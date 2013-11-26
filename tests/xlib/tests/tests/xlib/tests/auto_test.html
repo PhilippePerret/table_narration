@@ -1,0 +1,9 @@
+<script type="text/javascript" charset="utf-8">
+	var dhref = self.location.href.split('/')
+	dhref.pop();
+	dhref.splice(0,4);
+	user = dhref.shift();
+	dhref.shift(); // enlever "Sites"
+	url = 'http://localhost/~'+user+'/'+dhref.join('/')+'/'+'tests.php?autotest=1';
+	self.location.href = url;
+</script>
