@@ -12,7 +12,6 @@
 		<input type="button" value="Test" onclick="App.test()" />
 	</section>
 	<section id="table">
-		La table pour travailler
 	</section>
 <?php
 	
