@@ -555,7 +555,8 @@ String.prototype.should.return = function(value){
 
 // should.contain
 String.prototype.should.contain = function(value, strict){
-	var result = strict ? this.eval == value : ((this.eval || "").indexOf(value) > -1)
+  // var result = strict ? this.eval == value : ((this.eval || "").indexOf(value) > -1)
+  var result = this.contains(value, strict)
 	return _estime(result,
 		{
 			test:'contain',
@@ -570,7 +571,8 @@ String.prototype.should.contain = function(value, strict){
 				positif:{success:"", 	failure:""},
 				negatif:{success:"", 	failure:""}
 			},
-			expected_result:value,
+			expected_result:"`" + value + "`",
+      dont_inspect_expected:true,
 			after_if_failure:{positif:null, negatif:null}
 			
 		}

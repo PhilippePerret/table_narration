@@ -34,10 +34,19 @@ function FicheCreation_methodes_utiles() {
 function FicheCreation_code_html_de_la_fiche() {
   APP.ipage = new APP.Page()
   'ipage'.should.have.property('html')
+  console.log(APP.ipage.html)
   'ipage.html'.should_not.be.null
-  'ipage.html'.should.contain('<fiche id="'+APP.ipage.id+'" ')
-  'ipage.html'.should.contain('class="fiche page"')
-  'ipage.html'.should.contain('</fiche>')
+  var rege = new RegExp('<fiche id="'+APP.ipage.id+'"')
+  'ipage.html'.should.contain(rege)
+  'ipage.html'.should.contain(/class="fiche page/)
+  'ipage.html'.should.contain('<div class="poignee"></div>')
+  rege = new RegExp('<recto id="recto-'+APP.ipage.id+'"')
+  'ipage.html'.should.contain(rege)
+  'ipage.html'.should.contain(/\<\/recto\>/)
+  rege = new RegExp('<verso id="verso-'+APP.ipage.id+'"')
+  'ipage.html'.should.contain(rege)
+  'ipage.html'.should.contain(/\<\/verso\>/)
+  'ipage.html'.should.contain(/<\/fiche>/)
 }
 
 function FicheCreation_Creation_de_la_fiche() {

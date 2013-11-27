@@ -1,0 +1,41 @@
+/* Toutes les fiches */
+fiche {
+  display   : block;
+  position  : absolute;
+}
+
+/* ---------------------------------------------------------------------
+ *  LIVRE (BOOK)
+ */
+fiche.book {
+  background-color :#007;
+  color   :white;
+  width   :10em;
+  height  :2em;
+  border-radius :0.3em;
+}
+fiche.book.opened {
+  width   : 20em !important;
+  height  : 10em;
+}
+
+/* ---------------------------------------------------------------------
+ *  CHAPITRE (CHAPTER)
+ */
+fiche.chap {
+  
+}
+
+/* ---------------------------------------------------------------------
+ *  PAGE
+ */
+fiche.page {
+  
+}
+
+/* ---------------------------------------------------------------------
+ *  PARAGRAPHE
+ */
+fiche.para {
+  
+}

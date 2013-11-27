@@ -39,7 +39,10 @@ Object.defineProperties(Fiche.prototype, {
   "obj":{
     configurable:true,
     get:function(){
-      if(undefined == this._obj) this._obj = $('fiche#'+this.id)
+      if(undefined == this._obj){
+        var obj = $('fiche#'+this.id)
+        obj.length && (this._obj = obj)
+      } 
       return this._obj
     }
   },
@@ -91,8 +94,91 @@ Object.defineProperties(Fiche.prototype, {
   "positionne":{
     configurable:true,
     get:function(){
-      if(this.ranged) return
+      if( this.ranged || this.top == null || !this.obj ) return
       this.obj.css({'top':this.top+"px", 'left':this.left+"px"})
+    }
+  },
+  
+  /*
+   *  Création d'une nouvelle fiche
+   *  
+   *  “Créer la fiche” consiste à :
+   *    - mettre la fiche en attente de sauvegarde
+   *    - créer son objet sur la table
+   */
+  "create":{
+    configurable:true,
+    get:function(){
+      this.modified = true
+      this.build
+      return true
+    }
+  },
+  
+  /*
+   *  Construction de la fiche sur la table
+   *  
+   */
+  "build":{
+    configurable:true,
+    get:function(){
+      // On ajoute le code ou on le remplace
+      if(this.obj) this.obj.replaceWith( this.html )
+      else         $('section#table').append( this.html )
+      // On positionne la fiche
+      this.positionne
+      // On doit la rendre draggable
+      this.obj.draggable({containment:'parent'})
+      return true
+    }
+  },
+  
+  /*
+   *  Retourne le code HTML pour la fiche
+   *  
+   */
+  "html":{
+    configurable:true,
+    get:function(){
+      return  '<fiche id="' + this.id + '" class="fiche '+this.type+'">' +
+              '<div class="poignee"></div>' +
+              this.html_recto + this.html_verso +
+              '</fiche>' ;
+    }
+  },
+  
+  /*
+   *  Retourne le code HTML du RECTO de la fiche
+   *  
+   */
+  "html_recto":{
+    configurable:true,
+    get:function(){
+      return  '<recto id="recto-'+this.id+'" class="'+this.type+'">'+
+              '</recto>'
+    }
+  },
+  
+  /*
+   *  Retourne le code HTML du VERSO de la fiche
+   *  
+   */
+  "html_verso":{
+    configurable:true,
+    get:function(){
+      return  '<verso id="verso-'+this.id+'" class="'+this.type+'">'+
+              '</verso>'
+    }
+  },
+  
+  /*
+   *  Sauvegarde de la fiche
+   *  
+   */
+  "save":{
+    configurable:true,
+    get:function(){
+      return true
     }
   }
 })
