@@ -8,6 +8,7 @@
 	<?php include "./php/lib/librairies-css.php" ?>
 </head>
 <body>
+  <div id="flash" style="display:none;"></div>
 	<section id="header">
 		<input type="button" value="Test" onclick="App.test()" />
 	</section>

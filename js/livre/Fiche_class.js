@@ -124,6 +124,8 @@ Fiche.prototype.add_child = function(enfant)
   
 }
 
+Fiche.prototype.dispatch = function(data){ Data.dispatch(this, data) }
+
 Fiche.prototype.remove_child = function(enfant)
 {
   try
