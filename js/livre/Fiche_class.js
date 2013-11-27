@@ -34,6 +34,14 @@ window.Fiche = function(data)
 
 Object.defineProperties(Fiche.prototype, {
   
+  "modified":{
+    set:function(val){ 
+      this._modified      = val;
+      if(val) Collection.modified = true ;
+    },
+    get:function(){return this._modified || false }
+  },
+
   "type":{
     get:function(){ return this._type || null},
     set:function(ty){ this._type = ty }
@@ -69,7 +77,7 @@ Object.defineProperties(Fiche.prototype, {
     {
       try
       {
-        if('object' != typeof pere) throw 'parent should be an object';
+        if(!pere || 'object' != typeof pere) throw 'parent should be an object';
         if(pere.class != "Fiche")   throw 'parent should be a fiche';
         thislevel = FICHES.datatype[this.type].level ;
         perelevel = FICHES.datatype[pere.type].level ;
@@ -86,4 +94,59 @@ Object.defineProperties(Fiche.prototype, {
   
   
 })
+
+
+
+// C'est la méthode principale de création d'une relation entre
+// deux fiches. C'est elle qui ajoute l'enfant et définit le parent
+// de l'enfant.
+// @param   enfant    {Fiche} Instance Fiche du type attendu.
+Fiche.prototype.add_child = function(enfant)
+{
+  try
+  {
+    if(!enfant || 'object'!=typeof enfant)  throw 'child should be an object'
+    if( enfant.class != 'Fiche')            throw 'child should be a fiche'
+    thislevel = FICHES.datatype[this.type].level ;
+    chillevel = FICHES.datatype[enfant.type].level ;
+    if( thislevel <= chillevel )            throw 'child bad type'
+  }
+  catch(err){throw LOCALE.fiche.error[err]}
+  
+  // Ajout de l'enfant à la liste
+  if(this.enfants == null) this.enfants = []
+  this.enfants.push( enfant )
+  // Définition du parent de l'enfant
+  enfant.parent = this
+  
+  this.modified   = true
+  enfant.modified = true
+  
+}
+
+Fiche.prototype.remove_child = function(enfant)
+{
+  try
+  {
+    if('object' != typeof enfant || enfant.class != 'Fiche') throw 'child should be a fiche';
+  }
+  catch(err){ throw LOCALE.fiche.error[err] }
+  
+  var child_found = false
+  for(var i = 0, len=this.enfants.length; i<len; ++i )
+  { 
+    if(this.enfants[i].id == enfant.id){ 
+      this.enfants.splice(i, 1) 
+      enfant._parent = null
+      child_found = true
+      break
+    } 
+  }
+  
+  if(child_found)
+  {
+    this.modified   = true
+    enfant.modified = true
+  }
+}
 

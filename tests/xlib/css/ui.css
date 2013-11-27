@@ -8,7 +8,7 @@ div.buttons {
 a {text-decoration:none;}
 
 /* Du code entre `...` */
-code {font-family:Helvetica;font-size:12px;}
+code {font-family:monospace;font-size:12px;color:#CCCCCC;}
 
 h1 {
 	margin:0 0 0.3em 0;

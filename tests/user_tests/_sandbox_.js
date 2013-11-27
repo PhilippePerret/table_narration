@@ -8,14 +8,10 @@
  *
  */
 Object.defineProperties(Fiche.prototype, {
-  
+
   
 })
 
-Fiche.prototype.add_enfant = function(enfant)
-{
-  
-}
 
 Fiche.prototype.dispatch = function(data)
 {

@@ -49,7 +49,7 @@ String.prototype._eval = function(){
        // var ev = eval('APP.'+this.toString())
        this._evaluate_ = eval_in_app(this)
   	} catch(erreur){
-      warning("Problème d'évaluation de "+this)
+      warning("Problème d'évaluation de `"+this+"` : " + erreur)
       return undefined
     }
   }
@@ -594,7 +594,8 @@ String.prototype.should.respond_to = function(method){
 				positif:{success:LOCALES['responds to'], 		 failure:LOCALES['should respond to']},
 				negatif:{success:LOCALES['not responds to'], failure:LOCALES['should not respond to']}
 			},
-			expected_result:method,
+			expected_result:"`"+method+"`",
+      dont_inspect_expected:true,
 			after_if_failure:{positif:null, negatif:null}
 		}
 	)
