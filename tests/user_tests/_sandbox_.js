@@ -7,7 +7,6 @@
  *  actualiser à chaque fois.
  *
  */
-
 Object.defineProperties(Fiche.prototype, {
   
   "enfants":{
@@ -20,12 +19,20 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){ return this._parent },
     set:function(pere)
     {
-      if('object' != typeof pere) throw LOCALE.fiche.error['parent should be an object']
-      if(pere.class != "Fiche")   throw LOCALE.fiche.error['parent should be a fiche']
-      // Le père est-il du bon type ?
+      try
+      {
+        if('object' != typeof pere) throw 'parent should be an object';
+        if(pere.class != "Fiche")   throw 'parent should be a fiche';
+        thislevel = FICHES.datatype[this.type].level ;
+        perelevel = FICHES.datatype[pere.type].level ;
+        if( thislevel >= perelevel ) throw 'parent bad type';
+      }
+      catch(err)
+      { 
+        throw LOCALE.fiche.error[err]
+      }
       
       this._parent = pere
-      return this
     },
     configurable:true
   }
@@ -35,6 +42,15 @@ Object.defineProperties(Fiche.prototype, {
 Fiche.prototype.add_enfant = function(enfant)
 {
   
+}
+
+Fiche.prototype.dispatch = function(data)
+{
+  for(var prop in data)
+  {
+    if(false == data.hasOwnProperty(prop)) continue;
+    this[prop] = data[prop]
+  }
 }
 
 // KEEP THIS CODE LINE !

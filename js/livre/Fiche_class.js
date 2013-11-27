@@ -22,15 +22,14 @@ window.Fiche = function(data)
   this.created_at = null
   this.type       = null      // le type, entre 'book', 'page', 'chap', 'para'
   
-  // On doit dispatcher les données
+  this.dispatch(data)
   
-  // Nouvelle fiche
+  // Nouvelle fiche ?
   if(this.id == null) 
   {
     this.created_at = Time.now()
     this.id = ++ FICHES.last_id
   }
-  
 }
 
 Object.defineProperties(Fiche.prototype, {

@@ -50,9 +50,9 @@ window.LOCALES = {
 	'from'									: " from ",
 	'it is'									: "it is ",
 
-  'throw'                 : " throw ",
+  'throw'                 : " throws ",
   'should throw'          : " should throw ",
-  'doesnt throw'          : " does'nt throw ",
+  'doesnt throw'          : " doesn't throw ",
   'should not throw'      : " should'nt throw ",
 
 	'strict visual mode'		: " (strict visual mode — unlike jQuery) ",

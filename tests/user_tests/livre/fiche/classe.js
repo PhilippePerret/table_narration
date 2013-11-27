@@ -15,6 +15,7 @@ function livre_fiche_classe() {
   my.step_list = [
   "Existence de la classe Fiche et de ses méthodes/propriétés",
   "Fonctionnement des propriétés basiques",
+  "Fonctionnement des méthodes asynchrones",
   "Propriétés spéciales “parent” et “enfants”"
   ]
   switch(my.step)
@@ -26,6 +27,11 @@ function livre_fiche_classe() {
   case "Fonctionnement des propriétés basiques":
     Fiche_Fonctionnement_proprietes_basiques()
     break
+    
+  case "Fonctionnement des méthodes asynchrones":
+    Fiche_Fonctionnement_methodes_asynchrones()
+    break
+    
     
   case "Propriétés spéciales “parent” et “enfants”":
     Fiche_Propriete_speciale_parent_et_enfants()
@@ -58,7 +64,7 @@ function Fiche_Classe_et_methodes_principales() {
   
   // Méthodes
   var methods = [
-  'add_enfant'
+  'add_enfant', 'dispatch'
   ]
   L(methods).each(function(method){'Fiche.prototype'.should.respond_to(method)})
   
@@ -107,6 +113,17 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   'instanceFiche.resume'.should.be.null
 }
 
+function Fiche_Fonctionnement_methodes_asynchrones() {
+  blue("Méthode “`dispatch`”")
+  APP.ifiche = new APP.Fiche()
+  'ifiche.type'.should.be.null
+  'ifiche.fausse_prop'.should.be.null
+  w("Je dispatche")
+  APP.ifiche.dispatch({type:"para", fausse_prop:12})
+  'ifiche.type'.should = "para"
+  'ifiche.fausse_prop'.should = 12
+  
+}
 function Fiche_Propriete_speciale_parent_et_enfants() {
   specs("La propriété `parent` de la fiche permet de déterminer son parent tandis "+
         "que la propriété `enfants` permet de déterminer les enfants. "+
@@ -117,10 +134,34 @@ function Fiche_Propriete_speciale_parent_et_enfants() {
   APP.ipage.type = 'page'
   'ipage.parent = 12'.should.throw(APP.LOCALE.fiche.error['parent should be an object'])
   'ipage.parent = {}'.should.throw(APP.LOCALE.fiche.error['parent should be a fiche'])
-  APP.ibook = new APP.Fiche({type:'book'})
-  'ibook.type'.should = "book"
-  APP.ipara = new APP.Fiche({type:'para'})
+  APP.ipara = new APP.Fiche({type:"para"})
   'ipage.parent = ipara'.should.throw(APP.LOCALE.fiche.error['parent bad type'])
+  APP.ibook = new APP.Fiche({type:'book'})
+  'ipage.parent = ibook'.should_not.throw() ;
+  'ipage._parent'.should_not.be.null
+  'ipage._parent.class'.should = "Fiche"
+  'ipage._parent.type'.should = "book"
+  'ipage.parent'.should_not.be.null
+  'ipage.parent.class'.should = "Fiche"
+  'ipage.parent.type'.should = "book"
+  
+  // try
+  // {
+  //   APP.ipage.parent = APP.ipara
+  //   failure("ipage.parent = ipara should throw “"+APP.LOCALE.fiche.error['parent bad type']+"”")
+  // }
+  // catch(err){
+  //   success("ipage.parent = ipara throws “"+APP.LOCALE.fiche.error['parent bad type']+"”")
+  // }
+  // 
+  // try
+  // {
+  //   APP.ipara.parent = APP.ipage
+  //   success("ipara.parent = ipage doesn't throw “"+APP.LOCALE.fiche.error['parent bad type']+"”")
+  // }
+  // catch(err){
+  //   failure("ipage.parent = ipara should not throw “"+APP.LOCALE.fiche.error['parent bad type']+"”")
+  // }
   
   // TODO: On doit checker que le parent soit bien une fiche du bon type
   // NOTE: C'est par `add_enfant` qu'on définit une nouvelle relation.

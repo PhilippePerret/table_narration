@@ -29,6 +29,16 @@
 // 				cette constante dans leur donnée `_before_result`
 var _default_before_result_equality
 
+/*
+ * Évaluation de l'expression dans l'application
+ */
+function eval_in_app( code ) {
+  with(APP)
+  {
+    if(code.indexOf(/(=|\>|\<)/) > -1) return eval(code)
+    else return eval( code.toString() )
+  }
+}
 
 String.prototype._eval = function(){
   if(undefined == this._evaluate_)
@@ -36,9 +46,12 @@ String.prototype._eval = function(){
     // Il ne faut absolument évaluer le code qu'une seule fois
     // cf. bug #30
   	try{
-  		 var ev = eval('APP.'+this.toString())
-       this._evaluate_ = ev
-  	}catch(erreur){return undefined}
+       // var ev = eval('APP.'+this.toString())
+       this._evaluate_ = eval_in_app(this)
+  	} catch(erreur){
+      warning("Problème d'évaluation de "+this)
+      return undefined
+    }
   }
   return this._evaluate_
 }
@@ -213,19 +226,18 @@ const HumanStringProperties_Should = {
 	},
   // Test si une méthode/fonction produit bien une erreur
   // Cas spécial : quand on utilise `should_not.throw`, il peut n'y avoir aucun message défini
-  throw:{
+  "throw":{
     value:function(err_expected){
       try{
-        eval('APP.' + this.toString())
-        resultat      = this.positif
-        if(this.positif){  
-          // should + réussite
+        eval_in_app(this)
+        // Si on passe ci-dessous, c'est que l'évaluation n'a pas rencontré
+        // d'erreur. Si this.positif est true (should.throw), c'est une erreur
+        resultat = false
+        if(this.positif){  // => should + réussite
           err_produced  = LOCALES.messages['no error thrown']
-          // after_result  = LOCALES['error']
         }
-        else{ 
-          // should_not + réussite
-          if(undefined == err_expected) err_expected  = "("+LOCALES['undefined_e']+")"
+        else{ // => should_not + réussite
+          if(undefined == err_expected) err_expected  = ""
         }
           
       }catch(err){
