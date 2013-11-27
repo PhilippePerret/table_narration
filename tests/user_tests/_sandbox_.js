@@ -9,33 +9,6 @@
  */
 Object.defineProperties(Fiche.prototype, {
   
-  "enfants":{
-    get:function(){ return this._enfants },
-    set:function(children){ this._enfants = children },
-    configurable:true
-  },
-  
-  "parent":{
-    get:function(){ return this._parent },
-    set:function(pere)
-    {
-      try
-      {
-        if('object' != typeof pere) throw 'parent should be an object';
-        if(pere.class != "Fiche")   throw 'parent should be a fiche';
-        thislevel = FICHES.datatype[this.type].level ;
-        perelevel = FICHES.datatype[pere.type].level ;
-        if( thislevel >= perelevel ) throw 'parent bad type';
-      }
-      catch(err)
-      { 
-        throw LOCALE.fiche.error[err]
-      }
-      
-      this._parent = pere
-    },
-    configurable:true
-  }
   
 })
 
