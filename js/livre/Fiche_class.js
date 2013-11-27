@@ -22,6 +22,12 @@ window.Fiche = function(data)
   this.created_at = null
   this.type       = null      // le type, entre 'book', 'page', 'chap', 'para'
   
+  // --- State ---
+  // (ci-dessous les valeurs par défaut)
+  this.deleted    = false
+  this.opened     = true
+  this.ranged     = false
+  
   this.dispatch(data)
   
   // Nouvelle fiche ?
@@ -37,7 +43,7 @@ Object.defineProperties(Fiche.prototype, {
   "modified":{
     set:function(val){ 
       this._modified      = val;
-      if(val) Collection.modified = true ;
+      if(val) Collection.add_modified( this ) ;
     },
     get:function(){return this._modified || false }
   },

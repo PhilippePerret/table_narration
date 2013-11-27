@@ -50,17 +50,30 @@ function Fiche_Classe_et_methodes_principales() {
   
   APP.instance_Fiche = new APP.Fiche()
   
+  w("Je crée une instance fiche pour faire quelques vérifications simples")
+  APP.ifiche = new APP.Fiche()
+  
   // Propriétés
   var properties = [
-  'id', 'created_at', 'type', 'class'
+  'id', 'created_at', 'type', 'class',
+  'deleted',
+  'opened', 'ranged'
   ]
   L(properties).each(function(prop){'instance_Fiche'.should.have.property(prop)})
+  'ifiche.deleted'.should.be.false
+  'ifiche.opened' .should.be.true
+  'ifiche.ranged' .should.be.false
   
   // Pseudo-propriétés (propriétés complexes)
   var comp_properties = [
-  'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants'
+  'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
+  'obj', 'dom_obj', 'top', 'left', 'positionne',
+  'create', 'save', 'load', 'build', 'open', 'close',
+  'html'
   ]
   L(comp_properties).each(function(prop){'Fiche.prototype'.should.have.property(prop)})
+  'ifiche.top'.should.be.equal_to(null, strict = true)
+  'ifiche.left'.should.be.equal_to(null, strict = true)
   
   // Méthodes
   var methods = [
@@ -111,9 +124,13 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   APP.instanceFiche.resume = "  "
   'instanceFiche.resume'.should_not = "  "
   'instanceFiche.resume'.should.be.null
+  
+  pending("Test de la méthode-complexe `obj`")
+  pending("Test de la méthode-complexe `dom_obj`")
 }
 
 function Fiche_Fonctionnement_methodes_asynchrones() {
+  
   blue("Méthode `dispatch`")
   APP.ifiche = new APP.Fiche()
   'ifiche.type'.should.be.null
@@ -124,19 +141,30 @@ function Fiche_Fonctionnement_methodes_asynchrones() {
   'ifiche.fausse_prop'.should = 12
   
   blue("Méthode `modified`")
-  APP.ifiche.modified = false
-  APP.Collection.modified = false
+  APP.ifiche.modified           = false
+  APP.Collection.modified       = false
+  APP.Collection.modifieds_list = null
   'ifiche.modified'.should.be.false
   'Collection.modified'.should.be.false
+  'Collection.modifieds_list'.should.be.null
   APP.ifiche.modified = true // <-- TEST
   'ifiche.modified'.should.be.true
   'ifiche._modified'.should.be.true
   'Collection.modified'.should.be.true
+  'Collection.modifieds_list'.should.contain( APP.ifiche )
   APP.ifiche.modified = false // <-- TEST
   'ifiche.modified'.should.be.false
   'ifiche._modified'.should.be.false
   'Collection.modified'.should.be.true
+  'Collection.modifieds_list'.should.contain(APP.ifiche)
   
+  blue("Méthode `create`")
+  specs("La méthode create doit permettre de créer la fiche, c'est-à-dire :"+
+        "\n- Créer son div sur la table de travail ;"+
+        "\n- Ouvrir la fiche en fonction de son type ;"+
+        "\n- Enregistrer la fiche dans la collection (en la marquant modifiée).")
+  //
+  pending("Implémenter le test de create")
 }
 function Fiche_Propriete_speciale_parent_et_enfants() {
   specs("La propriété `parent` de la fiche permet de déterminer son parent tandis "+
