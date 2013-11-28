@@ -16,7 +16,8 @@ function livre_fiche_classe() {
   "Existence de la classe Fiche et de ses méthodes/propriétés",
   "Fonctionnement des propriétés basiques",
   "Fonctionnement des méthodes asynchrones",
-  "Propriétés spéciales “parent” et “enfants”"
+  "Propriétés spéciales “parent” et “enfants”",
+  "Fonctionnement des méthodes `open` et `close`"
   ]
   switch(my.step)
   {
@@ -35,6 +36,10 @@ function livre_fiche_classe() {
     
   case "Propriétés spéciales “parent” et “enfants”":
     Fiche_Propriete_speciale_parent_et_enfants()
+    break
+    
+  case "Fonctionnement des méthodes `open` et `close`":
+    Fiche_Methodes_open_et_close()
     break
     
   default:
@@ -68,7 +73,7 @@ function Fiche_Classe_et_methodes_principales() {
   var comp_properties = [
   'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
   'obj', 'dom_obj', 'top', 'left', 'positionne',
-  'create', 'save', 'load', 'build', 'open', 'close',
+  'create', 'save', 'load', 'build', 'open', 'close', 'delete',
   'html'
   ]
   L(comp_properties).each(function(prop){'Fiche.prototype'.should.have.property(prop)})
@@ -159,12 +164,44 @@ function Fiche_Fonctionnement_methodes_asynchrones() {
   'Collection.modifieds_list'.should.contain(APP.ifiche)
   
   blue("Méthode `create`")
-  specs("La méthode create doit permettre de créer la fiche, c'est-à-dire :"+
-        "\n- Créer son div sur la table de travail ;"+
-        "\n- Ouvrir la fiche en fonction de son type ;"+
-        "\n- Enregistrer la fiche dans la collection (en la marquant modifiée).")
-  //
-  pending("Implémenter le test de create")
+  specs("La méthode create est testée indépendamment")
+  
+  blue("Méthode `delete`")
+  specs("La méthode `delete` se contente de marquer la fiche `deleted` et de la marquer "+
+        "modifiée.")
+  APP.ipage = new APP.Page()
+  'ipage.deleted'.should.be.false
+  APP.ipage.modified = false
+  'ipage._modified'.should.be.false
+  APP.ipage.delete // <-- TEST
+  'ipage.deleted'.should.be.true
+  'ipage._modified'.should.be.true
+  'Collection.modifieds_list'.should.contain(APP.ipage)
+  
+  blue("Méthode `close`")
+  specs("La méthode `close` doit permettre de “fermer” la fiche, c'est-à-dire de "+
+  "la passer de son état ouvert (opened) à son état fermé."+
+  "\nNote: On la teste avant la méthode `open` puisque la fiche est ouverte à sa création.")
+  APP.ibook = new APP.Book()
+  APP.ibook.create
+  'ibook.opened'.should.be.true
+  jq('fiche#'+APP.ibook.id).should.have.class("opened")
+  APP.ibook.close // <-- TEST
+  'ibook.opened'.should.be.false
+  jq('fiche#'+APP.ibook.id).should_not.have.class("opened")
+  
+  blue("Méthode `open`")
+  specs("La méthode `open` doit permettre d'“ouvrir” la fiche, c'est-à-dire de " +
+  "la passer de son état fermé à son état ouvert.")
+  APP.ibook.open // <-- TEST
+  'ibook.opened'.should.be.true
+  jq('fiche#'+APP.ibook.id).should.have.class("opened")
+  
+}
+
+function Fiche_Methodes_open_et_close() {
+  
+  
 }
 function Fiche_Propriete_speciale_parent_et_enfants() {
   specs("La propriété `parent` de la fiche permet de déterminer son parent tandis "+

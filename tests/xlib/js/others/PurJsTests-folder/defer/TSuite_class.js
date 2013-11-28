@@ -88,13 +88,15 @@ Object.defineProperties(_SuiteTest_.prototype,{
     value:function(obj)
     {
       if(undefined != obj.stop_point) this.next_stop_point(obj.stop_point)
-      if(undefined != obj.success && 'string' == typeof obj.success)
+      if(undefined != obj.success)
       {
-        this._onsuccess = obj.success
+        if('string' == typeof obj.success) this._onsuccess = obj.success
+        else if ('function' == typeof obj.success) this.function_on_success = obj.success
       }
-      if(undefined != obj.failure && 'string' == typeof obj.failure)
+      if(undefined != obj.failure)
       {
-        this._onfailure = obj.failure
+        if('string' == typeof obj.failure) this._onfailure = obj.failure
+        else if ('function' == typeof obj.failure) this.function_on_failure = obj.failure
       }
       if(undefined != obj.success_step)
       {
@@ -159,6 +161,8 @@ _PropertiesOnSuccessAndFailure = {
       delete this._stop_point_on_failure
       delete this._onsuccess
       delete this._onfailure
+      delete this.function_on_success
+      delete this.function_on_failure
     }
   },
  
@@ -186,6 +190,11 @@ _PropertiesOnSuccessAndFailure = {
       if(this._step_on_success) this.step_on_success
       // Un stop point doit être invoqué
       if(this._stop_point_on_success) this.stop_point_on_success
+      // Une méthode doit être invoquée
+      // FIXME: Je ne sais pas pourquoi, mais avec la sandbox, qui passe par ici après
+      // son chargement, si on ne met pas ce setTimeout, on rentre tout de suite dans le
+      // test avec d'avoir terminé la boucle d'attente Wait.until.
+      if(this.function_on_success) setTimeout(this.function_on_success, 1 * 1000)
       return undefined != this._onsuccess && this._onsuccess != null
     }
   },
@@ -195,6 +204,7 @@ _PropertiesOnSuccessAndFailure = {
       if(this._onfailure != null) failure(this._onfailure)
       if(this._step_on_failure) this.step_on_failure
       if(this._stop_point_on_failure) this.stop_point_on_failure
+      if(this.function_on_failure) setTimeout( this.function_on_failure, 1000 )
       return undefined != this._onfailure && this._onfailure != null
     }
   },

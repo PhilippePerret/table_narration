@@ -75,6 +75,7 @@ window.Wait = {
   //          traite_options
   // 
   for:function(nombre_secondes, options, message){
+    console.log("-> Wait.for")
     this.pause_script_if_any()
     this.reset()
     if(undefined != message) this.options = {message:message}
@@ -84,15 +85,18 @@ window.Wait = {
     {
       w((this.options.message || LOCALES.messages['wait for']+nombre_secondes+LOCALES['second']+s)+"…",SYSTEM);
     }
+    console.log("Attente de "+ (nombre_secondes*1000) + "msecs…")
     this.timer = setTimeout("Wait.fin_ok()", nombre_secondes * 1000)
     return this.suite
   },
   until:function(fct_test, options){
+    console.log("-> Wait.until")
     this.pause_script_if_any()
     this.run_wait(fct_test, options, 'true')
     return this.suite
   },
   while:function(fct_test, options){
+    console.log("-> Wait.while")
     this.pause_script_if_any()
     this.run_wait(fct_test, options, 'false')
     return this.suite
@@ -129,6 +133,7 @@ window.Wait = {
 		this.options = $.extend(this.options, opts)
 	},
   run_wait:function(test,options,condition){
+    console.log("-> Wait.run_wait")
     this.reset()
 		this.traite_options(options)
     this.test       = test;
@@ -143,41 +148,6 @@ window.Wait = {
     if(undefined!=this.options.message) w(this.options.message+"…",SYSTEM);
   },
   
-  // run_wait_for_file:function(path, options, condition)
-  // {
-  //   if(undefined == this.tested_file)
-  //   {
-  //     this.reset()
-  //     this.traite_options(options)
-  //     this.condition    = condition
-  //     this.tested_file  = file(path)
-  //     this.start_time   = (new Date()).valueOf()
-  //     this.test = LOCALES.wait['wait for file ' + (condition?'existence':'non existence')] +"`"+ path+"`";
-  //     this.calcul_stop_time()
-  //     // On check le fichier
-  //     this.tested_file._script = {}
-  //     this.tested_file.seek_poursuivre = $.proxy(this.run_wait_for_file, this)
-  //     this.tested_file.seek
-  //   }
-  //   else
-  //   {
-  //     clearTimeout(this.timer)
-  //     if( this.condition == this.tested_file.exists )
-  //     { 
-  //       delete this.tested_file
-  //       this.fin_ok()
-  //     }
-  //     else
-  //     {
-  //       if((new Date()).valueOf() >= this.stop_time )
-  //       { 
-  //         delete this.tested_file
-  //         return this.waiting_too_long()
-  //       }
-  //       else this.tested_file.seek
-  //     }
-  //   }
-  // },
 	// Calcul le temps de fin en fonction des options
 	calcul_stop_time:function(){
 		this.stop_time = this.start_time + this.max_waiting_time;
@@ -186,7 +156,10 @@ window.Wait = {
     var retour;
     try{
       if( this.test() === condition ) 
+      {
+        console.log("Dans Wait.check, appel de fin_ok()")
         return this.fin_ok();
+      }
       else{
         if((new Date()).valueOf() >= this.stop_time ) return this.waiting_too_long()
         else this.poursuit_wait();
@@ -206,17 +179,20 @@ window.Wait = {
     return this.fin_not_ok(mess, WARNING+" SFP");
   },
   poursuit_wait:function(){
+    console.log("-> Wait.poursuit_wait")
     clearTimeout(this.timer);
     this.timer = setTimeout("Wait.check("+this.condition+")", this.laps);
   },
 	// Fin successful. Si une méthode `options.success` est définie, on la joue avant de
 	// poursuivre.
   fin_ok:function(){
-    // w("-> Wait.fin_ok")
+    console.log("-> Wait.fin_ok")
+    console.log(this.fin_ok.callee)
     if(false == this.suite.onresultat(true))
     {
   		if('function' == typeof this.options.success) this.options.success(true)
       else if (undefined != this.options.success_message) w(this.options.success_message, GREEN+" SFP")
+      console.log("-> Wait.fin_ok (appel de stop_check)")
   		this.stop_check( true )
     } 
     else
@@ -232,6 +208,7 @@ window.Wait = {
   		} else {
   	    w(mess,type);
   		}
+      console.log("-> Wait.fin_not_ok (qui va appeler stop_check)")
       this.stop_check(false);
     }
     else
@@ -245,6 +222,7 @@ window.Wait = {
   // TODO: L'utilisation des `options` ci-dessous doit devenir OBSOLÈTE avec l'utilisation
   // des fonctions magiques `_` et son alias `and`
   stop_check:function( bool_resultat ){
+    console.log("-> Wait.stop_check (qui va appeler poursuit_script)")
     clearTimeout(this.timer);
 		this.resultat = bool_resultat
     this.poursuit_script
@@ -268,8 +246,12 @@ Object.defineProperties(Wait, {
   // Pour poursuivre le script (après l'attente)
   "poursuit_script":{
     get:function(){
-      this.script.fonction.stop_pause
-			this.script.run
+      if(this.script)
+      {
+        console.log("-> Wait.poursuit_script (qui va appeler stop_pause)")
+        this.script.fonction.stop_pause
+  			this.script.run
+      }
     }
   }
 })
@@ -357,6 +339,7 @@ Object.defineProperties(_ObjetWaitUntilFile,{
       if( this.condition == this.tested_file.exists )
       { 
         // OK
+        console.log("-> Wait.retour_exists (appel de fin_ok)")
         delete this.tested_file
         this.suite.onresultat(true)
         Wait.fin_ok()

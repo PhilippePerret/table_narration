@@ -134,6 +134,29 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
+   *  Ouvre la fiche
+   *  
+   */
+  "open":{
+    configurable:true,
+    get:function(){
+      this.obj.addClass('opened')
+      this.opened = true
+    }
+  },
+  /*
+   *  Ferme la fiche
+   *  
+   */
+  "close":{
+    configurable:true,
+    get:function(){
+      this.obj.removeClass('opened')
+      this.opened = false
+    }  
+  },
+  
+  /*
    *  Retourne le code HTML pour la fiche
    *  
    */
@@ -180,7 +203,20 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       return true
     }
+  },
+  
+  /*
+   *  Suppression d'une fiche
+   *  
+   */
+  "delete":{
+    configurable:true,
+    get:function(){
+      this.deleted  = true
+      this.modified = true
+    }
   }
+  
 })
 
 

@@ -104,12 +104,20 @@ window.Test = {
     if(this.sandbox_on){ 
       force_db(LOCALES.messages['loading sandbox'], SYSTEM)
       Wait.until(
-        function(){ return APP.TEST_SANDBOX_READY == true }, 
-        {
-          success:$.proxy(this.run_right_now,this),
-          failure:$.proxy(this.unable_to_load_sandbox, this)
-        }
-      )}
+        function(){ return APP.TEST_SANDBOX_READY == true }).and(
+          {
+            success:$.proxy(this.run_right_now, this),
+            failure:$.proxy(this.unable_to_load_sandbox, this)
+          }
+        )
+    }
+      // Wait.until(
+      //   function(){ return APP.TEST_SANDBOX_READY == true }, 
+      //   {
+      //     success:$.proxy(this.run_right_now,this),
+      //     failure:$.proxy(this.unable_to_load_sandbox, this)
+      //   }
+      // )}
     else this.run_right_now()
   },
   run_right_now:function(){

@@ -14,11 +14,11 @@ function Mouse_class() {
 	
 	if(my.step_is("Première étape")){
 		if(undefined == my.stop_point){
-			console.log("-> Première étape")
+      // console.log("-> Première étape")
 			return my.proxy(1)
 		}
 		else if (my.stop_point == 1){
-			console.log("-> stop point 1")
+      // console.log("-> stop point 1")
 			return my.proxy(window.LaDerniere)
 		}
 	}

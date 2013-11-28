@@ -26,7 +26,7 @@ _PropertiesMainTestFunction = {
   // 
 	"run":{
 	  get:function(){
-      
+      // console.log("-> "+this.name+".run / waiting = "+this.waiting)
       if(this.waiting) return
 
       // Définition de l'étape à jouer (ou fin)
@@ -532,7 +532,7 @@ _PropertiesMainTestFunction = {
 	// Pour pouvoir utiliser `<fct>.wait` au lieu de `Wait`
 	"wait":{
 		get:function(){
-      // Mais si Wait s'en charge aussi, il faut le faire tout de suite
+      // Même si Wait s'en charge aussi, il faut le faire tout de suite
       // pour interrompre la fonction
       this.waiting = true
 			window.Wait.attached_script = this.script
@@ -623,7 +623,10 @@ _PropertiesMainTestFunction = {
     }
   },
   "stop_pause":{
-    get:function(){this.waiting = false}
+    get:function(){
+      // console.log("-> "+this.name+".stop_pause (waiting remis à false)")
+      this.waiting = false
+    }
   }
 
 	
