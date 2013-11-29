@@ -382,7 +382,7 @@ Object.defineProperties(_TFile.prototype, {
           sujet:"`'"+this.path+"'`",
           result:{
             positif:{success:LOCALES['contains'], failure:LOCALES['should contain']},
-            negatif:{success:LOCALES['doesnt contains'], failure:LOCALES['should not contain']}
+            negatif:{success:LOCALES['doesnt contain'], failure:LOCALES['should not contain']}
           },
           expected_result:searched,
       		no_expected_result:false,

@@ -565,7 +565,7 @@ String.prototype.should.contain = function(value, strict){
 			sujet:tostring(this),
 			_before_result:{
 						positif:{success:LOCALES['contains'], failure:LOCALES['should contain']},
-						negatif:{success:LOCALES['doesnt contains'], failure:LOCALES['should not contain']}
+						negatif:{success:LOCALES['doesnt contain'], failure:LOCALES['should not contain']}
 					},
 			result:{
 				positif:{success:"", 	failure:""},

@@ -33,7 +33,7 @@ window.LOCALES = {
 	'should be'		 					: " should be ",
 	'should not be'					: " should not be ",
 	'contains'							: " contains ",
-	'doesnt contains'				: " doesn't contain ",
+	'doesnt contain'				: " doesn't contain ",
 	'it contains'						: "it contains ",
 	'should contain'				: " should contain ",
 	'should not contain'		: " should not contain ",
@@ -68,6 +68,7 @@ window.LOCALES = {
   'error'                 : " error ",
 	'an error'              : " an error ", 
   'any_error'             : " any errors ",
+  'object containing'     : " an object containing ",
   'value'                 : " value ",
   
   // Autres verbes

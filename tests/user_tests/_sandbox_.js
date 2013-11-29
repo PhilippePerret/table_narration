@@ -94,6 +94,7 @@ Object.defineProperties(Fiche.prototype, {
       this.build
       FICHES.list[this.id] = this
       this.open
+      this.set_values
       return true
     }
   },
@@ -142,13 +143,53 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
+   *  Met les valeurs de la fiche dans la fiche DOM
+   *  
+   */
+  "set_values":{
+    configurable:true,
+    get:function(){
+      this.input_titre.val(this.titre || "")
+      return true
+    }
+  },
+  
+  /*
+   *  ---------------------------------------------------------------------
+   *    DOM Methods
+   *
+   */
+  
+  /*
+   *  Raccourcis pour obtenir les éléments DOM de la fiche
+   *    
+   */
+  /* Champ de saisie du titre */
+  "input_titre":{
+    configurable:true,
+    get:function(){
+      if(!this._input_titre || this._input_titre.length == 0) this._input_titre = $(this.titre_jid);
+      return this._input_titre
+    }
+  },
+  
+  /* Div des items (children) de la fiche */
+  "div_items":{
+    configurable:true,
+    get:function(){
+      if(!this._div_items || this._div_items.length == 0) this._div_items = $(this.items_jid);
+      return this._div_items
+    }
+  },
+  
+  /*
    *  Retourne le code HTML pour la fiche
    *  
    */
   "html":{
     configurable:true,
     get:function(){
-      return  '<fiche id="' + this.id + '" class="fiche '+this.type+'">' +
+      return  '<fiche id="' + this.dom_id + '" class="fiche '+this.type+'">' +
               '<div class="poignee"></div>' +
               this.html_recto + this.html_verso +
               '</fiche>' ;
@@ -162,8 +203,28 @@ Object.defineProperties(Fiche.prototype, {
   "html_recto":{
     configurable:true,
     get:function(){
-      return  '<recto id="recto-'+this.id+'" class="'+this.type+'">'+
+      return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
+              this.html_input_titre +
+              this.html_div_items   +
               '</recto>'
+    }
+  },
+  
+  /* Retourne le code HTML pour le titre de la fiche (sauf paragraphe) */
+  "html_input_titre":{
+    configurable:true,
+    get:function(){
+      if(this.is_paragraph) return ""
+      else return '<input type="text" value="" id="'+this.dom_id+'-titre" class="titre" />'
+    }
+  },
+  
+  /* Retourne le code HTML pour le div des items de la fiche (sauf paragraphe) */
+  "html_div_items":{
+    configurable:true,
+    get:function(){
+      if(this.is_paragraph) return ""
+      return '<div id="'+this.dom_id+'-items" class="items"></div>'
     }
   },
   
@@ -174,7 +235,7 @@ Object.defineProperties(Fiche.prototype, {
   "html_verso":{
     configurable:true,
     get:function(){
-      return  '<verso id="verso-'+this.id+'" class="'+this.type+'" style="display:none;">'+
+      return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
               '</verso>'
     }
   },

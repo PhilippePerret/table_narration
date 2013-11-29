@@ -45,17 +45,14 @@ function FicheCreation_code_html_de_la_fiche() {
   APP.ipage = new APP.Page()
   'ipage'.should.have.property('html')
   'ipage.html'.should_not.be.null
-  var rege = new RegExp('<fiche id="'+APP.ipage.id+'"')
-  'ipage.html'.should.contain(rege)
-  'ipage.html'.should.contain(/class="fiche page/)
+  'ipage.html'.should.contain('<fiche id="f-'+APP.ipage.id+'"')
+  'ipage.html'.should.contain('class="fiche page')
   'ipage.html'.should.contain('<div class="poignee"></div>')
-  rege = new RegExp('<recto id="recto-'+APP.ipage.id+'"')
-  'ipage.html'.should.contain(rege)
-  'ipage.html'.should.contain(/\<\/recto\>/)
-  rege = new RegExp('<verso id="verso-'+APP.ipage.id+'"')
-  'ipage.html'.should.contain(rege)
-  'ipage.html'.should.contain(/\<\/verso\>/)
-  'ipage.html'.should.contain(/<\/fiche>/)
+  'ipage.html'.should.contain('<recto id="'+APP.ipage.dom_id+'-recto"')
+  'ipage.html'.should.contain('</recto>')
+  'ipage.html'.should.contain('<verso id="'+APP.ipage.dom_id+'-verso"')
+  'ipage.html'.should.contain('</verso>')
+  'ipage.html'.should.contain('</fiche>')
   
   w("Les autres tests sont fait dans le test livre/fiche/display.js")
 }
@@ -80,7 +77,7 @@ function FicheCreation_Construction_de_la_fiche() {
     my.wait.for( 1, "Construction (build) de la fiche…" ).and( NEXT_POINT )
     break
   case 2:
-    var ofiche = jq('fiche#'+id_chap)
+    var ofiche = jq(APP.ichap.jid)
     ofiche.should.exist
     ofiche.should.be.visible
     ofiche.should.be.at( 600, 200)
@@ -107,7 +104,7 @@ function FicheCreation_Creation_de_la_fiche() {
   ('FICHES.list['+APP.ichap.id+']').should.be.defined ;
   ('FICHES.list['+APP.ichap.id+'].class').should = "Fiche" ;
   ('FICHES.list['+APP.ichap.id+'].type').should = "chap" ;
-  var ofiche = jq('fiche#'+id_chap)
+  var ofiche = jq(APP.ichap.jid)
   ofiche.should.be.visible
   ofiche.should.be.at( 400, 100)
   'ichap.opened'.should.be.true

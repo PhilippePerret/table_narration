@@ -466,7 +466,6 @@ const HumanProperties_JQ_Should = {
   			if( ! mess ) mess = ""
         if(t)
         { 
-          // res = t.indexOf( mess ) >-1 ;
           res = t.contains( mess ) // traite les expressions régulières
           rep = this.mess_long_contain( t )
         }
@@ -489,7 +488,7 @@ const HumanProperties_JQ_Should = {
 						positif:{success:LOCALES['contains'], 	failure:LOCALES['should contain']},
 						negatif:{success:LOCALES['doesnt contain'], failure:LOCALES['should not contain']}
 					},
-					expected_result:" "+this.mess_long_contain(mess),
+          expected_result:" "+this.mess_long_contain(mess),
 					dont_inspect_expected:true,
 					after_if_failure:{
 						positif:LOCALES['it contains']+rep, 

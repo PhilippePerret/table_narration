@@ -34,7 +34,7 @@ window.LOCALES = {
 	'should not be'					: " ne devrait pas être ",
 	
 	'contains'							: " contient ",
-	'doesnt contains'				: " ne contient pas ",
+	'doesnt contain'				: " ne contient pas ",
 	'it contains'						: "il contient ",
 	'should contain'				: " devrait contenir ",
 	'should not contain'		: " ne devrait pas contenir ",
@@ -69,6 +69,7 @@ window.LOCALES = {
   'error'                 : " l'erreur ",
 	'an error'              : " une erreur ", 
   'any_error'             : " d'erreur ",
+  'object containing'     : " un objet contenant ",
   'value'                 : " la valeur ",
 	
 	// adjectifs

@@ -56,10 +56,25 @@ Object.defineProperties(Fiche.prototype, {
   /* Définit et retourne le JID de la fiche */
   "jid":{
     get:function(){
-      if(this._jid == undefined) this._jid = "fiche#"+this.id ;
+      if(this._jid == undefined) this._jid = "fiche#"+this.dom_id ;
       return this._jid
     }
   },
+  "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
+  "titre_jid":{get:function(){return 'input#'+this.dom_id+'-titre'}},
+  
+  /* Définit et retourne le `dom_id' qui va permettre de construire l'id des éléments DOM */
+  "dom_id":{
+    get:function(){
+      if(this._dom_id == undefined) this._dom_id = "f-"+this.id ;
+      return this._dom_id
+    }
+  },
+  
+  "is_book"       :{get:function(){ return this.type == 'book'}},
+  "is_chapter"    :{get:function(){ return this.type == 'chap'}},
+  "is_page"       :{get:function(){ return this.type == 'page'}},
+  "is_paragraph"  :{get:function(){ return this.type == 'para'}},
 
   "titre":{
     get:function(){return this._titre || null },
@@ -115,7 +130,7 @@ Object.defineProperties(Fiche.prototype, {
 // deux fiches. C'est elle qui ajoute l'enfant et définit le parent
 // de l'enfant.
 // @param   enfant    {Fiche} Instance Fiche du type attendu.
-Fiche.prototype.add_child = function(enfant)
+Fiche.prototype.add_child = function(enfant, before_child)
 {
   try
   {
@@ -132,6 +147,16 @@ Fiche.prototype.add_child = function(enfant)
   this.enfants.push( enfant )
   // Définition du parent de l'enfant
   enfant.parent = this
+  
+  // Ajout de l'enfant dans le div_items de la fiche
+  if(undefined == before_child)
+  { // => ajout à la fin
+    this.div_items.append( enfant.obj )
+  }
+  else
+  { // => Ajout avant l'enfant before_child
+    enfant.obj.insertBefore( before_child.obj )
+  }
   
   this.modified   = true
   enfant.modified = true

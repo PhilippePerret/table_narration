@@ -5,9 +5,13 @@ Object.defineProperties(String.prototype,{
       /*
        *  La valeur à évaluer. Soit le texte brut (this.toString), soit
        *  l'évaluation de l'expression
+       *  Mais il peut être normal, ici, d'envoyer une valeur string "pure", donc
+       *  on tente de l'évaluer et si ça échoue on considère que c'est un string
+       *  normal.
        */
-      var val ;
-      var val_evaluated = this.eval
+      var val, val_evaluated ;
+      try{ with(APP){val_evaluated = eval( this.toString() )}}
+      catch(err){/* rien à faire */}
       if(val_evaluated != undefined) val = val_evaluated
       else val = this.toString()
       // console.log("val = "+val)

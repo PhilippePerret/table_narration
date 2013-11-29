@@ -1,3 +1,43 @@
+
+/*
+ *  Test qu'une liste {Array} contienne (ou non) un objet qui possède au moins
+ *  les propriétés définies dans +props+.
+ *
+ *  @param  arr     {String} Nom de la variable dans l'application (donc sans "APP")
+ *  @param  props   {Object} Liste des propriétés à comparer (p.e. {id:12, class:'Fiche'})
+ *                  Toutes les propriétés doivent être égales pour que l'objet soit trouvé
+ *  @param  negatif {Boolean} Inverse la condition. Si true, l'objet ne doit pas être trouvé
+ *                  pour entrainer un succès.
+ *
+ *  TODO  Il faudra pouvoir faire '<arr>.should.contain.object.with(<props>)'
+ */
+function ArrayShouldContainObjectWith(arr, props, negatif)
+{
+  if(undefined == negatif) negatif = false ;
+  var i, el, found = false ;
+  var arr_evaluated = eval_in_app( arr )
+  for(i = 0, len = arr_evaluated.length; i < len ; ++i)
+  {
+    el = arr_evaluated[i]
+    if( ElementInArrayHasProperties(el, props) )
+    {
+      found = true
+      break
+    }
+  }
+  var something = LOCALES['object containing'] + (inspect(props)) ;
+  if(found == !negatif) success(arr + (negatif ? LOCALES['doesnt contain'] : LOCALES['contains']) + something);
+  else failure(arr + (negatif ? LOCALES['should not contain'] : LOCALES['should contain']) + something);
+}
+function ElementInArrayHasProperties(el, props)
+{
+  for(var prop in props){
+    if(false == props.hasOwnProperty(prop)) continue ;
+    if( el[prop] != props[prop] ) return false
+  }
+  return true
+}
+
 // Pour obtenir le contenu de la dernière "ligne" (div) du rapport :
 Object.defineProperties(this,{
 	// Retourne le contenu HTML de la dernière ligne de rapport écrite

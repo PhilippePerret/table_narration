@@ -15,7 +15,7 @@ function livre_fiche_classe() {
   my.step_list = [
   "Existence de la classe Fiche et de ses méthodes/propriétés",
   "Fonctionnement des propriétés basiques",
-  "Fonctionnement des méthodes asynchrones",
+  "Fonctionnement des méthodes synchrones",
   "Propriétés spéciales “parent” et “enfants”",
   "Fonctionnement des méthodes `open` et `close`"
   ]
@@ -29,7 +29,7 @@ function livre_fiche_classe() {
     Fiche_Fonctionnement_proprietes_basiques()
     break
     
-  case "Fonctionnement des méthodes asynchrones":
+  case "Fonctionnement des méthodes synchrones":
     Fiche_Fonctionnement_methodes_synchrones()
     break
     
@@ -71,10 +71,12 @@ function Fiche_Classe_et_methodes_principales() {
   
   // Pseudo-propriétés (propriétés complexes)
   var comp_properties = [
-  'jid', 'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
+  'jid', 'dom_id', 'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
   'obj', 'dom_obj', 'top', 'left', 'positionne',
   'create', 'save', 'load', 'build', 'open', 'close', 'delete',
-  'html'
+  'html',
+  'is_book', 'is_chapter', 'is_page', 'is_paragraph',
+  'set_values'
   ]
   L(comp_properties).each(function(prop){'Fiche.prototype'.should.have.property(prop)})
   'ifiche.top'.should.be.equal_to(null, strict = true)
@@ -94,6 +96,7 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   var current_last_id = 0 + APP.FICHES.last_id
   
   APP.instanceFiche = new APP.Fiche()
+  var id = APP.instanceFiche.id
   
   blue("Class de fiche")
   'instanceFiche.class'.should = "Fiche"
@@ -101,6 +104,11 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   'instanceFiche.id'.should_not.be.null
   'instanceFiche.id'.should = current_last_id + 1
   'FICHES.last_id'.should   = current_last_id + 1
+  
+  blue("`dom_id` de la fiche")
+  'instanceFiche.dom_id'.should = "f-" + id ;
+  blue("`jid` de la fiche")
+  'instanceFiche.jid'.should = "fiche#f-" + id
   
   blue("Titre de la fiche")
   'instanceFiche.titre'.should.be.null
@@ -117,8 +125,30 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   APP.instanceFiche.updated_at = maintenant
   'instanceFiche.updated_at'.should = maintenant
   
-  blue("Le type d'une fiche ne doit pas être défini")
+  blue("Le type d'une fiche (Fiche) ne doit pas être défini")
   'instanceFiche.type'.should.be.null
+  
+  blue("Les méthodes `is_<type>` (is_page, etc.)")
+  APP.ibook = new APP.Book()
+  'ibook.is_book'.should.be.true
+  'ibook.is_chapter'.should.be.false
+  'ibook.is_page'.should.be.false
+  'ibook.is_paragraph'.should.be.false
+  APP.ichap = new APP.Chapter()
+  'ichap.is_book'.should.be.false
+  'ichap.is_chapter'.should.be.true
+  'ichap.is_page'.should.be.false
+  'ichap.is_paragraph'.should.be.false
+  APP.ipage = new APP.Page()
+  'ipage.is_book'.should.be.false
+  'ipage.is_chapter'.should.be.false
+  'ipage.is_page'.should.be.true
+  'ipage.is_paragraph'.should.be.false
+  APP.ipara = new APP.Paragraph()
+  'ipara.is_book'.should.be.false
+  'ipara.is_chapter'.should.be.false
+  'ipara.is_page'.should.be.false
+  'ipara.is_paragraph'.should.be.true
   
   blue("Le résumé (null au départ) doit pouvoir être défini")
   'instanceFiche.resume'.should.be.null
@@ -139,9 +169,6 @@ function Fiche_Fonctionnement_methodes_synchrones() {
   APP.ifiche = new APP.Fiche()
   var id = APP.ifiche.id
   
-  blue("Méthode `jid`")
-  'ifiche.jid'.should = ("fiche#"+id)
-    
   blue("Méthode `dispatch`")
   'ifiche.type'.should.be.null
   'ifiche.fausse_prop'.should.be.null
@@ -162,12 +189,15 @@ function Fiche_Fonctionnement_methodes_synchrones() {
   'ifiche.modified'.should.be.true
   'ifiche._modified'.should.be.true
   'Collection.modified'.should.be.true
-  'Collection.modifieds_list'.should.contain( APP.ifiche )
+  ArrayShouldContainObjectWith('Collection.modifieds_list', 
+    {id: APP.ifiche.id, class:'Fiche'})
+  
   APP.ifiche.modified = false // <-- TEST
   'ifiche.modified'.should.be.false
   'ifiche._modified'.should.be.false
   'Collection.modified'.should.be.true
-  'Collection.modifieds_list'.should.contain(APP.ifiche)
+  ArrayShouldContainObjectWith('Collection.modifieds_list', 
+    {id: APP.ifiche.id, class:'Fiche'})
   
   blue("Méthode `create`")
   specs("La méthode create est testée indépendamment")
@@ -182,7 +212,8 @@ function Fiche_Fonctionnement_methodes_synchrones() {
   APP.ipage.delete // <-- TEST
   'ipage.deleted'.should.be.true
   'ipage._modified'.should.be.true
-  'Collection.modifieds_list'.should.contain(APP.ipage)
+  ArrayShouldContainObjectWith('Collection.modifieds_list', 
+    {id: APP.ipage.id, type:'page', class:'Fiche'})
   
   blue("Méthode `remove`")
   specs("La méthode `remove` est testée indépendamment (cf. test livre/fiche/deletion.js)")
@@ -194,17 +225,17 @@ function Fiche_Fonctionnement_methodes_synchrones() {
   APP.ibook = new APP.Book()
   APP.ibook.create
   'ibook.opened'.should.be.true
-  jq('fiche#'+APP.ibook.id).should.have.class("opened")
+  jq(APP.ibook.jid).should.have.class("opened")
   APP.ibook.close // <-- TEST
   'ibook.opened'.should.be.false
-  jq('fiche#'+APP.ibook.id).should_not.have.class("opened")
+  jq(APP.ibook.jid).should_not.have.class("opened")
   
   blue("Méthode `open`")
   specs("La méthode `open` doit permettre d'“ouvrir” la fiche, c'est-à-dire de " +
   "la passer de son état fermé à son état ouvert.")
   APP.ibook.open // <-- TEST
   'ibook.opened'.should.be.true
-  jq('fiche#'+APP.ibook.id).should.have.class("opened")
+  jq(APP.ibook.jid).should.have.class("opened")
   
 }
 
