@@ -1,0 +1,17 @@
+
+/* ---------------------------------------------------------------------
+ *  CHAPTER
+ */
+fiche.chap {
+  background-color :#EEE;
+  color   :black;
+  width   :10em;
+  height  :2em;
+  border-radius :0.1em;
+  opacity :0.5;
+}
+fiche.chap.opened {
+  width   :20em !important;
+  height  :12em;
+  opacity :0.5 !important;
+}

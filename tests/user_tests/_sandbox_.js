@@ -8,26 +8,6 @@
  *
  */
 
-/* === CLASSE BOOK === */
-window.Book = function(data)
-{
-  if(undefined == data) data = {}
-  data.type = 'book'
-  Fiche.call(this, data)
-}
-Book.prototype = Object.create( Fiche.prototype )
-Book.prototype.constructor = Book
-
-/* === CLASSE CHAPTER === */
-window.Chapter = function(data)
-{
-  if(undefined == data) data = {}
-  data.type = 'chap'
-  Fiche.call(this, data)
-}
-Chapter.prototype = Object.create( Fiche.prototype )
-Chapter.prototype.constructor = Chapter
-
 
 /* === PROPRIÉTÉ DE FICHE === */
 Object.defineProperties(Fiche.prototype, {
@@ -40,7 +20,7 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       if(undefined == this._obj){
-        var obj = $('fiche#'+this.id)
+        var obj = $(this.jid)
         obj.length && (this._obj = obj)
       } 
       return this._obj
@@ -105,12 +85,15 @@ Object.defineProperties(Fiche.prototype, {
    *  “Créer la fiche” consiste à :
    *    - mettre la fiche en attente de sauvegarde
    *    - créer son objet sur la table
+   *    - l'ajouter dans FICHES.list
    */
   "create":{
     configurable:true,
     get:function(){
       this.modified = true
       this.build
+      FICHES.list[this.id] = this
+      this.open
       return true
     }
   },
@@ -125,6 +108,8 @@ Object.defineProperties(Fiche.prototype, {
       // On ajoute le code ou on le remplace
       if(this.obj) this.obj.replaceWith( this.html )
       else         $('section#table').append( this.html )
+      // Elle est toujours construite fermée
+      this.close
       // On positionne la fiche
       this.positionne
       // On doit la rendre draggable
@@ -189,7 +174,7 @@ Object.defineProperties(Fiche.prototype, {
   "html_verso":{
     configurable:true,
     get:function(){
-      return  '<verso id="verso-'+this.id+'" class="'+this.type+'">'+
+      return  '<verso id="verso-'+this.id+'" class="'+this.type+'" style="display:none;">'+
               '</verso>'
     }
   },
@@ -206,6 +191,19 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
+   *  Destruction totale d'une fiche
+   *  
+   */
+  "remove":{
+    configurable:true,
+    get:function(){
+      // TODO: Implémenter le traitement complexe (appartenances, etc.)
+      this.obj.remove()
+      this.delete ;
+    }
+  },
+  
+  /*
    *  Suppression d'une fiche
    *  
    */
@@ -213,6 +211,7 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       this.deleted  = true
+      delete FICHES.list[this.id]
       this.modified = true
     }
   }

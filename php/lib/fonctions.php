@@ -1,5 +1,13 @@
 <?php
-function traite_dossier($path, $js_or_css){
+/*
+ * Charge tous les fichiers JS ou CSS
+ *
+ * @param $path       {String} Chemin d'accès au dossier de départ (doit se finir par "/")
+ * @param $js_or_css  {String} 'js' pour les javascripts, 'css' pour les CSS
+ * @param $but        {String} Optionnel, un nom de sous-dossier à passer (p.e. 'required')
+ *                    Ce dossier est appelé directement avec $path pour pouvoir être traité
+ */
+function traite_dossier($path, $js_or_css, $but = null){
   $dos = opendir($path);
   // Les dossiers seront toujours traités après les fichiers (car les objets 
   // sont d'abord définis dans les fichiers)
@@ -10,7 +18,7 @@ function traite_dossier($path, $js_or_css){
   while(false != ($file = readdir($dos))){
     if($file!='.' && $file!='..'){
       if(is_dir($path.$file)){ 
-        if($file == '_extension_objet_plur'){continue;}
+        if($file == $but){continue;}
         array_push($liste_dossiers, $path.$file."/");
       }else if (substr($file, -$len_suffixe) == $suffixe ){ 
 				echo "\t\t";

@@ -1,0 +1,16 @@
+/* ---------------------------------------------------------------------
+ *  PARAGRAPH (FICHE)
+ */
+fiche.para {
+  background-color :#EEE;
+  color   :black;
+  width   :30em;
+  height  :2em;
+  border-radius :0.1em;
+  opacity :0.5;
+}
+fiche.para.opened {
+  width   :30em !important;
+  height  :12em;
+  opacity :0.5 !important;
+}

@@ -730,6 +730,7 @@ const HumanProperties_JQ_Should_Have = {
 			}))
     }
   },
+  "attribute":{value:function(attr, value){return this.attr(attr, value)}},
 	"attr"	:{
 		// @note: si value n'est pas fourni, on veut juste savoir si l'objet
 		// 				possède l'attribut fourni en premier argument.
@@ -760,7 +761,7 @@ const HumanProperties_JQ_Should_Have = {
       // if(undefined != value) result = result && (value == attr_val)
 			return _estime( result, data_estimation_jq(this, {
 				test:'have.attr',
-				sujet:"`"+attr+"`"+LOCALES['de']+"`"+this.jid+"` ",
+				sujet:"Attr `"+attr+"`"+LOCALES['of']+"`"+this.jid+"` ",
 				result:{
 					positif:result_pos,
 					negatif:result_neg

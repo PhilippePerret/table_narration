@@ -10,9 +10,10 @@ function livre_fiche_creation()
               "la construction de sa fiche sur la table de travail."
   
   my.step_list = [
+  ["Préparation du test de création des fiches", FicheCreation_Preparation],
   ["Vérification des méthodes/propriétés complexes utiles", FicheCreation_methodes_utiles],
   ["Construction du code HTML", FicheCreation_code_html_de_la_fiche],
-  "Construction de la fiche sur la table de travail",
+  ["Construction de la fiche sur la table de travail", FicheCreation_Construction_de_la_fiche],
   ["Création de la fiche sur la table de travail", FicheCreation_Creation_de_la_fiche]
   
   ]
@@ -20,20 +21,22 @@ function livre_fiche_creation()
   switch(my.step)
   {
     
-  case "Construction de la fiche sur la table de travail":
-    FicheCreation_Construction_de_la_fiche()
-    break
-    
   default:
     pending("Step '"+my.step+"' should be implanted")
   }
 }
 
-
+function FicheCreation_Preparation() {
+  with(APP)
+  {
+    $('section#table').html('')
+    FICHES.list = {}
+  }
+}
 function FicheCreation_methodes_utiles() {
   APP.ibook = new APP.Book()
   var compprops = [
-  'create', 'build', 'save', 'html'
+  'create', 'build', 'save', 'html', 'html_recto', 'html_verso'
   ]
   L(compprops).each(function(prop){'ibook'.should.have.property(prop)})
 }
@@ -53,24 +56,30 @@ function FicheCreation_code_html_de_la_fiche() {
   'ipage.html'.should.contain(rege)
   'ipage.html'.should.contain(/\<\/verso\>/)
   'ipage.html'.should.contain(/<\/fiche>/)
+  
+  w("Les autres tests sont fait dans le test livre/fiche/display.js")
 }
 function FicheCreation_Construction_de_la_fiche() {
+  
+  if(APP.ichap != undefined)
+  {
+    id_chap = APP.ichap.id
+  }
+  
   switch(my.stop_point)
   {
   case 1:
     APP.ichap = new APP.Chapter()
     var id_chap = APP.ichap.id
-    'ichap'.should.have.property('build')
     APP.ichap.dispatch({
       top:200, left:600, ranged:false
     })
-    if(APP.ichap.obj.length) APP.ichap.obj.remove()
+    if(APP.ichap.obj) APP.ichap.obj.remove()
   
     APP.ichap.build // <-- TEST
-    my.wait.for( 10 ).and( NEXT_POINT )
+    my.wait.for( 1, "Construction (build) de la fiche…" ).and( NEXT_POINT )
     break
   case 2:
-    var id_chap = APP.ichap.id
     var ofiche = jq('fiche#'+id_chap)
     ofiche.should.exist
     ofiche.should.be.visible
@@ -88,17 +97,19 @@ function FicheCreation_Construction_de_la_fiche() {
 function FicheCreation_Creation_de_la_fiche() {
   APP.ichap = new APP.Chapter()
   var id_chap = APP.ichap.id
-  'ichap'.should.have.property('create')
   APP.ichap.dispatch({
     top:100, left:400, ranged:false
   })
-  if(APP.ichap.obj.length) APP.ichap.obj.remove()
+  if(APP.ichap.obj) APP.ichap.obj.remove()
   
-  APP.ichap.create // <-- TEST
+  APP.ichap.create ; // <-- TEST
   
+  ('FICHES.list['+APP.ichap.id+']').should.be.defined ;
+  ('FICHES.list['+APP.ichap.id+'].class').should = "Fiche" ;
+  ('FICHES.list['+APP.ichap.id+'].type').should = "chap" ;
   var ofiche = jq('fiche#'+id_chap)
   ofiche.should.be.visible
   ofiche.should.be.at( 400, 100)
-  ofiche.should.have.class('opened')
   'ichap.opened'.should.be.true
+  ofiche.should.have.class('opened')
 }

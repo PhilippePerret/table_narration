@@ -53,6 +53,14 @@ Object.defineProperties(Fiche.prototype, {
     set:function(ty){ this._type = ty }
   },
   
+  /* Définit et retourne le JID de la fiche */
+  "jid":{
+    get:function(){
+      if(this._jid == undefined) this._jid = "fiche#"+this.id ;
+      return this._jid
+    }
+  },
+
   "titre":{
     get:function(){return this._titre || null },
     set:function(titre){ this._titre = titre}

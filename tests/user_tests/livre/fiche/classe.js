@@ -30,7 +30,7 @@ function livre_fiche_classe() {
     break
     
   case "Fonctionnement des méthodes asynchrones":
-    Fiche_Fonctionnement_methodes_asynchrones()
+    Fiche_Fonctionnement_methodes_synchrones()
     break
     
     
@@ -71,7 +71,7 @@ function Fiche_Classe_et_methodes_principales() {
   
   // Pseudo-propriétés (propriétés complexes)
   var comp_properties = [
-  'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
+  'jid', 'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
   'obj', 'dom_obj', 'top', 'left', 'positionne',
   'create', 'save', 'load', 'build', 'open', 'close', 'delete',
   'html'
@@ -117,7 +117,7 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   APP.instanceFiche.updated_at = maintenant
   'instanceFiche.updated_at'.should = maintenant
   
-  blue("Le typep d'une fiche ne doit pas être défini")
+  blue("Le type d'une fiche ne doit pas être défini")
   'instanceFiche.type'.should.be.null
   
   blue("Le résumé (null au départ) doit pouvoir être défini")
@@ -134,16 +134,22 @@ function Fiche_Fonctionnement_proprietes_basiques() {
   pending("Test de la méthode-complexe `dom_obj`")
 }
 
-function Fiche_Fonctionnement_methodes_asynchrones() {
-  
-  blue("Méthode `dispatch`")
+function Fiche_Fonctionnement_methodes_synchrones() {
+
   APP.ifiche = new APP.Fiche()
+  var id = APP.ifiche.id
+  
+  blue("Méthode `jid`")
+  'ifiche.jid'.should = ("fiche#"+id)
+    
+  blue("Méthode `dispatch`")
   'ifiche.type'.should.be.null
   'ifiche.fausse_prop'.should.be.null
   w("Je dispatche")
   APP.ifiche.dispatch({type:"para", fausse_prop:12})
   'ifiche.type'.should = "para"
   'ifiche.fausse_prop'.should = 12
+  
   
   blue("Méthode `modified`")
   APP.ifiche.modified           = false
@@ -177,6 +183,9 @@ function Fiche_Fonctionnement_methodes_asynchrones() {
   'ipage.deleted'.should.be.true
   'ipage._modified'.should.be.true
   'Collection.modifieds_list'.should.contain(APP.ipage)
+  
+  blue("Méthode `remove`")
+  specs("La méthode `remove` est testée indépendamment (cf. test livre/fiche/deletion.js)")
   
   blue("Méthode `close`")
   specs("La méthode `close` doit permettre de “fermer” la fiche, c'est-à-dire de "+

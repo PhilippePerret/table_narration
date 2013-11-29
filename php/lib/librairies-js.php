@@ -14,5 +14,6 @@
     }
   }
   
-  traite_dossier('./js/', 'js')
+  traite_dossier('./js/required/', 'js');
+  traite_dossier('./js/', 'js', 'required')
 ?>

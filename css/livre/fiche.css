@@ -3,41 +3,4 @@ fiche {
   display   : block;
   position  : absolute;
 }
-
-/* ---------------------------------------------------------------------
- *  LIVRE (BOOK)
- */
-fiche.book {
-  background-color :#007;
-  color   :white;
-  width   :10em;
-  height  :2em;
-  border-radius :0.3em;
-  opacity :0.5;
-}
-fiche.book.opened {
-  width   : 20em !important;
-  height  : 10em;
-  opacity :0.5 !important;
-}
-
-/* ---------------------------------------------------------------------
- *  CHAPITRE (CHAPTER)
- */
-fiche.chap {
-  
-}
-
-/* ---------------------------------------------------------------------
- *  PAGE
- */
-fiche.page {
-  
-}
-
-/* ---------------------------------------------------------------------
- *  PARAGRAPHE
- */
-fiche.para {
-  
-}
+fiche:hover {opacity:1 !important;}
