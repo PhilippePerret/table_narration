@@ -50,7 +50,6 @@ function FicheCreation_code_html_de_la_fiche() {
   'ipage.html'.should_not.be.null
   'ipage.html'.should.contain('<fiche id="f-'+APP.ipage.id+'"')
   'ipage.html'.should.contain('class="fiche page')
-  'ipage.html'.should.contain('<div class="poignee"></div>')
   'ipage.html'.should.contain('<recto id="'+APP.ipage.dom_id+'-recto"')
   'ipage.html'.should.contain('</recto>')
   'ipage.html'.should.contain('<verso id="'+APP.ipage.dom_id+'-verso"')

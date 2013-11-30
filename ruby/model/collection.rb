@@ -1,9 +1,26 @@
 class Collection
   class << self
     
+    # Return la liste ({Array}) des fiches non rangées
+    # Chaque élément est un {String} "<id>:<type>"
+    def non_rangeds
+      return [] unless File.exists? path_liste_non_ranged
+      File.read(path_liste_non_ranged).split("\n").reject{|el| el == ""}
+    end
+    # Enregistre la nouvelle liste des non rangées
+    def save_non_rangeds liste
+      File.unlink path_liste_non_ranged if File.exists? path_liste_non_ranged
+      liste.uniq!
+      if liste.length > 0
+        File.open(path_liste_non_ranged, 'wb'){|f| f.write liste.join("\n") }
+      end
+    end
     
     def folder
       @folder ||= File.join('.', 'collection', mode_test? ? 'test' : 'current')
+    end
+    def path_liste_non_ranged
+      @path_liste_non_ranged ||= File.join(folder_listes, 'non_ranged')
     end
     def folder_listes
       @folder_listes ||= File.join(folder, 'liste')

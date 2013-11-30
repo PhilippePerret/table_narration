@@ -3,6 +3,7 @@ window.UTest = {
 	// Méthode propre à l'application qui sera appelée avant les tests
 	before_test:function(){
 		window.LOCALE = APP.LOCALE
+    APP.Collection.stop_automatic_saving
 	},
 	// Méthode propre à l'application qui sera appelée après les tests
 	after_test:function(){

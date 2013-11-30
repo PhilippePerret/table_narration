@@ -11,9 +11,6 @@ fiche.para.opened {
   width   :30em !important;
 }
 
-/* Pas de poignée pour le paragraphe (on le déplace par la portion droite) */
-fiche.para > div.poignee { display: none; }
-
 /*
  * Champ de saisie du texte du paragraphe
  */

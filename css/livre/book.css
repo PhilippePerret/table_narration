@@ -5,7 +5,7 @@
 fiche.book {
   background-color :#007;
   color   :white;
-  width   :10em;
+  width   :14em;
   border-radius :0.3em;
   opacity :0.5;
 }
@@ -13,7 +13,11 @@ fiche.book.opened {
   width   : 20em !important;
 }
 
-fiche.book > recto > input.titre {
+fiche.book > recto > input.titre,
+fiche.book > recto > input.titre.focused {
+  background-color: transparent !important;
+  color: white !important;
+  text-align:center;
 }
 fiche.book > recto > input.real_titre {
   display:none;

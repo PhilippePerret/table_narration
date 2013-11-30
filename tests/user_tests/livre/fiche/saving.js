@@ -97,6 +97,7 @@ function FicheSave_Methode_data() {
     deleted:false,
     titre:titre,
     opened:true, ranged:false,
+    left:page.left, top:page.top,
     parent:{id:chap.id, type:'chap'},
     enfants:[
       {id:para1.id, type:'para'}, {id:para2.id, type:'para'}

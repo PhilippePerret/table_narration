@@ -7,7 +7,9 @@ function Collection_object()
   
   my.step_list = [
     "Existence des propriétés et méthodes de Collection",
-    "Test des fonctions synchrones"
+    "Test des fonctions synchrones",
+    ["Test de la méthode `dispatch`", Collection_Method_dispatch],
+    "Fin"
   ]
 
   switch(my.step)
@@ -20,6 +22,9 @@ function Collection_object()
     Collection_Test_fonctions_synchrones()
     break
     
+  case "Fin":
+    break
+    
   default:
     pending("Step '"+my.step+"' should be implanted")
   }
@@ -27,6 +32,7 @@ function Collection_object()
 
 
 function Collection_Existence_properties_and_methods() {
+  
   // Propriétés
   var props = [
     'modified'
@@ -41,7 +47,7 @@ function Collection_Existence_properties_and_methods() {
 
   // Méthodes
   var methods = [
-  'add_modified'
+  'add_modified', 'dispatch'
   ]
   L(methods).each(function(method){ 'Collection'.should.respond_to( method )})
 }
@@ -65,5 +71,31 @@ function Collection_Test_fonctions_synchrones() {
   'Collection.modifieds_list.length'.should = 2
   ArrayShouldContainObjectWith(
     'Collection.modifieds_list', {id: APP.ibook2.id, type:'book', class:'Fiche'})
+  
+}
+
+function Collection_Method_dispatch() {
+  switch(my.stop_point)
+  {
+  case 1:
+    specs("La méthode `Collection.dispatch` permet de distribuer les données remontées "+
+    "par la requête Ajax `collection/load`.")
+
+    w("On initialise les fiches pour repartir à zéro")
+    FICHES.init_all
+    'FICHES.length' .should = 0
+    'FICHES.list'   .should = {}
+
+    Collection.load // <-- TEST
+    return my.wait.while(function(){return Collection.loading == true}).and(NEXT_POINT)
+  case 2:
+  
+    my.wait.for(1).and(NEXT_POINT)
+    break
+  case 3:
+  
+    my.wait.for(0)
+  }
+  
   
 }

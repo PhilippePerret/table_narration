@@ -62,7 +62,6 @@ function FicheDisplay_of_regular_fiche() {
   var dom_id = APP.ipage.dom_id
   
   jq(jid).should.be.visible
-  jq(jid + ' > div.poignee').should.be.visible
   jq(jid + ' > recto').should.be.visible
   jq(jid + ' > verso').should.exist
   jq(jid + ' > verso').should_not.be.visible

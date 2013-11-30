@@ -149,6 +149,89 @@ window.FICHES = {
   
   
   /*
+   *  Dispatch des fiches
+   *
+   *  NOTES
+   *  -----
+   *    * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
+   *      des parents ou des enfants. Les fiches sont instanciées à leur première
+   *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
+   *      puis elles sont ensuites "remplies" avec les données si la fiche est
+   *      traitées plus tard ici.
+   *
+   *  @param  data   {Array} Liste des fiches remontées par Collection.load.data  
+   */
+  dispatch:function(data)
+  {
+    var i, len, dfiche, ifiche ;
+    for(i=0, len = data.length; i<len; ++i)
+    {
+      ifiche = this.fiche_from( data[i] )
+      ifiche.create
+      ifiche.modified = false 
+        // au cas où (mais est-ce suffisant ? car si la fiche a été marquée
+        // modifiée, elle se trouvera dans la liste des fiches à sauver)
+      if(ifiche.id > this.last_id) this.last_id = ifiche.id
+    }
+  },
+  
+  /*
+   *  Retourne la fiche (ou LES fiches) correspondant à l'objet
+   *  +obj+ envoyé, contenant :
+   *    - soit 'id' et 'type'
+   *    - soit une liste d'objets contenant 'id' et 'type'
+   *  La méthode crée les fiches si nécessaire, en fonction de leur type
+   *  ou renvoie les fiches déjà créées.
+   *  
+   */
+  fiche:function(obj)
+  {
+    var i ;
+    var is_list = 'array' == exact_typeof(obj) ;
+    if(is_list)
+    {
+      var list = [] ;
+      for(i=0, len = obj.length; i<len; ++i)
+      {
+        list.push( this.fiche_from( obj[i] ))
+      }
+      return list
+    }
+    else
+    {
+      return this.fiche_from(obj)
+    }
+  },
+  // Identique à la précédente, mais ne reçoit qu'un objet contenant
+  // au moins 'id' et 'type'
+  // Retourne la fiche correspondante ou l'instance créée
+  // @note: Les +data+ envoyées sont entièrement dispatchées, même si
+  // la fiche existe déjà.
+  fiche_from:function(data)
+  {
+    if(undefined != this.list[data.id]){ 
+      var ifiche = this.list[data.id]
+      ifiche.dispatch( data ) // au cas où d'autres données sont fournies
+      return ifiche
+    }
+    else
+    { // => il faut créer une instance
+      return this.create_instance_fiche_of_type(data)
+    }
+  },
+  // @data  Peut contenir 'id' et 'type' au minimum
+  create_instance_fiche_of_type:function(data)
+  {
+    switch(data.type)
+    {
+    case 'book' : return new Book(data);      break;
+    case 'chap' : return new Chapter(data);   break;
+    case 'page' : return new Page(data);      break;
+    case 'para' : return new Paragraph(data); break;
+    }
+  },
+  
+  /*
    *  Suppression d'une fiche de la sélection
    *  
    *  @param  ifiche    Instance de la fiche à retirer de la sélection

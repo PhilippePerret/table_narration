@@ -10,9 +10,20 @@ function livre_FICHES_object()
   my.step_list = [
   ["Existence des propriétés et méthodes", FICHES_Methodes_et_properties],
   ["Test de la méthode `init_all`", FICHES_Test_init_all],
-  ["Test des méthodes `add` et `remove`", FICHES_Test_add_et_remove_fiche]
+  ["Test des méthodes `add` et `remove`", FICHES_Test_add_et_remove_fiche],
+  ["Test de la méthode `dispatch`", FICHES_Test_method_dispatch],
+  ["Test de la méthode `fiche`", FICHES_Test_method_fiche],
+  "Fin"
   ]
 
+  switch(my.step)
+  {
+  case "Fin":
+    break
+  default:
+    pending("Le test “/var/folders/v6/6wr9_2s90_1428f45_7n6fym0000gn/T/TextMate_snippet_command.xEP6cF: line 4: +my.step+: command not found” doit être implémenté")
+  }
+  
 }
 
 function FICHES_Methodes_et_properties() {
@@ -21,7 +32,7 @@ function FICHES_Methodes_et_properties() {
   ]
   L(props).each(function(prop){ 'FICHES'.should.have.property(prop)})
   var methods = [
-  'add_selected', 'remove_selected', 'add'
+  'add_selected', 'remove_selected', 'add', 'dispatch'
   ]
   L(methods).each(function(method){ 'FICHES'.should.respond_to(method)})
   
@@ -86,4 +97,40 @@ function FICHES_Test_add_et_remove_fiche() {
   
   'FICHES.length' .should = 0
   'FICHES.list'   .should = {}
+}
+
+function FICHES_Test_method_dispatch() {
+  specs("La méthode `dispatch` permet de dispatcher les fiches (i.e. de les"+
+  " créer) lorsqu'elles sont remontées par ajax.")
+  APP.FICHES.init_all
+  'FICHES.length'.should = 0
+  'FICHES.last_id'.should = -1
+  'FICHES.list'.should = {}
+  
+  w("J'envoie à la méthode des fiches artificielles")
+  var data = [
+  {id:"12", type:'book', titre:"Un titre de livre", opened:false},
+  {id:"16", type:'page', titre:"La page d'un autre livre", opened:false,
+  enfants:[{id:"1", type:"para"}]},
+  {id:"1", type:'para', texte:"Le paragraphe a un texte", ranged:true, 
+    parent:{id:16, type:'page'}}
+  ]
+  
+  APP.FICHES.dispatch(data) // <-- TEST
+  
+  'FICHES.last_id'.should = 16
+  'FICHES.length'.should = data.length
+  // On vérifie pour chaque fiche
+  L([12, 16, 1]).each(function(id){
+    ("FICHES.list["+id+"]").should.be.defined
+    jq(APP.FICHES.list[id].jid).should.exist
+  })
+}
+
+function FICHES_Test_method_fiche() {
+  specs("La méthode `FICHES.fiche` doit permettre de retourner une instance "+
+  "ou des instance de Fiche en fonction d'un object contenant au moins 'id' "+
+  "et 'type'. Elle crée la fiche si nécessaire."+
+  "\nLa méthode peut recevoir une liste Array d'objets.")
+  pending("Implémenter test de `FICHES.fiche`")
 }

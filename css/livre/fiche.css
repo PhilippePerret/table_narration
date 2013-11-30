@@ -16,6 +16,9 @@ fiche > verso { display: block; }
 fiche > recto > div.items {
   display     :none;
 }
+fiche.opened > recto > div.items {
+  display     :block;
+}
 
 fiche > recto > input.titre {
   display     : block;
@@ -25,13 +28,8 @@ fiche > recto > input.titre {
   border      : 1px solid transparent;
 }
 
-fiche > div.poignee {
-  height:5px;
-}
-fiche.opened > div.poignee { height: 12px; }
-
 /* Fiche sélectionnée */
 fiche.selected { 
-  border-color: blue ; 
+  border-color: blue !important; 
   opacity: 1 !important;
 }
