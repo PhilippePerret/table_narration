@@ -28,6 +28,8 @@ window.Fiche = function(data)
   this.opened     = true
   this.ranged     = false
   this.selected   = false
+  this.built      = false  // mis à true quand la fiche est construite
+  this.retourned  = false
   
   if(undefined == data) data = {}
   
@@ -79,6 +81,13 @@ Object.defineProperties(Fiche.prototype, {
       return this._dom_id
     }
   },
+  /* Recto de la fiche */
+  "recto_jid":{get:function(){return 'recto#'+this.dom_id+'-recto'}},
+  "recto":{get:function(){ return $(this.recto_jid) }},
+  
+  /* Verso de la fiche */
+  "verso_jid":{get:function(){ return 'verso#'+this.dom_id+'-verso'}},
+  "verso":{get:function(){ return $(this.verso_jid) }},
   
   /* Champ de saisie du titre */
   "titre_jid":{get:function(){return 'input#'+this.dom_id+'-titre'}},
@@ -98,6 +107,187 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
+  
+  /*
+   *  Définit si nécessaire l'objet jQuery de la fiche et le retourne
+   *  
+   */
+  "obj":{
+    get:function(){
+      if(undefined == this._obj){
+        var obj = $(this.jid)
+        obj.length && (this._obj = obj)
+      } 
+      return this._obj
+    }
+  },
+  
+  /* Retourne le DOM élément de la fiche */
+  "dom_obj":{
+    get:function(){
+      if(undefined == this._dom_obj) this._dom_obj = this.obj[0]
+      return this._dom_obj
+    }
+  },
+    
+  /*
+   *  Positionne la fiche sur le table en fonction de :
+   *    - son état ranged ou non
+   *    - ses top / left
+   */
+  "positionne":{
+    get:function(){
+      if( this.ranged || this.top == null || !this.obj ) return
+      this.obj.css({'top':this.top+"px", 'left':this.left+"px"})
+    }
+  },
+  
+  /*
+   *  Création d'une nouvelle fiche
+   *  
+   *  “Créer la fiche” consiste à :
+   *    - mettre la fiche en attente de sauvegarde
+   *    - créer son objet sur la table
+   */
+  "create":{
+    get:function(){
+      this.modified = true
+      this.build
+      this.open
+      this.set_values
+      return true
+    }
+  },
+  
+  /*
+   *  Construction de la fiche sur la table
+   *  
+   */
+  "build":{
+    get:function(){
+      // On ajoute le code ou on le remplace
+      if(this.obj) this.obj.replaceWith( this.html )
+      else         $('section#table').append( this.html )
+      // Elle est toujours construite fermée
+      this.close
+      // On positionne la fiche
+      this.positionne
+      // On place les observers
+      this.observe
+      // On marque la fiche construite
+      this.built = true
+      return true
+    }
+  },
+  
+  /*
+   *  Place tous les observers sur la fiche
+   *  
+   */
+  "observe":{
+    get:function(){
+      // On doit la rendre draggable
+      this.obj.draggable({containment:'parent'})
+      // Le click sur la fiche doit activer sa sélection
+      this.obj.bind('click', $.proxy(this.toggle_select, this))
+      if(this.is_paragraph)
+      {
+        // La modification du texte du paragraphe doit provoquer son
+        // actualisation
+        this.input_texte[0].onchange = $.proxy(this.onchange_texte, this)
+      }
+      else
+      {
+        // La modification du titre doit entrainer son actualisation
+        // this.input_titre.bind('onchange', $.proxy(this.onchange_titre, this))
+        this.input_titre[0].onchange = $.proxy(this.onchange_titre, this)
+        
+        if(this.is_book)
+        {
+          // La modification du titre réel doit entrainer son update
+          this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
+        }
+      }
+      // Tous focus/blur dans les champs d'édition doivent entraîner la
+      // gestion propre des touches clavier
+      var l = ['input[type="text"]', 'textarea']
+      for(var i in l)
+      {
+        this.obj.find(l[i]).bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+        this.obj.find(l[i]).bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      }
+      return true
+    }
+  },
+    
+  /*
+   *  Ouvre la fiche
+   *  
+   */
+  "open":{
+    get:function(){
+      this.obj.addClass('opened')
+      this.opened = true
+    }
+  },
+  /*
+   *  Ferme la fiche
+   *  
+   */
+  "close":{
+    get:function(){
+      this.obj.removeClass('opened')
+      this.opened = false
+    }  
+  },
+  
+  /*
+   *  Met les valeurs de la fiche dans la fiche DOM
+   *  
+   */
+  "set_values":{
+    get:function(){
+      this.input_titre.val(this.titre || "")
+      if(this.is_book) this.input_real_titre.val(this.real_titre || "")
+      if(this.is_paragraph) this.input_texte.val(this.texte || "")
+      return true
+    }
+  },
+  
+  /*
+   *  ---------------------------------------------------------------------
+   *    Changement d'état
+   *  
+   */
+  /* Sélection et désélection de la fiche 
+   *
+   * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
+   *              En fonction de la pression ou non de la touche majuscule le comportement
+   *              et différent.
+   */
+  "toggle_select":{
+    value:function(evt){
+      var with_maj = (evt.shiftKey == true)
+      // Si la fiche est sélectionnée et que la touche majuscule est
+      // pressée, il faut déselectionner la fiche
+      if(this.selected){ if(with_maj) this.deselect }
+      else this.select
+    }
+  },
+  "select":{
+    get:function(){
+      FICHES.add_selected( this )
+      this.selected = true
+      if(this.built) this.obj.addClass('selected')
+    }
+  },
+  "deselect":{
+    get:function(){
+      FICHES.remove_selected( this )
+      this.selected = false
+      if(this.built) this.obj.removeClass('selected')
+    }
+  },
   
   "is_book"       :{get:function(){ return this.type == 'book'}},
   "is_chapter"    :{get:function(){ return this.type == 'chap'}},
@@ -214,6 +404,22 @@ Fiche.prototype.add_child = function(enfant, before_child)
   this.modified   = true
   enfant.modified = true
   
+}
+
+/*
+ *  Méthode appelée quand on change le titre de la fiche
+ *  
+ */
+Fiche.prototype.onchange_titre = function(evt)
+{this.titre = this.input_titre.val()}
+
+/*
+ *  Méthode appelée quand on change le texte d'un paragraphe
+ *  
+ */
+Fiche.prototype.onchange_texte = function(evt)
+{
+  this.texte = this.input_texte.val()
 }
 
 Fiche.prototype.dispatch = function(data){ Data.dispatch(this, data) }

@@ -5,17 +5,33 @@ fiche {
   font-family : "Times New Roman";
   font-size   : 14pt;
   padding     : 0 4px;
+  weight      : auto;
+  border      : 1px solid transparent;
 }
 fiche:hover {opacity:1 !important;}
+
+fiche > recto { display: block; }
+fiche > verso { display: block; }
+
+fiche > recto > div.items {
+  display     :none;
+}
 
 fiche > recto > input.titre {
   display     : block;
   width       : 99%;
   font-family : inherit;
   font-size   : inherit;
+  border      : 1px solid transparent;
 }
 
 fiche > div.poignee {
   height:5px;
 }
 fiche.opened > div.poignee { height: 12px; }
+
+/* Fiche sélectionnée */
+fiche.selected { 
+  border-color: blue ; 
+  opacity: 1 !important;
+}

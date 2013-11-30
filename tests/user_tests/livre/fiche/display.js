@@ -73,10 +73,14 @@ function FicheDisplay_of_regular_fiche() {
   inpTitre.should.be.visible
   inpTitre.should.have.attribute('id', dom_id+'-titre')
   inpTitre.should.contain(titre)
-  w("Les items")
+  w("Les items (cachés par défaut, si la fiche n'est pas ouverte)")
   var divItems = jq(jid + ' > recto > div.items')
-  divItems.should.be.visible
+  divItems.should.exist
+  divItems.should_not.be.visible
   divItems.should.be.empty
+  w("J'ouvre la fiche pour voir si ses éléments vont se révéler")
+  APP.ipage.open // <-- TEST
+  divItems.should.be.visible
   
   blue("Test de la présence des éléments du verso")
 }

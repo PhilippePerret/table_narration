@@ -5,12 +5,22 @@ fiche.para {
   background-color :#EEE;
   color   :black;
   width   :30em;
-  height  :2em;
-  border-radius :0.1em;
   opacity :0.5;
 }
 fiche.para.opened {
   width   :30em !important;
-  height  :12em;
-  opacity :0.5 !important;
+}
+
+/* Pas de poignée pour le paragraphe (on le déplace par la portion droite) */
+fiche.para > div.poignee { display: none; }
+
+/*
+ * Champ de saisie du texte du paragraphe
+ */
+fiche.para > recto > textarea.texte {
+  font-family :inherit;
+  font-size   :inherit;
+  width       :98%;
+  margin-left :1%;
+  border      :none;
 }

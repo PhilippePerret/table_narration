@@ -35,7 +35,7 @@ function FICHES_Test_init_all() {
   w("On crée des fiches qu'on dépose sur la table")
   APP.FICHES.last_id = -1
   APP.FICHES.list = {}
-  APP.FICHES.selecteds = null
+  APP.FICHES.selecteds = {}
   APP.FICHES.current = null
   // Préparation
   APP.ibook = new APP.Book(); APP.ibook.create;
@@ -63,7 +63,7 @@ function FICHES_Test_init_all() {
   'FICHES.list'       .should = {}
   'FICHES.length'     .should = 0
   'FICHES.current'    .should.be.null
-  'FICHES.selecteds'  .should.be.null
+  'FICHES.selecteds'  .should = {}
 
 }
 

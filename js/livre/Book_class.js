@@ -29,3 +29,9 @@ Object.defineProperties(Book.prototype,{
   }
   
 })
+
+/* Méthode appelée au changement de real titre du livre */
+Book.prototype.onchange_real_titre = function(evt)
+{
+  this.real_titre = this.input_real_titre.val()
+}

@@ -6,17 +6,19 @@ fiche.book {
   background-color :#007;
   color   :white;
   width   :10em;
-  height  :2em;
   border-radius :0.3em;
   opacity :0.5;
 }
 fiche.book.opened {
   width   : 20em !important;
-  height  : auto !important;
 }
 
 fiche.book > recto > input.titre {
 }
 fiche.book > recto > input.real_titre {
-  display:block;
+  display:none;
 }
+
+/* Éléments invisibles quand la fiche est fermée */
+fiche.book.open > recto > input.real_titre { display: block ;}
+fiche.book.open > recto > div.items { display: block;}

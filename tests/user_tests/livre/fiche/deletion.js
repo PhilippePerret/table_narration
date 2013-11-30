@@ -14,17 +14,13 @@ function livre_fiche_deletion()
   
   my.step_list = [
   ["Méthodes et propriétés utiles à la destruction d'une fiche", FicheDeletion_Methodes_et_proprietes_utiles],
-  "Destruction simple d'une fiche (sans appartenance)",
+  ["Destruction simple d'une fiche (sans appartenance)",FicheDeletion_Destruction_fiche_simple],
   "Destruction d'une fiche avec appartenance",
   "Destruction d'un fiche non rangée (donc avec un clone dans le parent)"
   ]
 
   switch(my.step)
   {
-  case "Destruction simple d'une fiche (sans appartenance)":
-    FicheDeletion_Destruction_fiche_simple()
-    break
-    
   case "Destruction d'une fiche avec appartenance":
     FicheDeletion_Fiche_avec_appartenance()
     break
@@ -56,7 +52,7 @@ function FicheDeletion_Destruction_fiche_simple() {
     ('FICHES.list['+APP.ipara.id+'].class') .should = "Fiche" ;
     ('FICHES.list['+APP.ipara.id+'].type')  .should = "para"
     
-    my.nombre_fiches = parseInt(FICHES.length, 10)
+    my.nombre_fiches = parseInt(APP.FICHES.length, 10)
     
     'ipara.obj'.should.exist
     jq(APP.ipara.jid).should.be.visible

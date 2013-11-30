@@ -137,7 +137,9 @@ Object.defineProperties(_jq.prototype, {
   },
   // Pour simuler un "onchange" sur l'élément
   "onchange":{get:function(){
-    if('function' == typeof this.obj_dom.onchange) this.obj_dom.onchange()
+    if('function' == typeof this.obj_dom.onchange){ 
+      this.obj_dom.onchange()
+    }
   }
   }
 })

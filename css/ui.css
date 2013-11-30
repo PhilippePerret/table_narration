@@ -8,3 +8,11 @@ section#table {
   height    : 30em;
   border    : 1px dashed green;
 }
+
+textarea {resize:none;}
+
+input[type="text"].focused,
+textarea.focused
+{
+  background-color:#EFE;
+}
