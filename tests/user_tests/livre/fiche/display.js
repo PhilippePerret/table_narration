@@ -16,7 +16,8 @@ function livre_fiche_display()
   ["Test des éléments propres à un chapitre",             FicheDisplay_of_a_chapitre],
   ["Test des éléments propres à une page",                FicheDisplay_of_a_page],
   ["Test des éléments propres à un paragraphe",           FicheDisplay_of_an_paragraph],
-  ["Test de la méthode `set_values`",                     FicheDisplay_Method_set_values]
+  ["Test de la méthode `set_values`",                     FicheDisplay_Method_set_values],
+  "Fin"
   ]
 
 }
@@ -81,8 +82,43 @@ function FicheDisplay_of_regular_fiche() {
 }
 
 function FicheDisplay_of_a_book() {
-  pending("Implémenter le test d'un livre")
-  // TODO Il doit avoir un champ "titre réel" (-> real_titre)
+  with(APP){ $('section#table').html('') }
+  // Propriétés complexes et simples
+  var props = [
+  'real_titre', 'real_titre_jid', 'input_real_titre'
+  ]
+  L(props).each(function(prop){ 'Book.prototype'.should.have.property( prop ) })
+
+  APP.ibook = new APP.Book()
+  APP.ibook.create
+  var id = APP.ibook.id
+  
+  blue("Le `real_titre` du livre")
+  'ibook.real_titre_jid'.should = 'input#'+APP.ibook.dom_id+'-real_titre'
+  'Book.prototype'.should.have.property('input_real_titre')
+  'ibook.input_real_titre'.should.be.defined
+  'ibook.input_real_titre'.should.have.property('jquery')
+  inpRealTitre = jq(APP.ibook.real_titre_jid)
+  inpRealTitre.should.be.visible
+  inpRealTitre.should.have.class('real_titre')
+  inpRealTitre.should.contain("")
+  var titre_reel = "Un titre "+Time.now()+" bien réel"
+  APP.ibook.real_titre = titre_reel
+  inpRealTitre.should.contain(titre_reel)
+  
+  pending("Poursuivre l'affichage propre d'un Book")
+  
+  blue("Ouvert, le livre doit afficher ses chapitres et les titres des pages")
+  
+  blue("Fermé, le livre ne doit afficher que son titre de référence")
+  APP.ibook.close
+  jq(APP.ibook.titre_jid).should.be.visible
+  jq(APP.ibook.real_titre_jid).should_not.be.visible
+  jq(APP.ibook.items_jid).should_not.be.visible
+  APP.ibook.open
+  jq(APP.ibook.titre_jid).should.be.visible
+  jq(APP.ibook.real_titre_jid).should.be.visible
+  jq(APP.ibook.items_jid).should.be.visible
 }
 
 function FicheDisplay_of_a_chapitre() {
@@ -93,8 +129,30 @@ function FicheDisplay_of_a_page() {
   pending("Implémenter le test de l'affichage d'une page")
 }
 function FicheDisplay_of_an_paragraph() {
-  pending("Implémenter le test de l'affichage d'un paragraphe")
-  // TODO Le paragraphe ne doit pas avoir de titre
+  with(APP){ $('section#table').html('') }
+  // Propriétés complexes et simples
+  var props = [
+  'texte', 'texte_jid', 'input_texte'
+  ]
+  L(props).each(function(prop){ 'Paragraph.prototype'.should.have.property( prop ) })
+  
+  APP.ipara = new APP.Paragraph()
+  APP.ipara.create
+  
+  blue("Le `texte` du paragraphe")
+  'ipara.texte_jid'.should = "textarea#"+APP.ipara.dom_id+'-texte'
+  'ipara.input_texte'.should.be.defined
+  'ipara.input_texte'.should.have.property('jquery')
+  var inpTexte = jq(APP.ipara.texte_jid)
+  inpTexte.should.be.visible
+  inpTexte.should.have.class('texte')
+  inpTexte.should.contain( "" )
+  var txt = "Un texte à "+Time.now()+" pour mettre dans le paragraphe."
+  APP.ipara.texte = txt // <-- TEST
+  inpTexte.should.contain( txt )
+  
+  pending("Poursuivre le test de l'affichage d'un paragraphe")
+  // TODO Le paragraphe doit se servir du titre comme d'un indice
 }
 
 function FicheDisplay_Method_set_values() {

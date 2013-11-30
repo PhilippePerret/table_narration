@@ -27,15 +27,23 @@ window.Fiche = function(data)
   this.deleted    = false
   this.opened     = true
   this.ranged     = false
+  this.selected   = false
   
-  this.dispatch(data)
+  if(undefined == data) data = {}
   
   // Nouvelle fiche ?
-  if(this.id == null) 
+  // @note: Il faut le faire avant que ne soient dispatchées les valeurs,
+  // car la définition de ces valeurs fait appel à d'autres méthodes qui
+  // utilisent l'identifiant (par exemple les méthodes de type `_jid')
+  if(undefined == data.id || data.id == null) 
   {
     this.created_at = Time.now()
     this.id = ++ FICHES.last_id
   }
+  
+  this.dispatch( data )
+  
+  FICHES.add( this )
 }
 
 Object.defineProperties(Fiche.prototype, {
@@ -53,6 +61,10 @@ Object.defineProperties(Fiche.prototype, {
     set:function(ty){ this._type = ty }
   },
   
+  /*
+   *  Raccourcis pour obtenir les éléments DOM de la fiche
+   *    
+   */
   /* Définit et retourne le JID de la fiche */
   "jid":{
     get:function(){
@@ -60,9 +72,6 @@ Object.defineProperties(Fiche.prototype, {
       return this._jid
     }
   },
-  "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
-  "titre_jid":{get:function(){return 'input#'+this.dom_id+'-titre'}},
-  
   /* Définit et retourne le `dom_id' qui va permettre de construire l'id des éléments DOM */
   "dom_id":{
     get:function(){
@@ -70,6 +79,25 @@ Object.defineProperties(Fiche.prototype, {
       return this._dom_id
     }
   },
+  
+  /* Champ de saisie du titre */
+  "titre_jid":{get:function(){return 'input#'+this.dom_id+'-titre'}},
+  "input_titre":{
+    get:function(){
+      if(!this._input_titre || this._input_titre.length == 0) this._input_titre = $(this.titre_jid);
+      return this._input_titre
+    }
+  },
+  
+  /* Div des items (children) de la fiche */
+  "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
+  "div_items":{
+    get:function(){
+      if(!this._div_items || this._div_items.length == 0) this._div_items = $(this.items_jid);
+      return this._div_items
+    }
+  },
+  
   
   "is_book"       :{get:function(){ return this.type == 'book'}},
   "is_chapter"    :{get:function(){ return this.type == 'chap'}},
@@ -118,6 +146,31 @@ Object.defineProperties(Fiche.prototype, {
       }
       
       this._parent = pere
+    }
+  },
+  
+  /*
+   *  Définition et retour de la position horizontale (left) de
+   *  la fiche sur la table
+   */
+  "left":{
+    get:function(){ return this._left || null },
+    set:function(left){
+      this._left = left
+      if( !this.ranged ) this.positionne
+    }
+  },
+  
+  /*
+   *  Définition et retour de la position haute (top) de la fiche 
+   *  sur la table.
+   *  
+   */
+  "top":{
+    get:function(){ return this._top || null },
+    set:function(top){
+      this._top = top
+      if( !this.ranged ) this.positionne
     }
   }
   

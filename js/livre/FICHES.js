@@ -30,7 +30,24 @@ window.FICHES = {
    *  C'est la méthode `create' de la fiche qui la met dans la liste
    *
    */
-  list:{}
-
+  list:{},
+  /*
+   *  Nombre de fiches dans `list'
+   */
+  length:0,
+  
+  /*
+   *  {Hash} des fiches sélectionnées
+   *  
+   *  En clé, l'ID de la fiche, en valeur, son instance
+   */
+  selecteds:null,
+  
+  /*
+   *  Fiche courante (instance Fiche)
+   *  
+   */
+  current:null
+  
 }
 

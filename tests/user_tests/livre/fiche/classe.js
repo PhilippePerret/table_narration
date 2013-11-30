@@ -62,12 +62,13 @@ function Fiche_Classe_et_methodes_principales() {
   var properties = [
   'id', 'created_at', 'type', 'class',
   'deleted',
-  'opened', 'ranged'
+  'opened', 'ranged', 'selected'
   ]
   L(properties).each(function(prop){'instance_Fiche'.should.have.property(prop)})
-  'ifiche.deleted'.should.be.false
-  'ifiche.opened' .should.be.true
-  'ifiche.ranged' .should.be.false
+  'ifiche.deleted'  .should.be.false
+  'ifiche.opened'   .should.be.true
+  'ifiche.ranged'   .should.be.false
+  'ifiche.selected' .should.be.false
   
   // Pseudo-propriétés (propriétés complexes)
   var comp_properties = [
@@ -76,7 +77,8 @@ function Fiche_Classe_et_methodes_principales() {
   'create', 'save', 'load', 'build', 'open', 'close', 'delete',
   'html',
   'is_book', 'is_chapter', 'is_page', 'is_paragraph',
-  'set_values'
+  'set_values',
+  'toggle_select', 'select', 'deselect'
   ]
   L(comp_properties).each(function(prop){'Fiche.prototype'.should.have.property(prop)})
   'ifiche.top'.should.be.equal_to(null, strict = true)

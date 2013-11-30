@@ -12,6 +12,11 @@ fiche.book {
 }
 fiche.book.opened {
   width   : 20em !important;
-  height  : 10em;
-  opacity :0.5 !important;
+  height  : auto !important;
+}
+
+fiche.book > recto > input.titre {
+}
+fiche.book > recto > input.real_titre {
+  display:block;
 }

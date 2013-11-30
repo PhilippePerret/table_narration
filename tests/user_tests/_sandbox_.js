@@ -8,6 +8,74 @@
  *
  */
 
+$.extend(FICHES, {
+  
+  /*
+   *  Ajoute une fiche instanciée
+   *  
+   *  NOTE
+   *  ----
+   *
+   *  @param  ifiche    Instance Fiche de la fiche instanciée
+   *
+   */
+  add:function(ifiche)
+  {
+    // La fiche ne doit pas encore exister
+    if(undefined != this.list[ifiche.id]) return
+    this.list[ifiche.id] = ifiche
+    this.length ++
+  },
+  
+  /*
+   *  Supprime une fiche instanciée
+   *  
+   */
+  remove:function(ifiche)
+  {
+    // La fiche doit exister
+    if(undefined == this.list[ifiche.id]) return
+    delete this.list[ifiche.id]
+    this.length --
+  },
+  
+  /*
+   *  Ajout d'une fiche à la sélection
+   *  
+   *  NOTES
+   *  -----
+   *    * Dans tous les cas, la dernière fiche est mise en fiche courante
+   *
+   *  @param  ifiche    Instance de la fiche à ajouter à la sélection
+   */
+  add_selected:function(ifiche)
+  {
+    this.current = ifiche
+  },
+  /*
+   *  Suppression d'une fiche de la sélection
+   *  
+   *  @param  ifiche    Instance de la fiche à retirer de la sélection
+   */
+  remove_selected:function(ifiche)
+  {
+    
+  }
+})
+
+Object.defineProperties(FICHES,{
+  "init_all":{
+    configurable:true,
+    get:function(){
+      this.length   = 0
+      this.list     = {}
+      this.current  = null
+      this.last_id  = -1
+      $('section#table').html('')
+    }
+  },
+  
+})
 
 /* === PROPRIÉTÉ DE FICHE === */
 Object.defineProperties(Fiche.prototype, {
@@ -35,37 +103,7 @@ Object.defineProperties(Fiche.prototype, {
       return this._dom_obj
     }
   },
-  
-  /*
-   *  Récupérer ou définir la position TOP de la fiche.
-   *  La définir correspond à définir la propriété _top et à placer la fiche au bon
-   *  endroit.
-   *
-   */
-  "top":{
-    configurable:true,
-    get:function(){ return this._top },
-    set:function(new_top) {
-      this._top = new_top
-      this.positionne
-    }
-  },
-  
-  /*
-   *  Récupérer ou définir la position LEFT de la fiche.
-   *  La définir correspond à définir la propriété _top et à placer la fiche au bon
-   *  endroit.
-   *
-   */
-  "left":{
-    configurable:true,
-    get:function(){ return this._left },
-    set:function(new_left) {
-      this._left = new_left
-      this.positionne
-    }
-  },
-  
+    
   /*
    *  Positionne la fiche sur le table en fonction de :
    *    - son état ranged ou non
@@ -85,14 +123,12 @@ Object.defineProperties(Fiche.prototype, {
    *  “Créer la fiche” consiste à :
    *    - mettre la fiche en attente de sauvegarde
    *    - créer son objet sur la table
-   *    - l'ajouter dans FICHES.list
    */
   "create":{
     configurable:true,
     get:function(){
       this.modified = true
       this.build
-      FICHES.list[this.id] = this
       this.open
       this.set_values
       return true
@@ -150,7 +186,39 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       this.input_titre.val(this.titre || "")
+      if(this.is_book) this.input_real_titre.val(this.real_titre || "")
+      if(this.is_paragraph) this.input_texte.val(this.texte || "")
       return true
+    }
+  },
+  
+  /*
+   *  ---------------------------------------------------------------------
+   *    Changement d'état
+   *  
+   */
+  /* Sélection et désélection de la fiche 
+   *
+   * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
+   *              En fonction de la pression ou non de la touche majuscule le comportement
+   *              et différent.
+   */
+  "toggle_select":{
+    configurable:true,
+    value:function(evt){
+      var with_maj = evt.shiftKey == true
+    }
+  },
+  "select":{
+    configurable:true,
+    get:function(){
+      
+    }
+  },
+  "deselect":{
+    configurable:true,
+    get:function(){
+      
     }
   },
   
@@ -160,27 +228,6 @@ Object.defineProperties(Fiche.prototype, {
    *
    */
   
-  /*
-   *  Raccourcis pour obtenir les éléments DOM de la fiche
-   *    
-   */
-  /* Champ de saisie du titre */
-  "input_titre":{
-    configurable:true,
-    get:function(){
-      if(!this._input_titre || this._input_titre.length == 0) this._input_titre = $(this.titre_jid);
-      return this._input_titre
-    }
-  },
-  
-  /* Div des items (children) de la fiche */
-  "div_items":{
-    configurable:true,
-    get:function(){
-      if(!this._div_items || this._div_items.length == 0) this._div_items = $(this.items_jid);
-      return this._div_items
-    }
-  },
   
   /*
    *  Retourne le code HTML pour la fiche
@@ -204,8 +251,8 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
-              this.html_input_titre +
-              this.html_div_items   +
+              this.html_input_titre + // + champ 'real_titre' pour Book
+              this.html_div_items   + // textarea.texte pour un paragraphe
               '</recto>'
     }
   },
@@ -215,7 +262,9 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       if(this.is_paragraph) return ""
-      else return '<input type="text" value="" id="'+this.dom_id+'-titre" class="titre" />'
+      var c = '<input type="text" value="" id="'+this.dom_id+'-titre" class="titre" />'
+      if(this.is_book) c += '<input type="text" value="" id="'+this.dom_id+'-real_titre" class="real_titre" />'
+      return c
     }
   },
   
@@ -223,8 +272,10 @@ Object.defineProperties(Fiche.prototype, {
   "html_div_items":{
     configurable:true,
     get:function(){
-      if(this.is_paragraph) return ""
-      return '<div id="'+this.dom_id+'-items" class="items"></div>'
+      if(this.is_paragraph) 
+        return '<textarea id="'+this.dom_id+'-texte" class="texte"></textarea>'
+      else
+        return '<div id="'+this.dom_id+'-items" class="items"></div>'
     }
   },
   
@@ -272,7 +323,7 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       this.deleted  = true
-      delete FICHES.list[this.id]
+      FICHES.remove( this )
       this.modified = true
     }
   }

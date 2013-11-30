@@ -4,9 +4,9 @@
  *
  *  To run this: all_tests
  */
-function all_tests()
+function all()
 {
-  my = all_tests
+  my = all
   
   my.step_list = 
   [

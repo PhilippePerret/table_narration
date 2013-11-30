@@ -52,10 +52,10 @@ function Livre_Existence_own_properties_and_methods() {
   L(methods).each(function(meth){'Book.prototype'.should.respond_to(meth)})
   var props = [
   ]
-  L(props).each(function(prop){'Book'.should.have.property(prop)})
+  L(props).each(function(prop){'Book.prototype'.should.have.property(prop)})
   // Propriétés complexes
   var compprops = [
   'real_titre'
   ]
-  L(compprops).each(function(prop){'Book'.should.have.property(prop)})
+  L(compprops).each(function(prop){'Book.prototype'.should.have.property(prop)})
 }

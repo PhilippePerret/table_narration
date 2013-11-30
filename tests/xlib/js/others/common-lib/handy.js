@@ -95,7 +95,11 @@ function _complexEqualityArray(ques, comp) {
 // Entendu que la simple comparaison avec == est déficiente
 // Retourne TRUE si ques et comp sont identifiques, FALSE dans le cas contraire
 // @TODO: Traiter la récursivité interne (comment ?)
-function _complexEqualityHash(quest, comp){
+function _complexEqualityHash(quest, comp, deep_level){
+  if(undefined == deep_level) deep_level = 1
+  // Pour éviter les boucles infinies, on ne test l'objet que jusqu'à une
+  // profondeur de 4. Au-dessus, on présuppose que c'est bon.
+  if(deep_level > 4) return true
   if (quest == comp ) return true // évaluation simple, mais…
   // Ça ne renvoie pas toujours vrai même quand ça l'est, peut-être à cause
   // d'apostrophes ou autre, donc on essaie de stringifier par JSON
@@ -112,7 +116,7 @@ function _complexEqualityHash(quest, comp){
     if('undefined' == typeof comp[prop])        return false // propriété absente
     if(typeof quest[prop] != typeof comp[prop]) return false // différence de type
     if(quest[prop] /* éviter NULL */ && typeof quest[prop] == 'object'){
-      if( false == _complexEqualityHash( quest[prop], comp[prop]) ) return false
+      if( false == _complexEqualityHash( quest[prop], comp[prop], deep_level + 1) ) return false
     } else {
       if(quest[prop] != comp[prop]) return false // différence de valeur
     }

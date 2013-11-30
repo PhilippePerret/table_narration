@@ -46,10 +46,7 @@ function FicheDeletion_Methodes_et_proprietes_utiles() {
 
 
 function FicheDeletion_Destruction_fiche_simple() {
-  if(APP.ipara && my.stop_point > 1)
-  {
-    
-  }
+
   switch(my.stop_point)
   {
   case 1:
@@ -59,8 +56,10 @@ function FicheDeletion_Destruction_fiche_simple() {
     ('FICHES.list['+APP.ipara.id+'].class') .should = "Fiche" ;
     ('FICHES.list['+APP.ipara.id+'].type')  .should = "para"
     
+    my.nombre_fiches = parseInt(FICHES.length, 10)
+    
     'ipara.obj'.should.exist
-    jq('fiche#'+APP.ipara.id).should.be.visible
+    jq(APP.ipara.jid).should.be.visible
     
     APP.ipara.remove // <-- TEST
     
@@ -69,8 +68,9 @@ function FicheDeletion_Destruction_fiche_simple() {
   case 2:
     // Vérification
     'ipara.deleted'.should.be.true
-    jq('fiche#'+APP.ipara.id).should_not.exist ;
+    jq(APP.ipara.jid).should_not.exist ;
     ('FICHES.list['+APP.ipara.id+']').should.be.undefined ;
+    'FICHES.length'.should = my.nombre_fiches - 1
     
     // On lance la sauvegarde pour vérifier la destruction du fichier
     APP.Collection.save
