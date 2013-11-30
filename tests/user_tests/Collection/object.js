@@ -35,6 +35,7 @@ function Collection_Existence_properties_and_methods() {
 
   // Propriétés complexes
   var comprops = [
+  'stop_automatic_saving', 'start_automatic_saving'
   ]
   L(comprops).each(function(prop){ 'Collection'.should.have.property( prop )})
 

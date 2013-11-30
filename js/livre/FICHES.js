@@ -110,6 +110,44 @@ window.FICHES = {
     // Réglage de la captation des touches clavier
     window.onkeypress = keypress_when_fiche_selected_out_textfield
   },
+  
+  /*
+   *  Sauvegarde de toutes les fiches marquées modifiées
+   *  
+   */
+  saving:false,
+  save:function(poursuivre)
+  {
+    this.saving = true
+    this.poursuivre_save = poursuivre
+    var fiches = []
+    for(var i in Collection.modifieds_list)
+    {
+      fiches.push(Collection.modifieds_list[i].data)
+    }
+    Ajax.send({script:'fiche/save', fiches:fiches}, $.proxy(this.retour_save,this))
+  },
+  retour_save:function(rajax)
+  {
+    if(rajax.ok)
+    {
+      // Si toutes les fiches ont pu être sauvées, on les marque non
+      // modifiées
+      for(var i in Collection.modifieds_list)
+      {
+        Collection.modifieds_list[i].modified = false
+      }
+      delete Collection.modifieds_list
+    }
+    else
+    {
+      F.error(rajax.message)
+    }
+    this.saving = false
+    if('function' == typeof this.poursuivre_save) this.poursuivre_save()
+  },
+  
+  
   /*
    *  Suppression d'une fiche de la sélection
    *  

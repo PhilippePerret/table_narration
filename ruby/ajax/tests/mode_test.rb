@@ -15,4 +15,5 @@ tests.
 
 =end
 
-raise "Le dossier de la collection est introuvable" unless File.exists?(Collection.folder)
+Collection::bascule_vers_mode_test
+RETOUR_AJAX[:current_folder] = Collection.folder

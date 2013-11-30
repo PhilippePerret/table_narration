@@ -15,7 +15,9 @@ div#flash {
   }
   div#flash div#inner_flash {
     max-height: 20em;
-    overflow-y: auto; }
+    overflow-y: auto; 
+    background-color: #F0F0F0;
+  }
     div#flash div#inner_flash div {
       padding: 0.17em 0.95em 0.1em;
     }
@@ -26,7 +28,8 @@ div#flash {
     }
     div#flash div#inner_flash span.notice {
       background-color: #77B;
-      color: white; }
+      color: #00005F;
+    }
     div#flash div#inner_flash span.warning {
       background-color: #FF4646 !important;
       color: white !important; }

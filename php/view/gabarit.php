@@ -9,9 +9,7 @@
 </head>
 <body>
   <div id="flash" style="display:none;"></div>
-	<section id="header">
-		<input type="button" value="Test" onclick="App.test()" />
-	</section>
+  <?php include "./php/view/section_header.php" ?>
 	<section id="table">
 	</section>
 <?php

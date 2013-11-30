@@ -8,9 +8,12 @@ function livre_fiche_saving()
   my.specs = "Test de la sauvegarde des fiches"
   
   my.step_list = [
+  ["Préparation du test", FicheSave_Prepare_test],
   ["Méthodes et propriétés utiles", FicheSave_Methodes_et_properties],
   ["Dossiers et fichiers indispensables", FicheSave_Dossiers_et_fichiers],
   ["Test de la méthode `data`", FicheSave_Methode_data],
+  // @note: Laisser ce test juste en dessous du test de `data', c'est plus
+  // prudent.
   ["Test de la sauvegarde d'une simple fiche", FicheSave_Test_simple]
   ]
 
@@ -23,6 +26,11 @@ function livre_fiche_saving()
   default:
     pending("Step '"+my.step+"' should be implanted")
   }
+}
+
+function FicheSave_Prepare_test() {
+  specs("Principalement, on arrête la boucle de sauvegarde de la collection.")
+  APP.Collection.stop_automatic_saving
 }
 function FicheSave_Methodes_et_properties() {
   var methods = [
@@ -45,7 +53,7 @@ function FicheSave_Dossiers_et_fichiers() {
   case 2:
     return file('./ruby/ajax').should.exist.and(NEXT_POINT)
   case 3:
-    return file('./ruby/ajax/fiche/save_fiches.rb').should.exist.and(NEXT_POINT)
+    return file('./ruby/ajax/fiche/save.rb').should.exist.and(NEXT_POINT)
     // my.wait.for(0)
   case 4:
     
@@ -98,6 +106,28 @@ function FicheSave_Methode_data() {
 
 
 function FicheSave_Test_simple() {
-  pending("à implémenter")
-  // Après la sauvegarde, la fiche ne doit plus être marquée modifiée
+  switch(my.stop_point)
+  {
+  case 1:
+    specs("On sauve les fiches créées dans l'étape précédente")
+    return file('./collection/test/fiche/page/'+APP.ipage.id+".js").should_not.exist.and(NEXT_POINT)
+  case 2:
+    return file('./collection/test/fiche/chap/'+APP.ichap.id+".js").should_not.exist.and(NEXT_POINT)
+  case 3:
+    return file('./collection/test/fiche/para/'+APP.ipara1.id+".js").should_not.exist.and(NEXT_POINT)
+  case 4:
+    w("On lance la sauvegarde des fiches créées ci-dessus")
+    APP.FICHES.save(null) // <-- TEST
+    return my.wait.while(function(){ return APP.FICHES.saving }).and(NEXT_POINT)
+  case 5:
+    return file('./collection/test/fiche/page/'+APP.ipage.id+".js").should.exist.and(NEXT_POINT)
+  case 6:
+    return file('./collection/test/fiche/chap/'+APP.ichap.id+".js").should.exist.and(NEXT_POINT)
+  case 7:
+    return file('./collection/test/fiche/para/'+APP.ipara1.id+".js").should.exist.and(NEXT_POINT)
+  case 8:
+    return file('./collection/test/fiche/para/'+APP.ipara2.id+".js").should.exist.and(NEXT_POINT)
+  }
+  
+  
 }
