@@ -1,13 +1,6 @@
 #!/Users/philippeperret/.rvm/rubies/ruby-1.9.3-p484/bin/ruby
 # encoding: UTF-8
 
-# NE MARCHE PAS :
-# ! ${HOME}/.rvm/rubies/ruby-1.9.3-p484/bin/ruby
-# NE MARCHE PAS (version 1.8.7 utilisée):
-#!/usr/bin/env ruby
-# NE MARCHE PAS
-# ! /usr/bin/env  rvm 1.9.3-p484 do ruby
-# MARCHE
 # ! /Users/philippeperret/.rvm/rubies/ruby-1.9.3-p484/bin/ruby
 
 =begin
@@ -75,11 +68,11 @@ end
 
 begin
   # Initialiser
-  require './tests/xlib/ruby/module/init.rb'
+  require './ruby/module/init.rb'
   
   # Prendre les données envoyées
   Params::init(ARGV[0])
-  require "./tests/xlib/ajax/#{param('script')}.rb"
+  require "./ruby/ajax/#{param('script')}.rb"
 rescue Exception => e
   RETOUR_AJAX[:ok]        = false
   RETOUR_AJAX[:message]   = e.message + '<br />' + e.backtrace.join('<br>')

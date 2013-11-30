@@ -100,7 +100,7 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
-   *  Sauvegarde de la fiche
+   *  Sauvegarde de la fiche (utile ?)
    *  
    */
   "save":{
@@ -110,6 +110,31 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
+  /*
+   *  Retourne les données à enregistrer
+   *  
+   */
+  "data":{
+    configurable:true,
+    get:function(){
+      data = {
+        id:this.id, type:this.type, titre:this.titre, deleted:this.deleted,
+        opened:this.opened, ranged:this.ranged
+      }
+      if(this.parent)  data.parent = {id:this.parent.id, type:this.parent.type}
+      if(this.enfants)
+      {
+        data.enfants = []
+        for(var i in this.enfants){ 
+          var child = this.enfants[i]
+          data.enfants.push({id:child.id, type:child.type})
+        }
+      }
+      if(this.is_book) data.real_titre = this.real_titre
+      if(this.is_paragraph) data.texte = this.texte
+      return data
+    }
+  },
   /*
    *  Destruction totale d'une fiche
    *  

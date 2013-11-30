@@ -130,6 +130,10 @@ window.FICHES = {
   onfocus_textfield:function(ifiche, evt)
   {
     // console.log("-> onfocus_textfield dans " + evt.target.id)
+    // @note: Il est important de sélectionner la fiche avant tout autre
+    // réglage pour que la sélection qui serait appelée ensuite (quand on clique
+    // dans le champ de saisie alors que la fiche n'est pas sélectionnée) ne
+    // remette par la méthode de gestion des touches clavier à ..._out_textfield
     ifiche.select
     window.onkeypress = keypress_when_fiche_selected_in_textfield
     var target = $(evt.currentTarget)

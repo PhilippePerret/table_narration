@@ -17,9 +17,7 @@ header('Content-Type: text/json');
 // Appeler le script ajax ruby
 $data = addslashes(json_encode($_POST['data']));
 try {
-  // $returned = json_encode(array('version' => exec('irb "puts RUBY_VERSION"')));
-  // $returned = exec("ruby ./tests/xlib/ruby/tests_ajax.rb \"${data}\"");
-  $returned = exec("./tests/xlib/ruby/tests_ajax.rb \"${data}\"");
+  $returned = exec("./ruby/ajax.rb \"${data}\"");
 } catch (Exception $e) {
   $returned = json_encode( array('message' => "ERREUR : $e", 'ok' => false));
 }

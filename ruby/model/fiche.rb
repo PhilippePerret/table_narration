@@ -1,0 +1,3 @@
+class Fiche
+  
+end
