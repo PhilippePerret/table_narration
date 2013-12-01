@@ -55,8 +55,13 @@ class Fiche
   attr_reader :type
   
   def initialize id, type
-    @id   = id
+    @id   = id.to_i
     @type = type
+  end
+  
+  # Return l'id:type de la fiche (pour les listes)
+  def idtype
+    @idtype ||= "#{id}:#{type}"
   end
   
   def exists?
