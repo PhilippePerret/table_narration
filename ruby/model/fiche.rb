@@ -39,7 +39,7 @@ class Fiche
       if type.nil? then [data_fiche['id'], data_fiche['type']]
       else [data_fiche, type] end
         
-      File.join(folder, type, id + ".js")
+      File.join(folder, type, "#{id}.js")
     end
     
     # Return le path du dossier principal des fiches

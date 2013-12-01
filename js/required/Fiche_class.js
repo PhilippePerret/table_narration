@@ -229,7 +229,7 @@ Object.defineProperties(Fiche.prototype, {
   "observe":{
     get:function(){
       // On doit la rendre draggable
-      this.obj.draggable({containment:'parent'})
+      this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
       this.obj.bind('click', $.proxy(this.toggle_select, this))
       if(this.is_paragraph)
@@ -276,6 +276,31 @@ Object.defineProperties(Fiche.prototype, {
   },
     
   /*
+   *  Rend la fiche sortable (lorsqu'elle est rangée)
+   *  
+   */
+  "rend_sortable":{
+    get:function(){
+      this.obj.sortable({
+        'containment': this.parent.div_items
+      })
+      
+    }
+  },
+  /*
+   *  Rend la fiche draggable (lorsqu'elle est posée sur la table)
+   *  
+   */
+  "rend_draggable":{
+    get:function(){
+      this.obj.draggable({
+        containment:'parent',
+        stop: $.proxy(this.stop_drag, this)
+      })
+    }
+  },
+    
+  /*
    *  Ouvre la fiche
    *  
    */
@@ -311,16 +336,18 @@ Object.defineProperties(Fiche.prototype, {
    *  -----
    *  * La fiche peut avoir un clone dans son parent, qu'il faut alors
    *    supprimer.
+   *  * On supprime le draggable de la fiche et on ajoute un sortable
    *
    */
   "range":{
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
       if(this.obj_clone.length) this.unclone
+      this.obj.draggable("destroy")
+      this.rend_sortable
       this.ranged = true
     }
   },
-  
   /*
    *  Sort la fiche de son rangement
    *  
@@ -329,9 +356,12 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error['unable to unrange orphelin']
       this.clone
+      this.obj.sortable("destroy")
+      this.rend_draggable
       this.ranged = false
     }
   },
+  
   
   /* Retourne l'objet DOM du clone de la fiche */
   "obj_clone":{
@@ -536,7 +566,6 @@ Object.defineProperties(Fiche.prototype, {
    *  
    */
   "delete":{
-    configurable:true,
     get:function(){
       this.deleted  = true
       FICHES.remove( this )
@@ -829,5 +858,16 @@ Fiche.prototype.remove_child = function(enfant)
     this.modified   = true
     enfant.modified = true
   }
+}
+
+/*
+ *  Appelé à la fin du drag d'une fiche
+ *  
+ */
+Fiche.prototype.stop_drag = function(evt, ui){
+  var pos = this.obj.position()
+  this.left = pos.left
+  this.top  = pos.top
+  this.modified = true
 }
 

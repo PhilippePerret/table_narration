@@ -19,8 +19,13 @@ fiche.book > recto > input.titre.focused {
   color: white !important;
   text-align:center;
 }
+fiche.book.opened > recto > input.titre {
+  text-align:left !important;
+}
+
 fiche.book > recto > input.real_titre {
-  display:none;
+  display   :none;
+  width     :98%;
 }
 
 /* Éléments invisibles quand la fiche est fermée */

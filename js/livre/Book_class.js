@@ -1,9 +1,11 @@
 /* === CLASSE BOOK === */
 window.Book = function(data)
 {
+  console.log("--> Book")
   if(undefined == data) data = {}
   data.type = 'book'
   Fiche.call(this, data)
+  console.log("<-- Book")
 }
 Book.prototype = Object.create( Fiche.prototype )
 Book.prototype.constructor = Book
@@ -21,7 +23,6 @@ Object.defineProperties(Book.prototype,{
       if (titre == this._real_titre) return
       this._real_titre = titre
       this.input_real_titre.val( titre )
-      this.modified = true
     },
     get:function(){
       return this._real_titre || null

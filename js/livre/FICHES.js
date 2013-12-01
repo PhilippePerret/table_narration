@@ -176,14 +176,16 @@ window.FICHES = {
    */
   dispatch:function(data)
   {
+    console.log("-> FICHES.dispatch")
     var i, len, dfiche, ifiche ;
     for(i=0, len = data.length; i<len; ++i)
     {
+      console.log("[dispatch] Traitement fiche " + data[i].id+":"+data[i].type)
+      console.log("--> fiche_from")
       ifiche = this.fiche_from( data[i] )
+      console.log("--> create")
       ifiche.create
-      ifiche.modified = false 
-        // au cas où (mais est-ce suffisant ? car si la fiche a été marquée
-        // modifiée, elle se trouvera dans la liste des fiches à sauver)
+      console.log("<- FICHES.dispatch")
     }
   },
   
@@ -221,13 +223,16 @@ window.FICHES = {
   // la fiche existe déjà.
   fiche_from:function(data)
   {
+    console.log("-> FICHES.fiche_from")
     if(undefined != this.list[data.id]){ 
+      console.log("[fiche_from] Fiche définie")
       var ifiche = this.list[data.id]
       ifiche.dispatch( data ) // au cas où d'autres données sont fournies
       return ifiche
     }
     else
     { // => il faut créer une instance
+      console.log("[fiche_from] Fiche NON définie")
       return this.create_instance_fiche_of_type(data)
     }
   },

@@ -89,7 +89,7 @@ end
 
 
 @data = {
-  :fiches   => {},
+  :fiches   => [],
   :prefs    => {},
   :data     => {
     :last_id_fiche => Fiche::last_id
