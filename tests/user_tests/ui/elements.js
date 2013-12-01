@@ -8,22 +8,15 @@ function ui_elements() {
   my = ui_elements
   
   my.step_list = [
-  "Vérification de la table de travail",
-  "Vérification de l'entête",
-  "Vérification des éléments divers"
+  ["Vérification de la table de travail",UI_Verification_Table_travail],
+  ["Vérification de l'entête", UI_Verification_Entete],
+  ["Vérification des éléments divers",UI_Verification_elements_divers],
+  "Fin" // juste pour virgule
   ]
   
   switch(my.step)
   {
-  case "Vérification de la table de travail":
-    UI_Verification_Table_travail()
-    break
-  case "Vérification de l'entête":
-    UI_Verification_Entete()
-    break
-    
-  case "Vérification des éléments divers":
-    UI_Verification_elements_divers()
+  case "Fin":
     break
     
   default:
@@ -41,6 +34,11 @@ function UI_Verification_Entete() {
   specs("On doit trouver une section header contenant les outils principaux")
   // La section header
   jq('section#header').should.exist
+  
+  blue("Doit contenir les outils permettant de créer des fiches")
+  L(APP.FICHES.datatype).each(function(type, dtype){
+    jq('section#header div.card_tool[data-type="'+type+'"]#card_tool-'+type).should.exist
+  })
   
 }
 

@@ -6,21 +6,14 @@ function Collection_object()
   my = Collection_object
   
   my.step_list = [
-    "Existence des propriétés et méthodes de Collection",
-    "Test des fonctions synchrones",
+    ["Existence des propriétés et méthodes de Collection", Collection_Existence_properties_and_methods],
+    ["Test des fonctions synchrones", Collection_Test_fonctions_synchrones],
     ["Test de la méthode `dispatch`", Collection_Method_dispatch],
     "Fin"
   ]
 
   switch(my.step)
   {
-  case  "Existence des propriétés et méthodes de Collection":
-    Collection_Existence_properties_and_methods()
-    break
-    
-  case "Test des fonctions synchrones":
-    Collection_Test_fonctions_synchrones()
-    break
     
   case "Fin":
     break
@@ -47,7 +40,8 @@ function Collection_Existence_properties_and_methods() {
 
   // Méthodes
   var methods = [
-  'add_modified', 'dispatch'
+  'add_modified', 'dispatch',
+  'ondrop_on_table'
   ]
   L(methods).each(function(method){ 'Collection'.should.respond_to( method )})
 }

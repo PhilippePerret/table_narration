@@ -33,3 +33,8 @@ fiche.selected {
   border-color: blue !important; 
   opacity: 1 !important;
 }
+
+/* Fiche survolée par enfant potentiel */
+fiche.dropped, fiche.selected.dropped {
+  border-color: #F05 !important;
+}

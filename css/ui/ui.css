@@ -19,19 +19,10 @@ textarea.focused
 /* ---------------------------------------------------------------------
  *  Éléments spécifiques
  */
-section#header {
-  clear:both;
-  min-height:16px;
-}
 
 section#table {
   position  : relative;
-  width     : 100%;
+  width     : 1000em;
   height    : 200em;
   border    : 1px dashed green;
-}
-
-section#header > div#buttons_right { float:right; }
-section#header > div#buttons_right input[type="button"] {
-  font-size: 10px;
 }

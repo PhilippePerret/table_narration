@@ -31,4 +31,15 @@
   </div>
   
   <!-- BOUTONS OUTILS POUR AJOUTER PAGE, BOOK, ETC. -->
+  <div id="header_card_tools">
+    <?php 
+      $table = array('book'=>"Book", 'chap' => "Chapter", 'page'=> "Page", 'para'=> "Paragraph");
+      foreach($table as $type => $name) { ?>
+      <div 
+        id="card_tool-<?php echo $type ?>" 
+        class="card_tool <?php echo $type ?>" 
+        data-type="<?php echo $type ?>"
+        ><?php echo $name ?></div>
+    <?php } ?>
+  </div>
 </section>

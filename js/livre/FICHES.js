@@ -10,10 +10,10 @@ window.FICHES = {
    *  
    */
   datatype:{
-    'para'  : {level: 5 },
-    'page'  : {level: 10},
-    'chap'  : {level: 15},
-    'book'  : {level: 20}
+    'para'  : {level: 5 , child_type:null},
+    'page'  : {level: 10, child_type:'para'},
+    'chap'  : {level: 15, child_type:'page'},
+    'book'  : {level: 20, child_type:'chap'}
     },
 
   /*

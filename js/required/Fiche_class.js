@@ -183,7 +183,7 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
-   *  Place tous les observers sur la fiche
+   *  Place tous les OBSERVERS sur la fiche
    *  
    */
   "observe":{
@@ -218,6 +218,19 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.find(l[i]).bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
         this.obj.find(l[i]).bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
       }
+      
+      // Toutes les fiches hors paragraphes doivent être droppable et
+      // accepter un élément de rang inférieur
+      var accepted_child = FICHES.datatype[this.type].child_type
+      if(this.is_paragraph == false)
+      {
+        this.obj.droppable({
+          hoverClass  :'dropped',
+          accept      : '.fiche.'+accepted_child+
+                        ', .card_tool[data-type="'+accepted_child+'"]',
+          drop        :$.proxy(this.on_drop, this)
+        })
+      }
       return true
     }
   },
@@ -249,9 +262,9 @@ Object.defineProperties(Fiche.prototype, {
    */
   "set_values":{
     get:function(){
-      this.input_titre.val(this.titre || "")
-      if(this.is_book) this.input_real_titre.val(this.real_titre || "")
-      if(this.is_paragraph) this.input_texte.val(this.texte || "")
+      this.input_titre.val(this.titre || "TITRE")
+      if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
+      if(this.is_paragraph) this.input_texte.val(this.texte || "TEXTE_PARAGRAPHE")
       return true
     }
   },
@@ -508,7 +521,15 @@ Object.defineProperties(Fiche.prototype, {
   
 })
 
-
+/*
+ *  Appelé quand on droppe un enfant sur la fiche courante
+ *  
+ */
+Fiche.prototype.on_drop = function(evt, ui)
+{
+  console.dir(ui.helper)
+  F.error("La méthode Fiche.on_drop doit être implémentée")
+}
 
 // C'est la méthode principale de création d'une relation entre
 // deux fiches. C'est elle qui ajoute l'enfant et définit le parent

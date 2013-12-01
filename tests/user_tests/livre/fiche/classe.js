@@ -86,7 +86,7 @@ function Fiche_Classe_et_methodes_principales() {
   
   // Méthodes
   var methods = [
-  'dispatch', 'add_child', 'remove_child'
+  'dispatch', 'on_drop', 'add_child', 'remove_child'
   ]
   L(methods).each(function(method){'Fiche.prototype'.should.respond_to(method)})
   

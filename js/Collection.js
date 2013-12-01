@@ -26,7 +26,8 @@ window.Collection = {
    *  Retour du chargement de la collection
    *  Il faut maintenant dispatcher les éléments et remplir la table
    *  
-   *  À la fin du chargement, on lance une sauvegarde
+   *  À la fin du chargement, on lance une sauvegarde et on prépare l'interface
+   *  si nécessaire.
    */
   retour_load:function(rajax)
   {
@@ -37,6 +38,7 @@ window.Collection = {
     }
     else F.error(rajax.message)
     this.loading = false
+    if(false == UI.prepared) UI.prepare
     this.backup
   },
   // Noter que ce retour n'est utilisé que lorsqu'on force un backup
