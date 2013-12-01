@@ -24,5 +24,5 @@ fiche.book > recto > input.real_titre {
 }
 
 /* Éléments invisibles quand la fiche est fermée */
-fiche.book.open > recto > input.real_titre { display: block ;}
-fiche.book.open > recto > div.items { display: block;}
+fiche.book.opened > recto > input.real_titre { display: block ;}
+fiche.book.opened > recto > div.items { display: block;}

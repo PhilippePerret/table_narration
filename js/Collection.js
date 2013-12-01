@@ -14,13 +14,18 @@
  */
 window.Collection = {
   /*
+   *  CONSTANTE
+   *  
+   */
+  frequence_saving: 20 * 1000, // 5*1000
+  
+  /*
    *  PROPRIÉTÉS GÉNÉRALES
    *  
    */
   /* Propriétés d'état */
   saving        : false,
   loading       : false,
-  modified      : false,
   
   /*
    *  Retour du chargement de la collection
@@ -41,6 +46,7 @@ window.Collection = {
     if(false == UI.prepared) UI.prepare
     this.backup
   },
+  
   // Noter que ce retour n'est utilisé que lorsqu'on force un backup
   // différent du backup quotidien.
   retour_backup:function(rajax)
@@ -63,8 +69,17 @@ window.Collection = {
   
   check_if_needs_save:function()
   {
-    if(false == this.modified) return
-    else this.save
+    console.log("-> Collection.check_if_needs_save (modified:"+this.modified+")")
+    if(this.modified === true)
+    {
+      console.log("= Sauvegarde nécessaire =")
+      this.save
+      return true
+    } 
+    else
+    {
+      return false
+    }
   },
   
   /*
@@ -94,7 +109,7 @@ window.Collection = {
     // TODO
     
     // Dispatch des autres données
-    // TODO
+    this.dispatch_data(data.data)
     
     // On supprime toutes les fiches marquées modifiées
     // (cf. le WARNING ci-dessus)
@@ -104,16 +119,45 @@ window.Collection = {
     // On peut remettre la boucle de sauvegarde en route
     this.start_automatic_saving
     
+  },
+  
+  /*
+   *  Dispatch des autres données remontées au chargement
+   *  
+   */
+  dispatch_data:function(data)
+  {
+    FICHES.last_id = parseInt(data.last_id_fiche,10) || -1
   }
   
 }
 
 Object.defineProperties(Collection,{
   
+  "saving_forbidden":{
+    get:function(){return this._saving_forbidden || false },
+    set:function(forbid){
+      this._saving_forbidden = forbid
+      this.regle_mark_saved
+    }
+  },
+  
+  "regle_mark_saved":{
+    get:function()
+    {
+      var mod = this.modified, forb = this.saving_forbidden ;
+      $('span#mark_saved_no')       [!forb && mod  ? 'show' : 'hide']()
+      $('span#mark_saved_yes')      [!mod && !forb ? 'show': 'hide']()
+      $('span#mark_saved_forbidden')[forb ? 'show':'hide']()
+    }
+  },
+  
   "start_automatic_saving":{
     get:function(){
       if(this.timer_save) return
-      this.timer_save = setInterval(this.check_if_needs_save, 20 * 1000)
+      this.timer_save = setInterval(
+        $.proxy(this.check_if_needs_save, this), this.frequence_saving
+      )
     }
   },
   "stop_automatic_saving":{
@@ -154,6 +198,7 @@ Object.defineProperties(Collection,{
    */
   "save":{
     get:function(){
+      console.log("-> Collection.save")
       this.saving = true
       this.save_fiches
     }
@@ -161,13 +206,27 @@ Object.defineProperties(Collection,{
   /* Sauvegarde des fiches */
   "save_fiches":{
     get:function(){
-      FICHES.save($.proxy(this.end_save, this))
+      console.log("-> Collection.save_fiches")
+      FICHES.save( $.proxy(this.end_save, this ))
     }
   },
   /* Fin de la sauvegarde de la collection */
   "end_save":{
     get:function(){ 
-      this.saving = false 
+      this.saving   = false
+      this.modified = false
+    }
+  },
+  
+  /*
+   *  Marque la collection modifiée/non modifié
+   *    
+   */
+  "modified":{
+    get:function(){ return this._modified || false },
+    set:function( modified ){
+      this._modified = modified
+      this.regle_mark_saved
     }
   },
   

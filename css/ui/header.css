@@ -5,6 +5,19 @@ section#header {
 }
 section#header:hover { opacity:1; }
 
+/* ---------------------------------------------------------------------
+ *  Marque de sauvegarde
+ */
+section#header > div#mark_saved {
+  float         : left;
+  margin-right  : 1em;
+  font-size     : 10pt;
+  width         : 30px;
+}
+
+/* ---------------------------------------------------------------------
+ *  Outils Fiches
+ */
 section#header > div#header_card_tools {
   
 }

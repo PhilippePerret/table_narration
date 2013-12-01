@@ -26,8 +26,8 @@ window.Fiche = function(data)
   // (ci-dessous les valeurs par défaut)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
-  this.opened     = true
-  this.ranged     = false
+  // this.opened     = true   // Propriété complexe
+  // this.ranged     = false  // propriété complexe
   this.selected   = false
   this.built      = false  // mis à true quand la fiche est construite
   this.retourned  = false
@@ -52,6 +52,18 @@ window.Fiche = function(data)
 
 Object.defineProperties(Fiche.prototype, {
   
+  /* ---------------------------------------------------------------------
+   *      DONNÉES DE LA FICHE
+   --------------------------------------------------------------------- */
+  "type":{
+    get:function(){ return this._type || null},
+    set:function(ty){ this._type = ty }
+  },
+  
+  
+  /* ---------------------------------------------------------------------
+   *      PROPRIÉTÉS D'ÉTAT
+   --------------------------------------------------------------------- */
   "modified":{
     set:function(val){ 
       this._modified      = val;
@@ -59,12 +71,35 @@ Object.defineProperties(Fiche.prototype, {
     },
     get:function(){return this._modified || false }
   },
-
-  "type":{
-    get:function(){ return this._type || null},
-    set:function(ty){ this._type = ty }
-  },
   
+  /*
+   *  Marque la fiche ouverte ou fermé (ou retourne la propriété)
+   *  
+   */
+  "opened":{
+    get:function(){ return this._opened || false },
+    set:function(opened){
+      this._opened = opened
+      this.obj[opened?'addClass':'removeClass']('opened')
+    }
+  },
+
+  /*
+   *  Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)
+   *  
+   */
+  "ranged":{
+    get:function(){ return this._ranged || false },
+    set:function(ranged){
+      this._ranged = ranged
+      this.obj[ranged?'addClass':'removeClass']('ranged')
+    }
+  },
+
+  /* ---------------------------------------------------------------------
+   *      PROPRIÉTÉS DOM
+   --------------------------------------------------------------------- */
+
   /*
    *  Raccourcis pour obtenir les éléments DOM de la fiche
    *    
@@ -146,14 +181,19 @@ Object.defineProperties(Fiche.prototype, {
   
   /*
    *  Création d'une nouvelle fiche
+   *  -----------------------------
    *  
-   *  “Créer la fiche” consiste à :
-   *    - mettre la fiche en attente de sauvegarde
-   *    - créer son objet sur la table
+   *  NOTES
+   *  -----
+   *  * Il ne suffit pas de créer la fiche pour qu'elle soit mise en 
+   *    sauvegarde. Cela permet de les créer tranquillement lors du chargement
+   *    de la collection.
+   *    C'est seulement lorsqu'un élément de la fiche aura été modifié (et
+   *    notamment le titre ou le texte — paragraph) qu'elle sera prête pour
+   *    l'enregistrement.
    */
   "create":{
     get:function(){
-      this.modified = true
       this.build
       this.open
       this.set_values
@@ -241,21 +281,97 @@ Object.defineProperties(Fiche.prototype, {
    */
   "open":{
     get:function(){
-      this.obj.addClass('opened')
+      if(this.is_paragraph) return
+      if(this.is_page && this.parent) this.unrange
       this.opened = true
     }
   },
   /*
    *  Ferme la fiche
    *  
+   *  NOTES
+   *  -----
+   *  * Un chapitre ne peut jamais être fermé (il est soit rangé soit unrangé)
+   *
    */
   "close":{
     get:function(){
-      this.obj.removeClass('opened')
-      this.opened = false
+      if(!this.is_chapter)
+      {
+        if(this.is_page && this.parent) this.range
+        this.opened = false
+      }
     }  
   },
   
+  /*
+   *  Range la fiche
+   *  
+   *  NOTES
+   *  -----
+   *  * La fiche peut avoir un clone dans son parent, qu'il faut alors
+   *    supprimer.
+   *
+   */
+  "range":{
+    get:function(){
+      if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
+      if(this.obj_clone.length) this.unclone
+      this.ranged = true
+    }
+  },
+  
+  /*
+   *  Sort la fiche de son rangement
+   *  
+   */
+  "unrange":{
+    get:function(){
+      if(!this.parent) throw LOCALE.fiche.error['unable to unrange orphelin']
+      this.clone
+      this.ranged = false
+    }
+  },
+  
+  /* Retourne l'objet DOM du clone de la fiche */
+  "obj_clone":{
+    get:function(){return $('fiche#'+this.dom_id_clone)}
+  },
+  
+  /*
+   *  Clone/Déclone la fiche courante
+   *
+   *  "Cloner la fiche" consiste à :
+   *    - Placer un clone de la fiche dans le parent, à la place de la fiche
+   *    - Sortir le DOM Objet du parent pour le mettre sur la table
+   *  "Décloner" la fiche consiste à :
+   *    - Remettre la fiche dans le parent
+   *    - Détruire le clone
+   */
+  "clone":{
+    get:function(){
+      this.clone_in_parent
+      $('section#table').append( this.obj )
+    }
+  },
+  "unclone":{
+    get:function(){
+      if(this.obj_clone.length == 0) throw "Clone introuvable pour la fiche #"+this.dom_id
+      this.obj.insertAfter( this.obj_clone )
+      this.obj_clone.remove()
+    }
+  },
+  /*
+   *  Place un clone de la fiche dans son parent
+   *  
+   */
+  "clone_in_parent":{
+    get:function(){
+      $(this.html_clone).insertAfter( this.obj )
+    }
+  },
+  
+
   /*
    *  Met les valeurs de la fiche dans la fiche DOM
    *  
@@ -342,6 +458,26 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
               '</verso>'
+    }
+  },
+  
+  /* Retourne le dom_id du clone */
+  "dom_id_clone":{
+    get:function(){return "clone"+this.dom_id }
+  },
+  /*
+   *  Retourne le code HTML pour un clone de la fiche (dans parent)
+   *  
+   *  @note:  Pour le moment, seul une page a besoin d'un clone
+   */
+  "html_clone":{
+      // id = 'clone'+this.dom_id => "clonef-12"
+    get:function(){
+      return '<fiche id="'+this.dom_id_clone+'" class="fiche '+this.type+' clone">'+
+        '<recto>'+
+          '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.titre+'</div>'+
+        '</recto>'+
+      '</fiche>'
     }
   },
   
@@ -524,11 +660,43 @@ Object.defineProperties(Fiche.prototype, {
 /*
  *  Appelé quand on droppe un enfant sur la fiche courante
  *  
+ *  @param  evt   L'évènement drop
+ *  @param  ui    L'objet déplacé (ui.element est l'original)
+ *                Note : l'original peut être soit une fiche réelle, soit
+ *                un card-tool. Lorsque c'est une card-tool, il faut créer la
+ *                nouvelle fiche.
  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
-  console.dir(ui.helper)
-  F.error("La méthode Fiche.on_drop doit être implémentée")
+  var ichild, is_tool = ui.helper.hasClass('card_tool')
+  if(is_tool)
+  {
+    // On crée la fiche
+    ichild = FICHES.full_create({
+      type: ui.helper.attr('data-type'),
+      left: 100, top: 100
+    })
+  }
+  else
+  {
+    ichild = FICHES.domObj_to_fiche( ui.helper )
+  }
+  this.add_child( ichild )
+  
+  if(is_tool)
+  {
+    // Si c'est une création, suivant le type, il faut faire des choses
+    // différentes.
+    // -- Pour une page --
+    // Une page doit être ouverte après sa création/insertion
+    if(ichild.is_page) ichild.open
+    
+  }
+  
+  // TODO: Plus tard, on pourra regarder si la fiche a été déposé à un
+  // endroit précis, pour le placer au bon endroit dans les enfants
+  // F.error("La méthode Fiche.on_drop doit être implémentée"+
+  // "\nÉlément #"+ui.helper.attr('id')+" (outil ? "+is_tool+") glissé sur fiche #"+this.id)
 }
 
 // C'est la méthode principale de création d'une relation entre
@@ -553,6 +721,12 @@ Fiche.prototype.add_child = function(enfant, before_child)
   // Définition du parent de l'enfant
   enfant.parent = this
   
+  // On ferme toujours l'enfant
+  // @note: la méthode appelante pourra unranger ou ouvrir l'enfant
+  // dans certains cas (par exemple lorsque c'est une nouvelle page qui est
+  // créée en la glissant sur un chapitre)
+  enfant.close
+  
   // Ajout de l'enfant dans le div_items de la fiche
   if(undefined == before_child)
   { // => ajout à la fin
@@ -564,8 +738,9 @@ Fiche.prototype.add_child = function(enfant, before_child)
   }
   
   this.modified   = true
+  enfant.ranged   = true
   enfant.modified = true
-  
+    
 }
 
 /*

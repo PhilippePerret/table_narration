@@ -7,14 +7,12 @@ fiche.para {
   width   :30em;
   opacity :0.5;
 }
-fiche.para.opened {
-  width   :30em !important;
-}
-
+/* Un paragraphe est toujours ouvert (avec opened à false pourtant) */
 /*
  * Champ de saisie du texte du paragraphe
  */
 fiche.para > recto > textarea.texte {
+  display     :block !important;
   font-family :inherit;
   font-size   :inherit;
   width       :98%;

@@ -52,9 +52,22 @@ window.FICHES = {
   /*
    *  Indique si on se trouve dans un champ de saisie (input-text ou textarea)
    *  de la fiche courante.
+   *  (Mais c'est une propriété complexe qui empêche d'enregistrer le livre
+   *   pendant l'édition)
+   */
+  // current_text_field:false,
+  
+  /*
+   *  Reçoit un objet DOM de fiche (class fiche) et
+   *  retourne la fiche correspondante.
    *  
    */
-  in_text_field:false,
+  domObj_to_fiche:function(obj)
+  {
+    var fi = this.list[ $(obj).attr('id').split('-')[1] ]
+    if(undefined == fi) throw LOCALE.fiche.error['no fiche for dom obj']
+    else return fi
+  },
   
   /*
    *  Ajoute une fiche instanciée
@@ -171,7 +184,6 @@ window.FICHES = {
       ifiche.modified = false 
         // au cas où (mais est-ce suffisant ? car si la fiche a été marquée
         // modifiée, elle se trouvera dans la liste des fiches à sauver)
-      if(ifiche.id > this.last_id) this.last_id = ifiche.id
     }
   },
   
@@ -232,6 +244,31 @@ window.FICHES = {
   },
   
   /*
+   *  Crée entièrement une nouvelle fiche à partir des +data+
+   *  transmises.
+   *
+   *  NOTES
+   *  -----
+   *    @ Il s'agit d'une toute nouvelle fiche, jamais d'une fiche
+   *      existente.
+   *    @ Pour le moment, la fiche n'est pas marquée modifiée.
+   *  
+   *  @param  data    {Hash} Les données pour la nouvelle fiche
+   *  @param  options {Hash} Les options.
+   *
+   *  @return La nouvelle fiche créée
+   */
+  full_create:function(data, options)
+  {
+    var ifiche = FICHES.create_instance_fiche_of_type(data)
+    ifiche.create
+    // ifiche.modified = true
+    var focuson = ifiche.is_paragraph?'input_texte':'input_titre';
+    ifiche[focuson].select() // sélectionne aussi la fiche
+    return ifiche
+  },
+  
+  /*
    *  Suppression d'une fiche de la sélection
    *  
    *  @param  ifiche    Instance de la fiche à retirer de la sélection
@@ -260,7 +297,7 @@ window.FICHES = {
     var target = $(evt.currentTarget)
     target.addClass('focused')
     target.select()
-    this.in_text_field = true
+    this.current_text_field = target // complex
   },
   onblur_textfield:function(ifiche, evt)
   {
@@ -268,7 +305,7 @@ window.FICHES = {
     $(evt.target).removeClass('focused')
     if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
     else window.onkeypress = keypress_when_no_selection_no_edition
-    this.in_text_field = false
+    this.current_text_field = null // complex
   }
 }
 
@@ -281,6 +318,28 @@ Object.defineProperties(FICHES,{
       this.last_id    = -1
       this.selecteds  = {}
       $('section#table').html('')
+    }
+  },
+  
+  "current_text_field":{
+    get:function(){ return this._current_text_field || false },
+    /*
+     *  Définit le text field courant (ou rien)
+     *  
+     *  @param  obj   Soit l'objet jQuery du text-field, soit NULL quand
+     *                on en sort.
+     */
+    set:function(obj)
+    {
+      var editing = ( obj !== null )
+      Collection.saving_forbidden = editing
+      this._current_text_field = obj
+      if(editing)
+      {
+      }
+      else
+      {
+      }
     }
   }
   

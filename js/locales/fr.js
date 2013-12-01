@@ -6,7 +6,10 @@ window.LOCALE = {
       'parent bad type'             : "Le parent n'est pas d'un type valide",
       'child should be an object'   : "L'enfant doit être un object (une fiche)",
       'child should be a fiche'     : "L'enfant doit être une fiche",
-      'child bad type'              : "L'enfant n'est pas d'un type valide"
+      'child bad type'              : "L'enfant n'est pas d'un type valide",
+      'no fiche for dom obj'        : "Aucune fiche ne correspond à l'objet DOM…",
+      'unable to range orphelin'    : "Impossible de ranger une fiche orpheline…",
+      'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…"
     }
   }
 }

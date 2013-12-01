@@ -72,7 +72,7 @@ end
 def get_all_non_ranged
   new_liste = []
   Collection.non_rangeds.each do |idtype|
-    next if idtype.trim == ""
+    next if idtype.strip == ""
     id, type = idtype.split(':')
     fiche = Fiche.new(id, type)
     next unless fiche.exists?
@@ -89,7 +89,11 @@ end
 
 
 @data = {
-  :fiches   => {}
+  :fiches   => {},
+  :prefs    => {},
+  :data     => {
+    :last_id_fiche => Fiche::last_id
+  }
 }
 get_all_fiches_needed
 RETOUR_AJAX[:data] = @data

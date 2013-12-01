@@ -74,7 +74,7 @@ function Fiche_Classe_et_methodes_principales() {
   var comp_properties = [
   'jid', 'dom_id', 'titre', 'updated_at', 'modified', 'resume', 'parent', 'enfants',
   'obj', 'dom_obj', 'top', 'left', 'positionne',
-  'create', 'save', 'load', 'build', 'observe', 'open', 'close', 'delete',
+  'create', 'save', 'load', 'build', 'observe', 'open', 'close', 'range', 'delete',
   'html',
   'is_book', 'is_chapter', 'is_page', 'is_paragraph',
   'set_values',

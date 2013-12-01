@@ -40,13 +40,12 @@ window.UI = {
     var x = evt.clientX - pos_table.left  // pas tout à fait exact mais
     var y = evt.clientY - pos_table.top   // n'importe pas trop
     
-    F.show("Création d'une fiche de type " + card_tool.attr('data-type'))
-    var ifiche = FICHES.create_instance_fiche_of_type({
+    // On crée la fiche
+    FICHES.full_create({
       type  : card_tool.attr('data-type'),
       left  : x,
       top   : y
     })
-    ifiche.create
   }
   
 }

@@ -11,3 +11,6 @@ fiche.chap {
 fiche.chap.opened {
   width   :20em !important;
 }
+
+fiche.chap > recto > div.items { display: block !important; }
+/*fiche.chap.opened > recto > div.items { display: block;}*/

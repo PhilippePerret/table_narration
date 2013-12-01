@@ -9,6 +9,26 @@ class Fiche
     # 
     attr_accessor :folder
     
+    # Return le dernier ID utilisé pour une fiche (le plus grand)
+    # 
+    def last_id
+      @last_id ||= begin
+        if File.exists?(path_last_id) then File.read(path_last_id).to_i
+        else - 1 end
+      end
+    end
+    
+    # Actualise le dernier ID enregistré
+    def update_last_id new_id
+      File.open(path_last_id, 'wb'){|f| f.write new_id }
+    end
+    
+    # Retourne le path au fichier contenant le dernier ID
+    # 
+    def path_last_id
+      @path_last_id ||= File.join(folder, 'LAST_ID')
+    end
+    
     # Return le path du fichier de la fiche de donnée +data_fiche+
     # +data_fiche+ doit contenir au minimum : 
     #   :id::     Son identifiant

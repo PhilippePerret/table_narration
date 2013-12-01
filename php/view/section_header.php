@@ -3,6 +3,14 @@
   $mode_normal = file_exists('./.mode_test') == false
   ?>
   <?php
+  // -- Marque de sauvegarde de la collection --
+  ?>
+  <div id="mark_saved" class="fleft">
+    <span id="mark_saved_no" style="display:none;">🔴</span>
+    <span id="mark_saved_yes">🔵</span>
+    <span id="mark_saved_forbidden" style="display:none;font-size:1.3em;">⛔</span>
+  </div>
+  <?php
     // --- BOUTONS À DROITE ---
     // 
     // Note:  Les plus en haut seront les plus à gauche

@@ -10,6 +10,10 @@ fiche {
 }
 fiche:hover {opacity:1 !important;}
 
+/* Une fiche rangée perd sa position absolute */
+fiche.ranged { position: relative !important;}
+
+
 fiche > recto { display: block; }
 fiche > verso { display: block; }
 

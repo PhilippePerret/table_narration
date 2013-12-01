@@ -8,12 +8,12 @@
  *
  */
 
-$.extend(FICHES, {
-  
-})
-
-$.extend(Collection,{
-})
+// $.extend(FICHES, {
+//   
+// })
+// 
+// $.extend(Collection,{
+// })
 
 /* === PROPRIÉTÉ DE FICHE === */
 Object.defineProperties(Fiche.prototype, {

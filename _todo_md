@@ -1,3 +1,14 @@
 * Implémenter les outils pour créer les fiches
   Je dois pouvoir commencer à retravailler
 * Implémenter les draggable/droppable pour entrer les fiches dans les autres
+
+Réflexion sur l'ouverture :
+
+- Quand on ouvre un élément, on doit toujours le charger si nécessaire
+
+- Quand on ouvre un livre, on ne fait que changer sa class (opened)
+- Quand on ouvre un chapitre, on l'unrange (puisqu'il est toujours ouvert)
+- Quand on ouvre une page
+  - si elle est rangée, on l'unrange (clone dans chapitre)
+  - on affiche ses éléments (class opened)
+- Quand on ouvre un paragraphe, on fait rien

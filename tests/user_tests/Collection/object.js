@@ -9,6 +9,7 @@ function Collection_object()
     ["Existence des propriétés et méthodes de Collection", Collection_Existence_properties_and_methods],
     ["Test des fonctions synchrones", Collection_Test_fonctions_synchrones],
     ["Test de la méthode `dispatch`", Collection_Method_dispatch],
+    ["Test de la méthode `dispatch_data`", Collection_Dispatch_data],
     "Fin"
   ]
 
@@ -28,19 +29,20 @@ function Collection_Existence_properties_and_methods() {
   
   // Propriétés
   var props = [
-    'modified'
+    'saving', 'loading'
   ] 
   L(props).each(function(prop){ 'Collection'.should.have.property( prop )})
 
   // Propriétés complexes
   var comprops = [
+  'saving_forbidden', 'modified', 'regle_mark_saved', 
   'stop_automatic_saving', 'start_automatic_saving'
   ]
   L(comprops).each(function(prop){ 'Collection'.should.have.property( prop )})
 
   // Méthodes
   var methods = [
-  'add_modified', 'dispatch',
+  'add_modified', 'dispatch', 'dispatch_data',
   'ondrop_on_table'
   ]
   L(methods).each(function(method){ 'Collection'.should.respond_to( method )})
@@ -92,4 +94,8 @@ function Collection_Method_dispatch() {
   }
   
   
+}
+
+function Collection_Dispatch_data() {
+  pending("Implémenter le test de la méthode `Collection.dispatch_data`.")
 }

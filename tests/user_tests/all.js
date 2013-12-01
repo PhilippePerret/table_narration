@@ -21,6 +21,7 @@ function all()
     {name:"Test des éléments DOM d'une fiche",    test:'livre/fiche/display'},
     {name:"Test des sauvegardes de fiches",       test:'livre/fiche/saving'},
     {name:"Test des sélections de fiches",        test:'livre/fiche/selection'},
+    {name:"Test du rangement et de l'ouverture des fiches", test:'livre/fiche/opening_ranging'},
     {name:"Test de la classe Book",               test:'livre/book/class'},
     {name:"Test général de l'objet FICHES",       test:'FICHES/object'},
     "Fin des tests"

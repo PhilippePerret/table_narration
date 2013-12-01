@@ -13,6 +13,7 @@ function livre_FICHES_object()
   ["Test des méthodes `add` et `remove`", FICHES_Test_add_et_remove_fiche],
   ["Test de la méthode `dispatch`", FICHES_Test_method_dispatch],
   ["Test de la méthode `fiche`", FICHES_Test_method_fiche],
+  ["Test de la méthode `domObj_to_fiche`", FICHES_Method_domObj_to_fiche]
   "Fin"
   ]
 
@@ -133,4 +134,10 @@ function FICHES_Test_method_fiche() {
   "et 'type'. Elle crée la fiche si nécessaire."+
   "\nLa méthode peut recevoir une liste Array d'objets.")
   pending("Implémenter test de `FICHES.fiche`")
+}
+
+function FICHES_Method_domObj_to_fiche() {
+  specs("La méthode `FICHES.domObj_to_fiche` doit recevoir un objet DOM et "+
+  "retourner la fiche correspondante")
+  pending("Implémenter le test de `FICHES.domObj_to_fiche`")
 }
