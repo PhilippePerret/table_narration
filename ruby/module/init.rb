@@ -10,3 +10,4 @@ Charge les modèles indispensables
 
 require './ruby/model/collection'
 require './ruby/model/fiche'
+require './ruby/lib/functions'

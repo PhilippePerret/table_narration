@@ -39,6 +39,7 @@ Ici, on actualise cette liste en ne gardant que les fiches vraiment opened.
 
 =end
 
+log "-> #{__FILE__}"
 
 # Dans le cas où le dossier n'existerait pas, on le crée avec tout ce qui 
 # est nécessaire dedans
@@ -46,17 +47,25 @@ load './ruby/module/prepare_folder.rb' unless File.exists? Collection::folder
 
 
 def get_all_fiches_needed
-  return unless File.exists? File.join(Fiche::folder)
+  log "-> get_all_fiches_needed"
+  unless File.exists? File.join(Fiche::folder)
+    log "<- get_all_fiches_needed (dossier fiche inexistant => aucune fiche à lire)"
+    return
+  end
   get_all_books
   get_all_non_ranged
 end
 
 def get_all_books
-  Dir["#{Fiche::folder}/book/*.js"].each do |path|
-    book = JSON.parse((File.read path), {:symbolize_names => true})
+  log "-> get_all_books"
+  Dir["#{Fiche::folder}/book/*.msh"].each do |path|
+    # book = JSON.parse((File.read path), {:symbolize_names => true})
+    log "\t\tBook:#{path}"
+    book = Marshal.load(File.read path)
     @data[:fiches] << book
     get_children_of(Fiche.new(book[:id], 'book')) if book[:opened] == "true"
   end
+  log "<- get_all_books"
 end
 
 # Relève tous les enfants de la fiche +fiche+ ({instance Fiche})
@@ -71,6 +80,7 @@ end
 
 
 def get_all_non_ranged
+  log "-> get_all_non_ranged"
   new_liste = []
   Collection.non_rangeds.each do |idtype|
     next if idtype.strip == ""
@@ -86,6 +96,7 @@ def get_all_non_ranged
   
   # On enregistre la nouvelle liste des non rangés
   Collection::save_non_rangeds new_liste
+  log "<- get_all_non_ranged"
 end
 
 

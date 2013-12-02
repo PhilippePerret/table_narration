@@ -73,6 +73,11 @@ begin
   # Prendre les données envoyées
   Params::init(ARGV[0])
   require "./ruby/ajax/#{param('script')}.rb"
+  
+  # Fermer le fichier log si nécessaire
+  # Fonction dans ./ruby/lib/functions.rb
+  closelog
+  
 rescue Exception => e
   RETOUR_AJAX[:ok]        = false
   RETOUR_AJAX[:message]   = e.message + '<br />' + e.backtrace.join('<br>')
