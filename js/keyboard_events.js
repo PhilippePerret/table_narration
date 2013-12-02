@@ -10,6 +10,15 @@
 window.keypress_when_no_selection_no_edition = function(evt)
 {
   // console.log("-> keypress_when_no_selection_no_edition")
+  switch (evt.keyCode) {
+  // La touche effacement arrière ne doit rien faire quand rien n'est
+  // sélectionné
+  case K_ERASE:
+    return stop_event(evt)
+    break;
+  default:
+    
+  }
   return true
 }
 /*
@@ -22,16 +31,30 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   // console.log("-> keypress_when_fiche_selected_out_textfield")
   switch(evt.keyCode)
   {
-  /*
-   *  La touche TAB doit permettre de retourner la fiche
-   *  
-   */
+  /* La touche TAB doit permettre de retourner la fiche */
   case K_TAB:
     FICHES.current.retourne
     return stop_event(evt)
+  /* La touche ERASE doit permettre de supprimer la fiche */
+  case K_ERASE:
+    FICHES.current.want_delete
+    return stop_event(evt)
   default:
-    // console.log(" fin de keypress fiche")
-    return true
+    // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
+    // return true // Non, on doit poursuivre
+  }
+  
+  switch(evt.charCode)
+  {
+  case Key_o:
+    FICHES.current.open
+    return stop_event(evt)
+  case Key_f:
+    FICHES.current.close
+    return stop_event(evt)
+  default:
+    console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
+    // return stop_event(evt)
   }
 }
 /*
@@ -43,6 +66,26 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
   // console.log("-> keypress_when_fiche_selected_in_textfield")
   switch(evt.keyCode)
   {
+  /*
+   *  La touche RETURN enregistre le nouveau texte (input-text) ou
+   *  passe normalement à la ligne (paragraphe - TODO: voir s'il n'est pas préférable
+   *  de créer tout de suite un nouveau paragraphe)
+   *  
+   */
+  case K_RETURN:
+    console.log("-> touche retour sur champ d'édition")
+    var ifiche = FICHES.current
+    var ifield = FICHES.current_text_field
+    if(ifiche.is_paragraph /* TODO: S'il y a d'autres champs de saisie, checker ifield */)
+    {
+      // TODO: Créer un nouveau paragraphe
+    }
+    else
+    {
+      // TODO: Enregistrer le changement si nécessaire
+      ifield.blur()
+    }
+    return stop_event(evt)
   /*
    *  La touche tabulation dans un champ d'édition quelconque doit
    *  simplement faire sortir du champ

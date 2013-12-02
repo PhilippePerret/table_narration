@@ -1,7 +1,7 @@
 <?php
   // Chargement des librairies CSS générales
 
-  $libs = array('couleur');
+  $libs = array('couleur', 'edit');
 	echo "\n";
   foreach($libs as $lib){
     echo "\t\t".'<link rel="stylesheet" type="text/css" href="../lib/css/'.$lib.'" />'."\n";

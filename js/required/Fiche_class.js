@@ -562,14 +562,36 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
+   *  Volonté de supprimer la fiche (confirmation)
+   *
+   *  Si la confirmation est demandée, la méthode "delete" est vraiment appelée  
+   */
+  "want_delete":{
+    get:function(){
+      Edit.show({
+        id:'kill_fiche',
+        title: LOCALE.fiche['want delete fiche'],
+        fields:{
+          kill_children:{type:'checkbox', value:"true", libelle:LOCALE.fiche['kill children'], checked:false}
+        },
+        buttons:{
+          cancel:{name:"Renoncer"},
+          ok:{name:"Détruire la fiche", onclick:$.proxy(FICHES.remove, FICHES, this)}
+        }
+      })
+    }
+  },
+  /*
    *  Suppression d'une fiche
    *  
+   *  NOTE: CETTE PROPRIÉTÉ NE DOIT PAS ÊTRE APPELÉE
+   *        Il faut appeler <fiche>.want_delete (qui appelle ensuite FICHES.remove)
    */
   "delete":{
     get:function(){
       this.deleted  = true
-      FICHES.remove( this )
       this.modified = true
+      this.obj.remove()
     }
   },
   

@@ -1,5 +1,8 @@
 window.LOCALE = {
   fiche:{
+    'want delete fiche'             : "Détruire définitivement cette fiche ?",
+    'kill children'                 : "Détruire aussi tout son contenu",
+    
     error:{
       'parent should be an object'  : "Le parent doit être un object (une fiche)",
       'parent should be a fiche'    : "Le parent doit être une fiche",

@@ -1,6 +1,7 @@
 const K_TAB     = KeyEvent.DOM_VK_TAB
 const K_RETURN  = KeyEvent.DOM_VK_RETURN
 const K_ENTER   = KeyEvent.DOM_VK_ENTER
+const K_ERASE   = 8
 
 const Key_F     = KeyEvent.DOM_VK_F
 

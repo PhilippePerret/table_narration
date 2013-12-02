@@ -89,11 +89,24 @@ window.FICHES = {
   /*
    *  Supprime une fiche instanciée
    *  
+   *  NOTES
+   *  -----
+   *  @ C'est cette méthode qui doit être appelée, pas la propriété `delete' de la fiche 
+   *  @ Mais dans le processus normal, on appelle '<fiche>.want_delete' qui demande confirmation
+   *    de la suppression en demandant aussi si les enfants doivent être supprimés avec la fiche,
+   *    ou être gardés.
+   *
    */
-  remove:function(ifiche)
+  remove:function(ifiche, resultat)
   {
+    console.dir(resultat)
+    alert("OK !")
+    return
     // La fiche doit exister
     if(undefined == this.list[ifiche.id]) return
+    var ifiche = this.list[ifiche.id]
+    fiche.delete
+    if(this.current.id == ifiche.id) this.current = null
     delete this.list[ifiche.id]
     this.length --
   },
@@ -367,9 +380,11 @@ Object.defineProperties(FICHES,{
       this._current_text_field = obj
       if(editing)
       {
+        Collection.stop_automatic_saving
       }
       else
       {
+        Collection.start_automatic_saving
       }
     }
   }
