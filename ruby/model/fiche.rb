@@ -39,7 +39,7 @@ class Fiche
       if type.nil? then [data_fiche['id'], data_fiche['type']]
       else [data_fiche, type] end
         
-      File.join((folder_type type), "#{id}.js")
+      File.join((folder_type type), "#{id}.msh")
     end
     
     # Return le path du dossier de type +type+ (fiches)
@@ -100,7 +100,8 @@ class Fiche
   end
   
   def data
-    @data ||= JSON.parse(File.read path)
+    # @data ||= JSON.parse(File.read path)
+    @data ||= Marshal.load( File.read path )
   end
   
   def path

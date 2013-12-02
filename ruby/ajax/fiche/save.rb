@@ -22,7 +22,12 @@ upper_id = 0 + Fiche::last_id
 param(:fiches).each do |data|
   ifiche = Fiche.new(data['id'], data['type'])
   File.unlink(ifiche.path) if ifiche.exists?
-  File.open(ifiche.path, 'wb'){|f| f.write data.to_json }
+  
+  # Suite aux problèmes avec JSON (encoding), j'utilise Marshal
+  # File.open(ifiche.path, 'wb'){|f| f.write data.to_json }
+  File.open(ifiche.path, 'wb'){|f| f.write (Marshal.dump data)}
+  
+  
   # La fiche doit-elle faire partie des non-rangée ?
   non_ranged << ifiche.idtype unless ifiche.ranged?
   upper_id = ifiche.id if ifiche.id > upper_id
