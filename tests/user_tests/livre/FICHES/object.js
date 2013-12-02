@@ -13,7 +13,7 @@ function livre_FICHES_object()
   ["Test des méthodes `add` et `remove`", FICHES_Test_add_et_remove_fiche],
   ["Test de la méthode `dispatch`", FICHES_Test_method_dispatch],
   ["Test de la méthode `fiche`", FICHES_Test_method_fiche],
-  ["Test de la méthode `domObj_to_fiche`", FICHES_Method_domObj_to_fiche]
+  ["Test de la méthode `domObj_to_fiche`", FICHES_Method_domObj_to_fiche],
   "Fin"
   ]
 

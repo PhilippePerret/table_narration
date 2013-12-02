@@ -176,17 +176,20 @@ window.FICHES = {
    */
   dispatch:function(data)
   {
-    console.log("-> FICHES.dispatch")
+    // On conserve les fiches ouvertes dans cette liste
+    var openeds = [], rangeds = [] ;
     var i, len, dfiche, ifiche ;
     for(i=0, len = data.length; i<len; ++i)
     {
-      console.log("[dispatch] Traitement fiche " + data[i].id+":"+data[i].type)
-      console.log("--> fiche_from")
       ifiche = this.fiche_from( data[i] )
-      console.log("--> create")
       ifiche.create
-      console.log("<- FICHES.dispatch")
+      if(data[i]['opened'] == "true") openeds.push( ifiche )
+      if(data[i]['ranged'] == "true") rangeds.push( ifiche )
     }
+    
+    console.log(openeds)
+    console.log(rangeds)
+    
   },
   
   /*
