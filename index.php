@@ -8,6 +8,7 @@ else
 {
   // Chargement normal de la table Narration
   include "./php/lib/fonctions.php";
+  include "./php/module/check.php";
   include "./php/view/gabarit.php";
 }
 

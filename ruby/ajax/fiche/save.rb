@@ -15,7 +15,8 @@ Actualise le dernier ID utilisé si nécessaire.
 # Liste des éléments non rangés
 non_ranged = Collection::non_rangeds
 
-upper_id = Fiche::last_id
+# Pour l'actualisation du dernier ID fiche utilisé
+upper_id = 0 + Fiche::last_id
 
 # Enregistrement de toutes les fiches transmises
 param(:fiches).each do |data|

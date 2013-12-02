@@ -46,15 +46,16 @@ load './ruby/module/prepare_folder.rb' unless File.exists? Collection::folder
 
 
 def get_all_fiches_needed
+  return unless File.exists? File.join(Fiche::folder)
   get_all_books
   get_all_non_ranged
 end
 
 def get_all_books
-  Dir["#{Collection::folder}/fiche/book/*.js"].each do |path|
-    book = JSON.parse(File.read(path))
+  Dir["#{Fiche::folder}/book/*.js"].each do |path|
+    book = JSON.parse((File.read path), {:symbolize_names => true})
     @data[:fiches] << book
-    get_children_of(Fiche.new(book['id'], 'book')) if book['opened'] == "true"
+    get_children_of(Fiche.new(book[:id], 'book')) if book[:opened] == "true"
   end
 end
 

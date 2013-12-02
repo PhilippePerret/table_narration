@@ -39,12 +39,26 @@ class Fiche
       if type.nil? then [data_fiche['id'], data_fiche['type']]
       else [data_fiche, type] end
         
-      File.join(folder, type, "#{id}.js")
+      File.join((folder_type type), "#{id}.js")
     end
     
+    # Return le path du dossier de type +type+ (fiches)
+    def folder_type type
+      type = type.to_sym
+      @folders ||= {}
+      if @folders[type].nil?
+        d = @folders[type] = File.join(folder, type.to_s)
+        Dir.mkdir(d, 0755) unless File.exists?(d)
+      end
+      @folders[type]
+    end
     # Return le path du dossier principal des fiches
     def folder
-      @folder ||= File.join(Collection::folder, 'fiche')
+      @folder ||= begin
+        d = File.join(Collection::folder, 'fiche')
+        Dir.mkdir(d, 0755) unless File.exists?(d)
+        d
+      end
     end
   end
   

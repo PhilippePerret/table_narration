@@ -1,4 +1,4 @@
-#!/Users/philippeperret/.rvm/rubies/ruby-1.9.3-p484/bin/ruby
+#!/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/bin/ruby
 # encoding: UTF-8
 
 # ! /Users/philippeperret/.rvm/rubies/ruby-1.9.3-p484/bin/ruby

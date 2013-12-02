@@ -23,7 +23,11 @@ class Collection
       @path_liste_non_ranged ||= File.join(folder_listes, 'non_ranged')
     end
     def folder_listes
-      @folder_listes ||= File.join(folder, 'liste')
+      @folder_listes ||= begin
+        d = File.join(folder, 'liste')
+        Dir.mkdir(d, 0755) unless File.exists?(d)
+        d
+      end
     end
     def folder_backups
       @folder_backups ||= begin
