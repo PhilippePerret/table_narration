@@ -804,6 +804,10 @@ Fiche.prototype.dispatch = function(data){
     // Transformation en fonction de la propriété
     switch(prop)
     {
+    case 'opened':
+    case 'ranged':
+      continue
+      break
     case 'id': 
       val = parseInt(val, 10); 
       break;
