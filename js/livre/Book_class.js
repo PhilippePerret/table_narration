@@ -1,11 +1,9 @@
 /* === CLASSE BOOK === */
 window.Book = function(data)
 {
-  console.log("--> Book")
   if(undefined == data) data = {}
   data.type = 'book'
   Fiche.call(this, data)
-  console.log("<-- Book")
 }
 Book.prototype = Object.create( Fiche.prototype )
 Book.prototype.constructor = Book

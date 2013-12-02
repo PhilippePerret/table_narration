@@ -14,6 +14,7 @@ function livre_FICHES_object()
   ["Test de la méthode `dispatch`", FICHES_Test_method_dispatch],
   ["Test de la méthode `fiche`", FICHES_Test_method_fiche],
   ["Test de la méthode `domObj_to_fiche`", FICHES_Method_domObj_to_fiche],
+  ["Test de le méthode `open`", FICHES_Method_open],
   "Fin"
   ]
 
@@ -33,7 +34,8 @@ function FICHES_Methodes_et_properties() {
   ]
   L(props).each(function(prop){ 'FICHES'.should.have.property(prop)})
   var methods = [
-  'add_selected', 'remove_selected', 'add', 'dispatch'
+  'add_selected', 'remove_selected', 'add', 'dispatch',
+  'open'
   ]
   L(methods).each(function(method){ 'FICHES'.should.respond_to(method)})
   
@@ -45,16 +47,18 @@ function FICHES_Test_init_all() {
   "le moment qu'une seule collection contenant toutes les fiches")
   
   w("On crée des fiches qu'on dépose sur la table")
-  APP.FICHES.last_id = -1
-  APP.FICHES.list = {}
-  APP.FICHES.selecteds = {}
-  APP.FICHES.current = null
+  APP.FICHES.last_id    = -1
+  APP.FICHES.list       = {}
+  APP.FICHES.length     = 0
+  APP.FICHES.selecteds  = {}
+  APP.FICHES.current    = null
   // Préparation
-  APP.ibook = new APP.Book(); APP.ibook.create;
-  APP.ipage = new APP.Page(); APP.ipage.create;
-  APP.ichap = new APP.Chapter(); APP.ichap.create;
-  APP.ipara = new APP.Paragraph(); APP.ipara.create;
+  APP.ibook = new APP.Book({titre:"Un livre"});         APP.ibook.create;
+  APP.ipage = new APP.Page({titre:"Une page"});           APP.ipage.create;
+  APP.ichap = new APP.Chapter({titre:"Un chapitre"});     APP.ichap.create;
+  APP.ipara = new APP.Paragraph({texte:"Un paragraphe"}); APP.ipara.create;
   APP.FICHES.add_selected(APP.ipage, keep = true)
+  // console.log(APP.FICHES.list)
   'FICHES.last_id'.should = 3
   'FICHES.length' .should = 4
   'FICHES.current'.should = APP.ipage
@@ -102,30 +106,47 @@ function FICHES_Test_add_et_remove_fiche() {
 
 function FICHES_Test_method_dispatch() {
   specs("La méthode `dispatch` permet de dispatcher les fiches (i.e. de les"+
-  " créer) lorsqu'elles sont remontées par ajax.")
+  " créer) lorsqu'elles sont remontées par ajax."+
+  "\nElle doit également ouvrir les fiches ouvertes (et peut-être ranger celles) "+
+  "qui doivent l'être, à part si un autre processus à été utilisé pour le faire.")
   APP.FICHES.init_all
-  'FICHES.length'.should = 0
-  'FICHES.last_id'.should = -1
-  'FICHES.list'.should = {}
+  'FICHES.length'   .should = 0
+  'FICHES.last_id'  .should = -1
+  'FICHES.list'     .should = {}
   
-  w("J'envoie à la méthode des fiches artificielles")
+  w("J'envoie à la méthode des données de fiches")
   var data = [
-  {id:"12", type:'book', titre:"Un titre de livre", opened:false},
-  {id:"16", type:'page', titre:"La page d'un autre livre", opened:false,
+  {id:"12", type:'book', titre:"Un titre de livre", opened:"false"},
+  {id:"16", type:'page', titre:"La page d'un autre livre", opened:"true",
   enfants:[{id:"1", type:"para"}]},
-  {id:"1", type:'para', texte:"Le paragraphe a un texte", ranged:true, 
-    parent:{id:16, type:'page'}}
+  {id:"1", type:'para', texte:"Le paragraphe a un texte", ranged:"true", 
+    parent:{id:"16", type:'page'}}
   ]
   
   APP.FICHES.dispatch(data) // <-- TEST
   
-  'FICHES.last_id'.should = 16
   'FICHES.length'.should = data.length
   // On vérifie pour chaque fiche
   L([12, 16, 1]).each(function(id){
     ("FICHES.list["+id+"]").should.be.defined
     jq(APP.FICHES.list[id].jid).should.exist
   })
+  
+  // Les fiches marquées ouvertes doivent l'être
+  APP.f12 = get_fiche(12)
+  APP.f16 = get_fiche(16)
+  'f12.opened'.should.be.false
+  jq(APP.f12.items_jid).should.exist
+  jq(APP.f12.items_jid).should_not.be.visible
+  'f16.opened'.should.be.true
+  jq(APP.f16.items_jid).should.exist
+  jq(APP.f16.items_jid).should.be.visible
+  
+  // Les fiches rangées doivent l'être
+  APP.f1 = get_fiche(1)
+  'f1.ranged'.should.be.true
+  jq(f16.items_jid).should.contain( jq(f1.jid) ) // Fonctionne ?
+  
 }
 
 function FICHES_Test_method_fiche() {
@@ -140,4 +161,37 @@ function FICHES_Method_domObj_to_fiche() {
   specs("La méthode `FICHES.domObj_to_fiche` doit recevoir un objet DOM et "+
   "retourner la fiche correspondante")
   pending("Implémenter le test de `FICHES.domObj_to_fiche`")
+}
+
+function FICHES_Method_open() {
+  specs("La méthode `open` doit permettre d'ouvrir une ou des fiches."+
+  "\n@Note: Elle a surtout été implémentée pour servir lors du chargement de la "+
+  "collection")
+  
+  w("On crée deux pages et on les ferme")
+  var page = APP.ipage = APP.FICHES.full_create({type:'page'})
+  page.close
+  'ipage.opened'.should.be.false
+  jq(page.items_jid).should.exist
+  jq(page.items_jid).should_not.be.visible
+  var page2 = APP.ipage2 = APP.FICHES.full_create({type:'page', titre:"Une autre page"})
+  page2.close
+  'ipage2.opened'.should.be.false
+  jq(page2.items_jid).should.exist
+  jq(page2.items_jid).should_not.be.visible
+  
+  blue("Test avec l'envoie d'une fiche en argument")
+  APP.FICHES.open(page) // <-- TEST
+  'ipage.opened'.should.be.true
+  jq(page.items_jid).should.be.visible
+  page.close
+  if('ipage.opened'.is.equal_to(true)) failure("La page devrait être fermée…")
+  
+  blue("Test avec l'envoi d'une liste en argument")
+  APP.FICHES.open([page, page2]) // <-- TEST
+  'ipage.opened'.should.be.true
+  jq(page.items_jid).should.be.visible
+  'ipage2.opened'.should.be.true
+  jq(page2.items_jid).should.be.visible
+  
 }

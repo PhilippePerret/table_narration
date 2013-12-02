@@ -10,10 +10,10 @@ window.FICHES = {
    *  
    */
   datatype:{
-    'para'  : {level: 5 , child_type:null},
-    'page'  : {level: 10, child_type:'para'},
-    'chap'  : {level: 15, child_type:'page'},
-    'book'  : {level: 20, child_type:'chap'}
+    'para'  : {level: 5 , child_type:null,    parent_type:'page'},
+    'page'  : {level: 10, child_type:'para',  parent_type:'chap'},
+    'chap'  : {level: 15, child_type:'page',  parent_type:'book'},
+    'book'  : {level: 20, child_type:'chap',  parent_type:null}
     },
 
   /*
@@ -182,15 +182,25 @@ window.FICHES = {
     for(i=0, len = data.length; i<len; ++i)
     {
       ifiche = this.fiche_from( data[i] )
-      ifiche.create
       if(data[i]['opened'] == "true") openeds.push( ifiche )
       if(data[i]['ranged'] == "true") rangeds.push( ifiche )
     }
     
-    console.log(openeds)
+    this.open(openeds)
     console.log(rangeds)
     
   },
+  
+  /*
+   *  Ouvre la ou les fiches données en argument
+   *
+   */
+  open:function(arr)
+  {
+    if(exact_typeof(arr) != 'array') arr = [arr] ;
+    L(arr).each(function(fi){ fi.open })
+  },
+  
   
   /*
    *  Retourne la fiche (ou LES fiches) correspondant à l'objet
@@ -219,25 +229,38 @@ window.FICHES = {
       return this.fiche_from(obj)
     }
   },
-  // Identique à la précédente, mais ne reçoit qu'un objet contenant
-  // au moins 'id' et 'type'
-  // Retourne la fiche correspondante ou l'instance créée
-  // @note: Les +data+ envoyées sont entièrement dispatchées, même si
-  // la fiche existe déjà.
+
+  /*
+   *  Renvoie la fiche si elle existe ou la crée (entièrement)
+   *
+   *  NOTES
+   *  -----
+   *
+   *  @ La méthode est identique à la précédente mais ne peut recevoir les données
+   *    que d'une seule fiche.
+   *
+   *  @ Les données +data+ sont toujours dispatchées dans la fiche, même lorsqu'elle
+   *    existe. Cela est utile au chargement : si un parent pas encore créé est défini
+   *    dans une fiche, on le crée "rapidement" (simplement avec son id et son type) puis
+   *    ensuite, quand on traite le parent dans le chargement, on n'a plus qu'à dispatcher
+   *    toutes ses données.
+   *
+   *  @ Quand une fiche doit être créée, on crée son INSTANCE et son OBJET DOM sur la table
+   *  
+   */
   fiche_from:function(data)
   {
-    console.log("-> FICHES.fiche_from")
+    var ifiche ;
     if(undefined != this.list[data.id]){ 
-      console.log("[fiche_from] Fiche définie")
-      var ifiche = this.list[data.id]
+      ifiche = this.list[data.id]
       ifiche.dispatch( data ) // au cas où d'autres données sont fournies
-      return ifiche
     }
     else
-    { // => il faut créer une instance
-      console.log("[fiche_from] Fiche NON définie")
-      return this.create_instance_fiche_of_type(data)
+    { // => il faut créer une instance      
+      ifiche = this.create_instance_fiche_of_type(data)
+      ifiche.create
     }
+    return ifiche
   },
   // @data  Peut contenir 'id' et 'type' au minimum
   create_instance_fiche_of_type:function(data)

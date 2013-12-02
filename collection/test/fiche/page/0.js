@@ -1,1 +1,0 @@
-{"id":"0","type":"page","titre":"L\\'été à çala","deleted":"false","opened":"true","ranged":"false","top":"31","left":"106"}
