@@ -6,6 +6,11 @@
   // -- Marque de sauvegarde de la collection --
   ?>
   <div id="mark_saved" class="fleft">
+    <span 
+      id="mark_mode_automatic" 
+      style="visibility:hidden;color:green;"
+      title="Mode de sauvegarde automatique activé"
+      >⚡⚡</span>
     <span id="mark_saved_no" style="display:none;" onclick="Collection.save">🔴</span>
     <span id="mark_saved_yes">🔵</span>
     <span id="mark_saved_forbidden" style="display:none;font-size:1.3em;">⛔</span>
@@ -16,6 +21,15 @@
     // Note:  Les plus en haut seront les plus à gauche
   ?>
   <div id="buttons_right">
+    <!-- CB d'enregistrement automatique -->
+    <div style="display:inline-block;">
+      <input 
+        type="checkbox" 
+        id="cb_automatic_save"
+        onclick="Collection.enable_automatic_saving(this.checked)"
+         />
+      <label for="cb_automatic_save">Automatic Save</label>
+    </div>
     <!-- Bouton pour forcer un backup -->
     <input
       id="btn_force_backup"

@@ -78,6 +78,12 @@ Object.defineProperties(FakedKeyEvent.prototype, {
 
 
 window.Keyboard = {
+  hit:function(texte)
+  {
+    // Ça ne fonctionne pas (alors que le script AppleScript fonctionne, seul)
+    // Ajax.send({script:'ui-osascript/hit_keys', texte:texte})
+  }
+  ,
 	event:null,			// L'évènement Key courant
   
   /*
@@ -140,7 +146,7 @@ window.Keyboard = {
 		return new FakedKeyEvent(data)
   },
   
-  // Création de l'évènement document
+  // Création de l'évènement Keyboard
   create_event:function(){
 	  var ev = document.createEvent("KeyboardEvent");
 		if(document.createEvent) 	return document.createEvent('KeyboardEvent')

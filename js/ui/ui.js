@@ -29,12 +29,9 @@ window.UI = {
    */
   ondrop_on_table:function(evt, ui)
   {
-    // -- DÉBUG --
-    // console.log("evt:");console.dir(evt)
-    // console.log("ui.helper:");console.dir(ui.helper)
-    // -- /DÉBUG --
+    var ctool = ui.helper
+    dlog("-> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_CURRENT|DB_FCT_ENTER)
     
-    var card_tool = ui.helper
     // Déterminer la position approximative du drop sur la table
     var pos_table = $('section#table').position()
     var x = evt.clientX - pos_table.left  // pas tout à fait exact mais
@@ -42,7 +39,7 @@ window.UI = {
     
     // On crée la fiche
     FICHES.full_create({
-      type  : card_tool.attr('data-type'),
+      type  : ctool.attr('data-type'),
       left  : x,
       top   : y
     })
@@ -61,18 +58,14 @@ Object.defineProperties(UI,{
   "prepare":{
     get:function(){
       this.preparing = true
-      // La table doit accepter les drops des "card tool" (tous les types)
-      $('section#table').droppable({
-        accept  : '.card_tool',
-        drop    : $.proxy(this.ondrop_on_table, this)
-      })
+      // // La table doit accepter les drops des "card tool" (tous les types)
+      // $('section#table').droppable({
+      //   accept  : '.card_tool',
+      //   drop    : $.proxy(this.ondrop_on_table, this)
+      // })
     
-      // Les "card-tool" doivent être rendus draggable
-      $('section#header > div#header_card_tools > div.card_tool').draggable({
-        cursor  : 'move',
-        zIndex  : 1000,
-        revert  : true
-      })
+      // Prépation des "card-tools"
+      CardTools.prepare
  
  
       this.preparing  = false

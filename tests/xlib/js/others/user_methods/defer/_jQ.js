@@ -29,6 +29,7 @@ window._obJOf = function(foo){
 	with(APP){foo = $(foo)} 													// jId
 	return foo				
 }
+
 // Reçoit un jID, un jQ ou un objet jQuery et retourne une Instance jQ
 window._jqOf = function(foo){
 	if(foo.hasOwnProperty('jid')) 	return foo ; // Objet jQ
@@ -144,13 +145,11 @@ Object.defineProperties(_jq.prototype, {
   }
 })
 
-
 // Récupérer l'objet DOM dans l'application testée (méthode interne seulement)
 _jq.prototype._get_obj = function(){
-	var jid = this.jid;
-	with(APP){obj = $(jid)};
-	this.obj 			= obj
-	this.obj_dom 	= obj[0]
+  var obj = get_obj_in_app(this.jid)
+  // console.log("this.jid:"+this.jid + " / obj est défini ? " + (undefined != obj))
+	this.obj_dom 	= obj ? obj[0] : null
 }
 
 // -------------------------------------------------------------------

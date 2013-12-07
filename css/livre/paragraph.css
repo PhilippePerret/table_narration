@@ -5,7 +5,7 @@ fiche.para {
   background-color :#EEE;
   color   :black;
   width   :30em;
-  opacity :0.5;
+/*  opacity :0.5;*/
 }
 /* Un paragraphe est toujours ouvert (avec opened à false pourtant) */
 /*

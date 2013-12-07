@@ -14,10 +14,10 @@
  *  @return   La fiche créée d'instance correspondante
  *
  */
-function create_book(data) {
+function create_book( data ) {
   if(undefined == data) data = {}
   data.type = 'book'
-  var ifiche = APP.FICHES.full_create(data)
+  var ifiche = APP.FICHES.full_create( data )
   if(undefined != data.parent) put_in_parent(data.parent, ifiche)
   return ifiche
 }

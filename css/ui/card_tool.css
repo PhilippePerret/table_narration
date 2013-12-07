@@ -1,0 +1,17 @@
+/*  
+ *  Styles pour les outils-fiche
+ */
+section#header > div#header_card_tools {
+  
+}
+
+section#header > div#header_card_tools > div.card_tool {
+  display           : inline-block;
+  width             : 84px;
+  background-color  : #DDD;
+  font-family       : "Lucida Grande";
+  font-size         : 10pt;
+  color             : #565656;
+  text-align        : center;
+  padding           : 5px 0;
+}

@@ -3,14 +3,22 @@
  *  CHAPTER
  */
 fiche.chap {
-  background-color :#EEE;
+  background-color : white;
   color   :black;
-  width   :10em;
-  opacity :0.5;
+  width   :auto;
+/*  opacity :0.5;*/
 }
-fiche.chap.opened {
-  width   :20em !important;
+fiche.chap.opened:not(.ranged) {
+  width   :20em;
 }
 
-fiche.chap > recto > div.items { display: block !important; }
+fiche.chap.ranged {
+  margin-top  : 1em;
+  padding     : 0 4px 0 0;
+}
+
+fiche.chap > recto > div.items { 
+  display     : block !important; 
+  margin-top  : 0.5em;
+}
 /*fiche.chap.opened > recto > div.items { display: block;}*/

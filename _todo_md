@@ -4,3 +4,24 @@
 * Quand la fiche est un-rangée :
   - ajouter son draggable
   - supprimer son sortable
+
+
+* Devant l'impossibilité d'écrire du texte dans les champs de saisie, j'ai deux solutions :
+
+    1. Simuler cet event en ajouter les touches en changeant la valeur
+        ( entendu que les touches “keycode” ont l'air de fonctionner, comme la touche
+          retour — mais c'est seulement parce qu'elle est traitée dans mon propre
+          gestionnaire d'évènement. Sinon ça serait pareil)
+          
+    2.  Implémenter justement dans ce gestionnaire d'évènement keypress l'ajout des
+        touches dans les champs. Mais alors, il faudrait le faire dans toutes les
+        application, hors comment gérer le fait qu'elles peuvent elles aussi traiter
+        ces évènements.
+        
+    3.  Abandonner ce genre de test et "accompagner" le testeur, en lui demandant
+        d'accomplir des actions (p.e. "taper un titre dans le champ") et en testant
+        les résultats obtenus.
+        Même si c'est un peu lourd, ça me semble quand même être la meilleure solution.
+      
+    4.  Voir si un outil externe (comme AppleScript) ne pourrait pas me permettre de
+        simuler vraiment un utilisateur…

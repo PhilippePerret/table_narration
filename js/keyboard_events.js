@@ -1,4 +1,9 @@
 
+window.dispay_code_event = function(evt)
+{
+  console.dir({charCode:evt.charCode, keyCode:evt.keyCode, which:evt.which})
+  return true
+}
 /*
  *  Gestion des touches pressées quand aucune fiche n'est sélectionnée
  *  
@@ -10,6 +15,7 @@
 window.keypress_when_no_selection_no_edition = function(evt)
 {
   // console.log("-> keypress_when_no_selection_no_edition")
+  
   switch (evt.keyCode) {
   // La touche effacement arrière ne doit rien faire quand rien n'est
   // sélectionné
@@ -29,6 +35,8 @@ window.keypress_when_no_selection_no_edition = function(evt)
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
   // console.log("-> keypress_when_fiche_selected_out_textfield")
+  // return dispay_code_event(evt)
+  
   switch(evt.keyCode)
   {
   /* La touche TAB doit permettre de retourner la fiche */
@@ -64,6 +72,8 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
  */
 window.keypress_when_fiche_selected_in_textfield = function(evt){
   // console.log("-> keypress_when_fiche_selected_in_textfield")
+  // dispay_code_event(evt)
+
   switch(evt.keyCode)
   {
   /*
@@ -73,16 +83,23 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
    *  
    */
   case K_RETURN:
-    console.log("-> touche retour sur champ d'édition")
+    // console.log("-> touche retour sur champ d'édition")
     var ifiche = FICHES.current
     var ifield = FICHES.current_text_field
-    if(ifiche.is_paragraph /* TODO: S'il y a d'autres champs de saisie, checker ifield */)
+    var field_prop = ifield.attr('id').split('-')[2]
+    // console.log("field_prop = "+field_prop)
+    
+    if(ifiche.is_paragraph && field_prop == 'texte')
     {
-      // TODO: Créer un nouveau paragraphe
+      // TODO: Créer un paragraphe à la suite de ifield
     }
     else
     {
-      // TODO: Enregistrer le changement si nécessaire
+      // Enregistrer le changement de texte, if any
+      // @note: Inutile d'appeler "onchange_titre" puisqu'il sera appelé
+      // par le blur() ci-dessous. De même que pour les autres champs,
+      // certainement.
+      // ifiche['onchange_'+field_prop]()
       ifield.blur()
     }
     return stop_event(evt)

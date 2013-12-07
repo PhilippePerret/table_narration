@@ -10,10 +10,10 @@ window.FICHES = {
    *  
    */
   datatype:{
-    'para'  : {level: 5 , child_type:null,    parent_type:'page'},
-    'page'  : {level: 10, child_type:'para',  parent_type:'chap'},
-    'chap'  : {level: 15, child_type:'page',  parent_type:'book'},
-    'book'  : {level: 20, child_type:'chap',  parent_type:null}
+    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,  parent_type:'page'},
+    'page'  : {level: 10, defvalue: "TITRE_PAGE", child_type:'para',      parent_type:'chap'},
+    'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE", child_type:'page',  parent_type:'book'},
+    'book'  : {level: 20, defvalue: "TITRE_LIVRE", child_type:'chap',     parent_type:null}
     },
 
   /*
@@ -58,6 +58,18 @@ window.FICHES = {
   // current_text_field:false,
   
   /*
+   *  Retourne la fiche ({Fiche>something}) d'identifiant +id+
+   *  
+   */
+  get:function(id)
+  {
+    if(undefined==id) throw "Il faut fournir l'identifiant de la fiche à retourner";
+    var fi = this.list[id]
+    if(undefined==fi) throw "La fiche d'identifiant #"+id+" est inconnue au bataillon";
+    return fi
+  },
+  
+  /*
    *  Reçoit un objet DOM de fiche (class fiche) et
    *  retourne la fiche correspondante.
    *  
@@ -74,13 +86,13 @@ window.FICHES = {
    *  
    *  NOTE
    *  ----
+   *    # Si la fiche existe déjà, on ne l'ajoute pas.
    *
    *  @param  ifiche    Instance Fiche de la fiche instanciée
    *
    */
   add:function(ifiche)
   {
-    // La fiche ne doit pas encore exister
     if(undefined != this.list[ifiche.id]) return
     this.list[ifiche.id] = ifiche
     this.length ++
@@ -179,41 +191,68 @@ window.FICHES = {
    *
    *  NOTES
    *  -----
-   *    * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
+   *    # Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
    *      des parents ou des enfants. Les fiches sont instanciées à leur première
    *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
    *      puis elles sont ensuites "remplies" avec les données si la fiche est
    *      traitées plus tard ici.
+   *    # Par défaut, les fiches sont maintenant créées fermées, donc on doit
+   *      passer seulement en revue les fiches qui doivent être ouvertes.
    *
    *  @param  data   {Array} Liste des fiches remontées par Collection.load.data  
    */
   dispatch:function(data)
   {
-    // On conserve les fiches ouvertes dans cette liste
-    var openeds = [], rangeds = [] ;
+    dlog("-> FICHES.dispatch", DB_FCT_ENTER)
+    var idm = "[FICHES.dispatch] "
+    var openeds = [], closeds = [], rangeds = [] ;
     var i, len, dfiche, ifiche ;
     for(i=0, len = data.length; i<len; ++i)
     {
       ifiche = this.fiche_from( data[i] )
-      if(data[i]['opened'] == "true") openeds.push( ifiche )
-      if(data[i]['ranged'] == "true") rangeds.push( ifiche )
+      if(data[i]['opened'] == "true" ) openeds.push( ifiche )
+      if(data[i]['opened'] == "false") closeds.push( ifiche )
+      if(data[i]['ranged'] == "true" ) rangeds.push( ifiche )
     }
     
-    this.open(openeds)
-    console.log(rangeds)
+    // this  .close (closeds)
+    this  .open  (openeds)
+    this  .range (rangeds)
+    // console.log(rangeds)
     
+    dlog("<- FICHES.dispatch", DB_FCT_ENTER)
   },
   
   /*
    *  Ouvre la ou les fiches données en argument
    *
+   * @param arr   Liste d'instance Fiche ou Instance Fiche
    */
   open:function(arr)
   {
     if(exact_typeof(arr) != 'array') arr = [arr] ;
     L(arr).each(function(fi){ fi.open })
   },
-  
+  /*
+   *  Ferme la ou les fiches données en argument
+   *  
+   * @param arr   Liste d'instance Fiche ou Instance Fiche
+   *
+   */
+  close:function(arr)
+  {
+    if(exact_typeof(arr) != 'array') arr = [arr] ;
+    L(arr).each(function(fi){ fi.close })
+  },
+  /*
+   *  Range la ou les fiches données en argument
+   *  
+   */
+  range:function(arr)
+  {
+    if(exact_typeof(arr) != 'array') arr = [arr] ;
+    L(arr).each(function(fi){ fi.range })
+  },
   
   /*
    *  Retourne la fiche (ou LES fiches) correspondant à l'objet
@@ -263,7 +302,9 @@ window.FICHES = {
    */
   fiche_from:function(data)
   {
-    var ifiche ;
+    dlog("-> FICHES.fiche_from", DB_FCT_ENTER)
+    DL & DB_FCT_ENTER && console.log()
+    var idm="[FICHES.fiche_from] ", ifiche ;
     if(undefined != this.list[data.id]){ 
       ifiche = this.list[data.id]
       ifiche.dispatch( data ) // au cas où d'autres données sont fournies
@@ -273,17 +314,19 @@ window.FICHES = {
       ifiche = this.create_instance_fiche_of_type(data)
       ifiche.create
     }
+    dlog("<- FICHES.fiche_from", DB_FCT_ENTER)
     return ifiche
   },
   // @data  Peut contenir 'id' et 'type' au minimum
   create_instance_fiche_of_type:function(data)
   {
+    dlog("-> FICHES.create_instance_fiche_of_type ["+data.type+"#"+data.id+"]", DB_FCT_ENTER)
     switch(data.type)
     {
-    case 'book' : return new Book(data);      break;
-    case 'chap' : return new Chapter(data);   break;
-    case 'page' : return new Page(data);      break;
-    case 'para' : return new Paragraph(data); break;
+    case 'book' : return new Book(data)
+    case 'chap' : return new Chapter(data)
+    case 'page' : return new Page(data)
+    case 'para' : return new Paragraph(data)
     }
   },
   
@@ -299,16 +342,29 @@ window.FICHES = {
    *  
    *  @param  data    {Hash} Les données pour la nouvelle fiche
    *  @param  options {Hash} Les options.
+   *                    focus_titre   Si TRUE, on focuse dans le titre
+   *                    select        Si TRUE, on sélectionne la fiche
    *
    *  @return La nouvelle fiche créée
    */
   full_create:function(data, options)
   {
+    dlog("-> FICHES.full_create", DB_FCT_ENTER)
     var ifiche = FICHES.create_instance_fiche_of_type(data)
     ifiche.create
-    // ifiche.modified = true
-    var focuson = ifiche.is_paragraph?'input_texte':'input_titre';
-    ifiche[focuson].select() // sélectionne aussi la fiche
+    if(options)
+    {
+      if(options.focus_titre)
+      {
+        var focuson = ifiche.is_paragraph?'input_texte':'input_titre';
+        ifiche[focuson].select() // sélectionne aussi la fiche (est-ce bien ?)
+      }
+      else if(options.select)
+      {
+        ifiche.select
+      }
+    }
+    dlog("<- FICHES.full_create", DB_FCT_ENTER)
     return ifiche
   },
   
@@ -322,6 +378,24 @@ window.FICHES = {
     if(this.current == ifiche) this.current = null
     delete this.selecteds[ifiche.id]
     window.onkeypress = keypress_when_no_selection_no_edition
+  },
+  
+  /*
+   *  Double-click sur une fiche fermée
+   *  
+   *  PRODUIT
+   *  -------
+   *    # Ouvre la fiche
+   *    # Focusse sur le titre ou le texte si paragraphe
+   *
+   *  @param  ifiche    Instance Fiche de la fiche double-cliquée
+   *  @param  evt       Event Dblclick
+   */
+  on_dblclick:function(ifiche, evt)
+  {
+    ifiche.open
+    if(ifiche.is_paragraph) ifiche.input_texte.select()
+    else ifiche.input_titre[0].focus()
   },
   
   /*

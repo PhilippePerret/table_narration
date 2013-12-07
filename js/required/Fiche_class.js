@@ -17,6 +17,8 @@
 // Classe Fiche
 window.Fiche = function(data)
 {
+  dlog("-> Fiche (instanciation)", DB_FCT_ENTER)
+  
   this.class      = "Fiche"
   this.id         = null
   this.created_at = null
@@ -30,7 +32,7 @@ window.Fiche = function(data)
   // this.ranged     = false  // propriété complexe
   this.selected   = false
   this.built      = false  // mis à true quand la fiche est construite
-  this.retourned  = false
+  this.retourned  = false   // Mis à true quand c'est le verso affiché
   
   if(undefined == data) data = {}
   
@@ -48,6 +50,8 @@ window.Fiche = function(data)
   this.dispatch( data )
   
   FICHES.add( this )
+  dlog("<- Fiche (instanciation)", DB_FCT_ENTER)
+  
 }
 
 Object.defineProperties(Fiche.prototype, {
@@ -127,12 +131,14 @@ Object.defineProperties(Fiche.prototype, {
   "verso":{get:function(){ return $(this.verso_jid) }},
   
   /* Champ de saisie du titre */
-  "titre_jid":{get:function(){return 'input#'+this.dom_id+'-titre'}},
+  "titre_id":{get:function(){return this.dom_id+'-titre'}},
+  "titre_jid":{get:function(){return 'input#'+this.titre_id}},
   "input_titre":{
     get:function(){
       if(!this._input_titre || this._input_titre.length == 0) this._input_titre = $(this.titre_jid);
       return this._input_titre
-    }
+    },
+    set:function(obj){this._input_titre = obj}
   },
   
   /* Div des items (children) de la fiche */
@@ -194,9 +200,10 @@ Object.defineProperties(Fiche.prototype, {
    */
   "create":{
     get:function(){
+      dlog("-> Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       this.build
-      this.open
       this.set_values
+      dlog("<- Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       return true
     }
   },
@@ -210,14 +217,14 @@ Object.defineProperties(Fiche.prototype, {
       // On ajoute le code ou on le remplace
       if(this.obj) this.obj.replaceWith( this.html )
       else         $('section#table').append( this.html )
+      // On marque la fiche construite
+      this.built = true
       // Elle est toujours construite fermée
       this.close
       // On positionne la fiche
       this.positionne
       // On place les observers
       this.observe
-      // On marque la fiche construite
-      this.built = true
       return true
     }
   },
@@ -228,6 +235,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "observe":{
     get:function(){
+      DL & DB_FCT_ENTER && console.log("-> Fiche::observe")
       // On doit la rendre draggable
       this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
@@ -239,26 +247,13 @@ Object.defineProperties(Fiche.prototype, {
         this.input_texte[0].onchange = $.proxy(this.onchange_texte, this)
       }
       else
-      {
-        // La modification du titre doit entrainer son actualisation
-        // this.input_titre.bind('onchange', $.proxy(this.onchange_titre, this))
-        this.input_titre[0].onchange = $.proxy(this.onchange_titre, this)
-        
+      {        
         if(this.is_book)
         {
           // La modification du titre réel doit entrainer son update
           this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
         }
-      }
-      // Tous focus/blur dans les champs d'édition doivent entraîner la
-      // gestion propre des touches clavier
-      var l = ['input[type="text"]', 'textarea']
-      for(var i in l)
-      {
-        this.obj.find(l[i]).bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-        this.obj.find(l[i]).bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      }
-      
+      }      
       // Toutes les fiches hors paragraphes doivent être droppable et
       // accepter un élément de rang inférieur
       var accepted_child = FICHES.datatype[this.type].child_type
@@ -293,21 +288,73 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_draggable":{
     get:function(){
+      dlog("-> Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       this.obj.draggable({
         containment:'parent',
         stop: $.proxy(this.stop_drag, this)
       })
+      dlog("<- Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
     }
   },
-    
+  
+  /*
+   *  Désactive/réactive l'édition du titre
+   *  
+   *  PRODUIT
+   *  -------
+   *    # Remplace le div contenant le titre (ou le texte) par un champ
+   *      de saisie.
+   *    # Place les observers sur le champ de saisie.
+   *
+   */
+  "enable_titre":{
+    get:function(){
+      dlog("-> Fiche::enable_titre", DB_FCT_ENTER)
+      this.is_paragraph ? this.texte_in_textarea : this.titre_in_input
+      var obj = this.is_paragraph ? this.input_texte : this.input_titre
+      obj.unbind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
+      obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+      obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      // obj.bind('onchange', $.proxy(this.onchange_titre_or_texte, this))
+      obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
+    }
+  },
+  "disable_titre":{
+    get:function(){
+      dlog("-> Fiche::disable_titre", DB_FCT_ENTER)
+      this.is_paragraph ? this.texte_in_div : this.titre_in_div
+      var obj = this.is_paragraph ? this.input_texte : this.input_titre
+      if(FICHES.current_text_field && FICHES.current_text_field[0].id == obj[0].id) FICHES.onblur_textfield( this, {target:obj} )
+      obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
+      obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+      obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      // obj.unbind('onchange', $.proxy(this.onchange_titre_or_texte, this))
+    }
+  },
+  
+  "titre_in_input":{
+    get:function(){
+      this.input_titre.replaceWith(this.html_input_titre)
+      this.input_titre = $('input#'+this.titre_id)
+    }
+  },
+  "titre_in_div":{
+    get:function(){
+      this.input_titre.replaceWith( this.html_div_titre )
+      this.input_titre = $('div#'+this.titre_id)
+    }
+  },
+  
   /*
    *  Ouvre la fiche
    *  
    */
   "open":{
     get:function(){
+      // console.log("-> open "+this.id)
       if(this.is_paragraph) return
       if(this.is_page && this.parent) this.unrange
+      this.enable_titre
       this.opened = true
     }
   },
@@ -317,15 +364,19 @@ Object.defineProperties(Fiche.prototype, {
    *  NOTES
    *  -----
    *  * Un chapitre ne peut jamais être fermé (il est soit rangé soit unrangé)
+   *  @ En mode fermé, le titre est disabled
    *
    */
   "close":{
     get:function(){
+      dlog("-> Fiche::close ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       if(!this.is_chapter)
       {
         if(this.is_page && this.parent) this.range
         this.opened = false
       }
+      if(!this.is_paragraph) this.disable_titre
+      dlog("<- Fiche::close ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
     }  
   },
   
@@ -451,20 +502,39 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
-              this.html_input_titre + // + champ 'real_titre' pour Book
+              this.html_input_titre_and_other + // + champ 'real_titre' pour Book
               this.html_div_items   + // textarea.texte pour un paragraphe
               '</recto>'
     }
   },
   
   /* Retourne le code HTML pour le titre de la fiche (sauf paragraphe) */
-  "html_input_titre":{
-    configurable:true,
+  "html_input_titre_and_other":{
     get:function(){
       if(this.is_paragraph) return ""
-      var c = '<input type="text" value="" id="'+this.dom_id+'-titre" class="titre" />'
+      var c = this.html_input_titre
       if(this.is_book) c += '<input type="text" value="" id="'+this.dom_id+'-real_titre" class="real_titre" />'
       return c
+    }
+  },
+  /*
+   *  3 Méthodes pour construire le titre
+   *  Car le titre peut apparaitre dans un DIV quand la fiche est fermée,
+   *  ou dans un INPUT quand la fiche est ouverte.
+   *  
+   */
+  "html_input_titre":{
+    get:function(){
+      return '<input id="'+this.titre_id+'" type="text" class="titre" value="'+
+              (this.titre || FICHES.datatype[this.type].defvalue) +
+              '" />'
+    }
+  },
+  "html_div_titre":{
+    get:function(){
+      return '<div id="'+this.titre_id+'" class="titre">' + 
+              (this.titre || FICHES.datatype[this.type].defvalue) +
+              '</div>'
     }
   },
   
@@ -602,6 +672,11 @@ Object.defineProperties(Fiche.prototype, {
    */
   /* Sélection et désélection de la fiche 
    *
+   * NOTES
+   * -----
+   *  # Stoppe l'évènement pour qu'il ne se propage pas aux fiches
+   *    ancêtres si elles existent.
+   *
    * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
    *              En fonction de la pression ou non de la touche majuscule le comportement
    *              et différent.
@@ -613,6 +688,7 @@ Object.defineProperties(Fiche.prototype, {
       // pressée, il faut déselectionner la fiche
       if(this.selected){ if(with_maj) this.deselect }
       else this.select
+      return stop_event(evt)
     }
   },
   "select":{
@@ -719,18 +795,20 @@ Object.defineProperties(Fiche.prototype, {
  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
-  var ichild, is_tool = ui.helper.hasClass('card_tool')
+  var obj_moved = ui.draggable
+  var ichild, is_tool = obj_moved.hasClass('card_tool')
+  
   if(is_tool)
   {
     // On crée la fiche
     ichild = FICHES.full_create({
-      type: ui.helper.attr('data-type'),
+      type: obj_moved.attr('data-type'),
       left: 100, top: 100
     })
   }
   else
   {
-    ichild = FICHES.domObj_to_fiche( ui.helper )
+    ichild = FICHES.domObj_to_fiche( obj_moved )
   }
   this.add_child( ichild )
   
@@ -744,10 +822,16 @@ Fiche.prototype.on_drop = function(evt, ui)
     
   }
   
+  // Si cette fiche parent est fermée, il faut l'ouvrir
+  if(false == this.opened) this.open
+  
+  // On sélectionne l'enfant
+  ichild.select
+  
   // TODO: Plus tard, on pourra regarder si la fiche a été déposé à un
   // endroit précis, pour le placer au bon endroit dans les enfants
   // F.error("La méthode Fiche.on_drop doit être implémentée"+
-  // "\nÉlément #"+ui.helper.attr('id')+" (outil ? "+is_tool+") glissé sur fiche #"+this.id)
+  // "\nÉlément #"+obj_moved.attr('id')+" (outil ? "+is_tool+") glissé sur fiche #"+this.id)
 }
 
 // C'est la méthode principale de création d'une relation entre
@@ -797,9 +881,29 @@ Fiche.prototype.add_child = function(enfant, before_child)
 /*
  *  Méthode appelée quand on change le titre de la fiche
  *  
+ *  NOTES
+ *  -----
+ *  @ Cela peut se produire lorsqu'on quitte le champ, ou lorsque
+ *    l'on presse la touche RETURN sur le champ.
+ *
+ *  @ C'est vraiment cette fonction qui inaugure le changement du
+ *    titre, car si c'était `titre=` (propriété complexe), on aura
+ *    une difficulté à la définition des fiches remontées.
+ *
  */
-Fiche.prototype.onchange_titre = function(evt)
-{this.titre = this.input_titre.val()}
+Fiche.prototype.onchange_titre_or_texte = function(evt)
+{
+  dlog("-> onchange_titre_or_texte ["+this.type+"#"+this.id+"]", DB_FCT_ENTER | DB_CURRENT)
+  var obj   = this.is_paragraph ? this.input_texte : this.input_titre ;
+  var prop  = this.is_paragraph ? 'texte' : 'titre' ;
+  var new_value = obj.val()
+  if(this[prop] != new_value)
+  {
+    this[prop]    = new_value
+    this.modified = true    
+  }
+  dlog("<- onchange_titre ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
+}
 
 /*
  *  Méthode appelée quand on change le texte d'un paragraphe
@@ -811,6 +915,7 @@ Fiche.prototype.onchange_texte = function(evt)
 }
 
 Fiche.prototype.dispatch = function(data){
+  dlog("-> Fiche::dispatch ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
   var prop, val ;
   for(prop in data)
   {
@@ -858,6 +963,7 @@ Fiche.prototype.dispatch = function(data){
     // On met la donnée dans la propriété
     this[prop] = val
   }
+  dlog("<- Fiche::dispatch", DB_FCT_ENTER)
 }
 
 Fiche.prototype.remove_child = function(enfant)

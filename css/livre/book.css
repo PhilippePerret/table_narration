@@ -3,18 +3,17 @@
  *  LIVRE (BOOK)
  */
 fiche.book {
-  background-color :#007;
+  background-color :#00A2B7;
   color   :white;
   width   :14em;
   border-radius :0.3em;
-  opacity :0.5;
+/*  opacity :0.5;*/
 }
 fiche.book.opened {
   width   : 20em !important;
 }
 
-fiche.book > recto > input.titre,
-fiche.book > recto > input.titre.focused {
+fiche.book > recto > .titre {
   background-color: transparent !important;
   color: white !important;
   text-align:center;
@@ -30,4 +29,8 @@ fiche.book > recto > input.real_titre {
 
 /* Éléments invisibles quand la fiche est fermée */
 fiche.book.opened > recto > input.real_titre { display: block ;}
-fiche.book.opened > recto > div.items { display: block;}
+fiche.book.opened > recto > div.items { 
+  display: block;
+  padding-bottom : 1em;
+  padding-top    : 0.1em;
+}

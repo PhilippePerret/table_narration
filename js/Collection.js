@@ -44,6 +44,12 @@ window.Collection = {
     else F.error(rajax.message)
     this.loading = false
     if(false == UI.prepared) UI.prepare
+    if(rajax.mode_test == true){ 
+      // NON :
+      // App.test();
+      // Sinon, ça arrive chaque fois qu'un test recharge
+      F.show("Penser à quitter le mode test en finissant, par commodité.")
+    }
     this.backup
   },
   
@@ -126,7 +132,7 @@ window.Collection = {
    */
   dispatch_data:function(data)
   {
-    FICHES.last_id = parseInt(data.last_id_fiche,10) || -1
+    FICHES.last_id = parseInt(data.last_id_fiche, 10)
   }
   
 }
@@ -153,7 +159,7 @@ Object.defineProperties(Collection,{
   
   "start_automatic_saving":{
     get:function(){
-      if(this.timer_save) return
+      if(this.timer_save || $('input#cb_automatic_save')[0].checked==false) return
       this.timer_save = setInterval(
         $.proxy(this.check_if_needs_save, this), this.frequence_saving
       )
@@ -164,6 +170,17 @@ Object.defineProperties(Collection,{
       if(!this.timer_save) return
       clearInterval(this.timer_save)
       delete this.timer_save
+    }
+  },
+  "enable_automatic_saving":{
+    value:function(oui){
+      if(oui){ 
+        this.start_automatic_saving
+      }
+      else if(this.timer_save){ 
+        this.stop_automatic_saving
+      }
+      $('span#mark_mode_automatic').css('visibility', oui ? 'visible' : 'hidden')
     }
   },
   
@@ -197,7 +214,7 @@ Object.defineProperties(Collection,{
    */
   "save":{
     get:function(){
-      // console.log("-> Collection.save")
+      dlog("Sauvegarde de la collection", DB_SIMPLE)
       this.saving = true
       this.save_fiches
     }

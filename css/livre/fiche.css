@@ -6,9 +6,9 @@ fiche {
   font-size   : 14pt;
   padding     : 0 4px;
   weight      : auto;
-  border      : 1px solid transparent;
+  border      : 2px solid transparent;
 }
-fiche:hover {opacity:1 !important;}
+/*fiche:hover {opacity:1 !important;}*/
 
 /* Une fiche rangée perd sa position absolute */
 fiche.ranged { position: static !important;}
@@ -18,13 +18,14 @@ fiche > recto { display: block; }
 fiche > verso { display: block; }
 
 fiche > recto > div.items {
-  display     :none;
+  display           : none;
+  background-color  : white;
 }
 fiche.opened > recto > div.items {
   display     :block;
 }
 
-fiche > recto > input.titre {
+fiche > recto > .titre {
   display     : block;
   width       : 99%;
   font-family : inherit;
@@ -35,10 +36,10 @@ fiche > recto > input.titre {
 /* Fiche sélectionnée */
 fiche.selected { 
   border-color: blue !important; 
-  opacity: 1 !important;
+/*  opacity: 1 !important;*/
 }
 
 /* Fiche survolée par enfant potentiel */
 fiche.dropped, fiche.selected.dropped {
-  border-color: #F05 !important;
+  border-color: #0F5 !important;
 }

@@ -27,15 +27,12 @@ Par nature, les fiches à charger sont :
   - Toutes les fiches (hors livres) qui ne sont pas rangées dans leur parent (qui
     sont donc `opened`).
 
-Réflexion
----------
 
-Imaginons qu'à chaque modification de fiche (fiche/save), on tienne à jour
-une liste des `ranged' et des 'opened' (ou seulement non 'ranged' ?).
-Quand on charge l'application : on lit cette liste, et on regarde si la fiche est
-encore ouverte. Si c'est le cas, on la charge. 
-Ici, on actualise cette liste en ne gardant que les fiches vraiment opened.
-=> Liste des 'non_ranged'
+NOTES
+-----
+
+  @ Le chargement de la collection vérifie aussi si on est en mode normal ou
+    en mode test et remonte l'information ::mode_test => true/false
 
 =end
 
@@ -109,3 +106,4 @@ end
 }
 get_all_fiches_needed
 RETOUR_AJAX[:data] = @data
+RETOUR_AJAX[:mode_test] = File.exists?('./.mode_test')

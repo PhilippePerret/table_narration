@@ -10,6 +10,7 @@ function livre_FICHES_object()
   my.step_list = [
   ["Existence des propriétés et méthodes", FICHES_Methodes_et_properties],
   ["Test de la méthode `init_all`", FICHES_Test_init_all],
+  ["Test de la méthode `get`", FICHES_Test_get],
   ["Test des méthodes `add` et `remove`", FICHES_Test_add_et_remove_fiche],
   ["Test de la méthode `dispatch`", FICHES_Test_method_dispatch],
   ["Test de la méthode `fiche`", FICHES_Test_method_fiche],
@@ -34,7 +35,7 @@ function FICHES_Methodes_et_properties() {
   ]
   L(props).each(function(prop){ 'FICHES'.should.have.property(prop)})
   var methods = [
-  'add_selected', 'remove_selected', 'add', 'dispatch',
+  'get', 'add_selected', 'remove_selected', 'add', 'dispatch',
   'open'
   ]
   L(methods).each(function(method){ 'FICHES'.should.respond_to(method)})
@@ -82,7 +83,14 @@ function FICHES_Test_init_all() {
   'FICHES.selecteds'  .should = {}
 
 }
-
+function FICHES_Test_get() {
+  specs("La méthodes `get` est un raccourci pour `FICHES.list[<id>]` et doit "+
+  "retourner la fiche dont l'identifiant est fourni en argument.")
+  'FICHES.get()'.should.throw("Il faut fournir l'identifiant de la fiche à retourner")
+  'FICHES.get(200000)'.should.throw("La fiche d'identifiant #200000 est inconnue au bataillon")
+  APP.ipage = create_page({titre:"Une page nouvelle"});
+  ('FICHES.get('+APP.ipage.id+')').should.return( APP.ipage )
+}
 function FICHES_Test_add_et_remove_fiche() {
   specs("Les méthodes `add` et `remove` doivent permettre d'ajouter et de retirer une fiche dans `FICHES.list` "+
   "et de tenir à jour la propriété `length`. Ces méthodes sont appelées "+

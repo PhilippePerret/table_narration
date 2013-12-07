@@ -39,9 +39,35 @@ Object.defineProperties(FakedMouseEvent.prototype, {
 			return this
 		}
 	},
+  /*
+   *  Méthode qui envoie véritablement l'évènement à l'objet DOM
+   *  
+   */
 	"dispatch":{
 		get:function(){
-			this.domObj.dispatchEvent(this._event)
+      if(undefined != this.domObj[0]) this.domObj = this.domObj[0]
+      if('function' == typeof this.domObj.dispatchEvent)
+      {
+        var ev = this._event
+        // Ne change rien :
+        // ev.target = this.domObj
+        // ev.originalTarget = this.domObj
+        // ev.explicitOriginalTarget = this.domObj
+        if(console)
+        {
+          console.log("EVENT dispatché :")
+          console.dir(ev)
+          console.log("Dispatché sur :")
+          console.dir(this.domObj)
+        }
+  			this.domObj.dispatchEvent(ev)
+      }
+      else
+      {
+        if(console)console.dir(this.domObj)
+        throw "L'objet "+this.domObj.tagname + '#' + this.domObj.id+
+        "ne répond pas à dispatchEvent…"
+      }
 			return this
 		}
 	},
@@ -191,6 +217,16 @@ window.Mouse = {
     data.center_x = data.x + (data.w / 2)
     data.center_y = data.y + (data.h / 2)
     return data
+  },
+  
+  /*
+   *  Simule un click sur l'objet +obj+
+   *  
+   *  @param  obj   Un objet jQuery ou Natif
+   */
+  click:function(obj)
+  {
+    this.fireFakedEvent({domObj: obj, type:'click'})
   },
   
   // Simule un click dans drag sur l'objet +obj+ avec les données +data+

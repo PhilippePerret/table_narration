@@ -5,21 +5,36 @@
 fiche.page {
   background-color :white;
   color         : black;
-  width         : 10em;
-  opacity       : 0.5;
-  border-color  : #CCC;
-  border-radius : 6px;
+  width         : auto;
+/*  opacity       : 0.5;*/
 }
 fiche.page.opened {
-  width   :34em !important;
+  width         : 34em !important;
+  border-radius : 6px;
+  border-color  : #CCC;
+  width         : 20em;
 }
 
+fiche.page.ranged {
+  margin-left   : 1.5em;
+  height        : 20px;
+  border-width  : 1px !solid;
+}
+
+fiche.page.ranged > recto > div.titre {
+  font-size     : 0.9em;
+}
 /* Pour la page, la hauteur des éléments est fixe */
 fiche.page.opened > recto > div.items {
   height    : 30em;
   overflow  : auto;
 }
 
+/* Le titre quand la page est fermée */
+fiche.page > recto > div.titre {
+  
+}
+/* Le titre (en édition) quand la page est ouverte */
 fiche.page.opened > recto > input.titre {
   font-size   : 1.8em;
   margin-top  : 1.5em !important;

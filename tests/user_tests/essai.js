@@ -1,94 +1,86 @@
+/*
+ * To run this test : essai
+ */
+function essai()
+{
+  my = essai
+  
+  my.before_all = function(){
+    reload_app()
+  }
+  my.specs = "Différents tests"
+  
+  my.step_list = [
+  ["Test de Keyboard",Test_Keyboard],
+  "Fin"
+  ]
 
-function essai(poursuivre){
-	
-	I = essai
-	
-	if(I.dont_know_step_list){
-		
-		specs("Ceci est juste un script d'essai pour voir si tout est OK. Il ne teste pas encore "+
-					"votre application puisque je ne la connais pas…")
-		
-		I.set_step_list_to([
-			"Première étape",
-			"Deuxième étape",
-			"Troisième étape",
-			"Quatrième étape"
-			])
-			
-	}
-	
-	I.define_work
+  switch(my.step)
+  {
+  case "Fin":
+    break
+    
+  default:
+    pending("Step '"+my.step+"' should be implanted")
+  }
+}
 
-
-
-	if( I.run_step( 
-		
-		
-		"Première étape" 
-	
-	
-	)){
-		db("La première étape est jouée, elle teste si le fichier ./tests.php existe bien.");
-		I.wait.until(function(){return TFile.exists('./tests.php')});
-	}
-	else if ( I.run_step(
-		
-		
-		"Deuxième étape"
-	
-	
-	)){
-		db("La deuxième étape est jouée, c'est juste une attente de 4 secondes");
-		if(TFile.resultat == true) success("Le fichier ./tests.php existe !")
-		else { 
-			failure("Malheureusement, je ne trouve pas le fichier ./tests.php…")
-		}
-		
-		I.wait.for(4);
-	}
-	else if ( I.run_step(
-		
-		
-		3
-	
-	
-	)){
-		db("La troisième étape est jouée simplement en donnant un indice d'étape dans `I.run_step`");
-		w("Dans cette étape, je vais donner des valeurs à l'application et les tester.", BLUE)
-		
-		APP._une_valeur_test = 12
-		
-		'_une_valeur_test'.should_not.be.a_string
-		'_une_valeur_test'.should_not.be.an_array
-		'_une_valeur_test'.should.be.a_number
-		'_une_valeur_test'.should_not.be.eq(13)
-		'_une_valeur_test'.should.be.eq(12)
-		'_une_valeur_test'.should.be.greater_than(11)
-		'_une_valeur_test'.should.be.less_than(13)
-		
-		I.wait.for( 3 );
-
-	}
-
-	else if( I.run_step(
-		
-		
-		"Quatrième étape"
-	
-	
-	)){
-		if(I.must_stop_at(0)){
-			db("C'est un premier stop-point")
-			I.go_to_stop_point(1)
-		}
-		else if(I.must_stop_at(1)){
-			db("C'est un deuxième stop-point")
-			I.go_to_stop_point(2)
-		}
-		else if(I.must_stop_at(2)){
-			db("C'est le dernière point d'arrêt")
-			I.end_step
-		}
-	}
-
+function Test_Keyboard() {
+  switch(my.stop_point)
+  {
+  case 1:
+    blue("Active l'application pour suivre les opérations.")
+    my.book = APP.FICHES.list[0]
+    // my.page = APP.ipage = create_page({titre:"Son titre"})
+    jq(my.book.titre_jid).should.exist
+    'FICHES.list[0].selected'.should.be.false
+    // Ne fonctionne pas :
+    // Mouse.press_and_drag(my.book.obj, {for_x:100, for_y:100})
+    // Ne fonctionne pas :
+    // Mouse.click(my.book.obj)
+    // APP.window.focus()
+    my.wait.for(4).and(NEXT_POINT)
+    break
+  case 2:
+    APP.F.show("J'essaie avec Mouse.click")
+    Mouse.click(my.book.obj)
+    my.wait.for(1).and(NEXT_POINT)
+    break
+  case 3:
+    // my.page.input_titre.select()
+    'FICHES.list[0].selected'.should.be.true
+    APP.F.show("J'essaie avec jQuery.click()")
+    // Keyboard.press({key_code:K_ERASE})
+    // Keyboard.press(Key_o)
+    // Fonctionne : 
+    with(APP){FICHES.get(0).obj.click()}
+    my.wait.for(1).and(NEXT_POINT)
+    break
+  case 4:
+    'FICHES.list[0].selected'.should.be.true
+    // APP.F.show("Le champ de texte devrait être vidé")
+    my.wait.for(1).and(NEXT_POINT)
+    break
+  case 5:
+    APP.F.show("J'ESSAIE DE CLIQUER UNE TOUCHE AVEC JQUERY")
+    var book = APP.FICHES.get(0)
+    // var e = jQuery.Event( "keydown", { keyCode: Key_o } );
+    with(APP)
+    {
+      var e = $.Event( "keydown", { charCode: Key_o } );
+      $('input#f-0-titre').select();
+      $('input#f-0-titre').trigger( e );
+    }
+    // $( book.input_titre ).trigger( e );
+    // var e = $.Event( "keyup", { charCode: Key_o } );
+    // $( book.input_titre ).trigger( e );
+    my.wait.for(2).and(NEXT_POINT)
+    break
+  case 6:
+    APP.F.show("LE TITRE DOIT ÊTRE o")
+    my.wait.for(0)
+    break
+    
+  }
+  
 }
