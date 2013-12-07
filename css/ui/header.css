@@ -1,6 +1,12 @@
 section#header {
   clear       : both;
-  min-height  : 30px;
+  height      : 40px;
+  position    : fixed;
+  top         : 0px;
+  left        : 0px;
+  z-index     : 1;
+  background  : none repeat scroll 0 0 #EEEEEE;
+  padding-top : 4px;
 /*  opacity     : 0.4;*/
 }
 section#header:hover { opacity:1; }
@@ -11,6 +17,8 @@ section#header:hover { opacity:1; }
 section#header > div#mark_saved {
   float         : left;
   margin-right  : 1em;
+  margin-top    : 12px;
+  margin-left   : 0.6em;
   font-size     : 10pt;
   width         : 60px;
 }
@@ -24,7 +32,13 @@ section#header > div#mark_saved {
 /* ---------------------------------------------------------------------
  *  Boutons à droite
  */
-section#header > div#buttons_right { float:right; }
+section#header > div#buttons_right {
+  position      : relative;
+  float         : right;
+  margin-left   : 40em;
+  margin-top    : 10px;
+  margin-right  : 1em;
+}
 section#header > div#buttons_right input[type="button"] {
   font-size: 10px;
 }

@@ -21,8 +21,9 @@ textarea.focused
  */
 
 section#table {
-  position  : relative;
-  width     : 1000em;
-  height    : 200em;
-  border    : 1px dashed green;
+  position    : relative;
+  width       : 1000em;
+  height      : 200em;
+  border      : 1px dashed green;
+  margin-top  : 40px;
 }

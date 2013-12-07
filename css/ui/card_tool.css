@@ -2,7 +2,9 @@
  *  Styles pour les outils-fiche
  */
 section#header > div#header_card_tools {
-  
+  position    : absolute;
+  left        : 6em;
+  top         : 10px;
 }
 
 section#header > div#header_card_tools > div.card_tool {
