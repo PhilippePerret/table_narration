@@ -28,7 +28,11 @@ fiche.book > recto > input.real_titre {
 }
 
 /* Éléments invisibles quand la fiche est fermée */
-fiche.book.opened > recto > input.real_titre { display: block ;}
+fiche.book.opened > recto > input.real_titre { 
+  display       : block ;
+  font-family   : "Times New Roman";
+  font-size     : 15pt;
+}
 fiche.book.opened > recto > div.items { 
   display: block;
   padding-bottom : 1em;

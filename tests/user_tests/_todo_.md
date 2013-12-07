@@ -1,4 +1,5 @@
-* À l'ouverture, si les tests sont actifs, il faut lancer Pure-JS
+* Gestion du chargement des fiches manquantes à l'ouverture d'un élément
+  cf. avec le livre test, qui contient maintenant un chapitre qui contient deux pages
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode
@@ -8,9 +9,6 @@
 
 * Vérifier que <fiche>.built est mis à true quand la fiche est construite
 
-* Test des backup (normaux et forcés)
-
-* Test du chargement de la collection (Collection.load)
 
 * Tester en profondeur la méthode Fiche.dispatch pour voir si elle
   retransforme bien les {id:xxx, type:xxxx} en fiche pour les propriétés
