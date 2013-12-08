@@ -180,7 +180,6 @@ Object.defineProperties(Collection,{
       else if(this.timer_save){ 
         this.stop_automatic_saving
       }
-      $('span#mark_mode_automatic').css('visibility', oui ? 'visible' : 'hidden')
       $('label[for="cb_automatic_save"]')[oui ? 'addClass' : 'removeClass']('on')
     }
   },

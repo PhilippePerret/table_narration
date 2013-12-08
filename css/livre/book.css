@@ -5,31 +5,40 @@
 fiche.book {
   background-color :#00A2B7;
   color   :white;
-  width   :14em;
-  border-radius :0.3em;
+  width   :16em;
+  border-radius :0.2em;
 /*  opacity :0.5;*/
 }
 fiche.book.opened {
-  width   : 26em !important;
+  width   : 29em !important;
 }
 
 fiche.book > recto > .titre {
   background-color: transparent !important;
   color: white !important;
-  text-align:center;
+}
+fiche.book:not(.opened) > recto > input.titre {
+  text-align :center;
+  font-size  : 1.2em;
 }
 fiche.book.opened > recto > input.titre {
-  text-align:left !important;
+  text-align :left;
+  font-size  : 1.5em;
 }
 
-fiche.book > recto > input.real_titre {
-  display   :none;
-  width     :98%;
+fiche.book > recto > div.div_real_titre {
+    display   : none;
+}
+fiche.book.opened > recto > div.div_real_titre {
+    display   : block;
+}
+
+fiche.book > recto > div.div_real_titre input.real_titre {
+  width     : 70%;
 }
 
 /* Éléments invisibles quand la fiche est fermée */
-fiche.book.opened > recto > input.real_titre { 
-  display       : block ;
+fiche.book.opened > recto > div.div_real_titre input.real_titre { 
   font-family   : "Times New Roman";
   font-size     : 15pt;
 }

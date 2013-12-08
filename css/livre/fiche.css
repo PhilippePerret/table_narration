@@ -4,7 +4,7 @@ fiche {
   position    : absolute;
   font-family : "Times New Roman";
   font-size   : 14pt;
-  padding     : 0 4px;
+/*  padding     : 0 4px;*/
   weight      : auto;
   border      : 2px solid transparent;
 }
@@ -14,25 +14,33 @@ fiche {
 fiche.ranged { position: static !important;}
 
 
-fiche > recto { display: block; }
-fiche > verso { display: block; }
+fiche > recto { 
+  display       : block; 
+  padding-left  : 1em;
+}
+fiche > verso { 
+  display       : block; 
+  padding-left  : 1em;
+}
 
 fiche > recto > div.items {
   display           : none;
   background-color  : white;
 }
 fiche.opened > recto > div.items {
-  display     :block;
+  display     : block;
 }
 
 fiche > recto > .titre {
   display     : block;
-  width       : 99%;
+/*  width       : 99%;*/
   font-family : inherit;
   font-size   : inherit;
   border      : 1px solid transparent;
 }
-
+fiche > recto > input.titre {
+  width:98%;
+}
 /* Fiche sélectionnée */
 fiche.selected { 
   border-color: blue !important; 

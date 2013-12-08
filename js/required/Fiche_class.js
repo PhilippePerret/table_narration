@@ -611,7 +611,6 @@ Object.defineProperties(Fiche.prototype, {
    *  
    */
   "html_recto":{
-    configurable:true,
     get:function(){
       return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
               this.html_input_titre_and_other + // + champ 'real_titre' pour Book
@@ -625,7 +624,7 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(this.is_paragraph) return ""
       var c = this.html_input_titre
-      if(this.is_book) c += '<input type="text" value="" id="'+this.dom_id+'-real_titre" class="real_titre" />'
+      if(this.is_book) c += this.html_input_real_titre
       return c
     }
   },

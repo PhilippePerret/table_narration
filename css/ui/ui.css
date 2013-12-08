@@ -16,6 +16,12 @@ textarea.focused
   background-color:#EFE;
 }
 
+label.libelle {
+  font-size     : 0.9em;
+  font-style    : italic;
+  margin-right  : 1em;
+}
+
 /* ---------------------------------------------------------------------
  *  Éléments spécifiques
  */

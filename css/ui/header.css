@@ -43,19 +43,24 @@ section#header > div#buttons_right input[type="button"] {
   font-size: 10px;
 }
 
-section#header > div#buttons_right label[for="cb_automatic_save"] {
-  font-family : "Lucida Grande";
-  font-size   : 10pt;
-  padding     : 4px 8px 7px;
+section#header > div#div_automatic_save {
+  position    :absolute;
+  left        : 5px;
+  top         : 14px;
 }
-section#header > div#buttons_right label[for="cb_automatic_save"].on {
+section#header label[for="cb_automatic_save"] {
+  font-family : "Lucida Grande";
+  font-size   : 8.1pt;
+  padding     : 2.3px 6.3px 3px;
+}
+section#header label[for="cb_automatic_save"].on {
   background-color:#00BC00;
   color:white;
 }
-section#header > div#buttons_right label[for="cb_automatic_save"]:not(.on) {
+section#header label[for="cb_automatic_save"]:not(.on) {
   background-color:#DDD;
 }
-section#header > div#buttons_right input#cb_automatic_save {
+section#header input#cb_automatic_save {
   visibility  : hidden;
 }
 
