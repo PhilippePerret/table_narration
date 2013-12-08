@@ -95,12 +95,43 @@ class Fiche
     false == ( data['enfants'].nil? || data['enfants'] == [] )
   end
   
+  # Return toutes les données des enfants de la fiche.
+  # La méthode est récursive : si un enfant est ouvert, on charge aussi ses
+  # enfants.
+  def data_children
+    @data_children ||= begin
+      data_children = []
+      children.each do |minidata|
+        child = Fiche.new(minidata['id'], minidata['type'])
+        data_children << child.data
+        data_children += child.data_children if child.opened?
+      end if hasChildren?
+      data_children
+    end
+  end
+  
+  # Retourne les données (pour remontée ajax)
+  # 
+  # @note   Attention, c'est toujours un Array qui est retourné, pas un hash des
+  #         données. Il faut donc utiliser `liste_data += <ifiche>.get_data'
+  #
+  # @param  options
+  #         :children   => true / :if_opened
+  #           Retourne aussi les données des enfants (true) dans tous les cas,
+  #           (:if_opened) seulement si la fiche est ouverte
+  # 
+  def get_data options = nil
+    options ||= {}
+    d = [data]
+    d += data_children if options[:children] === true || (options[:children]==:if_opened && opened?)
+    return d
+  end
+  
   def children
     @children ||= data['enfants']
   end
   
   def data
-    # @data ||= JSON.parse(File.read path)
     @data ||= Marshal.load( File.read path )
   end
   

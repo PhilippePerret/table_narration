@@ -1,5 +1,8 @@
-* Gestion du chargement des fiches manquantes à l'ouverture d'un élément
-  cf. avec le livre test, qui contient maintenant un chapitre qui contient deux pages
+ON charge le livre #0 fermé
+Il contient un chapitre #1 qui doit être rangé
+- Ce chapitre n'est pas chargé, puisque le livre #0 n'est pas ouvert
+- Mais l'instance de la fiche du chapitre existe
+BUG : le programme construit la fiche sur la table
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode

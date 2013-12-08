@@ -43,6 +43,8 @@ log "-> #{__FILE__}"
 load './ruby/module/prepare_folder.rb' unless File.exists? Collection::folder
 
 
+# Méthode principale appelée pour charger les fiches nécessaires
+# de la collection à son chargement.
 def get_all_fiches_needed
   log "-> get_all_fiches_needed"
   unless File.exists? File.join(Fiche::folder)
@@ -56,25 +58,12 @@ end
 def get_all_books
   log "-> get_all_books"
   Dir["#{Fiche::folder}/book/*.msh"].each do |path|
-    # book = JSON.parse((File.read path), {:symbolize_names => true})
-    log "\t\tBook:#{path}"
-    book = Marshal.load(File.read path)
-    @data[:fiches] << book
-    get_children_of(Fiche.new(book[:id], 'book')) if book[:opened] == "true"
+    data_book = Marshal.load(File.read path)
+    ibook = Fiche.new(data_book['id'], 'book')
+    @data[:fiches] += ibook.get_data :children => :if_opened
   end
   log "<- get_all_books"
 end
-
-# Relève tous les enfants de la fiche +fiche+ ({instance Fiche})
-def get_children_of fiche
-  return unless fiche.hasChildren?
-  fiche.children.each do |minidata|
-    child = Fiche.new(minidata['id'], minidata['type'])
-    @data[:fiches] << child.data
-    get_children_of( child ) if child.chapter?
-  end
-end
-
 
 def get_all_non_ranged
   log "-> get_all_non_ranged"

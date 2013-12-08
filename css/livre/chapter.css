@@ -8,6 +8,9 @@ fiche.chap {
   width   :auto;
 /*  opacity :0.5;*/
 }
+fiche.chap:hover {
+  cursor:move;
+}
 fiche.chap.opened:not(.ranged) {
   width   :20em;
 }

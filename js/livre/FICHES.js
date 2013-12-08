@@ -199,20 +199,31 @@ window.FICHES = {
    *    # Par défaut, les fiches sont maintenant créées fermées, donc on doit
    *      passer seulement en revue les fiches qui doivent être ouvertes.
    *
+   *  PRODUIT
+   *  -------
+   *    # La création de la fiche (toujours, entendu qu'une fiche passant par
+   *      ce dispatch a forcément toutes ses données)
+   *
    *  @param  data   {Array} Liste des fiches remontées par Collection.load.data  
    */
-  dispatch:function(data)
+  dispatch:function( data )
   {
     dlog("-> FICHES.dispatch", DB_FCT_ENTER)
-    var idm = "[FICHES.dispatch] "
     var openeds = [], closeds = [], rangeds = [] ;
     var i, len, dfiche, ifiche ;
+    // dlog("*** Data envoyées à FICHES.dispatch ***")
+    // dlog(data)
     for(i=0, len = data.length; i<len; ++i)
     {
+      dlog("FICHES.dispatch / dispatch de " + JSON.stringify(data[i]))
       ifiche = this.fiche_from( data[i] )
       if(data[i]['opened'] == "true" ) openeds.push( ifiche )
       if(data[i]['opened'] == "false") closeds.push( ifiche )
       if(data[i]['ranged'] == "true" ) rangeds.push( ifiche )
+      // Une fiche passant par ici est forcément chargée
+      ifiche.loaded = true
+      // On crée la fiche
+      ifiche.create
     }
     
     // this  .close (closeds)
@@ -231,7 +242,7 @@ window.FICHES = {
   open:function(arr)
   {
     if(exact_typeof(arr) != 'array') arr = [arr] ;
-    L(arr).each(function(fi){ fi.open })
+    L(arr).each(function(fi){ if(fi.built) fi.open })
   },
   /*
    *  Ferme la ou les fiches données en argument
@@ -245,13 +256,53 @@ window.FICHES = {
     L(arr).each(function(fi){ fi.close })
   },
   /*
+   *  Charge les fiches données en arguments
+   *
+   *  @param  fiches    Liste {Array} de {Hash} contenant `id' et `type'  
+   *
+   *  La méthode appelante doit définir `FICHES.after_load.poursuivre'
+   *  Soit une function normale ({Function}) soit un {Object} contenant
+   *  {id:<id fiche>, prop:<propriété complexe} (p.e. {id:12, prop:'open'})
+   *
+   */
+  load:function(arr)
+  {
+    dlog("-> FICHES.load", DB_FCT_ENTER)
+    console.log(arr)
+    Ajax.send(
+      {script:'fiche/load', fiches:arr},
+      $.proxy(this.after_load, this)
+    )
+    dlog("<- FICHES.load", DB_FCT_ENTER)
+  },
+  /* Retour de la précédente */
+  after_load:function(rajax)
+  {
+    dlog("-> FICHES.after_load", DB_FCT_ENTER)
+    if(rajax.ok)
+    {
+      // On dispatch les fiches remontées
+      this.dispatch( rajax.fiches )
+      // Méthode (ou propriété complexe) pour suivre
+      var fn = this.after_load.poursuivre
+      dlog(fn)
+      if(     'function'== typeof fn) fn()
+      else if('object'  == typeof fn) this.get(fn.id)[fn.prop]
+    }
+    else F.error(rajax.message)
+    dlog("<- FICHES.after_load", DB_FCT_ENTER)
+  },
+  /*
    *  Range la ou les fiches données en argument
    *  
    */
   range:function(arr)
   {
+    dlog("-> FICHES.range", DB_FCT_ENTER)
+    dlog("Fiches à ranger : " + arr)
     if(exact_typeof(arr) != 'array') arr = [arr] ;
-    L(arr).each(function(fi){ fi.range })
+    L(arr).each(function(fi){ if(fi.built) fi.range })
+    dlog("<- FICHES.range", DB_FCT_ENTER)
   },
   
   /*
@@ -265,21 +316,11 @@ window.FICHES = {
    */
   fiche:function(obj)
   {
-    var i ;
+    var i=0, list=[];
     var is_list = 'array' == exact_typeof(obj) ;
-    if(is_list)
-    {
-      var list = [] ;
-      for(i=0, len = obj.length; i<len; ++i)
-      {
-        list.push( this.fiche_from( obj[i] ))
-      }
-      return list
-    }
-    else
-    {
-      return this.fiche_from(obj)
-    }
+    if(!is_list) obj = [obj]
+    for(len = obj.length; i<len; ++i) list.push( this.fiche_from( obj[i] ))
+    return is_list ?  list : list[0]
   },
 
   /*
@@ -288,31 +329,31 @@ window.FICHES = {
    *  NOTES
    *  -----
    *
-   *  @ La méthode est identique à la précédente mais ne peut recevoir les données
+   *  # La méthode est identique à la précédente mais ne peut recevoir les données
    *    que d'une seule fiche.
    *
-   *  @ Les données +data+ sont toujours dispatchées dans la fiche, même lorsqu'elle
-   *    existe. Cela est utile au chargement : si un parent pas encore créé est défini
-   *    dans une fiche, on le crée "rapidement" (simplement avec son id et son type) puis
-   *    ensuite, quand on traite le parent dans le chargement, on n'a plus qu'à dispatcher
-   *    toutes ses données.
+   *  # 2 # Les données +data+ sont dispatchées dans la fiche, même lorsqu'elle
+   *    existe, sauf si son `loaded` est à true. Cela est utile au chargement : si un 
+   *    parent pas encore créé est défini dans une fiche, on le crée "rapidement" 
+   *    (simplement avec son id et son type) puis ensuite, quand on traite le parent dans
+   *    le chargement, on n'a plus qu'à dispatcher toutes ses données.
    *
-   *  @ Quand une fiche doit être créée, on crée son INSTANCE et son OBJET DOM sur la table
+   *  @return L'instance Fiche
    *  
    */
   fiche_from:function(data)
   {
     dlog("-> FICHES.fiche_from", DB_FCT_ENTER)
-    DL & DB_FCT_ENTER && console.log()
     var idm="[FICHES.fiche_from] ", ifiche ;
     if(undefined != this.list[data.id]){ 
+      // => L'instance existe déjà
       ifiche = this.list[data.id]
-      ifiche.dispatch( data ) // au cas où d'autres données sont fournies
+      if(!ifiche.loaded) ifiche.dispatch( data ) // cf. note #2 ci-dessus
     }
     else
-    { // => il faut créer une instance      
+    { 
+      // => il faut créer une instance      
       ifiche = this.create_instance_fiche_of_type(data)
-      ifiche.create
     }
     dlog("<- FICHES.fiche_from", DB_FCT_ENTER)
     return ifiche

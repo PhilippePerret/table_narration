@@ -64,7 +64,20 @@ Object.defineProperties(Fiche.prototype, {
     set:function(ty){ this._type = ty }
   },
   
-  
+  /*
+   *  Retourne un {Array} des minidata des enfants 
+   *  
+   */
+  "enfants_as_minidata":{
+    get:function(){
+      arr = []
+      for(var i in this.enfants){ 
+        arr.push(this.enfants[i].minidata)
+      }
+      return arr
+    }
+  },
+
   /* ---------------------------------------------------------------------
    *      PROPRIÉTÉS D'ÉTAT
    --------------------------------------------------------------------- */
@@ -100,6 +113,35 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
 
+  /* ---------------------------------------------------------------------
+   */
+  /*
+   *  Vérifie si la fiche peut être ouverte
+   *  Pour être ouverte, la fiche doit être `loaded' et ses enfants doivent
+   *  l'être aussi.
+   *
+   *  Rappel :  Les enfants, dans la fiche, sont toujours des instances Fiche.
+   *            (réglées au chargement du parent). C'est leur propriété `loaded'
+   *            qui détermine si elles sont chargées ou non.
+   *
+   */
+  "is_openable":{
+    get:function(){
+      var i = 0, ichild ;
+      if(this.loaded == false) return false ;
+      if(!this.enfants || this.enfants == []) return true ;
+      for(len = this.enfants.length; i<len; ++i)
+      {
+        ichild = this.enfants[i]
+        if(false == (ichild.loaded && ichild.built) ) return false
+      }
+      // Si on arrive ici, c'est que tous les éléments ont été chargés
+      return true
+    }
+  },
+  "is_not_openable":{
+    get:function(){return this.is_openable == false}
+  },
   /* ---------------------------------------------------------------------
    *      PROPRIÉTÉS DOM
    --------------------------------------------------------------------- */
@@ -269,7 +311,7 @@ Object.defineProperties(Fiche.prototype, {
       return true
     }
   },
-    
+  
   /*
    *  Rend la fiche sortable (lorsqu'elle est rangée)
    *  
@@ -277,7 +319,32 @@ Object.defineProperties(Fiche.prototype, {
   "rend_sortable":{
     get:function(){
       this.obj.sortable({
-        'containment': this.parent.div_items
+        // 'containment': this.parent.div_items,
+        'grid'    : [100,0],
+        'cursor'  : 'move',
+        'opacity' : 0.5,
+        'scroll'  : true,
+        'change'  : function(evt, ui)
+        {
+          /* appelé si changement de position*/
+          dlog(this.type+"#"+this.id+" a changé de position")
+        },
+        'out' :function(evt,ui)
+        {
+          dlog(this.type+"#"+this.id+" sort de son parent")
+        },
+        'over':function(evt,ui)
+        {
+          dlog(this.type+"#"+this.id+" passe sur une liste qui peut l'accepter")
+        },
+        'start':function(evt,ui)
+        {
+          dlog("Début du déplacement (sort) de "+this.type+"#"+this.id)
+        },
+        'stop':function(evt,ui)
+        {
+          dlog("Fin du déplacement (sort) de "+this.type+"#"+this.id)
+        }
       })
       
     }
@@ -346,16 +413,37 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
+   *  Rend la fiche "ouvrable"
+   *  (en chargeant ses données au besoin et ses enfants)
+   *  
+   */
+  "rend_openable":{
+    value:function(poursuivre){
+      var idm = "Fiche::rend_openable ["+this.type+"#"+this.id+"]" 
+      dlog("-> "+idm)
+      if('string' == typeof poursuivre) poursuivre = {id:this.id, prop:poursuivre}
+      FICHES.after_load.poursuivre = poursuivre
+      FICHES.load( this.enfants_as_minidata )
+      dlog("<- "+idm)
+    }
+  },
+  /*
    *  Ouvre la fiche
    *  
    */
   "open":{
     get:function(){
-      // console.log("-> open "+this.id)
+      var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
+      dlog("-> "+idm)
       if(this.is_paragraph) return
+      if(this.is_not_openable){ 
+        dlog(idm + "NOT OPENABLE => rend_openable")
+        return this.rend_openable('open')
+      }
       if(this.is_page && this.parent) this.unrange
       this.enable_titre
       this.opened = true
+      dlog("<- "+idm)
     }
   },
   /*
@@ -394,6 +482,7 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
       if(this.obj_clone.length) this.unclone
+      else this.parent.div_items.append( this.obj )
       this.obj.draggable("destroy")
       this.rend_sortable
       this.ranged = true
@@ -412,7 +501,6 @@ Object.defineProperties(Fiche.prototype, {
       this.ranged = false
     }
   },
-  
   
   /* Retourne l'objet DOM du clone de la fiche */
   "obj_clone":{
@@ -609,8 +697,7 @@ Object.defineProperties(Fiche.prototype, {
       {
         data.enfants = []
         for(var i in this.enfants){ 
-          var child = this.enfants[i]
-          data.enfants.push({id:child.id, type:child.type})
+          data.enfants.push(this.enfants[i].minidata)
         }
       }
       if(this.is_book) data.real_titre = this.real_titre
@@ -618,6 +705,15 @@ Object.defineProperties(Fiche.prototype, {
       return data
     }
   },
+  
+  /*
+   *  Retourne le {Hash} des données minimum de la fiche (id et type)
+   *  
+   */
+  "minidata":{
+    get:function(){return {id:this.id, type:this.type}}
+  },
+  
   /*
    *  Destruction totale d'une fiche
    *  
@@ -730,11 +826,19 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
+  /*
+   *  Définit ou retourne les enfants de la fiche
+   *  
+   */
   "enfants":{
-    get:function(){ return this._enfants },
-    set:function(children){ this._enfants = children }
+    get:function(){return this._enfants },
+    set:function(children){ this._enfants = children },
   },
 
+  /*
+   *  Définit ou retourne le parent de la fiche
+   *  
+   */
   "parent":{
     get:function(){ return this._parent },
     set:function(pere)
@@ -763,7 +867,7 @@ Object.defineProperties(Fiche.prototype, {
   "left":{
     get:function(){ return this._left || null },
     set:function(left){
-      this._left = left
+      this._left = parseInt(left, 10)
       if( !this.ranged ) this.positionne
     }
   },
@@ -776,7 +880,7 @@ Object.defineProperties(Fiche.prototype, {
   "top":{
     get:function(){ return this._top || null },
     set:function(top){
-      this._top = top
+      this._top = parseInt(top, 10)
       if( !this.ranged ) this.positionne
     }
   }
@@ -939,7 +1043,9 @@ Fiche.prototype.dispatch = function(data){
       val = parseInt(val, 10); 
       break;
     case 'type':
-      // Juste pour ne pas passer par default
+    case 'class':
+      // Juste pour ne pas passer par default: qui mettrait
+      // loaded à true
       break
     case 'titre':
     case 'real_titre':
