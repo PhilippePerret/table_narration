@@ -21,6 +21,13 @@
     // Note:  Les plus en haut seront les plus à gauche
   ?>
   <div id="buttons_right">
+    <!-- Affichage des raccourcis-clavier -->
+    <input 
+      type="button"
+      id="btn_toggle_shortcuts"
+      value="Shortcuts"
+      onclick="$('table#shortcuts_panel').toggle()"
+      />
     <!-- CB d'enregistrement automatique -->
     <div style="display:inline-block;">
       <input 
@@ -64,4 +71,6 @@
         ><?php echo $name ?></div>
     <?php } ?>
   </div>
+  <!-- AIDE RACCOURCIS-CLAVIER -->
+  <?php include "./php/view/shortcuts_panel.php" ?>
 </section>

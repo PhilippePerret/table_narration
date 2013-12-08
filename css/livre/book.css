@@ -10,7 +10,7 @@ fiche.book {
 /*  opacity :0.5;*/
 }
 fiche.book.opened {
-  width   : 20em !important;
+  width   : 26em !important;
 }
 
 fiche.book > recto > .titre {

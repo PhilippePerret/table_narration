@@ -1,8 +1,11 @@
+/* keyCode */
 const K_TAB     = KeyEvent.DOM_VK_TAB
 const K_RETURN  = KeyEvent.DOM_VK_RETURN
 const K_ENTER   = KeyEvent.DOM_VK_ENTER
 const K_ERASE   = 8
 
+/* charCode */
+const K_SPACE   = KeyEvent.DOM_VK_SPACE
 const Key_F     = KeyEvent.DOM_VK_F
 
 const Key_a     = 97

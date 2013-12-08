@@ -54,6 +54,10 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   
   switch(evt.charCode)
   {
+  /* La touche SPACE toggle l'ouverture/fermeture de la fiche */
+  case K_SPACE:
+    FICHES.current.toggle
+    return stop_event(evt)
   case Key_o:
     FICHES.current.open
     return stop_event(evt)
@@ -89,7 +93,7 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
     var field_prop = ifield.attr('id').split('-')[2]
     // console.log("field_prop = "+field_prop)
     
-    if(ifiche.is_paragraph && field_prop == 'texte')
+    if(evt.metaKey && ifiche.is_paragraph && field_prop == 'texte')
     {
       // TODO: Créer un paragraphe à la suite de ifield
     }

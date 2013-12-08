@@ -43,3 +43,38 @@ section#header > div#buttons_right input[type="button"] {
   font-size: 10px;
 }
 
+section#header > div#buttons_right label[for="cb_automatic_save"] {
+  font-family : "Lucida Grande";
+  font-size   : 10pt;
+  padding     : 4px 8px 7px;
+}
+section#header > div#buttons_right label[for="cb_automatic_save"].on {
+  background-color:#00BC00;
+  color:white;
+}
+section#header > div#buttons_right label[for="cb_automatic_save"]:not(.on) {
+  background-color:#DDD;
+}
+section#header > div#buttons_right input#cb_automatic_save {
+  visibility  : hidden;
+}
+
+
+/* ---------------------------------------------------------------------
+ *  Table des raccourcis
+ */
+table#shortcuts_panel {
+  margin-top  : 4em;
+  border      : 1px solid;
+  padding     : 1em;
+  background-color:white;
+  margin-left : 1em;
+}
+
+table#shortcuts_panel tr td.shortcut {
+  text-align:right;
+  padding: 0 1em 0 0 ;
+}
+table#shortcuts_panel tr td.description {
+
+}

@@ -33,7 +33,8 @@ window.Fiche = function(data)
   this.selected   = false
   this.built      = false  // mis à true quand la fiche est construite
   this.retourned  = false   // Mis à true quand c'est le verso affiché
-  
+  this.draggable  = false
+  this.sortable   = false
   if(undefined == data) data = {}
   
   // Nouvelle fiche ?
@@ -346,7 +347,7 @@ Object.defineProperties(Fiche.prototype, {
           dlog("Fin du déplacement (sort) de "+this.type+"#"+this.id)
         }
       })
-      
+      this.sortable = true
     }
   },
   /*
@@ -360,6 +361,7 @@ Object.defineProperties(Fiche.prototype, {
         containment:'parent',
         stop: $.proxy(this.stop_drag, this)
       })
+      this.draggable = true
       dlog("<- Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
     }
   },
@@ -427,6 +429,17 @@ Object.defineProperties(Fiche.prototype, {
       dlog("<- "+idm)
     }
   },
+  
+  /*
+   *  Toggle (ouvre/ferme) la fiche
+   *  
+   */
+  "toggle":{
+    get:function(){
+      this.opened ? this.close : this.open
+    }
+  },
+  
   /*
    *  Ouvre la fiche
    *  
@@ -457,14 +470,15 @@ Object.defineProperties(Fiche.prototype, {
    */
   "close":{
     get:function(){
-      dlog("-> Fiche::close ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      var idm = "Fiche::close ["+this.type+"#"+this.id+"]"
+      dlog("-> "+idm, DB_FCT_ENTER)
       if(!this.is_chapter)
       {
         if(this.is_page && this.parent) this.range
         this.opened = false
       }
       if(!this.is_paragraph) this.disable_titre
-      dlog("<- Fiche::close ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
   
@@ -480,12 +494,18 @@ Object.defineProperties(Fiche.prototype, {
    */
   "range":{
     get:function(){
+      var idm = "Fiche::range ["+this.type+"#"+this.id+"]"
+      dlog("-> "+idm, DB_FCT_ENTER)
       if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
       if(this.obj_clone.length) this.unclone
       else this.parent.div_items.append( this.obj )
-      this.obj.draggable("destroy")
+      if(this.draggable){
+        this.obj.draggable("destroy")
+        this.draggable = false
+      }
       this.rend_sortable
       this.ranged = true
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   /*
@@ -496,7 +516,11 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error['unable to unrange orphelin']
       this.clone
-      this.obj.sortable("destroy")
+      if(this.sortable)
+      {
+        this.obj.sortable("destroy")
+        this.sortable = false
+      }
       this.rend_draggable
       this.ranged = false
     }
