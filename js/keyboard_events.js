@@ -14,7 +14,7 @@ window.dispay_code_event = function(evt)
  */
 window.keypress_when_no_selection_no_edition = function(evt)
 {
-  // console.log("-> keypress_when_no_selection_no_edition")
+  // console.log("---> keypress_when_no_selection_no_edition")
   
   switch (evt.keyCode) {
   // La touche effacement arrière ne doit rien faire quand rien n'est
@@ -34,7 +34,7 @@ window.keypress_when_no_selection_no_edition = function(evt)
  */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
-  // console.log("-> keypress_when_fiche_selected_out_textfield")
+  // console.log("---> keypress_when_fiche_selected_out_textfield")
   // return dispay_code_event(evt)
   
   switch(evt.keyCode)
@@ -75,7 +75,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
  *  
  */
 window.keypress_when_fiche_selected_in_textfield = function(evt){
-  // console.log("-> keypress_when_fiche_selected_in_textfield")
+  // console.log("---> keypress_when_fiche_selected_in_textfield")
   // dispay_code_event(evt)
 
   switch(evt.keyCode)
@@ -87,7 +87,7 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
    *  
    */
   case K_RETURN:
-    // console.log("-> touche retour sur champ d'édition")
+    // console.log("---> touche retour sur champ d'édition")
     var ifiche = FICHES.current
     var ifield = FICHES.current_text_field
     var field_prop = ifield.attr('id').split('-')[2]
@@ -138,10 +138,10 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
       console.log("Touche CMD + F pressée dans un champ de texte")
       return stop_event(evt)
     case Key_m: //=> Insérer un mot du scénodico
-      console.log("-> Insertion d'un mot du scénodico")
+      console.log("---> Insertion d'un mot du scénodico")
       return stop_event(evt)
     case Key_r: //=> Insérer une référence vers une fiche
-      console.log("-> Insertion d'une référence vers une fiche")
+      console.log("---> Insertion d'une référence vers une fiche")
       return stop_event(evt)
     default:
       // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)

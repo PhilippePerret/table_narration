@@ -75,7 +75,7 @@ window.Collection = {
   
   check_if_needs_save:function()
   {
-    // console.log("-> Collection.check_if_needs_save (modified:"+this.modified+")")
+    // console.log("---> Collection.check_if_needs_save (modified:"+this.modified+")")
     if(this.modified === true)
     {
       this.save
@@ -230,7 +230,7 @@ Object.defineProperties(Collection,{
   /* Sauvegarde des fiches */
   "save_fiches":{
     get:function(){
-      // console.log("-> Collection.save_fiches")
+      // console.log("---> Collection.save_fiches")
       FICHES.save( $.proxy(this.end_save, this ))
     }
   },

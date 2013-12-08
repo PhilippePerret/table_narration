@@ -319,7 +319,7 @@ Object.defineProperties(_TFile.prototype, {
   },
   "seek":{get:function()
     {
-      console.log("-> File.seek")
+      console.log("---> File.seek")
       this.wait_function()
       Ajax.send({
         script:'file/seek', 
@@ -331,7 +331,7 @@ Object.defineProperties(_TFile.prototype, {
   "suite_seek":{
     value:function(rajax)
     {
-      console.log("-> File.suite_seek")
+      console.log("---> File.suite_seek")
       // Test.write(rajax.ok ? "OK" : "NOT OK")
       this._exists = rajax.file_exists
       if(this._exists)
@@ -397,7 +397,7 @@ Object.defineProperties(_TFile.prototype, {
   "exist":{
     get:function()
     {
-      console.log("-> File.suite")
+      console.log("---> File.suite")
       // this.exist_and()
       this.fonction.waiting = true
       this.seek_poursuivre  = $.proxy(this.suite_exist, this)
@@ -408,7 +408,7 @@ Object.defineProperties(_TFile.prototype, {
   "suite_exist":{
     value:function()
     {
-      console.log("-> File.suite_exist")
+      console.log("---> File.suite_exist")
       this.seek_poursuivre = null
       // On regarde si l'utilisateur a défini des messages en
       // cas de succès ou d'échec (ainsi que des étapes suivantes suivant

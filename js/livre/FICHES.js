@@ -117,7 +117,7 @@ window.FICHES = {
   remove:function(ifiche, resultat)
   {
     var idm = "FICHES.remove"
-    dlog("-> "+idm)
+    dlog("---> "+idm)
     var detruire_enfants = resultat.kill_children == true
     
     
@@ -167,7 +167,7 @@ window.FICHES = {
    */
   add_selected:function(ifiche, keep)
   {
-    // console.log("-> add_selected (ifiche #"+ifiche.id+")")
+    // console.log("---> add_selected (ifiche #"+ifiche.id+")")
     if(undefined == keep) keep = false
     if(this.current == ifiche) return
     if(this.current && !keep) this.current.deselect
@@ -238,7 +238,7 @@ window.FICHES = {
    */
   dispatch:function( data )
   {
-    dlog("-> FICHES.dispatch", DB_FCT_ENTER)
+    dlog("---> FICHES.dispatch", DB_FCT_ENTER)
     var openeds = [], closeds = [], rangeds = [] ;
     var i, len, dfiche, ifiche ;
     // dlog("*** Data envoyées à FICHES.dispatch ***")
@@ -294,7 +294,7 @@ window.FICHES = {
    */
   load:function(arr)
   {
-    dlog("-> FICHES.load", DB_FCT_ENTER)
+    dlog("---> FICHES.load", DB_FCT_ENTER)
     console.log(arr)
     Ajax.send(
       {script:'fiche/load', fiches:arr},
@@ -305,7 +305,7 @@ window.FICHES = {
   /* Retour de la précédente */
   after_load:function(rajax)
   {
-    dlog("-> FICHES.after_load", DB_FCT_ENTER)
+    dlog("---> FICHES.after_load", DB_FCT_ENTER)
     if(rajax.ok)
     {
       // On dispatch les fiches remontées
@@ -325,7 +325,7 @@ window.FICHES = {
    */
   range:function(arr)
   {
-    dlog("-> FICHES.range", DB_FCT_ENTER)
+    dlog("---> FICHES.range", DB_FCT_ENTER)
     if(exact_typeof(arr) != 'array') arr = [arr] ;
     L(arr).each(function(fi){ if(fi.built) fi.range })
     dlog("<- FICHES.range", DB_FCT_ENTER)
@@ -369,7 +369,7 @@ window.FICHES = {
    */
   fiche_from:function(data)
   {
-    dlog("-> FICHES.fiche_from", DB_FCT_ENTER)
+    dlog("---> FICHES.fiche_from", DB_FCT_ENTER)
     var idm="[FICHES.fiche_from] ", ifiche ;
     if(undefined != this.list[data.id]){ 
       // => L'instance existe déjà
@@ -387,7 +387,7 @@ window.FICHES = {
   // @data  Peut contenir 'id' et 'type' au minimum
   create_instance_fiche_of_type:function(data)
   {
-    dlog("-> FICHES.create_instance_fiche_of_type ["+data.type+"#"+data.id+"]", DB_FCT_ENTER)
+    dlog("---> FICHES.create_instance_fiche_of_type ["+data.type+"#"+data.id+"]", DB_FCT_ENTER)
     switch(data.type)
     {
     case 'book' : return new Book(data)
@@ -416,14 +416,14 @@ window.FICHES = {
    */
   full_create:function(data, options)
   {
-    dlog("-> FICHES.full_create", DB_FCT_ENTER)
+    dlog("---> FICHES.full_create", DB_FCT_ENTER)
     var ifiche = FICHES.create_instance_fiche_of_type(data)
     ifiche.create
     if(options)
     {
       if(options.focus_titre)
       {
-        var focuson = ifiche.is_paragraph?'input_texte':'input_titre';
+        var focuson = ifiche.is_paragraph?'textarea_texte':'input_titre';
         ifiche[focuson].select() // sélectionne aussi la fiche (est-ce bien ?)
       }
       else if(options.select)
@@ -462,8 +462,8 @@ window.FICHES = {
   on_dblclick:function(ifiche, evt)
   {
     ifiche.open
-    if(ifiche.is_paragraph) ifiche.input_texte.select()
-    else if (!ifiche.enfants) ifiche.input_titre[0].focus()
+    if(ifiche.is_paragraph) ifiche.textarea_texte.select()
+    else if (!ifiche.titre) ifiche.input_titre[0].focus()
   },
   
   /*
@@ -473,7 +473,7 @@ window.FICHES = {
    */
   onfocus_textfield:function(ifiche, evt)
   {
-    // console.log("-> onfocus_textfield dans " + evt.target.id)
+    // console.log("---> onfocus_textfield dans " + evt.target.id)
     // @note: Il est important de sélectionner la fiche avant tout autre
     // réglage pour que la sélection qui serait appelée ensuite (quand on clique
     // dans le champ de saisie alors que la fiche n'est pas sélectionnée) ne
@@ -487,7 +487,7 @@ window.FICHES = {
   },
   onblur_textfield:function(ifiche, evt)
   {
-    // console.log("-> onblur_textfield de " + evt.target.id)
+    // console.log("---> onblur_textfield de " + evt.target.id)
     $(evt.target).removeClass('focused')
     if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
     else window.onkeypress = keypress_when_no_selection_no_edition

@@ -66,14 +66,16 @@ Object.defineProperties(Paragraph.prototype,{
    *  
    */
   "texte_id":{get:function(){return this.dom_id+'-texte'}},
-  "texte_jid":{get:function(){ return (this.opened?'textarea':'div')+'#'+this.texte_id }},
-  "input_texte":{get:function(){ return $(this.texte_jid)}},
+  "textearea_texte_jid":{get:function(){return "textarea#"+this.texte_id}},
+  "textarea_texte":{get:function(){return $(this.textearea_texte_jid)}},
+  "div_texte_jid":{get:function(){return "div#"+this.texte_id}},
+  "div_texte":{get:function(){ return $(this.div_texte_jid)}},
   "texte":{
     get:function(){ return this._texte || null },
     set:function(texte){
       if(texte == this._texte) return
       this._texte = texte
-      this.input_texte.val( texte )
+      this.textarea_texte.val( texte )
       this.modified = true
     }
   },
@@ -82,27 +84,31 @@ Object.defineProperties(Paragraph.prototype,{
   /* Code HTML du textarea pour `texte' */
   "html_textarea_texte":{
     get:function(){
-      return '<textarea id="'+this.texte_id+'" class="texte">'+this.texte+'</textarea>'
+      return '<textarea id="'+this.texte_id+'" class="texte">'+(this.texte || 'TEXTE_PARAGRAPHE')+'</textarea>'
     }
   },
   /* Code HTML du Div pour `texte' */
   "html_div_texte":{
     get:function(){
-      return '<div id="'+this.texte_id+'" class="texte">'+this.texte+'</div>'
+      return '<div id="'+this.texte_id+'" class="texte">'+(this.texte || 'TEXTE_PARAGRAPHE')+'</div>'
     }
   },
   /* Place le texte dans un textarea */
   "texte_in_textarea":{
     get:function(){
-      this.input_texte.replaceWith(this.html_textarea_texte)
-      this.input_texte = $('textarea#'+this.texte_id) // pas vraiment utile (cf. texte_jid)
+      var idm = "Paragraph::texte_in_textarea ["+this.type+"#"+this.id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.div_texte.replaceWith(this.html_textarea_texte)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   /* Place le texte dans un div */
   "texte_in_div":{
     get:function(){
-      this.input_texte.replaceWith( this.html_div_texte )
-      this.input_texte = $('div#'+this.texte_id) // pas vraiment utile (cf. texte_jid)
+      var idm = "Paragraph::texte_in_div ["+this.type+"#"+this.id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.textarea_texte.replaceWith( this.html_div_texte )
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   }
   

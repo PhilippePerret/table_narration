@@ -135,7 +135,7 @@ function FicheDisplay_of_an_paragraph() {
   with(APP){ $('section#table').html('') }
   // Propriétés complexes et simples
   var props = [
-  'texte', 'texte_jid', 'input_texte'
+  'texte', 'textarea_texte'
   ]
   L(props).each(function(prop){ 'Paragraph.prototype'.should.have.property( prop ) })
   
@@ -143,10 +143,10 @@ function FicheDisplay_of_an_paragraph() {
   APP.ipara.create
   
   blue("Le `texte` du paragraphe")
-  'ipara.texte_jid'.should = "textarea#"+APP.ipara.dom_id+'-texte'
-  'ipara.input_texte'.should.be.defined
-  'ipara.input_texte'.should.have.property('jquery')
-  var inpTexte = jq(APP.ipara.texte_jid)
+  'ipara.textarea_texte_jid'.should = "textarea#"+APP.ipara.dom_id+'-texte'
+  'ipara.textarea_texte'.should.be.defined
+  'ipara.textarea_texte'.should.have.property('jquery')
+  var inpTexte = jq(APP.ipara.textarea_texte)
   inpTexte.should.be.visible
   inpTexte.should.have.class('texte')
   inpTexte.should.contain( "" )

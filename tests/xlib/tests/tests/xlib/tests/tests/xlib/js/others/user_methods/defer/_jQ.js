@@ -67,7 +67,7 @@ APP.jq = jq
 
 
 window._jq = function(jid){
-	// console.log("-> instanciation de "+jid)
+	// console.log("---> instanciation de "+jid)
   this.jid 			= jid
 	this.obj			= null		// L'énumérateur jQuery
 	this.obj_dom	= null		// Véritable objet DOM

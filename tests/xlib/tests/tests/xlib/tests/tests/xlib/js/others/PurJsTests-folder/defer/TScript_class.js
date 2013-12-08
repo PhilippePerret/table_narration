@@ -90,7 +90,7 @@ Object.defineProperties(TScript.prototype, {
 			if(false == this._first_run_ok) return this.first_run
 			
       // // --- Débug ---
-      // debug("-> TScript.run ("+this.relative_path+") avec :"+
+      // debug("---> TScript.run ("+this.relative_path+") avec :"+
       //       "\n   curstep_indice:"+this.curstep_indice+
       //       "\n   stop_point:"+this.stop_point +
       //       "\n   arg:"+this.arg

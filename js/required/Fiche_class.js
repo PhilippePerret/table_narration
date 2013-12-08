@@ -17,7 +17,7 @@
 // Classe Fiche
 window.Fiche = function(data)
 {
-  dlog("-> Fiche (instanciation)", DB_FCT_ENTER)
+  dlog("---> Fiche (instanciation)", DB_FCT_ENTER)
   
   this.class      = "Fiche"
   this.id         = null
@@ -243,7 +243,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "create":{
     get:function(){
-      dlog("-> Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("---> Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       this.build
       this.set_values
       dlog("<- Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
@@ -257,6 +257,8 @@ Object.defineProperties(Fiche.prototype, {
    */
   "build":{
     get:function(){
+      var idm = "Fiche::build ["+this.type+"#"+this.id+"]" ;
+      dlog("---> " + idm, DB_FCT_ENTER)
       // On ajoute le code ou on le remplace
       if(this.obj) this.obj.replaceWith( this.html )
       else         $('section#table').append( this.html )
@@ -268,6 +270,7 @@ Object.defineProperties(Fiche.prototype, {
       this.positionne
       // On place les observers
       this.observe
+      dlog("<- " + idm, DB_FCT_ENTER)
       return true
     }
   },
@@ -279,7 +282,7 @@ Object.defineProperties(Fiche.prototype, {
   "observe":{
     get:function(){
       var idm = "Fiche::observe ["+this.type+"#"+this.id+"]" ;
-      dlog("-> " + idm, DB_FCT_ENTER)
+      dlog("---> " + idm, DB_FCT_ENTER)
       var obj ;
       // On doit la rendre draggable
       this.rend_draggable
@@ -287,20 +290,6 @@ Object.defineProperties(Fiche.prototype, {
       this.obj.bind('click', $.proxy(this.toggle_select, this))
       if(this.is_paragraph)
       {
-        // La modification du texte du paragraphe doit provoquer son
-        // actualisation
-        obj = this.input_texte
-        if(obj.length)
-        {
-          obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-          obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-          this.input_texte[0].onchange = $.proxy(this.onchange_texte, this)
-        }
-        else{
-          var err = "Problème dans "+idm+" : this.input_texte n'est pas défini…" +
-          " Les observers n'ont pas pu être placés…"
-          console.error(err)
-        } 
       }
       else
       {        
@@ -372,7 +361,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_draggable":{
     get:function(){
-      dlog("-> Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("---> Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
       this.obj.draggable({
         containment:'parent',
         stop: $.proxy(this.stop_drag, this)
@@ -383,7 +372,7 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
-   *  Désactive/réactive l'édition du titre
+   *  Désactive/réactive l'édition du titre (ou du texte pour le paragraphe)
    *  
    *  PRODUIT
    *  -------
@@ -394,26 +383,25 @@ Object.defineProperties(Fiche.prototype, {
    */
   "enable_titre":{
     get:function(){
-      dlog("-> Fiche::enable_titre", DB_FCT_ENTER)
+      dlog("---> Fiche::enable_titre", DB_FCT_ENTER)
       this.is_paragraph ? this.texte_in_textarea : this.titre_in_input
-      var obj = this.is_paragraph ? this.input_texte : this.input_titre
+      var obj = this.is_paragraph ? this.textarea_texte : this.input_titre
+      console.dir(obj)
       obj.unbind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      // obj.bind('onchange', $.proxy(this.onchange_titre_or_texte, this))
       obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
     }
   },
   "disable_titre":{
     get:function(){
-      dlog("-> Fiche::disable_titre", DB_FCT_ENTER)
+      dlog("---> Fiche::disable_titre", DB_FCT_ENTER)
       this.is_paragraph ? this.texte_in_div : this.titre_in_div
-      var obj = this.is_paragraph ? this.input_texte : this.input_titre
+      var obj = this.is_paragraph ? this.div_texte : this.input_titre
       if(FICHES.current_text_field && FICHES.current_text_field[0].id == obj[0].id) FICHES.onblur_textfield( this, {target:obj} )
       obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      // obj.unbind('onchange', $.proxy(this.onchange_titre_or_texte, this))
     }
   },
   
@@ -438,7 +426,7 @@ Object.defineProperties(Fiche.prototype, {
   "rend_openable":{
     value:function(poursuivre){
       var idm = "Fiche::rend_openable ["+this.type+"#"+this.id+"]" 
-      dlog("-> "+idm)
+      dlog("---> "+idm)
       if('string' == typeof poursuivre) poursuivre = {id:this.id, prop:poursuivre}
       FICHES.after_load.poursuivre = poursuivre
       FICHES.load( this.enfants_as_minidata )
@@ -463,10 +451,12 @@ Object.defineProperties(Fiche.prototype, {
   "open":{
     get:function(){
       var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
-      dlog("-> "+idm, DB_FCT_ENTER)
-      if(this.is_paragraph) return
-      if(this.is_not_openable) return this.rend_openable('open')
-      if(this.is_page && this.parent) this.unrange
+      dlog("---> "+idm, DB_FCT_ENTER)
+      if(this.is_not_paragraph)
+      {
+        if(this.is_not_openable) return this.rend_openable('open')
+        if(this.is_page && this.parent) this.unrange
+      }
       this.enable_titre
       this.opened = true
       dlog("<- "+idm, DB_FCT_ENTER)
@@ -484,13 +474,13 @@ Object.defineProperties(Fiche.prototype, {
   "close":{
     get:function(){
       var idm = "Fiche::close ["+this.type+"#"+this.id+"]"
-      dlog("-> "+idm, DB_FCT_ENTER)
+      dlog("---> "+idm, DB_FCT_ENTER)
       if(this.is_not_chapter)
       {
         if(this.is_page && this.parent) this.range
         this.opened = false
       }
-      if(this.is_not_paragraph) this.disable_titre
+      this.disable_titre
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
@@ -508,7 +498,7 @@ Object.defineProperties(Fiche.prototype, {
   "range":{
     get:function(){
       var idm = "Fiche::range ["+this.type+"#"+this.id+"]"
-      dlog("-> "+idm, DB_FCT_ENTER)
+      dlog("---> "+idm, DB_FCT_ENTER)
       if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
       if(this.obj_clone.length) this.unclone
       else this.parent.div_items.append( this.obj )
@@ -586,7 +576,10 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       this.input_titre.val(this.titre || "TITRE")
       if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
-      if(this.is_paragraph) this.input_texte.val(this.texte || "TEXTE_PARAGRAPHE")
+      if(this.is_paragraph){
+        var prop = this.opened ? 'textarea' : 'div' ;
+        this[prop+'_texte'].val(this.texte || "TEXTE_PARAGRAPHE")
+      }
       return true
     }
   },
@@ -666,7 +659,7 @@ Object.defineProperties(Fiche.prototype, {
     configurable:true,
     get:function(){
       if(this.is_paragraph) 
-        return '<textarea id="'+this.dom_id+'-texte" class="texte"></textarea>'
+        return this.html_div_texte
       else
         return '<div id="'+this.dom_id+'-items" class="items"></div>'
     }
@@ -721,7 +714,8 @@ Object.defineProperties(Fiche.prototype, {
   "set_titre_verso":{
     get:function(){
       $(this.titre_verso_jid).html(
-        "Verso " + FICHES.datatype[this.type].hname + " #" + this.id + " : " + this.titre
+        "Verso " + FICHES.datatype[this.type].hname + " #" + this.id + " : " + 
+        (this.is_paragraph ? (this.texte || "").substring(0, 50) : this.titre)
       )
     }
   },
@@ -1002,8 +996,16 @@ Fiche.prototype.on_drop = function(evt, ui)
     // Si c'est une création, suivant le type, il faut faire des choses
     // différentes.
     // -- Pour une page --
-    // Une page doit être ouverte après sa création/insertion
-    if(ichild.is_page) ichild.open
+    // Une page doit être ouverte après sa création/insertion et on doit
+    // sélectionner son titre pour édition.
+    if(ichild.is_page){ 
+      ichild.open
+      ichild.input_titre.select()
+    }
+    else if (ichild.is_paragraph)
+    {
+      ichild.textarea_texte.select()
+    }
     
   }
   
@@ -1041,11 +1043,11 @@ Fiche.prototype.add_child = function(enfant, before_child)
   // Définition du parent de l'enfant
   enfant.parent = this
   
-  // On ferme toujours l'enfant
+  // On ferme l'enfant sauf si c'est un chapitre (qui ne peut jamais être fermé)
   // @note: la méthode appelante pourra unranger ou ouvrir l'enfant
   // dans certains cas (par exemple lorsque c'est une nouvelle page qui est
   // créée en la glissant sur un chapitre)
-  enfant.close
+  if(enfant.is_not_chapter) enfant.close
   
   // Ajout de l'enfant dans le div_items de la fiche
   if(undefined == before_child)
@@ -1078,8 +1080,8 @@ Fiche.prototype.add_child = function(enfant, before_child)
  */
 Fiche.prototype.onchange_titre_or_texte = function(evt)
 {
-  dlog("-> onchange_titre_or_texte ["+this.type+"#"+this.id+"]", DB_FCT_ENTER | DB_CURRENT)
-  var obj   = this.is_paragraph ? this.input_texte : this.input_titre ;
+  dlog("---> onchange_titre_or_texte ["+this.type+"#"+this.id+"]", DB_FCT_ENTER | DB_CURRENT)
+  var obj   = this.is_paragraph ? this.textarea_texte : this.input_titre ;
   var prop  = this.is_paragraph ? 'texte' : 'titre' ;
   var new_value = obj.val()
   if(this[prop] != new_value)
@@ -1096,11 +1098,11 @@ Fiche.prototype.onchange_titre_or_texte = function(evt)
  */
 Fiche.prototype.onchange_texte = function(evt)
 {
-  this.texte = this.input_texte.val()
+  this.texte = this.textarea_texte.val()
 }
 
 Fiche.prototype.dispatch = function(data){
-  dlog("-> Fiche::dispatch ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
+  dlog("---> Fiche::dispatch ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
   var prop, val ;
   for(prop in data)
   {

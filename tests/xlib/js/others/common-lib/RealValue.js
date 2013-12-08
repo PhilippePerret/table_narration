@@ -90,7 +90,7 @@ window.RealValue = {
   // Transforme un object (hash) en instance de la classe voulue, en la définissant
   // @note Lire les points [Requis 2], [Requis 3] et [Requis 5]
   object_to_classe: function(obj){
-    // console.log("-> RealValue.object_to_classe(obj de classe "+obj.class+")");
+    // console.log("---> RealValue.object_to_classe(obj de classe "+obj.class+")");
     try{
       return eval('get_or_create_'+obj.class.toLowerCase())(obj);
     }catch(erreur){
@@ -101,7 +101,7 @@ window.RealValue = {
   // Retourne true si l'objet +obj+ a une property `class' correspondant à un objet
   // propre de l'application
   has_property_class_as_class:function(obj){
-    // console.log("-> RealValue.has_property_class_as_class");
+    // console.log("---> RealValue.has_property_class_as_class");
     if('undefined'==typeof obj || obj==null) return false;
     if('string' != typeof obj.class) return false;
     try{
@@ -159,7 +159,7 @@ window.RealValue = {
     @return L'objet (instance) lui-même. cf. [Requis 3]
   */
   deserialize:function(obj, data){
-    // console.log("-> RealValue.deserialize (objet de class `"+obj.class+"')");
+    // console.log("---> RealValue.deserialize (objet de class `"+obj.class+"')");
     for (var prop in data) {
       if(false == data.hasOwnProperty(prop)) continue;
       // console.log("   --> Traitement de la propriété "+prop);

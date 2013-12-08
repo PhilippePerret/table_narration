@@ -36,7 +36,7 @@ NOTES
 
 =end
 
-log "-> #{__FILE__}"
+log "---> #{__FILE__}"
 
 # Dans le cas où le dossier n'existerait pas, on le crée avec tout ce qui 
 # est nécessaire dedans
@@ -46,7 +46,7 @@ load './ruby/module/prepare_folder.rb' unless File.exists? Collection::folder
 # Méthode principale appelée pour charger les fiches nécessaires
 # de la collection à son chargement.
 def get_all_fiches_needed
-  log "-> get_all_fiches_needed"
+  log "---> get_all_fiches_needed"
   unless File.exists? File.join(Fiche::folder)
     log "<- get_all_fiches_needed (dossier fiche inexistant => aucune fiche à lire)"
     return
@@ -56,7 +56,7 @@ def get_all_fiches_needed
 end
 
 def get_all_books
-  log "-> get_all_books"
+  log "---> get_all_books"
   Dir["#{Fiche::folder}/book/*.msh"].each do |path|
     data_book = Marshal.load(File.read path)
     ibook = Fiche.new(data_book['id'], 'book')
@@ -66,7 +66,7 @@ def get_all_books
 end
 
 def get_all_non_ranged
-  log "-> get_all_non_ranged"
+  log "---> get_all_non_ranged"
   new_liste = []
   Collection.non_rangeds.each do |idtype|
     next if idtype.strip == ""

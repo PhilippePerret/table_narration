@@ -212,7 +212,7 @@ window.Wait = {
 	// Fin successful. Si une méthode `options.success` est définie, on la joue avant de
 	// poursuivre.
   fin_ok:function(){
-    // w("-> Wait.fin_ok")
+    // w("---> Wait.fin_ok")
     if(false == this.suite.onresultat(true))
     {
   		if('function' == typeof this.options.success) this.options.success(true)

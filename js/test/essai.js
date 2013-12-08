@@ -25,7 +25,7 @@ function bricole_event(data_injected) {
 var obj, e ;
 function hit()
 {
-    console.log("-> hit !");
+    console.log("---> hit !");
     window.focus()
     obj[0].focus()
     obj.select()

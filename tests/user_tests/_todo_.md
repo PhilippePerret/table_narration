@@ -1,5 +1,11 @@
-* Quand on ouvre une page, on ne doit focusser sur le titre que si la
-  page n'a aucun enfant.
+* À la création d'un paragraphe, on doit directement focusser dans son
+  texte (normalement, c'est fait… mais peut-être que c'est le paragraphe
+  qui est fermé)
+  - Rendre le paragraphe sortable (et non draggable)
+
+*?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en
+  dehors de lui, soit un raccourci pour le sortir (en scrollant jusqu'à lui
+  ou en le plaçant là où on se trouve.)
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode

@@ -110,18 +110,22 @@ function Fiche_Test_open_simple_by_type() {
   
   blue("Ouverture d'un paragraphe (ne doit rien changer)")
   var para = APP.ipara = APP.FICHES.full_create({type:'para'})
-  var para_texte = jq(para.texte_jid)
+  var para_texte = jq(para.textarea_texte_jid)
+  var div_texte  = jq(para.div_texte_jid)
   para_texte.should.exist
   para_texte.should.be.visible
-  'ipara.opened'.should.be.false // toujours
+  div_texte.should_not.be.visible
+  'ipara.opened'.should.be.true
   w("On ferme le paragraphe")
   para.close // <-- TEST
-  para_texte.should.be.visible
-  'ipara.opened'.should.be.false // toujours
+  para_texte.should_not.be.visible
+  div_texte.should.be.visible
+  'ipara.opened'.should.be.false
   w("On ouvre le paragraphe")
   para.open // <-- TEST
   para_texte.should.be.visible
-  'ipara.opened'.should.be.false // toujours
+  div_texte.should_not.be.visible
+  'ipara.opened'.should.be.true
   
 }
 

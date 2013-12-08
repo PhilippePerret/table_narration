@@ -30,7 +30,7 @@ window.UI = {
   ondrop_on_table:function(evt, ui)
   {
     var ctool = ui.helper
-    dlog("-> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_CURRENT|DB_FCT_ENTER)
+    dlog("---> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_CURRENT|DB_FCT_ENTER)
     
     // Déterminer la position approximative du drop sur la table
     var pos_table = $('section#table').position()

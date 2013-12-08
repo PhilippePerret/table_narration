@@ -26,7 +26,7 @@ _PropertiesMainTestFunction = {
   // 
 	"run":{
 	  get:function(){
-      // console.log("-> "+this.name+".run / waiting = "+this.waiting)
+      // console.log("---> "+this.name+".run / waiting = "+this.waiting)
       if(this.waiting) return
 
       // Définition de l'étape à jouer (ou fin)
@@ -624,7 +624,7 @@ _PropertiesMainTestFunction = {
   },
   "stop_pause":{
     get:function(){
-      // console.log("-> "+this.name+".stop_pause (waiting remis à false)")
+      // console.log("---> "+this.name+".stop_pause (waiting remis à false)")
       this.waiting = false
     }
   }

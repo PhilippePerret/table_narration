@@ -80,7 +80,7 @@ Object.defineProperties(TStep.prototype,{
   },
   "run_fonction":{
     get:function(){
-      // console.log("-> TStep.run_fonction")
+      // console.log("---> TStep.run_fonction")
       if(undefined == this.fonction || 'function' != typeof this.fonction)
       {
         throw "Il faut définir la fonction de l'étape !"
