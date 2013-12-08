@@ -19,6 +19,9 @@ fiche.chap.ranged {
   margin-top  : 1em;
   padding     : 0 4px 0 0;
 }
+fiche.chap.ranged > recto > .titre {
+  font-size   : 1.2em;
+}
 
 fiche.chap > recto > div.items { 
   display     : block !important; 

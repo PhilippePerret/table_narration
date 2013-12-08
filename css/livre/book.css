@@ -39,8 +39,11 @@ fiche.book > recto > div.div_real_titre input.real_titre {
 
 /* Éléments invisibles quand la fiche est fermée */
 fiche.book.opened > recto > div.div_real_titre input.real_titre { 
-  font-family   : "Times New Roman";
-  font-size     : 15pt;
+  font-family       : "Times New Roman";
+  font-size         : 15pt;
+  background-color  : #00BFD3;
+  border            : 0;
+  padding           : 0 9px 2px;
 }
 fiche.book.opened > recto > div.items { 
   display: block;

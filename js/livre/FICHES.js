@@ -249,9 +249,7 @@ window.FICHES = {
       if(data[i]['opened'] == "true" ) openeds.push( ifiche )
       if(data[i]['opened'] == "false") closeds.push( ifiche )
       if(data[i]['ranged'] == "true" ) rangeds.push( ifiche )
-      // Une fiche passant par ici est forcément chargée
-      ifiche.loaded = true
-      // On crée la fiche
+      ifiche.loaded = true // Une fiche passant par ici est forcément chargée
       ifiche.create
     }
     
@@ -455,7 +453,8 @@ window.FICHES = {
    *  PRODUIT
    *  -------
    *    # Ouvre la fiche
-   *    # Focusse sur le titre ou le texte si paragraphe
+   *    # Focusse sur le titre ou le texte si paragraphe, mais sous
+   *      certaines conditions (si aucun enfants pour le moment)
    *
    *  @param  ifiche    Instance Fiche de la fiche double-cliquée
    *  @param  evt       Event Dblclick
@@ -464,7 +463,7 @@ window.FICHES = {
   {
     ifiche.open
     if(ifiche.is_paragraph) ifiche.input_texte.select()
-    else ifiche.input_titre[0].focus()
+    else if (!ifiche.enfants) ifiche.input_titre[0].focus()
   },
   
   /*

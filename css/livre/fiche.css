@@ -23,6 +23,7 @@ fiche > verso {
   padding-left      : 1em;
   min-height        : 2em;
   background-color  : #dcdcdc;
+  padding           : 0.5em 0.6em;
 }
 
 fiche > recto > div.items {

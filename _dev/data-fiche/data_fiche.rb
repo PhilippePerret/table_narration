@@ -4,9 +4,9 @@
 # Affiche les données d'une fiche
 
 
-FOLDER_COLLECTION = "current" # "current"
-FICHE_TYPE  = 'book'
-FICHE_ID    = 0
+FOLDER_COLLECTION = "test" # "current"
+FICHE_TYPE  = 'page'
+FICHE_ID    = 5
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
 
 
