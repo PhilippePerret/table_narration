@@ -172,6 +172,14 @@ Object.defineProperties(Collection,{
       delete this.timer_save
     }
   },
+  /*
+   *  Méthode appelée quand on clique sur le "Auto" de l'enregistrement
+   *  automatique. L'active ou le désactive.
+   *
+   *  La méthode est aussi appelée quand on charge l'application, pour
+   *  remettre l'état précédent.
+   *  
+   */
   "enable_automatic_saving":{
     value:function(oui){
       if(oui){ 

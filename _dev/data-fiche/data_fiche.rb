@@ -4,7 +4,7 @@
 # Affiche les données d'une fiche
 
 
-FOLDER_COLLECTION = "test" # "current"
+FOLDER_COLLECTION = "current" # "current"
 FICHE_TYPE  = 'book'
 FICHE_ID    = 0
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")

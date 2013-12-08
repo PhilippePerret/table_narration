@@ -215,7 +215,6 @@ window.FICHES = {
     // dlog(data)
     for(i=0, len = data.length; i<len; ++i)
     {
-      dlog("FICHES.dispatch / dispatch de " + JSON.stringify(data[i]))
       ifiche = this.fiche_from( data[i] )
       if(data[i]['opened'] == "true" ) openeds.push( ifiche )
       if(data[i]['opened'] == "false") closeds.push( ifiche )
@@ -299,7 +298,6 @@ window.FICHES = {
   range:function(arr)
   {
     dlog("-> FICHES.range", DB_FCT_ENTER)
-    dlog("Fiches à ranger : " + arr)
     if(exact_typeof(arr) != 'array') arr = [arr] ;
     L(arr).each(function(fi){ if(fi.built) fi.range })
     dlog("<- FICHES.range", DB_FCT_ENTER)

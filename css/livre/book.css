@@ -3,10 +3,10 @@
  *  LIVRE (BOOK)
  */
 fiche.book {
-  background-color :#00A2B7;
-  color   :white;
-  width   :16em;
-  border-radius :0.2em;
+  background-color  : #00A2B7;
+  color             : white;
+  width             : 13em;
+  border-radius     : 0.2em;
 /*  opacity :0.5;*/
 }
 fiche.book.opened {
@@ -46,4 +46,5 @@ fiche.book.opened > recto > div.items {
   display: block;
   padding-bottom : 1em;
   padding-top    : 0.1em;
+  padding-left   : -1em;
 }

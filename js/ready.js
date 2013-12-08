@@ -13,7 +13,8 @@ $(document).ready(function(){
    */
   Collection.load
   
-  // Lancer la boucle de sauvegarde
-  Collection.start_automatic_saving
+  // Lancer (ou non) la boucle de sauvegarde
+  Collection.enable_automatic_saving($('input#cb_automatic_save')[0].checked)
+  
 
 });

@@ -278,7 +278,8 @@ Object.defineProperties(Fiche.prototype, {
    */
   "observe":{
     get:function(){
-      DL & DB_FCT_ENTER && console.log("-> Fiche::observe")
+      var idm = "Fiche::observe ["+this.type+"#"+this.id+"]"
+      dlog("-> " + idm, DB_FCT_ENTER)
       // On doit la rendre draggable
       this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
@@ -294,13 +295,16 @@ Object.defineProperties(Fiche.prototype, {
         if(this.is_book)
         {
           // La modification du titre réel doit entrainer son update
+          var obj = this.input_real_titre
+          obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+          obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
           this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
         }
       }      
       // Toutes les fiches hors paragraphes doivent être droppable et
       // accepter un élément de rang inférieur
       var accepted_child = FICHES.datatype[this.type].child_type
-      if(this.is_paragraph == false)
+      if(this.is_not_paragraph)
       {
         this.obj.droppable({
           hoverClass  :'dropped',
@@ -309,10 +313,10 @@ Object.defineProperties(Fiche.prototype, {
           drop        :$.proxy(this.on_drop, this)
         })
       }
+      dlog("<- " + idm, DB_FCT_ENTER)
       return true
     }
   },
-  
   /*
    *  Rend la fiche sortable (lorsqu'elle est rangée)
    *  
@@ -447,7 +451,7 @@ Object.defineProperties(Fiche.prototype, {
   "open":{
     get:function(){
       var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
-      dlog("-> "+idm)
+      dlog("-> "+idm, DB_FCT_ENTER)
       if(this.is_paragraph) return
       if(this.is_not_openable){ 
         dlog(idm + "NOT OPENABLE => rend_openable")
@@ -456,7 +460,7 @@ Object.defineProperties(Fiche.prototype, {
       if(this.is_page && this.parent) this.unrange
       this.enable_titre
       this.opened = true
-      dlog("<- "+idm)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   /*
@@ -825,10 +829,11 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  "is_book"       :{get:function(){ return this.type == 'book'}},
-  "is_chapter"    :{get:function(){ return this.type == 'chap'}},
-  "is_page"       :{get:function(){ return this.type == 'page'}},
-  "is_paragraph"  :{get:function(){ return this.type == 'para'}},
+  "is_book"         :{get:function(){ return this._type == 'book'}},
+  "is_chapter"      :{get:function(){ return this._type == 'chap'}},
+  "is_page"         :{get:function(){ return this._type == 'page'}},
+  "is_paragraph"    :{get:function(){ return this._type == 'para'}},
+  "is_not_paragraph":{get:function(){ return this._type != "para"}},
 
   "titre":{
     get:function(){return this._titre || null },

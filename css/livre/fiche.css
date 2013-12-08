@@ -19,8 +19,10 @@ fiche > recto {
   padding-left  : 1em;
 }
 fiche > verso { 
-  display       : block; 
-  padding-left  : 1em;
+  display           : block; 
+  padding-left      : 1em;
+  min-height        : 2em;
+  background-color  : #dcdcdc;
 }
 
 fiche > recto > div.items {
