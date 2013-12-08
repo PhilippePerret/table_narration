@@ -1,4 +1,5 @@
-* On doit modifier le onkeypress quand on focusse dans real_titre
+* Quand on ouvre une page, on ne doit focusser sur le titre que si la
+  page n'a aucun enfant.
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode

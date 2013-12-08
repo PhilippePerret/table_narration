@@ -278,8 +278,9 @@ Object.defineProperties(Fiche.prototype, {
    */
   "observe":{
     get:function(){
-      var idm = "Fiche::observe ["+this.type+"#"+this.id+"]"
+      var idm = "Fiche::observe ["+this.type+"#"+this.id+"]" ;
       dlog("-> " + idm, DB_FCT_ENTER)
+      var obj ;
       // On doit la rendre draggable
       this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
@@ -288,14 +289,25 @@ Object.defineProperties(Fiche.prototype, {
       {
         // La modification du texte du paragraphe doit provoquer son
         // actualisation
-        this.input_texte[0].onchange = $.proxy(this.onchange_texte, this)
+        obj = this.input_texte
+        if(obj.length)
+        {
+          obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+          obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+          this.input_texte[0].onchange = $.proxy(this.onchange_texte, this)
+        }
+        else{
+          var err = "Problème dans "+idm+" : this.input_texte n'est pas défini…" +
+          " Les observers n'ont pas pu être placés…"
+          console.error(err)
+        } 
       }
       else
       {        
         if(this.is_book)
         {
           // La modification du titre réel doit entrainer son update
-          var obj = this.input_real_titre
+          obj = this.input_real_titre
           obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
           obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
           this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
@@ -453,10 +465,7 @@ Object.defineProperties(Fiche.prototype, {
       var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
       dlog("-> "+idm, DB_FCT_ENTER)
       if(this.is_paragraph) return
-      if(this.is_not_openable){ 
-        dlog(idm + "NOT OPENABLE => rend_openable")
-        return this.rend_openable('open')
-      }
+      if(this.is_not_openable) return this.rend_openable('open')
       if(this.is_page && this.parent) this.unrange
       this.enable_titre
       this.opened = true
@@ -476,12 +485,12 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Fiche::close ["+this.type+"#"+this.id+"]"
       dlog("-> "+idm, DB_FCT_ENTER)
-      if(!this.is_chapter)
+      if(this.is_not_chapter)
       {
         if(this.is_page && this.parent) this.range
         this.opened = false
       }
-      if(!this.is_paragraph) this.disable_titre
+      if(this.is_not_paragraph) this.disable_titre
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
@@ -588,12 +597,12 @@ Object.defineProperties(Fiche.prototype, {
    *  
    */
   "retourne":{
-    configurable:true,
     get:function()
     {
       this.recto[this.retourned ? 'show' : 'hide']()
       this.verso[this.retourned ? 'hide' : 'show']()
       this.retourned = !this.retourned
+      if(this.retourned) this.regle_verso
     }
   },
   
@@ -602,7 +611,6 @@ Object.defineProperties(Fiche.prototype, {
    *  
    */
   "html":{
-    configurable:true,
     get:function(){
       return  '<fiche id="' + this.dom_id + '" class="fiche '+this.type+'">' +
               this.html_recto + this.html_verso +
@@ -666,13 +674,55 @@ Object.defineProperties(Fiche.prototype, {
   
   /*
    *  Retourne le code HTML du VERSO de la fiche
-   *  
+   *  -------------------------------------------
    */
   "html_verso":{
-    configurable:true,
     get:function(){
       return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
+                '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
+                this.html_fieldset_parametres +
               '</verso>'
+    }
+  },
+  /*
+   *  Règle le verso
+   *  --------------
+   *  Cette méthode est appelée quand on retourne la fiche, entendu qu'on ne
+   *  définit pas vraiment son verso à l'affichage. Et puis certaines valeurs,
+   *  comme le titre, ne sont pas affichées.
+   *  Donc c'est seulement quand on la met au verso qu'on règle les choses
+   *  suivant les fiches.
+   *
+   */
+  "regle_verso":{
+    get:function(){
+      this.set_titre_verso
+      if(undefined != this.after_regle_verso) this.after_regle_verso
+    }
+  },
+  
+  /*
+   *  Au verso, le fielset contenant les paramètres
+   *  
+   */
+  "fieldset_parametres":{get:function(){return $(this.fieldset_parametres_jid)}},
+  "fieldset_parametres_jid":{get:function(){return "fieldset#"+this.fieldset_parametres_id}},
+  "fieldset_parametres_id":{get:function(){return this.dom_id+'-fieldset_parametres'}},
+  "html_fieldset_parametres":{
+    get:function(){
+      return '<fieldset id="'+this.fieldset_parametres_id+'">' +
+        '<legend>Paramètres</legend>'+
+        '</fieldset>'
+    }
+  },
+  
+  "titre_verso_id":{get:function(){return this.dom_id+"-titre_verso"}},
+  "titre_verso_jid":{get:function(){return 'div#'+this.titre_verso_id}},
+  "set_titre_verso":{
+    get:function(){
+      $(this.titre_verso_jid).html(
+        "Verso " + FICHES.datatype[this.type].hname + " #" + this.id + " : " + this.titre
+      )
     }
   },
   
@@ -829,11 +879,14 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  "is_book"         :{get:function(){ return this._type == 'book'}},
-  "is_chapter"      :{get:function(){ return this._type == 'chap'}},
-  "is_page"         :{get:function(){ return this._type == 'page'}},
-  "is_paragraph"    :{get:function(){ return this._type == 'para'}},
-  "is_not_paragraph":{get:function(){ return this._type != "para"}},
+  "is_book"           :{get:function(){ return this._type == 'book'}},
+  "is_not_book"       :{get:function(){ return this._type != 'book'}},
+  "is_chapter"        :{get:function(){ return this._type == 'chap'}},
+  "is_not_chapter"    :{get:function(){ return this._type != 'chap'}},
+  "is_page"           :{get:function(){ return this._type == 'page'}},
+  "is_not_page"       :{get:function(){ return this._type != 'page'}},
+  "is_paragraph"      :{get:function(){ return this._type == 'para'}},
+  "is_not_paragraph"  :{get:function(){ return this._type != "para"}},
 
   "titre":{
     get:function(){return this._titre || null },

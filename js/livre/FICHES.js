@@ -10,10 +10,10 @@ window.FICHES = {
    *  
    */
   datatype:{
-    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,  parent_type:'page'},
-    'page'  : {level: 10, defvalue: "TITRE_PAGE", child_type:'para',      parent_type:'chap'},
-    'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE", child_type:'page',  parent_type:'book'},
-    'book'  : {level: 20, defvalue: "TITRE_LIVRE", child_type:'chap',     parent_type:null}
+    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,    parent_type:'page', hname: "page"},
+    'page'  : {level: 10, defvalue: "TITRE_PAGE",       child_type:'para',  parent_type:'chap', hname: "chapitre"},
+    'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE",   child_type:'page',  parent_type:'book', hname: "livre"},
+    'book'  : {level: 20, defvalue: "TITRE_LIVRE",      child_type:'chap',  parent_type:null,   hname:"paragraphe"}
     },
 
   /*
@@ -103,24 +103,54 @@ window.FICHES = {
    *  
    *  NOTES
    *  -----
-   *  @ C'est cette méthode qui doit être appelée, pas la propriété `delete' de la fiche 
-   *  @ Mais dans le processus normal, on appelle '<fiche>.want_delete' qui demande confirmation
+   *  # C'est cette méthode qui doit être appelée, pas la propriété `delete' de la fiche 
+   *
+   *  # Mais dans le processus normal, on appelle '<fiche>.want_delete' qui demande confirmation
    *    de la suppression en demandant aussi si les enfants doivent être supprimés avec la fiche,
    *    ou être gardés.
+   *
+   *  # La fenêtre de confirmation demande aussi si les enfants doivent être détruits,
+   *    ce qui se fera de façon récursive (resultat.kill_children). Si les enfants
+   *    ne doivent pas être détruits, on les sort simplement de leur parent.
    *
    */
   remove:function(ifiche, resultat)
   {
-    console.dir(resultat)
-    alert("OK !")
-    return
+    var idm = "FICHES.remove"
+    dlog("-> "+idm)
+    var detruire_enfants = resultat.kill_children == true
+    
+    
     // La fiche doit exister
     if(undefined == this.list[ifiche.id]) return
     var ifiche = this.list[ifiche.id]
-    fiche.delete
+    var enfants = ifiche.enfants
+    ifiche.delete
     if(this.current.id == ifiche.id) this.current = null
     delete this.list[ifiche.id]
-    this.length --
+    this.length -- ;
+    // Si la fiche a un parent
+    if(ifiche.parent)
+    {
+      ifiche.parent.remove_child( ifiche )
+    }
+    // Si la fiche a des enfants
+    if(enfants)
+    {
+      if (detruire_enfants)
+      {
+        L(enfants).each(function(ichild){FICHES.remove(ichild,{kill_children:true})})
+      }
+      else
+      {
+        L(enfants).each(function(ichild){
+          if(ichild.ranged) ichild.unrange
+          ichild.parent   = null ; 
+          ichild.modified = true ;
+        })
+      }
+    }
+    dlog("<- "+idm)
   },
   
   /*
