@@ -259,7 +259,6 @@ window.FICHES = {
 
     // Création des fiches sur la table
     L(instances).each(function(instance){
-      dlog("Création de "+instance.type_id, DB_CURRENT)
       instance.create
     })
 
@@ -328,9 +327,11 @@ window.FICHES = {
     {
       // On dispatch les fiches remontées
       this.dispatch( rajax.fiches )
-      // Méthode (ou propriété complexe) pour suivre
+      // Méthode ou propriété complexe pour suivre
+      // @RAPPEL: Si c'est une propriété complexe qui doit être appelée,
+      //          this.after_load.poursuivre est mis à {id:<ID de la fiche visée>, 
+      //          prop:<propriété>}
       var fn = this.after_load.poursuivre
-      dlog(fn)
       if(     'function'== typeof fn) fn()
       else if('object'  == typeof fn) this.get(fn.id)[fn.prop]
     }
@@ -478,8 +479,14 @@ window.FICHES = {
    */
   on_dblclick:function(ifiche, evt)
   {
-    ifiche.open
-    if(ifiche.is_paragraph || !ifiche.titre) ifiche.main_field.select()
+    var idm = "FICHES.on_dblclick ["+ifiche.type_id+"]"
+    dlog("---> "+idm)
+    ifiche.toggle
+    if(ifiche.opened /* car a pu ne pas se faire tout de suite */)
+    {
+      if(ifiche.is_paragraph || !ifiche.titre) ifiche.main_field.select()
+    }
+    dlog("<- "+idm)
   },
   
   /*

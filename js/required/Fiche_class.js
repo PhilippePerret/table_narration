@@ -408,8 +408,8 @@ Object.defineProperties(Fiche.prototype, {
       this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
       this.obj.bind('click', $.proxy(this.toggle_select, this))
-      // Le double-click doit ouvrir la fiche
-      this.obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
+      // // Le double-click doit ouvrir la fiche
+      // this.obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       if(this.is_book)
       {
         // La modification du titre réel doit entrainer son update
@@ -534,11 +534,11 @@ Object.defineProperties(Fiche.prototype, {
   "rend_openable":{
     value:function(poursuivre){
       var idm = "Fiche::rend_openable ["+this.type_id+"]" 
-      dlog("---> "+idm)
+      dlog("---> "+idm, DB_FCT_ENTER)
       if('string' == typeof poursuivre) poursuivre = {id:this.id, prop:poursuivre}
       FICHES.after_load.poursuivre = poursuivre
       FICHES.load( this.enfants_as_minidata )
-      dlog("<- "+idm)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   
@@ -688,7 +688,6 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Fiche::set_values ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      dlog("main_field:"+this.main_field[0].tagName+"#"+this.main_field[0].id)
       this.main_field.set(this.main_field_value)
       if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
       dlog("<- "+idm, DB_FCT_ENTER)
@@ -1303,8 +1302,9 @@ Fiche.prototype.remove_child = function(enfant)
  */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
-  this.left = pos.left
-  this.top  = pos.top
+  pos_on_grid = UI.position_on_grid([pos.left, pos.top], evt.metaKey)
+  this.left = pos_on_grid.left
+  this.top  = pos_on_grid.top
+  this.positionne
   this.modified = true
 }
-

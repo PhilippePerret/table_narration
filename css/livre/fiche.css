@@ -10,15 +10,25 @@ fiche {
 }
 /*fiche:hover {opacity:1 !important;}*/
 
+fiche:not(.opened){
+  cursor:move;
+  z-index:0;
+}
+fiche.opened:not(.selected){
+  z-index:1;
+}
+fiche.selected {
+  z-index:2;
+}
+
 /* Une fiche rangée perd sa position absolute */
 fiche.ranged { 
   position: static !important ;
   
 }
 fiche.ranged:not(.opened) {
-  cursor:URL(http://www.atelier-icare.net/img/pictos/up-and-down.png);
+  cursor: URL('http://www.atelier-icare.net/img/pictos/up-and-down.png');
 }
-fiche:not(.opened){cursor:move;}
 
 fiche > recto { 
   display       : block; 

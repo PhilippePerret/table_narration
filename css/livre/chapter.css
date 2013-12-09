@@ -19,12 +19,11 @@ fiche.chap.ranged {
   margin-top  : 1em;
   padding     : 0 4px 0 0;
 }
-fiche.chap.ranged > recto > .titre {
+fiche.chap > recto > .titre {
   font-size   : 1.2em;
 }
 
 fiche.chap > recto > div.items { 
-  display     : block !important; 
+  display     : block !important; /* toujours ouvert */
   margin-top  : 0.5em;
 }
-/*fiche.chap.opened > recto > div.items { display: block;}*/

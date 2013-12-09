@@ -64,6 +64,9 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_f:
     FICHES.current.close
     return stop_event(evt)
+  case Key_d:
+    FICHES.current.deselect
+    return stop_event(evt)
   default:
     console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
     // return stop_event(evt)
