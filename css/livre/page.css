@@ -12,6 +12,7 @@ fiche.page.opened {
   border-radius : 6px;
   border-color  : #CCC;
   width         : 20em;
+  z-index       : 20;
 }
 
 fiche.page.ranged {

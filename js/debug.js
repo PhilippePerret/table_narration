@@ -2,16 +2,29 @@ DB_SIMPLE     = 1
 DB_MAIN_STEPS = 2
 DB_CURRENT    = 4
 DB_FCT_ENTER  = 8
+// 16
+// 32
+// 64
+// 128
+DB_DETAILLED  = 256
 
 /*
  *  Niveau de débuggage de l'application
  *  
+ *  Le niveau de débuggage peut être modifié localement en
+ *  redéfinissant `DL' puis en le remettant à CURRENT_DL :
+ *    DL = DB_SIMPLE | DB_DETAILLED
+ *    ...
+ *    DL = CURRENT_DL
  */
 var DL;
 if(console)
 {
   DL = DB_SIMPLE | DB_CURRENT 
-       // | DB_FCT_ENTER           // Pour voir les entrées dans les méthodes
+       // | DB_FCT_ENTER            // Pour voir les entrées dans les méthodes
+       // | DB_DETAILLED            // Pour les moindres détails
+  
+  CURRENT_DL = 0 + DL
 }
 else
 {

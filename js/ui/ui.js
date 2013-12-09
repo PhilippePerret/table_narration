@@ -50,6 +50,8 @@ window.UI = {
    *    # Noter qu'il s'agit d'un déplacement sur un coin vide de la table, pas
    *      sur une autre fiche.
    *
+   *    # Cette méthode étant appelée avant le drop sur un élément
+   *      on la retarde à peine.
    *
    *  PARAMS
    *  ------ 
@@ -57,8 +59,18 @@ window.UI = {
    *  @param  ui    Objet ui (ui.helper => card-tool jQuery) 
    *
    */
+  rappelle_ondrop_on_table:function(evt, ui){
+    this.ondrop_on_table(evt, ui)
+  },
   ondrop_on_table:function(evt, ui)
   {
+    if(undefined == this.timer_ondrop)
+    {
+      return this.timer_ondrop = setTimeout($.proxy(UI.rappelle_ondrop_on_table, UI, evt, ui), 4*100)
+    }
+    delete this.timer_ondrop
+    var idm = "UI.ondrop_on_table"
+    dlog("---> "+idm, DB_FCT_ENTER )
     if(this.drop_on_fiche)
     {
       delete this.drop_on_fiche

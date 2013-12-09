@@ -93,8 +93,9 @@ Object.defineProperties(Fiche.prototype,{
       this.set_main_field_as_input
 
       var obj = this.main_field
-      obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+      // obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      obj[0].onfocus  = $.proxy(FICHES.onfocus_textfield, FICHES, this)
       obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
       obj.select()
       dlog("<- "+idm, DB_FCT_ENTER)
@@ -184,11 +185,11 @@ Object.defineProperties(Fiche.prototype,{
   "html_clone":{
       // id = 'clone'+this.dom_id => "clonef-12"
     get:function(){
-      return '<fiche id="'+this.dom_id_clone+'" class="fiche '+this.type+' clone">'+
-        '<recto>'+
-          '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.titre+'</div>'+
-        '</recto>'+
-      '</fiche>'
+      return  '<fiche id="'+this.dom_id_clone+'" class="fiche '+this.type+' clone ranged">'+
+                '<recto>'+
+                  '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.main_field_value+'</div>'+
+                '</recto>'+
+              '</fiche>'
     }
   },
   

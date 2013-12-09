@@ -33,7 +33,7 @@ Object.defineProperties(Fiche.prototype,{
   "toggle_select":{
     value:function(evt){
       var idm = "Fiche::toggle_select ["+this.type_id+"] (this.selected:"+this.selected+")"
-      dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT )
+      dlog("---> "+idm, DB_FCT_ENTER )
       var with_maj = (evt.shiftKey == true)
       if(this.selected && with_maj){ this.deselect }
       else this[this.selected ? 'deselect' : 'select']
@@ -51,10 +51,13 @@ Object.defineProperties(Fiche.prototype,{
   },
   "deselect":{
     get:function(){
+      var idm = "Fiche::deselect ["+this.type_id+"] / this.selected:"+this.selected
+      dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
       FICHES.remove_selected( this )
       this.selected = false
       if(this.built) this.obj.removeClass('selected')
       this.repercute_zindex_on_ancestors('')
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   /*
@@ -69,13 +72,23 @@ Object.defineProperties(Fiche.prototype,{
   "repercute_zindex_on_ancestors":
   {
     value:function(zindex){
-      dlog("Application du z-index "+zindex+" sur les parents")
-      if(this.is_book) return
+      dlog("Application du z-index "+zindex+" sur les parents", DB_DETAILLED)
+      if(this.is_book || this.ranged == false) return
       var p = this.obj.parent()
-      do { 
-        p = p.parent()
-        if(p.length) p.css('z-index', zindex)
-      } while(p.length && p.attr('class').indexOf('fiche book') == -1)
+      try
+      {
+        do { 
+          p = p.parent()
+          if(p.length) p.css('z-index', zindex)
+        } while(p.length && p.attr('class').indexOf('fiche book') == -1)
+      }catch(err){
+        console.error(
+          "Erreur dans Fiche::repercute_zindex_on_ancestors ["+this.type_id+"]"+
+          "\nErr : "+err+
+          "\nCf la valeur de `p' ci-dessous"
+        )
+        console.dir(p)
+      }
     }
   }
 })

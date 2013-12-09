@@ -692,6 +692,8 @@ Object.defineProperties(Fiche.prototype, {
  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
+  var idm = "Fiche::on_drop ["+this.type_id+"]"
+  dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT )
   UI.drop_on_fiche = true
   
   var obj_moved = ui.draggable
@@ -714,15 +716,6 @@ Fiche.prototype.on_drop = function(evt, ui)
   
   // Si cette fiche parent est fermée, il faut l'ouvrir
   if(false == this.opened) this.open
-
-  if(is_tool)
-  {
-    // Si c'est une création, on "ouvre" toujours l'élément, et
-    // on sélectionne le champ de saisie principal
-    // @note: Ça doit aussi sélectionner l'enfant
-    ichild.open
-    ichild.main_field.select()
-  }
   
   // TODO: Plus tard, on pourra regarder si la fiche a été déposé à un
   // endroit précis, pour le placer au bon endroit dans les enfants

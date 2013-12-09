@@ -14,7 +14,8 @@ window.dispay_code_event = function(evt)
  */
 window.keypress_when_no_selection_no_edition = function(evt)
 {
-  // console.log("---> keypress_when_no_selection_no_edition")
+  // var idm = "keypress_when_no_selection_no_edition"
+  // dlog("---> "+idm, DB_FCT_ENTER)
   
   switch (evt.keyCode) {
   // La touche effacement arrière ne doit rien faire quand rien n'est
@@ -25,6 +26,7 @@ window.keypress_when_no_selection_no_edition = function(evt)
   default:
     
   }
+  // dlog("<- "+idm, DB_FCT_ENTER)
   return true
 }
 /*
@@ -34,8 +36,8 @@ window.keypress_when_no_selection_no_edition = function(evt)
  */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
-  // console.log("---> keypress_when_fiche_selected_out_textfield")
-  // return dispay_code_event(evt)
+  // var idm = "keypress_when_fiche_selected_out_textfield"
+  // dlog("---> "+idm, DB_FCT_ENTER)
   
   switch(evt.keyCode)
   {
@@ -71,6 +73,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
     // return stop_event(evt)
   }
+  // dlog("<- "+idm, DB_FCT_ENTER)
 }
 /*
  *  Gestion des touches clavier quand on se trouve dans un champ
@@ -78,8 +81,9 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
  *  
  */
 window.keypress_when_fiche_selected_in_textfield = function(evt){
-  // console.log("---> keypress_when_fiche_selected_in_textfield")
-  // dispay_code_event(evt)
+
+  // var idm = "keypress_when_fiche_selected_in_textfield"
+  // dlog("---> "+idm, DB_FCT_ENTER)
 
   switch(evt.keyCode)
   {
@@ -151,6 +155,7 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
       return true
     }
   }
+  // dlog("<- "+idm, DB_FCT_ENTER)
 }
 
 /* Méthode par défaut */

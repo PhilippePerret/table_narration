@@ -474,9 +474,12 @@ window.FICHES = {
    */
   remove_selected:function(ifiche)
   {
+    var idm = "FICHES.remove_selected(ifiche:"+ifiche.type_id+")"
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     if(this.current == ifiche) this.current = null
     delete this.selecteds[ifiche.id]
     window.onkeypress = keypress_when_no_selection_no_edition
+    dlog("<- "+idm, DB_FCT_ENTER)
   },
 
   /*
@@ -486,11 +489,12 @@ window.FICHES = {
   on_click_on_main_field:function(ifiche, evt)
   {
     // dlog("Click sur le titre/texte")
+    ifiche.toggle_select(evt) // stop l'event
     if(evt.metaKey)
     {
       ifiche.enable_main_field
     }
-    return ifiche.toggle_select(evt) // stop l'event
+    return false
   },
   /*
    *  Retourne true si le champ d'édition courant et celui
@@ -512,26 +516,27 @@ window.FICHES = {
    */
   onfocus_textfield:function(ifiche, evt)
   {
-    // console.log("---> onfocus_textfield dans " + evt.target.id)
-    // @note: Il est important de sélectionner la fiche avant tout autre
-    // réglage pour que la sélection qui serait appelée ensuite (quand on clique
-    // dans le champ de saisie alors que la fiche n'est pas sélectionnée) ne
-    // remette par la méthode de gestion des touches clavier à ..._out_textfield
+    var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     ifiche.select
-    window.onkeypress = keypress_when_fiche_selected_in_textfield
     var target = $(evt.currentTarget)
     target.addClass('focused')
     target.select()
     this.current_text_field = target // complex
+    window.onkeypress = window.keypress_when_fiche_selected_in_textfield
+    console.dir(window.onkeypress)
+    dlog("<- "+idm, DB_FCT_ENTER | DB_CURRENT)
   },
   onblur_textfield:function(ifiche, evt)
   {
-    // console.log("---> onblur_textfield de " + evt.target.id)
+    var idm = "FICHES.onblur_textfield(ifiche:"+ifiche.type_id+")"
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     $(evt.target).removeClass('focused')
     if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
     if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
     else window.onkeypress = keypress_when_no_selection_no_edition
     this.current_text_field = null // complex
+    dlog("<- "+idm, DB_FCT_ENTER)
   }
 }
 
