@@ -32,7 +32,7 @@ function Test_Keyboard() {
     blue("Active l'application pour suivre les opérations.")
     my.book = APP.FICHES.list[0]
     // my.page = APP.ipage = create_page({titre:"Son titre"})
-    jq(my.book.titre_jid).should.exist
+    jq(my.book.input_titre_jid).should.exist
     'FICHES.list[0].selected'.should.be.false
     // Ne fonctionne pas :
     // Mouse.press_and_drag(my.book.obj, {for_x:100, for_y:100})
@@ -47,7 +47,6 @@ function Test_Keyboard() {
     my.wait.for(1).and(NEXT_POINT)
     break
   case 3:
-    // my.page.input_titre.select()
     'FICHES.list[0].selected'.should.be.true
     APP.F.show("J'essaie avec jQuery.click()")
     // Keyboard.press({key_code:K_ERASE})
@@ -71,9 +70,6 @@ function Test_Keyboard() {
       $('input#f-0-titre').select();
       $('input#f-0-titre').trigger( e );
     }
-    // $( book.input_titre ).trigger( e );
-    // var e = $.Event( "keyup", { charCode: Key_o } );
-    // $( book.input_titre ).trigger( e );
     my.wait.for(2).and(NEXT_POINT)
     break
   case 6:

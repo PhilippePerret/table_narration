@@ -423,8 +423,7 @@ window.FICHES = {
     {
       if(options.focus_titre)
       {
-        var focuson = ifiche.is_paragraph?'textarea_texte':'input_titre';
-        ifiche[focuson].select() // sélectionne aussi la fiche (est-ce bien ?)
+        ifiche.main_field.select() // sélectionne aussi la fiche (est-ce bien ?)
       }
       else if(options.select)
       {
@@ -462,8 +461,20 @@ window.FICHES = {
   on_dblclick:function(ifiche, evt)
   {
     ifiche.open
-    if(ifiche.is_paragraph) ifiche.textarea_texte.select()
-    else if (!ifiche.titre) ifiche.input_titre[0].focus()
+    if(ifiche.is_paragraph || !ifiche.titre) ifiche.main_field.select()
+  },
+  
+  /*
+   *  Retourne true si le champ d'édition courant et celui
+   *  donné en argument
+   *  
+   *  @param  obj   DOM Element jQuery
+   *
+   */
+  current_field_is:function(obj)
+  {
+    if( ! this.current_text_field ) return false
+    return this.current_text_field[0].id == $(obj)[0].id
   },
   
   /*

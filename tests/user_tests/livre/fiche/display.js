@@ -33,20 +33,20 @@ function FicheDisplay_Preparation() {
 function FicheDisplay_Test_methods() {
   var compprops = [
   'dom_id', 'jid', 
-  'titre_jid', 'input_titre', 
+  'input_titre_jid', 'main_field, 
   'items_jid', 'div_items'
   ]
   L(compprops).each(function(prop){ 'Fiche.prototype'.should.have.property(prop) })
   
   blue("Test du retour des propriétés")
   APP.ipage = new APP.Page()
-  'ipage.titre_jid'.should = "input#"+APP.ipage.dom_id+"-titre"
+  'ipage.input_titre_jid'.should = "input#"+APP.ipage.dom_id+"-titre"
   'ipage.items_jid'.should = "div#"+APP.ipage.dom_id+"-items"
   APP.ipage.create
-  w("`input_titre` doit retourner l'élément jQuery du champ de titre")
-  'ipage.input_titre'.should.be.defined
-  'ipage.input_titre'.should.have.property('jquery')
-  'ipage.input_titre'.should.respond_to('attr')
+  w("`imain_field doit retourner l'élément jQuery du champ de titre")
+  'ipage.imain_field.should.be.defined
+  'ipage.imain_field.should.have.property('jquery')
+  'ipage.imain_field.should.respond_to('attr')
   w("`div_items` doit retourner l'élément jQuery du div des items")
   'ipage.div_items'.should.be.defined
   'ipage.div_items'.should.have.property('jquery')
@@ -115,11 +115,11 @@ function FicheDisplay_of_a_book() {
   
   blue("Fermé, le livre ne doit afficher que son titre de référence")
   APP.ibook.close
-  jq(APP.ibook.titre_jid).should.be.visible
+  jq(APP.ibook.input_titre_jid).should.be.visible
   jq(APP.ibook.real_titre_jid).should_not.be.visible
   jq(APP.ibook.items_jid).should_not.be.visible
   APP.ibook.open
-  jq(APP.ibook.titre_jid).should.be.visible
+  jq(APP.ibook.input_titre_jid).should.be.visible
   jq(APP.ibook.real_titre_jid).should.be.visible
   jq(APP.ibook.items_jid).should.be.visible
 }
@@ -168,13 +168,13 @@ function FicheDisplay_Method_set_values() {
   var titre  = "Titre de la page "+Time.now()
   APP.ipage.titre = titre
   
-  jq(APP.ipage.titre_jid).should.be.empty
+  jq(APP.ipage.input_titre_jid).should.be.empty
   jq(APP.ipage.items_jid).should.be.empty
   
   APP.ipage.set_values ; // <-- TEST
   
   var div_items = jq(APP.ipage.items_jid)
-  jq(APP.ipage.titre_jid).should = titre 
+  jq(APP.ipage.input_titre_jid).should = titre 
   div_items.should.be.empty
   
   APP.ipara1 = new APP.Paragraph({texte:"Le paragraphe 1"})

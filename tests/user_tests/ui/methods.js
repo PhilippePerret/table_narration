@@ -60,7 +60,7 @@ function UI_Voyant_sauvegarde() {
   w("On focusse dans un champ d'édition")
   APP.ipage = new APP.Page()
   APP.ipage.create
-  jq(APP.ipage.titre_jid).obj.select() // <-- TEST
+  jq(APP.ipage.input_titre_jid).obj.select() // <-- TEST
   mark_saved.should_not.be.visible
   mark_not_saved.should_not.be.visible
   mark_saved_forb.should.be.visible

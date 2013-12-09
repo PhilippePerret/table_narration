@@ -150,15 +150,15 @@ function FicheCreation_Fonction_observers() {
       
     blue("Focusser dans le titre doit changer son style")
     w("Le test ne peut pas être exécuté, car il faudrait basculer vers l'application")
-    jq(page.titre_jid).should_not.have.class('focused')
-    jq(page.titre_jid).obj.select() // <-- TEST
-    jq(page.titre_jid).should.have.class('focused')
-    jq(page.titre_jid).obj[0].blur() // <-- TEST
-    jq(page.titre_jid).should_not.have.class('focused')
+    jq(page.input_titre_jid).should_not.have.class('focused')
+    jq(page.input_titre_jid).obj.select() // <-- TEST
+    jq(page.input_titre_jid).should.have.class('focused')
+    jq(page.input_titre_jid).obj[0].blur() // <-- TEST
+    jq(page.input_titre_jid).should_not.have.class('focused')
     
     blue("Modifier le titre doit changer le titre et mettre la fiche modifiée")
     my.new_titre = "Un titre donné à " + Time.now()
-    jq(page.titre_jid).val(my.new_titre)
+    jq(page.input_titre_jid).val(my.new_titre)
     'ipage._titre'.should = my.new_titre
     
     blue("Modifier le titre réel d'un livre doit modifier la fiche")
@@ -170,7 +170,7 @@ function FicheCreation_Fonction_observers() {
     'ibook._real_titre'.should = new_real_titre
     
     blue("Focusser dans un champ d'édition doit régler la gestion propre des touches")
-    jq(page.titre_jid).obj.select() // <-- TEST
+    jq(page.input_titre_jid).obj.select() // <-- TEST
     Keyboard.press({meta:true, key_code:APP.Key_F})
     // TODO Implémenter la vérification
 

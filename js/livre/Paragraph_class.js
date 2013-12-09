@@ -75,8 +75,7 @@ Object.defineProperties(Paragraph.prototype,{
     set:function(texte){
       if(texte == this._texte) return
       this._texte = texte
-      this.textarea_texte.val( texte )
-      this.modified = true
+      this.main_field.val( texte )
     }
   },
   
@@ -84,31 +83,13 @@ Object.defineProperties(Paragraph.prototype,{
   /* Code HTML du textarea pour `texte' */
   "html_textarea_texte":{
     get:function(){
-      return '<textarea id="'+this.texte_id+'" class="texte">'+(this.texte || 'TEXTE_PARAGRAPHE')+'</textarea>'
+      return '<textarea id="'+this.texte_id+'" class="texte">'+this.main_field_value+'</textarea>'
     }
   },
   /* Code HTML du Div pour `texte' */
   "html_div_texte":{
     get:function(){
-      return '<div id="'+this.texte_id+'" class="texte">'+(this.texte || 'TEXTE_PARAGRAPHE')+'</div>'
-    }
-  },
-  /* Place le texte dans un textarea */
-  "texte_in_textarea":{
-    get:function(){
-      var idm = "Paragraph::texte_in_textarea ["+this.type+"#"+this.id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      this.div_texte.replaceWith(this.html_textarea_texte)
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
-  /* Place le texte dans un div */
-  "texte_in_div":{
-    get:function(){
-      var idm = "Paragraph::texte_in_div ["+this.type+"#"+this.id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      this.textarea_texte.replaceWith( this.html_div_texte )
-      dlog("<- "+idm, DB_FCT_ENTER)
+      return '<div id="'+this.texte_id+'" class="texte">'+this.main_field_value+'</div>'
     }
   }
   

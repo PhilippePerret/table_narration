@@ -88,7 +88,7 @@ function Fiche_Test_open_simple_by_type() {
   
   blue("Ouverture d'une page")
   var page = APP.ipage = APP.FICHES.full_create({type:'page'})
-  var page_titre = jq(page.titre_jid)
+  var page_titre = jq(page.input_titre_jid)
   var page_items = jq(page.items_jid)
   page_titre.should.exist
   page_items.should.exist
@@ -196,7 +196,7 @@ function Fiche_Test_open_children() {
     var page = APP.ipage = APP.FICHES.full_create({type:'page'})
     w("Création de la page #"+page.id+" et insertion dans le chapitre #"+chap.id)
     chap.add_child( page ) // <-- enfant de chapitre
-    var page_titre = jq(page.titre_jid)
+    var page_titre = jq(page.input_titre_jid)
     var page_items = jq(page.items_jid)
     page_titre.should.exist
     page_items.should.exist
@@ -222,7 +222,7 @@ function Fiche_Test_open_children() {
   case 2:
     var chap = APP.ichap
     var page = APP.ipage
-    var page_titre = jq(page.titre_jid)
+    var page_titre = jq(page.input_titre_jid)
     var page_items = jq(page.items_jid)
     my.clone = jq(chap.jid+' > recto > div.items > fiche.clone#clone'+page.dom_id)
     my.clone.should_not.exist

@@ -129,6 +129,7 @@ Object.defineProperties(Fiche.prototype, {
   "is_openable":{
     get:function(){
       var i = 0, ichild ;
+      if(this.is_paragraph) return true ; // toujours ouvrable
       if(this.loaded == false) return false ;
       if(!this.enfants || this.enfants == []) return true ;
       for(len = this.enfants.length; i<len; ++i)
@@ -173,17 +174,107 @@ Object.defineProperties(Fiche.prototype, {
   "verso_jid":{get:function(){ return 'verso#'+this.dom_id+'-verso'}},
   "verso":{get:function(){ return $(this.verso_jid) }},
   
-  /* Champ de saisie du titre */
-  "titre_id":{get:function(){return this.dom_id+'-titre'}},
-  "titre_jid":{get:function(){return 'input#'+this.titre_id}},
-  "input_titre":{
-    get:function(){
-      if(!this._input_titre || this._input_titre.length == 0) this._input_titre = $(this.titre_jid);
-      return this._input_titre
-    },
-    set:function(obj){this._input_titre = obj}
+  
+  /* ---------------------------------------------------------------------
+   *  Champ principal
+   *
+   *  - C'est le titre pour les book, chap et page. C'est le texte pour les
+   *    paragraphes.
+   *  - Il peut être en champ de saisie (input-text ou textarea) quand la fiche
+   *    est ouverte ou div quand la fiche est fermée (tout type).
+   *
+   *  C'est donc une propriété définie dynamiquement.
+   *
+   */
+  
+  /* Propriété principale */
+  "main_prop":{
+    get:function(){return this.is_paragraph ? 'texte' : 'titre' }
   },
   
+  /* 
+   * Retourne le champ principal (soit div soit saisie suivant le contexte) 
+   *
+   *  NOTES
+   *  -----
+   *  Pour forcer la définition, utiliser `this._main_field = null'
+   *
+   */
+  "main_field":{
+    get:function(){
+      if(!this._main_field)
+      {
+        if(this.is_paragraph)
+        {
+          if(this.opened) this._main_field = $(this.textarea_texte_jid)
+          else            this._main_field = $(this.div_texte_jid)
+        }
+        else
+        {
+          if(this.opened) this._main_field = $(this.input_titre_jid)
+          else            this._main_field = $(this.div_titre_jid)
+        }
+      }
+      return this._main_field
+    },
+    set:function(obj){this._main_field = obj}
+  },
+  "titre_id"        :{get:function(){return this.dom_id+'-titre'}},
+  "input_titre_jid" :{get:function(){return 'input#'+this.titre_id}},
+  "div_titre_jid"   :{get:function(){return 'div#'+this.titre_id}},
+  "main_field_as_input":{
+    get:function(){
+      if(this.is_paragraph) this.texte_in_textarea
+      else                  this.titre_in_input
+    }
+  },
+  "main_field_as_div":{
+    get:function(){
+      if(this.is_paragraph) this.texte_in_div
+      else                  this.titre_in_div
+    }
+  },
+  "titre_in_input":{
+    get:function(){
+      this.main_field.replaceWith(this.html_input_titre)
+      this.main_field = $('input#'+this.titre_id)
+    }
+  },
+  "titre_in_div":{
+    get:function(){
+      this.main_field.replaceWith( this.html_div_titre )
+      this.main_field = $('div#'+this.titre_id)
+    }
+  },
+  /* Place le texte dans un textarea */
+  "texte_in_textarea":{
+    get:function(){
+      var idm = "Paragraph::texte_in_textarea ["+this.type+"#"+this.id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.main_field.replaceWith(this.html_textarea_texte)
+      this.main_field = $(this.textarea_texte_jid)
+      dlog("<- "+idm, DB_FCT_ENTER)
+    }
+  },
+  /* Place le texte dans un div */
+  "texte_in_div":{
+    get:function(){
+      var idm = "Paragraph::texte_in_div ["+this.type+"#"+this.id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.main_field.replaceWith( this.html_div_texte )
+      this.main_field = $(this.div_texte_jid)
+      dlog("<- "+idm, DB_FCT_ENTER)
+    }
+  },
+  
+  /* /Fin champ principal
+     --------------------------------------------------------------------- */
+  
+  /* ---------------------------------------------------------------------
+   *
+   *  Items de la fiche
+   *  
+   */
   /* Div des items (children) de la fiche */
   "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
   "div_items":{
@@ -381,40 +472,27 @@ Object.defineProperties(Fiche.prototype, {
    *    # Place les observers sur le champ de saisie.
    *
    */
-  "enable_titre":{
+
+  "enable_main_field":{
     get:function(){
-      dlog("---> Fiche::enable_titre", DB_FCT_ENTER)
-      this.is_paragraph ? this.texte_in_textarea : this.titre_in_input
-      var obj = this.is_paragraph ? this.textarea_texte : this.input_titre
-      console.dir(obj)
+      dlog("---> Fiche::enable_main_field", DB_FCT_ENTER)
+      this.main_field_as_input
+      var obj = this.main_field
       obj.unbind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
       obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
     }
   },
-  "disable_titre":{
+  "disable_main_field":{
     get:function(){
-      dlog("---> Fiche::disable_titre", DB_FCT_ENTER)
-      this.is_paragraph ? this.texte_in_div : this.titre_in_div
-      var obj = this.is_paragraph ? this.div_texte : this.input_titre
-      if(FICHES.current_text_field && FICHES.current_text_field[0].id == obj[0].id) FICHES.onblur_textfield( this, {target:obj} )
+      dlog("---> Fiche::disable_main_field", DB_FCT_ENTER)
+      this.main_field_as_div
+      var obj = this.main_field
+      if(FICHES.current_field_is( obj )) FICHES.onblur_textfield( this, {target:obj} )
       obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-    }
-  },
-  
-  "titre_in_input":{
-    get:function(){
-      this.input_titre.replaceWith(this.html_input_titre)
-      this.input_titre = $('input#'+this.titre_id)
-    }
-  },
-  "titre_in_div":{
-    get:function(){
-      this.input_titre.replaceWith( this.html_div_titre )
-      this.input_titre = $('div#'+this.titre_id)
     }
   },
   
@@ -452,13 +530,10 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
       dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.is_not_paragraph)
-      {
-        if(this.is_not_openable) return this.rend_openable('open')
-        if(this.is_page && this.parent) this.unrange
-      }
-      this.enable_titre
+      if(this.is_not_openable) return this.rend_openable('open')
       this.opened = true
+      if(this.is_page && this.parent) this.unrange
+      this.enable_main_field
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -475,12 +550,9 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Fiche::close ["+this.type+"#"+this.id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.is_not_chapter)
-      {
-        if(this.is_page && this.parent) this.range
-        this.opened = false
-      }
-      this.disable_titre
+      this.opened = false
+      if(this.is_page && this.parent) this.range
+      this.disable_main_field
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
@@ -569,21 +641,31 @@ Object.defineProperties(Fiche.prototype, {
   
 
   /*
-   *  Met les valeurs de la fiche dans la fiche DOM
+   *  Met les valeurs de la fiche dans l'élément DOM de la fiche
    *  
+   *  TODO: La fiche est complètement à implémenter suivant les valeurs
+   *        qui seront éditables.
    */
   "set_values":{
     get:function(){
-      this.input_titre.val(this.titre || "TITRE")
+      var idm = "Fiche::set_values ["+this.type+"#"+this.id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.main_field.set(this.main_field_value)
       if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
-      if(this.is_paragraph){
-        var prop = this.opened ? 'textarea' : 'div' ;
-        this[prop+'_texte'].val(this.texte || "TEXTE_PARAGRAPHE")
-      }
+      dlog("<- "+idm, DB_FCT_ENTER)
       return true
     }
   },
-  
+  /*
+   *  Retourne une valeur pour le champ principal (titre ou texte)
+   *  
+   */
+  main_field_value:{
+    get:function(){
+      if(this.is_paragraph) return this.texte || "TEXTE_PARAGRAPHE"
+      else                  return this.titre || "TTITRE"
+    }
+  },
   
   /*
    *  Retourne la fiche
@@ -991,29 +1073,17 @@ Fiche.prototype.on_drop = function(evt, ui)
   }
   this.add_child( ichild )
   
-  if(is_tool)
-  {
-    // Si c'est une création, suivant le type, il faut faire des choses
-    // différentes.
-    // -- Pour une page --
-    // Une page doit être ouverte après sa création/insertion et on doit
-    // sélectionner son titre pour édition.
-    if(ichild.is_page){ 
-      ichild.open
-      ichild.input_titre.select()
-    }
-    else if (ichild.is_paragraph)
-    {
-      ichild.textarea_texte.select()
-    }
-    
-  }
-  
   // Si cette fiche parent est fermée, il faut l'ouvrir
   if(false == this.opened) this.open
-  
-  // On sélectionne l'enfant
-  ichild.select
+
+  if(is_tool)
+  {
+    // Si c'est une création, on "ouvre" toujours l'élément, et
+    // on sélectionne le champ de saisie principal
+    // @note: Ça doit aussi sélectionner l'enfant
+    ichild.open
+    ichild.main_field.select()
+  }
   
   // TODO: Plus tard, on pourra regarder si la fiche a été déposé à un
   // endroit précis, pour le placer au bon endroit dans les enfants
@@ -1043,11 +1113,8 @@ Fiche.prototype.add_child = function(enfant, before_child)
   // Définition du parent de l'enfant
   enfant.parent = this
   
-  // On ferme l'enfant sauf si c'est un chapitre (qui ne peut jamais être fermé)
-  // @note: la méthode appelante pourra unranger ou ouvrir l'enfant
-  // dans certains cas (par exemple lorsque c'est une nouvelle page qui est
-  // créée en la glissant sur un chapitre)
-  if(enfant.is_not_chapter) enfant.close
+  // On ferme toujours l'enfant
+  enfant.close
   
   // Ajout de l'enfant dans le div_items de la fiche
   if(undefined == before_child)
@@ -1078,18 +1145,19 @@ Fiche.prototype.add_child = function(enfant, before_child)
  *    une difficulté à la définition des fiches remontées.
  *
  */
+
 Fiche.prototype.onchange_titre_or_texte = function(evt)
 {
-  dlog("---> onchange_titre_or_texte ["+this.type+"#"+this.id+"]", DB_FCT_ENTER | DB_CURRENT)
-  var obj   = this.is_paragraph ? this.textarea_texte : this.input_titre ;
-  var prop  = this.is_paragraph ? 'texte' : 'titre' ;
+  var idm = "Fiche::onchange_titre_or_texte ["+this.type+"#"+this.id+"]"
+  dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+  var obj=this.main_field, prop=this.main_prop ;
   var new_value = obj.val()
   if(this[prop] != new_value)
   {
     this[prop]    = new_value
     this.modified = true    
   }
-  dlog("<- onchange_titre ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
+  dlog("<- "+idm, DB_FCT_ENTER)
 }
 
 /*
