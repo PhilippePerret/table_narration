@@ -14,16 +14,9 @@ fiche.book.opened {
 }
 
 fiche.book > recto > .titre {
-  background-color: transparent !important;
-  color: white !important;
-}
-fiche.book:not(.opened) > recto > input.titre {
-  text-align :center;
-  font-size  : 1.2em;
-}
-fiche.book.opened > recto > input.titre {
-  text-align :left;
-  font-size  : 1.5em;
+  background-color  : transparent !important;
+  color             : white !important;
+  font-size         : larger;
 }
 
 fiche.book > recto > div.div_real_titre {

@@ -4,21 +4,25 @@ fiche {
   position    : absolute;
   font-family : "Times New Roman";
   font-size   : 14pt;
-/*  padding     : 0 4px;*/
   weight      : auto;
   border      : 2px solid transparent;
 }
 /*fiche:hover {opacity:1 !important;}*/
 
-fiche:not(.opened){
-  cursor:move;
-  z-index:0;
+fiche.opened > recto > div.items {
+  display     : block;
 }
-fiche.opened:not(.selected){
-  z-index:1;
+/* Fiche ouverte */
+fiche.opened:not(.selected), fiche.opened:not(.selected) * {
+  z-index : 5;
 }
-fiche.selected {
-  z-index:2;
+/* Fiche sélectionnée */
+fiche.selected:not(.opened), fiche.selected:not(.opened) * {
+  z-index : 10;
+}
+/* Fiche ouverte et sélectionnée */
+fiche.selected.opened, fiche.selected.opened * {
+  z-index : 15;
 }
 
 /* Une fiche rangée perd sa position absolute */
@@ -26,8 +30,8 @@ fiche.ranged {
   position: static !important ;
   
 }
-fiche.ranged:not(.opened) {
-  cursor: URL('http://www.atelier-icare.net/img/pictos/up-and-down.png');
+fiche.ranged {
+/*  cursor: url(http://www.atelier-icare.net/img/pictos/up-and-down.png), auto;*/
 }
 
 fiche > recto { 
@@ -46,24 +50,17 @@ fiche > recto > div.items {
   display           : none;
   background-color  : white;
 }
-fiche.opened > recto > div.items {
-  display     : block;
-}
 
 fiche > recto > .titre {
   display     : block;
-/*  width       : 99%;*/
   font-family : inherit;
-  font-size   : inherit;
   border      : 1px solid transparent;
 }
 fiche > recto > input.titre {
   width:98%;
 }
-/* Fiche sélectionnée */
 fiche.selected { 
   border-color: blue !important; 
-/*  opacity: 1 !important;*/
 }
 
 /* Fiche survolée par enfant potentiel */

@@ -4,6 +4,11 @@ const K_RETURN  = KeyEvent.DOM_VK_RETURN
 const K_ENTER   = KeyEvent.DOM_VK_ENTER
 const K_ERASE   = 8
 
+const K_LEFT_ARROW  = 37
+const K_UP_ARROW    = 38
+const K_RIGHT_ARROW = 39
+const K_DOWN_ARROW  = 40
+
 /* charCode */
 const K_SPACE   = KeyEvent.DOM_VK_SPACE
 const Key_F     = KeyEvent.DOM_VK_F

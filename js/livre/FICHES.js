@@ -280,6 +280,20 @@ window.FICHES = {
   },
   
   /*
+   *  Bascule entre l'ouverture et la fermeture les fiches
+   *  dans +arr+
+   *  
+   *  @param  arr   {Array} d'instances de fiche ou simple fiche
+   *  @param  evt   Event ayant conduit à l'appel de cette méthode
+   */
+  toggle:function(arr, evt)
+  {
+    dlog("=> FICHES.toggle")
+    if(undefined != arr.opened) arr = [arr]
+    this[arr[0].opened ? 'close' : 'open'](arr)
+  },
+  
+  /*
    *  Ouvre la ou les fiches données en argument
    *
    * @param arr   Liste d'instance Fiche ou Instance Fiche
@@ -464,32 +478,20 @@ window.FICHES = {
     delete this.selecteds[ifiche.id]
     window.onkeypress = keypress_when_no_selection_no_edition
   },
-  
+
   /*
-   *  Double-click sur une fiche fermée
+   *  Gestionnaire de l'évènement CLICK sur le titre/texte
    *  
-   *  PRODUIT
-   *  -------
-   *    # Ouvre la fiche
-   *    # Focusse sur le titre ou le texte si paragraphe, mais sous
-   *      certaines conditions (si aucun enfants pour le moment)
-   *
-   *  @param  ifiche    Instance Fiche de la fiche double-cliquée
-   *  @param  evt       Event Dblclick
    */
-  on_dblclick:function(ifiche, evt)
+  on_click_on_main_field:function(ifiche, evt)
   {
-    var idm = "FICHES.on_dblclick ["+ifiche.type_id+"]"
-    dlog("---> "+idm, DB_FCT_ENTER)
-    ifiche.toggle
-    if(ifiche.opened /* car a pu ne pas se faire tout de suite */)
+    // dlog("Click sur le titre/texte")
+    if(evt.metaKey)
     {
-      if(ifiche.is_paragraph || !ifiche.titre) ifiche.main_field.select()
+      ifiche.enable_main_field
     }
-    dlog("<- "+idm, DB_FCT_ENTER)
-    return stop_event( evt )
+    return ifiche.toggle_select(evt) // stop l'event
   },
-  
   /*
    *  Retourne true si le champ d'édition courant et celui
    *  donné en argument
@@ -526,6 +528,7 @@ window.FICHES = {
   {
     // console.log("---> onblur_textfield de " + evt.target.id)
     $(evt.target).removeClass('focused')
+    if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
     if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
     else window.onkeypress = keypress_when_no_selection_no_edition
     this.current_text_field = null // complex

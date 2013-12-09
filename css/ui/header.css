@@ -4,7 +4,7 @@ section#header {
   position    : fixed;
   top         : 0px;
   left        : 0px;
-  z-index     : 1;
+  z-index     : 1000;
   background  : none repeat scroll 0 0 #EEEEEE;
   padding-top : 4px;
 /*  opacity     : 0.4;*/
@@ -74,6 +74,7 @@ table#shortcuts_panel {
   padding     : 1em;
   background-color:white;
   margin-left : 1em;
+  z-index     : 1000;
 }
 
 table#shortcuts_panel tr td.shortcut {

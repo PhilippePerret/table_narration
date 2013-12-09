@@ -6,7 +6,6 @@ fiche.page {
   background-color :white;
   color         : black;
   width         : auto;
-/*  opacity       : 0.5;*/
 }
 fiche.page.opened {
   width         : 34em !important;
@@ -17,12 +16,15 @@ fiche.page.opened {
 
 fiche.page.ranged {
   margin-left   : 1.5em;
-  height        : 20px;
+  height        : 24px;
   border-width  : 1px !solid;
 }
 
-fiche.page.ranged > recto > div.titre {
-  font-size     : 0.9em;
+fiche.page.ranged > recto > .titre {
+  font-size     : 1.1em;
+}
+fiche.page.opened > recto > .titre {
+  font-size     : xx-large;
 }
 /* Pour la page, la hauteur des éléments est fixe */
 fiche.page.opened > recto > div.items {

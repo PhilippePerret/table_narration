@@ -8,9 +8,6 @@ fiche.chap {
   width   :auto;
 /*  opacity :0.5;*/
 }
-fiche.chap:hover {
-  cursor:move;
-}
 fiche.chap.opened:not(.ranged) {
   width   :20em;
 }
@@ -20,7 +17,7 @@ fiche.chap.ranged {
   padding     : 0 4px 0 0;
 }
 fiche.chap > recto > .titre {
-  font-size   : 1.2em;
+  font-size   : x-large;
 }
 
 fiche.chap > recto > div.items { 

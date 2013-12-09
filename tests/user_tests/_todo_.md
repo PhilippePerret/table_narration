@@ -1,7 +1,5 @@
-* À la création d'un paragraphe, on doit directement focusser dans son
-  texte (normalement, c'est fait… mais peut-être que c'est le paragraphe
-  qui est fermé)
-  - Rendre le paragraphe sortable (et non draggable)
+  
+
 
 *?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en
   dehors de lui, soit un raccourci pour le sortir (en scrollant jusqu'à lui

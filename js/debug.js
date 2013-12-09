@@ -11,7 +11,7 @@ var DL;
 if(console)
 {
   DL = DB_SIMPLE | DB_CURRENT 
-       | DB_FCT_ENTER           // Pour voir les entrées dans les méthodes
+       // | DB_FCT_ENTER           // Pour voir les entrées dans les méthodes
 }
 else
 {

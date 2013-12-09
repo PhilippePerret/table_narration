@@ -2,12 +2,13 @@
 // === Panneau contenant les raccourcis-clavier ===
 
 $tbl_shortcuts = array(
+  'K_Espace'  => "Toggle (ouvrir/fermer) la fiche sélectionnée",
   'K_F'       => "Fermer la fiche sélectionnée",
   'K_O'       => "Ouvrir la fiche sélectionnée",
-  'K_Espace'  => "Toggle (ouvrir/fermer) la fiche sélectionnée",
   'K_Entree'  => "En édition, enregistre le changement.",
   "K_D"       => "Hors champ d'édition, déselectionne la fiche sélectionnée",
-  'K_Command+K_Entree'  => "Dans un paragraphe en édition, crée un nouveau paragraphe"
+  'K_Command+K_Entree'  => "Dans un paragraphe en édition, crée un nouveau paragraphe",
+  'K_Command+CLICK'     => "Sur le titre, le passe en édition"
 ) ;
   
   foreach($tbl_shortcuts as $k => $texte)

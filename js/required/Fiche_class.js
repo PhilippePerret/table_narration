@@ -278,11 +278,12 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Paragraph::texte_in_textarea ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.main_field_as_div.length == 0)
-      {
-        console.error("Le DIV du champ principal de "+this.type_id+" est introuvable…")
-      }
-      else this.main_field_as_div.replaceWith(this.html_textarea_texte)
+      // if(this.main_field_as_div.length == 0)
+      // {
+      //   console.error("Le DIV du champ principal de "+this.type_id+" est introuvable…")
+      // }
+      // else 
+      this.main_field_as_div.replaceWith(this.html_textarea_texte)
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -291,11 +292,12 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       var idm = "Paragraph::texte_in_div ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.main_field_as_input.length == 0)
-      {
-        console.error("Le champ de saisie principal de "+this.type_id+" est introuvable…")
-      }
-      else this.main_field_as_input.replaceWith( this.html_div_texte )
+      // if(this.main_field_as_input.length == 0)
+      // {
+      //   console.error("Le champ de saisie principal de "+this.type_id+" est introuvable…")
+      // }
+      // else 
+      this.main_field_as_input.replaceWith( this.html_div_texte )
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -404,10 +406,18 @@ Object.defineProperties(Fiche.prototype, {
       var idm = "Fiche::observe ["+this.type_id+"]" ;
       dlog("---> " + idm, DB_FCT_ENTER)
       var obj ;
-      // On doit la rendre draggable
+      
+      // Rend la fiche draggable
       this.rend_draggable
-      // Click sur fiche => sélection/déselection
+      
+      // Un click sur la fiche doit la sélectionner
       this.obj.bind('click', $.proxy(this.toggle_select, this))
+
+      // Le click sur la fiche, en combinaison avec des modifiers,
+      // doit entrainer différents résultats (pour le moment, avec 
+      // CMD, on met le titre/texte en édition)
+      this.main_field.bind('click', $.proxy(FICHES.on_click_on_main_field, FICHES, this))
+
       if(this.is_book)
       {
         // La modification du titre réel doit entrainer son update
@@ -440,14 +450,14 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       this.obj.sortable({
         // 'containment': this.parent.div_items,
-        'grid'    : [200,0],
-        'cursor'  : 'move',
+        'axis'    : 'y',
         'opacity' : 0.5,
         'scroll'  : true,
         'change'  : function(evt, ui)
         {
           /* appelé si changement de position*/
           dlog(this.type_id+" a changé de position")
+          return true
         },
         'out' :function(evt,ui)
         {
@@ -485,45 +495,7 @@ Object.defineProperties(Fiche.prototype, {
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
-  
-  /*
-   *  Désactive/réactive l'édition du titre (ou du texte pour le paragraphe)
-   *  
-   *  PRODUIT
-   *  -------
-   *    # Remplace le div contenant le titre (ou le texte) par un champ
-   *      de saisie.
-   *    # Place les observers sur le champ de saisie.
-   *
-   */
 
-  "enable_main_field":{
-    get:function(){
-      var idm = "Fiche::enable_main_field ["+this.type_id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      this.set_main_field_as_input
-      this.obj.unbind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
-      var obj = this.main_field
-      obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-      obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
-  "disable_main_field":{
-    get:function(){
-      var idm = "Fiche::disable_main_field ["+this.type_id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      this.set_main_field_as_div
-      this.obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
-      var obj = this.main_field
-      if(FICHES.current_field_is( obj )) FICHES.onblur_textfield( this, {target:obj} )
-      obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-      obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
-  
   /*
    *  Rend la fiche "ouvrable"
    *  (en chargeant ses données au besoin et ses enfants)
@@ -568,7 +540,6 @@ Object.defineProperties(Fiche.prototype, {
       if(this.is_not_openable) return this.rend_openable('open')
       this.opened = true
       if(this.is_page && this.ranged) this.unrange
-      this.enable_main_field
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -587,7 +558,6 @@ Object.defineProperties(Fiche.prototype, {
       dlog("---> "+idm, DB_FCT_ENTER)
       this.opened = false
       if(this.is_page && this.parent) this.range
-      this.disable_main_field
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
@@ -637,71 +607,6 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /* Retourne l'objet DOM du clone de la fiche */
-  "obj_clone":{
-    get:function(){return $('fiche#'+this.dom_id_clone)}
-  },
-  
-  /*
-   *  Clone/Déclone la fiche courante
-   *
-   *  "Cloner la fiche" consiste à :
-   *    - Placer un clone de la fiche dans le parent, à la place de la fiche
-   *    - Sortir le DOM Objet du parent pour le mettre sur la table
-   *  "Décloner" la fiche consiste à :
-   *    - Remettre la fiche dans le parent
-   *    - Détruire le clone
-   */
-  "clone":{
-    get:function(){
-      this.clone_in_parent
-      $('section#table').append( this.obj )
-    }
-  },
-  "unclone":{
-    get:function(){
-      if(this.obj_clone.length == 0) throw "Clone introuvable pour la fiche #"+this.dom_id
-      this.obj.insertAfter( this.obj_clone )
-      this.obj_clone.remove()
-    }
-  },
-  /*
-   *  Place un clone de la fiche dans son parent
-   *  
-   */
-  "clone_in_parent":{
-    get:function(){
-      $(this.html_clone).insertAfter( this.obj )
-    }
-  },
-  
-
-  /*
-   *  Met les valeurs de la fiche dans l'élément DOM de la fiche
-   *  
-   *  TODO: La fiche est complètement à implémenter suivant les valeurs
-   *        qui seront éditables.
-   */
-  "set_values":{
-    get:function(){
-      var idm = "Fiche::set_values ["+this.type_id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      this.main_field.set(this.main_field_value)
-      if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
-      dlog("<- "+idm, DB_FCT_ENTER)
-      return true
-    }
-  },
-  /*
-   *  Retourne une valeur pour le champ principal (titre ou texte)
-   *  
-   */
-  "main_field_value":{
-    get:function(){
-      if(this.is_paragraph) return this.texte || "TEXTE_PARAGRAPHE"
-      else                  return this.titre || FICHES.datatype[this.type].defvalue
-    }
-  },
   
   /*
    *  Retourne la fiche
@@ -718,160 +623,6 @@ Object.defineProperties(Fiche.prototype, {
   },
   
   /*
-   *  Retourne le code HTML pour la fiche
-   *  
-   */
-  "html":{
-    get:function(){
-      return  '<fiche id="' + this.dom_id + '" class="fiche '+this.type+'">' +
-              this.html_recto + this.html_verso +
-              '</fiche>' ;
-    }
-  },
-  
-  /*
-   *  Retourne le code HTML du RECTO de la fiche
-   *  
-   */
-  "html_recto":{
-    get:function(){
-      return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
-              this.html_input_titre_and_other + // + champ 'real_titre' pour Book
-              this.html_div_items   + // empty pour les paragraphes
-              '</recto>'
-    }
-  },
-  
-  /*
-   *  Retourne le code HTML pour le texte en fonction de l'état
-   *  d'ouverture du paragraphe
-   *  
-   */
-  "html_for_texte":{
-    get:function(){
-      return this.opened ? this.html_textarea_texte : this.html_div_texte
-    }
-  },
-  /*
-   *  Retourne le code HTML pour le titre en fonction de l'état
-   *  d'ouverture de la fiche
-   *  
-   */
-  "html_for_titre":{
-    get:function(){
-      var c ;
-      var c = this.opened ? this.html_input_titre : this.html_div_titre
-      if(this.is_book) c += this.html_input_real_titre
-      return c
-    }
-  },
-  /* Retourne le code HTML pour le titre de la fiche (sauf paragraphe) */
-  "html_input_titre_and_other":{
-    get:function(){
-      if(this.is_paragraph) return this.html_for_texte
-      else                  return this.html_for_titre
-    }
-  },
-  /*
-   *  3 Méthodes pour construire le titre
-   *  Car le titre peut apparaitre dans un DIV quand la fiche est fermée,
-   *  ou dans un INPUT quand la fiche est ouverte.
-   *  
-   */
-  "html_input_titre":{
-    get:function(){
-      return '<input id="'+this.titre_id+'" type="text" class="titre" value="" />'
-    }
-  },
-  "html_div_titre":{
-    get:function(){
-      return '<div id="'+this.titre_id+'" class="titre"></div>'
-    }
-  },
-  
-  /* Retourne le code HTML pour le div des items de la fiche (sauf paragraphe) */
-  "html_div_items":{
-    get:function(){
-      return this.is_paragraph ? "" : '<div id="'+this.dom_id+'-items" class="items"></div>'
-    }
-  },
-  
-  /*
-   *  Retourne le code HTML du VERSO de la fiche
-   *  -------------------------------------------
-   */
-  "html_verso":{
-    get:function(){
-      return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
-                '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
-                this.html_fieldset_parametres +
-              '</verso>'
-    }
-  },
-  /*
-   *  Règle le verso
-   *  --------------
-   *  Cette méthode est appelée quand on retourne la fiche, entendu qu'on ne
-   *  définit pas vraiment son verso à l'affichage. Et puis certaines valeurs,
-   *  comme le titre, ne sont pas affichées.
-   *  Donc c'est seulement quand on la met au verso qu'on règle les choses
-   *  suivant les fiches.
-   *
-   */
-  "regle_verso":{
-    get:function(){
-      this.set_titre_verso
-      if(undefined != this.after_regle_verso) this.after_regle_verso
-    }
-  },
-  
-  /*
-   *  Au verso, le fielset contenant les paramètres
-   *  
-   */
-  "fieldset_parametres":{get:function(){return $(this.fieldset_parametres_jid)}},
-  "fieldset_parametres_jid":{get:function(){return "fieldset#"+this.fieldset_parametres_id}},
-  "fieldset_parametres_id":{get:function(){return this.dom_id+'-fieldset_parametres'}},
-  "html_fieldset_parametres":{
-    get:function(){
-      return '<fieldset id="'+this.fieldset_parametres_id+'">' +
-        '<legend>Paramètres</legend>'+
-        '</fieldset>'
-    }
-  },
-  
-  "titre_verso_id":{get:function(){return this.dom_id+"-titre_verso"}},
-  "titre_verso_jid":{get:function(){return 'div#'+this.titre_verso_id}},
-  "set_titre_verso":{
-    get:function(){
-      $(this.titre_verso_jid).html(
-        "Verso " + FICHES.datatype[this.type].hname + " #" + this.id + " : " + 
-        (this.is_paragraph ? (this.texte || "").substring(0, 50) : this.titre)
-      )
-    }
-  },
-  
-  /* Retourne le dom_id du clone */
-  "dom_id_clone":{
-    get:function(){return "clone"+this.dom_id }
-  },
-  /*
-   *  Retourne le code HTML pour un clone de la fiche (dans parent)
-   *  
-   *  @note:  Pour le moment, seul une page a besoin d'un clone
-   */
-  "html_clone":{
-      // id = 'clone'+this.dom_id => "clonef-12"
-    get:function(){
-      return '<fiche id="'+this.dom_id_clone+'" class="fiche '+this.type+' clone">'+
-        '<recto>'+
-          '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.titre+'</div>'+
-        '</recto>'+
-      '</fiche>'
-    }
-  },
-  
-  /*
    *  Sauvegarde de la fiche (utile ?)
    *  
    */
@@ -882,40 +633,6 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /*
-   *  Retourne les données à enregistrer
-   *  
-   */
-  "data":{
-    configurable:true,
-    get:function(){
-      data = {
-        id:this.id, type:this.type, titre:this.titre, deleted:this.deleted,
-        opened:this.opened, ranged:this.ranged,
-        top:this.top, left:this.left
-      }
-      if(this.parent)  data.parent = {id:this.parent.id, type:this.parent.type}
-      if(this.enfants)
-      {
-        data.enfants = []
-        for(var i in this.enfants){ 
-          data.enfants.push(this.enfants[i].minidata)
-        }
-      }
-      if(this.is_book) data.real_titre  = this.real_titre
-      if(this.is_chapter || this.is_paragraph) data.opened   = false
-      if(this.is_paragraph) data.texte  = this.texte
-      return data
-    }
-  },
-  
-  /*
-   *  Retourne le {Hash} des données minimum de la fiche (id et type)
-   *  
-   */
-  "minidata":{
-    get:function(){return {id:this.id, type:this.type}}
-  },
   
   /*
    *  Destruction totale d'une fiche
@@ -961,155 +678,7 @@ Object.defineProperties(Fiche.prototype, {
       this.modified = true
       this.obj.remove()
     }
-  },
-  
-  /*
-   *  ---------------------------------------------------------------------
-   *    Changement d'état
-   *  
-   */
-  /* Sélection et désélection de la fiche 
-   *
-   * NOTES
-   * -----
-   *  # Stoppe l'évènement pour qu'il ne se propage pas aux fiches
-   *    ancêtres si elles existent.
-   *
-   * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
-   *              En fonction de la pression ou non de la touche majuscule le comportement
-   *              et différent.
-   */
-  "toggle_select":{
-    value:function(evt){
-      var with_maj = (evt.shiftKey == true)
-      if(this.selected){ if(with_maj) this.deselect }
-      else this.select
-      return stop_event(evt)
-    }
-  },
-  "select":{
-    get:function(){
-      FICHES.add_selected( this )
-      this.selected = true
-      if(this.built) this.obj.addClass('selected')
-      this.up_zIndex
-    }
-  },
-  "deselect":{
-    get:function(){
-      FICHES.remove_selected( this )
-      this.selected = false
-      if(this.built) this.obj.removeClass('selected')
-      this.down_zIndex
-    }
-  },
-  
-  /*
-   *  Quand la fiche est sélectionné, il faut régler son z-index
-   *  ainsi que celui de tous ses parents, afin que tout passe au-dessus
-   *  
-   */
-  "up_zIndex":{
-    get:function(){
-      this.obj.css('z-index', 10)
-      if(this.parent) this.parent.up_zIndex ;
-    }
-  },
-  "down_zIndex":{
-    get:function(){
-      this.obj.css('z-index', 0)
-      if(this.parent) this.parent.down_zIndex ;
-    }
-  },
-  
-  "is_book"           :{get:function(){ return this._type == 'book'}},
-  "is_not_book"       :{get:function(){ return this._type != 'book'}},
-  "is_chapter"        :{get:function(){ return this._type == 'chap'}},
-  "is_not_chapter"    :{get:function(){ return this._type != 'chap'}},
-  "is_page"           :{get:function(){ return this._type == 'page'}},
-  "is_not_page"       :{get:function(){ return this._type != 'page'}},
-  "is_paragraph"      :{get:function(){ return this._type == 'para'}},
-  "is_not_paragraph"  :{get:function(){ return this._type != "para"}},
-
-  "titre":{
-    get:function(){return this._titre || null },
-    set:function(titre){ this._titre = titre}
-  },
-  
-  "updated_at":{
-    get:function(){ return this._updated_at },
-    set:function(time){this._updated_at = time}
-  },
-  
-  "resume":{
-    get:function(){ return this._resume },
-    set:function(resume)
-    {
-      if(resume.trim() == "") resume = null
-      this._resume = resume
-    }
-  },
-  
-  /*
-   *  Définit ou retourne les enfants de la fiche
-   *  
-   */
-  "enfants":{
-    get:function(){return this._enfants },
-    set:function(children){ this._enfants = children },
-  },
-
-  /*
-   *  Définit ou retourne le parent de la fiche
-   *  
-   */
-  "parent":{
-    get:function(){ return this._parent },
-    set:function(pere)
-    {
-      try
-      {
-        if(!pere || 'object' != typeof pere) throw 'parent should be an object';
-        if(pere.class != "Fiche")   throw 'parent should be a fiche';
-        thislevel = FICHES.datatype[this.type].level ;
-        perelevel = FICHES.datatype[pere.type].level ;
-        if( thislevel >= perelevel ) throw 'parent bad type';
-      }
-      catch(err)
-      { 
-        throw LOCALE.fiche.error[err]
-      }
-      
-      this._parent = pere
-    }
-  },
-  
-  /*
-   *  Définition et retour de la position horizontale (left) de
-   *  la fiche sur la table
-   */
-  "left":{
-    get:function(){ return this._left || null },
-    set:function(left){
-      this._left = parseInt(left, 10)
-      if( !this.ranged ) this.positionne
-    }
-  },
-  
-  /*
-   *  Définition et retour de la position haute (top) de la fiche 
-   *  sur la table.
-   *  
-   */
-  "top":{
-    get:function(){ return this._top || null },
-    set:function(top){
-      this._top = parseInt(top, 10)
-      if( !this.ranged ) this.positionne
-    }
-  }
-  
-  
+  }  
 })
 
 /*
