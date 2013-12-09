@@ -58,11 +58,11 @@ Object.defineProperties(UI,{
   "prepare":{
     get:function(){
       this.preparing = true
-      // // La table doit accepter les drops des "card tool" (tous les types)
-      // $('section#table').droppable({
-      //   accept  : '.card_tool',
-      //   drop    : $.proxy(this.ondrop_on_table, this)
-      // })
+      // La table doit accepter les drops des "card tool" (tous les types)
+      $('section#table').droppable({
+        accept  : '.card_tool',
+        drop    : $.proxy(this.ondrop_on_table, this)
+      })
     
       // Prépation des "card-tools"
       CardTools.prepare

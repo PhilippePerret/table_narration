@@ -7,10 +7,9 @@ $.fn.extend({
    */
   set:function(value){
     if( this.length == 0 ) return
-    var tag = this[0].tagName ;
-    var is_champ_edition = ['INPUT', 'TEXTAREA', 'SELECT'].indexOf(tag) > -1 ;
-    return this.each(function(is_champ_edition){
-      this[is_champ_edition?'value':'innerHTML'] = value
+    return this.each(function(){
+      var edition = ('.INPUT.TEXTAREA.SELECT.'.indexOf('.'+this.tagName+'.') > -1) ;
+      this[edition?'value':'innerHTML'] = value
     })
   },
 })

@@ -76,8 +76,7 @@ def get_all_non_ranged
     next unless fiche.ranged?
     # Si on arrive ici, c'est que la fiche n'est toujours pas rangée
     new_liste << "#{fiche.id}:#{fiche.type}"
-    @data[:fiches] << fiche.data
-    get_children_of fiche unless fiche.paragraph?
+    @data[:fiches] += fiche.get_data :children => :if_opened
   end
   
   # On enregistre la nouvelle liste des non rangés

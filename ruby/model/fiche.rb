@@ -104,7 +104,7 @@ class Fiche
       children.each do |minidata|
         child = Fiche.new(minidata['id'], minidata['type'])
         data_children << child.data
-        data_children += child.data_children if child.opened?
+        data_children += child.data_children if child.opened? || child.chapter?
       end if hasChildren?
       data_children
     end
@@ -118,12 +118,12 @@ class Fiche
   # @param  options
   #         :children   => true / :if_opened
   #           Retourne aussi les données des enfants (true) dans tous les cas,
-  #           (:if_opened) seulement si la fiche est ouverte
+  #           (:if_opened) seulement si la fiche est ouverte ou si c'est un chapitre
   # 
   def get_data options = nil
     options ||= {}
     d = [data]
-    d += data_children if options[:children] === true || (options[:children]==:if_opened && opened?)
+    d += data_children if chapter? || options[:children] === true || (options[:children]==:if_opened && opened?)
     return d
   end
   

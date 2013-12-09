@@ -3,6 +3,12 @@
  *  --------------------
  *
  */
+// Raccourci
+window.get_fiche = function(id)
+{
+  return FICHES.get(id)
+}
+
 window.FICHES = {
   
   /*
@@ -239,24 +245,37 @@ window.FICHES = {
   dispatch:function( data )
   {
     dlog("---> FICHES.dispatch", DB_FCT_ENTER)
-    var openeds = [], closeds = [], rangeds = [] ;
-    var i, len, dfiche, ifiche ;
+    var i = 0, dfiche, ifiche ;
+    var nombre_fiches = data.length
+    var instances = []
     // dlog("*** Data envoyées à FICHES.dispatch ***")
     // dlog(data)
-    for(i=0, len = data.length; i<len; ++i)
+    for( ; i < nombre_fiches; ++i)
     {
       ifiche = this.fiche_from( data[i] )
-      if(data[i]['opened'] == "true" ) openeds.push( ifiche )
-      if(data[i]['opened'] == "false") closeds.push( ifiche )
-      if(data[i]['ranged'] == "true" ) rangeds.push( ifiche )
       ifiche.loaded = true // Une fiche passant par ici est forcément chargée
-      ifiche.create
+      instances.push( ifiche )
     }
+
+    // Création des fiches sur la table
+    L(instances).each(function(instance){
+      dlog("Création de "+instance.type_id, DB_CURRENT)
+      instance.create
+    })
+
+    // Ouverture/fermeture des fiches
+    L(instances).each(function(instance){
+      if(instance.opened) instance.open
+                     else instance.close
+    })
     
-    // this  .close (closeds)
-    this  .open  (openeds)
-    this  .range (rangeds)
-    // console.log(rangeds)
+    // Rangement des fiches
+    L(instances).each(function(instance){
+      if(instance.ranged) instance.range
+                     else instance.positionne
+    })
+    
+    
     
     dlog("<- FICHES.dispatch", DB_FCT_ENTER)
   },
@@ -295,7 +314,6 @@ window.FICHES = {
   load:function(arr)
   {
     dlog("---> FICHES.load", DB_FCT_ENTER)
-    console.log(arr)
     Ajax.send(
       {script:'fiche/load', fiches:arr},
       $.proxy(this.after_load, this)
