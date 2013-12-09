@@ -480,13 +480,14 @@ window.FICHES = {
   on_dblclick:function(ifiche, evt)
   {
     var idm = "FICHES.on_dblclick ["+ifiche.type_id+"]"
-    dlog("---> "+idm)
+    dlog("---> "+idm, DB_FCT_ENTER)
     ifiche.toggle
     if(ifiche.opened /* car a pu ne pas se faire tout de suite */)
     {
       if(ifiche.is_paragraph || !ifiche.titre) ifiche.main_field.select()
     }
-    dlog("<- "+idm)
+    dlog("<- "+idm, DB_FCT_ENTER)
+    return stop_event( evt )
   },
   
   /*

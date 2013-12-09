@@ -39,12 +39,16 @@ window.UI = {
    *  Méthode appelée quand on droppe un outil fiche (card-tool)
    *  sur la table
    *
-   *  Cela provoque la création d'une nouvelle fiche.
+   *  Cela provoque la création d'une nouvelle fiche SUR LA TABLE.
    *
    *  NOTES
    *  -----
-   *  * Noter qu'il s'agit d'un déplacement sur un coin vide de la table, pas
-   *    sur une autre fiche.
+   *    # Si l'outil est déplacé sur une autre fiche qui peut être parent,
+   *      cette méthode est court-circuitée en mettant drop_on_fiche à true
+   *      cf. Fiche.prototype.on_drop
+   *
+   *    # Noter qu'il s'agit d'un déplacement sur un coin vide de la table, pas
+   *      sur une autre fiche.
    *
    *
    *  PARAMS
@@ -55,8 +59,13 @@ window.UI = {
    */
   ondrop_on_table:function(evt, ui)
   {
+    if(this.drop_on_fiche)
+    {
+      delete this.drop_on_fiche
+      return
+    }
     var ctool = ui.helper
-    dlog("---> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_CURRENT|DB_FCT_ENTER)
+    dlog("---> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_FCT_ENTER)
     
     // Déterminer la position approximative du drop sur la table
     var pos_table = $('section#table').position()
@@ -71,6 +80,7 @@ window.UI = {
     })
     ifiche.positionne
     ifiche.open
+    dlog("<- UI.ondrop_on_table", DB_FCT_ENTER)
   }
   
 }
@@ -86,11 +96,11 @@ Object.defineProperties(UI,{
   "prepare":{
     get:function(){
       this.preparing = true
-      // // La table doit accepter les drops des "card tool" (tous les types)
-      // $('section#table').droppable({
-      //   accept  : '.card_tool',
-      //   drop    : $.proxy(this.ondrop_on_table, this)
-      // })
+      // La table doit accepter les drops des "card tool" (tous les types)
+      $('section#table').droppable({
+        accept  : '.card_tool',
+        drop    : $.proxy(this.ondrop_on_table, this)
+      })
     
       // Prépation des "card-tools"
       CardTools.prepare

@@ -406,10 +406,8 @@ Object.defineProperties(Fiche.prototype, {
       var obj ;
       // On doit la rendre draggable
       this.rend_draggable
-      // Le click sur la fiche doit activer sa sélection
+      // Click sur fiche => sélection/déselection
       this.obj.bind('click', $.proxy(this.toggle_select, this))
-      // // Le double-click doit ouvrir la fiche
-      // this.obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       if(this.is_book)
       {
         // La modification du titre réel doit entrainer son update
@@ -984,8 +982,6 @@ Object.defineProperties(Fiche.prototype, {
   "toggle_select":{
     value:function(evt){
       var with_maj = (evt.shiftKey == true)
-      // Si la fiche est sélectionnée et que la touche majuscule est
-      // pressée, il faut déselectionner la fiche
       if(this.selected){ if(with_maj) this.deselect }
       else this.select
       return stop_event(evt)
@@ -996,6 +992,7 @@ Object.defineProperties(Fiche.prototype, {
       FICHES.add_selected( this )
       this.selected = true
       if(this.built) this.obj.addClass('selected')
+      this.up_zIndex
     }
   },
   "deselect":{
@@ -1003,6 +1000,25 @@ Object.defineProperties(Fiche.prototype, {
       FICHES.remove_selected( this )
       this.selected = false
       if(this.built) this.obj.removeClass('selected')
+      this.down_zIndex
+    }
+  },
+  
+  /*
+   *  Quand la fiche est sélectionné, il faut régler son z-index
+   *  ainsi que celui de tous ses parents, afin que tout passe au-dessus
+   *  
+   */
+  "up_zIndex":{
+    get:function(){
+      this.obj.css('z-index', 10)
+      if(this.parent) this.parent.up_zIndex ;
+    }
+  },
+  "down_zIndex":{
+    get:function(){
+      this.obj.css('z-index', 0)
+      if(this.parent) this.parent.down_zIndex ;
     }
   },
   
@@ -1107,6 +1123,8 @@ Object.defineProperties(Fiche.prototype, {
  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
+  UI.drop_on_fiche = true
+  
   var obj_moved = ui.draggable
   var ichild
   var is_tool   = obj_moved.hasClass('card_tool') ;
