@@ -64,7 +64,10 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){ return this._type || null},
     set:function(ty){ this._type = ty }
   },
-  
+  /* Méthode pratique retournant <type>#<id> (p.e. 'book#12') */
+  "type_id":{
+    get:function(){ return this.type_id}
+  },
   /*
    *  Retourne un {Array} des minidata des enfants 
    *  
@@ -219,50 +222,76 @@ Object.defineProperties(Fiche.prototype, {
     },
     set:function(obj){this._main_field = obj}
   },
+  "main_field_as_div":{
+    get:function(){ 
+      return $(this.is_paragraph ? this.div_texte_jid : this.input_titre_jid)
+    }
+  },
+  "main_field_as_input":{
+    get:function(){
+      return $(this.is_paragraph ? this.textearea_texte_jid : this.input_titre_jid)
+    }
+  },
   "titre_id"        :{get:function(){return this.dom_id+'-titre'}},
   "input_titre_jid" :{get:function(){return 'input#'+this.titre_id}},
   "div_titre_jid"   :{get:function(){return 'div#'+this.titre_id}},
-  "main_field_as_input":{
+  
+  /* Remplace le DIV du main field par son champ d'édition (tout type de fiche) */
+  "set_main_field_as_input":{
     get:function(){
       if(this.is_paragraph) this.texte_in_textarea
       else                  this.titre_in_input
+      this.main_field = this.main_field_as_input
     }
   },
-  "main_field_as_div":{
+  "set_main_field_as_div":{
     get:function(){
       if(this.is_paragraph) this.texte_in_div
       else                  this.titre_in_div
+      this.main_field = this.main_field_as_div
     }
   },
   "titre_in_input":{
     get:function(){
-      this.main_field.replaceWith(this.html_input_titre)
-      this.main_field = $('input#'+this.titre_id)
+      if(this.main_field_as_div.length == 0)
+      {
+        console.error("Le DIV du champ principal de "+this.type_id+" est introuvable…")
+      }
+      else this.main_field_as_div.replaceWith(this.html_input_titre)
     }
   },
   "titre_in_div":{
     get:function(){
-      this.main_field.replaceWith( this.html_div_titre )
-      this.main_field = $('div#'+this.titre_id)
+      if(this.main_field_as_input.length == 0)
+      {
+        console.error("Le champ de saisie principal de "+this.type_id+" est introuvable…")
+      }
+      else this.main_field_as_input.replaceWith( this.html_div_titre )
     }
   },
   /* Place le texte dans un textarea */
   "texte_in_textarea":{
     get:function(){
-      var idm = "Paragraph::texte_in_textarea ["+this.type+"#"+this.id+"]"
+      var idm = "Paragraph::texte_in_textarea ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      this.main_field.replaceWith(this.html_textarea_texte)
-      this.main_field = $(this.textarea_texte_jid)
+      if(this.main_field_as_div.length == 0)
+      {
+        console.error("Le DIV du champ principal de "+this.type_id+" est introuvable…")
+      }
+      else this.main_field_as_div.replaceWith(this.html_textarea_texte)
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   /* Place le texte dans un div */
   "texte_in_div":{
     get:function(){
-      var idm = "Paragraph::texte_in_div ["+this.type+"#"+this.id+"]"
+      var idm = "Paragraph::texte_in_div ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      this.main_field.replaceWith( this.html_div_texte )
-      this.main_field = $(this.div_texte_jid)
+      if(this.main_field_as_input.length == 0)
+      {
+        console.error("Le champ de saisie principal de "+this.type_id+" est introuvable…")
+      }
+      else this.main_field_as_input.replaceWith( this.html_div_texte )
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -334,10 +363,10 @@ Object.defineProperties(Fiche.prototype, {
    */
   "create":{
     get:function(){
-      dlog("---> Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("---> Fiche::create ("+this.type_id+")", DB_FCT_ENTER)
       this.build
       this.set_values
-      dlog("<- Fiche::create ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("<- Fiche::create ("+this.type_id+")", DB_FCT_ENTER)
       return true
     }
   },
@@ -348,7 +377,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "build":{
     get:function(){
-      var idm = "Fiche::build ["+this.type+"#"+this.id+"]" ;
+      var idm = "Fiche::build ["+this.type_id+"]" ;
       dlog("---> " + idm, DB_FCT_ENTER)
       // On ajoute le code ou on le remplace
       if(this.obj) this.obj.replaceWith( this.html )
@@ -372,27 +401,21 @@ Object.defineProperties(Fiche.prototype, {
    */
   "observe":{
     get:function(){
-      var idm = "Fiche::observe ["+this.type+"#"+this.id+"]" ;
+      var idm = "Fiche::observe ["+this.type_id+"]" ;
       dlog("---> " + idm, DB_FCT_ENTER)
       var obj ;
       // On doit la rendre draggable
       this.rend_draggable
       // Le click sur la fiche doit activer sa sélection
       this.obj.bind('click', $.proxy(this.toggle_select, this))
-      if(this.is_paragraph)
+      if(this.is_book)
       {
+        // La modification du titre réel doit entrainer son update
+        obj = this.input_real_titre
+        obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+        obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+        this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
       }
-      else
-      {        
-        if(this.is_book)
-        {
-          // La modification du titre réel doit entrainer son update
-          obj = this.input_real_titre
-          obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-          obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-          this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
-        }
-      }      
       // Toutes les fiches hors paragraphes doivent être droppable et
       // accepter un élément de rang inférieur
       var accepted_child = FICHES.datatype[this.type].child_type
@@ -417,30 +440,30 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       this.obj.sortable({
         // 'containment': this.parent.div_items,
-        'grid'    : [100,0],
+        'grid'    : [200,0],
         'cursor'  : 'move',
         'opacity' : 0.5,
         'scroll'  : true,
         'change'  : function(evt, ui)
         {
           /* appelé si changement de position*/
-          dlog(this.type+"#"+this.id+" a changé de position")
+          dlog(this.type_id+" a changé de position")
         },
         'out' :function(evt,ui)
         {
-          dlog(this.type+"#"+this.id+" sort de son parent")
+          dlog(this.type_id+" sort de son parent")
         },
         'over':function(evt,ui)
         {
-          dlog(this.type+"#"+this.id+" passe sur une liste qui peut l'accepter")
+          dlog(this.type_id+" passe sur une liste qui peut l'accepter")
         },
         'start':function(evt,ui)
         {
-          dlog("Début du déplacement (sort) de "+this.type+"#"+this.id)
+          dlog("Début du déplacement (sort) de "+this.type_id)
         },
         'stop':function(evt,ui)
         {
-          dlog("Fin du déplacement (sort) de "+this.type+"#"+this.id)
+          dlog("Fin du déplacement (sort) de "+this.type_id)
         }
       })
       this.sortable = true
@@ -452,13 +475,14 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_draggable":{
     get:function(){
-      dlog("---> Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      var idm = "Fiche::rend_draggable ("+this.type_id+")"
+      dlog("---> "+idm, DB_FCT_ENTER)
       this.obj.draggable({
         containment:'parent',
         stop: $.proxy(this.stop_drag, this)
       })
       this.draggable = true
-      dlog("<- Fiche::rend_draggable ("+this.type+"#"+this.id+")", DB_FCT_ENTER)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   
@@ -475,24 +499,28 @@ Object.defineProperties(Fiche.prototype, {
 
   "enable_main_field":{
     get:function(){
-      dlog("---> Fiche::enable_main_field", DB_FCT_ENTER)
-      this.main_field_as_input
+      var idm = "Fiche::enable_main_field ["+this.type_id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.set_main_field_as_input
       var obj = this.main_field
       obj.unbind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
       obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   "disable_main_field":{
     get:function(){
-      dlog("---> Fiche::disable_main_field", DB_FCT_ENTER)
-      this.main_field_as_div
+      var idm = "Fiche::disable_main_field ["+this.type_id+"]"
+      dlog("---> "+idm, DB_FCT_ENTER)
+      this.set_main_field_as_div
       var obj = this.main_field
       if(FICHES.current_field_is( obj )) FICHES.onblur_textfield( this, {target:obj} )
       obj.bind('dblclick', $.proxy(FICHES.on_dblclick, FICHES, this))
       obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
       obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
   
@@ -503,7 +531,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_openable":{
     value:function(poursuivre){
-      var idm = "Fiche::rend_openable ["+this.type+"#"+this.id+"]" 
+      var idm = "Fiche::rend_openable ["+this.type_id+"]" 
       dlog("---> "+idm)
       if('string' == typeof poursuivre) poursuivre = {id:this.id, prop:poursuivre}
       FICHES.after_load.poursuivre = poursuivre
@@ -524,11 +552,18 @@ Object.defineProperties(Fiche.prototype, {
   
   /*
    *  Ouvre la fiche
-   *  
+   *  --------------
+   *
+   *  NOTES
+   *  -----
+   *    # L'opération produit des résultats différents en fonction du type
+   *      de la fiche. Par exemple, pour une page, on la sort de son parent
+   *      et on montre ses enfants (paragraphes). Pour un chapitre, on ne
+   *      fait que mettre son titre en édition.
    */
   "open":{
     get:function(){
-      var idm = "Fiche::open ["+this.type+"#"+this.id+"]" 
+      var idm = "Fiche::open ["+this.type_id+"]" 
       dlog("---> "+idm, DB_FCT_ENTER)
       if(this.is_not_openable) return this.rend_openable('open')
       this.opened = true
@@ -539,16 +574,16 @@ Object.defineProperties(Fiche.prototype, {
   },
   /*
    *  Ferme la fiche
-   *  
+   *  --------------
+   *
    *  NOTES
    *  -----
-   *  * Un chapitre ne peut jamais être fermé (il est soit rangé soit unrangé)
-   *  @ En mode fermé, le titre est disabled
+   *    # En mode fermé, le titre est disabled
    *
    */
   "close":{
     get:function(){
-      var idm = "Fiche::close ["+this.type+"#"+this.id+"]"
+      var idm = "Fiche::close ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
       this.opened = false
       if(this.is_page && this.parent) this.range
@@ -569,12 +604,13 @@ Object.defineProperties(Fiche.prototype, {
    */
   "range":{
     get:function(){
-      var idm = "Fiche::range ["+this.type+"#"+this.id+"]"
+      var idm = "Fiche::range ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
       if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
       if(this.obj_clone.length) this.unclone
       else this.parent.div_items.append( this.obj )
-      if(this.draggable){
+      if(this.draggable)
+      {
         this.obj.draggable("destroy")
         this.draggable = false
       }
@@ -648,7 +684,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "set_values":{
     get:function(){
-      var idm = "Fiche::set_values ["+this.type+"#"+this.id+"]"
+      var idm = "Fiche::set_values ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
       this.main_field.set(this.main_field_value)
       if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
@@ -660,7 +696,7 @@ Object.defineProperties(Fiche.prototype, {
    *  Retourne une valeur pour le champ principal (titre ou texte)
    *  
    */
-  main_field_value:{
+  "main_field_value":{
     get:function(){
       if(this.is_paragraph) return this.texte || "TEXTE_PARAGRAPHE"
       else                  return this.titre || "TTITRE"
@@ -701,7 +737,7 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       return  '<recto id="'+this.dom_id+'-recto" class="'+this.type+'">'+
               this.html_input_titre_and_other + // + champ 'real_titre' pour Book
-              this.html_div_items   + // textarea.texte pour un paragraphe
+              this.html_div_items   + // empty pour les paragraphes
               '</recto>'
     }
   },
@@ -709,7 +745,7 @@ Object.defineProperties(Fiche.prototype, {
   /* Retourne le code HTML pour le titre de la fiche (sauf paragraphe) */
   "html_input_titre_and_other":{
     get:function(){
-      if(this.is_paragraph) return ""
+      if(this.is_paragraph) return this.html_div_texte
       var c = this.html_input_titre
       if(this.is_book) c += this.html_input_real_titre
       return c
@@ -740,10 +776,7 @@ Object.defineProperties(Fiche.prototype, {
   "html_div_items":{
     configurable:true,
     get:function(){
-      if(this.is_paragraph) 
-        return this.html_div_texte
-      else
-        return '<div id="'+this.dom_id+'-items" class="items"></div>'
+      return this.is_paragraph ? "" : '<div id="'+this.dom_id+'-items" class="items"></div>'
     }
   },
   
@@ -874,7 +907,6 @@ Object.defineProperties(Fiche.prototype, {
   "remove":{
     configurable:true,
     get:function(){
-      // TODO: Implémenter le traitement complexe (appartenances, etc.)
       this.obj.remove()
       this.delete ;
     }
@@ -1056,8 +1088,7 @@ Object.defineProperties(Fiche.prototype, {
  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
-  var obj_moved = ui.draggable
-  var ichild, is_tool = obj_moved.hasClass('card_tool')
+  var obj_moved=ui.draggable, ichild, is_tool=obj_moved.hasClass('card_tool') ;
   
   if(is_tool)
   {
@@ -1148,7 +1179,7 @@ Fiche.prototype.add_child = function(enfant, before_child)
 
 Fiche.prototype.onchange_titre_or_texte = function(evt)
 {
-  var idm = "Fiche::onchange_titre_or_texte ["+this.type+"#"+this.id+"]"
+  var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
   var obj=this.main_field, prop=this.main_prop ;
   var new_value = obj.val()
@@ -1160,17 +1191,9 @@ Fiche.prototype.onchange_titre_or_texte = function(evt)
   dlog("<- "+idm, DB_FCT_ENTER)
 }
 
-/*
- *  Méthode appelée quand on change le texte d'un paragraphe
- *  
- */
-Fiche.prototype.onchange_texte = function(evt)
-{
-  this.texte = this.textarea_texte.val()
-}
 
 Fiche.prototype.dispatch = function(data){
-  dlog("---> Fiche::dispatch ["+this.type+"#"+this.id+"]", DB_FCT_ENTER)
+  dlog("---> Fiche::dispatch ["+this.type_id+"]", DB_FCT_ENTER)
   var prop, val ;
   for(prop in data)
   {

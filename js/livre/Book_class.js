@@ -40,7 +40,7 @@ Object.defineProperties(Book.prototype,{
 /* Méthode appelée au changement de real titre du livre */
 Book.prototype.onchange_real_titre = function(evt)
 {
-  var idm = "Fiche::onchange_real_titre ["+this.type+"#"+this.id+"]"
+  var idm = "Fiche::onchange_real_titre ["+this.type_id+"]"
   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
   this.real_titre = this.input_real_titre.val()
   this.modified = true

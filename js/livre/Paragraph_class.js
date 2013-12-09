@@ -94,3 +94,12 @@ Object.defineProperties(Paragraph.prototype,{
   }
   
 })
+
+/*
+ *  Méthode appelée quand on change le texte d'un paragraphe
+ *  
+ */
+Fiche.prototype.onchange_texte = function(evt)
+{
+  this.texte = this.textarea_texte.val()
+}
