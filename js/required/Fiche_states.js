@@ -80,7 +80,7 @@ Object.defineProperties(Fiche.prototype,{
         do { 
           p = p.parent()
           if(p.length) p.css('z-index', zindex)
-        } while(p.length && p.attr('class').indexOf('fiche book') == -1)
+        } while(p.length && p.attr('id') != "table" && p.attr('class').indexOf('fiche book') == -1)
       }catch(err){
         console.error(
           "Erreur dans Fiche::repercute_zindex_on_ancestors ["+this.type_id+"]"+
