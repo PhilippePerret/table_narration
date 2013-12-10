@@ -43,8 +43,9 @@ Object.defineProperties(Fiche.prototype,{
   "fieldset_parametres_id":{get:function(){return this.dom_id+'-fieldset_parametres'}},
   "html_fieldset_parametres":{
     get:function(){
-      return '<fieldset id="'+this.fieldset_parametres_id+'">' +
+      return '<fieldset id="'+this.fieldset_parametres_id+'" class="parametres">' +
         '<legend>Paramètres</legend>'+
+        (this.is_paragraph ? '<div class="div_menu_styles"></div>' : '') +
         '</fieldset>'
     }
   },

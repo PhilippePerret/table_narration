@@ -22,6 +22,10 @@ label.libelle {
   margin-right  : 1em;
 }
 
+div.buttons {
+  text-align  : right;
+}
+
 /* ---------------------------------------------------------------------
  *  Éléments spécifiques
  */

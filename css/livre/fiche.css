@@ -38,14 +38,6 @@ fiche > recto {
   display       : block; 
   padding-left  : 1em;
 }
-fiche > verso { 
-  display           : block; 
-  padding-left      : 1em;
-  min-height        : 2em;
-  background-color  : #dcdcdc;
-  padding           : 0.5em 0.6em;
-}
-
 fiche > recto > div.items {
   display           : none;
   background-color  : white;

@@ -25,7 +25,11 @@ Object.defineProperties(Fiche.prototype,{
       }
       if(this.is_book) data.real_titre  = this.real_titre
       if(this.is_chapter || this.is_paragraph) data.opened   = false
-      if(this.is_paragraph) data.texte  = this.texte
+      if(this.is_paragraph)
+      {
+        data.texte  = this.texte
+        if(this._style) data.style = this._style.join('.')
+      } 
       return data
     }
   },
@@ -145,3 +149,61 @@ Object.defineProperties(Fiche.prototype,{
   
   
 })
+
+Fiche.prototype.dispatch = function(data){
+  dlog("---> Fiche::dispatch("+JSON.stringify(data)+")", DB_FCT_ENTER)
+  var prop, val ;
+  for(prop in data)
+  {
+    if(false == data.hasOwnProperty(prop)) continue;
+    val = data[prop] ;
+    // Transformation de la valeur
+    switch(val)
+    {
+    case "false": val = false ; break;
+    case "true" : val = true; break;
+    case "null" : val = null; break;
+    }
+    
+    // Transformation en fonction de la propriété
+    switch(prop)
+    {
+    case 'opened':
+    case 'ranged':
+      prop = '_' + prop
+      break
+    case 'id': 
+      val = parseInt(val, 10); 
+      break;
+    case 'type':
+    case 'class':
+      // Juste pour ne pas passer par default: qui mettrait
+      // loaded à true
+      break
+    case 'titre':
+    case 'real_titre':
+    case 'texte':
+      val = val.stripSlashes()
+      if(prop != 'titre') this.loaded = true
+      break;
+    case 'parent':
+      val = FICHES.fiche( val );
+      this.loaded = true
+      break;
+    case 'enfants':
+      if(val!=null && val.length > 0){
+        val = FICHES.fiche( val )
+      }
+      this.loaded = true
+      break;
+    case 'style':
+      this.style  = val.split('.')
+      break
+    default:
+      this.loaded = true
+    }
+    // On met la donnée dans la propriété
+    this[prop] = val
+  }
+  dlog("<- Fiche::dispatch", DB_FCT_ENTER)
+}

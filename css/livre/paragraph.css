@@ -21,3 +21,52 @@ fiche.para > recto > textarea.texte {
   margin-left :1%;
   border      :none;
 }
+fiche.para > recto > .texte,
+ul#paragraphs_menu_styles > li
+ {
+  margin-left   : 40px;
+}
+
+/*
+ * Menu contenant les styles de paragraph
+ * --------------------------------------
+ */
+/* Le div qu'on trouve dans tous les rectos */
+div.div_menu_styles {
+  
+}
+
+div.div_menu_styles div#div_paragraph_styles {
+  margin-left       : 1em;
+  padding           : 1em;
+  background-color  : white;
+}
+
+div.div_menu_styles div#div_paragraph_styles div#div_apercu_paragraph {
+  height    : 80px;
+  border    : 1px solid #ccc;
+  padding   : 0.5em;
+}
+div.div_menu_styles div#div_paragraph_styles li#apercu_paragraph{
+  list-style-type : none;
+  text-align: center;
+}
+div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles {
+  list-style    : none;
+  max-height    : 240px;
+  overflow-x    : hidden;
+  overflow-y    : scroll;
+  border        : 1px solid #ccc;
+  padding       : 0.5em;
+}
+div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li {
+  cursor    : pointer;
+}
+div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li:hover {
+  background-color :#eef;
+}
+div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li input[type="checkbox"] {
+  margin-right  : 1.5em;
+  width         : 19px;
+  height        : 19px;
+}

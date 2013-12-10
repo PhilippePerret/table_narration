@@ -7,8 +7,8 @@
  */
 window.UI = {
   
-  GRID_X    : 40,       // Snap horizontal
-  GRID_Y    : 20,       // Snap vertical
+  GRID_X    : 80,       // Snap horizontal
+  GRID_Y    : 40,       // Snap vertical
   
   prepared  :false,     // Mis à true quand l'UI est prête
   preparing :false,     // True pendant la préparation de l'interface

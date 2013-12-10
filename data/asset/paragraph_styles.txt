@@ -1,0 +1,88 @@
+
+# Définition des styles de paragraphe (Fiche::Paragraph)
+# 
+#   * Permet de construire :
+#     - le fichier ./css/livre/styles_paragraph.css
+#       qui définit les classes CSS
+#     - le fichier ./js/data/styles_paragraph.js
+#       qui contient la liste des styles (pour peupler le menu au verso de la fiche)
+#
+#   * C'est le fichier ./ruby/module/update_styles_paragraph.rb qui produit
+#     ces fichiers de façon automatique dès que ce fichier a été modifié.
+# 
+# Pour composer un style : mêmes règle pour un fichier CSS, mais sans utiliser aucune
+# ponctuation (par de ";", pas de ":", pas d'accolades).
+# 
+# Un élément placé contre le bord gauche est forcément un nom de style, une ligne
+# "tabulée" définit forcément une propriété.
+#
+#   NOTES
+#   -----
+#     :: Tous les selectors qui commencent par le même nom fonctionnent en "exclusion",
+#        c'est-à-dire qu'un seul peut être appliqué à la fois.
+#
+# 
+
+titre_level_1, titre_level_2, titre_level_3
+  font-family   "Times New Roman"
+  margin-left   -12px
+
+titre_level_1
+  font-size       1.6em
+  margin-top      40px
+  margin-bottom   30px
+
+titre_level_2
+  font-size       1.4em
+  margin-top      30px
+  margin-bottom   20px
+  
+titre_level_3
+  font-size       1.2em
+  margin-top      20px
+  margin-bottom   10px
+
+# ---------------------------------------------------------------------
+#   Styles pour scénario
+# 
+scenario_action, scenario_scene, scenario_dialog, scenario_character, scenario_note_jeu
+  font-family   Arial, Helvetica
+  font-size     12pt
+
+scenario_scene, scenario_action, scenario_character
+  margin-top    1em
+
+scenario_scene, scenario_character
+  font-weight   bold
+  font-variant  small-caps
+  font-size     1.1em
+
+scenario_action
+  margin-left   1em
+
+scenario_character
+  margin-left   170px
+
+scenario_note_jeu
+  font-style    italic
+  margin-left   170px
+
+scenario_dialog
+  margin-left   110px
+  width         10em
+
+# ---------------------------------------------------------------------
+#   Divers
+
+action_lecteur
+  font-family   Verdana
+  font-size     0.8em
+  margin-left   4em
+  font-weight   bolder
+
+note, note_redaction
+  font-style    italic
+  font-size     0.8em
+
+note_redaction
+  color         blue

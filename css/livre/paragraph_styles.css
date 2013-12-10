@@ -1,0 +1,105 @@
+/*
+ *  Paragraph Styles
+ *  ----------------
+ *
+ *  @last_update : 10 12 2013 - 13:26 (day month year - hours:minutes)
+ */
+/*        ------------------------------------------------
+ *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
+ *        | MODIFIER : ./data/asset/paragraph_styles.txt |
+ *        | PUIS RECHARGER L'APPLICATION (AUTO UPDATE)   |
+ *        ------------------------------------------------
+ */
+ 
+ 
+
+fiche.para textarea.titre_level_1{border:0;}
+fiche.para div.titre_level_1,fiche.para textarea.titre_level_1,div#div_paragraph_styles li.titre_level_1 {
+	font-family : "Times New Roman" !important;
+	margin-left : -12px !important;
+	font-size : 1.6em !important;
+	margin-top : 40px !important;
+	margin-bottom : 30px !important;
+}
+
+fiche.para textarea.titre_level_2{border:0;}
+fiche.para div.titre_level_2,fiche.para textarea.titre_level_2,div#div_paragraph_styles li.titre_level_2 {
+	font-family : "Times New Roman" !important;
+	margin-left : -12px !important;
+	font-size : 1.4em !important;
+	margin-top : 30px !important;
+	margin-bottom : 20px !important;
+}
+
+fiche.para textarea.titre_level_3{border:0;}
+fiche.para div.titre_level_3,fiche.para textarea.titre_level_3,div#div_paragraph_styles li.titre_level_3 {
+	font-family : "Times New Roman" !important;
+	margin-left : -12px !important;
+	font-size : 1.2em !important;
+	margin-top : 20px !important;
+	margin-bottom : 10px !important;
+}
+
+fiche.para textarea.scenario_action{border:0;}
+fiche.para div.scenario_action,fiche.para textarea.scenario_action,div#div_paragraph_styles li.scenario_action {
+	font-family : Arial, Helvetica !important;
+	font-size : 12pt !important;
+	margin-top : 1em !important;
+	margin-left : 1em !important;
+}
+
+fiche.para textarea.scenario_scene{border:0;}
+fiche.para div.scenario_scene,fiche.para textarea.scenario_scene,div#div_paragraph_styles li.scenario_scene {
+	font-family : Arial, Helvetica !important;
+	font-size : 1.1em !important;
+	margin-top : 1em !important;
+	font-weight : bold !important;
+	font-variant : small-caps !important;
+}
+
+fiche.para textarea.scenario_dialog{border:0;}
+fiche.para div.scenario_dialog,fiche.para textarea.scenario_dialog,div#div_paragraph_styles li.scenario_dialog {
+	font-family : Arial, Helvetica !important;
+	font-size : 12pt !important;
+	margin-left : 110px !important;
+	width : 10em !important;
+}
+
+fiche.para textarea.scenario_character{border:0;}
+fiche.para div.scenario_character,fiche.para textarea.scenario_character,div#div_paragraph_styles li.scenario_character {
+	font-family : Arial, Helvetica !important;
+	font-size : 1.1em !important;
+	margin-top : 1em !important;
+	font-weight : bold !important;
+	font-variant : small-caps !important;
+	margin-left : 170px !important;
+}
+
+fiche.para textarea.scenario_note_jeu{border:0;}
+fiche.para div.scenario_note_jeu,fiche.para textarea.scenario_note_jeu,div#div_paragraph_styles li.scenario_note_jeu {
+	font-family : Arial, Helvetica !important;
+	font-size : 12pt !important;
+	font-style : italic !important;
+	margin-left : 170px !important;
+}
+
+fiche.para textarea.action_lecteur{border:0;}
+fiche.para div.action_lecteur,fiche.para textarea.action_lecteur,div#div_paragraph_styles li.action_lecteur {
+	font-family : Verdana !important;
+	font-size : 0.8em !important;
+	margin-left : 4em !important;
+	font-weight : bolder !important;
+}
+
+fiche.para textarea.note{border:0;}
+fiche.para div.note,fiche.para textarea.note,div#div_paragraph_styles li.note {
+	font-style : italic !important;
+	font-size : 0.8em !important;
+}
+
+fiche.para textarea.note_redaction{border:0;}
+fiche.para div.note_redaction,fiche.para textarea.note_redaction,div#div_paragraph_styles li.note_redaction {
+	font-style : italic !important;
+	font-size : 0.8em !important;
+	color : blue !important;
+}
