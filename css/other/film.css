@@ -1,0 +1,52 @@
+panneau#films {
+  position    : fixed;
+  top         : 10em;
+  left        : 10em;
+  background-color    : white;
+  border            : 2px solid #ccc;
+  padding-bottom    : 20px;
+  z-index           : 4000;
+}
+panneau#films div#panneau_film_onglets {
+  background-color  : #000;
+  color             : #fff;
+  padding       : 5px 20px;
+}
+panneau#films div#panneau_film_onglets {
+  height    : 20px;
+}
+panneau#films div#panneau_film_onglets div.onglet_lettre {
+  float       : left;
+  width       : 25px;
+  cursor      : pointer;
+  text-align  : center;
+}
+
+panneau#films div#panneau_film_onglets div.onglet_lettre.pressed {
+  background-color  : #6464BD;
+}
+
+/* ---------------------------------------------------------------------
+ *  DIV contenant les listings par lettre
+ */
+panneau#films > div#panneau_film_listings {
+  height      : 200px;
+  overflow    : auto;
+  margin      : 30px 20px;
+  padding     : 20px;
+  font-size   : 15.7pt;
+  border      : 1px solid #CCCCCC;
+  
+}
+/* Pour le div d'un film */
+panneau#films div.div_film div.titre {
+  height      : 30px;
+  cursor      : pointer;
+}
+
+/* ---------------------------------------------------------------------
+ *  DIV des BOUTONS BAS
+ */
+panneau#films > div#panneau_film_buttons {
+  padding     : 0 20px;
+}

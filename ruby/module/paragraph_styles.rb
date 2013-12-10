@@ -23,6 +23,7 @@ REQUIS
 module StylesParagraph
 
   module OwnMethods
+    
     FORCE_UPDATE = false
     
     # Les données des styles relevés
@@ -46,7 +47,8 @@ module StylesParagraph
     # Method to call from outside
     # 
     def update_styles_paragraph_if_needed
-      update_styles_paragraph if need_update?
+      RETOUR_AJAX[:paragraph_styles_updated] = need_update?
+      update_styles_paragraph if RETOUR_AJAX[:paragraph_styles_updated]
     end
     
     # - Main -

@@ -6,6 +6,7 @@ fiche {
   font-size   : 14pt;
   weight      : auto;
   border      : 2px solid transparent;
+/*  z-index     : 1;*/
 }
 /*fiche:hover {opacity:1 !important;}*/
 

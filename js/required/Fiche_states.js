@@ -54,6 +54,7 @@ Object.defineProperties(Fiche.prototype,{
       var idm = "Fiche::deselect ["+this.type_id+"] / this.selected:"+this.selected
       dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
       FICHES.remove_selected( this )
+      if(this.retourned) this.retourne
       this.selected = false
       if(this.built) this.obj.removeClass('selected')
       this.repercute_zindex_on_ancestors('')

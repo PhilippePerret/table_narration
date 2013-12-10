@@ -26,6 +26,7 @@ window.Collection = {
   /* Propriétés d'état */
   saving        : false,
   loading       : false,
+  loaded        : false,
   
   /*
    *  Retour du chargement de la collection
@@ -36,7 +37,6 @@ window.Collection = {
    */
   retour_load:function(rajax)
   {
-    F.clean()
     if(rajax.ok)
     {
       this.dispatch( rajax.data )
@@ -48,8 +48,9 @@ window.Collection = {
       // NON :
       // App.test();
       // Sinon, ça arrive chaque fois qu'un test recharge
-      F.show("Penser à quitter le mode test en finissant, par commodité.")
+      F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
     }
+    if( rajax.paragraph_styles_updated ) F.show("La liste des styles de paragraphe a été updatée.")
     this.backup
   },
   
@@ -57,7 +58,7 @@ window.Collection = {
   // différent du backup quotidien.
   retour_backup:function(rajax)
   {
-    if(rajax.ok) F.show("Backup done!")
+    if(rajax.ok) F.show("Backup done!", {keep:true})
     else F.error(rajax.message)
   },
   
@@ -122,8 +123,10 @@ window.Collection = {
     this.modified = false
     
     // On peut remettre la boucle de sauvegarde en route
+    // @note Sauf si la sauvegarde automatique n'est pas activée
     this.start_automatic_saving
     
+    this.loaded = true
   },
   
   /*
@@ -178,12 +181,17 @@ Object.defineProperties(Collection,{
    *
    *  La méthode est aussi appelée quand on charge l'application, pour
    *  remettre l'état précédent.
+   *
+   *  NOTES
+   *  -----
+   *    :: La méthode `save' est appelée dès qu'on active le bouton
    *  
    */
   "enable_automatic_saving":{
     value:function(oui){
       if(oui){ 
         this.start_automatic_saving
+        if(this.loaded) this.save
       }
       else if(this.timer_save){ 
         this.stop_automatic_saving
@@ -223,6 +231,7 @@ Object.defineProperties(Collection,{
   "save":{
     get:function(){
       dlog("Sauvegarde de la collection", DB_SIMPLE)
+      F.show("Sauvegarde en cours…", {no_timer:true})
       this.saving = true
       this.save_fiches
     }
@@ -239,6 +248,7 @@ Object.defineProperties(Collection,{
     get:function(){ 
       this.saving   = false
       this.modified = false
+      F.clean()
     }
   },
   

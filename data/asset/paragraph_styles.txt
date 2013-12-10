@@ -50,7 +50,7 @@ scenario_action, scenario_scene, scenario_dialog, scenario_character, scenario_n
   font-size     12pt
 
 scenario_scene, scenario_action, scenario_character
-  margin-top    1em
+  margin-top    16px
 
 scenario_scene, scenario_character
   font-weight   bold
@@ -58,7 +58,7 @@ scenario_scene, scenario_character
   font-size     1.1em
 
 scenario_action
-  margin-left   1em
+  margin-left   20px
 
 scenario_character
   margin-left   170px

@@ -4,6 +4,7 @@
 *?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en
   dehors de lui, soit un raccourci pour le sortir (en scrollant jusqu'à lui
   ou en le plaçant là où on se trouve.)
+  => Raccourci "E" (Extraire)
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode

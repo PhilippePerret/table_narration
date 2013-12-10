@@ -9,7 +9,7 @@ div#flash {
     right: 1em;
     margin: 0;
     padding: 0;
-    z-index: 1000;
+    z-index: 2000;
     max-width: 40%;
     min-width: 30%; 
   }
@@ -20,6 +20,8 @@ div#flash {
   }
     div#flash div#inner_flash div {
       padding: 0.17em 0.95em 0.1em;
+      background-color: #B7B7FB;
+      color: #00005F;
     }
     div#flash div#inner_flash span {
       display:block;

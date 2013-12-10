@@ -1,7 +1,7 @@
 /*
  *  Paragraph Style List
  *  --------------------
- *  @last_update : 10 12 2013 - 13:26 (day month year - hours:minutes)
+ *  @last_update : 10 12 2013 - 15:38 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |

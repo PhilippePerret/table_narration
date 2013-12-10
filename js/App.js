@@ -18,7 +18,7 @@ window.App = {
     if(rajax.ok)
     {
       F.show("Cliquer sur le bouton “-> Mode normal” pour revenir à la collection originale"+
-      "\n\nDossier courant : " + rajax.current_folder)
+      "\n\nDossier courant : " + rajax.current_folder, {keep:true})
       Collection.load
       $('input#btn_test').hide()
       $('input#btn_collection_originale').show()
@@ -40,7 +40,7 @@ window.App = {
     if(rajax.ok)
     {
       F.show("Retour au mode normal. Rechargement de la collection en cours."+
-      "\n\nDossier courant : " + rajax.current_folder)
+      "\n\nDossier courant : " + rajax.current_folder, {keep:true})
       Collection.load
       $('input#btn_test').show()
       $('input#btn_collection_originale').hide()

@@ -60,6 +60,8 @@ window.FICHES = {
    *  de la fiche courante.
    *  (Mais c'est une propriété complexe qui empêche d'enregistrer le livre
    *   pendant l'édition)
+   *
+   *  @value    NULL si aucun text-field, ou un set jQuery
    */
   // current_text_field:false,
   
@@ -524,7 +526,9 @@ window.FICHES = {
     target.select()
     this.current_text_field = target // complex
     window.onkeypress = window.keypress_when_fiche_selected_in_textfield
-    console.dir(window.onkeypress)
+    // On bloque les click dans le champ (pour empêcher la déselection
+    // qui remet le onkeypress à rien)
+    this.current_text_field.bind('click', function(evt){evt.stopPropagation();return true})
     dlog("<- "+idm, DB_FCT_ENTER | DB_CURRENT)
   },
   onblur_textfield:function(ifiche, evt)
@@ -535,8 +539,29 @@ window.FICHES = {
     if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
     if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
     else window.onkeypress = keypress_when_no_selection_no_edition
+    this.current_text_field.unbind('click', function(evt){evt.stopPropagation();return true})
     this.current_text_field = null // complex
     dlog("<- "+idm, DB_FCT_ENTER)
+  },
+  
+  /*
+   *  Méthode qui change la sélection courante
+   *  ----------------------------------------
+   *
+   *  NOTES
+   *  -----
+   *    ::  Cette méthode permet de forcer le changement du texte, 
+   *        qui dans le cas contraire ne génère pas de onchange quand on
+   *        bouge la sélection.
+   *  
+   */
+  set_selection_to:function(new_value)
+  {
+    Selection.set(FICHES.current_text_field, new_value,{end:true})
+    if(this.current_field_is(this.current.main_field)) 
+    {
+      FICHES.current.onchange_titre_or_texte(FICHES.current_text_field.val())
+    }
   }
 }
 
