@@ -12,6 +12,7 @@ FILMS.Dom = {
    */
   options:null,
   
+  
   /*
    *  Lettre courante (affichée)
    *  
@@ -161,6 +162,32 @@ Object.defineProperties(FILMS.Dom, {
   },
   
   /* ---------------------------------------------------------------------
+   *  ACTIONS SUR ÉLÉMENTS DOM
+   * --------------------------------------------------------------------- */
+  
+  /*
+   *  Affiche/Masque le formulaire
+   * 
+   * 
+   */
+  "show_formulaire":{
+    get:function(){
+      L(['tools', 'onglets', 'listings', 'buttons']).each(function(suf){
+        $('div#panneau_film_'+suf).hide()
+      })
+      $('div#panneau_film_edition').show()
+    }
+  },
+  "hide_formulaire":{
+    get:function(){
+      $('div#panneau_film_edition').hide()
+      L(['tools', 'onglets', 'listings', 'buttons']).each(function(suf){
+        $('div#panneau_film_'+suf).show()
+      })
+    }
+  },
+  
+  /* ---------------------------------------------------------------------
    *
    *  CONSTRUCTEURS
    *
@@ -246,8 +273,9 @@ Object.defineProperties(FILMS.Dom, {
   "div_boutons":{
     get:function(){
       return '<div id="panneau_film_buttons" class="buttons">' +
-      '<input type="button" value="Renoncer" onclick="$.proxy(FILMS.Dom.hide_panneau, FILMS.Dom)()" />'
-              '</div>'
+      '<input type="button" value="+" onclick="$.proxy(FILMS.Edition.edit, FILMS.Edition)()" class="fleft" />' +
+      '<input type="button" value="Renoncer" onclick="$.proxy(FILMS.Dom.hide_panneau, FILMS.Dom)()" />' +
+      '</div>'
     }
   }
   

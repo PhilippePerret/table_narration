@@ -1,4 +1,9 @@
-  
+* ÉDITION FILM
+  - désactiver les gestions de keypress quand on édite le film.
+  - les remettre quand on finit (FILMS.Edition.end)
+
+* En basculant du texte à l'édition (peut-être tous les champs), il faut
+  corriger les balises
 
 
 *?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en

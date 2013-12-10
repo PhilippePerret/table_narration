@@ -10,9 +10,41 @@
  *
  *  
  */
+window.get_film = function(fid, data)
+{
+  var film ;
+  if(undefined != FILMS.list[fid]) return FILMS.list[fid]
+  film = new Film(fid)
+  if(undefined != data) film.dispatch(data)
+}
 window.FILMS = {
-  DATA:null,      // Data mini des films (cf. ../interdata/film/data_js/films_data.js)
+  /*
+   *  Data mini des films
+   *
+   *  (cf. ../interdata/film/data_js/films_data.js)
+   */
+  DATA:null,      
 
+  /*
+   *  Table {Hash} des instances de films déjà instancié
+   *  
+   *  NOTES
+   *  -----
+   *    ::  Utiliser la méthode FILMS.get(fid) pour pouvoir instancier
+   *        une nouvelle instance Film avec les data mini ou renvoyer
+   *        celle déjà instanciée
+   */
+  list:{},
+  
+  /*
+   *  Retourne la class Film du film d'identifiant +fid+
+   *  
+   */
+  get:function(fid)
+  {
+    return get_film(fid, this.DATA[fid])
+  },
+  
   /*
    *  Retourne la balise à insérer pour le film d'identifiant +fid+
    *  

@@ -1,8 +1,10 @@
 panneau#films {
-  position    : fixed;
-  top         : 10em;
-  left        : 10em;
-  background-color    : white;
+  position          : fixed;
+  top               : 2em;
+  left              : 10em;
+  width             : 640px;
+  min-height        : 300px;
+  background-color  : white;
   border            : 2px solid #ccc;
   padding-bottom    : 20px;
   z-index           : 4000;
@@ -45,8 +47,54 @@ panneau#films div.div_film div.titre {
 }
 
 /* ---------------------------------------------------------------------
+ *  LE FORMULAIRE 
+ --------------------------------------------------------------------- */
+panneau#films div#div_form_film {
+  
+  
+}
+panneau#films div#div_form_film div#film_form {
+  height    : 284px;
+  overflow  : auto;
+  padding   : 1em;
+}
+panneau#films div#div_form_film div#film_form > div {
+  padding   : 4px 0;
+}
+panneau#films div#film_form label.libelle {
+  display       : inline-block;
+  width         : 75px;
+  text-align    : right;
+  /*  padding-right : 8px;*/
+}
+panneau#films div#film_form textarea {
+  width         : 98%;
+  height        : 50px;
+}
+panneau#films div#film_form div#film_titres input[type="text"] {
+  width         : 230px;
+}
+panneau#films div#film_form div#film_titres label[for="film_titre"] {
+  width         : 25px !important;
+}
+panneau#films div#film_form div#film_titres label[for="film_titre"],
+panneau#films div#film_form div#film_titres input#film_titre {
+  font-weight   : bold;
+  font-size     : 1.1em;
+}
+panneau#films div#film_form div#film_data input[type="text"] {
+  width         : 40px;
+}
+panneau#films div#div_form_film div.buttons {
+  margin-top    : 1em;
+}
+
+/* ---------------------------------------------------------------------
  *  DIV des BOUTONS BAS
  */
-panneau#films > div#panneau_film_buttons {
+panneau#films div.buttons {
   padding     : 0 20px;
+}
+panneau#films div.buttons input[type="button"] {
+  font-size  : 15pt;
 }
