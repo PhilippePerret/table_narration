@@ -76,9 +76,9 @@ window.PARAGRAPHS = {
    */
   apply_styles:function()
   {
-    this.current.on_change_styles( this.current_styles )
+    this.current = FICHES.current
+    this.current.on_change_styles( this.current_styles || [] )
     this.current.retourne
-    // this.toggle_section_styles() // NON
   },
   /*
    *  Ajoute ou retire un style de paragraphe au paragraphe courant
@@ -95,8 +95,12 @@ window.PARAGRAPHS = {
   {
     var selector = $(CB).parent().attr('class')
     var checked  = CB.checked == true
-    if(this.current != FICHES.current) this.current = FICHES.current
-    if(this.current_styles === null) this.current_styles = this.current.style
+    if(this.current != FICHES.current)
+    { 
+      this.current = FICHES.current
+      this.current_styles = this.current.style
+    }
+    else if(this.current_styles === null) this.current_styles = this.current.style
     if( ! this.current_styles ) this.current_styles = []
     if(checked)
     {
@@ -167,23 +171,23 @@ Object.defineProperties(PARAGRAPHS, {
   "build_menu_styles":{
     get:function(){
       var id ;
-      var btn_apply = '<input type="button" value="Appliquer" onclick="$.proxy(PARAGRAPHS.apply_styles, PARAGRAPHS)()" />'
-      var buttons   = '<div class="buttons">' +
+      var btn_apply = '<input type="button" value="Appliquer" onclick="$.proxy(PARAGRAPHS.apply_styles, PARAGRAPHS)()" style="font-size:1.3em;" />'
+      var cb_apercu =   '<div class="fleft">' +
+                          '<input type="checkbox" id="cb_show_apercu_paragraph" onchange="$(\'div#div_apercu_paragraph\').toggle();" />' +
+                          '<label for="cb_show_apercu_paragraph">Aperçu</label>' +
+                        '</div>' ;
+      var buttons   = '<div class="buttons" style="font-size:0.9em">' +  
                         btn_apply +
                       '</div>'
       var code =  '<div id="divuniq_menu_styles">' +
                   '<a onclick="PARAGRAPHS.toggle_section_styles(); return false">Style(s) du paragraphe…</a>' +
                   '<div id="div_paragraph_styles" style="display:none;">' +
-                    /* Boutons */
-                    '<div class="buttons">'+
-                      '<input type="checkbox" id="cb_show_apercu_paragraph" onchange="$(\'div#div_apercu_paragraph\').toggle();" />' +
-                      '<label for="cb_show_apercu_paragraph">Aperçu</label>' +
-                    '</div>' +
                     /* Aperçu de l'aspect du paragraphe */
                     '<div id="div_apercu_paragraph" style="display:none;">' +
                       '<li id="apercu_paragraph">Aperçu du style du paragraphe</li>' +
                     '</div>' +
-                 buttons
+                  cb_apercu + 
+                  buttons
       code += '<ul id="paragraphs_menu_styles">'
       L(PARAGRAPH_STYLES).each(function(selector){
         id  = "paragraph_style-"+selector ;
