@@ -60,14 +60,6 @@ Object.defineProperties(Fiche.prototype, {
   /* ---------------------------------------------------------------------
    *      DONNÉES DE LA FICHE
    --------------------------------------------------------------------- */
-  "type":{
-    get:function(){ return this._type || null},
-    set:function(ty){ this._type = ty }
-  },
-  /* Méthode pratique retournant <type>#<id> (p.e. 'book#12') */
-  "type_id":{
-    get:function(){ return this.type + '#' + this.id}
-  },
   /*
    *  Retourne un {Array} des minidata des enfants 
    *  

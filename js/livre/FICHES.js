@@ -16,7 +16,7 @@ window.FICHES = {
    *  
    */
   datatype:{
-    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,    parent_type:'page', hname:"paragraphe"},
+    'para'  : {level: 5 , defvalue: "",                 child_type:null,    parent_type:'page', hname:"paragraphe"},
     'page'  : {level: 10, defvalue: "TITRE_PAGE",       child_type:'para',  parent_type:'chap', hname: "page"},
     'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE",   child_type:'page',  parent_type:'book', hname: "chapitre"},
     'book'  : {level: 20, defvalue: "TITRE_LIVRE",      child_type:'chap',  parent_type:null,   hname: "livre"}

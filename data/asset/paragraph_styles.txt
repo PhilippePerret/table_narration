@@ -70,6 +70,7 @@ scenario_scene, scenario_character
 
 scenario_action
   margin-left     20px
+  :style_after    scenario_action
 
 scenario_character
   margin-left     170px

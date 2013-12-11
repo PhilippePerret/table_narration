@@ -31,6 +31,7 @@ fiche.page.ranged > recto > .titre {
 }
 fiche.page.opened > recto > .titre {
   font-size     : xx-large;
+  margin-bottom : 76px;
 }
 /* Pour la page, la hauteur des éléments est fixe */
 fiche.page.opened > recto > div.items {

@@ -155,9 +155,9 @@ UI.Input = {
           // CMD + ENTER => Création d'un nouveau paragraphe
           var data = {type:'para'}
           // Si le style du paragraphe courant définit un style after,
-          // on l'utilise
-          if(fiche.next_style) data.style = [ fiche.next_style ]
-          var ipara = FICHES.full_create(data)
+          // on l'utilise.
+          if(fiche.next_style) data.style = [fiche.next_style]
+          var ipara = FICHES.full_create( data )
           // On l'ajoute au parent en dessous du paragraphe courant
           fiche.parent.add_child( ipara, {after:fiche} )
           // Et on le met en édition
@@ -167,7 +167,7 @@ UI.Input = {
         else
         {
           // => Un message d'aide
-          F.show("Tip: Pour créer un nouveau paragraphe depuis un paragraphe, utiliser CMD + ENTER.")
+          F.show("Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER.")
         }
       }
       return stop_event(evt)

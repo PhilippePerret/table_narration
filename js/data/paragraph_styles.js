@@ -1,7 +1,7 @@
 /*
  *  Paragraph Style List
  *  --------------------
- *  @last_update : 11 12 2013 - 19:13 (day month year - hours:minutes)
+ *  @last_update : 11 12 2013 - 19:58 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
@@ -19,7 +19,7 @@ DATA_STYLES = {
 	titre_level_2: {style_after:'titre_level_3'}, 
 	titre_level_3: {style_after:null}, 
 	scenario_scene: {style_after:'scenario_action'}, 
-	scenario_action: {}, 
+	scenario_action: {style_after:'scenario_action'}, 
 	scenario_character: {style_after:'scenario_dialog'}, 
 	scenario_note_jeu: {style_after:'scenario_dialog'}, 
 	scenario_dialog: {style_after:'scenario_action'}, 

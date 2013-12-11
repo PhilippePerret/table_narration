@@ -8,10 +8,10 @@
   
 AJOUTER
 -------
-- Appel de <fiche>.update_indice_enfants au chargement (FICHES.dispatch) si la
-  fiche a des enfants
-- Appel de <fiche>.update_indice_enfants à la suppression d'un enfant
-  
+- Fiche sélectionnée + ENTER => éditer main field (unable_main_field + select)
+- Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
+  des balises, évaluation du code si code, etc.
+- Fiche sélectionnée + FLECHES => sélectionner autre fiche
 
 * En basculant du texte à l'édition (peut-être tous les champs), il faut
   corriger les balises

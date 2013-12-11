@@ -96,6 +96,15 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
+  "type":{
+    get:function(){ return this._type || null},
+    set:function(ty){ this._type = ty }
+  },
+  /* Méthode pratique retournant <type>#<id> (p.e. 'book#12') */
+  "type_id":{
+    get:function(){ return this.type + '#' + this.id}
+  },
+
   /*
    *  Retourne le {Hash} des données minimum de la fiche (id et type)
    *  
@@ -203,7 +212,7 @@ Object.defineProperties(Fiche.prototype,{
    */
   "main_field_value":{
     get:function(){
-      if(this.is_paragraph) return this.texte || "TEXTE_PARAGRAPHE"
+      if(this.is_paragraph) return this.texte || ""
       else                  return this.titre || FICHES.datatype[this.type].defvalue
     }
   }
@@ -259,7 +268,7 @@ Fiche.prototype.dispatch = function(data){
       this.loaded = true
       break;
     case 'style':
-      this.style  = val.split('.')
+      if('string' == typeof val) this.style = val.split('.')
       break
     default:
       this.loaded = true
