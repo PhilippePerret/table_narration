@@ -30,7 +30,9 @@ UI.Input = {
    */
   bind:function(field)
   {
-    this.bind_or_unbind( this.real_field_from( field ), bind = true)
+    var real_field = this.real_field_from( field )
+    this.bind_or_unbind( real_field, bind = true)
+    return real_field
   },
   
   /*
@@ -53,6 +55,7 @@ UI.Input = {
   {
     fields[binding?'bind':'unbind']('focus', $.proxy(this.onfocus, this))
     fields[binding?'bind':'unbind']('blur',  $.proxy(this.onblur,  this))
+    fields[binding?'bind':'unbind']('click dblclick', $.proxy(this.unpropage, this))
   },
   
   /*
@@ -82,13 +85,32 @@ UI.Input = {
     dlog("-> UI.Input.onblur (dans " + target.tag + '#' + target.id +")", DB_FCT_ENTER)
     
     // Traitement spéciaux (par exemple champs d'édition de type "people")
-    // S'il y a un problème avec la donnée, on abandonne le blur et on reste
-    // dans le champ de saisie
+    // Si la touche TAB a été utilisée, le traitement a eu lieu avant et on
+    // reste dans le champ
     if(target.data_type && this.check_value() == false){
-      console.log("Je reste")
       this.target.jq.select()
       return stop_event(evt)
     } 
+    
+    // Traitements spéciaux dans le cas d'une fiche
+    if(this.target.hasFiche)
+    {
+      var fiche     = get_fiche(this.target.fiche_id)
+      var new_value = this.target.jq.val()
+      if(fiche.main_prop == this.target.property )
+      {
+        fiche.onchange_titre_or_texte( new_value )
+        fiche.disable_main_field
+      }
+      else
+      {
+        if('function' == typeof fiche['onchange_'+this.target.property])
+        {
+          dlog("Méthode `onchange_"+this.target.property+"' appelée sur "+fiche.type_id)
+          fiche['onchange_'+this.target.property](new_value)
+        }
+      }
+    }
     
     this.set_keypress(focus = false)
     return this.unpropage(evt)
@@ -106,10 +128,45 @@ UI.Input = {
     /* Test du KEYCODE */
     switch(evt.keyCode)
     {
+    case K_RETURN:
+      /*
+       *  La touche retour produit des choses différentes en fonction
+       *  du contexte.
+       *  Pour un INPUT-text, on blure simplement le champ (ce qui 
+       *  entraînera la correction/validation du texte entré)
+       *  Pour un TEXTAREA, le comportement est différent suivant qu'on se
+       *  trouve dans un champ quelconque ou dans le texte d'un paragraphe.
+       *  Pour un paragraphe, cela provoque la création d'un nouveau
+       *  paragraphe juste au-dessous du champ courant, et ce nouveau
+       *  champ prend la place du champ courant
+       *  
+       */
+      // Quelque soit le champ, on doit blurer
+      this.target.jq.blur()
+      // Traitement spécial pour un champ texte de fiche paragraphe
+      if(this.target.hasFiche && this.target.property == 'texte')
+      {
+        // => Champ de saisie du texte d'un paragraphe
+        dlog("C'est un champ texte de paragraphe")
+      }
+      return stop_event(evt)
     case K_TAB:
+      var targ  = this.target ;
+      var fiche = FICHES.list[targ.fiche_id] ; // défini seulement pour les fiches
       if(this.check_value() == false /* bad data */)
       { 
         this.target.jq.select()
+        return stop_event(evt)
+      }
+      /*
+       *  Si c'est le champ principal d'une fiche (titre/texte), alors
+       *  on doit stopper complètement l'évènement est remettre le
+       *  DIV.
+       *  
+       */
+      if(fiche && targ.property == fiche.main_prop)
+      {
+        fiche.disable_main_field
         return stop_event(evt)
       }
       break; // on passe au champ suivant
@@ -130,6 +187,15 @@ UI.Input = {
         case Key_i:
           if(kmeta) this.set_selection_to('<i>_$_</i>')
           return stop_event(evt) // toujours
+        case Key_f: //=> Insérer un film
+          FILMS.choose_a_film($.proxy(FILMS.insert_in_input, FILMS))
+          return stop_event(evt)
+        case Key_m: //=> Insérer un mot du scénodico
+          console.log("---> Insertion d'un mot du scénodico")
+          return stop_event(evt)
+        case Key_r: //=> Insérer une référence vers une fiche
+          console.log("---> Insertion d'une référence vers une fiche")
+          return stop_event(evt)
         case Key_u:
           if(kmeta) this.set_selection_to('<u>_$_</u>')
           return stop_event(evt) // toujours
@@ -300,7 +366,7 @@ UI.Input = {
   {
     var target = $(evt.currentTarget)
     var domObj = target[0]
-    return {
+    var data = {
              jq : target,
             dom : domObj,
              id : domObj.id,
@@ -309,8 +375,26 @@ UI.Input = {
            type : target.attr('type'),
           value : domObj.value,
       data_type : target.attr('data-type'),
-         format : target.attr('data-format')
+         format : target.attr('data-format'),
+       is_input : null,
+    is_textarea : null,
+       /* Seulement si c'est le champ d'une fiche */
+       hasFiche : null,
+       property : null,
+       fiche_id : null
     }
+    data.is_input     = data.tag == 'INPUT'
+    data.is_textarea  = !data.is_input
+    
+    /* On regarde si c'est une fiche */
+    var dId = domObj.id.split('-')
+    if(dId[0] == 'f')
+    {
+      data.hasFiche = true
+      data.fiche_id = dId[1]
+      data.property = dId[2]
+    }
+    return data
   },
   
   /*

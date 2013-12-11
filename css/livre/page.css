@@ -21,6 +21,11 @@ fiche.page.ranged {
   border-width  : 1px !solid;
 }
 
+fiche.page:not(.ranged) > recto {
+  padding-left  : 1.6em;
+  padding-top   : 2em;
+}
+
 fiche.page.ranged > recto > .titre {
   font-size     : 1.1em;
 }

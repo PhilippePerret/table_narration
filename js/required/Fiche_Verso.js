@@ -13,6 +13,7 @@ Object.defineProperties(Fiche.prototype,{
       return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
                 '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
                 this.html_fieldset_parametres +
+                '<div style="clear:both;"></div>' +
               '</verso>'
     }
   },

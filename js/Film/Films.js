@@ -63,7 +63,7 @@ window.FILMS = {
    */
   insert_in_input:function(fid)
   {
-    FICHES.set_selection_to( this.balise_for( fid ) )
+    UI.Input.set_selection_to( this.balise_for( fid ) )
   },
   
   /*

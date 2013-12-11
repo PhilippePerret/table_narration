@@ -77,6 +77,7 @@ window.PARAGRAPHS = {
   apply_styles:function()
   {
     this.current.on_change_styles( this.current_styles )
+    this.current.retourne
     // this.toggle_section_styles() // NON
   },
   /*
@@ -173,7 +174,13 @@ Object.defineProperties(PARAGRAPHS, {
       var code =  '<div id="divuniq_menu_styles">' +
                   '<a onclick="PARAGRAPHS.toggle_section_styles(); return false">Style(s) du paragraphe…</a>' +
                   '<div id="div_paragraph_styles" style="display:none;">' +
-                    '<div id="div_apercu_paragraph">' +
+                    /* Boutons */
+                    '<div class="buttons">'+
+                      '<input type="checkbox" id="cb_show_apercu_paragraph" onchange="$(\'div#div_apercu_paragraph\').toggle();" />' +
+                      '<label for="cb_show_apercu_paragraph">Aperçu</label>' +
+                    '</div>' +
+                    /* Aperçu de l'aspect du paragraphe */
+                    '<div id="div_apercu_paragraph" style="display:none;">' +
                       '<li id="apercu_paragraph">Aperçu du style du paragraphe</li>' +
                     '</div>' +
                  buttons

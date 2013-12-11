@@ -45,13 +45,16 @@ titre_level_3
 # ---------------------------------------------------------------------
 #   Styles pour scénario
 # 
-scenario_action, scenario_scene, scenario_dialog, scenario_character, scenario_note_jeu
+scenario_scene, scenario_action, scenario_character, scenario_note_jeu, scenario_dialog
   font-family   Arial, Helvetica
   font-size     12pt
 
 scenario_scene, scenario_action, scenario_character
   margin-top    16px
 
+scenario_scene
+  margin-left   0px
+  
 scenario_scene, scenario_character
   font-weight   bold
   font-variant  small-caps
@@ -68,8 +71,8 @@ scenario_note_jeu
   margin-left   170px
 
 scenario_dialog
-  margin-left   110px
-  width         10em
+  margin-left   104px
+  width         300px
 
 # ---------------------------------------------------------------------
 #   Divers

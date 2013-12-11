@@ -141,28 +141,28 @@ window.keypress_when_fiche_selected_in_textfield = function(evt){
   {
     switch(evt.which)
     {
-    case Key_b: // => mettre en GRAS
-      FICHES.set_selection_to("<strong>_$_</strong>")
-      return stop_event(evt)
-    case Key_d: // => mettre en BARRÉ (del) ou INSÉRÉ
-      var del = evt.shiftKey ? 'ins' : 'del'
-      FICHES.set_selection_to("<"+del+">_$_</"+del+">")
-      return stop_event(evt)
-    case Key_i: // => mettre en ITALIC
-      FICHES.set_selection_to("<i>_$_</i>")
-      return stop_event(evt)
-    case Key_f: //=> Insérer un film
-      FILMS.choose_a_film($.proxy(FILMS.insert_in_input, FILMS))
-      return stop_event(evt)
-    case Key_m: //=> Insérer un mot du scénodico
-      console.log("---> Insertion d'un mot du scénodico")
-      return stop_event(evt)
-    case Key_r: //=> Insérer une référence vers une fiche
-      console.log("---> Insertion d'une référence vers une fiche")
-      return stop_event(evt)
-    case Key_u: // => mettre en SOULIGNÉ
-      FICHES.set_selection_to("<u>_$_</u>")
-      return stop_event(evt)
+    // case Key_b: // => mettre en GRAS
+    //   FICHES.set_selection_to("<strong>_$_</strong>")
+    //   return stop_event(evt)
+    // case Key_d: // => mettre en BARRÉ (del) ou INSÉRÉ
+    //   var del = evt.shiftKey ? 'ins' : 'del'
+    //   FICHES.set_selection_to("<"+del+">_$_</"+del+">")
+    //   return stop_event(evt)
+    // case Key_i: // => mettre en ITALIC
+    //   FICHES.set_selection_to("<i>_$_</i>")
+    //   return stop_event(evt)
+    // case Key_f: //=> Insérer un film
+    //   FILMS.choose_a_film($.proxy(FILMS.insert_in_input, FILMS))
+    //   return stop_event(evt)
+    // case Key_m: //=> Insérer un mot du scénodico
+    //   console.log("---> Insertion d'un mot du scénodico")
+    //   return stop_event(evt)
+    // case Key_r: //=> Insérer une référence vers une fiche
+    //   console.log("---> Insertion d'une référence vers une fiche")
+    //   return stop_event(evt)
+    // case Key_u: // => mettre en SOULIGNÉ
+    //   FICHES.set_selection_to("<u>_$_</u>")
+    //   return stop_event(evt)
     default:
       // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
       return true

@@ -34,9 +34,7 @@ Object.defineProperties(Fiche.prototype,{
     value:function(evt){
       var idm = "Fiche::toggle_select ["+this.type_id+"] (this.selected:"+this.selected+")"
       dlog("---> "+idm, DB_FCT_ENTER )
-      var with_maj = (evt.shiftKey == true)
-      if(this.selected && with_maj){ this.deselect }
-      else this[this.selected ? 'deselect' : 'select']
+      if (false == this.selected) this.select ;
       dlog("<- "+idm+ " (en stoppant l'évènement)", DB_FCT_ENTER )
       return stop_event(evt)
     }

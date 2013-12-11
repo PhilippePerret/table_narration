@@ -147,74 +147,6 @@ Object.defineProperties(Fiche.prototype, {
   "is_not_openable":{
     get:function(){return this.is_openable == false}
   },
-  /* ---------------------------------------------------------------------
-   *      PROPRIÉTÉS DOM
-   --------------------------------------------------------------------- */
-
-  /*
-   *  Raccourcis pour obtenir les éléments DOM de la fiche
-   *    
-   */
-  /* Définit et retourne le JID de la fiche */
-  "jid":{
-    get:function(){
-      if(this._jid == undefined) this._jid = "fiche#"+this.dom_id ;
-      return this._jid
-    }
-  },
-  /* Définit et retourne le `dom_id' qui va permettre de construire l'id des éléments DOM */
-  "dom_id":{
-    get:function(){
-      if(this._dom_id == undefined) this._dom_id = "f-"+this.id ;
-      return this._dom_id
-    }
-  },
-  /* Recto de la fiche */
-  "recto_jid":{get:function(){return 'recto#'+this.dom_id+'-recto'}},
-  "recto":{get:function(){ return $(this.recto_jid) }},
-  
-  /* Verso de la fiche */
-  "verso_jid":{get:function(){ return 'verso#'+this.dom_id+'-verso'}},
-  "verso":{get:function(){ return $(this.verso_jid) }},
-  
-  
-  
-  /* ---------------------------------------------------------------------
-   *
-   *  Items de la fiche
-   *  
-   */
-  /* Div des items (children) de la fiche */
-  "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
-  "div_items":{
-    get:function(){
-      if(!this._div_items || this._div_items.length == 0) this._div_items = $(this.items_jid);
-      return this._div_items
-    }
-  },
-  
-  
-  /*
-   *  Définit si nécessaire l'objet jQuery de la fiche et le retourne
-   *  
-   */
-  "obj":{
-    get:function(){
-      if(undefined == this._obj){
-        var obj = $(this.jid)
-        obj.length && (this._obj = obj)
-      } 
-      return this._obj
-    }
-  },
-  
-  /* Retourne le DOM élément de la fiche */
-  "dom_obj":{
-    get:function(){
-      if(undefined == this._dom_obj) this._dom_obj = this.obj[0]
-      return this._dom_obj
-    }
-  },
     
   /*
    *  Positionne la fiche sur le table en fonction de :
@@ -296,10 +228,11 @@ Object.defineProperties(Fiche.prototype, {
       if(this.is_book)
       {
         // La modification du titre réel doit entrainer son update
-        obj = this.input_real_titre
-        obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-        obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-        this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
+        // obj = this.input_real_titre
+        // obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
+        // obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+        // this.input_real_titre[0].onchange = $.proxy(this.onchange_real_titre, this)
+        UI.Input.bind( this.input_real_titre )
       }
       // Toutes les fiches hors paragraphes doivent être droppable et
       // accepter un élément de rang inférieur

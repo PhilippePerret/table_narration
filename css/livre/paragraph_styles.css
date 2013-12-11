@@ -2,7 +2,7 @@
  *  Paragraph Styles
  *  ----------------
  *
- *  @last_update : 10 12 2013 - 15:38 (day month year - hours:minutes)
+ *  @last_update : 11 12 2013 - 14:50 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
@@ -40,29 +40,22 @@ fiche.para div.titre_level_3,fiche.para textarea.titre_level_3,div#div_paragraph
 	margin-bottom : 10px !important;
 }
 
+fiche.para textarea.scenario_scene{border:0;}
+fiche.para div.scenario_scene,fiche.para textarea.scenario_scene,div#div_paragraph_styles li.scenario_scene {
+	font-family : Arial, Helvetica !important;
+	font-size : 1.1em !important;
+	margin-top : 16px !important;
+	margin-left : 0px !important;
+	font-weight : bold !important;
+	font-variant : small-caps !important;
+}
+
 fiche.para textarea.scenario_action{border:0;}
 fiche.para div.scenario_action,fiche.para textarea.scenario_action,div#div_paragraph_styles li.scenario_action {
 	font-family : Arial, Helvetica !important;
 	font-size : 12pt !important;
 	margin-top : 16px !important;
 	margin-left : 20px !important;
-}
-
-fiche.para textarea.scenario_scene{border:0;}
-fiche.para div.scenario_scene,fiche.para textarea.scenario_scene,div#div_paragraph_styles li.scenario_scene {
-	font-family : Arial, Helvetica !important;
-	font-size : 1.1em !important;
-	margin-top : 16px !important;
-	font-weight : bold !important;
-	font-variant : small-caps !important;
-}
-
-fiche.para textarea.scenario_dialog{border:0;}
-fiche.para div.scenario_dialog,fiche.para textarea.scenario_dialog,div#div_paragraph_styles li.scenario_dialog {
-	font-family : Arial, Helvetica !important;
-	font-size : 12pt !important;
-	margin-left : 110px !important;
-	width : 10em !important;
 }
 
 fiche.para textarea.scenario_character{border:0;}
@@ -81,6 +74,14 @@ fiche.para div.scenario_note_jeu,fiche.para textarea.scenario_note_jeu,div#div_p
 	font-size : 12pt !important;
 	font-style : italic !important;
 	margin-left : 170px !important;
+}
+
+fiche.para textarea.scenario_dialog{border:0;}
+fiche.para div.scenario_dialog,fiche.para textarea.scenario_dialog,div#div_paragraph_styles li.scenario_dialog {
+	font-family : Arial, Helvetica !important;
+	font-size : 12pt !important;
+	margin-left : 110px !important;
+	width : 10em !important;
 }
 
 fiche.para textarea.action_lecteur{border:0;}

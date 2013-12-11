@@ -4,6 +4,68 @@
  *  
  */
 Object.defineProperties(Fiche.prototype,{
+
+  /*
+   *  Raccourcis pour obtenir les éléments DOM de la fiche
+   *    
+   */
+  /* Définit et retourne le JID de la fiche */
+  "jid":{
+    get:function(){
+      if(this._jid == undefined) this._jid = "fiche#"+this.dom_id ;
+      return this._jid
+    }
+  },
+  /* Définit et retourne le `dom_id' qui va permettre de construire l'id des éléments DOM */
+  "dom_id":{
+    get:function(){
+      if(this._dom_id == undefined) this._dom_id = "f-"+this.id ;
+      return this._dom_id
+    }
+  },
+  /* Recto de la fiche */
+  "recto_jid":{get:function(){return 'recto#'+this.dom_id+'-recto'}},
+  "recto":{get:function(){ return $(this.recto_jid) }},
+  
+  /* Verso de la fiche */
+  "verso_jid":{get:function(){ return 'verso#'+this.dom_id+'-verso'}},
+  "verso":{get:function(){ return $(this.verso_jid) }},
+  
+  /* ---------------------------------------------------------------------
+   *  Items de la fiche
+   --------------------------------------------------------------------- */
+  /* Div des items (children) de la fiche */
+  "items_jid":{get:function(){return 'div#'+this.dom_id+'-items'}},
+  "div_items":{
+    get:function(){
+      if(!this._div_items || this._div_items.length == 0) this._div_items = $(this.items_jid);
+      return this._div_items
+    }
+  },
+  
+  
+  /*
+   *  Définit si nécessaire l'objet jQuery de la fiche et le retourne
+   *  
+   */
+  "obj":{
+    get:function(){
+      if(undefined == this._obj){
+        var obj = $(this.jid)
+        obj.length && (this._obj = obj)
+      } 
+      return this._obj
+    }
+  },
+  
+  /* Retourne le DOM élément de la fiche */
+  "dom_obj":{
+    get:function(){
+      if(undefined == this._dom_obj) this._dom_obj = this.obj[0]
+      return this._dom_obj
+    }
+  },
+  
   /*
    *  Retourne le code HTML pour la fiche
    *  
@@ -129,13 +191,24 @@ Object.defineProperties(Fiche.prototype,{
   "input_titre_jid" :{get:function(){return 'input#'+this.titre_id}},
   "div_titre_jid"   :{get:function(){return 'div#'+this.titre_id}},
   
-  /* Remplace le DIV du main field par son champ d'édition (tout type de fiche) */
+  /* 
+   * Remplace le DIV du main field par son champ d'édition (tout type de fiche) 
+   *
+   *  NOTES
+   *  -----
+   *    = Avant de procéder à l'opération, on désactive le click sur le DIV
+   *      du titre (pas vraiment utile)
+   *    = C'est la méthode appelante qui doit faire suivre le champ par UI.Input
+   *
+   */
   "set_main_field_as_input":{
     get:function(){
+      // On désactive le click sur le DIV titre
+      // this.main_field.unbind('click', $.proxy(FICHES.on_click_on_main_field, FICHES, this))
       if(this.is_paragraph) this.texte_in_textarea
       else                  this.titre_in_input
       this.main_field = this.main_field_as_input
-      this.main_field.set(this.main_field_value)
+      this.main_field.set( this.main_field_value )
     }
   },
   "set_main_field_as_div":{
@@ -220,17 +293,13 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       var idm = "Fiche::enable_main_field ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      this.main_field.unbind('click', $.proxy(FICHES.on_click_on_main_field, FICHES, this))
 
       // On remplace le DIV par un INPUT/TEXTAREA
       this.set_main_field_as_input
 
-      var obj = this.main_field
-      // obj.bind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-      obj.bind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
-      obj[0].onfocus  = $.proxy(FICHES.onfocus_textfield, FICHES, this)
-      obj[0].onchange = $.proxy(this.onchange_titre_or_texte, this)
-      obj.select()
+      // On le suit
+      UI.Input.bind( this.main_field ).select()
+      
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -238,9 +307,10 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       var idm = "Fiche::disable_main_field ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      var obj = this.main_field
-      obj.unbind('focus', $.proxy(FICHES.onfocus_textfield, FICHES, this))
-      obj.unbind('blur', $.proxy(FICHES.onblur_textfield, FICHES, this))
+      
+      // On arrête le suivi par UI.Input (pas vraiment utile puisque le
+      // champ de saisie va être supprimé, mais c'est plus correct pour le DOM…)
+      UI.Input.unbind(this.main_field)
       
       // On remplace le INPUT/TEXTAREA par un DIV
       this.set_main_field_as_div

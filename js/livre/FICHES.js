@@ -525,6 +525,7 @@ window.FICHES = {
     - on change de gestion d'évènement keypress
     - on bloque les click sur le champ
      */
+    console.warn("La méthode FICHES.onfocus_textfield doit devenir obsolète")
     var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     ifiche.select
@@ -540,6 +541,7 @@ window.FICHES = {
   },
   onblur_textfield:function(ifiche, evt)
   {
+    console.warn("La méthode FICHES.onblur_textfield doit devenir obsolète")
     var idm = "FICHES.onblur_textfield(ifiche:"+ifiche.type_id+")"
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     $(evt.target).removeClass('focused')
