@@ -547,103 +547,164 @@ Fiche.prototype.on_drop = function(evt, ui)
   return stop_event( evt )
 }
 
-// C'est la méthode principale de création d'une relation entre
-// deux fiches. C'est elle qui ajoute l'enfant et définit le parent
-// de l'enfant.
-// @param   enfant    {Fiche} Instance Fiche du type attendu.
-Fiche.prototype.add_child = function(enfant, before_child)
-{
-  try
+$.extend(Fiche.prototype,{
+  
+  /*
+   *  Actualise l'indice des enfants
+   *
+   *  NOTES
+   *  -----
+   *    = L'indice des enfants (0-start) est une propriété volatile
+   *      utile à quelques méthodes, par exemple l'insertion d'enfants
+   *      à un endroit précis.
+   *  
+   */
+  update_indice_enfants:function(from)
   {
-    if(!enfant || 'object'!=typeof enfant)  throw 'child should be an object'
-    if( enfant.class != 'Fiche')            throw 'child should be a fiche'
-    thislevel = FICHES.datatype[this.type].level ;
-    chillevel = FICHES.datatype[enfant.type].level ;
-    if( thislevel <= chillevel )            throw 'child bad type'
-  }
-  catch(err){throw LOCALE.fiche.error[err]}
+    if(undefined == from) from = 0
+    for(var ichild = from, len=this.enfants.length; ichild<len; ++ichild)
+    {
+      this.enfants[ichild].indice = parseInt(from, 10)
+    }
+  },
   
-  // Ajout de l'enfant à la liste
-  if(this.enfants == null) this.enfants = []
-  this.enfants.push( enfant )
-  // Définition du parent de l'enfant
-  enfant.parent = this
-  
-  // On ferme toujours l'enfant
-  enfant.close
-  
-  // Ajout de l'enfant dans le div_items de la fiche
-  if(undefined == before_child)
-  { // => ajout à la fin
-    this.div_items.append( enfant.obj )
-  }
-  else
-  { // => Ajout avant l'enfant before_child
-    enfant.obj.insertBefore( before_child.obj )
-  }
-  
-  this.modified   = true
-  enfant.ranged   = true
-  enfant.modified = true
-    
-}
-
-/*
- *  Méthode appelée quand on change le titre de la fiche
- *  
- *  NOTES
- *  -----
- *  @ Cela peut se produire lorsqu'on quitte le champ, ou lorsque
- *    l'on presse la touche RETURN sur le champ.
- *
- *  @ C'est vraiment cette fonction qui inaugure le changement du
- *    titre, car si c'était `titre=` (propriété complexe), on aura
- *    une difficulté à la définition des fiches remontées.
- *
- */
-
-Fiche.prototype.onchange_titre_or_texte = function(evt)
-{
-  var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
-  dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-  var obj=this.main_field, prop=this.main_prop ;
-  var new_value = obj.val()
-  if(this[prop] != new_value)
+  /*
+   *  Ajout d'un enfant à la fiche
+   *
+   *  NOTES
+   *  -----
+   *    = C'est cette méthode qui doit être utilisée pour tout ajout
+   *      d'enfant.
+   *
+   *  @param  enfant    {Fiche} de l'enfant à ajouter
+   *  @param  options   {Hash} Options d'insertion :
+   *                      after  : <fiche>    Ajouter après cet enfant
+   *                      before : <fiche>    Ajouter avant cet enfant
+   */
+  add_child:function(enfant, options)
   {
-    this[prop]    = new_value
-    this.modified = true    
-  }
-  if(this.is_chapter) this.close
-  dlog("<- "+idm, DB_FCT_ENTER)
-}
-
-
-
-Fiche.prototype.remove_child = function(enfant)
-{
-  try
-  {
-    if('object' != typeof enfant || enfant.class != 'Fiche') throw 'child should be a fiche';
-  }
-  catch(err){ throw LOCALE.fiche.error[err] }
+    if(undefined == options) options = {}
+    try
+    {
+      if(!enfant || 'object'!=typeof enfant)  throw 'child should be an object'
+      if( enfant.class != 'Fiche')            throw 'child should be a fiche'
+      thislevel = FICHES.datatype[this.type].level ;
+      chillevel = FICHES.datatype[enfant.type].level ;
+      if( thislevel <= chillevel )            throw 'child bad type'
+    }
+    catch(err){throw LOCALE.fiche.error[err]}
   
-  var child_found = false
-  for(var i = 0, len=this.enfants.length; i<len; ++i )
-  { 
-    if(this.enfants[i].id == enfant.id){ 
-      this.enfants.splice(i, 1) 
-      enfant._parent = null
-      child_found = true
-      break
+    // Ajout de l'enfant à la liste
+    if(this.enfants == null)
+    {
+      enfant.indice = 0
+      this.enfants  = [enfant]
     } 
-  }
+    else
+    {
+      if(options.after || options.before){
+        var indice = options.after ? options.after.indice + 1 : options.before.indice
+        this.enfants.splice(indice, 0, enfant)
+        this.update_indice_enfants(from = indice)
+      }
+      else {
+        enfant.indice = this.enfants.length
+        this.enfants.push( enfant )
+      }
+    }
   
-  if(child_found)
+    // Définition du parent de l'enfant
+    enfant.parent = this
+  
+    if(enfant.opened) enfant.close
+  
+    /*
+     *  Placement de l'objet DOM
+     *  
+     */
+    if(options.after)
+    { 
+      enfant.obj.insertAfter( options.after.obj )
+    }
+    else if(options.before)
+    { // => Ajout avant l'enfant before_child
+      enfant.obj.insertBefore( options.before.obj )
+    }
+    else {
+      this.div_items.append( enfant.obj )
+    }
+  
+  
+    this.modified   = true
+    enfant.ranged   = true
+    enfant.modified = true
+    
+  },
+  
+  /*
+   *  Supprime un enfant 
+   *  
+   */
+  remove_child:function(enfant)
   {
+    try
+    {
+      // L'enfant doit être du bon type
+      if('object' != typeof enfant || enfant.class != 'Fiche') throw 'child should be a fiche';
+
+      // On va vérifier que l'enfant soit bien celui qu'il prétend être
+      if(enfant.parent != this) throw 'is not child'
+      var childcheck = this.enfants[enfant.indice]
+      if(childcheck != enfant) throw 'is not child'
+    }
+    catch(err){ throw LOCALE.fiche.error[err] }
+  
+    this.enfants.splice(enfant.indice, 1)
+    enfant._parent = null
+
     this.modified   = true
     enfant.modified = true
+
+    // Actualisation de l'indice des enfants suivants
+    this.update_indice_enfants(from = enfant.indice)
+    
+    // On peut retirer l'enfant de la liste
+    if(enfant.ranged == false) enfant.range
+    $('section#table').append( enfant.obj )
+    enfant.positionne
+    
+  },
+  
+  /*
+   *  Méthode appelée quand on change le titre de la fiche
+   *  
+   *  NOTES
+   *  -----
+   *  @ Cela peut se produire lorsqu'on quitte le champ, ou lorsque
+   *    l'on presse la touche RETURN sur le champ.
+   *
+   *  @ C'est vraiment cette fonction qui inaugure le changement du
+   *    titre, car si c'était `titre=` (propriété complexe), on aura
+   *    une difficulté à la définition des fiches remontées.
+   *
+   */
+  onchange_titre_or_texte:function(evt)
+  {
+    var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    var obj=this.main_field, prop=this.main_prop ;
+    var new_value = obj.val()
+    if(this[prop] != new_value)
+    {
+      this[prop]    = new_value
+      this.modified = true    
+    }
+    if(this.is_chapter) this.close
+    dlog("<- "+idm, DB_FCT_ENTER)
   }
-}
+  
+})
+
 
 /*
  *  Appelé à la fin du drag d'une fiche

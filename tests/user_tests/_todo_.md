@@ -1,5 +1,16 @@
-* Un nouveau click sur la fiche doit empêcher de la déselectionner
-  Mais un click sur la table doit le permettre (si c'est vraiment la cible)
+* Implémenter `Fiche.prototype.set_after(<fiche>)` et `set_before` qui visent à
+  replacer la fiche dans le parent.
+  Cela consiste à :
+  - Modifier l'emplacement dans le DOM (dans le div.items parent)
+  - Modifier la liste des enfants du parent (à partir de la fiche ou la fiche avant)
+  - Marquer la fiche modifiée
+  - Marquer le parent modifié
+  
+AJOUTER
+-------
+- Appel de <fiche>.update_indice_enfants au chargement (FICHES.dispatch) si la
+  fiche a des enfants
+- Appel de <fiche>.update_indice_enfants à la suppression d'un enfant
   
 
 * En basculant du texte à l'édition (peut-être tous les champs), il faut

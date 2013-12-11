@@ -1,3 +1,65 @@
+$.extend(Fiche.prototype,{
+  /*
+   *  Place la fiche courante APRÈS la fiche +bfiche+ {Fiche}
+   *  
+   *  NOTES
+   *  -----
+   *    = Si la fiche n'appartient pas au parent, elle est ajoutée
+   *
+   */
+  set_after:function(bfiche)
+  {
+    // Ajouter au parent si nécessaire
+    if(this.parent != bfiche.parent)
+    {
+      if(this.parent) this.parent.remove_child( this )
+      bfiche.parent.add_child( this, {after: bfiche} )
+    } 
+    else
+    {
+      // Quand la fiche est déjà dans le parent
+      this.parent.move_child( this, bfiche.indice + 1)
+    }
+    this.modified = true 
+  },
+  
+  /*
+   *  Déplace un enfant
+   * 
+   *  @param  child       {Fiche} enfant à déplacer
+   *  @param  new_indice  {Number} Nouvelle position (0-start)
+   */
+  move_child:function(child, new_indice)
+  {
+    var cur_indice = child.indice
+
+    // Dans le DOM
+    child.obj.insertBefore(this.enfants[new_indice].obj)
+    
+    // Comme on va d'abord retirer l'élément de son ancienne place puis
+    // l'insérer à sa nouvelle place, si l'ancienne indice est avant, il
+    // faut retirer une place au nouvel indice
+    if(cur_indice < new_indice) new_indice = new_indice - 1
+    this.enfants.splice(cur_indice, 1)
+    this.enfants.splice(new_indice, 0, child)
+    this.update_indice_enfants(from = Math.min(new_indice, cur_indice))
+  },
+  /*
+   *  Place la fiche courante AVANT la fiche +bfiche+ {Fiche}
+   *
+   *  NOTES
+   *  -----
+   *    Cf. les notes de `set_after' ci-dessus  
+   */
+  set_before:function(afiche)
+  {
+    
+    // Modifier dans le parent
+    // Modifier dans le DOM (div_items du parent)
+    this.modified = true 
+  }
+})
+
 /*
  *  Méthodes Fiche concernant les data de la fiche
  *  

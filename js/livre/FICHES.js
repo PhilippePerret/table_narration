@@ -444,8 +444,13 @@ window.FICHES = {
    *  
    *  @param  data    {Hash} Les données pour la nouvelle fiche
    *  @param  options {Hash} Les options.
-   *                    focus_titre   Si TRUE, on focuse dans le titre
+   *                    focus_titre   Si TRUE, on passe le titre en édition
+   *                    focus_texte   Si TRUE, on passe le texte en édition (même chose que pour
+   *                                  focus_titre, mais pour un paragraphe)
    *                    select        Si TRUE, on sélectionne la fiche
+   *                    after_fiche   Si défini, c'est la fiche après laquelle on doit
+   *                                  placer la nouvelle fiche.
+   *                    before_fiche  Idem, mais en fournissant la fiche après.
    *
    *  @return La nouvelle fiche créée
    */
@@ -456,9 +461,20 @@ window.FICHES = {
     ifiche.create
     if(options)
     {
+      // La fiche a été créée à la fin de son parent, il faut la placer
+      // à un autre endroit.
+      if(options.after_fiche)
+      {
+        ifiche.set_after( options.after_fiche )
+      }
+      else if (options.before_fiche)
+      {
+        ifiche.set_before( options.before_fiche )
+      }
+      
       if(options.focus_titre)
       {
-        ifiche.main_field.select() // sélectionne aussi la fiche (est-ce bien ?)
+        ifiche.enable_main_field
       }
       else if(options.select)
       {

@@ -148,6 +148,29 @@ UI.Input = {
       {
         // => Champ de saisie du texte d'un paragraphe
         dlog("C'est un champ texte de paragraphe")
+        
+        var fiche = get_fiche( this.target.fiche_id )
+        if(evt.metaKey)
+        {
+          // CMD + ENTER => Création d'un nouveau paragraphe
+          var data = {type:'para'}
+          // Si le style du paragraphe courant définit un style after,
+          // on l'utilise
+          if(fiche.style && ( next_style = DATA_STYLES[fiche.style[0]].style_after ))
+          {
+            data.style = [ next_style ]
+          }
+          var ipara = FICHES.full_create(data)
+          // On l'ajoute au parent en dessous du paragraphe courant
+          fiche.parent.add_child( ipara, {after:fiche} )
+          // Et on le met en édition
+          ipara.enable_main_field
+        }
+        else
+        {
+          // => Un message d'aide
+          F.show("Tip: Pour créer un nouveau paragraphe depuis un paragraphe, utiliser CMD + ENTER.")
+        }
       }
       return stop_event(evt)
     case K_TAB:

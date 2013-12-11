@@ -12,7 +12,8 @@ window.LOCALE = {
       'child bad type'              : "L'enfant n'est pas d'un type valide",
       'no fiche for dom obj'        : "Aucune fiche ne correspond à l'objet DOM…",
       'unable to range orphelin'    : "Impossible de ranger une fiche orpheline…",
-      'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…"
+      'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…",
+      'is not child'                : "Impossible de retirer l'enfant, ça n'est pas un enfant de la fiche."
     }
   }
 }

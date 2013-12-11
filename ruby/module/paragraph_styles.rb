@@ -32,6 +32,13 @@ module StylesParagraph
     # En valeur : la définition du style.
     STYLES = {}
     
+    # Les données hors CSS, enregistrées dans DATA_STYLES
+    # 
+    # En clé, le nom du style (sans ":hover" etc.)
+    # En valeur : un {Hash} définissant les valeurs rencontrées.
+    # Par exemple : 'note' : { style_after:"<le style suivant>" }
+    DATA_STYLES = {}
+    
     # Liste des styles
     # ----------------
     # {Array} de tous les noms de styles ('mon_style' est identique à 'mon_style:hover'
@@ -63,7 +70,10 @@ module StylesParagraph
     def load_and_analyse
       File.read(file_data_path).each_line do |line|
         next if line.strip == "" || line.start_with?('#')
-        if line.start_with? ' '
+        if line.strip.start_with? ':'
+          # => Data hors CSS du style
+          analyse_as_data_non_css line
+        elsif line.start_with? ' '
           # => Propriété
           analyse_as_property line
         else
@@ -98,11 +108,18 @@ module StylesParagraph
     # 
     def product_js_file
       File.unlink file_js_path if File.exists? file_js_path
-      File.open(file_js_path, 'wb') do |f|
-        f.write js_header + 'PARAGRAPH_STYLES = ["'+STYLE_NAMES.join('", "')+'"];'
-      end
+      File.open(file_js_path, 'wb') { |f| f.write code_js_file }
     end
     
+    # Construit le code à écrire dans le fichier js
+    def code_js_file
+      js_header + 'PARAGRAPH_STYLES = ["'+STYLE_NAMES.join('", "')+'"];' + "\n\n" +
+      'DATA_STYLES = {' + 
+      DATA_STYLES.collect{|style_name, style_data|
+        "\n\t"+style_name + ': {'+style_data.join(', ')+'}'
+      }.join(', ') + 
+      "\n}"
+    end
     
     def analyse_as_selector line
       @current_selectors = []
@@ -112,10 +129,25 @@ module StylesParagraph
         @current_selectors  << selector
         if STYLES[selector].nil?
           STYLE_NAMES      << style_name
-          STYLES[selector] = {} 
+          STYLES[selector] = {}
         end
+        if DATA_STYLES[style_name].nil?
+          DATA_STYLES[style_name] = []
+        end
+        @current_style_name = style_name
       end
     end
+    
+    # Analyse la ligne comme une définition hors CSS
+    # 
+    def analyse_as_data_non_css line
+      dline = line.strip[1..-1].gsub(/( |\t)( |\t)+/, ' ').split(' ')
+      prop  = dline.shift
+      data  = dline.join(' ')
+      data  = "'#{data}'"  unless data == "null"
+      DATA_STYLES[@current_style_name] << "#{prop}:#{data}"
+    end
+    
     # Analyse la ligne comme une définition de propriété
     def analyse_as_property line
       dline = line.strip.gsub(/( |\t)( |\t)+/, ' ').split(' ')
