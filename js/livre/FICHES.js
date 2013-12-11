@@ -480,7 +480,6 @@ window.FICHES = {
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     if(this.current == ifiche) this.current = null
     delete this.selecteds[ifiche.id]
-    window.onkeypress = keypress_when_no_selection_no_edition
     dlog("<- "+idm, DB_FCT_ENTER)
   },
 
@@ -518,6 +517,14 @@ window.FICHES = {
    */
   onfocus_textfield:function(ifiche, evt)
   {
+    /*
+    - on sélectionne la fiche
+    - on change l'aspect du champ ('focused')
+    - on sélectionne son texte
+    - on met le champ courant à ce champ (current_text_field)
+    - on change de gestion d'évènement keypress
+    - on bloque les click sur le champ
+     */
     var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     ifiche.select

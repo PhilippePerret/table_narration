@@ -71,6 +71,14 @@ FILMS.Edition = {
 Object.defineProperties(FILMS.Edition,{
   
   /*
+   *  Return le {jQuerySet} du formulaire d'édition du film.
+   *  
+   */
+  "form":{
+    get:function(){return $('div#panneau_film_edition div#film_form')}
+  },
+  
+  /*
    *  Initialisation du formulaire
    *  
    */
@@ -85,10 +93,13 @@ Object.defineProperties(FILMS.Edition,{
    *  NOTES
    *  -----
    *    = Il est préparé masqué
+   *    = On place sur tous les champs de saisie textuels le gestionnaire
+   *      de focus et blur de UI.Input
    */
   "prepare_formulaire":{
     get:function(){
       $('div#panneau_film_edition').append( this.html_form )
+      UI.Input.bind( this.form )
       this.form_prepared = true
     }
   },
@@ -118,19 +129,20 @@ Object.defineProperties(FILMS.Edition,{
         {id:'film_titre', label:"Titre"}, {id:'film_titre_fr', label:"Titre fr."},
         '</div>',
         '<div id="film_data">',
-        {id:'film_durée', label:"Durée (mns)"}, {id:'film_annee', label:'Année'},
+        {id:'film_durée', label:"Durée (mns)", data_type:'horloge'}, 
+        {id:'film_annee', label:'Année', data_type:'number', data_format:'(18|19|20)[0-9]{2}'},
         '</div>',
         '<fieldset id="film_producteurs_div"><legend><b>Producteurs</b> (prénom, nom ↵)</legend>',
-        {type:'textarea', id:'film_auteurs'},
+        {type:'textarea', id:'film_auteurs', data_type:'people'},
         '</fieldset>',
         '<fieldset id="film_auteurs_div"><legend><b>Auteurs</b> (prénom, nom[, roman/scénario/story] ↵)</legend>',
-        {type:'textarea', id:'film_auteurs'},
+        {type:'textarea', id:'film_auteurs', data_type:'people', data_format:'auteur'},
         '</fieldset>',
         '<fieldset id="film_realisateurs_div"><legend><b>Réalisateurs</b> (prénom, nom ↵)</legend>',
-        {type:'textarea', id:'film_realisateur'},
+        {type:'textarea', id:'film_realisateur', data_type:'people'},
         '</fieldset>',
         '<fieldset id="film_acteurs_div"><legend><b>Acteurs</b> (prénom, nom, prénom/surnom perso, nom perso, fonction ↵)</legend>',
-        {type:'textarea', id:'film_acteurs'},
+        {type:'textarea', id:'film_acteurs', data_type:'people', data_format:'acteur'},
         '</fieldset>'
         ]).each(function(dfield){c += FILMS.Edition.html_field(dfield)})
       c += '</div>'
@@ -151,11 +163,32 @@ Object.defineProperties(FILMS.Edition,{
       {
       case 'text':
         if(dfield.label) field += '<label class="libelle" for="'+dfield.id+'">'+dfield.label+'</label>'
-        return field + '<input type="text" id="'+dfield.id+'" value="" />'
+        return field + this.html_balise_in_field(dfield)
       case 'textarea':
         if(dfield.label) field += '<label class="libelle" for="'+dfield.id+'">'+dfield.label+'</label>'
-        return field + '<textarea id="'+dfield.id+'"></textarea>'
+        var value = dfield.value; delete dfield.value
+        return field + this.html_balise_in_field(dfield) + (value ? value : "") + '</textarea>'
       }
+    }
+  },
+  
+  /*
+   *  Retourne le code HTML des attributs du champ d'après ses données +dfield+
+   *  
+   */
+  "html_balise_in_field":{
+    value:function(dfield)
+    {
+      if(undefined == dfield.type) dfield.type = 'text'
+      return "<" + (dfield.type == 'text' ? 'input' : dfield.type) +
+      (dfield.type=='text'? ' type="text"' :  '') +
+      (dfield.id          ? ' id="'+dfield.id+'"' :  '') +
+      (dfield.class       ? ' class="'+dfield.class+'"' : '') +
+      (dfield.data_type   ? ' data-type="'+dfield.data_type+'"' : '') +
+      (dfield.data_format ? ' data-format="'+dfield.data_format+'"' : '') +
+      (dfield.value       ? ' value="'+dfield.value+'"' : '') +
+      (dfield.style       ? ' style="'+dfield.style+'"' : '') +
+      (dfield.type=='text' ? ' />' : '>')
     }
   },
     

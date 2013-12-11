@@ -1,6 +1,11 @@
 * ÉDITION FILM
   - désactiver les gestions de keypress quand on édite le film.
   - les remettre quand on finit (FILMS.Edition.end)
+  
+  Mais en fait, non, il faut gérer les champs de la même manière que pour le
+  titre : d'autres champs seront ajoutés, plus tard, qui devront répondre et
+  utiliser les mêmes méthodes.
+  
 
 * En basculant du texte à l'édition (peut-être tous les champs), il faut
   corriger les balises

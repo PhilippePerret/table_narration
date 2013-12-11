@@ -5,7 +5,8 @@
  *
  *  
  */
-window.UI = {
+if('undefined' == typeof UI) UI = {}
+$.extend(UI, {
   
   GRID_X    : 80,       // Snap horizontal
   GRID_Y    : 40,       // Snap vertical
@@ -95,7 +96,7 @@ window.UI = {
     dlog("<- UI.ondrop_on_table", DB_FCT_ENTER)
   }
   
-}
+})
 
 Object.defineProperties(UI,{
  

@@ -1,8 +1,8 @@
-DB_SIMPLE     = 1
-DB_MAIN_STEPS = 2
-DB_CURRENT    = 4
-DB_FCT_ENTER  = 8
-// 16
+DB_SIMPLE       = 1
+DB_MAIN_STEPS   = 2
+DB_CURRENT      = 4
+DB_FCT_ENTER    = 8
+DB_INFOS_EVENT  = 16
 // 32
 // 64
 // 128
@@ -23,6 +23,7 @@ if(console)
   DL = DB_SIMPLE | DB_CURRENT 
        // | DB_FCT_ENTER            // Pour voir les entrées dans les méthodes
        // | DB_DETAILLED            // Pour les moindres détails
+       // | DB_INFOS_EVENT          // Pour les infos sur les évènements
   
   CURRENT_DL = 0 + DL
 }
