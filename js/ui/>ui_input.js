@@ -156,14 +156,12 @@ UI.Input = {
           var data = {type:'para'}
           // Si le style du paragraphe courant définit un style after,
           // on l'utilise
-          if(fiche.style && ( next_style = DATA_STYLES[fiche.style[0]].style_after ))
-          {
-            data.style = [ next_style ]
-          }
+          if(fiche.next_style) data.style = [ fiche.next_style ]
           var ipara = FICHES.full_create(data)
           // On l'ajoute au parent en dessous du paragraphe courant
           fiche.parent.add_child( ipara, {after:fiche} )
           // Et on le met en édition
+          ipara.select
           ipara.enable_main_field
         }
         else

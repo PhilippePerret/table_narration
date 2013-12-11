@@ -12,6 +12,12 @@ Object.defineProperties(Fiche.prototype,{
   "is_paragraph"      :{get:function(){ return this._type == 'para'}},
   "is_not_paragraph"  :{get:function(){ return this._type != "para"}},
 
+  /* Retourne true si la fiche a des enfants */
+  "has_children":{
+    get:function(){
+      return ('object' == typeof this.enfants) && this.enfants.length > 0
+    }
+  },
   
   /*
    *  ---------------------------------------------------------------------

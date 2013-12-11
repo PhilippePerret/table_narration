@@ -27,8 +27,23 @@ Object.defineProperties(Paragraph.prototype,{
     set:function(selectors){
       this._style = selectors
       this.main_field.attr('class', this.class_css)
+      delete this._next_style
     },
     get:function(){return this._style}
+  },
+  
+  /*
+   *  Retourne le style par défaut du paragraphe suivant s'il est défini
+   *  
+   */
+  "next_style":{
+    get:function(){
+      if(undefined == this._next_style)
+      {
+        this._next_style = this.style ? DATA_STYLES[this.style[0]].style_after : null
+      }
+      return this._next_style
+    }
   },
   
   /* Retourne le code pour `class' en fonction des styles */

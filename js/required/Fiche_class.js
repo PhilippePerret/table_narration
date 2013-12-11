@@ -564,7 +564,7 @@ $.extend(Fiche.prototype,{
     if(undefined == from) from = 0
     for(var ichild = from, len=this.enfants.length; ichild<len; ++ichild)
     {
-      this.enfants[ichild].indice = parseInt(from, 10)
+      this.enfants[ichild].indice = parseInt(ichild, 10)
     }
   },
   

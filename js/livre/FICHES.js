@@ -276,6 +276,10 @@ window.FICHES = {
                      else instance.positionne
     })
     
+    // Réglage de l'indice des fiches enfants
+    L(instances).each(function(instance){
+      if(instance.has_children) instance.update_indice_enfants()
+    })
     
     
     dlog("<- FICHES.dispatch", DB_FCT_ENTER)
