@@ -1,14 +1,19 @@
-* Implémenter `Fiche.prototype.set_after(<fiche>)` et `set_before` qui visent à
-  replacer la fiche dans le parent.
-  Cela consiste à :
-  - Modifier l'emplacement dans le DOM (dans le div.items parent)
-  - Modifier la liste des enfants du parent (à partir de la fiche ou la fiche avant)
-  - Marquer la fiche modifiée
-  - Marquer le parent modifié
   
 AJOUTER
 -------
-- Fiche sélectionnée + FLECHES => sélectionner autre fiche
+- Créer un fichier CSS qui contiendra les styles pour les balises
+  > lk_film     Pour les films dans le texte
+
+- Dans la balise film, en troisième argument, pouvoir ajouter des
+  options, séparées par des espaces :
+  [film:DancerInTheDark|Dancer In The Dark|date titre_fr]
+  `date' indique qu'il faut mettre la date
+  `titre_or` indique qu'il faut utiliser le titre original et indiquer le titre
+  français
+  => Documenter pour un accès facile à ces options.
+
+- Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
+
 - Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
   des balises, évaluation du code si code, etc.
   > En basculant du texte à l'édition (peut-être tous les champs), il faut
@@ -25,21 +30,7 @@ AJOUTER
 
 * Tester le réglage de top et left
   En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode
-  qui placera une fiche à un endroit précis (sans écraser une autre fiche)
+  qui placera une fiche à un endroit précis sans écraser une autre fiche (donc
+  l'idée de "place libre" aka `free_space')
   Noter que cet emplacement pourra avoir été déterminé par le déplacement d'un
   des outils pour créer une fiche (qui aura été déplacé à un endroit particulier)
-
-* Vérifier que <fiche>.built est mis à true quand la fiche est construite
-
-
-* Tester en profondeur la méthode Fiche.dispatch pour voir si elle
-  retransforme bien les {id:xxx, type:xxxx} en fiche pour les propriétés
-  concernées (enfants, parent, etc.)
-  -   Voir aussi si elle ouvre bien les fiches à ouvrir (FICHES.open), si elle
-     ferme bienles fiches non ouverte (FICHES.close) et si elle range bien les
-     fiches à ranger (FICHES.range)
-
-* Tester la propriété 'loaded' de Fiche. Une fiche est chargée lorsqu'elle
-  définit autre chose que son type et son id (titre aussi ? dans le cas où
-  je prévois plus tard un chargement seulement avec le titre, pour les
-  références et les chapitres fermés)

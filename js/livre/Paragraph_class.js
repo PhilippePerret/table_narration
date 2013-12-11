@@ -116,13 +116,13 @@ Object.defineProperties(Paragraph.prototype,{
   /* Code HTML du textarea pour `texte' */
   "html_textarea_texte":{
     get:function(){
-      return '<textarea id="'+this.texte_id+'" class="'+this.class_css+'">'+this.main_field_value+'</textarea>'
+      return '<textarea id="'+this.texte_id+'" class="'+this.class_css+'">'+this.main_field_value(false)+'</textarea>'
     }
   },
   /* Code HTML du Div pour `texte' */
   "html_div_texte":{
     get:function(){
-      return '<div id="'+this.texte_id+'" class="'+this.class_css+'">'+this.main_field_value+'</div>'
+      return '<div id="'+this.texte_id+'" class="'+this.class_css+'">'+this.main_field_value(true)+'</div>'
     }
   }
   

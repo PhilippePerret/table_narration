@@ -337,7 +337,7 @@ Object.defineProperties(Fiche.prototype,{
       if(this.is_paragraph) this.texte_in_textarea
       else                  this.titre_in_input
       this.main_field = this.main_field_as_input
-      this.main_field.set( this.main_field_value )
+      this.main_field.set( this.main_field_value(false) )
     }
   },
   "set_main_field_as_div":{
@@ -345,7 +345,7 @@ Object.defineProperties(Fiche.prototype,{
       if(this.is_paragraph) this.texte_in_div
       else                  this.titre_in_div
       this.main_field = this.main_field_as_div
-      this.main_field.set(this.main_field_value)
+      this.main_field.set( this.main_field_value(true) )
     }
   },
   "titre_in_input":{
@@ -438,7 +438,7 @@ Object.defineProperties(Fiche.prototype,{
       dlog("---> "+idm, DB_FCT_ENTER)
       
       // On arrête le suivi par UI.Input (pas vraiment utile puisque le
-      // champ de saisie va être supprimé, mais c'est plus correct pour le DOM…)
+      // champ de saisie va être supprimé, mais c'est plus correct, non?…)
       UI.Input.unbind(this.main_field)
       
       // On remplace le INPUT/TEXTAREA par un DIV
@@ -498,7 +498,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       var idm = "Fiche::set_values ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      this.main_field.set(this.main_field_value)
+      this.main_field.set(this.main_field_value(true))
       if(this.is_book) this.input_real_titre.val(this.real_titre || "TITRE RÉEL")
       dlog("<- "+idm, DB_FCT_ENTER)
       return true
@@ -519,7 +519,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       return  '<fiche id="'+this.dom_id_clone+'" class="fiche '+this.type+' clone ranged">'+
                 '<recto>'+
-                  '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.main_field_value+'</div>'+
+                  '<div id="'+this.dom_id_clone+'-titre" class="titre">'+this.main_field_value(true)+'</div>'+
                 '</recto>'+
               '</fiche>'
     }

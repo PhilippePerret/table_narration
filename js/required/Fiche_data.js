@@ -208,12 +208,24 @@ Object.defineProperties(Fiche.prototype,{
   },
   /*
    *  Retourne une valeur pour le champ principal (titre ou texte)
-   *  
+   *
+   *  NOTES
+   *  -----
+   *    = Cette méthode renvoie le texte brut si +brut+ est TRUE
+   *      Dans le cas contraire, elle le met en forme.
+   *
+   *  @param  formate   Si TRUE le texte est interprété, i.e. par exemple que
+   *                    ses balises de référence ([<balise>:<valeur>]) sont mises
+   *                    en forme. 
+   *                    Si FALSE, le texte est renvoyé tel qu'il est enregistré.
    */
   "main_field_value":{
-    get:function(){
-      if(this.is_paragraph) return this.texte || ""
-      else                  return this.titre || FICHES.datatype[this.type].defvalue
+    value:function( formate ){
+      var code = "" ;
+      if(this.is_paragraph) code = this.texte || ""
+      else                  code = this.titre || FICHES.datatype[this.type].defvalue
+      if(formate && code != "") code = ColText.formate( code )
+      return code
     }
   }
   

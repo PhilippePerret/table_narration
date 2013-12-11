@@ -10,13 +10,16 @@
  *
  *  
  */
-window.get_film = function(fid, data)
+
+/*
+ *  Raccourci pour `FILMS.get(id)'
+ *  
+ */
+window.get_film = function(fid)
 {
-  var film ;
-  if(undefined != FILMS.list[fid]) return FILMS.list[fid]
-  film = new Film(fid)
-  if(undefined != data) film.dispatch(data)
+  return FILMS.get(fid)
 }
+
 window.FILMS = {
   /*
    *  Data mini des films
@@ -42,7 +45,10 @@ window.FILMS = {
    */
   get:function(fid)
   {
-    return get_film(fid, this.DATA[fid])
+    if( undefined != this.list[fid] ) return this.list[fid]
+    var film = new Film(fid)
+    film.dispatch( this.DATA[fid] )
+    return film
   },
   
   /*
@@ -51,7 +57,7 @@ window.FILMS = {
    */
   balise_for:function(fid)
   {
-    return "[film:"+fid+"|"+this.DATA[fid].titre+"]"
+    return "[film:"+fid+"|"+(this.DATA[fid].titre_fr || this.DATA[fid].titre)+"]"
   },
   
   /*
