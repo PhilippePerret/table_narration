@@ -65,6 +65,131 @@ Object.defineProperties(Fiche.prototype,{
       return this._dom_obj
     }
   },
+
+  /* ---------------------------------------------------------------------
+   *
+   *  MÉTHODES DE SÉLECTION
+   *  
+   --------------------------------------------------------------------- */
+  
+  
+  /* Sélection et désélection de la fiche 
+   *
+   * NOTES
+   * -----
+   *  # Stoppe l'évènement pour qu'il ne se propage pas aux fiches
+   *    ancêtres si elles existent.
+   *
+   * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
+   *              En fonction de la pression ou non de la touche majuscule le comportement
+   *              et différent.
+   */
+  "toggle_select":{
+    value:function(evt){
+      var idm = "Fiche::toggle_select ["+this.type_id+"] (this.selected:"+this.selected+")"
+      dlog("---> "+idm, DB_FCT_ENTER )
+      if (false == this.selected) this.select ;
+      dlog("<- "+idm+ " (en stoppant l'évènement)", DB_FCT_ENTER )
+      return stop_event(evt)
+    }
+  },
+  "select":{
+    get:function(){
+      FICHES.add_selected( this )
+      this.selected = true
+      if(this.built) this.obj.addClass('selected')
+      this.repercute_zindex_on_ancestors(5 + parseInt(this.obj.css('z-index'),10))
+    }
+  },
+  "deselect":{
+    get:function(){
+      var idm = "Fiche::deselect ["+this.type_id+"] / this.selected:"+this.selected
+      dlog("---> "+idm, DB_FCT_ENTER)
+      FICHES.remove_selected( this )
+      if(this.retourned) this.retourne
+      this.selected = false
+      if(this.built) this.obj.removeClass('selected')
+      this.repercute_zindex_on_ancestors('')
+      dlog("<- "+idm, DB_FCT_ENTER)
+    }
+  },
+  
+  /*
+   *  Sélectionne le parent
+   *  
+   */
+  "select_parent":{
+    get:function(){
+      if(this.is_book) return F.show(LOCALE.fiche.message['book has no parent'])
+      if(!this.parent) return F.show(LOCALE.fiche.message['no parent'])
+      this.parent.select
+    }
+  },
+  
+  /*
+   *  Sélectionne le premier enfant
+   *  
+   */
+  "select_first_child":{
+    get:function(){
+      if(this.has_children == false) return F.show(LOCALE.fiche.message['no children'])
+      if(this.opened == false)
+      {
+        if(this.is_not_openable) return this.rend_openable('select_first_child')
+        else this.open
+      } 
+      this.enfants[0].select
+    }
+  },
+  
+  /*
+   *  Sélection la fiche précédente (sibling)
+   *  
+   *  NOTES
+   *  -----
+   *    = Le traitement est spécial pour les livres, ils sont conservés
+   *      dans l'ordre de leur instanciation (création) dans Collection.books
+   */
+  "select_previous":{
+    get:function(){
+      if(this.is_book)
+      {
+        prev_indice = this.indice ? this.indice - 1 : Collection.books.length - 1
+        Collection.books[prev_indice].select
+      }
+      else
+      {
+        if(this.indice == 0) return
+        this.parent.enfants[this.indice - 1].select
+      }
+    }
+  },
+  
+  /*
+   *  Sélectionne la fiche suivante (sibling)
+   *  
+   */
+  "select_next":{
+    get:function(){
+      if(this.is_book)
+      {
+        next_indice = this.indice + 1
+        if(next_indice > Collection.books.length - 1) next_indice = 0
+        Collection.books[next_indice].select
+      }
+      else
+      {
+        if(this.indice == this.parent.enfants.length -1) return
+        this.parent.enfants[this.indice + 1].select
+      }
+    }
+  },
+  
+  /* ---------------------------------------------------------------------
+   *
+   *  CONSTRUCTEURS DE CODE
+   *  
+   --------------------------------------------------------------------- */
   
   /*
    *  Retourne le code HTML pour la fiche

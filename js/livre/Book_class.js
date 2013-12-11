@@ -4,6 +4,8 @@ window.Book = function(data)
   if(undefined == data) data = {}
   data.type = 'book'
   Fiche.call(this, data)
+  this.indice = Collection.books.length
+  Collection.books.push( this )
 }
 Book.prototype = Object.create( Fiche.prototype )
 Book.prototype.constructor = Book

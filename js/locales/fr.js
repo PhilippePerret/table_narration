@@ -3,6 +3,7 @@ window.LOCALE = {
     'want delete fiche'             : "Détruire définitivement cette fiche ?",
     'kill children'                 : "Détruire aussi tout son contenu",
     
+    // LOCALE.fiche.error
     error:{
       'parent should be an object'  : "Le parent doit être un object (une fiche)",
       'parent should be a fiche'    : "Le parent doit être une fiche",
@@ -14,6 +15,13 @@ window.LOCALE = {
       'unable to range orphelin'    : "Impossible de ranger une fiche orpheline…",
       'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…",
       'is not child'                : "Impossible de retirer l'enfant, ça n'est pas un enfant de la fiche."
+    },
+    
+    // LOCALE.fiche.message
+    message:{
+      'book has no parent'          : "Un livre ne peut pas avoir de parent…",
+      'no parent'                   : "Cette fiche n'a pas de parent, elle est orpheline.",
+      'no children'                 : "Cette fiche n'a pas d'enfants",
     }
   }
 }

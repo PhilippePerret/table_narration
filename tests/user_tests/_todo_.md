@@ -8,16 +8,14 @@
   
 AJOUTER
 -------
-- Fiche sélectionnée + ENTER => éditer main field (unable_main_field + select)
+- Fiche sélectionnée + FLECHES => sélectionner autre fiche
 - Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
   des balises, évaluation du code si code, etc.
-- Fiche sélectionnée + FLECHES => sélectionner autre fiche
-
-* En basculant du texte à l'édition (peut-être tous les champs), il faut
-  corriger les balises
-  -> UI.Input.check_value
-  Note&nbsp;: penser que l'on pourra avoir un type de paragraphe qui sera
-  du chargement de fichier, ou du code quelconque (js, ruby, etc.).
+  > En basculant du texte à l'édition (peut-être tous les champs), il faut
+    corriger les balises
+    -> UI.Input.check_value
+    Note&nbsp;: penser que l'on pourra avoir un type de paragraphe qui sera
+    du chargement de fichier, ou du code quelconque (js, ruby, etc.).
 
 
 *?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en

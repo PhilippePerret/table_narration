@@ -29,6 +29,18 @@ window.Collection = {
   loaded        : false,
   
   /*
+   *  {Array} Livres de {Book} de la collection
+   *
+   *  NOTES
+   *  -----
+   *  Cette liste est établie au chargement de la collection en insérant
+   *  toutes les fiches de type {Book}. C'est la méthode FICHES.dispatch qui
+   *  s'en charge.
+   *
+   */
+  books:[],
+  
+  /*
    *  Retour du chargement de la collection
    *  Il faut maintenant dispatcher les éléments et remplir la table
    *  

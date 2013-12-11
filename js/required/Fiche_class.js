@@ -116,10 +116,14 @@ Object.defineProperties(Fiche.prototype, {
    *  Pour être ouverte, la fiche doit être `loaded' et ses enfants doivent
    *  l'être aussi.
    *
-   *  Rappel :  Les enfants, dans la fiche, sont toujours des instances Fiche.
-   *            (réglées au chargement du parent). C'est leur propriété `loaded'
-   *            qui détermine si elles sont chargées ou non.
+   *  NOTES
+   *  -----
+   *    = Les enfants, dans la fiche, sont toujours des instances Fiche.
+   *      (réglées au chargement du parent). C'est leur propriété `loaded'
+   *      qui détermine si elles sont chargées ou non.
    *
+   *    = On peut appeler la méthode `rend_openable(<poursuivre>)' pour rendre
+   *      la fiche ouvrable après le test `<fiche>.is_not_openable'
    */
   "is_openable":{
     get:function(){
@@ -313,6 +317,11 @@ Object.defineProperties(Fiche.prototype, {
    *  Rend la fiche "ouvrable"
    *  (en chargeant ses données au besoin et ses enfants)
    *  
+   *  @param  poursuivre    SOIT une fonction pour poursuivre, 
+   *                        SOIT un {String} qui sera une pseudo-méthode (propriété
+   *                        complexe) de la fiche elle-même.
+   *                        SOIT un {Object} contenant :
+   *                        {id:<id de la fiche>, prop:<propriété complexe>}
    */
   "rend_openable":{
     value:function(poursuivre){

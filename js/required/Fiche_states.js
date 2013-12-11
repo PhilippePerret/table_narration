@@ -25,46 +25,6 @@ Object.defineProperties(Fiche.prototype,{
    *  
    */
   
-  /* Sélection et désélection de la fiche 
-   *
-   * NOTES
-   * -----
-   *  # Stoppe l'évènement pour qu'il ne se propage pas aux fiches
-   *    ancêtres si elles existent.
-   *
-   * @param evt   Évènement click qui a permis de sélectionner/déselectionner la fiche
-   *              En fonction de la pression ou non de la touche majuscule le comportement
-   *              et différent.
-   */
-  "toggle_select":{
-    value:function(evt){
-      var idm = "Fiche::toggle_select ["+this.type_id+"] (this.selected:"+this.selected+")"
-      dlog("---> "+idm, DB_FCT_ENTER )
-      if (false == this.selected) this.select ;
-      dlog("<- "+idm+ " (en stoppant l'évènement)", DB_FCT_ENTER )
-      return stop_event(evt)
-    }
-  },
-  "select":{
-    get:function(){
-      FICHES.add_selected( this )
-      this.selected = true
-      if(this.built) this.obj.addClass('selected')
-      this.repercute_zindex_on_ancestors(5 + parseInt(this.obj.css('z-index'),10))
-    }
-  },
-  "deselect":{
-    get:function(){
-      var idm = "Fiche::deselect ["+this.type_id+"] / this.selected:"+this.selected
-      dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-      FICHES.remove_selected( this )
-      if(this.retourned) this.retourne
-      this.selected = false
-      if(this.built) this.obj.removeClass('selected')
-      this.repercute_zindex_on_ancestors('')
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
   /*
    *  Répercute le z-index de la fiche courant sur les parents
    *  Dans le cas contraire, les parents apparaitraient en dessous

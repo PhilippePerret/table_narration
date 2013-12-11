@@ -229,18 +229,27 @@ window.FICHES = {
    *
    *  NOTES
    *  -----
-   *    # Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
+   *    = Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
    *      des parents ou des enfants. Les fiches sont instanciées à leur première
    *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
    *      puis elles sont ensuites "remplies" avec les données si la fiche est
    *      traitées plus tard ici.
-   *    # Par défaut, les fiches sont maintenant créées fermées, donc on doit
+   *
+   *    = Par défaut, les fiches sont maintenant créées fermées, donc on doit
    *      passer seulement en revue les fiches qui doivent être ouvertes.
+   *
+   *    = Pour le moment, cette méthode n'est appelée qu'au chargement de la
+   *      collection. Mais à l'avenir on pourra imaginer qu'elle soit aussi
+   *      utilisée en cas de chargement en masse de fiches. Il faut donc en
+   *      tenir compte et utiliser la propriété `Collected.loaded' pour savoir
+   *      si c'est un tout premier chargement.
    *
    *  PRODUIT
    *  -------
-   *    # La création de la fiche (toujours, entendu qu'une fiche passant par
+   *    = La création de la fiche (toujours, entendu qu'une fiche passant par
    *      ce dispatch a forcément toutes ses données)
+   *
+   *    = La tenue à jour de `Collection.books'
    *
    *  @param  data   {Array} Liste des fiches remontées par Collection.load.data  
    */
@@ -248,10 +257,17 @@ window.FICHES = {
   {
     dlog("---> FICHES.dispatch", DB_FCT_ENTER)
     var i = 0, dfiche, ifiche ;
+    var first_loading = Collection.loaded == false
     var nombre_fiches = data.length
     var instances = []
-    // dlog("*** Data envoyées à FICHES.dispatch ***")
-    // dlog(data)
+
+    if(first_loading)
+    {
+      Collection.books = []
+    }
+    
+    // Création des instances de toutes les fiches utiles
+    // (même les enfants cachés)
     for( ; i < nombre_fiches; ++i)
     {
       ifiche = this.fiche_from( data[i] )
@@ -497,7 +513,7 @@ window.FICHES = {
   remove_selected:function(ifiche)
   {
     var idm = "FICHES.remove_selected(ifiche:"+ifiche.type_id+")"
-    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    dlog("---> "+idm, DB_FCT_ENTER)
     if(this.current == ifiche) this.current = null
     delete this.selecteds[ifiche.id]
     dlog("<- "+idm, DB_FCT_ENTER)
@@ -530,48 +546,48 @@ window.FICHES = {
     return this.current_text_field[0].id == $(obj)[0].id
   },
   
-  /*
-   *  Méthode appelée quand on focuse/blure dans n'importe quel champ de
-   *  saisie de la fiche
-   *  
-   */
-  onfocus_textfield:function(ifiche, evt)
-  {
-    /*
-    - on sélectionne la fiche
-    - on change l'aspect du champ ('focused')
-    - on sélectionne son texte
-    - on met le champ courant à ce champ (current_text_field)
-    - on change de gestion d'évènement keypress
-    - on bloque les click sur le champ
-     */
-    console.warn("La méthode FICHES.onfocus_textfield doit devenir obsolète")
-    var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
-    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-    ifiche.select
-    var target = $(evt.currentTarget)
-    target.addClass('focused')
-    target.select()
-    this.current_text_field = target // complex
-    window.onkeypress = window.keypress_when_fiche_selected_in_textfield
-    // On bloque les click dans le champ (pour empêcher la déselection
-    // qui remet le onkeypress à rien)
-    this.current_text_field.bind('click', function(evt){evt.stopPropagation();return true})
-    dlog("<- "+idm, DB_FCT_ENTER | DB_CURRENT)
-  },
-  onblur_textfield:function(ifiche, evt)
-  {
-    console.warn("La méthode FICHES.onblur_textfield doit devenir obsolète")
-    var idm = "FICHES.onblur_textfield(ifiche:"+ifiche.type_id+")"
-    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-    $(evt.target).removeClass('focused')
-    if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
-    if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
-    else window.onkeypress = keypress_when_no_selection_no_edition
-    this.current_text_field.unbind('click', function(evt){evt.stopPropagation();return true})
-    this.current_text_field = null // complex
-    dlog("<- "+idm, DB_FCT_ENTER)
-  },
+  // /*
+  //  *  Méthode appelée quand on focuse/blure dans n'importe quel champ de
+  //  *  saisie de la fiche
+  //  *  
+  //  */
+  // onfocus_textfield:function(ifiche, evt)
+  // {
+  //   /*
+  //   - on sélectionne la fiche
+  //   - on change l'aspect du champ ('focused')
+  //   - on sélectionne son texte
+  //   - on met le champ courant à ce champ (current_text_field)
+  //   - on change de gestion d'évènement keypress
+  //   - on bloque les click sur le champ
+  //    */
+  //   console.warn("La méthode FICHES.onfocus_textfield doit devenir obsolète")
+  //   var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
+  //   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+  //   ifiche.select
+  //   var target = $(evt.currentTarget)
+  //   target.addClass('focused')
+  //   target.select()
+  //   this.current_text_field = target // complex
+  //   window.onkeypress = window.keypress_when_fiche_selected_in_textfield
+  //   // On bloque les click dans le champ (pour empêcher la déselection
+  //   // qui remet le onkeypress à rien)
+  //   this.current_text_field.bind('click', function(evt){evt.stopPropagation();return true})
+  //   dlog("<- "+idm, DB_FCT_ENTER | DB_CURRENT)
+  // },
+  // onblur_textfield:function(ifiche, evt)
+  // {
+  //   console.warn("La méthode FICHES.onblur_textfield doit devenir obsolète")
+  //   var idm = "FICHES.onblur_textfield(ifiche:"+ifiche.type_id+")"
+  //   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+  //   $(evt.target).removeClass('focused')
+  //   if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
+  //   if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
+  //   else window.onkeypress = keypress_when_no_selection_no_edition
+  //   this.current_text_field.unbind('click', function(evt){evt.stopPropagation();return true})
+  //   this.current_text_field = null // complex
+  //   dlog("<- "+idm, DB_FCT_ENTER)
+  // },
   
   /*
    *  Méthode qui change la sélection courante
