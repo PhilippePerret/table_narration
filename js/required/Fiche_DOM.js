@@ -129,6 +129,10 @@ Object.defineProperties(Fiche.prototype,{
   /*
    *  Sélectionne le premier enfant
    *  
+   *  NOTES
+   *  -----
+   *    = La méthode gère sans problème les enfants non chargés et la fermeture
+   *      de la fiche.
    */
   "select_first_child":{
     get:function(){
