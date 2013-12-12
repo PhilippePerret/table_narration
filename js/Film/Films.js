@@ -27,9 +27,11 @@ window.FILMS = {
    *  
    */
   OPTIONS:{
-    'annee'   :{hname: "Année (A)", valdef:true}, 
-    'titrefr' :{hname: "Titre français (F)", valdef:false}, 
-    'titreor' :{hname: "Titre original (O)", valdef:false}
+    'annee'   :{hname: "Année (A)",           valdef:true}, 
+    'titrefr' :{hname: "Titre français (F)",  valdef:false}, 
+    'titreor' :{hname: "Titre original (O)",  valdef:false},
+    'nolink'  :{hname: "Pas de lien (L)",     valdef:false},
+    'auteurs' :{hname: "Auteurs (S)",         valdef:false}
   },
   
   /*
@@ -51,6 +53,16 @@ window.FILMS = {
   list:{},
   
   /*
+   *  Liste des Identifiants de films qui doivent être chargés
+   *  à la première occasion.
+   *
+   *  Cf. dans la class Film la méthode `formate'
+   *  
+   *  NOTE TODO POUR LE MOMENT, CE CHARGEMENT N'EST PAS LANCÉ
+   */
+  need_loading:[],
+    
+  /*
    *  Retourne la class Film du film d'identifiant +fid+
    *  
    */
@@ -61,16 +73,7 @@ window.FILMS = {
     film.dispatch( this.DATA[fid] )
     return film
   },
-  
-  /*
-   *  Retourne la balise à insérer pour le film d'identifiant +fid+
-   *  
-   */
-  balise_for:function(fid)
-  {
-    return "[film:"+fid+"|"+(this.DATA[fid].titre_fr || this.DATA[fid].titre)+"]"
-  },
-  
+    
   /*
    *  Méthode appelée après avoir choisi un film, quand
    *  on doit l'insérer dans le texte (CMD + F).
@@ -80,7 +83,8 @@ window.FILMS = {
    */
   insert_in_input:function(fid)
   {
-    UI.Input.set_selection_to( this.balise_for( fid ) )
+    dlog("Balise générée : " + this.get(fid).balise( this.Dom.options_balise ))
+    UI.Input.set_selection_to( this.get(fid).balise( this.Dom.options_balise ))
   },
   
   /*
@@ -120,3 +124,20 @@ window.FILMS = {
   
  
 }
+
+
+Object.defineProperties(FILMS,{
+  
+  /*
+   *  Initialise l'objet FILMS
+   *  
+   */
+  "init":{
+    get:function(){
+      this.need_loading = []
+      this.list = {}
+      this.DATA = {}
+    }
+  }
+  
+})

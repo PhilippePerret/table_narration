@@ -99,12 +99,12 @@ FILMS.Dom = {
     if(false == this.panneau_films_ready) this.prepare_panneau
     else this.panneau.show()
     
-    // TRY
-    // On prend le champ courant (field de fiche) pour le blurer,
-    // pour pouvoir utiliser le clavier
-    this.current_field = UI.Input.target
-    // On le blur
-    this.current_field.jq.blur()
+    // // TRY
+    // // On prend le champ courant (field de fiche) pour le blurer,
+    // // pour pouvoir utiliser le clavier
+    // this.current_field = UI.Input.target
+    // // On le blur
+    // this.current_field.jq.blur()
     
     // Pour le moment :
     this.old_window_onkeypress = window.onkeypress
@@ -207,7 +207,9 @@ FILMS.Dom = {
     {
     case Key_a: this.toggle_option('annee')    ; break
     case Key_f: this.toggle_option('titrefr')  ; break
+    case Key_l: this.toggle_option('nolink')   ; break
     case Key_o: this.toggle_option('titreor')  ; break
+    case Key_s: this.toggle_option('auteurs')  ; break
     }
     return stop_event(evt)
   },
@@ -486,10 +488,11 @@ Object.defineProperties(FILMS.Dom, {
       var dasp = this.current_item ? get_film(this.current_item) : this.DATA_ASPECT
       var aspect = "", inpar  = [] ;
       var opts = this.options_balise
-      aspect += opts.titrefr ? dasp.titre_fr : dasp.titre
+      aspect += opts.titrefr ? (dasp.titre_fr || dasp.titre) : dasp.titre
       if(opts.titrefr && opts.titreor) inpar.push(dasp.titre)
       if(opts.annee) inpar.push(dasp.annee)
-      if(inpar.length) aspect += " ("+inpar.join(' - ')+")"
+      if(opts.auteurs) inpar.push("<i>Auteurs</i>")
+      if(inpar.length) aspect += " ("+inpar.join(', ')+")"
       $('span#film_aspect_titre').html(aspect)
     }
   },

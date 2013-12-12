@@ -17,15 +17,14 @@ window.ColText = {
    *
    *
    *  @param  code    {String} du texte à formater
-   *  @param  options {Hash} des options (INUTILISÉ POUR LE MOMENT)
    *
    *  @return Le code mis en forme, prêt à être affiché dans un DIV/SPAN
    *
    */
-  formate:function(code, options)
+  formate:function(code)
   {
     this.code = code
-    if(code.indexOf('[film:')) this.traite_balises_films( options )
+    if(code.indexOf('[film:')) this.traite_balises_films()
     return this.code
   },
   
@@ -33,15 +32,16 @@ window.ColText = {
    *  Traitement des balises films
    *  
    */
-  traite_balises_films:function(options)
+  traite_balises_films:function()
   {
     var c, dfilm ;
-    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]]+)\]/g, function(match, fid, ftitre, offset){
-      dfilm = get_film( fid )
-      console.dir(dfilm)
-      c = '<a onclick="FILMS.show(\''+fid+'\')" class="lk_film">'+ftitre+'</a>' ;
-      if( dfilm.annee ) c += ' ('+ dfilm.annee +')' ;
-      return c
+    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+?)\|?([^\]]+)\]/g, function(match, fid, ftitre, options, offset){ 
+      return get_film(fid).formate(options.split(' '), skip_loading = true)
+      /*
+       *  La précision skip_loading ci-dessus permet de passer les données
+       *  manquante, lorsque des options d'affichage du film nécessite d'avoir
+       *  les données complètes et qu'elles ne sont pas encore chargées.
+       */
     })
   }
   

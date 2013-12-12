@@ -35,5 +35,6 @@ Ces options peuvent être&nbsp;:
                 parenthèses
     nolink      Le film ne doit pas être lié, c'est-à-dire qu'il
                 n'est pas cliquable.
+    auteurs     Indication des auteurs du film.
 
 -

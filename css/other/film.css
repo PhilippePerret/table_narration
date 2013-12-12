@@ -43,7 +43,7 @@ panneau#films > div#panneau_film_listings {
 }
 /* Pour le div d'un film */
 panneau#films div.div_film div.titre {
-  height      : 20px;
+  min-height  : 20px;
   padding     : 5px;
   cursor      : pointer;
 }
@@ -99,7 +99,7 @@ panneau#films div#panneau_film_options {
 }
 panneau#films div#panneau_film_options span#film_aspect_titre {
   display       : block ;
-  width         : 280px;
+  width         : 540px;
   border        : 1px solid #ccc;
   padding       : 2px 8px;
   margin-right  : 1em;

@@ -25,12 +25,8 @@ div.focusable.focused {
   border-color : #D583FE !important;
 }
 
-/*
-.selected {
-  background-color : #B1CFF4;
-}
-*/
-.selected {
+/* Quelque chose sélectionnée, sauf une fiche */
+.selected:not(fiche) {
   background-color : #6464BD !important;
   color : white !important;
 }
