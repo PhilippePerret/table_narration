@@ -3,7 +3,7 @@ panneau#films {
   top               : 2em;
   left              : 10em;
   width             : 640px;
-  min-height        : 300px;
+  height            : 410px;
   background-color  : white;
   border            : 2px solid #ccc;
   padding-bottom    : 20px;
@@ -15,11 +15,12 @@ panneau#films div#panneau_film_onglets {
   padding       : 5px 20px;
 }
 panneau#films div#panneau_film_onglets {
-  height    : 20px;
+  height    : 13px;
 }
 panneau#films div#panneau_film_onglets div.onglet_lettre {
   float       : left;
-  width       : 25px;
+  width       : 22px;
+  font-size   : 11pt;
   cursor      : pointer;
   text-align  : center;
 }
@@ -42,7 +43,8 @@ panneau#films > div#panneau_film_listings {
 }
 /* Pour le div d'un film */
 panneau#films div.div_film div.titre {
-  height      : 30px;
+  height      : 20px;
+  padding     : 5px;
   cursor      : pointer;
 }
 
@@ -54,7 +56,7 @@ panneau#films div#div_form_film {
   
 }
 panneau#films div#div_form_film div#film_form {
-  height    : 284px;
+  height    : 334px;
   overflow  : auto;
   padding   : 1em;
 }
@@ -87,6 +89,22 @@ panneau#films div#film_form div#film_data input[type="text"] {
 }
 panneau#films div#div_form_film div.buttons {
   margin-top    : 1em;
+}
+
+/* ---------------------------------------------------------------------
+ *  DIV des OPTIONS
+ */
+panneau#films div#panneau_film_options {
+  padding     : 12px;
+}
+panneau#films div#panneau_film_options span#film_aspect_titre {
+  display       : block ;
+  width         : 280px;
+  border        : 1px solid #ccc;
+  padding       : 2px 8px;
+  margin-right  : 1em;
+  font-family   : Verdana;
+  font-size     : 9.5pt;
 }
 
 /* ---------------------------------------------------------------------

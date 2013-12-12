@@ -6,7 +6,7 @@ fiche > verso {
   background-color  : #dcdcdc;
   padding           : 0.5em 0.6em;
   border            : 2px solid #808080;
-  width             : 100%;
+  width             : 540px;
   z-index           : 30 !important;
 }
 

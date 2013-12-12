@@ -3,7 +3,7 @@
 
   $libs = array(
     'required'  => array('jquery', 'jquery-ui'),
-    'optional'  => array('time', 'ajax_php', 'String-extensions', 'mouse', 'selection', 'texte', 'flash', 'L', 'couleur', 'RealValue', 'Edit', 'cookie', 'ui_basic', 'utils')
+    'optional'  => array('ajax_php', 'cookie', 'couleur', 'Edit', 'flash', 'L', 'mouse', 'Number', 'RealValue', 'selection', 'String-extensions', 'texte', 'time', 'ui_basic', 'utils')
       // @note :  la librairie 'ajax_send' est utile aux tests, mais elle est remplacée
       //          dans l'application par sa propre librairie.
     );

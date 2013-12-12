@@ -1,9 +1,7 @@
   
 AJOUTER
 -------
-- Créer un fichier CSS qui contiendra les styles pour les balises
-  > lk_film     Pour les films dans le texte
-
+- Options dans la fenêtre film pour déterminer l'aspect de l'affichage (avec date, etc.)
 - Dans la balise film, en troisième argument, pouvoir ajouter des
   options, séparées par des espaces :
   [film:DancerInTheDark|Dancer In The Dark|date titre_fr]
@@ -14,6 +12,11 @@ AJOUTER
 
 - Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
 
+- Voir si au lieu de définir un `window.onkeypress' il ne vaut pas mieux définir
+  le keypress toujours sur l'élément visé. Note : prendre en compte le fait que
+  cela signifie qu'il faut que l'élément DOM soit focusé pour que les keypress
+  s'applique à lui.
+  
 - Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
   des balises, évaluation du code si code, etc.
   > En basculant du texte à l'édition (peut-être tous les champs), il faut

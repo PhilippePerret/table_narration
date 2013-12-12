@@ -16,6 +16,25 @@ textarea.focused
   background-color:#EFE;
 }
 
+div.focusable {
+  border-width  : 1px;
+  border-style  : solid;
+  border-color  : transparent;
+}
+div.focusable.focused {
+  border-color : #D583FE !important;
+}
+
+/*
+.selected {
+  background-color : #B1CFF4;
+}
+*/
+.selected {
+  background-color : #6464BD !important;
+  color : white !important;
+}
+
 label.libelle {
   font-size     : 0.9em;
   font-style    : italic;

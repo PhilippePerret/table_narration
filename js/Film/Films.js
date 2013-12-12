@@ -22,6 +22,17 @@ window.get_film = function(fid)
 
 window.FILMS = {
   /*
+   *  Options pour l'affichage du titre du film
+   *  dans la page.
+   *  
+   */
+  OPTIONS:{
+    'annee'   :{hname: "Année (A)", valdef:true}, 
+    'titrefr' :{hname: "Titre français (F)", valdef:false}, 
+    'titreor' :{hname: "Titre original (O)", valdef:false}
+  },
+  
+  /*
    *  Data mini des films
    *
    *  (cf. ../interdata/film/data_js/films_data.js)

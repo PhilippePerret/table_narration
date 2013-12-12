@@ -3,6 +3,7 @@ const K_TAB     = KeyEvent.DOM_VK_TAB
 const K_RETURN  = KeyEvent.DOM_VK_RETURN
 const K_ENTER   = KeyEvent.DOM_VK_ENTER
 const K_ERASE   = 8
+const K_ESCAPE  = KeyEvent.DOM_VK_ESCAPE
 
 const K_LEFT_ARROW  = 37
 const K_UP_ARROW    = 38

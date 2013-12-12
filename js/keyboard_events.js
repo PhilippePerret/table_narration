@@ -55,60 +55,68 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   // var idm = "keypress_when_fiche_selected_out_textfield"
   // dlog("---> "+idm, DB_FCT_ENTER)
   
-  if(FICHES.current)
+  /*  = WARNING =
+   *  S'il n'y a pas de fiche courante, il faut rectifier le gestionnaire
+   *  des évènement keypress courant.
+   *  Je signale une erreur, car ça ne devrait pas arriver si l'implémentation
+   *  est solide et pertinente.
+   */
+  if(!FICHES.current)
   {
-    var complex_method = null
-    switch(evt.keyCode)
-    {
-    /* TAB => retourner la fiche */
-    case K_TAB:     complex_method = 'retourne'; break
-    
-    /* ENTER => édite main field */
-    case K_RETURN:  complex_method = 'enable_main_field'; break
-    
-    /*
-     *  ->    Sélectionner le premier enfant (if any)
-     *  <-    Sélectionner le parent (if any)
-     *  up    Sibling précédent (if any)
-     *  down  Sibling suivant (if any)
-     */
-    case K_LEFT_ARROW:  complex_method = 'select_parent';       break
-    case K_RIGHT_ARROW: complex_method = 'select_first_child';  break
-    case K_UP_ARROW:    complex_method = 'select_previous';     break
-    case K_DOWN_ARROW:  complex_method = 'select_next';         break
-      
-    /* ERASE => supprimer la fiche */
-    case K_ERASE: complex_method = 'want_delete'; break
-    default:
-      // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
-      // return true // Non, on doit poursuivre
-    }
-    if(complex_method) 
-    {
-      FICHES.current[complex_method]
-      return stop_event(evt)
-    }
+    console.warn("Le gestionnaire de keypress `keypress_when_fiche_selected_out_textfield' a été appelé alors qu'aucune fiche n'est sélectionné…")
+    window.onkeypress = keypress_when_no_selection_no_edition
+    return keypress_when_no_selection_no_edition(evt)
   }
   
+  var complex_method = null
+  switch(evt.keyCode)
+  {
+  /* TAB => retourner la fiche */
+  case K_TAB:     complex_method = 'retourne'; break
+  
+  /* ENTER => édite main field */
+  case K_RETURN:  complex_method = 'enable_main_field'; break
+  
+  /*
+   *  ->    Sélectionner le premier enfant (if any)
+   *  <-    Sélectionner le parent (if any)
+   *  up    Sibling précédent (if any)
+   *  down  Sibling suivant (if any)
+   */
+  case K_LEFT_ARROW:  complex_method = 'select_parent';       break
+  case K_RIGHT_ARROW: complex_method = 'select_first_child';  break
+  case K_UP_ARROW:    complex_method = 'select_previous';     break
+  case K_DOWN_ARROW:  complex_method = 'select_next';         break
+    
+  /* ERASE => supprimer la fiche */
+  case K_ERASE: complex_method = 'want_delete'; break
+  default:
+    // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
+    // return true // Non, on doit poursuivre
+  }
+  if(complex_method) 
+  {
+    FICHES.current[complex_method]
+    return stop_event(evt)
+  }
+  
+  complex_method = null
   switch(evt.charCode)
   {
-  /* La touche SPACE toggle l'ouverture/fermeture de la fiche */
-  case K_SPACE:
-    FICHES.current.toggle
-    return stop_event(evt)
-  case Key_o:
-    FICHES.current.open
-    return stop_event(evt)
-  case Key_f:
-    FICHES.current.close
-    return stop_event(evt)
-  case Key_d:
-    FICHES.current.deselect
-    return stop_event(evt)
+  case K_SPACE: complex_method = 'toggle'   ; break
+  case Key_o:   complex_method = 'open'     ; break
+  case Key_f:   complex_method = 'close'    ; break
+  case Key_d:   complex_method = 'deselect' ; break
   default:
     console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
     // return stop_event(evt)
   }
+  if(complex_method)
+  {
+    FICHES.current[complex_method]
+    return stop_event(evt)
+  }
+      
   // dlog("<- "+idm, DB_FCT_ENTER)
 }
 

@@ -23,5 +23,13 @@ window.LOCALE = {
       'no parent'                   : "Cette fiche n'a pas de parent, elle est orpheline.",
       'no children'                 : "Cette fiche n'a pas d'enfants",
     }
+  },
+  
+  // LOCALE.film
+  film:{
+    // LOCALE.film.message
+    message:{
+      'must choose a film'          : "Il faut choisir un film !"
+    }
   }
 }

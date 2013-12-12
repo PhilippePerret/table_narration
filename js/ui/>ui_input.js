@@ -389,6 +389,7 @@ UI.Input = {
     var domObj = target[0]
     var data = {
              jq : target,
+            obj : target, // parce que j'utilise souvent 'obj' par réflexe
             dom : domObj,
              id : domObj.id,
             jid : domObj.tagName+'#'+domObj.id,
