@@ -148,7 +148,7 @@ FILMS.Dom = {
    */
   set_focus_on:function(idfocus)
   {
-    dlog("-> FILMS.Dom.set_focus_on('"+idfocus+"')", DB_FCT_ENTER | DB_CURRENT)
+    dlog("-> FILMS.Dom.set_focus_on('"+idfocus+"')", DB_FCT_ENTER)
     if(this.current_focus) this.current_focus.obj.removeClass('focused')
     this.current_focus = this.DFOCUS[idfocus]
     this.current_focus.obj.addClass('focused')
@@ -168,7 +168,7 @@ FILMS.Dom = {
 
   keypress_on_onglets:function(evt)
   {
-    dlog("Touche pressée sur onglets")
+    dlog("-> FILMS.Dom.keypress_on_onglets", DB_FCT_ENTER)
     if( this.keypress_common(evt) ) return stop_event(evt)
     switch(evt.keyCode)
     {
@@ -182,7 +182,7 @@ FILMS.Dom = {
   },
   keypress_on_listing:function(evt)
   {
-    dlog("Touche pressée sur listing")
+    dlog("-> FILMS.Dom.keypress_on_listing", DB_FCT_ENTER)
     if( this.keypress_common(evt) ) return false
     var complex_method = null
     switch(evt.keyCode)
@@ -198,7 +198,7 @@ FILMS.Dom = {
   },
   keypress_on_options:function(evt)
   {
-    dlog("Touche pressée sur options")
+    dlog("-> FILMS.Dom.keypress_on_options", DB_FCT_ENTER)
     if( this.keypress_common(evt) ) return false
     switch(evt.keyCode)
     {

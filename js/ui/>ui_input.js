@@ -340,13 +340,12 @@ UI.Input = {
     this.targets[id] = $.extend({}, this.target)
     if(options.blur)
     {
+      this.target.dom.blur()
       if(this.target.hasFiche)
       {
         var fiche = get_fiche(this.target.fiche_id)
         if(fiche.main_prop == this.target.property ) fiche.disable_main_field
-        else this.target.dom.blur()
       }
-      else this.target.dom.blur()
     }
     return id
   },
