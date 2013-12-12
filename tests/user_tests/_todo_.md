@@ -1,14 +1,13 @@
-  
-AJOUTER
--------
-- Options dans la fenêtre film pour déterminer l'aspect de l'affichage (avec date, etc.)
-- Dans la balise film, en troisième argument, pouvoir ajouter des
-  options, séparées par des espaces :
-  [film:DancerInTheDark|Dancer In The Dark|date titre_fr]
-  `date' indique qu'il faut mettre la date
-  `titre_or` indique qu'il faut utiliser le titre original et indiquer le titre
-  français
-  => Documenter pour un accès facile à ces options.
+IMPLÉMENTER
+-----------
+
+CHOIX D'UN FILM
+  - Lors du choix d'un film, il faut blurer le champ courant, mais conserver
+    en mémoire sa selection.
+    À la fin du choix du film, il faut remettre l'édition en place.
+    NOTE : le travail n'est pas du tout le même avec un champ de saisie normal
+    (qu'il suffit de quitter) et un main field qui nécessite la reconstruction
+    du champ de saisie.
 
 - Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
 
