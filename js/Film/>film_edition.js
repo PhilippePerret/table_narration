@@ -47,8 +47,9 @@ FILMS.Edition = {
     }
     else
     {
-      film = FILMS.get( fid )
-      film.edit // @note: sait gérer le fait que le film ne soit pas encore chargé
+      this.current = FILMS.get( fid )
+      this.current.edit 
+        // @note: sait gérer le fait que le film ne soit pas encore chargé
     }
   },
   
@@ -62,23 +63,23 @@ FILMS.Edition = {
     var is_new_film = values.id == null
     if(is_new_film)
     {
-      film = new Film( this.id_from_titre( values.titre ) )
+      var id_new_film = this.id_from_titre( values.titre )
+      this.current = new Film( id_new_film )
     }
-    else film = get_film( values.id )
-    film.dispatch( values )
-    film.save($.proxy(this.end, this)) // <-- SAUVEGARDE
+    else this.current = get_film( values.id )
+    this.current.dispatch( values )
+    if(is_new_film) this.current.id = id_new_film // a été écrasé par dispatch
+    this.current.save( $.proxy(this.end, this) ) // <-- SAUVEGARDE
+    if(is_new_film)
+    {
+      // Pour signaler le nouveau film à la méthode `end' qui
+      // s'occupera de recharger la liste
+      this.current.is_new = true
+      this.current.let    = this.current.id.charCodeAt(0)
+      if(this.current.let.is_between(48,57)) this.current.let = 0
+    }
   },
   
-  /*
-   *  Retourne un identifiant de film à partir du +titre+ fourni
-   *  
-   */
-  id_from_titre:function(titre)
-  {
-    var t = Texte.to_ascii( titre )
-    t = t.titleize().replace(/[^a-zA-Z0-9]/g,'')
-    return t
-  },
   
   /*
    *  Pour terminer l'édition
@@ -92,6 +93,12 @@ FILMS.Edition = {
   end:function()
   {
     FILMS.Dom.hide_formulaire
+    if(this.current.is_new)
+    {
+      FILMS.Dom.remove_listing_lettre( this.current.let )
+      this.reload_data_film_js
+    }
+     
   },
 
   /*
@@ -241,11 +248,41 @@ FILMS.Edition = {
       break
     }
     return d
+  },
+  
+  /*
+   *  Retourne un identifiant de film à partir du +titre+ fourni
+   *  
+   */
+  id_from_titre:function(titre)
+  {
+    var t = Texte.to_ascii( titre )
+    t = t.titleize().replace(/[^a-zA-Z0-9]/g,'')
+    return t
   }
   
 }
 
 Object.defineProperties(FILMS.Edition,{
+  
+  /*
+   *  Rechargement du fichier data_film.js
+   *  
+   */
+  "reload_data_film_js":{
+    get:function()
+    {
+      delete FILMS.DATA
+      $('head script#films_data_js').remove()
+      $('head').append('<script id="films_data_js" type="text/javascript" charset="utf-8" src=""></script>')
+      $('head script#films_data_js')[0].src = "../interdata/film/data_js/films_data.js"
+      FILMS.timer_wait = setTimeout($.proxy(FILMS.reaffiche_listing_when_ok, FILMS), 500)
+    }
+  },
+  remove_listing_lettre:function(lettre)
+  {
+    delete FILMS.Dom.lettres_built[lettre]
+  },
   
   /*
    *  Return le {jQuerySet} du formulaire d'édition du film.
@@ -275,6 +312,7 @@ Object.defineProperties(FILMS.Edition,{
    */
   "prepare_formulaire":{
     get:function(){
+      $('div#panneau_film_edition').html('')
       $('div#panneau_film_edition').append( this.html_form )
       UI.Input.bind( this.form )
       this.form_prepared = true

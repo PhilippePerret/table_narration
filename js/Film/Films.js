@@ -138,6 +138,30 @@ window.FILMS = {
   {
     if(!this.Dom.options.keep_opened) this.Dom.hide_panneau()
     this.on_choose_film.poursuivre(film_id)
+  },
+  
+  /*
+   *  Méthode utilisée après la création d'un nouveau film
+   *  La méthode appelante (FILMS.Edition.reload_data_film_js) a appelé le rechargement
+   *  du fichier des data des films (this.DATA = FILMS.DATA) et on doit attendre
+   *  la fin de son chargement pour rafraichir l'onglet courant.
+   *  
+   */
+  reaffiche_listing_when_ok:function(lettre)
+  {
+    clearTimeout(this.timer_wait)
+    if(this.DATA)
+    {
+      // Ça y est, les données sont rechargées
+      // @note :  le panneau de la lettre du nouveau film a déjà été
+      //          supprimé, il sera donc rafraichi
+      this.Dom.on_click_onglet()
+    }
+    else
+    {
+      dlog("Attente de FILMS.DATA…")
+      this.timer_wait = setTimeout($.proxy(this.reaffiche_listing_when_ok, this, lettre), 300)
+    }
   }
   
  

@@ -18,5 +18,5 @@
   traite_dossier('./js/', 'js', 'required');
   
   // Données pour les films (du dossier `interdata')
-  echo "\t\t".'<script type="text/javascript" charset="utf-8" src="../interdata/film/data_js/films_data.js" defer></script>';
+  echo "\t\t".'<script id="films_data_js" type="text/javascript" charset="utf-8" src="../interdata/film/data_js/films_data.js" defer></script>';
 ?>

@@ -265,10 +265,13 @@ FILMS.Dom = {
    *    ::  Si la liste des films de la lettre voulue n'est pas encore établie
    *        on la construit.
    *  
+   *    ::  La méthode est appelée aussi après l'insertion d'un nouveau film
+   *        pour forcer l'actualisation du panneau.
+   *
    */
   on_click_onglet:function(lettre)
   {
-    if(this.lettre_courante)        this.hide_listing(this.lettre_courante)
+    if(this.lettre_courante) this.hide_listing(this.lettre_courante)
     $('panneau#films div#onglet_lettre-'+lettre).addClass('pressed')
     if(!this.lettres_built[lettre]) this.build_listing( lettre )
     else this.show_listing(lettre)
@@ -304,8 +307,8 @@ FILMS.Dom = {
   {
     $(this.jid_current_listing).hide()
     $('panneau#films div#onglet_lettre-'+lettre).removeClass('pressed')
-    this.lettre_courante = null
-    this.current_item = null
+    this.lettre_courante  = null
+    this.current_item     = null
   },
   
   /*
@@ -317,6 +320,19 @@ FILMS.Dom = {
     this.div_listing.append(this.html_listing(lettre))
     this.lettres_built[lettre] = true
     this.lettre_courante = lettre
+  },
+  
+  /*
+   *  Détruit le listing d'une lettre (pour rafraîchissement)
+   *  
+   */
+  remove_listing_lettre:function(lettre)
+  {
+    if(!this.lettres_built[lettre]) return // rien à faire
+    if(this.lettre_courante == lettre) this.lettre_courante = null
+    delete this.lettres_built[lettre]
+    $('div#'+this.listing_id(lettre)).remove()
+    this.current_item = null
   },
   
   /*

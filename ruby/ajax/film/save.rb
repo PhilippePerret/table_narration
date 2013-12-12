@@ -68,6 +68,4 @@ end
 
 # Le film a-t-il modifié une de ses données mini (dans lequel cas il
 # faudrait actualiser la liste des tous les films)
-if need_update
-  Film::update_listes_js
-end
+Film::update_listes_js if need_update
