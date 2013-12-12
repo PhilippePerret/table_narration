@@ -153,8 +153,6 @@ FILMS.Dom = {
     this.current_focus = this.DFOCUS[idfocus]
     this.current_focus.obj.addClass('focused')
     this.current_focus.obj[0].focus()
-    dlog(this.current_focus.obj)
-    // this.active_keypress_on(idfocus) // inutile ?
   },
   
   // /*

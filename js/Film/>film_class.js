@@ -53,7 +53,7 @@ $.extend(Film.prototype,{
    *  Formate la balise film (cf. `balise' ci-dessus) en respectant
    *  les options +options+
    *  
-   *  @param  options       Les options d'affichage du titre du film.
+   *  @param  opts          {Array} Les options d'affichage du titre du film.
    *                        Cf. ci-dessus
    *  @param  skip_missing  Si TRUE, on passe les données manquantes qui nécessiteraient
    *                        le chargement complet du film. Cela est utile lorsqu'on
@@ -62,11 +62,14 @@ $.extend(Film.prototype,{
    *                        Cependant, ces films sont mis en attente et chargés dès
    *                        que possible (cf. FILMS.need_loading)  
    */
-  formate:function(options, skip_loading)
+  formate:function(opts, skip_loading)
   {
-    if(undefined == options) options = {}
+    if(undefined == opts) opts = []
+    else if ('string' == typeof opts) opts = opts.split(' ')
+    // Il faut passer le {Array} des options en {Hash} (convenient)
+    var options = {} ;
+    L(opts).each(function(opt){ options[opt] = true})
     if(undefined == skip_loading) skip_loading = false
-    else if ('string' == typeof options) options = options.split(' ')
 
     // Les options à passer si le film n'est pas chargé et qu'il faut
     // passer son chargement.

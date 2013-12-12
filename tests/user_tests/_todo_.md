@@ -2,12 +2,10 @@ IMPLÉMENTER
 -----------
 
 CHOIX D'UN FILM
-  - Lors du choix d'un film, il faut blurer le champ courant, mais conserver
-    en mémoire sa selection.
-    À la fin du choix du film, il faut remettre l'édition en place.
-    NOTE : le travail n'est pas du tout le même avec un champ de saisie normal
-    (qu'il suffit de quitter) et un main field qui nécessite la reconstruction
-    du champ de saisie.
+  # [pas toujours…] Les raccourcis ne fonctionnent plus sur un deuxième champ édité
+  # Quand on passe d'un listing à l'autre, les flèches concernent toujours
+    l'autre listing (pourtant, il m'avait semblé avec prévu ça…)
+  # L'année ne s'indique pas dans les options
 
 - Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
 

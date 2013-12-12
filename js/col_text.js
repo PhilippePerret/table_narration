@@ -35,7 +35,7 @@ window.ColText = {
   traite_balises_films:function()
   {
     var c, dfilm ;
-    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+?)\|?([^\]]+)\]/g, function(match, fid, ftitre, options, offset){ 
+    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, fid, ftitre, options, offset){ 
       return get_film(fid).formate(options.split(' '), skip_loading = true)
       /*
        *  La précision skip_loading ci-dessus permet de passer les données

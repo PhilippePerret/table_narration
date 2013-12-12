@@ -692,7 +692,7 @@ $.extend(Fiche.prototype,{
   onchange_titre_or_texte:function(evt)
   {
     var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
-    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    dlog("---> "+idm, DB_FCT_ENTER)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val()
     if(this[prop] != new_value)

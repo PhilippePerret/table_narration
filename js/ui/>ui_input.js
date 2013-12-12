@@ -157,9 +157,6 @@ UI.Input = {
       // Traitement spécial pour un champ texte de fiche paragraphe
       if(this.target.hasFiche && this.target.property == 'texte')
       {
-        // => Champ de saisie du texte d'un paragraphe
-        dlog("C'est un champ texte de paragraphe")
-        
         var fiche = get_fiche( this.target.fiche_id )
         if(evt.metaKey)
         {
