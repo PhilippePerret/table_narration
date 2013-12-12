@@ -98,14 +98,13 @@ FILMS.Dom = {
   {
     if(false == this.panneau_films_ready) this.prepare_panneau
     else this.panneau.show()
-    
-    // // TRY
-    // // On prend le champ courant (field de fiche) pour le blurer,
-    // // pour pouvoir utiliser le clavier
-    // this.current_field = UI.Input.target
-    // // On le blur
-    // this.current_field.jq.blur()
-    
+        
+    // Il faut mémoriser le champ de saisie et sa sélection courante pour
+    // pouvoir y revenir, car le panneau blur
+    // @note: `current_textfield' est un timestamp qui permettrait
+    // de "retreiver" le champ de saisie courant
+    this.current_textfield = UI.Input.memorize_current({blur:true})
+
     // Pour le moment :
     this.old_window_onkeypress = window.onkeypress
     window.onkeypress = null
@@ -120,6 +119,7 @@ FILMS.Dom = {
   hide_panneau:function()
   {
     this.panneau.hide()
+    UI.Input.retreive_current(this.current_textfield, {focus:true})
     window.onkeypress = this.old_window_onkeypress
   },
   
@@ -336,10 +336,13 @@ FILMS.Dom = {
   html_div_film:function(fdata)
   {
     return '<div id="'+this.id_div_item(fdata.id)+'" class="div_film">' +
+              '<div class="fright">' +
+                '<input type="button" class="small" value="edit" onclick="$.proxy(FILMS.edit, FILMS, \''+fdata.id+'\')()" />'+
+              '</div>' +
               '<div class="titre" onclick="$.proxy(FILMS.on_choose_film, FILMS, \''+fdata.id+'\')()">' +
               fdata.titre +
               (fdata.titre_fr ? " ("+fdata.titre_fr+")" : '') +
-              (fdata.annee ? " "+fdata.annee : '') +
+              (fdata.annee ? " - <span class=\"tiny\">"+fdata.annee+'</span>' : '') +
               '</div>' +
             '</div>'
   },

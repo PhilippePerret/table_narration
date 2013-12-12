@@ -20,6 +20,17 @@ UI.Input = {
   target: null, 
   
   /*
+   *  Les champs de saisie mémorisés par la méthode `memorize_current'
+   *
+   *  En clé, un timestamp permettant de récupérer le champ de saisie et
+   *  de le remettre dans le même état (sélection)
+   *  En valeur, une {Target} telle que définie par la méthode
+   *  this.eventTextField
+   *  
+   */
+  targets:null,
+  
+  /*
    *  Méthode appelée pour placer les observers sur les champs fournis
    *  en argument.
    *
@@ -318,6 +329,45 @@ UI.Input = {
     Selection.set(this.target.dom, valeur, options || {end:true})  
   },
   
+  memorize_current:function(options)
+  {
+    if(undefined == options) options = {}
+    var id = Time.now()
+    if(!this.targets) this.targets = {}
+    this.targets[id] = $.extend({}, this.target)
+    if(options.blur)
+    {
+      if(this.target.hasFiche)
+      {
+        var fiche = get_fiche(this.target.fiche_id)
+        if(fiche.main_prop == this.target.property ) fiche.disable_main_field
+        else this.target.dom.blur()
+      }
+      else this.target.dom.blur()
+    }
+    return id
+  },
+  
+  retreive_current:function(id, options)
+  {
+    if(undefined == options) options = {}
+    this.target = this.targets[id]
+    if(!this.target) throw "La target d'identifiant "+id+" n'est pas définie…"
+    if(options.focus)
+    {
+      if(this.target.hasFiche)
+      {
+        var fiche = get_fiche(this.target.fiche_id)
+        if(fiche.main_prop == this.target.property )
+        {
+          fiche.enable_main_field
+        }
+      }
+      // On remet la sélection précédente
+      Selection.select(this.target.dom, this.target.selection)
+    }
+  },
+  
   /*
    *  Débug les infos sur l'évènement 'keypress'
    *  (si DL contient DB_INFOS_EVENT)
@@ -396,6 +446,7 @@ UI.Input = {
             tag : domObj.tagName,
            type : target.attr('type'),
           value : domObj.value,
+      selection : Selection.of(domObj),
       data_type : target.attr('data-type'),
          format : target.attr('data-format'),
        is_input : null,
