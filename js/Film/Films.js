@@ -75,6 +75,25 @@ window.FILMS = {
   },
     
   /*
+   *  Affiche la fiche du film d'identifiant +fid+
+   *  TODO
+   *  
+   */
+  show:function(fid)
+  {
+    F.show("La méthode d'affichage du film n'est pas encore implémentée.")
+  },
+  
+  /*
+   *  Met le film d'identifiant +fid+ en édition
+   *  
+   */
+  edit:function(fid)
+  {
+    F.show("La méthode d'édition des films n'est pas encore implémentée.")
+  },
+  
+  /*
    *  Méthode appelée après avoir choisi un film, quand
    *  on doit l'insérer dans le texte (CMD + F).
    *  
@@ -83,7 +102,6 @@ window.FILMS = {
    */
   insert_in_input:function(fid)
   {
-    dlog("Balise générée : " + this.get(fid).balise( this.Dom.options_balise ))
     UI.Input.set_selection_to( this.get(fid).balise( this.Dom.options_balise ))
   },
   
