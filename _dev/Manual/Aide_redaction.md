@@ -8,7 +8,7 @@ On peut choisir un film en tapant CMD+F quand on se trouve dans un champ d'édit
 
 Après avoir choisi le film, une balise s'inscrit au cursor.
 
-Dans la fenêtre Film, des cases à cocher permettent de définir l'aspect du lien, ses options. On peut cependant les régler dans la balise elle-même.
+*Dans la fenêtre Film, des cases à cocher permettent de définir l'aspect du lien, ses options. Le plus simple est donc de définir l'affichage du titre en le choisissant. On peut cependant les régler dans la balise elle-même.*
 
 La balise est composée de&nbsp;:
 

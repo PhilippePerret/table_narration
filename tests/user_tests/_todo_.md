@@ -1,6 +1,11 @@
 IMPLÉMENTER
 -----------
 
+EDITION FILM
+- créer le film en "local" 
+  > dans la donnée de tous les films
+  > dans l'affichage
+  
 CHOIX D'UN FILM
   # [pas toujours…] Les raccourcis ne fonctionnent plus sur un deuxième champ édité
   # Quand on passe d'un listing à l'autre, les flèches concernent toujours

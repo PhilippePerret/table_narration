@@ -351,10 +351,9 @@ UI.Input = {
   {
     if(undefined == options) options = {}
     this.target = this.targets[id]
-    // Je ne sais pas pourquoi, mais dans la suite, entre ce point et
-    // le Selection.select ci-dessous, la sélection de this.target repasse
-    // à rien. Donc il faut que je mémorise ici la sélection définie 
-    // auparavant pour pouvoir la remettre
+    // Il faut reprendre la sélection dans this.target maintenant, car
+    // this.target sera modifié ci-dessous quand on ré-activera
+    // le champ the this.targets[id]
     var selection = $.extend({}, this.target.selection)
     if(!this.target) throw "La target d'identifiant "+id+" n'est pas définie…"
     if(options.focus)

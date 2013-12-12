@@ -1,3 +1,17 @@
+
+# Pour requérir un model du dossier ./ruby/model/ ou du dossier ./interdata
+# 
+def require_model model
+  path_local = File.join('.', 'ruby', 'model', model)
+  if File.exists? path_local
+    require path_local
+  else
+    path_interdata = File.join('..', 'interdata', model)
+    require path_interdata
+  end
+end
+
+
 def log line
   openlog if @reflog.nil?
   @reflog.write "#{line}\n"

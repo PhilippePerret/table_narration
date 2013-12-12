@@ -10,6 +10,9 @@
 
 window.Film = function(fid)
 {
+  // L'identifiant est toujours requis
+  if(undefined == fid || fid == null || fid == "") throw LOCALE.film.error['no id supplied']
+
   this.id = fid
   
   /* État */
@@ -43,7 +46,7 @@ $.extend(Film.prototype,{
     if(options.titrefr === false) bal += this.titre
     else bal += (this.titre_fr || this.titre)
     // Les options choisies
-    var opts = L(options).collect(function(opt, value){ return value == true }).join(' ')
+    var opts = L(options).select(function(opt, value){ return value == true }).join(' ')
     if(opts != "") bal += "|" + opts
     bal += "]"
     return bal
@@ -236,7 +239,11 @@ Object.defineProperties(Film.prototype,{
           this.loaded = true
           if('function'==typeof poursuivre) poursuivre()
         }
-        else F.error(rajax.message)
+        else
+        { 
+          this.unabled_to_load = true
+          F.error(rajax.message)
+        }
       }
     }
   },
@@ -251,7 +258,7 @@ Object.defineProperties(Film.prototype,{
       if(undefined == rajax)
       { // => Requête ajax
         Ajax.send(
-          {script:'film/save', film_data:this.data_for_save},
+          {script:'film/save', data:this.data_for_save},
           $.proxy(this.save, this, poursuivre)
         )
       }
@@ -259,6 +266,7 @@ Object.defineProperties(Film.prototype,{
       { // => Retour sauvegarde
         if(rajax.ok)
         {
+          F.show("Film “"+this.titre+"” enregistré.")
           this.modified = false
           if('function'==typeof poursuivre) poursuivre()
         }
@@ -278,10 +286,27 @@ Object.defineProperties(Film.prototype,{
    */
   "edit":{
     get:function(){
-      if(false == this.loaded) return this.load($.proxy(this.edit, this))
-      FILM.Edition.set_values( this )
+      if(this.unabled_to_load == true) return // abandon
+      if(false == this.loaded) return this.load($.proxy(FILMS.edit, FILMS, this.id))
+      FILMS.Edition.set_values( this )
     }
   },
   
+  /*
+   *  Data en envoyer par la requête d'enregistrement du film
+   *  
+   */
+  "data_for_save":{
+    get:function()
+    {
+      var d = {}
+      var my = this
+      L(FILMS.Edition.FILM_PROPERTIES).each(function(prop){
+        d[prop] = my[prop]
+        if(d[prop] == "") d[prop] == null
+      })
+      return d
+    }
+  }
   
 })

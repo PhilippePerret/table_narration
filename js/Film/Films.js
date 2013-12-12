@@ -90,7 +90,7 @@ window.FILMS = {
    */
   edit:function(fid)
   {
-    F.show("La méthode d'édition des films n'est pas encore implémentée.")
+    this.Edition.edit(fid)
   },
   
   /*

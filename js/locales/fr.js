@@ -30,6 +30,11 @@ window.LOCALE = {
     // LOCALE.film.message
     message:{
       'must choose a film'          : "Il faut choisir un film !"
+    },
+    
+    // LOCALE.film.error
+    error:{
+      'no id supplied'              : "Aucun identifiant fourni à l'instanciation. Je renonce"
     }
   }
 }

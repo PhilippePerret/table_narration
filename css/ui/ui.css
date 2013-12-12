@@ -11,7 +11,14 @@ body {
 .small { font-size: 0.8em;  }
 .tiny  { font-size: 0.65em; }
 
-textarea {resize:none;}
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  resize:none;
+}
+textarea.haut {
+  height : 140px !important
+}
 
 input[type="text"].focused,
 textarea.focused

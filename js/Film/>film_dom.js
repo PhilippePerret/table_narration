@@ -9,9 +9,15 @@ FILMS.Dom = {
    *
    */
   DFOCUS: {
-    'onglets':{prev:'options', next:'listing', obj:null},
-    'listing':{prev:'onglets', next:'options', obj:null},
-    'options':{prev:'listing', next:'onglets', obj:null}
+    'onglets':{prev:'options', next:'listing', obj:null, help:
+      "Presser la touche de la lettre pour changer d'onglet."
+    },
+    'listing':{prev:'onglets', next:'options', obj:null, help:
+      image('clavier/K_FlecheH.png') + " et " + image('clavier/K_FlecheB.png') +
+      " pour sélectionner les films.\n" +
+      image('clavier/K_Command.png') + " + LETTRE pour changer d'onglet."
+    },
+    'options':{prev:'listing', next:'onglets', obj:null, help:null}
   },
   
   /*
@@ -153,6 +159,8 @@ FILMS.Dom = {
     this.current_focus = this.DFOCUS[idfocus]
     this.current_focus.obj.addClass('focused')
     this.current_focus.obj[0].focus()
+    F.clean()
+    if(this.DFOCUS[idfocus].help) F.show(this.DFOCUS[idfocus].help)
   },
   
   // /*
@@ -192,7 +200,21 @@ FILMS.Dom = {
     {
       this[complex_method]
       return stop_event(evt)
-    } 
+    }
+    /*
+     *  Dans le listing, le raccourci CMD + Lettre permet de 
+     *  changer d'onglet.
+     *  
+     */
+    if(evt.metaKey)
+    {
+      var ccode = evt.charCode
+      if(ccode.is_between(97, 122))
+      {
+        this.on_click_onglet(ccode - 32)
+      }
+      return stop_event(evt)
+    }
   },
   keypress_on_options:function(evt)
   {
@@ -270,8 +292,8 @@ FILMS.Dom = {
    */
   show_listing:function(lettre)
   {
+    this.current_item = null
     this.lettre_courante  = lettre
-    this.current_item     = null
     $(this.jid_current_listing).show()
   },
   /*
@@ -283,6 +305,7 @@ FILMS.Dom = {
     $(this.jid_current_listing).hide()
     $('panneau#films div#onglet_lettre-'+lettre).removeClass('pressed')
     this.lettre_courante = null
+    this.current_item = null
   },
   
   /*
@@ -423,10 +446,11 @@ Object.defineProperties(FILMS.Dom, {
       if(cur) // car la méthode peut être appelée pour déselectionner le courant
       {
         this.div_item(cur).addClass('selected')
-        this._current_item = cur
         this.scroll_to_current_item
         this.set_apercu_titre
       }
+      this._current_item = cur
+      dlog("this._current_item mis à : "+this._current_item)
     }
   },
   /* Sélectionne l'item suivant dans le listing */
