@@ -334,6 +334,9 @@ UI.Input = {
     if(undefined == options) options = {}
     var id = Time.now()
     if(!this.targets) this.targets = {}
+    // On prend la sélection courante
+    this.target.selection = Selection.of(this.target.dom)
+    
     this.targets[id] = $.extend({}, this.target)
     if(options.blur)
     {
@@ -352,6 +355,11 @@ UI.Input = {
   {
     if(undefined == options) options = {}
     this.target = this.targets[id]
+    // Je ne sais pas pourquoi, mais dans la suite, entre ce point et
+    // le Selection.select ci-dessous, la sélection de this.target repasse
+    // à rien. Donc il faut que je mémorise ici la sélection définie 
+    // auparavant pour pouvoir la remettre
+    var selection = $.extend({}, this.target.selection)
     if(!this.target) throw "La target d'identifiant "+id+" n'est pas définie…"
     if(options.focus)
     {
@@ -364,7 +372,7 @@ UI.Input = {
         }
       }
       // On remet la sélection précédente
-      Selection.select(this.target.dom, this.target.selection)
+      Selection.select(this.target.dom, selection)
     }
   },
   
@@ -467,6 +475,7 @@ UI.Input = {
       data.fiche_id = dId[1]
       data.property = dId[2]
     }
+        
     return data
   },
   
