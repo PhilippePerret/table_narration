@@ -8,12 +8,29 @@ body {
 .fright{float:right;}
 .fleft {float:left ;}
 
+.small { font-size: 0.8em;  }
+.tiny  { font-size: 0.65em; }
+
 textarea {resize:none;}
 
 input[type="text"].focused,
 textarea.focused
 {
   background-color:#EFE;
+}
+
+input[type="button"].small,
+a.small {
+  font-family       : "Lucida Grande";
+  font-size         : 9.1pt !important;
+  padding           : 0px 4px;
+  border            : 1px solid #00AF00 ;
+  opacity           : 0.35;
+  background-color  : #DFFFDB;
+  color             : #009200;
+}
+.small:hover {
+  opacity     : 1 !important;
 }
 
 div.focusable {
