@@ -141,16 +141,19 @@ FILMS.Edition = {
         val = val.replace(/\^rc\^/g, "\n")
         break
       case 'producteur':
-        if(val) val = my.stringify_people_as(val, 'producteur')
+        val = my.stringify_people_as(val, 'producteur')
         break
       case 'auteurs':
-        if(val) val = my.stringify_people_as(val, 'auteur')
+        val = my.stringify_people_as(val, 'auteur')
         break
       case 'realisateur':
-        if(val) val = my.stringify_people_as(val, 'realisateur')
+        val = my.stringify_people_as(val, 'realisateur')
         break
       case 'acteurs':
-        if(val) val = my.stringify_people_as(val, 'acteur')
+        val = my.stringify_people_as(val, 'acteur')
+        break
+      case 'duree':
+        val = val ? Time.m2h(val) : ""
         break
       default:
         if(val == null) val = ""
@@ -158,8 +161,14 @@ FILMS.Edition = {
       $(my.tag_for(prop)+'#filmEdit-'+prop).val( val )
     })
   },
+  /*
+   *  Transforme une liste de people en {String} (pour édition)
+   *  
+   */
   stringify_people_as:function(list, people_type /* 'acteur' ou */)
   {
+    dlog(list)
+    if(list == null || list.length == 0) return ""
     var my = this
     return L(list).collect(function(data){
       return my.stringify_person_as(data, people_type)
@@ -206,6 +215,9 @@ FILMS.Edition = {
       case 'acteurs':
         val = my.dataify_people(val, 'acteur')
         break
+      case 'duree':
+        val = val != "" ? Time.h2m( val ) : null
+        break
       default:
         if(val == "") val = null
       }
@@ -234,12 +246,13 @@ FILMS.Edition = {
   /*
    *  Transforme les données string des people en donnée pour l'enregistrement
    *  
-   *  @param  str     Le contenant entier du textarea de la propriété
+   *  @param  str           Le contenant entier du textarea de la propriété
    *  @param  people_type   Le type de personne concerné ('acteur', 'producteur', etc.)
    *
    */
   dataify_people:function(str, people_type)
   {
+    if(str.trim() == "") return null
     var my = this
     return L(str.trim().split("\n")).collect(function(line){
       return my.dataify_person(line.trim(), people_type)
@@ -306,6 +319,18 @@ Object.defineProperties(FILMS.Edition,{
       
     }
   },
+  
+  /*
+   *  Recherche le film sur imdb
+   *  --------------------------
+   *  
+   */
+  "find_in_imdb":{
+    get:function(){
+      'http://www.imdb.com/find?q=Dancer+in+the+dark&s=all'
+    }
+  },
+  
   /*
    *  Préparation du formulaire
    *  
@@ -347,27 +372,29 @@ Object.defineProperties(FILMS.Edition,{
       L([
         '<div id="film_titres">',
         {id:'id', type:'hidden'},
-        {id:'titre', label:"Titre"}, {id:'titre_fr', label:"Titre fr."},
+        {id:'titre', placeholder:"Titre original"}, 
+        image("picto/imdb/projectors.png", {id:"img_imdb"}),
+        {id:'titre_fr', placeholder:"Titre français (s'il existe)"},
         '</div>',
         '<div id="div_film_resume">',
-        {type:'textarea', id:'resume', class:'haut'},
+        {type:'textarea', id:'resume', class:'haut', placeholder:"Résumé du film"},
         '</div>',
         '<div id="film_data">',
-        {id:'duree', label:"Durée (mns)", data_type:'horloge'}, 
-        {id:'annee', label:'Année', data_type:'number', data_format:'(18|19|20)[0-9]{2}'},
+        {id:'duree', label:"Durée (mns)", placeholder:"h:mm:ss", data_type:'horloge'}, 
+        {id:'annee', label:'Année', placeholder: "AAAA", data_type:'number', data_format:'(18|19|20)[0-9]{2}'},
         {id:'pays', label:"Pays", data_type:'pays', data_format:'[a-zA-Z]{2}'}, 
         '</div>',
-        '<fieldset id="film_producteur_div"><legend><b>Producteur</b> (prénom, nom [↵])</legend>',
-        {type:'textarea', id:'producteur', data_type:'people'},
+        '<fieldset id="film_producteur_div"><legend><b>Producteur</b></legend>',
+        {type:'textarea', id:'producteur', data_type:'people', placeholder:"Prénom, nom [↵]"},
         '</fieldset>',
-        '<fieldset id="film_auteurs_div"><legend><b>Auteurs</b> (prénom, nom[, roman/scénario/story] [↵])</legend>',
-        {type:'textarea', id:'auteurs', data_type:'people', data_format:'auteur'},
+        '<fieldset id="film_auteurs_div"><legend><b>Auteurs</b></legend>',
+        {type:'textarea', id:'auteurs', data_type:'people', data_format:'auteur', placeholder:"prénom, nom[, roman/scénario/story] [↵]"},
         '</fieldset>',
-        '<fieldset id="film_realisateurs_div"><legend><b>Réalisateur</b> (prénom, nom [↵])</legend>',
-        {type:'textarea', id:'realisateur', data_type:'people'},
+        '<fieldset id="film_realisateurs_div"><legend><b>Réalisateur</b></legend>',
+        {type:'textarea', id:'realisateur', data_type:'people', placeholder:"prénom, nom [↵]"},
         '</fieldset>',
-        '<fieldset id="film_acteurs_div"><legend><b>Acteurs</b> (prénom, nom, prénom/surnom perso, nom perso, fonction [↵])</legend>',
-        {type:'textarea', id:'acteurs', data_type:'people', data_format:'acteur', class:'haut'},
+        '<fieldset id="film_acteurs_div"><legend><b>Acteurs</b></legend>',
+        {type:'textarea', id:'acteurs', data_type:'people', data_format:'acteur', placeholder:"prénom, nom, prénom/surnom perso, nom perso, fonction [↵]", class:'haut'},
         '</fieldset>'
         ]).each(function(dfield){c += FILMS.Edition.html_field(dfield)})
       c += '</div>'
@@ -416,6 +443,7 @@ Object.defineProperties(FILMS.Edition,{
       (dfield.data_format ? ' data-format="'+dfield.data_format+'"' : '') +
       (dfield.value       ? ' value="'+dfield.value+'"' : '') +
       (dfield.style       ? ' style="'+dfield.style+'"' : '') +
+      (dfield.placeholder ? ' placeholder="'+dfield.placeholder+'"' : '') +
       (dfield.type=='text' ? ' />' : '>')
     }
   },

@@ -17,6 +17,9 @@ DONC
   
 EDITION FILM
   Sur listing : "E" permet d'éditer le film, ERASE permet de le détruire
+  # On ne peut pas utiliser RETURN sur les textarea
+    On pourrait imaginer mettre une class css 'returnable' ou 'enterable' qui
+    dirait à UI.Input (si c'est lui) qu'on peut ajouter des retours chariots.
 
 RACCOURCIS CLAVIER
   > Les faire plutôt apparaitre dans une ligne fixe en bas de la fenêtre

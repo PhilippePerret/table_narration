@@ -169,9 +169,9 @@ Object.defineProperties(Film.prototype,{
     }
   },
   "annee":{
-    get:function(){return this._annee},
+    get:function(){return this._annee || null },
     set:function(annee){
-      this._annee = parseInt(annee, 10)
+      if(annee) this._annee = parseInt(annee, 10)
     }
   },
   

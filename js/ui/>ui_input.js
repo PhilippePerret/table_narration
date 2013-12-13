@@ -244,6 +244,9 @@ UI.Input = {
    *      + quand on tab sur le champ
    *
    *    • Aucun traitement si le champ est vide
+   *
+   *    • Si une valeur est modifiée, il faut la remettre dans
+   *      le champ à l'aide de `this.target.jq.val(nouvelle valeur)'
    *  
    *  @return TRUE si tout est OK ou false dans le cas contraire
    */
@@ -264,8 +267,9 @@ UI.Input = {
       if( isNaN(value)) return F.error("La donnée devrait être un nombre")
       break
     case 'horloge':
-      // La donnée doit être transformée en horloge
-      // TODO
+      value = value.trim().replace(/,/g, ':').replace(/ /g, '')
+      dlog("value: "+value)
+      this.target.jq.val(Time.m2h(Time.h2m(value)))
       break
     case 'people':
       switch(this.target.format)

@@ -9,7 +9,7 @@ Voir les données du film (régler l'identifiant ci-dessus)
 
 require '../interdata/film/ruby/model/film'
 
-FILM_ID = 'ZUnAutreNouveau--'
+FILM_ID = 'EtUnAutrePourVoir'
 
 film = Film.new FILM_ID
 if film.exists?
