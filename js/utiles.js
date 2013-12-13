@@ -1,4 +1,13 @@
 /*
+ *  Affiche un message d'aide (par exemple les raccourcis clavier)
+ *  
+ */
+window.help = function(message)
+{
+  $('div#div_help').html( message )
+}
+
+/*
  *  Retourne le code HTML pour afficher l'image de path +path+
  *
  *  Pour le moment, l'image doit se trouver dans le dossier lib/img

@@ -12,8 +12,6 @@
   <?php include "./php/view/section_header.php" ?>
 	<section id="table">
 	</section>
-<?php
-	
-?>
+  <?php include "./php/view/section_footer.php" ?>
 </body>
 </html>

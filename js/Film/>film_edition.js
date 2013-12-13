@@ -296,6 +296,28 @@ FILMS.Edition = {
     var t = Texte.to_ascii( titre )
     t = t.titleize().replace(/[^a-zA-Z0-9]/g,'')
     return t
+  },
+  
+  /*
+   *  Recherche le film sur imdb
+   *  --------------------------
+   *  
+   *  NOTES
+   *  -----
+   *    = Mis en vraie méthode car appelé depuis le formulaire sans argument
+   *      en proxy.
+   */
+  search_in_imdb:function(titre)
+  {
+    if(undefined == titre) titre = $('input#filmEdit-titre').val().trim()
+    else titre = titre.trim()
+    if(titre == "") titre = $('input#filmEdit-titre_fr').val().trim()
+    if(titre == "") F.error( LOCALE.film.error['no titre to find'] )
+    else
+    {
+      var path = 'http://www.imdb.com/find?q='+titre.split(' ').join('+')+'&s=all'
+      window.open(path, "SearchInImdb")
+    }
   }
   
 }
@@ -317,17 +339,6 @@ Object.defineProperties(FILMS.Edition,{
   "init_form":{
     get:function(){
       
-    }
-  },
-  
-  /*
-   *  Recherche le film sur imdb
-   *  --------------------------
-   *  
-   */
-  "find_in_imdb":{
-    get:function(){
-      'http://www.imdb.com/find?q=Dancer+in+the+dark&s=all'
     }
   },
   
@@ -373,14 +384,18 @@ Object.defineProperties(FILMS.Edition,{
         '<div id="film_titres">',
         {id:'id', type:'hidden'},
         {id:'titre', placeholder:"Titre original"}, 
-        image("picto/imdb/projectors.png", {id:"img_imdb"}),
+        image("picto/imdb/projectors.png", {
+          id:"img_imdb", 
+          title:"Cliquer pour rechercher le titre sur IMDb",
+          onclick:"$.proxy(FILMS.Edition.search_in_imdb, FILMS.Edition)()"}
+        ),
         {id:'titre_fr', placeholder:"Titre français (s'il existe)"},
         '</div>',
         '<div id="div_film_resume">',
         {type:'textarea', id:'resume', class:'haut', placeholder:"Résumé du film"},
         '</div>',
         '<div id="film_data">',
-        {id:'duree', label:"Durée (mns)", placeholder:"h:mm:ss", data_type:'horloge'}, 
+        {id:'duree', label:"Durée", placeholder:"h:mm:ss", data_type:'horloge'}, 
         {id:'annee', label:'Année', placeholder: "AAAA", data_type:'number', data_format:'(18|19|20)[0-9]{2}'},
         {id:'pays', label:"Pays", data_type:'pays', data_format:'[a-zA-Z]{2}'}, 
         '</div>',
@@ -437,13 +452,15 @@ Object.defineProperties(FILMS.Edition,{
       if(undefined == dfield.type) dfield.type = 'text'
       return "<" + (dfield.type == 'text' ? 'input' : dfield.type) +
       (dfield.type=='text'? ' type="text"' :  '') +
-      (dfield.id          ? ' id="'+dfield.id+'"' :  '') +
-      (dfield.class       ? ' class="'+dfield.class+'"' : '') +
-      (dfield.data_type   ? ' data-type="'+dfield.data_type+'"' : '') +
-      (dfield.data_format ? ' data-format="'+dfield.data_format+'"' : '') +
-      (dfield.value       ? ' value="'+dfield.value+'"' : '') +
-      (dfield.style       ? ' style="'+dfield.style+'"' : '') +
-      (dfield.placeholder ? ' placeholder="'+dfield.placeholder+'"' : '') +
+      (dfield.id          ? ' id="'           +dfield.id          +'"' : '') +
+      (dfield.class       ? ' class="'        +dfield.class       +'"' : '') +
+      (dfield.data_type   ? ' data-type="'    +dfield.data_type   +'"' : '') +
+      (dfield.data_format ? ' data-format="'  +dfield.data_format +'"' : '') +
+      (dfield.value       ? ' value="'        +dfield.value       +'"' : '') +
+      (dfield.style       ? ' style="'        +dfield.style       +'"' : '') +
+      (dfield.title       ? ' title="'        +dfield.title       +'"' : '') +
+      (dfield.alt         ? ' alt="'          +dfield.alt         +'"' : '') +
+      (dfield.placeholder ? ' placeholder="'  +dfield.placeholder +'"' : '') +
       (dfield.type=='text' ? ' />' : '>')
     }
   },

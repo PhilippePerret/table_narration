@@ -65,6 +65,8 @@ div.buttons {
   text-align  : right;
 }
 
+img[onclick] { cursor:pointer;}
+
 /* ---------------------------------------------------------------------
  *  Éléments spécifiques
  */
@@ -75,4 +77,22 @@ section#table {
   height      : 200em;
   border      : 1px dashed green;
   margin-top  : 40px;
+}
+
+/* Div de bas de page affichant des messages d'aide */
+div#div_help {
+  position    : fixed;
+  width       : 100%;
+  height      : 28px;
+  bottom      : 0px;
+  left        : 0px;
+  padding     : 4px 20px;
+  background-color : #eee;
+  border-top  : 2px solid #ccc;
+  font-family : "Lucida Grande";
+  font-size   : 8pt;
+  color       : #6F6F6F;
+}
+div#div_help img {
+  vertical-align : middle;
 }

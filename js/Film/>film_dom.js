@@ -1,4 +1,8 @@
 FILMS.Dom = {
+  SHORTCUTS_COMMUNS:
+  image('clavier/K_Escape.png') + " pour renoncer, " +
+  image('clavier/K_Tab.png') + " pour focusser sur la section suivante, "
+  ,
   /*
    *  Données pour focus
    *  
@@ -9,15 +13,15 @@ FILMS.Dom = {
    *
    */
   DFOCUS: {
-    'onglets':{prev:'options', next:'listing', obj:null, help:
+    'onglets':{id:'onglets', prev:'options', next:'listing', obj:null, help:
       "Presser la touche de la lettre pour changer d'onglet."
     },
-    'listing':{prev:'onglets', next:'options', obj:null, help:
+    'listing':{id:'listing', prev:'onglets', next:'options', obj:null, help:
       image('clavier/K_FlecheH.png') + " et " + image('clavier/K_FlecheB.png') +
       " pour sélectionner les films.\n" +
       image('clavier/K_Command.png') + " + LETTRE pour changer d'onglet."
     },
-    'options':{prev:'listing', next:'onglets', obj:null, help:null}
+    'options':{id:'options', prev:'listing', next:'onglets', obj:null, help:null}
   },
   
   /*
@@ -160,7 +164,10 @@ FILMS.Dom = {
     this.current_focus.obj.addClass('focused')
     this.current_focus.obj[0].focus()
     F.clean()
-    if(this.DFOCUS[idfocus].help) F.show(this.DFOCUS[idfocus].help)
+    if(this.DFOCUS[idfocus].help)
+    {
+      help(this.SHORTCUTS_COMMUNS + ' ' + this.DFOCUS[idfocus].help)
+    } 
   },
   
   // /*
@@ -252,6 +259,15 @@ FILMS.Dom = {
     case K_ESCAPE:
       this.hide_panneau()
       return true
+    }
+    switch(evt.charCode)
+    {
+    case Key_n: // => Nouveau film
+      if(this.current_focus.id != 'listing' && evt.metaKey)
+      {
+        FILMS.Edition.edit()
+        return true
+      }
     }
     return false // la touche n'a pas été traitée ici
   },

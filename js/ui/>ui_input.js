@@ -268,7 +268,6 @@ UI.Input = {
       break
     case 'horloge':
       value = value.trim().replace(/,/g, ':').replace(/ /g, '')
-      dlog("value: "+value)
       this.target.jq.val(Time.m2h(Time.h2m(value)))
       break
     case 'people':

@@ -34,7 +34,8 @@ window.LOCALE = {
     
     // LOCALE.film.error
     error:{
-      'no id supplied'              : "Aucun identifiant fourni à l'instanciation. Je renonce"
+      'no id supplied'              : "Aucun identifiant fourni à l'instanciation. Je renonce",
+      'no titre to find'            : "Il faut donner un titre à chercher !"
     }
   }
 }

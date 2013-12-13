@@ -64,7 +64,7 @@ panneau#films div#div_form_film div#film_form > div {
 }
 panneau#films div#film_form label.libelle {
   display       : inline-block;
-  width         : 75px;
+  width         : 50px;
   text-align    : right;
   /*  padding-right : 8px;*/
 }
