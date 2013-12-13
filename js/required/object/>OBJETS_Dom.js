@@ -676,11 +676,11 @@ OBJETS_Dom_defined_properties = {
     get:function(){
       return  '<panneau id="'+this.id_panneau+'" class="main_panneau_items">' +
                 this.html_div_outils  +
-                this.div_edition +
+                this.html_div_edition +
                 this.html_div_onglets +
                 '<div id="'+this.id_panneau+'_listings" class="focusable main_panneau_listings" tabindex="1"></div>' +
                 this.html_div_options +
-                this.div_boutons +
+                this.html_div_boutons +
               '</panneau>'
     }
   },
@@ -744,7 +744,7 @@ OBJETS_Dom_defined_properties = {
    *  Construit le div du formulaire de film
    *  
    */
-  "div_edition":{
+  "html_div_edition":{
     get:function(){
       return '<div id="'+this.id_panneau+'_edition">' + '</div>'
     }
@@ -753,7 +753,7 @@ OBJETS_Dom_defined_properties = {
    *  Code HTML du div des boutons (bas)
    *  
    */
-  "div_boutons":{
+  "html_div_boutons":{
     get:function(){
       return '<div id="'+this.id_panneau+'_buttons" class="buttons">' +
       '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, FILMS.Edition)()" class="fleft" />' +

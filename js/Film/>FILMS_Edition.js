@@ -4,8 +4,25 @@
  *  Pour l'édition des films
  *  
  */
+if(undefined == FILMS.Edition) FILMS.Edition = {}
 
-FILMS.Edition = {
+// Méthodes et propriété partagées
+// Cf. à la fin de >OBJETS_Edition
+
+// Propriétés complexes partagées
+// Cf. à la fin de >OBJETS_Edition
+
+// Propriétés et méthodes propres
+$.extend(FILMS.Edition, {
+  
+  OBJS              : FILMS,
+  SELF              : FILMS.Edition,
+  as_string         : "FILMS.Edition",
+  parent_as_string  : "FILMS",
+  ItemClass         : Film,
+  main_prop         : 'titre', 
+  class_min         : "film",
+  folder_ajax       : "film",
   
   /*
    *  Liste des propriétés du film qui pourront être
@@ -18,154 +35,11 @@ FILMS.Edition = {
    */
   ITEM_PROPERTIES:['id', 'titre', 'titre_fr', 'resume', 'producteur', 'auteurs',
     'realisateur', 'acteurs', 'annee', 'duree', 'pays'],
-  
-  /*
-   *  Etats
-   *  
-   */
-  form_prepared:false,
-  
-  /*
-   *  Instance du film {Film} en édition (if any)
-   *  
-   */
-  current:null, 
-  
-  /*
-   *  = MAIN = Demande d'édition du formulaire
-   *
-   *  @param  fid   Identifiant {String} du film à éditer
-   *                Si non fourni, c'est une création.
-   */
-  edit:function(fid)
-  {
-    if(!this.form_prepared) this.prepare_formulaire ;
-    FILMS.Dom.show_formulaire
-    if(undefined == fid)
-    {
-      this.init_form
-    }
-    else
-    {
-      this.current = FILMS.get( fid )
-      this.current.edit 
-        // @note: sait gérer le fait que le film ne soit pas encore chargé
-    }
-  },
-  
-  /*
-   *  Pour enregistrer les modifications (ou créer un nouveau film)
-   *  
-   */
-  save:function()
-  {
-    var values = this.get_values()
-    var is_new_film = values.id == null
-    if(is_new_film)
-    {
-      var id_new_film = this.id_from_titre( values.titre )
-      this.current = new Film( id_new_film )
-    }
-    else this.current = get_film( values.id )
-    this.current.dispatch( values )
-    if(is_new_film) this.current.id = id_new_film // a été écrasé par dispatch
-    // === ENREGISTREMENT DU FILM ===
-    this.current.save( 
-      $.proxy(this[is_new_film ? 'update_film_list_with_new' : 'end'], this) 
-    )
-  },
-  
-  /*
-   *  Demande de destruction du film d'identifiant +fid+
-   *  
-   */
-  want_remove:function(fid)
-  {
-    Edit.show({
-      id:'destroy_film',
-      title: LOCALE.film.ask['want delete film'] + " “"+get_film(fid).titre+"” ?",
-      buttons:{
-        cancel:{name:"Renoncer"},
-        ok:{name:"Détruire le film", onclick:$.proxy(FILMS.Edition.remove, FILMS.Edition, fid)}
-      }
-    })
-  },
-  /*
-   *  Destruction du film d'identifiant +fid+
-   *  
-   */
-  remove:function(fid)
-  {
-    Ajax.send({script:'film/destroy', film_id:fid}, $.proxy(this.suite_remove, this))
-  },
-  suite_remove:function(rajax)
-  {
-    if(rajax.ok)
-    {
-      var film = get_film( rajax.film_id )
-      FILMS.Dom.remove_item(film.id)
-      if(FILMS.DATA_PER_LETTER[film.let])
-      {
-        var indice = FILMS.DATA_PER_LETTER[film.let].indexOf(film.id)
-        console.log("indice: "+indice)
-        FILMS.DATA_PER_LETTER[film.let].splice(indice, 1)
-      }
-      delete FILMS.DATA[film.id]
-      with(FILMS.Dom)
-      {
-        remove_listing_letter(film.let)
-        on_click_onglet(film.let) 
-      }
-    }
-    else F.error(rajax.message)
-  },
-  
-  /*
-   *  Appelé après `save' ci-dessus en cas de nouveau film
-   *  On doit actualiser la liste des films (pour ne pas avoir à la recharger)
-   *  et rafraichir l'affichage de la liste si nécessaire (si elle est affichée ou
-   *  construite, entendu que la lettre affichée n'est pas forcément la lettre du
-   *  film)
-   *  
-   *  @requis   this.current    Instance {Film} du nouveau film
-   */
-  update_film_list_with_new:function()
-  {
-    var film = this.current
-    film.is_new = true // encore utile ?
-    // = Ajout à FILMS.DATA =
-    FILMS.DATA[film.id] = film.data_mini
-    // = Ajout à FILMS.DATA_PER_LETTER =
-    // @note: si DATA_PER_LETTER a déjà été établie, c'est ici
-    // qu'il faut ajouter le film. Sinon, il sera automatiquement
-    // ajouté à la définition de DATA_PER_LETTER.
-    if(FILMS.check_if_list_per_letter_ok)
-    {
-      FILMS.DATA_PER_LETTER[film.let].push( film.id )
-      FILMS.DATA_PER_LETTER[film.let].sort
-    } 
-    // = Forcer l'actualisation du listing =
-    FILMS.Dom.remove_listing_letter( film.let )
-    // = Finir et afficher le listing =
-    this.end()
-  },
-  
-  /*
-   *  Pour terminer l'édition/création du film
-   *
-   *  NOTES
-   *  -----
-   *    = Cette méthode est appelée directement par le bouton "Renoncer", sans
-   *      passer par `save' ci-dessus
-   *  
-   *    = On peut venir aussi de `update_film_list_with_new' ci-dessus lorsque
-   *      c'est une création de film.
-   */
-  end:function()
-  {
-    FILMS.Dom.hide_formulaire
-    if(this.current.is_new) FILMS.Dom.on_click_onglet( this.current.let )
-  },
+
+})
+
+
+$.extend(FILMS.Edition, {
 
   /*
    *  Met les valeurs du film +film+ {Film} dans les champs d'édition
@@ -174,7 +48,7 @@ FILMS.Edition = {
   set_values:function(film)
   {
     // On remonte toujours au-dessus
-    $('div#film_form').scrollTo(0) ;
+    $('div#'+this.prefix+'form').scrollTo(0) ;
     var my = this
     L(my.ITEM_PROPERTIES).each(function(prop){
       val = film[prop]
@@ -241,7 +115,7 @@ FILMS.Edition = {
   get_values:function()
   {
     // On remonte toujours au-dessus
-    $('div#film_form').scrollTo(0) ;
+    $('div#'+this.prefix+'form').scrollTo(0) ;
     var values = {}
     var my = this
     L(my.ITEM_PROPERTIES).each(function(prop){
@@ -332,16 +206,6 @@ FILMS.Edition = {
     return d
   },
   
-  /*
-   *  Retourne un identifiant de film à partir du +titre+ fourni
-   *  
-   */
-  id_from_titre:function(titre)
-  {
-    var t = Texte.to_ascii( titre )
-    t = t.titleize().replace(/[^a-zA-Z0-9]/g,'')
-    return t
-  },
   
   /*
    *  Recherche le film sur imdb
@@ -365,17 +229,9 @@ FILMS.Edition = {
     }
   }
   
-}
+})
 
 Object.defineProperties(FILMS.Edition,{
-  
-  /*
-   *  Return le {jQuerySet} du formulaire d'édition du film.
-   *  
-   */
-  "form":{
-    get:function(){return $('div#panneau_film_edition div#film_form')}
-  },
   
   /*
    *  Initialisation du formulaire
@@ -388,43 +244,12 @@ Object.defineProperties(FILMS.Edition,{
   },
   
   /*
-   *  Préparation du formulaire
-   *  
-   *  NOTES
-   *  -----
-   *    = Il est préparé masqué
-   *    = On place sur tous les champs de saisie textuels le gestionnaire
-   *      de focus et blur de UI.Input
-   */
-  "prepare_formulaire":{
-    get:function(){
-      $('div#panneau_film_edition').html('')
-      $('div#panneau_film_edition').append( this.html_form )
-      UI.Input.bind( this.form )
-      this.form_prepared = true
-    }
-  },
-  
-  /*
-   *  Retourne le code HTML du formulaire
-   *  
-   */
-  "html_form":{
-    get:function(){
-      return  '<div id="div_form_film">' +
-                this.html_formulaire + 
-                this.html_div_buttons + 
-              '</div>'
-    }
-  },
-  
-  /*
    *  Code HTML du formulaire proprement dit
    *  
    */
   "html_formulaire":{
     get:function(){
-      var c = '<div id="film_form">'
+      var c = '<div id="'+this.prefix+'form" class="items_form">'
       L([
         '<div id="film_titres">',
         {id:'id', type:'hidden'},

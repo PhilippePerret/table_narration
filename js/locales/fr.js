@@ -31,6 +31,10 @@ window.LOCALE = {
     ask:{
       'want delete film'            : "Veux-tu vraiment détruire définitivement le film :\n\n"
     },
+    // LOCALE.film.label
+    label:{
+      'destroy'                     :"Détruire le film"
+    },
     // LOCALE.film.message
     message:{
       'is saved'                    : "Le film est enregistré",
@@ -52,8 +56,12 @@ window.LOCALE = {
     ask:{
       
     },
+    // LOCALE.film.label
+    label:{
+      'destroy'                       :"Détruire le mot"
+    },  
     message:{
-      'is saved'                    : "Le mot est sauvegardé",
+      'is saved'                      : "Le mot est sauvegardé",
     },
     
     error:{
