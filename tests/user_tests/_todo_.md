@@ -1,20 +1,12 @@
 IMPLÉMENTER
 -----------
 
-CRÉATION FILM
-- Le nouveau film se crée bien (vérifier qu'il est son ID)
-MAIS
-  > Le fichier interdata film_data.js ne s'actualise pas
-  > La donnée FILMS.DATA ne s'actualise pas
-    NOTE : Pour cette dernière, plutôt que de tout recharger, ajouter simplement
-    le nouveau film à FILMS.DATA (en le classant) et rafraichir son listing comme
-    je le fais déjà ici.
-    Vérifier avant comme sont relevés les films d'une lettre, si c'est fait avant.
-    En fait, je crois qu'il parcourt simplement la liste qui, par défaut, est 
-    forcément ordonnée.
-DONC
-  Le vrai problème à régler est l'actualisation de film_data.js
-  
+!Film ou Mot en édition => interrompre la boucle save
+
+FILM
+Faire plutôt CMD + Click pour insérer la balise
+Click seul sélectionnera le film
+
 EDITION FILM
   Sur listing : "E" permet d'éditer le film, ERASE permet de le détruire
   # On ne peut pas utiliser RETURN sur les textarea

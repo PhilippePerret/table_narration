@@ -1,4 +1,20 @@
 /*
+ *  Pour empêcher de quitter la page quand des données n'ont pas été
+ *  enregistrées.
+ *  
+ */
+function confirmExit(evt)
+{
+  if(Collection.modified)
+  {
+    F.error("Des données n'ont pas été enregistrées, veux-tu vraiment quitter la page ?")
+    evt.returnValue = "Veux-tu vraiment quitter ?"
+    return "Veux-tu vraiment quitter ?"
+  }  
+}
+window.onbeforeunload = confirmExit
+
+/*
  *	Objet App
  */
 window.App = {

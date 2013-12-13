@@ -27,9 +27,16 @@ window.LOCALE = {
   
   // LOCALE.film
   film:{
+    // LOCALE.film.ask
+    ask:{
+      'want delete film'            : "Veux-tu vraiment détruire définitivement le film :\n\n"
+    },
     // LOCALE.film.message
     message:{
-      'must choose a film'          : "Il faut choisir un film !"
+      'must choose a film'          : "Il faut choisir un film !",
+      'no item selected'            : "Aucun film sélectionné.",
+      'cant remove item'            : "Je ne peux pas détruire le film.",
+      'choose item to edit it'      : "Choisissez un film, pour pouvoir l'éditer."
     },
     
     // LOCALE.film.error

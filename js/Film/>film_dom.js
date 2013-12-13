@@ -18,8 +18,9 @@ FILMS.Dom = {
     },
     'listing':{id:'listing', prev:'onglets', next:'options', obj:null, help:
       image('clavier/K_FlecheH.png') + " et " + image('clavier/K_FlecheB.png') +
-      " pour sélectionner les films.\n" +
-      image('clavier/K_Command.png') + " + LETTRE pour changer d'onglet."
+      " pour sélectionner les films. " +
+      image('clavier/K_Command.png') + " + LETTRE pour changer d'onglet." +
+      image('clavier/K_E.png') + " pour éditer le film sélectionner. "
     },
     'options':{id:'options', prev:'listing', next:'onglets', obj:null, help:null}
   },
@@ -202,6 +203,7 @@ FILMS.Dom = {
     {
     case K_UP_ARROW:    complex_method = 'select_prev_item'   ; break
     case K_DOWN_ARROW:  complex_method = 'select_next_item'   ; break
+    case K_ERASE:       complex_method = 'remove_selected'    ; break
     }
     if(complex_method)
     {
@@ -213,15 +215,23 @@ FILMS.Dom = {
      *  changer d'onglet.
      *  
      */
+    var ccode = evt.charCode
     if(evt.metaKey)
     {
-      var ccode = evt.charCode
       if(ccode.is_between(97, 122))
       {
         this.on_click_onglet(ccode - 32)
       }
       return stop_event(evt)
     }
+    else
+    {
+      switch(ccode)
+      {
+      case Key_e: this.edit_selected; break
+      }
+    }
+    
   },
   keypress_on_options:function(evt)
   {
@@ -266,6 +276,7 @@ FILMS.Dom = {
       if(this.current_focus.id != 'listing' && evt.metaKey)
       {
         FILMS.Edition.edit()
+        stop_event(evt)
         return true
       }
     }
@@ -349,6 +360,16 @@ FILMS.Dom = {
     delete this.letters_built[letter]
     $('div#'+this.listing_id(letter)).remove()
     this.current_item = null
+  },
+  
+  /*
+   *  Détruit le DOMElement du film d'identifiant +fid+
+   *  s'il est construit
+   *
+   */
+  remove_item:function(fid)
+  {
+    $('div#'+this.id_div_item(fid)).remove()
   },
   
   /*
@@ -481,7 +502,6 @@ Object.defineProperties(FILMS.Dom, {
         this.set_apercu_titre
       }
       this._current_item = cur
-      dlog("this._current_item mis à : "+this._current_item)
     }
   },
   /* Sélectionne l'item suivant dans le listing */
@@ -513,6 +533,28 @@ Object.defineProperties(FILMS.Dom, {
       {
         F.show(LOCALE.film.message['must choose a film'])
       }
+    }
+  },
+  
+  /*
+   *  Passer l'item sélectionné en édition
+   *  
+   */
+  "edit_selected":{
+    get:function(){
+      if(!this.current_item) return F.show(LOCALE.film.message['no item selected']+' '+LOCALE.film.message['choose item to edit it'])
+      FILMS.Edition.edit(this.current_item)
+    }
+  },
+  
+  /*
+   *  Détruire l'item sélectionné
+   *  
+   */
+  "remove_selected":{
+    get:function(){
+      if(!this.current_item) return F.show(LOCALE.film.message['no item selected']+' '+LOCALE.film.message['cant remove item'])
+      FILMS.Edition.want_remove(this.current_item)
     }
   },
   

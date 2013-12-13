@@ -76,6 +76,51 @@ FILMS.Edition = {
   },
   
   /*
+   *  Demande de destruction du film d'identifiant +fid+
+   *  
+   */
+  want_remove:function(fid)
+  {
+    Edit.show({
+      id:'destroy_film',
+      title: LOCALE.film.ask['want delete film'] + " “"+get_film(fid).titre+"” ?",
+      buttons:{
+        cancel:{name:"Renoncer"},
+        ok:{name:"Détruire le film", onclick:$.proxy(FILMS.Edition.remove, FILMS.Edition, fid)}
+      }
+    })
+  },
+  /*
+   *  Destruction du film d'identifiant +fid+
+   *  
+   */
+  remove:function(fid)
+  {
+    Ajax.send({script:'film/destroy', film_id:fid}, $.proxy(this.suite_remove, this))
+  },
+  suite_remove:function(rajax)
+  {
+    if(rajax.ok)
+    {
+      var film = get_film( rajax.film_id )
+      FILMS.Dom.remove_item(film.id)
+      if(FILMS.DATA_PER_LETTER[film.let])
+      {
+        var indice = FILMS.DATA_PER_LETTER[film.let].indexOf(film.id)
+        console.log("indice: "+indice)
+        FILMS.DATA_PER_LETTER[film.let].splice(indice, 1)
+      }
+      delete FILMS.DATA[film.id]
+      with(FILMS.Dom)
+      {
+        remove_listing_letter(film.let)
+        on_click_onglet(film.let) 
+      }
+    }
+    else F.error(rajax.message)
+  },
+  
+  /*
    *  Appelé après `save' ci-dessus en cas de nouveau film
    *  On doit actualiser la liste des films (pour ne pas avoir à la recharger)
    *  et rafraichir l'affichage de la liste si nécessaire (si elle est affichée ou
