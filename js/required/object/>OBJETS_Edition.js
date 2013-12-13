@@ -236,8 +236,78 @@ OBJETS_Edition_defined_properties = {
                 this.html_div_buttons + 
               '</div>'
     }
-  }  
+  },
 
+
+
+
+
+  /*
+   *  Construit un champ d'après les données dfield
+   *  
+   */
+  "html_field":{
+    value:function(dfield){
+      if('string'==typeof dfield) return dfield
+      var field = ""
+      var type  = dfield.type || 'text'
+      if(dfield.id) dfield.id = this.class_min+'Edit-'+dfield.id
+      switch(type)
+      {
+      case 'text':
+        if(dfield.label) field += '<label class="libelle" for="'+dfield.id+'">'+dfield.label+'</label>'
+        return field + this.html_balise_in_field(dfield)
+      case 'textarea':
+        if(dfield.label) field += '<label class="libelle" for="'+dfield.id+'">'+dfield.label+'</label>'
+        var value = dfield.value; delete dfield.value
+        if(dfield.class) dfield.class = dfield.class.split(' ')
+        else dfield.class = []
+        dfield.class.push('returnable')
+        dfield.class = dfield.class.join(' ')
+        return field + this.html_balise_in_field(dfield) + (value ? value : "") + '</textarea>'
+      case 'hidden':
+        return '<input type="hidden" id="'+dfield.id+'" value="" />'
+      }
+    }
+  },
+  
+  /*
+   *  Retourne le code HTML des attributs du champ d'après ses données +dfield+
+   *  
+   */
+  "html_balise_in_field":{
+    value:function(dfield)
+    {
+      if(undefined == dfield.type) dfield.type = 'text'
+      return "<" + (dfield.type == 'text' ? 'input' : dfield.type) +
+      (dfield.type=='text'? ' type="text"' :  '') +
+      (dfield.id          ? ' id="'           +dfield.id          +'"' : '') +
+      (dfield.class       ? ' class="'        +dfield.class       +'"' : '') +
+      (dfield.data_type   ? ' data-type="'    +dfield.data_type   +'"' : '') +
+      (dfield.data_format ? ' data-format="'  +dfield.data_format +'"' : '') +
+      (dfield.value       ? ' value="'        +dfield.value       +'"' : '') +
+      (dfield.style       ? ' style="'        +dfield.style       +'"' : '') +
+      (dfield.title       ? ' title="'        +dfield.title       +'"' : '') +
+      (dfield.alt         ? ' alt="'          +dfield.alt         +'"' : '') +
+      (dfield.placeholder ? ' placeholder="'  +dfield.placeholder +'"' : '') +
+      (dfield.type=='text' ? ' />' : '>')
+    }
+  },
+    
+  /*
+   *  Code HTML des boutons du formulaire
+   *  
+   */
+  "html_div_buttons":{
+    get:function(){
+      dlog("-> FILMS.Edition.html_div_buttons", DB_FCT_ENTER)
+      return  '<div class="buttons">' +
+                '<input type="button" value="Renoncer" onclick="$.proxy(FILMS.Edition.end, FILMS.Edition)()" class="fleft" />' +
+                '<input type="button" value="Enregistrer" onclick="$.proxy(FILMS.Edition.save, FILMS.Edition)()" />' +
+              '</div>'
+    }
+  }
+  
 }
 
 if(undefined == FILMS.Edition) FILMS.Edition = {}

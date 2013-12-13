@@ -23,7 +23,7 @@ $.extend(DICO.Edition,{
    *
    *  NOTES
    *  -----
-   *    = Le champ les recevant porte toujours l'id `filmEdit-<property>'
+   *    = Le champ les recevant porte toujours l'id `dicoEdit-<property>'
    *  
    */
   ITEM_PROPERTIES:['id', 'mot', 'definition'],
@@ -44,7 +44,7 @@ $.extend(DICO.Edition,{
       default:
         if(val == null) val = ""
       }
-      $(my.tag_for(prop)+'#filmEdit-'+prop).val( val )
+      $(my.tag_for(prop)+'#dicoEdit-'+prop).val( val )
     })
   },
   /*
@@ -58,7 +58,7 @@ $.extend(DICO.Edition,{
     var values = {}
     var my = this
     L(my.ITEM_PROPERTIES).each(function(prop){
-      val = $(my.tag_for(prop)+'#filmEdit-'+prop).val()
+      val = $(my.tag_for(prop)+'#dicoEdit-'+prop).val()
       switch(prop)
       {
       case 'mot':
@@ -103,4 +103,23 @@ Object.defineProperties(DICO.Edition,{
     }
   },
   
+  
+  "html_formulaire":{
+    get:function(){
+      var c = '<div id="'+this.prefix+'form" class="items_form">'
+      L([
+        '<div id="dico_div_item_definition">',
+        {id:'mot', placeholder:"Nouveau mot scénodico"},
+        {type:'textarea', id:'definition', class:'haut', placeholder:"Définition du mot"},
+        '</div>',
+        '<div id="mot_data">',
+        '</div>',
+        '<fieldset id="dico_section_relation"><legend><b>Relations</b></legend>',
+        '</fieldset>'
+        ]).each(function(dfield){c += SELF.html_field(dfield)})
+      c += '</div>'
+      return c
+    }
+  },
+
 })
