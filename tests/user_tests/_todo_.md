@@ -1,32 +1,10 @@
 IMPLÉMENTER
 -----------
 
-!Film ou Mot en édition => interrompre la boucle save
-
-FILM
-Faire plutôt CMD + Click pour insérer la balise
-Click seul sélectionnera le film
-
-EDITION FILM
-  Sur listing : "E" permet d'éditer le film, ERASE permet de le détruire
-  # On ne peut pas utiliser RETURN sur les textarea
-    On pourrait imaginer mettre une class css 'returnable' ou 'enterable' qui
-    dirait à UI.Input (si c'est lui) qu'on peut ajouter des retours chariots.
-
-RACCOURCIS CLAVIER
-  > Les faire plutôt apparaitre dans une ligne fixe en bas de la fenêtre
-    div#div_shortcuts
-  > Faire un objet Shortcuts qui gèrera ça.
-
-DESTRUCTION FILM
-  > bouton "x"
-  > requête "film/destroy"
-  
-CHOIX D'UN FILM
-  # [pas toujours…] Les raccourcis ne fonctionnent plus sur un deuxième champ édité
-  # Quand on passe d'un listing à l'autre, les flèches concernent toujours
-    l'autre listing (pourtant, il m'avait semblé avec prévu ça…)
-  # L'année ne s'indique pas dans les options
+SCÉNODICO (objet DICO / class Mot)
+  > Mettre le maximum de méthodes partageable avec FILMS dans un objet séparé
+    à charger dans les deux objets/prototype de class
+    
 
 - Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
 

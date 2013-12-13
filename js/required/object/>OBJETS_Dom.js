@@ -1,8 +1,9 @@
-FILMS.Dom = {
+OBJETS.Dom = {
   SHORTCUTS_COMMUNS:
-  image('clavier/K_Escape.png') + " pour renoncer, " +
-  image('clavier/K_Tab.png') + " pour focusser sur la section suivante, "
-  ,
+    image('clavier/K_Entree.png') + " Balise, " +
+    image('clavier/K_Escape.png') + " Fermer, " +
+    image('clavier/K_Tab.png') + " Section suivante." ,
+    
   /*
    *  Données pour focus
    *  
@@ -13,27 +14,22 @@ FILMS.Dom = {
    *
    */
   DFOCUS: {
-    'onglets':{id:'onglets', prev:'options', next:'listing', obj:null, help:
+    'onglets':{id:'onglets', prev:'options', next:'listing', obj:null, 
+    help:
       "Presser la touche de la lettre pour changer d'onglet."
     },
-    'listing':{id:'listing', prev:'onglets', next:'options', obj:null, help:
-      image('clavier/K_FlecheH.png') + " et " + image('clavier/K_FlecheB.png') +
-      " pour sélectionner les films. " +
-      image('clavier/K_Command.png') + " + LETTRE pour changer d'onglet." +
-      image('clavier/K_E.png') + " pour éditer le film sélectionner. "
+    'listing':{id:'listing', prev:'onglets', next:'options', obj:null, 
+    help:
+      image('clavier/K_Command.png') + image('clavier/CLICK.png') + 
+      "/" + image('clavier/CLICK.png') + image('clavier/K_Entree.png') + " Balise, " +
+      image('clavier/K_FlecheH.png') + image('clavier/K_FlecheB.png') + " Suivant/précédent, " +
+      image('clavier/K_Command.png') + " + LETTRE => Listing, " +
+      image('clavier/K_E.png') + " Éditer, " + 
+      image('clavier/K_Effacer.png') + " Détruire, "
     },
     'options':{id:'options', prev:'listing', next:'onglets', obj:null, help:null}
   },
-  
-  /*
-   *  Données pour l'aperçu du titre suivant les options
-   *  
-   *  NOTES
-   *  -----
-   *    = Si un titre est sélectionné, ce sont ses données qui sont
-   *      utilisées.
-   */
-  DATA_ASPECT: {titre:"Original Title", titre_fr:"Titre français", annee:"2013"},
+
   
   /*
    *  Focus courant {Hash}
@@ -55,10 +51,10 @@ FILMS.Dom = {
    *  Indique que la fenêtre est construite
    *  
    */
-  panneau_films_ready: false,
+  main_panneau_ready: false,
   
   /*
-   *  Les Options {Hash} envoyées à la méthode choose_a_film
+   *  Les Options {Hash} envoyées à la méthode choose_an_item
    *  
    */
   options:null,
@@ -107,7 +103,10 @@ FILMS.Dom = {
    */
   show_panneau:function()
   {
-    if(false == this.panneau_films_ready) this.prepare_panneau
+    // Pas de sauvegarde pendant l'édition des films
+    Collection.disable_save
+    
+    if(false == this.main_panneau_ready) this.prepare_panneau
     else this.panneau.show()
         
     // Il faut mémoriser le champ de saisie et sa sélection courante pour
@@ -126,12 +125,18 @@ FILMS.Dom = {
   /*
    *  Ferme le panneau des films
    *  
+   *  NOTES
+   *  -----
+   *    = Relance la boucle de sauvegarde si on est en enregistrement
+   *      automatique.
    */
   hide_panneau:function()
   {
     this.panneau.hide()
     UI.Input.retreive_current(this.current_textfield, {focus:true})
     window.onkeypress = this.old_window_onkeypress
+    Collection.enable_save
+    help('')
   },
   
   /*
@@ -159,15 +164,18 @@ FILMS.Dom = {
    */
   set_focus_on:function(idfocus)
   {
-    dlog("-> FILMS.Dom.set_focus_on('"+idfocus+"')", DB_FCT_ENTER)
+    dlog("-> "+this.NAME+".set_focus_on('"+idfocus+"')", DB_FCT_ENTER)
     if(this.current_focus) this.current_focus.obj.removeClass('focused')
     this.current_focus = this.DFOCUS[idfocus]
+    // dlog("idfocus:"+idfocus)
+    // dlog("this.DFOCUS[idfocus]:")
+    // dlog(this.DFOCUS[idfocus])
     this.current_focus.obj.addClass('focused')
     this.current_focus.obj[0].focus()
     F.clean()
     if(this.DFOCUS[idfocus].help)
     {
-      help(this.SHORTCUTS_COMMUNS + ' ' + this.DFOCUS[idfocus].help)
+      help(this.DFOCUS[idfocus].help +', '+this.SHORTCUTS_COMMUNS)
     } 
   },
   
@@ -182,7 +190,7 @@ FILMS.Dom = {
 
   keypress_on_onglets:function(evt)
   {
-    dlog("-> FILMS.Dom.keypress_on_onglets", DB_FCT_ENTER)
+    dlog("-> "+this.NAME+".keypress_on_onglets", DB_FCT_ENTER)
     if( this.keypress_common(evt) ) return stop_event(evt)
     switch(evt.keyCode)
     {
@@ -196,14 +204,15 @@ FILMS.Dom = {
   },
   keypress_on_listing:function(evt)
   {
-    dlog("-> FILMS.Dom.keypress_on_listing", DB_FCT_ENTER)
-    if( this.keypress_common(evt) ) return false
+    dlog("-> "+this.NAME+".keypress_on_listing", DB_FCT_ENTER)
+    if( this.keypress_common(evt) ) return stop_event(evt)
     var complex_method = null
     switch(evt.keyCode)
     {
     case K_UP_ARROW:    complex_method = 'select_prev_item'   ; break
     case K_DOWN_ARROW:  complex_method = 'select_next_item'   ; break
     case K_ERASE:       complex_method = 'remove_selected'    ; break
+    // Note : La touche RETURN est traité dans keypress_common
     }
     if(complex_method)
     {
@@ -233,23 +242,7 @@ FILMS.Dom = {
     }
     
   },
-  keypress_on_options:function(evt)
-  {
-    dlog("-> FILMS.Dom.keypress_on_options", DB_FCT_ENTER)
-    if( this.keypress_common(evt) ) return false
-    switch(evt.keyCode)
-    {
-    }
-    switch(evt.charCode)
-    {
-    case Key_a: this.toggle_option('annee')    ; break
-    case Key_f: this.toggle_option('titrefr')  ; break
-    case Key_l: this.toggle_option('nolink')   ; break
-    case Key_o: this.toggle_option('titreor')  ; break
-    case Key_s: this.toggle_option('auteurs')  ; break
-    }
-    return stop_event(evt)
-  },
+
   /*
    *  Keypress commun à tous les focus
    *  
@@ -275,7 +268,7 @@ FILMS.Dom = {
     case Key_n: // => Nouveau film
       if(this.current_focus.id != 'listing' && evt.metaKey)
       {
-        FILMS.Edition.edit()
+        this.OBJS.Edition.edit()
         stop_event(evt)
         return true
       }
@@ -299,7 +292,7 @@ FILMS.Dom = {
   on_click_onglet:function(letter)
   {
     if(this.current_letter) this.hide_listing(this.current_letter)
-    $('panneau#films div#onglet_letter-'+letter).addClass('pressed')
+    $('div#'+this.prefix+'onglet_letter-'+letter).addClass('pressed')
     if(!this.letters_built[letter]) this.build_listing( letter )
     else this.show_listing(letter)
     this.set_focus_on('listing')
@@ -313,7 +306,7 @@ FILMS.Dom = {
   {
     var option = obj.id.split('-')[1]
     this.options_balise[option] = obj.checked
-    this.set_apercu_titre
+    this.set_apercu_balise
   },
   
   /*
@@ -333,7 +326,7 @@ FILMS.Dom = {
   hide_listing:function(letter)
   {
     $(this.jid_current_listing).hide()
-    $('panneau#films div#onglet_letter-'+letter).removeClass('pressed')
+    $('div#'+this.prefix+'onglet_letter-'+letter).removeClass('pressed')
     this.current_letter  = null
     this.current_item     = null
   },
@@ -363,6 +356,24 @@ FILMS.Dom = {
   },
   
   /*
+   *  Méthode appelée quand on clique sur un film
+   *
+   *  NOTES
+   *  -----
+   *    = Si la touche CMD est pressée, on écrit directement la balise
+   *      dans le texte édité.  
+   */
+  on_select_item:function(fid, evt)
+  {
+    this.current_item = fid
+    if(evt.metaKey) this.OBJS.on_choose_item(fid)
+    else
+    {
+      this.set_focus_on('listing')
+    }
+  },
+  
+  /*
    *  Détruit le DOMElement du film d'identifiant +fid+
    *  s'il est construit
    *
@@ -371,26 +382,31 @@ FILMS.Dom = {
   {
     $('div#'+this.id_div_item(fid)).remove()
   },
-  
+ 
+
   /*
    *  Retourne le code HTML du listing de la lettre +letter+
-   *  C'est un DIV contenant tous les films de cette letter
+   *  C'est un DIV contenant tous les items de cette lettre
    *  
    */
   html_listing:function(letter){
-    var fdata, c = "", letter_list, i = 0, film_count ;
-    FILMS.check_if_list_per_letter_ok
-    letter_list = FILMS.DATA_PER_LETTER[letter]
-    films_count = letter_list.length
-    for(; i<films_count; ++i) 
+    var fdata, c = "", letter_list, i = 0, items_count ;
+    this.OBJS.check_if_list_per_letter_ok
+    letter_list = this.OBJS.DATA_PER_LETTER[letter]
+    items_count = letter_list.length
+    for(; i<items_count; ++i) 
     {
-      c += this.html_div_film(FILMS.DATA[letter_list[i]])
+      /*
+       *  AJOUT DU DIV DU FILM
+       *  
+       */
+      c += this.html_div_item(this.OBJS.DATA[letter_list[i]])
     }
     return '<div id="'+this.listing_id(letter)+'" class="listing_films">' + c + '</div>'
   },
   
   /* Retourne l'identifiant DOM du div principal d'un item de la liste (un film) */
-  id_div_item:function(item_id){ return "div_film-"+item_id },
+  id_div_item:function(item_id){ return this.prefix+"div_item-"+item_id },
 
   /* 
    * Retourne le {jQuery Set} du div principal d'un item de la liste 
@@ -400,58 +416,43 @@ FILMS.Dom = {
   {
     return $('div#' + this.id_div_item(item_id))
   },
-  
-  /*
-   *  Retourne le code HTML pour le div d'un film de données
-   *  +fdata+ dans le listing.
-   *  
-   */
-  html_div_film:function(fdata)
-  {
-    return '<div id="'+this.id_div_item(fdata.id)+'" class="div_film">' +
-              '<div class="fright">' +
-                '<input type="button" class="small" value="edit" onclick="$.proxy(FILMS.edit, FILMS, \''+fdata.id+'\')()" />'+
-              '</div>' +
-              '<div class="titre" onclick="$.proxy(FILMS.on_choose_film, FILMS, \''+fdata.id+'\')()">' +
-              fdata.titre +
-              (fdata.titre_fr ? " ("+fdata.titre_fr+")" : '') +
-              (fdata.annee ? " - <span class=\"tiny\">"+fdata.annee+'</span>' : '') +
-              '</div>' +
-            '</div>'
-  },
-  
+
   /* Retourne l'identifiant du listing (DIV) pour la lettre +letter+ */
   listing_id:function(letter){
-    return "panneau_film_listing-"+letter
+    return "panneau_"+this.prefix+"listing-"+letter
   }
   
 }
 
-Object.defineProperties(FILMS.Dom, {
+/*
+ *  Propriétés complexes à ajouter aux sous-objets <OBJETS PLURIEL>.Dom
+ *  
+ */
+OBJETS_Dom_defined_properties = {
   /* ---------------------------------------------------------------------
    *
    *  ÉLÉMENTS DOM
    *
    */
-  
   /* Le panneau complet */
+  "id_panneau":{get:function(){ return this.prefix+"panneau" }},
+  "jid_panneau":{get:function(){ return "panneau#"+this.id_panneau}},
   "panneau":{
-    get:function(){ return $('panneau#films')}
+    get:function(){ return $(this.jid_panneau)}
   },
   
   /* Le DIV de la barre d'onglets */
   "div_onglets":{
-    get:function(){ return $('panneau#films > div#panneau_film_onglets')}
+    get:function(){ return $(this.jid_panneau + ' > div#'+this.id_panneau+'_onglets')}
   },
   /* Le DIV contenant tous les listings par lettre */
   "div_listing":{
-    get:function(){ return $('panneau#films > div#panneau_film_listings')}
+    get:function(){ return $(this.jid_panneau + ' > div#'+this.id_panneau+'_listings')}
   },
   /* Le DIV des options de balise */
   "div_options":{
-    get:function(){ return $('panneau#films > div#panneau_film_options')}
+    get:function(){ return $(this.jid_panneau + ' > div#'+this.id_panneau+'_options')}
   },
-  
   /*
    *  Retourne le DIV du listing courant ({jQuery Set})
    *  
@@ -473,6 +474,7 @@ Object.defineProperties(FILMS.Dom, {
   "div_current_item":{
     get:function(){ return this.div_item(this.current_item) }
   },
+ 
   
   /* ---------------------------------------------------------------------
    *  MÉTHODES
@@ -499,7 +501,7 @@ Object.defineProperties(FILMS.Dom, {
       {
         this.div_item(cur).addClass('selected')
         this.scroll_to_current_item
-        this.set_apercu_titre
+        this.set_apercu_balise
       }
       this._current_item = cur
     }
@@ -527,7 +529,7 @@ Object.defineProperties(FILMS.Dom, {
     get:function(){
       if(this.current_item)
       {
-        this.div_current_item.find('> .titre').click()
+        this.OBJS.on_choose_item(this.current_item)
       }
       else
       {
@@ -543,7 +545,7 @@ Object.defineProperties(FILMS.Dom, {
   "edit_selected":{
     get:function(){
       if(!this.current_item) return F.show(LOCALE.film.message['no item selected']+' '+LOCALE.film.message['choose item to edit it'])
-      FILMS.Edition.edit(this.current_item)
+      this.OBJS.Edition.edit(this.current_item)
     }
   },
   
@@ -572,29 +574,6 @@ Object.defineProperties(FILMS.Dom, {
     }
   },
   
-  /* ---------------------------------------------------------------------
-   *  RÉGLAGES
-   --------------------------------------------------------------------- */
-  
-  /*
-   *  Règle l'affiche de l'aperçu du titre en fonction des options
-   *  
-   */
-  "set_apercu_titre":{
-    get:function()
-    {
-      var dasp = this.current_item ? get_film(this.current_item) : this.DATA_ASPECT
-      var aspect = "", inpar  = [] ;
-      var opts = this.options_balise
-      aspect += opts.titrefr ? (dasp.titre_fr || dasp.titre) : dasp.titre
-      if(opts.titrefr && opts.titreor) inpar.push(dasp.titre)
-      if(opts.annee) inpar.push(dasp.annee)
-      if(opts.auteurs) inpar.push("<i>Auteurs</i>")
-      if(inpar.length) aspect += " ("+inpar.join(', ')+")"
-      $('span#film_aspect_titre').html(aspect)
-    }
-  },
-
   /*
    *  Règle les options d'affichage du titre
    *  (à la construction de la fenêtre)
@@ -609,21 +588,22 @@ Object.defineProperties(FILMS.Dom, {
       for(var opt in this.options_balise){
         this.set_option(opt)
       }
-      this.set_apercu_titre
+      this.set_apercu_balise
     }
   },
   "set_option":{
     value:function(opt, value){
       if(undefined != value) this.options_balise[opt] = value
-      $('div#panneau_film_options input[type="checkbox"]#film_option-'+opt)[0].checked = this.options_balise[opt]
+      $('div#'+this.id_panneau+'_options input[type="checkbox"]#'+this.prefix+'option-'+opt)[0].checked = this.options_balise[opt]
     }
   },
   "toggle_option":{
     value:function(opt){
       this.set_option(opt, !this.options_balise[opt])
-      this.set_apercu_titre
+      this.set_apercu_balise
     }
   },
+  
   
   /* ---------------------------------------------------------------------
    *  ACTIONS SUR ÉLÉMENTS DOM
@@ -637,16 +617,16 @@ Object.defineProperties(FILMS.Dom, {
   "show_formulaire":{
     get:function(){
       L(['tools', 'onglets', 'listings', 'buttons', 'options']).each(function(suf){
-        $('div#panneau_film_'+suf).hide()
+        $('div#'+this.id_panneau+'_'+suf).hide()
       })
-      $('div#panneau_film_edition').show()
+      $('div#'+this.id_panneau+'_edition').show()
     }
   },
   "hide_formulaire":{
     get:function(){
-      $('div#panneau_film_edition').hide()
+      $('div#'+this.id_panneau+'_edition').hide()
       L(['tools', 'onglets', 'listings', 'buttons', 'options']).each(function(suf){
-        $('div#panneau_film_'+suf).show()
+        $('div#'+this.id_panneau+'_'+suf).show()
       })
     }
   },
@@ -663,12 +643,14 @@ Object.defineProperties(FILMS.Dom, {
    */
   "prepare_panneau":{
     get:function(){
-      $('body').append( this.html_panneau_films )
+      $('body').append( this.html_main_panneau )
       // Définition du focus
       var idfocus, obj ;
       for(idfocus in this.DFOCUS)
       {
         obj = this.DFOCUS[idfocus].obj = this['div_'+idfocus]
+        dlog("obj mis à this[div_"+idfocus+"] :")
+        dlog(this['div_'+idfocus])
         obj.bind('keypress', $.proxy(this['keypress_on_'+idfocus], this))
         // obj.bind('click', $.proxy(this.set_focus_on, this, idfocus))
       }
@@ -676,9 +658,11 @@ Object.defineProperties(FILMS.Dom, {
       this.panneau.draggable({containment:'parent'})
       // On coche les options par défaut
       this.set_options
-      this.panneau_films_ready = true
+      this.main_panneau_ready = true
     }
   },
+  
+ 
   /*
    *  Fabrication de la liste des films
    *  
@@ -688,13 +672,13 @@ Object.defineProperties(FILMS.Dom, {
    *        C'est seulement le click sur un onglet qui déterminera l'affichage
    *        de la liste.
    */
-  "html_panneau_films":{
+  "html_main_panneau":{
     get:function(){
-      return  '<panneau id="films">' +
+      return  '<panneau id="'+this.id_panneau+'" class="main_panneau_items">' +
                 this.html_div_outils  +
                 this.div_edition +
                 this.html_div_onglets +
-                '<div id="panneau_film_listings" class="focusable" tabindex="1"></div>' +
+                '<div id="'+this.id_panneau+'_listings" class="focusable main_panneau_listings" tabindex="1"></div>' +
                 this.html_div_options +
                 this.div_boutons +
               '</panneau>'
@@ -708,27 +692,29 @@ Object.defineProperties(FILMS.Dom, {
     get:function(){
       var cbs = "", id, opt ;
       this.options_balise = {}
-      for(opt in FILMS.OPTIONS)
+      for(opt in this.OBJS.OPTIONS)
       {
-        this.options_balise[opt] = FILMS.OPTIONS[opt].valdef
-        id   = "film_option-"+opt
+        this.options_balise[opt] = this.OBJS.OPTIONS[opt].valdef
+        id   = this.prefix+"option-"+opt
         cbs += '<input type="checkbox" id="'+id+'" ' +
-                'onchange="$.proxy(FILMS.Dom.onchange_option, FILMS.Dom, this)()" />' +
-                '<label for="'+id+'">'+ FILMS.OPTIONS[opt].hname +'</label>' ;
+                'onchange="$.proxy('+this.as_string+'.onchange_option, '+this.as_string+', this)()" />' +
+                '<label for="'+id+'">'+ this.OBJS.OPTIONS[opt].hname +'</label>' ;
       }
-      var aspect_titre = '<span id="film_aspect_titre">Titre original</span>'
-      return '<div id="panneau_film_options" class="focusable" tabindex="2">' + aspect_titre + cbs + '</div>'
+      var aspect_titre = '<span id="'+this.prefix+'aspect_balise" class="item_aspect_balise">Titre original</span>'
+      return '<div id="'+this.id_panneau+'_options" class="focusable main_panneau_options" tabindex="2">' + aspect_titre + cbs + '</div>'
     }  
   },
   
+
   /*
    *  Construit le div des onglets lettre
    *  
    */
   "html_div_onglets":{
     get:function(){
-      var c = '<div id="panneau_film_onglets" class="focusable" tabindex="0">'
-      c += this.div_onglet( 0, '0-9' )
+      var c = '<div id="'+this.id_panneau+'_onglets" class="focusable main_panneau_onglets" tabindex="0">'
+      // Seulement pour FILMS
+      if(this.as_string ==  'FILMS.Dom') c += this.div_onglet( 0, '0-9' )
       for(var i = 65; i<=90; ++i){
         c += this.div_onglet( i, String.fromCharCode(i) )
       }
@@ -739,8 +725,8 @@ Object.defineProperties(FILMS.Dom, {
   /* Retourne le code HTML pour un onglet de code +ascii+ et de titre +letter+ */
   "div_onglet":{
     value:function(ascii, letter){
-      return '<div id="onglet_letter-'+ascii+
-      '" class="onglet_letter" onclick="$.proxy(FILMS.Dom.on_click_onglet, FILMS.Dom, '+
+      return '<div id="'+this.prefix+'onglet_letter-'+ascii+
+      '" class="onglet_letter" onclick="$.proxy('+this.as_string+'.on_click_onglet, '+this.as_string+', '+
       ascii+')()">'+letter+'</div>'
     }
   },
@@ -751,7 +737,7 @@ Object.defineProperties(FILMS.Dom, {
    */
   "html_div_outils":{
     get:function(){
-      return '<div id="panneau_film_tools">' + '</div>'
+      return '<div id="'+this.id_panneau+'_tools">' + '</div>'
     }
   },
   /*
@@ -760,7 +746,7 @@ Object.defineProperties(FILMS.Dom, {
    */
   "div_edition":{
     get:function(){
-      return '<div id="panneau_film_edition">' + '</div>'
+      return '<div id="'+this.id_panneau+'_edition">' + '</div>'
     }
   },
   /*
@@ -769,11 +755,12 @@ Object.defineProperties(FILMS.Dom, {
    */
   "div_boutons":{
     get:function(){
-      return '<div id="panneau_film_buttons" class="buttons">' +
-      '<input type="button" value="+" onclick="$.proxy(FILMS.Edition.edit, FILMS.Edition)()" class="fleft" />' +
-      '<input type="button" value="Renoncer" onclick="$.proxy(FILMS.Dom.hide_panneau, FILMS.Dom)()" />' +
+      return '<div id="'+this.id_panneau+'_buttons" class="buttons">' +
+      '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, FILMS.Edition)()" class="fleft" />' +
+      '<input type="button" value="Renoncer" onclick="$.proxy('+this.as_string+'.hide_panneau, '+this.as_string+')()" />' +
       '</div>'
     }
   }
   
-})
+}
+/* /OBJETS_Dom_defined_properties */

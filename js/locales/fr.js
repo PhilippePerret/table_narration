@@ -33,6 +33,7 @@ window.LOCALE = {
     },
     // LOCALE.film.message
     message:{
+      'is saved'                    : "Le film est enregistré",
       'must choose a film'          : "Il faut choisir un film !",
       'no item selected'            : "Aucun film sélectionné.",
       'cant remove item'            : "Je ne peux pas détruire le film.",
@@ -43,6 +44,20 @@ window.LOCALE = {
     error:{
       'no id supplied'              : "Aucun identifiant fourni à l'instanciation. Je renonce",
       'no titre to find'            : "Il faut donner un titre à chercher !"
+    }
+  },
+  
+  // LOCALE.dico
+  dico:{
+    ask:{
+      
+    },
+    message:{
+      'is saved'                    : "Le mot est sauvegardé",
+    },
+    
+    error:{
+      
     }
   }
 }

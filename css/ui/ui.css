@@ -83,7 +83,7 @@ section#table {
 div#div_help {
   position    : fixed;
   width       : 100%;
-  height      : 28px;
+  height      : 18px;
   bottom      : 0px;
   left        : 0px;
   padding     : 4px 20px;
@@ -94,5 +94,6 @@ div#div_help {
   color       : #6F6F6F;
 }
 div#div_help img {
-  vertical-align : middle;
+  vertical-align  : middle;
+  height          : 13.6px;
 }

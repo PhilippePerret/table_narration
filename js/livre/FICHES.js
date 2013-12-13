@@ -633,16 +633,8 @@ Object.defineProperties(FICHES,{
     set:function(obj)
     {
       var editing = ( obj !== null )
-      Collection.saving_forbidden = editing
       this._current_text_field = obj
-      if(editing)
-      {
-        Collection.stop_automatic_saving
-      }
-      else
-      {
-        Collection.start_automatic_saving
-      }
+      Collection[editing ? 'disable_save' : 'enable_save']
     }
   }
   

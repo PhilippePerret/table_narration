@@ -16,7 +16,7 @@ FILMS.Edition = {
    *    = Le champ les recevant porte toujours l'id `filmEdit-<property>'
    *  
    */
-  FILM_PROPERTIES:['id', 'titre', 'titre_fr', 'resume', 'producteur', 'auteurs',
+  ITEM_PROPERTIES:['id', 'titre', 'titre_fr', 'resume', 'producteur', 'auteurs',
     'realisateur', 'acteurs', 'annee', 'duree', 'pays'],
   
   /*
@@ -176,7 +176,7 @@ FILMS.Edition = {
     // On remonte toujours au-dessus
     $('div#film_form').scrollTo(0) ;
     var my = this
-    L(my.FILM_PROPERTIES).each(function(prop){
+    L(my.ITEM_PROPERTIES).each(function(prop){
       val = film[prop]
       switch(prop)
       {
@@ -244,7 +244,7 @@ FILMS.Edition = {
     $('div#film_form').scrollTo(0) ;
     var values = {}
     var my = this
-    L(my.FILM_PROPERTIES).each(function(prop){
+    L(my.ITEM_PROPERTIES).each(function(prop){
       val = $(my.tag_for(prop)+'#filmEdit-'+prop).val()
       switch(prop)
       {
@@ -436,7 +436,7 @@ Object.defineProperties(FILMS.Edition,{
         ),
         {id:'titre_fr', placeholder:"Titre français (s'il existe)"},
         '</div>',
-        '<div id="div_film_resume">',
+        '<div id="div_item_resume">',
         {type:'textarea', id:'resume', class:'haut', placeholder:"Résumé du film"},
         '</div>',
         '<div id="film_data">',
@@ -480,6 +480,10 @@ Object.defineProperties(FILMS.Edition,{
       case 'textarea':
         if(dfield.label) field += '<label class="libelle" for="'+dfield.id+'">'+dfield.label+'</label>'
         var value = dfield.value; delete dfield.value
+        if(dfield.class) dfield.class = dfield.class.split(' ')
+        else dfield.class = []
+        dfield.class.push('returnable')
+        dfield.class = dfield.class.join(' ')
         return field + this.html_balise_in_field(dfield) + (value ? value : "") + '</textarea>'
       case 'hidden':
         return '<input type="hidden" id="'+dfield.id+'" value="" />'

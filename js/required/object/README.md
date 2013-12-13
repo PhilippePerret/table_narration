@@ -1,0 +1,1 @@
+Ce dossier contient les méthodes qui seront ajoutés aux objets FILMS et DICO, et aux classes Film et Mot.

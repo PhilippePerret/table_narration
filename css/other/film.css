@@ -1,4 +1,4 @@
-panneau#films {
+panneau.main_panneau_items {
   position          : fixed;
   top               : 2em;
   left              : 10em;
@@ -9,15 +9,15 @@ panneau#films {
   padding-bottom    : 20px;
   z-index           : 4000;
 }
-panneau#films div#panneau_film_onglets {
+panneau.main_panneau_items div.main_panneau_onglets {
   background-color  : #000;
   color             : #fff;
   padding       : 5px 20px;
 }
-panneau#films div#panneau_film_onglets {
+panneau.main_panneau_items div.main_panneau_onglets {
   height    : 13px;
 }
-panneau#films div#panneau_film_onglets div.onglet_letter {
+panneau.main_panneau_items div.main_panneau_onglets div.onglet_letter {
   float       : left;
   width       : 22px;
   font-size   : 11pt;
@@ -25,14 +25,14 @@ panneau#films div#panneau_film_onglets div.onglet_letter {
   text-align  : center;
 }
 
-panneau#films div#panneau_film_onglets div.onglet_letter.pressed {
+panneau.main_panneau_items div.main_panneau_onglets div.onglet_letter.pressed {
   background-color  : #6464BD;
 }
 
 /* ---------------------------------------------------------------------
  *  DIV contenant les listings par lettre
  */
-panneau#films > div#panneau_film_listings {
+panneau.main_panneau_items > div.main_panneau_listings {
   height      : 200px;
   overflow    : auto;
   margin      : 30px 10px 10px 13px;
@@ -42,7 +42,7 @@ panneau#films > div#panneau_film_listings {
   
 }
 /* Pour le div d'un film */
-panneau#films div.div_film div.titre {
+panneau.main_panneau_items div.div_item div.titre {
   min-height  : 20px;
   padding     : 5px;
   cursor      : pointer;
@@ -51,60 +51,60 @@ panneau#films div.div_film div.titre {
 /* ---------------------------------------------------------------------
  *  LE FORMULAIRE 
  --------------------------------------------------------------------- */
-panneau#films div#div_form_film {
+panneau.main_panneau_items div#div_form_film {
   padding-top : 0.5em;
 }
-panneau#films div#div_form_film div#film_form {
+panneau.main_panneau_items div#div_form_film div#film_form {
   height    : 334px;
   overflow  : auto;
   padding   : 1em;
 }
-panneau#films div#div_form_film div#film_form > div {
+panneau.main_panneau_items div#div_form_film div#film_form > div {
   padding   : 4px 0;
 }
-panneau#films div#film_form label.libelle {
+panneau.main_panneau_items div#film_form label.libelle {
   display       : inline-block;
   width         : 50px;
   text-align    : right;
   /*  padding-right : 8px;*/
 }
-panneau#films div#film_form div#film_titres > img#img_imdb {
+panneau.main_panneau_items div#film_form div#film_titres > img#img_imdb {
     vertical-align: bottom;
     width: 49px;
 }
-panneau#films div#film_form textarea {
+panneau.main_panneau_items div#film_form textarea {
   width         : 98%;
   height        : 50px;
 }
-panneau#films div#film_form div#film_titres input[type="text"] {
+panneau.main_panneau_items div#film_form div#film_titres input[type="text"] {
   width         : 268px;
 }
-panneau#films div#film_form div#film_titres label.libelle {
+panneau.main_panneau_items div#film_form div#film_titres label.libelle {
   width         : 48px;
 }
-panneau#films div#film_form div#film_titres label[for="filmEdit-titre"] {
+panneau.main_panneau_items div#film_form div#film_titres label[for="filmEdit-titre"] {
   width         : 25px !important;
 }
-panneau#films div#film_form div#film_titres label[for="filmEdit-titre"],
-panneau#films div#film_form div#film_titres input#filmEdit-titre {
+panneau.main_panneau_items div#film_form div#film_titres label[for="filmEdit-titre"],
+panneau.main_panneau_items div#film_form div#film_titres input#filmEdit-titre {
   font-weight   : bold;
   font-size     : 1.1em;
 }
-panneau#films div#film_form div#film_data input[type="text"] {
+panneau.main_panneau_items div#film_form div#film_data input[type="text"] {
   width         : 52px;
   text-align    : center;
 }
-panneau#films div#div_form_film div.buttons {
+panneau.main_panneau_items div#div_form_film div.buttons {
   margin-top    : 1em;
 }
 
 /* ---------------------------------------------------------------------
  *  DIV des OPTIONS
  */
-panneau#films div#panneau_film_options {
+panneau.main_panneau_items div.main_panneau_options {
   padding     : 12px;
 }
-panneau#films div#panneau_film_options span#film_aspect_titre {
+panneau.main_panneau_items div.main_panneau_options span.item_aspect_balise {
   display       : block ;
   width         : 540px;
   border        : 1px solid #ccc;
@@ -117,9 +117,9 @@ panneau#films div#panneau_film_options span#film_aspect_titre {
 /* ---------------------------------------------------------------------
  *  DIV des BOUTONS BAS
  */
-panneau#films div.buttons {
+panneau.main_panneau_items div.buttons {
   padding     : 0 20px;
 }
-panneau#films div.buttons input[type="button"] {
+panneau.main_panneau_items div.buttons input[type="button"] {
   font-size  : 15pt;
 }

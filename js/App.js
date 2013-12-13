@@ -7,7 +7,6 @@ function confirmExit(evt)
 {
   if(Collection.modified)
   {
-    F.error("Des données n'ont pas été enregistrées, veux-tu vraiment quitter la page ?")
     evt.returnValue = "Veux-tu vraiment quitter ?"
     return "Veux-tu vraiment quitter ?"
   }  

@@ -5,27 +5,13 @@
  *
  *  NOTES
  *  -----
- *    ::  On instancie toujours un film seulement avec son identifiant  
+ *    ::  La toute première définition se trouve dans required.  
  */
 
-window.Film = function(fid)
-{
-  // L'identifiant est toujours requis
-  if(undefined == fid || fid == null || fid == "") throw LOCALE.film.error['no id supplied']
-
-  this.id = fid
-  
-  /* État */
-  this.loaded = false
-  
-  FILMS.list[fid] = this
-}
-
-Film.prototype.dispatch = function(data)
-{
-  var film = this
-  for(var prop in data) film[prop] = data[prop]
-}
+// On l'étend avec les méthodes et propriétés partagées
+$.extend(Film.prototype, ObjectClass.prototype)
+// On l'étend avec les propriétés complexes partagées
+Object.defineProperties(Film.prototype, ObjectClass_defined_properties)
 
 $.extend(Film.prototype,{
   
@@ -175,17 +161,6 @@ Object.defineProperties(Film.prototype,{
     }
   },
   
-  "let":{
-    get:function(){ 
-      if(undefined == this._let)
-      {
-        this._let = this.id.charCodeAt(0)
-        if(this._let.is_between(48,57)) this._let = 0
-      }
-      return this._let 
-    },
-    set:function(let){ this._let = let}
-  },
   
   /*
    *  Retourne les "data mini", c'est-à-dire les données qu'on trouve
@@ -231,116 +206,5 @@ Object.defineProperties(Film.prototype,{
       }
       return str.join(', ')
     }
-  },
-  
-  /* ---------------------------------------------------------------------
-   *
-   *  ETAT
-   *  
-   --------------------------------------------------------------------- */
-  "modified":{
-    get:function(){ return this._modified || false },
-    set:function(val){
-      this._modified = val
-    }
-  },
-  
-  /* ---------------------------------------------------------------------
-   *
-   *  PSEUDO-MÉTHODES
-   *  
-   --------------------------------------------------------------------- */
-  
-  /*
-   *  Chargement des données complètes du film
-   *  
-   *  @param  poursuivre  La méthode poursuivre
-   */
-  "load":{
-    value:function(poursuivre, rajax){
-      if(undefined == rajax)
-      { // => Requête ajax
-        Ajax.send(
-          {script:'film/load', film_id:this.id},
-          $.proxy(this.load, this, poursuivre)
-        )
-      }
-      else
-      { // => Retour chargement
-        if(rajax.ok)
-        {
-          this.dispatch( rajax.film )
-          this.loaded = true
-          if('function'==typeof poursuivre) poursuivre()
-        }
-        else
-        { 
-          this.unabled_to_load = true
-          F.error(rajax.message)
-        }
-      }
-    }
-  },
-  
-  /*
-   *  Enregistrement des données complètes du film
-   *  
-   *  @param  poursuivre  La méthode poursuivre
-   */
-  "save":{
-    value:function(poursuivre, rajax){
-      if(undefined == rajax)
-      { // => Requête ajax
-        Ajax.send(
-          {script:'film/save', data:this.data_for_save},
-          $.proxy(this.save, this, poursuivre)
-        )
-      }
-      else
-      { // => Retour sauvegarde
-        if(rajax.ok)
-        {
-          F.show("Film “"+this.titre+"” enregistré.")
-          this.modified = false
-          if('function'==typeof poursuivre) poursuivre()
-        }
-        else F.error(rajax.message)
-      }
-    }
-  },
-  
-  /*
-   *  Mise en édition du film
-   *  -----------------------
-   *
-   *  NOTES
-   *  -----
-   *    = La méthode s'assure que les data complètes soient chargées
-   *
-   */
-  "edit":{
-    get:function(){
-      if(this.unabled_to_load == true) return // abandon
-      if(false == this.loaded) return this.load($.proxy(FILMS.edit, FILMS, this.id))
-      FILMS.Edition.set_values( this )
-    }
-  },
-  
-  /*
-   *  Data en envoyer par la requête d'enregistrement du film
-   *  
-   */
-  "data_for_save":{
-    get:function()
-    {
-      var d = {}
-      var my = this
-      L(FILMS.Edition.FILM_PROPERTIES).each(function(prop){
-        d[prop] = my[prop]
-        if(d[prop] == "") d[prop] == null
-      })
-      return d
-    }
-  }
-  
+  }  
 })

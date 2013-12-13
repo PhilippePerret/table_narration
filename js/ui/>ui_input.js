@@ -150,8 +150,15 @@ UI.Input = {
        *  Pour un paragraphe, cela provoque la création d'un nouveau
        *  paragraphe juste au-dessous du champ courant, et ce nouveau
        *  champ prend la place du champ courant
+       *
+       *  NOTES
+       *  -----
+       *    = Pour qu'un champ textarea se comporte normalement, lui ajouter
+       *      la classe css "returnable"
        *  
        */
+      // Un champ "returnable" se comporte normalement
+      if(this.target.jq.hasClass('returnable')) return true
       // Quelque soit le champ, on doit blurer
       this.target.jq.blur()
       // Traitement spécial pour un champ texte de fiche paragraphe
@@ -217,7 +224,7 @@ UI.Input = {
           if(kmeta) this.set_selection_to('<i>_$_</i>')
           return stop_event(evt) // toujours
         case Key_f: //=> Insérer un film
-          FILMS.choose_a_film($.proxy(FILMS.insert_in_input, FILMS))
+          FILMS.choose_an_item($.proxy(FILMS.insert_in_input, FILMS))
           return stop_event(evt)
         case Key_m: //=> Insérer un mot du scénodico
           console.log("---> Insertion d'un mot du scénodico")

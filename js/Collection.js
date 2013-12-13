@@ -154,10 +154,27 @@ window.Collection = {
 
 Object.defineProperties(Collection,{
   
-  "saving_forbidden":{
-    get:function(){return this._saving_forbidden || false },
-    set:function(forbid){
-      this._saving_forbidden = forbid
+  /*
+   *  Les deux méthodes `disable_save' et 'enable_save' permettent
+   *  d'activer ou non la sauvegarde automatique (lorsque l'option AUTO
+   *  est activé)
+   *  
+   *  UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
+   *  start_automatic_saving
+   *
+   */
+  "disable_save":{
+    get:function(){
+      this.save_in_disable = true
+      this.stop_automatic_saving
+      this.regle_mark_saved
+    }
+  },
+  
+  "enable_save":{
+    get:function(){
+      this.save_in_disable = false
+      this.start_automatic_saving
       this.regle_mark_saved
     }
   },
@@ -165,7 +182,7 @@ Object.defineProperties(Collection,{
   "regle_mark_saved":{
     get:function()
     {
-      var mod = this.modified, forb = this.saving_forbidden ;
+      var mod = this.modified, forb = this.save_in_disable ;
       $('span#mark_saved_no')       [!forb && mod  ? 'show' : 'hide']()
       $('span#mark_saved_yes')      [!mod && !forb ? 'show': 'hide']()
       $('span#mark_saved_forbidden')[forb ? 'show':'hide']()
