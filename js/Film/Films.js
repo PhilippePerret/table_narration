@@ -42,6 +42,24 @@ window.FILMS = {
   DATA:null,      
 
   /*
+   *  {Hash} contenant les identifiants des films classés par lettre
+   *  Key   : La valeur Ascii de la lettre (ou 0 pour les films commençant 
+   *          par un nombre)
+   *  Value : {Array} contenant les identifiants des films, classé
+   *          alphabétiquement.  
+   *  
+   *  NOTES
+   *  -----
+   *    = C'est cette donnée qui est utilisée par FILMS.Dom pour construire
+   *      les listings des films d'une liste donnée.
+   *
+   *    = La pseudo-méthode FILMS.do_film_list_per_letter est appelée au
+   *      besoin, c'est-à-dire à la première construction d'un listing.
+   *      
+   */
+  DATA_PER_LETTER:null,
+
+  /*
    *  Table {Hash} des instances de films déjà instancié
    *  
    *  NOTES
@@ -111,7 +129,7 @@ window.FILMS = {
    *  @param  poursuivre  La méthode pour suivre (elle doit recevoir en premier 
    *                      argument l'id du film choisi)
    *  @param  options     {Hash} des options possibles :
-   *                      lettre      :  La lettre à afficher, if any  
+   *                      letter      :  La lettre à afficher, if any  
    *                      keep_opened :  Si TRUE, le panneau ne se fermera pas
    *                                     au choix d'un film
    */
@@ -120,7 +138,7 @@ window.FILMS = {
     if(undefined == poursuivre) throw "Il faut indiquer la méthode pour suivre !"
     if(undefined == options) options = {}
     this.Dom.show_panneau()
-    if(options.lettre) this.Dom.on_click_onglet(options.lettre)
+    if(options.letter) this.Dom.on_click_onglet(options.letter)
     this.Dom.options = options
     this.on_choose_film.poursuivre = poursuivre
   },
@@ -138,32 +156,7 @@ window.FILMS = {
   {
     if(!this.Dom.options.keep_opened) this.Dom.hide_panneau()
     this.on_choose_film.poursuivre(film_id)
-  },
-  
-  /*
-   *  Méthode utilisée après la création d'un nouveau film
-   *  La méthode appelante (FILMS.Edition.reload_data_film_js) a appelé le rechargement
-   *  du fichier des data des films (this.DATA = FILMS.DATA) et on doit attendre
-   *  la fin de son chargement pour rafraichir l'onglet courant.
-   *  
-   */
-  reaffiche_listing_when_ok:function(lettre)
-  {
-    clearTimeout(this.timer_wait)
-    if(this.DATA)
-    {
-      // Ça y est, les données sont rechargées
-      // @note :  le panneau de la lettre du nouveau film a déjà été
-      //          supprimé, il sera donc rafraichi
-      this.Dom.on_click_onglet()
-    }
-    else
-    {
-      dlog("Attente de FILMS.DATA…")
-      this.timer_wait = setTimeout($.proxy(this.reaffiche_listing_when_ok, this, lettre), 300)
-    }
-  }
-  
+  }  
  
 }
 
@@ -179,6 +172,47 @@ Object.defineProperties(FILMS,{
       this.need_loading = []
       this.list = {}
       this.DATA = {}
+      this.DATA_PER_LETTER = null
+    }
+  },
+  
+  /*
+   *  Vérifie si FILMS.DATA_PER_LETTER est établie et l'établit le
+   *  cas échéant
+   *  
+   *  @return TRUE si la donnée a déjà été établie, FALSE si elle doit
+   *          doit être établie. Cette information est utile, par exemple à
+   *          la création d'un nouveau film, pour savoir s'il faut ajouter
+   *          le nouveau film à cette liste, ou s'il sera ajouté en construisant
+   *          cette liste, puisque le nouveau film a déjà été ajouté à FILMS.DATA
+   */
+  "check_if_list_per_letter_ok":{
+    get:function(){
+      if(null != FILMS.DATA_PER_LETTER) return true
+      FILMS.do_film_list_per_letter
+      return false
+    }
+  },
+  /*
+   *  Produit DATA_PER_LETTER (cf. en tête de ce fichier)
+   *  
+   */
+  "do_film_list_per_letter":{
+    get:function(){
+      var fid, dfilm, iletter ;
+      this.DATA_PER_LETTER = {}
+      for(fid in this.DATA)
+      {
+        dfilm = this.DATA[fid]
+        if(undefined == this.DATA_PER_LETTER[dfilm.let]) this.DATA_PER_LETTER[dfilm.let] = []
+        this.DATA_PER_LETTER[dfilm.let].push(fid)
+      }
+      // On classe les films
+      var letters_count = this.DATA_PER_LETTER.length
+      for(iletter=0; iletter<letters_count; ++iletter)
+      {
+        this.DATA_PER_LETTER[iletter].sort()
+      }
     }
   }
   

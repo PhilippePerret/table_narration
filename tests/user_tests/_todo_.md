@@ -1,10 +1,31 @@
 IMPLÉMENTER
 -----------
 
+CRÉATION FILM
+- Le nouveau film se crée bien (vérifier qu'il est son ID)
+MAIS
+  > Le fichier interdata film_data.js ne s'actualise pas
+  > La donnée FILMS.DATA ne s'actualise pas
+    NOTE : Pour cette dernière, plutôt que de tout recharger, ajouter simplement
+    le nouveau film à FILMS.DATA (en le classant) et rafraichir son listing comme
+    je le fais déjà ici.
+    Vérifier avant comme sont relevés les films d'une lettre, si c'est fait avant.
+    En fait, je crois qu'il parcourt simplement la liste qui, par défaut, est 
+    forcément ordonnée.
+DONC
+  Le vrai problème à régler est l'actualisation de film_data.js
+  
 EDITION FILM
-- créer le film en "local" 
-  > dans la donnée de tous les films
-  > dans l'affichage
+  Sur listing : "E" permet d'éditer le film, ERASE permet de le détruire
+
+RACCOURCIS CLAVIER
+  > Les faire plutôt apparaitre dans une ligne fixe en bas de la fenêtre
+    div#div_shortcuts
+  > Faire un objet Shortcuts qui gèrera ça.
+
+DESTRUCTION FILM
+  > bouton "x"
+  > requête "film/destroy"
   
 CHOIX D'UN FILM
   # [pas toujours…] Les raccourcis ne fonctionnent plus sur un deuxième champ édité

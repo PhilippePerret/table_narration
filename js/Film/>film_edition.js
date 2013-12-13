@@ -69,36 +69,57 @@ FILMS.Edition = {
     else this.current = get_film( values.id )
     this.current.dispatch( values )
     if(is_new_film) this.current.id = id_new_film // a été écrasé par dispatch
-    this.current.save( $.proxy(this.end, this) ) // <-- SAUVEGARDE
-    if(is_new_film)
-    {
-      // Pour signaler le nouveau film à la méthode `end' qui
-      // s'occupera de recharger la liste
-      this.current.is_new = true
-      this.current.let    = this.current.id.charCodeAt(0)
-      if(this.current.let.is_between(48,57)) this.current.let = 0
-    }
+    // === ENREGISTREMENT DU FILM ===
+    this.current.save( 
+      $.proxy(this[is_new_film ? 'update_film_list_with_new' : 'end'], this) 
+    )
   },
   
+  /*
+   *  Appelé après `save' ci-dessus en cas de nouveau film
+   *  On doit actualiser la liste des films (pour ne pas avoir à la recharger)
+   *  et rafraichir l'affichage de la liste si nécessaire (si elle est affichée ou
+   *  construite, entendu que la lettre affichée n'est pas forcément la lettre du
+   *  film)
+   *  
+   *  @requis   this.current    Instance {Film} du nouveau film
+   */
+  update_film_list_with_new:function()
+  {
+    var film = this.current
+    film.is_new = true // encore utile ?
+    // = Ajout à FILMS.DATA =
+    FILMS.DATA[film.id] = film.data_mini
+    // = Ajout à FILMS.DATA_PER_LETTER =
+    // @note: si DATA_PER_LETTER a déjà été établie, c'est ici
+    // qu'il faut ajouter le film. Sinon, il sera automatiquement
+    // ajouté à la définition de DATA_PER_LETTER.
+    if(FILMS.check_if_list_per_letter_ok)
+    {
+      FILMS.DATA_PER_LETTER[film.let].push( film.id )
+      FILMS.DATA_PER_LETTER[film.let].sort
+    } 
+    // = Forcer l'actualisation du listing =
+    FILMS.Dom.remove_listing_letter( film.let )
+    // = Finir et afficher le listing =
+    this.end()
+  },
   
   /*
-   *  Pour terminer l'édition
+   *  Pour terminer l'édition/création du film
    *
    *  NOTES
    *  -----
    *    = Cette méthode est appelée directement par le bouton "Renoncer", sans
    *      passer par `save' ci-dessus
    *  
+   *    = On peut venir aussi de `update_film_list_with_new' ci-dessus lorsque
+   *      c'est une création de film.
    */
   end:function()
   {
     FILMS.Dom.hide_formulaire
-    if(this.current.is_new)
-    {
-      FILMS.Dom.remove_listing_lettre( this.current.let )
-      this.reload_data_film_js
-    }
-     
+    if(this.current.is_new) FILMS.Dom.on_click_onglet( this.current.let )
   },
 
   /*
@@ -115,21 +136,24 @@ FILMS.Edition = {
       switch(prop)
       {
       case 'resume':
+        if( val == null ) val = ""
         /* Compatibilité avec ancienne version */
         val = val.replace(/\^rc\^/g, "\n")
         break
       case 'producteur':
-        val = my.stringify_people_as(val, 'producteur')
+        if(val) val = my.stringify_people_as(val, 'producteur')
         break
       case 'auteurs':
-        val = my.stringify_people_as(val, 'auteur')
+        if(val) val = my.stringify_people_as(val, 'auteur')
         break
       case 'realisateur':
-        val = my.stringify_people_as(val, 'realisateur')
+        if(val) val = my.stringify_people_as(val, 'realisateur')
         break
       case 'acteurs':
-        val = my.stringify_people_as(val, 'acteur')
+        if(val) val = my.stringify_people_as(val, 'acteur')
         break
+      default:
+        if(val == null) val = ""
       }
       $(my.tag_for(prop)+'#filmEdit-'+prop).val( val )
     })
@@ -264,25 +288,6 @@ FILMS.Edition = {
 }
 
 Object.defineProperties(FILMS.Edition,{
-  
-  /*
-   *  Rechargement du fichier data_film.js
-   *  
-   */
-  "reload_data_film_js":{
-    get:function()
-    {
-      delete FILMS.DATA
-      $('head script#films_data_js').remove()
-      $('head').append('<script id="films_data_js" type="text/javascript" charset="utf-8" src=""></script>')
-      $('head script#films_data_js')[0].src = "../interdata/film/data_js/films_data.js"
-      FILMS.timer_wait = setTimeout($.proxy(FILMS.reaffiche_listing_when_ok, FILMS), 500)
-    }
-  },
-  remove_listing_lettre:function(lettre)
-  {
-    delete FILMS.Dom.lettres_built[lettre]
-  },
   
   /*
    *  Return le {jQuerySet} du formulaire d'édition du film.

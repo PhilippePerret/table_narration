@@ -175,6 +175,40 @@ Object.defineProperties(Film.prototype,{
     }
   },
   
+  "let":{
+    get:function(){ 
+      if(undefined == this._let)
+      {
+        this._let = this.id.charCodeAt(0)
+        if(this._let.is_between(48,57)) this._let = 0
+      }
+      return this._let 
+    },
+    set:function(let){ this._let = let}
+  },
+  
+  /*
+   *  Retourne les "data mini", c'est-à-dire les données qu'on trouve
+   *  dans FILMS.DATA (mais ici, l'objet est construit)
+   *
+   *  NOTES
+   *  -----
+   *    = Cette méthode n'est utile (pour le moment) qu'à la création
+   *      d'un nouveau film.
+   *  
+   */
+  "data_mini":{
+    get:function(){
+      return {
+        id        : this.id, 
+        titre     : this.titre,
+        titre_fr  : this.titre_fr,
+        annee     : (this.annee || null),
+        let       : this.let
+      }
+    }
+  },
+  
   /* ---------------------------------------------------------------------
    *
    *  MÉTHODES D'AFFICHAGE

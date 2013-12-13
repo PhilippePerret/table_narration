@@ -88,13 +88,13 @@ FILMS.Dom = {
    *    ::  Dans la table FILMS.DATA, c'est la propriété `let' qui contient cette
    *        valeur.
    */
-  lettre_courante: null,
+  current_letter: null,
   
   /*
    *  Liste des lettres dont la liste a déjà été établie
    *  En clé : la lettre, en valeur : true
    */
-  lettres_built:{},
+  letters_built:{},
   
   /*
    *  Ouvre le panneau des films
@@ -269,12 +269,12 @@ FILMS.Dom = {
    *        pour forcer l'actualisation du panneau.
    *
    */
-  on_click_onglet:function(lettre)
+  on_click_onglet:function(letter)
   {
-    if(this.lettre_courante) this.hide_listing(this.lettre_courante)
-    $('panneau#films div#onglet_lettre-'+lettre).addClass('pressed')
-    if(!this.lettres_built[lettre]) this.build_listing( lettre )
-    else this.show_listing(lettre)
+    if(this.current_letter) this.hide_listing(this.current_letter)
+    $('panneau#films div#onglet_letter-'+letter).addClass('pressed')
+    if(!this.letters_built[letter]) this.build_listing( letter )
+    else this.show_listing(letter)
     this.set_focus_on('listing')
   },
   
@@ -290,67 +290,66 @@ FILMS.Dom = {
   },
   
   /*
-   *  Affiche le listing de films de la lettre +lettre+
+   *  Affiche le listing de films de la lettre +letter+
    *  
    */
-  show_listing:function(lettre)
+  show_listing:function(letter)
   {
     this.current_item = null
-    this.lettre_courante  = lettre
+    this.current_letter  = letter
     $(this.jid_current_listing).show()
   },
   /*
-   *  Masque le listing de films de la lettre +lettre+
+   *  Masque le listing de films de la lettre +letter+
    *  
    */
-  hide_listing:function(lettre)
+  hide_listing:function(letter)
   {
     $(this.jid_current_listing).hide()
-    $('panneau#films div#onglet_lettre-'+lettre).removeClass('pressed')
-    this.lettre_courante  = null
+    $('panneau#films div#onglet_letter-'+letter).removeClass('pressed')
+    this.current_letter  = null
     this.current_item     = null
   },
   
   /*
-   *  Construit le listing de la lettre +lettre+ (qui sera mise en courante)
+   *  Construit le listing de la lettre +letter+ (qui sera mise en courante)
    *  
    */
-  build_listing:function(lettre)
+  build_listing:function(letter)
   {
-    this.div_listing.append(this.html_listing(lettre))
-    this.lettres_built[lettre] = true
-    this.lettre_courante = lettre
+    this.div_listing.append(this.html_listing(letter))
+    this.letters_built[letter] = true
+    this.current_letter = letter
   },
   
   /*
    *  Détruit le listing d'une lettre (pour rafraîchissement)
    *  
    */
-  remove_listing_lettre:function(lettre)
+  remove_listing_letter:function(letter)
   {
-    if(!this.lettres_built[lettre]) return // rien à faire
-    if(this.lettre_courante == lettre) this.lettre_courante = null
-    delete this.lettres_built[lettre]
-    $('div#'+this.listing_id(lettre)).remove()
+    if(!this.letters_built[letter]) return // rien à faire
+    if(this.current_letter == letter) this.current_letter = null
+    delete this.letters_built[letter]
+    $('div#'+this.listing_id(letter)).remove()
     this.current_item = null
   },
   
   /*
-   *  Retourne le code HTML du listing de la lettre +lettre+
-   *  C'est un DIV contenant tous les films de cette lettre
+   *  Retourne le code HTML du listing de la lettre +letter+
+   *  C'est un DIV contenant tous les films de cette letter
    *  
    */
-  html_listing:function(lettre){
-    var c = '<div id="'+this.listing_id(lettre)+'" class="listing_films">'
-    var fdata ;
-    for(fid in FILMS.DATA)
+  html_listing:function(letter){
+    var fdata, c = "", letter_list, i = 0, film_count ;
+    FILMS.check_if_list_per_letter_ok
+    letter_list = FILMS.DATA_PER_LETTER[letter]
+    films_count = letter_list.length
+    for(; i<films_count; ++i) 
     {
-      fdata = FILMS.DATA[fid]
-      if(fdata.let > lettre) break
-      if(fdata.let == lettre) c += this.html_div_film(fdata)
+      c += this.html_div_film(FILMS.DATA[letter_list[i]])
     }
-    c += '</div>'
-    return c
+    return '<div id="'+this.listing_id(letter)+'" class="listing_films">' + c + '</div>'
   },
   
   /* Retourne l'identifiant DOM du div principal d'un item de la liste (un film) */
@@ -384,9 +383,9 @@ FILMS.Dom = {
             '</div>'
   },
   
-  /* Retourne l'identifiant du listing (DIV) pour la lettre +lettre+ */
-  listing_id:function(lettre){
-    return "panneau_film_listing-"+lettre
+  /* Retourne l'identifiant du listing (DIV) pour la lettre +letter+ */
+  listing_id:function(letter){
+    return "panneau_film_listing-"+letter
   }
   
 }
@@ -427,7 +426,7 @@ Object.defineProperties(FILMS.Dom, {
   },
   /* Retourne le jID du listing de la lettre courante */
   "jid_current_listing":{
-    get:function(){ return "div#"+this.listing_id(this.lettre_courante)}
+    get:function(){ return "div#"+this.listing_id(this.current_letter)}
   },
   
   /*
@@ -679,12 +678,12 @@ Object.defineProperties(FILMS.Dom, {
       return c
     }
   },
-  /* Retourne le code HTML pour un onglet de code +ascii+ et de titre +lettre+ */
+  /* Retourne le code HTML pour un onglet de code +ascii+ et de titre +letter+ */
   "div_onglet":{
-    value:function(ascii, lettre){
-      return '<div id="onglet_lettre-'+ascii+
-      '" class="onglet_lettre" onclick="$.proxy(FILMS.Dom.on_click_onglet, FILMS.Dom, '+
-      ascii+')()">'+lettre+'</div>'
+    value:function(ascii, letter){
+      return '<div id="onglet_letter-'+ascii+
+      '" class="onglet_letter" onclick="$.proxy(FILMS.Dom.on_click_onglet, FILMS.Dom, '+
+      ascii+')()">'+letter+'</div>'
     }
   },
   

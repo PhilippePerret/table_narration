@@ -17,7 +17,7 @@ panneau#films div#panneau_film_onglets {
 panneau#films div#panneau_film_onglets {
   height    : 13px;
 }
-panneau#films div#panneau_film_onglets div.onglet_lettre {
+panneau#films div#panneau_film_onglets div.onglet_letter {
   float       : left;
   width       : 22px;
   font-size   : 11pt;
@@ -25,7 +25,7 @@ panneau#films div#panneau_film_onglets div.onglet_lettre {
   text-align  : center;
 }
 
-panneau#films div#panneau_film_onglets div.onglet_lettre.pressed {
+panneau#films div#panneau_film_onglets div.onglet_letter.pressed {
   background-color  : #6464BD;
 }
 
