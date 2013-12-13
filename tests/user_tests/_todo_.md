@@ -1,11 +1,14 @@
 IMPLÉMENTER
 -----------
 
+-# Empêcher de pouvoir sauver un film sans titre
+
 SCÉNODICO (objet DICO / class Mot)
-  > Mettre le maximum de méthodes partageable avec FILMS dans un objet séparé
-    à charger dans les deux objets/prototype de class
+  Récupérer les données
     
 
+FICHES
+------
 - Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
 
 - Voir si au lieu de définir un `window.onkeypress' il ne vaut pas mieux définir

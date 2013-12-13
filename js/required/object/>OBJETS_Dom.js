@@ -616,17 +616,19 @@ OBJETS_Dom_defined_properties = {
    */
   "show_formulaire":{
     get:function(){
+      var id_pan = this.id_panneau
       L(['tools', 'onglets', 'listings', 'buttons', 'options']).each(function(suf){
-        $('div#'+this.id_panneau+'_'+suf).hide()
+        $('div#'+id_pan+'_'+suf).hide()
       })
-      $('div#'+this.id_panneau+'_edition').show()
+      $('div#'+id_pan+'_edition').show()
     }
   },
   "hide_formulaire":{
     get:function(){
-      $('div#'+this.id_panneau+'_edition').hide()
+      var id_pan = this.id_panneau
+      $('div#'+id_pan+'_edition').hide()
       L(['tools', 'onglets', 'listings', 'buttons', 'options']).each(function(suf){
-        $('div#'+this.id_panneau+'_'+suf).show()
+        $('div#'+id_pan+'_'+suf).show()
       })
     }
   },

@@ -147,7 +147,7 @@ OBJETS_Edition = {
   end:function()
   {
     this.OBJS.Dom.hide_formulaire
-    if(this.current.is_new) this.OBJS.Dom.on_click_onglet( this.current.let )
+    if(this.current && this.current.is_new) this.OBJS.Dom.on_click_onglet( this.current.let )
   },
  
   /*
