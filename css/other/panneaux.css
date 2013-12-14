@@ -71,11 +71,14 @@ panneau.main_panneau_items div.items_form textarea {
   height        : 50px;
 }
 
-
-panneau.main_panneau_items div.items_form div#film_data input[type="text"] {
-  width         : 52px;
-  text-align    : center;
+panneau.main_panneau_items div.items_form div.main_data input[type="text"] {
+  width         : 268px;
 }
+panneau.main_panneau_items div.items_form input.main_prop {
+  font-weight   : bold;
+  font-size     : 1.1em;
+}
+
 panneau.main_panneau_items div.div_form_item div.buttons {
   margin-top    : 1em;
 }

@@ -8,10 +8,10 @@
  *    ::  La toute première définition se trouve dans required.  
  */
 
-// On l'étend avec les méthodes et propriétés partagées
-$.extend(Film.prototype, ObjectClass.prototype)
-// On l'étend avec les propriétés complexes partagées
-Object.defineProperties(Film.prototype, ObjectClass_defined_properties)
+// // On l'étend avec les méthodes et propriétés partagées
+// $.extend(Film.prototype, ObjetClass.prototype)
+// // On l'étend avec les propriétés complexes partagées
+// Object.defineProperties(Film.prototype, ObjetClass_defined_properties)
 
 $.extend(Film.prototype,{
   

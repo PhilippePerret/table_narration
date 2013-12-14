@@ -8,8 +8,8 @@
  *  
  */
 
-// On l'étend avec les méthodes et propriétés partagées
-$.extend(Mot.prototype, ObjectClass.prototype)
+// // On l'étend avec les méthodes et propriétés partagées
+// $.extend(Mot.prototype, ObjetClass.prototype)
 
 
 $.extend(Mot.prototype,{
@@ -43,60 +43,8 @@ $.extend(Mot.prototype,{
   {
     var t =
     // Approximatif pour le moment
-    t = '<a onclick="DICO.show(\''+this.id+'\')">'+this.mot+'</a>'
+    t = '<a onmouseover="DICO.show(\''+this.id+'\')">'+this.mot+'</a>'
     return t
   }
-  
-})
-
-/*
- *  Méthodes complexe
- *  
- */ 
-Object.defineProperties(Mot.prototype,{
- 
-  /* ---------------------------------------------------------------------
-   *
-   *  DATA
-   *  
-   --------------------------------------------------------------------- */
-  "mot":{
-    get:function(){return this._mot},
-    set:function(val){
-      this._mot = val
-    }
-  },
-  "definition":{
-    get:function(){ return this._definition},
-    set:function(def){
-      this._definition = def
-    }
-  },
-  
-  /*
-   *  Retourne les "data mini", c'est-à-dire les données qu'on trouve
-   *  dans FILMS.DATA (mais ici, l'objet est construit)
-   *
-   *  NOTES
-   *  -----
-   *    = Cette méthode n'est utile (pour le moment) qu'à la création
-   *      d'un nouveau film.
-   *  
-   */
-  "data_mini":{
-    get:function(){
-      return {
-        id          : this.id, 
-        mot         : this.mot,
-        let         : this.let
-      }
-    }
-  },
-  
-  /* ---------------------------------------------------------------------
-   *
-   *  MÉTHODES D'AFFICHAGE
-   *  
-   --------------------------------------------------------------------- */
   
 })

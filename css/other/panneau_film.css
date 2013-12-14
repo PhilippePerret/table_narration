@@ -13,22 +13,12 @@ panneau.main_panneau_items div.div_item div.titre {
   cursor      : pointer;
 }
 
+panneau.main_panneau_items div.items_form div#film_data input[type="text"] {
+  width         : 52px;
+  text-align    : center;
+}
+
 panneau.main_panneau_items div.items_form div#film_titres > img#img_imdb {
     vertical-align: bottom;
     width: 49px;
-}
-
-panneau.main_panneau_items div.items_form div#film_titres input[type="text"] {
-  width         : 268px;
-}
-panneau.main_panneau_items div.items_form div#film_titres label.libelle {
-  width         : 48px;
-}
-panneau.main_panneau_items div.items_form div#film_titres label[for="filmEdit-titre"] {
-  width         : 25px !important;
-}
-panneau.main_panneau_items div.items_form div#film_titres label[for="filmEdit-titre"],
-panneau.main_panneau_items div.items_form div#film_titres input#filmEdit-titre {
-  font-weight   : bold;
-  font-size     : 1.1em;
 }

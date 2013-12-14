@@ -363,10 +363,10 @@ OBJETS.Dom = {
    *    = Si la touche CMD est pressée, on écrit directement la balise
    *      dans le texte édité.  
    */
-  on_select_item:function(fid, evt)
+  on_select_item:function(id, evt)
   {
-    this.current_item = fid
-    if(evt.metaKey) this.OBJS.on_choose_item(fid)
+    this.current_item = id
+    if(evt.metaKey) this.OBJS.on_choose_item(id)
     else
     {
       this.set_focus_on('listing')
@@ -378,9 +378,9 @@ OBJETS.Dom = {
    *  s'il est construit
    *
    */
-  remove_item:function(fid)
+  remove_item:function(id)
   {
-    $('div#'+this.id_div_item(fid)).remove()
+    $('div#'+this.id_div_item(id)).remove()
   },
  
 
@@ -391,7 +391,6 @@ OBJETS.Dom = {
    */
   html_listing:function(letter){
     var fdata, c = "", letter_list, i = 0, items_count ;
-    dlog("DICO.DATA:");dlog(DICO.DATA)
     this.OBJS.check_if_list_per_letter_ok
     letter_list = this.OBJS.DATA_PER_LETTER[letter]
     items_count = letter_list.length
@@ -652,8 +651,6 @@ OBJETS_Dom_defined_properties = {
       for(idfocus in this.DFOCUS)
       {
         obj = this.DFOCUS[idfocus].obj = this['div_'+idfocus]
-        dlog("obj mis à this[div_"+idfocus+"] :")
-        dlog(this['div_'+idfocus])
         obj.bind('keypress', $.proxy(this['keypress_on_'+idfocus], this))
         // obj.bind('click', $.proxy(this.set_focus_on, this, idfocus))
       }

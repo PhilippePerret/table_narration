@@ -50,14 +50,25 @@ window.OBJETS = {
   list:{},
   
   /*
+   *  Retourne l'« identifiant méthode » pour le débuggage
+   *  
+   */
+  idm:function(method)
+  {
+    return this.NAME+"."+method
+  },
+  
+  /*
    *  Retourne la class {Film} ou {Mot} de l'item d'identifiant +id+
    *  
    */
   get:function(id)
   {
+    dlog("-> "+this.idm('get')+"("+id+")")
     if( undefined != this.list[id] ) return this.list[id]
     var item = new this.Class(id)
     item.dispatch( this.DATA[id] )
+    dlog("<- "+this.idm('get'))
     return item
   },
   
@@ -164,12 +175,11 @@ OBJETS_defined_properties = {
    */
   "do_item_list_per_letter":{
     get:function(){
-      dlog("-> "+this.NAME+".do_item_list_per_letter", DB_FCT_ENTER|DB_CURRENT)
+      dlog("-> "+this.NAME+".do_item_list_per_letter", DB_FCT_ENTER)
       var id, ditem, iletter ;
       this.DATA_PER_LETTER = {}
       for(id in this.DATA)
       {
-        dlog("id : "+id)
         ditem = this.DATA[id]
         if(undefined == this.DATA_PER_LETTER[ditem.let]) this.DATA_PER_LETTER[ditem.let] = []
         this.DATA_PER_LETTER[ditem.let].push(id)

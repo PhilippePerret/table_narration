@@ -1,16 +1,16 @@
-DICO.Edition = {}
+
+if(undefined == DICO.Edition) DICO.Edition = {}
 
 // Méthodes et propriété partagées
-$.extend(DICO.Edition, OBJETS_Edition)
+// cf. à la fin de >OBJETS_Edition
 
 // Propriétés complexes partagées
-Object.defineProperties(DICO.Edition, OBJETS_Edition_defined_properties)
+// cf. à la fin de >OBJETS_Edition
 
 // Propriétés et méthodes propres
 $.extend(DICO.Edition,{
   NAME              : "DICO.Edition",
   OBJS              : DICO,
-  SELF              : DICO.Edition,
   parent_as_string  : "DICO",
   ItemClass         : Mot,
   main_prop         : 'mot', 
@@ -18,7 +18,7 @@ $.extend(DICO.Edition,{
   folder_ajax       : "scenodico",
 
   /*
-   *  Liste des propriétés du film qui pourront être
+   *  Liste des propriétés du mot qui pourront être
    *  éditées.
    *
    *  NOTES
@@ -29,13 +29,16 @@ $.extend(DICO.Edition,{
   ITEM_PROPERTIES:['id', 'mot', 'definition'],
  
 
-  set_values:function(film)
+  set_values:function(mot)
   {
+    var idm = this.NAME+".set_values(mot #"+mot.id+")"
+    dlog("-> "+idm, DB_FCT_ENTER | DB_CURRENT)
     // On remonte toujours au-dessus
     $('div#'+this.prefix+'form').scrollTo(0) ;
     var my = this
     L(my.ITEM_PROPERTIES).each(function(prop){
-      val = film[prop]
+      val = mot[prop]
+      dlog("Prop:"+prop+" = "+val)
       switch(prop)
       {
       case 'mot':
@@ -107,16 +110,20 @@ Object.defineProperties(DICO.Edition,{
   "html_formulaire":{
     get:function(){
       var c = '<div id="'+this.prefix+'form" class="items_form">'
+      var self = this
       L([
-        '<div id="dico_div_item_definition">',
-        {id:'mot', placeholder:"Nouveau mot scénodico"},
-        {type:'textarea', id:'definition', class:'haut', placeholder:"Définition du mot"},
+        '<div id="dico_div_item_definition" class="main_data">',
+        {id:'id', type:'hidden'},
+        {id:'mot', placeholder:"Nouveau mot scénodico", class:"main_prop"},
         '</div>',
         '<div id="mot_data">',
+        {type:'textarea', id:'definition', class:'haut', placeholder:"Définition du mot"},
         '</div>',
+        '<fieldset id="dico_section_categorie"><legend><b>Catégories</b></legend>',
+        '</fieldset>',
         '<fieldset id="dico_section_relation"><legend><b>Relations</b></legend>',
         '</fieldset>'
-        ]).each(function(dfield){c += SELF.html_field(dfield)})
+        ]).each(function(dfield){c += self.html_field(dfield)})
       c += '</div>'
       return c
     }

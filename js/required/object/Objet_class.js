@@ -1,10 +1,12 @@
-window.ObjectClass = function(){}
+window.ObjetClass = function(id){
+  this.id = id
+}
 
 /*
  *  Méthodes à argument
  *  
  */
-$.extend(ObjectClass.prototype,{
+$.extend(ObjetClass.prototype,{
   
   /*
    *  Dispatch les +data+ envoyées dans l'instance
@@ -20,7 +22,7 @@ $.extend(ObjectClass.prototype,{
  *  Propriétés (complexes)
  *  
  */
-ObjectClass_defined_properties = {
+Object.defineProperties(ObjetClass.prototype, {
   /* ---------------------------------------------------------------------
    *
    *  DATA (communes aux différents types d'objet — film, mot, etc.)
@@ -44,6 +46,7 @@ ObjectClass_defined_properties = {
    *  
    --------------------------------------------------------------------- */
   "modified":{
+    enumerable:true,
     get:function(){ return this._modified || false },
     set:function(val)
     {
@@ -63,6 +66,7 @@ ObjectClass_defined_properties = {
    *  @param  poursuivre  La méthode poursuivre
    */
   "load":{
+    enumerable:true,
     value:function(poursuivre, rajax)
     {
       if(undefined == rajax)
@@ -95,6 +99,7 @@ ObjectClass_defined_properties = {
    *  @param  poursuivre  La méthode poursuivre
    */
   "save":{
+    enumerable:true,
     value:function(poursuivre, rajax){
       if(undefined == rajax)
       { // => Requête ajax
@@ -125,6 +130,7 @@ ObjectClass_defined_properties = {
    *
    */
   "edit":{
+    enumerable:true,
     get:function(){
       if(this.unabled_to_load == true) return // abandon
       if(false == this.loaded) return this.load($.proxy(this.OBJS.edit, this.OBJS, this.id))
@@ -149,4 +155,4 @@ ObjectClass_defined_properties = {
     }
   }
 
-}
+})

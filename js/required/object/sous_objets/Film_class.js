@@ -14,13 +14,16 @@ window.Film = function(fid)
   // L'identifiant est toujours requis
   if(undefined == fid || fid == null || fid == "") throw LOCALE.film.error['no id supplied']
 
+  ObjetClass.call(this, fid)
   this.OBJS         = FILMS
   this.folder_ajax  = 'film'
   this.class_min    = 'film'
-  this.id           = fid
   
   /* État */
   this.loaded = false
   
   this.OBJS.list[fid] = this
 }
+Film.prototype = Object.create( ObjetClass.prototype )
+Film.prototype.constructor = Film
+

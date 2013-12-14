@@ -50,7 +50,7 @@ $.extend(DICO.Dom, {
   {
     return '<div id="'+this.id_div_item(ditem.id)+'" class="div_item">' +
               '<div class="fright">' +
-                '<input type="button" class="small" value="edit" onclick="$.proxy(FILMS.edit, FILMS, \''+ditem.id+'\')()" />'+
+                '<input type="button" class="small" value="edit" onclick="$.proxy(DICO.edit, DICO, \''+ditem.id+'\')()" />'+
               '</div>' +
               // '<div class="titre" onclick="$.proxy(FILMS.on_choose_item, FILMS, \''+ditem.id+'\')()">' +
               '<div class="mot" onclick="$.proxy(DICO.Dom.on_select_item, DICO.Dom, \''+ditem.id+'\', event)()">' +

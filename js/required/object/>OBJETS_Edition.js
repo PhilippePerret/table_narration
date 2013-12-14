@@ -29,7 +29,7 @@ OBJETS_Edition = {
     else
     {
       this.current = this.OBJS.get( id )
-      this.current.edit 
+      this.current.edit
         // @note: sait gérer le fait que le item ne soit pas encore chargé
     }
   },
@@ -67,7 +67,7 @@ OBJETS_Edition = {
       title: LOCALE[this.class_min].ask['want delete film'] + " “"+this.OBJS.get(id).titre+"” ?",
       buttons:{
         cancel:{name:"Renoncer"},
-        ok:{name:LOCALE[this.class_min].label['destroy'], onclick:$.proxy(SELF.remove, SELF, id)}
+        ok:{name:LOCALE[this.class_min].label['destroy'], onclick:$.proxy(this.remove, this, id)}
       }
     })
   },
@@ -300,16 +300,22 @@ OBJETS_Edition_defined_properties = {
    */
   "html_div_buttons":{
     get:function(){
-      dlog("-> FILMS.Edition.html_div_buttons", DB_FCT_ENTER)
+      dlog("-> "+this.NAME+".html_div_buttons", DB_FCT_ENTER)
       return  '<div class="buttons">' +
-                '<input type="button" value="Renoncer" onclick="$.proxy(FILMS.Edition.end, FILMS.Edition)()" class="fleft" />' +
-                '<input type="button" value="Enregistrer" onclick="$.proxy(FILMS.Edition.save, FILMS.Edition)()" />' +
+                '<input type="button" value="Renoncer" onclick="$.proxy('+this.NAME+'.end, '+this.NAME+')()" class="fleft" />' +
+                '<input type="button" value="Enregistrer" onclick="$.proxy('+this.NAME+'.save, '+this.NAME+')()" />' +
               '</div>'
     }
   }
   
 }
 
+// Extensions pour les films
 if(undefined == FILMS.Edition) FILMS.Edition = {}
 $.extend(FILMS.Edition, OBJETS_Edition)
 Object.defineProperties(FILMS.Edition, OBJETS_Edition_defined_properties)
+// Extensions pour le Scénodico
+if(undefined == DICO.Edition) DICO.Edition = {}
+$.extend(DICO.Edition, OBJETS_Edition)
+Object.defineProperties(DICO.Edition, OBJETS_Edition_defined_properties)
+

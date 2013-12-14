@@ -17,7 +17,6 @@ $.extend(FILMS.Edition, {
   
   NAME              : "FILMS.Edition",
   OBJS              : FILMS,
-  SELF              : FILMS.Edition,
   parent_as_string  : "FILMS",
   ItemClass         : Film,
   main_prop         : 'titre', 
@@ -251,9 +250,9 @@ Object.defineProperties(FILMS.Edition,{
     get:function(){
       var c = '<div id="'+this.prefix+'form" class="items_form">'
       L([
-        '<div id="film_titres">',
+        '<div id="film_titres" class="main_data">',
         {id:'id', type:'hidden'},
-        {id:'titre', placeholder:"Titre original"}, 
+        {id:'titre', placeholder:"Titre original", class:"main_prop"}, 
         image("picto/imdb/projectors.png", {
           id:"img_imdb", 
           title:"Cliquer pour rechercher le titre sur IMDb",

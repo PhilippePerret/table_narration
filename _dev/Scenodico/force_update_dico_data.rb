@@ -19,7 +19,7 @@ NOTES
 FOLDER_SCENODICO = File.join('..', 'interdata', 'scenodico')
 MODELS_RUBY       = File.join(FOLDER_SCENODICO, 'ruby', 'model')
 
-require File.join(MODELS_RUBY, 'Mot_class')
+require File.join(MODELS_RUBY, 'mot')
 
 if defined?(Mot)
   Mot::update_dico_data_js
