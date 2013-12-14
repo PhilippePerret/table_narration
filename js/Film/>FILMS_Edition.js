@@ -15,9 +15,9 @@ if(undefined == FILMS.Edition) FILMS.Edition = {}
 // Propriétés et méthodes propres
 $.extend(FILMS.Edition, {
   
+  NAME              : "FILMS.Edition",
   OBJS              : FILMS,
   SELF              : FILMS.Edition,
-  as_string         : "FILMS.Edition",
   parent_as_string  : "FILMS",
   ItemClass         : Film,
   main_prop         : 'titre', 

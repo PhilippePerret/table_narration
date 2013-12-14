@@ -36,6 +36,20 @@ window.get_film = function(fid)
 }
 
 /*
+ *  Retourne l'instance {Ref} de la référence d'identifiant +rid+
+ *  en la créant si nécessaire.
+ *
+ *  NOTES
+ *  -----
+ *    = Cette méthode est un raccourci de `REFS.get(rid)'
+ *  
+ */
+window.get_ref = function(rid)
+{
+  return REFS.get(rid)
+}
+
+/*
  *  Affiche un message d'aide (par exemple les raccourcis clavier)
  *  dans la barre inférieure.
  */

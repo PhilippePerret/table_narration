@@ -391,6 +391,7 @@ OBJETS.Dom = {
    */
   html_listing:function(letter){
     var fdata, c = "", letter_list, i = 0, items_count ;
+    dlog("DICO.DATA:");dlog(DICO.DATA)
     this.OBJS.check_if_list_per_letter_ok
     letter_list = this.OBJS.DATA_PER_LETTER[letter]
     items_count = letter_list.length
@@ -699,7 +700,7 @@ OBJETS_Dom_defined_properties = {
         this.options_balise[opt] = this.OBJS.OPTIONS[opt].valdef
         id   = this.prefix+"option-"+opt
         cbs += '<input type="checkbox" id="'+id+'" ' +
-                'onchange="$.proxy('+this.as_string+'.onchange_option, '+this.as_string+', this)()" />' +
+                'onchange="$.proxy('+this.NAME+'.onchange_option, '+this.NAME+', this)()" />' +
                 '<label for="'+id+'">'+ this.OBJS.OPTIONS[opt].hname +'</label>' ;
       }
       var aspect_titre = '<span id="'+this.prefix+'aspect_balise" class="item_aspect_balise">Titre original</span>'
@@ -716,7 +717,7 @@ OBJETS_Dom_defined_properties = {
     get:function(){
       var c = '<div id="'+this.id_panneau+'_onglets" class="focusable main_panneau_onglets" tabindex="0">'
       // Seulement pour FILMS
-      if(this.as_string ==  'FILMS.Dom') c += this.div_onglet( 0, '0-9' )
+      if(this.NAME ==  'FILMS.Dom') c += this.div_onglet( 0, '0-9' )
       for(var i = 65; i<=90; ++i){
         c += this.div_onglet( i, String.fromCharCode(i) )
       }
@@ -728,7 +729,7 @@ OBJETS_Dom_defined_properties = {
   "div_onglet":{
     value:function(ascii, letter){
       return '<div id="'+this.prefix+'onglet_letter-'+ascii+
-      '" class="onglet_letter" onclick="$.proxy('+this.as_string+'.on_click_onglet, '+this.as_string+', '+
+      '" class="onglet_letter" onclick="$.proxy('+this.NAME+'.on_click_onglet, '+this.NAME+', '+
       ascii+')()">'+letter+'</div>'
     }
   },
@@ -759,7 +760,7 @@ OBJETS_Dom_defined_properties = {
     get:function(){
       return '<div id="'+this.id_panneau+'_buttons" class="buttons">' +
       '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, FILMS.Edition)()" class="fleft" />' +
-      '<input type="button" value="Renoncer" onclick="$.proxy('+this.as_string+'.hide_panneau, '+this.as_string+')()" />' +
+      '<input type="button" value="Renoncer" onclick="$.proxy('+this.NAME+'.hide_panneau, '+this.NAME+')()" />' +
       '</div>'
     }
   }

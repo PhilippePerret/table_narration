@@ -8,9 +8,9 @@ Object.defineProperties(DICO.Edition, OBJETS_Edition_defined_properties)
 
 // Propriétés et méthodes propres
 $.extend(DICO.Edition,{
+  NAME              : "DICO.Edition",
   OBJS              : DICO,
   SELF              : DICO.Edition,
-  as_string         : "DICO.Edition",
   parent_as_string  : "DICO",
   ItemClass         : Mot,
   main_prop         : 'mot', 

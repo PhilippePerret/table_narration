@@ -6,8 +6,9 @@ $.extend(FILMS.Dom, OBJETS.Dom)
 // Les méthodes et propriétés propres
 $.extend(FILMS.Dom, {
   
-  OBJS      : FILMS,
-  NAME      : "FILMS.Dom",  // Pour les messages de débug
+  OBJS              : FILMS,
+  NAME              : "FILMS.Dom",  // Pour les messages de débug
+  parent_as_string  : "FILMS",
   prefix    : "films_",     // prefix pour les DOM Elements
   
   /*
@@ -72,8 +73,6 @@ Object.defineProperties(FILMS.Dom, {
   /* ---------------------------------------------------------------------
    *  RÉGLAGES
    --------------------------------------------------------------------- */
-  "as_string":{get:function(){ return "FILMS.Dom" }},
-  "parent_as_string":{get:function(){ return "FILMS"}},
   
   /*
    *  Règle l'affiche de l'aperçu du titre en fonction des options

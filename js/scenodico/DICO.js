@@ -11,8 +11,11 @@
  *  
  */
 
-
-window.DICO = {
+if('undefined'==typeof DICO) DICO = {}
+$.extend(DICO, {
+  
+  NAME:"DICO",
+  
   /*
    *  Options pour l'affichage du mot
    *  dans la page.
@@ -48,7 +51,4 @@ window.DICO = {
   {
     F.show("La méthode d'affichage du mot n'est pas encore implémentée.")
   }
-}
-
-$.extend(DICO, OBJETS)
-Object.defineProperties(FILMS, OBJETS_defined_properties)
+})

@@ -146,8 +146,14 @@ OBJETS_defined_properties = {
    */
   "check_if_list_per_letter_ok":{
     get:function(){
-      if(null != this.DATA_PER_LETTER) return true
+      dlog("-> "+this.NAME+".check_if_list_per_letter_ok", DB_FCT_ENTER)
+      if(null != this.DATA_PER_LETTER)
+      {
+        dlog("<- "+this.NAME+".check_if_list_per_letter_ok (return TRUE => DATA_PER_LETTER déjà établi)", DB_FCT_ENTER)
+        return true
+      } 
       this.do_item_list_per_letter
+      dlog("<- "+this.NAME+".check_if_list_per_letter_ok (après établissement de DATA_PER_LETTER)", DB_FCT_ENTER )
       return false
     }
   },
@@ -157,12 +163,13 @@ OBJETS_defined_properties = {
    *  
    */
   "do_item_list_per_letter":{
-    enumerable:true,
     get:function(){
+      dlog("-> "+this.NAME+".do_item_list_per_letter", DB_FCT_ENTER|DB_CURRENT)
       var id, ditem, iletter ;
       this.DATA_PER_LETTER = {}
       for(id in this.DATA)
       {
+        dlog("id : "+id)
         ditem = this.DATA[id]
         if(undefined == this.DATA_PER_LETTER[ditem.let]) this.DATA_PER_LETTER[ditem.let] = []
         this.DATA_PER_LETTER[ditem.let].push(id)
@@ -179,3 +186,9 @@ OBJETS_defined_properties = {
 }
 
 Object.defineProperties(OBJETS, OBJETS_defined_properties)
+if('undefined'==typeof FILMS) FILMS = {}
+$.extend(FILMS, OBJETS)
+Object.defineProperties(FILMS, OBJETS_defined_properties)
+if('undefined'==typeof DICO) DICO = {}
+$.extend(DICO, OBJETS)
+Object.defineProperties(DICO, OBJETS_defined_properties)

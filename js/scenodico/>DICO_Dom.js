@@ -6,9 +6,10 @@ $.extend(DICO.Dom, OBJETS.Dom)
 // Les méthodes et propriétés propres
 $.extend(DICO.Dom, {
  
-  OBJS      : DICO,
-  NAME      : "DICO.Dom",  // Pour les messages de débug
-  prefix    : "dico_",     // prefix pour les DOM Elements
+  OBJS              : DICO,
+  NAME              : "DICO.Dom",  // Pour les messages de débug
+  prefix            : "dico_",     // prefix pour les DOM Elements
+  parent_as_string  : "DICO",
 
   /*
    *  Données pour l'aperçu du titre suivant les options
@@ -66,8 +67,6 @@ Object.defineProperties(DICO.Dom, OBJETS_Dom_defined_properties)
 // Propriétés complexes propres au Scénodico
 Object.defineProperties(DICO.Dom,{
  
-  "as_string":{get:function(){ return "DICO.Dom" }},
-  "parent_as_string":{get:function(){ return "DICO"}},
  
   /*
    *  Règle l'affiche de l'aperçu du titre en fonction des options
@@ -76,7 +75,7 @@ Object.defineProperties(DICO.Dom,{
   "set_apercu_balise":{
     get:function()
     {
-      var dasp = this.current_item ? get_film(this.current_item) : this.DATA_ASPECT
+      var dasp = this.current_item ? get_mot(this.current_item) : this.DATA_ASPECT
       var aspect = "", inpar  = [] ;
       var opts = this.options_balise
       aspect += dasp.mot

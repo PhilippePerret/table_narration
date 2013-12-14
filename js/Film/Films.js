@@ -11,8 +11,11 @@
  *  
  */
 
+if('undefined'==typeof FILMS) FILMS = {}
+$.extend(FILMS, {
 
-window.FILMS = {
+  NAME:"FILMS",
+
   /*
    *  Options pour l'affichage du titre du film
    *  dans la page.
@@ -52,8 +55,5 @@ window.FILMS = {
   {
     F.show("La méthode d'affichage du film n'est pas encore implémentée.")
   }
-}
-
-$.extend(FILMS, OBJETS)
-Object.defineProperties(FILMS, OBJETS_defined_properties)
+} )
 
