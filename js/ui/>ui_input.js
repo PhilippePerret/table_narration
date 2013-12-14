@@ -227,7 +227,7 @@ UI.Input = {
           FILMS.choose_an_item($.proxy(FILMS.insert_in_input, FILMS))
           return stop_event(evt)
         case Key_m: //=> Insérer un mot du scénodico
-          console.log("---> Insertion d'un mot du scénodico")
+          DICO.choose_an_item($.proxy(DICO.insert_in_input, DICO))
           return stop_event(evt)
         case Key_r: //=> Insérer une référence vers une fiche
           console.log("---> Insertion d'une référence vers une fiche")
