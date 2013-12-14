@@ -58,26 +58,8 @@ OBJETS.Dom = {
    *  
    */
   options:null,
-  
-  /*
-   *  Options d'affichage courantes
-   *
-   *  NOTES
-   *  -----
-   *    = Ces options déterminent la balise qui sera produite.
-   *
-   *    = Ce {Hash} est rempli à la construction des CB pour choisir le type
-   *      du lien à produire, à partir de la donnée FILMS.OPTIONS.
-   *      Chaque clé est une option et sa valeur est true quand l'option est
-   *      retenue, false dans le cas contraire.
-   *
-   *    = Pour modifier ou ajouter des options, il suffit de modifier la valeur
-   *      de FILMS.OPTIONS (dans Films.js)
-   *  
-   */
-  options_balise:{},
-  
-  
+
+ 
   /*
    *  Lettre courante (affichée)
    *  
@@ -90,12 +72,6 @@ OBJETS.Dom = {
    *        valeur.
    */
   current_letter: null,
-  
-  /*
-   *  Liste des lettres dont la liste a déjà été établie
-   *  En clé : la lettre, en valeur : true
-   */
-  letters_built:{},
   
   /*
    *  Ouvre le panneau des films
@@ -293,6 +269,7 @@ OBJETS.Dom = {
   {
     if(this.current_letter) this.hide_listing(this.current_letter)
     $('div#'+this.prefix+'onglet_letter-'+letter).addClass('pressed')
+    // dlog("on_click_onglet dans "+this.NAME+" avec lettre "+letter)
     if(!this.letters_built[letter]) this.build_listing( letter )
     else this.show_listing(letter)
     this.set_focus_on('listing')
@@ -338,6 +315,7 @@ OBJETS.Dom = {
   build_listing:function(letter)
   {
     this.div_listing.append(this.html_listing(letter))
+    dlog("build_listing dans "+this.NAME)
     this.letters_built[letter] = true
     this.current_letter = letter
   },
@@ -347,7 +325,7 @@ OBJETS.Dom = {
    *  
    */
   remove_listing_letter:function(letter)
-  {
+  {    
     if(!this.letters_built[letter]) return // rien à faire
     if(this.current_letter == letter) this.current_letter = null
     delete this.letters_built[letter]
@@ -556,7 +534,7 @@ OBJETS_Dom_defined_properties = {
   "remove_selected":{
     get:function(){
       if(!this.current_item) return F.show(LOCALE.film.message['no item selected']+' '+LOCALE.film.message['cant remove item'])
-      FILMS.Edition.want_remove(this.current_item)
+      this.OBJS.Edition.want_remove(this.current_item)
     }
   },
   
@@ -756,7 +734,7 @@ OBJETS_Dom_defined_properties = {
   "html_div_boutons":{
     get:function(){
       return '<div id="'+this.id_panneau+'_buttons" class="buttons">' +
-      '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, FILMS.Edition)()" class="fleft" />' +
+      '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, '+this.parent_as_string+'.Edition)()" class="fleft" />' +
       '<input type="button" value="Renoncer" onclick="$.proxy('+this.NAME+'.hide_panneau, '+this.NAME+')()" />' +
       '</div>'
     }

@@ -1,5 +1,52 @@
+/* ---------------------------------------------------------------------
+ *    APERÇU DU CONTENU
+ --------------------------------------------------------------------- */
+
+div.apercu {
+  position          : absolute;
+  top               : 0;
+  left              : 0;
+  background-color  : #EEFFB0;
+  padding           : 1em;
+  min-width         : 240px;
+  max-width         : 400px;
+  font-size         : 9pt;
+  max-height        : 100px;
+  overflow          : auto;
+  z-index           : 1000 !important;
+}
+/*div.apercu:hover{display:block;}*/
+
+.apercu .mainprop {
+  font-weight   : bold;
+  font-size     : 1.1em;
+  margin-bottom : 0.5em;
+}
+
+/* Style utilisé pour le résumé du film, mais aussi la définition du mot etc. */
+.apercu .resume {
+  
+}
+
+/* ---------------------------------------------------------------------
+ *    LES LIENS
+ --------------------------------------------------------------------- */
+.lk_mot .apercu {display:none;}
+.lk_mot:hover {z-index:1000 !important;}
+.lk_mot:hover .apercu {display:block;}
+
 fiche.para .lk_film {
+  position    : relative;
   font-family : Verdana;
   font-size   : 11.3pt;
   color       : #00009C;
+  z-index     : 1;
+}
+
+fiche.para .lk_mot {
+  position    : relative;
+  font-family : Verdana;
+  font-size   : 11.3pt;
+  color       : #00009C;
+  z-index     : 1;
 }

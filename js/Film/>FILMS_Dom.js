@@ -21,6 +21,31 @@ $.extend(FILMS.Dom, {
    */
   DATA_ASPECT: {titre:"Original Title", titre_fr:"Titre français", annee:"2013"},
 
+  /*
+   *  Liste des lettres dont la liste a déjà été établie
+   *  En clé : la lettre, en valeur : true
+   */
+  letters_built:{},
+
+  
+  /*
+   *  Options d'affichage courantes
+   *
+   *  NOTES
+   *  -----
+   *    = Ces options déterminent la balise qui sera produite.
+   *
+   *    = Ce {Hash} est rempli à la construction des CB pour choisir le type
+   *      du lien à produire, à partir de la donnée FILMS.OPTIONS.
+   *      Chaque clé est une option et sa valeur est true quand l'option est
+   *      retenue, false dans le cas contraire.
+   *
+   *    = Pour modifier ou ajouter des options, il suffit de modifier la valeur
+   *      de FILMS.OPTIONS (dans Films.js)
+   *  
+   */
+  options_balise:{},
+
   // Keypress activé quand on est sur la section 'options'
   // 
   keypress_on_options:function(evt)

@@ -40,15 +40,5 @@ $.extend(DICO, {
    *  
    */
   Class: Mot,
-  
-    
-  /*
-   *  Affiche la fiche du mot d'identifiant +fid+
-   *  TODO
-   *  
-   */
-  show:function(fid)
-  {
-    F.show("La méthode d'affichage du mot n'est pas encore implémentée.")
-  }
+
 })

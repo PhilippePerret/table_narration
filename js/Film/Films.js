@@ -46,14 +46,5 @@ $.extend(FILMS, {
   Class: Film,
   
     
-  /*
-   *  Affiche la fiche du film d'identifiant +fid+
-   *  TODO
-   *  
-   */
-  show:function(fid)
-  {
-    F.show("La méthode d'affichage du film n'est pas encore implémentée.")
-  }
-} )
+})
 

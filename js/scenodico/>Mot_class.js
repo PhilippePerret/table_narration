@@ -41,10 +41,27 @@ $.extend(Mot.prototype,{
    */
   formate:function(opts)
   {
-    var t =
-    // Approximatif pour le moment
-    t = '<a onmouseover="DICO.show(\''+this.id+'\')">'+this.mot+'</a>'
+    var t ;
+    // Simple pour le moment
+    t = '<a onmouseover="DICO.show(this, \''+this.id+'\')" class="lk_mot">'+this.mot+'</a>'
     return t
   }
+
+})
+
+Object.defineProperties(Mot.prototype,{
   
+  /*
+   *  Retourne le code HTML de l'aperçu de l'item
+   *  
+   *  NOTES
+   *  -----
+   *    = Ce code sera placé dans un div.apercu
+   */
+  "html_apercu":{
+    get:function(){
+      return  '<div class="mainprop">'+this.mot+'</div>' +
+              '<div class="resume">'+this.definition+'</div>'
+    }
+  }
 })

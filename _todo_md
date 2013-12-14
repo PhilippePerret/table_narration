@@ -1,27 +1,78 @@
-* Quand une fiche est rangée :
-  - supprimer son draggable
-  - ajouter un sortable
-* Quand la fiche est un-rangée :
-  - ajouter son draggable
-  - supprimer son sortable
+IMPLÉMENTER
+-----------
+
+-# Empêcher de pouvoir sauver un film sans titre
+-# Le titre de la page semble disparaitre parfois.
+
+APERCU (souris hover un mot/film)
+- Faire une classe unique 'lk' pour tous ces types de lien : "lk lk_mot"
+  - C'est cette classe qui doit porter le :hover dans balisage.css
+- click sur l'apercu va mettre le mot/film/etc. en édition
+  > Pour les films, mots, il faut donc procéder à l'ouverture du panneau
+    correspondant.
+  > Pour les références, il faut soit les afficher dans leur contexte et si
+    c'est une page, on l'ouvre.
+- Pour l'aperçu d'une page, le début de son texte ou peut-être même tout
+  son texte.
+  > Mais quid s'il s'agit d'un chapitre ou d'un livre ? Peut-être faire un
+    résumé de leur contenu (la liste des chapitres pour un livre et la liste
+    des titres de pages pour un chapitre)
+- mieux gérer les z-index qui se propagent aux enfants, en ne mettant pas
+  "*" mais en étant plus spécifique
+
+SCÉNODICO (objet DICO / class Mot)
+  Récupérer les données
+    
+* Help contextuel complexe
+  Elle doit toujours tester où l'on en est (une fiche sélectionnée/ou non, un 
+  parent ou non, des enfants ou non) et proposer les raccourcis possibles
+
+* Une recherche spéciale sur le DICO quand le focus est sur le listing, comme dans
+  le finder (premières lettres).
+  Fonctionnement : dès qu'on tape une lettre, ça interrompt le timer courant et
+  ça en relance un de 1 seconde. Tout en recherchant le premier mot qui commence
+  par les lettres tapées.
+  NOTE: Il faut désactiver le "e" pour éditer (utiliser CMD+E — MÊME chose pour FILM)
+  DONC :
+    - focus sur le listing
+    - Une première lettre tapée
+    =>  - Mémorise cette lettre 
+        - Lance le timer
+        - Sélectionne le premier mot correspondant (si la première lettre
+          et la lettre du listing, c'est le premier mot)
+    - Une autre lettre tapée AVANT la fin du timer
+    =>  - Mémorise cette lettre avec l'autre
+        - Arrête le timer et le relance
+        - Sélectionne le premier mot correspondant aux deux lettres
+    - Une autre lettre tapée APRÈS la fin du timer
+    =>  - La lettre est mémorisée comme première lettre
+    
+FICHES
+------
+- Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
+
+- Voir si au lieu de définir un `window.onkeypress' il ne vaut pas mieux définir
+  le keypress toujours sur l'élément visé. Note : prendre en compte le fait que
+  cela signifie qu'il faut que l'élément DOM soit focusé pour que les keypress
+  s'applique à lui.
+  
+- Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
+  des balises, évaluation du code si code, etc.
+  > En basculant du texte à l'édition (peut-être tous les champs), il faut
+    corriger les balises
+    -> UI.Input.check_value
+    Note&nbsp;: penser que l'on pourra avoir un type de paragraphe qui sera
+    du chargement de fichier, ou du code quelconque (js, ruby, etc.).
 
 
-* Devant l'impossibilité d'écrire du texte dans les champs de saisie, j'ai deux solutions :
+*?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en
+  dehors de lui, soit un raccourci pour le sortir (en scrollant jusqu'à lui
+  ou en le plaçant là où on se trouve.)
+  => Raccourci "E" (Extraire)
 
-    1. Simuler cet event en ajouter les touches en changeant la valeur
-        ( entendu que les touches “keycode” ont l'air de fonctionner, comme la touche
-          retour — mais c'est seulement parce qu'elle est traitée dans mon propre
-          gestionnaire d'évènement. Sinon ça serait pareil)
-          
-    2.  Implémenter justement dans ce gestionnaire d'évènement keypress l'ajout des
-        touches dans les champs. Mais alors, il faudrait le faire dans toutes les
-        application, hors comment gérer le fait qu'elles peuvent elles aussi traiter
-        ces évènements.
-        
-    3.  Abandonner ce genre de test et "accompagner" le testeur, en lui demandant
-        d'accomplir des actions (p.e. "taper un titre dans le champ") et en testant
-        les résultats obtenus.
-        Même si c'est un peu lourd, ça me semble quand même être la meilleure solution.
-      
-    4.  Voir si un outil externe (comme AppleScript) ne pourrait pas me permettre de
-        simuler vraiment un utilisateur…
+* Tester le réglage de top et left
+  En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode
+  qui placera une fiche à un endroit précis sans écraser une autre fiche (donc
+  l'idée de "place libre" aka `free_space')
+  Noter que cet emplacement pourra avoir été déterminé par le déplacement d'un
+  des outils pour créer une fiche (qui aura été déplacé à un endroit particulier)

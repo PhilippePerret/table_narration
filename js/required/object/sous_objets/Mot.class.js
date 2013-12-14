@@ -19,10 +19,7 @@ window.Mot = function(id)
   this.folder_ajax  = 'scenodico'
   this.class_min    = 'dico'
   
-  /* État */
-  this.loaded = false
-  
-  this.OBJS.list[id] = this
+  this.OBJS.list[id]  = this
 }
 Mot.prototype = Object.create( ObjetClass.prototype )
 Mot.prototype.constructor = Mot

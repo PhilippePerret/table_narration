@@ -1,5 +1,6 @@
 window.ObjetClass = function(id){
-  this.id = id
+  this.id             = id
+  this.loaded         = false  
 }
 
 /*
@@ -14,8 +15,29 @@ $.extend(ObjetClass.prototype,{
    */
   dispatch:function(data)
   {
-    for(var prop in data) this[prop] = data[prop]
+    for(var prop in data){ 
+      var value = data[prop]
+      if('string' == typeof value) value = value.stripSlashes()
+      this[prop] = value
+    }
+  },
+  
+  
+  /*
+   *  Construit l'aperçu de l'affichage lorsqu'on passe la 
+   *  souris sur le mot.
+   *
+   *  NOTES
+   *    = La méthode gère le fait que l'item ne soit pas encore chargé
+   *  
+   *  @param  options   {Hash} des options (inutilisé pour le moment)
+   */
+  apercu:function(options)
+  {
+    if(false == this.loaded) return this.load($.proxy(this.apercu, this, options))
+    $('div#apercu-'+this.id).html( this.html_apercu )
   }
+  
 })
 
 /*
@@ -69,8 +91,10 @@ Object.defineProperties(ObjetClass.prototype, {
     enumerable:true,
     value:function(poursuivre, rajax)
     {
+      dlog("-> load")
       if(undefined == rajax)
       { // => Requête ajax
+        dlog("script : "+this.folder_ajax+'/load')
         Ajax.send(
           {script:this.folder_ajax+'/load', item_id:this.id},
           $.proxy(this.load, this, poursuivre)

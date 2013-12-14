@@ -125,7 +125,7 @@ $.extend(Film.prototype,{
     }
 
     // Dans un lien ou un span
-    var bal = options.nolink ? '<span' : '<a onclick="FILMS.show(\''+this.id+'\')"' ;
+    var bal = options.nolink ? '<span' : '<a onmouseover="FILMS.show(this, \''+this.id+'\')"' ;
     t = bal + ' class="lk_film">' + t 
     t += options.nolink ? '</span>' : '</a>'
 
@@ -206,5 +206,19 @@ Object.defineProperties(Film.prototype,{
       }
       return str.join(', ')
     }
-  }  
+  },
+  
+  /*
+   *  Retourne le code HTML de l'aperçu de l'item
+   *  
+   *  NOTES
+   *  -----
+   *    = Ce code sera placé dans un div.apercu
+   */
+  "html_apercu":{
+    get:function(){
+      return  '<div class="mainprop">'+this.titre+'</div>' +
+              '<div class="resume">'+this.resume+'</div>'
+    }
+  }
 })

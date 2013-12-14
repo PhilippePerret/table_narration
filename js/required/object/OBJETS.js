@@ -126,8 +126,28 @@ window.OBJETS = {
   {
     if(!this.Dom.options.keep_opened) this.Dom.hide_panneau()
     this.on_choose_item.poursuivre(film_id)
-  }  
+  },
   
+  /*
+   *  Méthode appelée quand on glisse la souris sur un item (mot, film, etc.)
+   *  
+   *  La méthode doit afficher une version détaillée de l'élément concerné.
+   *
+   *  @param  domObj    Le {DOMELement} sur lequel on glisse la souris. C'est dans
+   *                    celui-ci qu'on mettre le panneau de détail de l'élément.
+   *  @param  id        Identifiant {String} de l'item.
+   */
+  show:function(domObj, item_id)
+  {
+    if($(domObj).find('.apercu').length) return true
+    else
+    {
+      $(domObj).append(
+        '<div id="apercu-'+item_id+'" class="apercu"></div>'
+      )
+      this.get(item_id).apercu()
+    }
+  }
 }
 
 
