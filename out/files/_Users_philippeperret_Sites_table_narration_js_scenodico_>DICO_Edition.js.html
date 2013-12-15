@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>/Users/philippeperret/Sites/table_narration/js/col_text.js</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/scenodico/&gt;DICO_Edition.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -118,118 +118,157 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/col_text.js</h1>
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/scenodico/&gt;DICO_Edition.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- *
- *  @module ColText
- *
+ *  @submodule  Edition
+ *  @module     DICO
+ *  @namespace  Edition
  **/
 
-/**
- *  Objet ColText
- *  -------------
- *  Gestion des textes de la collection (toutes les fiches).
- *  C&#x27;est cet objet par exemple qui va traiter les balises que contient un texte
- *  avant de l&#x27;afficher.
- *  
- *  @class ColText
- *  @static
- *
- **/
-window.ColText = {
-  
-  /**
-   *
-   *  Le code en traitement courant
-   *
-   *  @property code 
-   *  @type     {String}  
-   *  @default  null
-   */
-  code:null,
-  
-  /**
-   *  Met en forme le texte +code+ pour son affichage humain
-   *
-   *
-   *  @method formate
-   *  @param  code    {String} du texte à formater
-   *  @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
-   *                    ou un aperçu.
-   *
-   *  @example
-   *      ColText.formate(&lt;le texte&gt;)
-   *      # Mais on peut utiliser aussi :
-   *      &lt;le texte&gt;.formate
-   *
-   */
-  formate:function(code)
-  {
-    this.code = code
-    if(code.indexOf(&#x27;[film:&#x27;)) this.traite_balises_films()
-    if(code.indexOf(&#x27;[mot:]&#x27;)) this.traite_balises_mots()
-    if(code.indexOf(&#x27;[ref:]&#x27;)) this.traite_balises_refs()
-    return this.code
-  },
-  
-  /*
-   *  Traitement des balises films
-   *  
-   */
-  traite_balises_films:function()
-  {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, fid, ftitre, options, offset){ 
-      return get_film(fid).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage du film nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
-  },
-  
-  /*
-   *  Traitement des balises mots
-   *  
-   */
-  traite_balises_mots:function()
-  {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[mot:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_mot(id).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage du film nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
-  },
-  
-  /*
-   *  Traitement des balises références
-   *  
-   */
-  traite_balises_refs:function()
-  {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_ref(id).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage de la référence nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
-  }
-  
-  
-  
-}
+if(undefined == DICO.Edition) DICO.Edition = {}
 
+// Méthodes et propriété partagées
+// cf. à la fin de &gt;OBJETS_Edition
+
+// Propriétés complexes partagées
+// cf. à la fin de &gt;OBJETS_Edition
+
+// Propriétés et méthodes propres
+$.extend(DICO.Edition,{
+  NAME              : &quot;DICO.Edition&quot;,
+  OBJS              : DICO,
+  parent_as_string  : &quot;DICO&quot;,
+  ItemClass         : Mot,
+  main_prop         : &#x27;mot&#x27;, 
+  class_min         : &quot;dico&quot;,
+  folder_ajax       : &quot;scenodico&quot;,
+
+  /**
+   *  Liste des propriétés du mot qui pourront être
+   *  éditées et qui seront enregistrées.
+   *
+   *  NOTES
+   *  -----
+   *    = Le champ les recevant porte toujours l&#x27;id &#x60;dicoEdit-&lt;property&gt;&#x27;
+   *  
+   *  @property   {Array} ITEM_PROPERTIES
+   *  @static
+   *  @final
+   */
+  ITEM_PROPERTIES:[&#x27;id&#x27;, &#x27;mot&#x27;, &#x27;definition&#x27;],
+ 
+  /**
+   *  Mets les valeurs de l&#x27;instance +mot+ dans le formulaire.
+   *
+   *  @method set_values
+   *  @param  mot {Mot} Instance du mot à éditer.
+   */
+  set_values:function(mot)
+  {
+    var idm = this.NAME+&quot;.set_values(mot #&quot;+mot.id+&quot;)&quot;
+    dlog(&quot;-&gt; &quot;+idm, DB_FCT_ENTER)
+    // On remonte toujours au-dessus
+    $(&#x27;div#&#x27;+this.prefix+&#x27;form&#x27;).scrollTo(0) ;
+    var my = this
+    L(my.ITEM_PROPERTIES).each(function(prop){
+      val = mot[prop]
+      dlog(&quot;Prop:&quot;+prop+&quot; = &quot;+val)
+      switch(prop)
+      {
+      case &#x27;mot&#x27;:
+        if( val == null ) val = &quot;&quot;
+        break
+      default:
+        if(val == null) val = &quot;&quot;
+      }
+      $(my.tag_for(prop)+&#x27;#dicoEdit-&#x27;+prop).val( val )
+    })
+  },
+  /**
+   *  Récupère les valeurs éditées (pour enregistrement de l&#x27;instance Mot)
+   *  
+   *  @method   get_values
+   *
+   */
+  get_values:function()
+  {
+    // On remonte toujours au-dessus
+    $(&#x27;div#&#x27;+this.prefix+&#x27;form&#x27;).scrollTo(0) ;
+    var values = {}
+    var my = this
+    L(my.ITEM_PROPERTIES).each(function(prop){
+      val = $(my.tag_for(prop)+&#x27;#dicoEdit-&#x27;+prop).val()
+      switch(prop)
+      {
+      case &#x27;mot&#x27;:
+        if(val == &quot;&quot;) throw &quot;Il faut fournir un mot !&quot;
+        break
+      case &#x27;definition&#x27;:
+        break
+      default:
+        if(val == &quot;&quot;) val = null
+      }
+      values[prop] = val
+    })
+    return values
+  },
+  /*
+   *  Retourne le type de tag (input/textarea) pour la propriété +prop+
+   *  
+   */
+  tag_for:function(prop)
+  {
+    switch(prop)
+    {
+    case &#x27;definition&#x27;:
+      return &#x27;textarea&#x27;
+    default:
+      return &#x27;input&#x27;
+    }
+  },
+
+})
+
+
+// Propriétés complexes propres
+Object.defineProperties(DICO.Edition,{
+  /*
+   *  Initialisation du formulaire
+   *  
+   */
+  &quot;init_form&quot;:{
+    get:function(){
+      
+    }
+  },
+  
+  
+  &quot;html_formulaire&quot;:{
+    get:function(){
+      var c = &#x27;&lt;div id=&quot;&#x27;+this.prefix+&#x27;form&quot; class=&quot;items_form&quot;&gt;&#x27;
+      var self = this
+      L([
+        &#x27;&lt;div id=&quot;dico_div_item_definition&quot; class=&quot;main_data&quot;&gt;&#x27;,
+        {id:&#x27;id&#x27;, type:&#x27;hidden&#x27;},
+        {id:&#x27;mot&#x27;, placeholder:&quot;Nouveau mot scénodico&quot;, class:&quot;main_prop&quot;},
+        &#x27;&lt;/div&gt;&#x27;,
+        &#x27;&lt;div id=&quot;mot_data&quot;&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;definition&#x27;, class:&#x27;haut&#x27;, placeholder:&quot;Définition du mot&quot;},
+        &#x27;&lt;/div&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;dico_section_categorie&quot;&gt;&lt;legend&gt;&lt;b&gt;Catégories&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        &#x27;&lt;/fieldset&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;dico_section_relation&quot;&gt;&lt;legend&gt;&lt;b&gt;Relations&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        &#x27;&lt;/fieldset&gt;&#x27;
+        ]).each(function(dfield){c += self.html_field(dfield)})
+      c += &#x27;&lt;/div&gt;&#x27;
+      return c
+    }
+  },
+
+})
     </pre>
 </div>
 

@@ -3,16 +3,24 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "ColText",
         "DICO",
-        "Mot",
-        "OBJETS",
-        "ObjetClass"
-    ],
-    "modules": [
-        "ColText",
-        "DICO.js",
+        "Input.Input",
         "Mot",
         "OBJETS",
         "ObjetClass",
+        "UI"
+    ],
+    "modules": [
+        "ColText",
+        "DICO",
+        "DICO.js",
+        "Edition",
+        "FILMS",
+        "Input",
+        "Mot",
+        "OBJETS",
+        "ObjetClass",
+        "String",
+        "UI",
         "dom"
     ],
     "allModules": [
@@ -21,12 +29,29 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "ColText"
         },
         {
+            "displayName": "DICO",
+            "name": "DICO"
+        },
+        {
             "displayName": "DICO.js",
             "name": "DICO.js"
         },
         {
             "displayName": "dom",
             "name": "dom"
+        },
+        {
+            "displayName": "Edition",
+            "name": "Edition"
+        },
+        {
+            "displayName": "FILMS",
+            "name": "FILMS"
+        },
+        {
+            "displayName": "Input",
+            "name": "Input",
+            "description": "Sous-Objet UI.Input\n-------------------\nGestionnaire de champ de saisie.\nMalgré son nom, gère aussi bien les input de type \"text\" que les textarea."
         },
         {
             "displayName": "Mot",
@@ -40,6 +65,15 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "OBJETS",
             "name": "OBJETS",
             "description": "Objet OBJETS mixé dans les FILMS, DICO et REFS\n\nNOTES\n-----\n  * Les descriptions ci-dessous, lorsqu'elles ne parlent que de \"Film\"\n    peuvent être comprise pour tout objet pluriel mixant ces méthodes."
+        },
+        {
+            "displayName": "String",
+            "name": "String",
+            "description": "Extensions de la classe String propre à l'application."
+        },
+        {
+            "displayName": "UI",
+            "name": "UI"
         }
     ]
 } };

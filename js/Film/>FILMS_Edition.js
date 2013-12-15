@@ -1,3 +1,9 @@
+/**
+  * @submodule  Edition
+  * @module     FILMS
+  * @namespace  Edition
+**/
+
 /*
  *  Object FILMS.Edition
  *  --------------------
@@ -23,14 +29,17 @@ $.extend(FILMS.Edition, {
   class_min         : "film",
   folder_ajax       : "film",
   
-  /*
+  /**
    *  Liste des propriétés du film qui pourront être
-   *  éditées.
+   *  éditées et qui seront enregistrées.
    *
    *  NOTES
    *  -----
-   *    = Le champ les recevant porte toujours l'id `filmEdit-<property>'
+   *    * Le champ les recevant porte toujours l'id `filmEdit-<property>'
    *  
+   *  @property {Array} ITEM_PROPERTIES
+   *  @static
+   *  @final
    */
   ITEM_PROPERTIES:['id', 'titre', 'titre_fr', 'resume', 'producteur', 'auteurs',
     'realisateur', 'acteurs', 'annee', 'duree', 'pays'],
@@ -40,10 +49,13 @@ $.extend(FILMS.Edition, {
 
 $.extend(FILMS.Edition, {
 
-  /*
-   *  Met les valeurs du film +film+ {Film} dans les champs d'édition
-   *  
-   */
+  /**
+    * Met les valeurs du film +film+ {Film} dans les champs d'édition
+    * 
+    * @method set_values
+    * @param  film  {Film} Instance du film à éditer.
+    *
+    */
   set_values:function(film)
   {
     // On remonte toujours au-dessus
@@ -107,10 +119,12 @@ $.extend(FILMS.Edition, {
     return d.join(', ')
   },
   
-  /*
-   *  Récupère les valeurs éditées
-   *  
-   */
+  /**
+    * Récupère les valeurs éditées (en vue de l'enregistrement du Film)
+    * 
+    * @method get_values
+    *
+    */
   get_values:function()
   {
     // On remonte toujours au-dessus
@@ -118,9 +132,12 @@ $.extend(FILMS.Edition, {
     var values = {}
     var my = this
     L(my.ITEM_PROPERTIES).each(function(prop){
-      val = $(my.tag_for(prop)+'#filmEdit-'+prop).val()
+      val = $(my.tag_for(prop)+'#filmEdit-'+prop).val().trim()
       switch(prop)
       {
+      case 'titre':
+        if(val == "") throw LOCALE.film.error['title is required']
+        break
       case 'producteur':
         val = my.dataify_people(val, 'producteur')
         break
@@ -143,10 +160,14 @@ $.extend(FILMS.Edition, {
     })
     return values
   },
-  /*
-   *  Retourne le type de tag (input/textarea) pour la propriété +prop+
-   *  
-   */
+  /**
+    *  Retourne le type de tag (input|textarea) pour la propriété +prop+
+    * 
+    * @method tag_for
+    * @param  prop  {String} La propriété de l'instance dont il faut obtenir le type du tag
+    * @return {String}  Le tagname propre à la propriété.
+    *
+    */
   tag_for:function(prop)
   {
     switch(prop)
@@ -206,15 +227,19 @@ $.extend(FILMS.Edition, {
   },
   
   
-  /*
-   *  Recherche le film sur imdb
-   *  --------------------------
-   *  
-   *  NOTES
-   *  -----
-   *    = Mis en vraie méthode car appelé depuis le formulaire sans argument
-   *      en proxy.
-   */
+  /**
+    *  Recherche le film sur imdb
+    *
+    * @method search_in_imdb
+    *  
+    *  NOTES
+    *  -----
+    *    * Mis en vraie méthode car appelé depuis le formulaire sans argument
+    *      en proxy.
+    *
+    * @param  titre {String} Le titre du film qu'il faut chercher sur IMDb
+    *
+    */
   search_in_imdb:function(titre)
   {
     if(undefined == titre) titre = $('input#filmEdit-titre').val().trim()
@@ -232,27 +257,32 @@ $.extend(FILMS.Edition, {
 
 Object.defineProperties(FILMS.Edition,{
   
-  /*
-   *  Initialisation du formulaire
-   *  
-   */
+  /**
+    *  Initialisation du formulaire
+    * 
+    * @method init_form
+    *
+    */
   "init_form":{
     get:function(){
       
     }
   },
   
-  /*
-   *  Code HTML du formulaire proprement dit
-   *  
-   */
+  /**
+    *  Code HTML du formulaire de film
+    *  
+    * @method html_formulaire
+    * @return {HTML} Code HTML du formulaire pour un {Film}
+    *
+    */
   "html_formulaire":{
     get:function(){
       var c = '<div id="'+this.prefix+'form" class="items_form">'
       L([
         '<div id="film_titres" class="main_data">',
         {id:'id', type:'hidden'},
-        {id:'titre', placeholder:"Titre original", class:"main_prop"}, 
+        {id:'titre', placeholder:"Titre original", class:"main_prop", data_type:UI.FIELD_NOT_EMPTY}, 
         image("picto/imdb/projectors.png", {
           id:"img_imdb", 
           title:"Cliquer pour rechercher le titre sur IMDb",
@@ -265,8 +295,8 @@ Object.defineProperties(FILMS.Edition,{
         '</div>',
         '<div id="film_data">',
         {id:'duree', label:"Durée", placeholder:"h:mm:ss", data_type:'horloge'}, 
-        {id:'annee', label:'Année', placeholder: "AAAA", data_type:'number', data_format:'(18|19|20)[0-9]{2}'},
-        {id:'pays', label:"Pays", data_type:'pays', data_format:'[a-zA-Z]{2}'}, 
+        {id:'annee', label:'Année', placeholder: "AAAA", data_type:UI.FIELD_NUMBER, data_format:'(18|19|20)[0-9]{2}'},
+        {id:'pays', label:"Pays", data_type:UI.FIELD_PAYS, data_format:'[a-zA-Z]{2}'}, 
         '</div>',
         '<fieldset id="film_producteur_div"><legend><b>Producteur</b></legend>',
         {type:'textarea', id:'producteur', data_type:'people', placeholder:"Prénom, nom [↵]"},

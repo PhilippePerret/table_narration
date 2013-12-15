@@ -45,6 +45,7 @@ $.extend(ObjetClass.prototype,{
    *
    *    * L'aperçu est également décalé à droite ou à gauche suivant la
    *      position de son contenant dans le texte pour être parfaitement visible.
+   *    * On affiche pas l'aperçu si le mot se trouve dans un aperçu.
    *
    *  @method apercu_in
    *
@@ -53,6 +54,11 @@ $.extend(ObjetClass.prototype,{
    */
   apercu_in:function(domObj)
   {
+    if($(domObj).parents().hasClass('apercu'))
+    {
+      dlog("Je n'affiche pas l'aperçu dans un aperçu")
+      return
+    }
     if(this.apercu.length == 0) this.create_apercu(domObj)
     else $(domObj).append(this.apercu)
     var agauche = $(domObj).position().left < ($(domObj).parent().width() / 2)

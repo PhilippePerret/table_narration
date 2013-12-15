@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>/Users/philippeperret/Sites/table_narration/js/Film/&gt;FILMS_Edition.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Input.Input.html">Input.Input</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/Film/&gt;FILMS_Edition.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @submodule  Edition
+  * @module     FILMS
+  * @namespace  Edition
+**/
+
+/*
+ *  Object FILMS.Edition
+ *  --------------------
+ *  Pour l&#x27;édition des films
+ *  
+ */
+if(undefined == FILMS.Edition) FILMS.Edition = {}
+
+// Méthodes et propriété partagées
+// Cf. à la fin de &gt;OBJETS_Edition
+
+// Propriétés complexes partagées
+// Cf. à la fin de &gt;OBJETS_Edition
+
+// Propriétés et méthodes propres
+$.extend(FILMS.Edition, {
+  
+  NAME              : &quot;FILMS.Edition&quot;,
+  OBJS              : FILMS,
+  parent_as_string  : &quot;FILMS&quot;,
+  ItemClass         : Film,
+  main_prop         : &#x27;titre&#x27;, 
+  class_min         : &quot;film&quot;,
+  folder_ajax       : &quot;film&quot;,
+  
+  /**
+   *  Liste des propriétés du film qui pourront être
+   *  éditées et qui seront enregistrées.
+   *
+   *  NOTES
+   *  -----
+   *    * Le champ les recevant porte toujours l&#x27;id &#x60;filmEdit-&lt;property&gt;&#x27;
+   *  
+   *  @property {Array} ITEM_PROPERTIES
+   *  @static
+   *  @final
+   */
+  ITEM_PROPERTIES:[&#x27;id&#x27;, &#x27;titre&#x27;, &#x27;titre_fr&#x27;, &#x27;resume&#x27;, &#x27;producteur&#x27;, &#x27;auteurs&#x27;,
+    &#x27;realisateur&#x27;, &#x27;acteurs&#x27;, &#x27;annee&#x27;, &#x27;duree&#x27;, &#x27;pays&#x27;],
+
+})
+
+
+$.extend(FILMS.Edition, {
+
+  /**
+    * Met les valeurs du film +film+ {Film} dans les champs d&#x27;édition
+    * 
+    * @method set_values
+    * @param  film  {Film} Instance du film à éditer.
+    *
+    */
+  set_values:function(film)
+  {
+    // On remonte toujours au-dessus
+    $(&#x27;div#&#x27;+this.prefix+&#x27;form&#x27;).scrollTo(0) ;
+    var my = this
+    L(my.ITEM_PROPERTIES).each(function(prop){
+      val = film[prop]
+      switch(prop)
+      {
+      case &#x27;resume&#x27;:
+        if( val == null ) val = &quot;&quot;
+        /* Compatibilité avec ancienne version */
+        val = val.replace(/\^rc\^/g, &quot;\n&quot;)
+        break
+      case &#x27;producteur&#x27;:
+        val = my.stringify_people_as(val, &#x27;producteur&#x27;)
+        break
+      case &#x27;auteurs&#x27;:
+        val = my.stringify_people_as(val, &#x27;auteur&#x27;)
+        break
+      case &#x27;realisateur&#x27;:
+        val = my.stringify_people_as(val, &#x27;realisateur&#x27;)
+        break
+      case &#x27;acteurs&#x27;:
+        val = my.stringify_people_as(val, &#x27;acteur&#x27;)
+        break
+      case &#x27;duree&#x27;:
+        val = val ? Time.m2h(val) : &quot;&quot;
+        break
+      default:
+        if(val == null) val = &quot;&quot;
+      }
+      $(my.tag_for(prop)+&#x27;#filmEdit-&#x27;+prop).val( val )
+    })
+  },
+  /*
+   *  Transforme une liste de people en {String} (pour édition)
+   *  
+   */
+  stringify_people_as:function(list, people_type /* &#x27;acteur&#x27; ou */)
+  {
+    dlog(list)
+    if(list == null || list.length == 0) return &quot;&quot;
+    var my = this
+    return L(list).collect(function(data){
+      return my.stringify_person_as(data, people_type)
+    }).join(&quot;\n&quot;)
+  },
+  stringify_person_as:function(data, person_type /* &#x27;acteur&#x27; ou */)
+  {
+    var d = [data.prenom || &quot;null&quot;, data.nom || &quot;null&quot;]
+    switch(person_type)
+    {
+    case &#x27;acteur&#x27;:
+      d = $.merge(d, [data.prenom_perso || &quot;null&quot;, data.nom_perso || &quot;null&quot;, data.fct_perso || &quot;null&quot;])
+      break
+    case &#x27;auteur&#x27;:
+      d.push(data.objet || &quot;null&quot;)
+      break
+    }
+    return d.join(&#x27;, &#x27;)
+  },
+  
+  /**
+    * Récupère les valeurs éditées (en vue de l&#x27;enregistrement du Film)
+    * 
+    * @method get_values
+    *
+    */
+  get_values:function()
+  {
+    // On remonte toujours au-dessus
+    $(&#x27;div#&#x27;+this.prefix+&#x27;form&#x27;).scrollTo(0) ;
+    var values = {}
+    var my = this
+    L(my.ITEM_PROPERTIES).each(function(prop){
+      val = $(my.tag_for(prop)+&#x27;#filmEdit-&#x27;+prop).val().trim()
+      switch(prop)
+      {
+      case &#x27;titre&#x27;:
+        if(val == &quot;&quot;) throw LOCALE.film.error[&#x27;title is required&#x27;]
+        break
+      case &#x27;producteur&#x27;:
+        val = my.dataify_people(val, &#x27;producteur&#x27;)
+        break
+      case &#x27;auteurs&#x27;:
+        val = my.dataify_people(val, &#x27;auteur&#x27;)
+        break
+      case &#x27;realisateur&#x27;:
+        val = my.dataify_people(val, &#x27;realisateur&#x27;)
+        break
+      case &#x27;acteurs&#x27;:
+        val = my.dataify_people(val, &#x27;acteur&#x27;)
+        break
+      case &#x27;duree&#x27;:
+        val = val != &quot;&quot; ? Time.h2m( val ) : null
+        break
+      default:
+        if(val == &quot;&quot;) val = null
+      }
+      values[prop] = val
+    })
+    return values
+  },
+  /**
+    *  Retourne le type de tag (input|textarea) pour la propriété +prop+
+    * 
+    * @method tag_for
+    * @param  prop  {String} La propriété de l&#x27;instance dont il faut obtenir le type du tag
+    * @return {String}  Le tagname propre à la propriété.
+    *
+    */
+  tag_for:function(prop)
+  {
+    switch(prop)
+    {
+    case &#x27;resume&#x27;:
+    case &#x27;producteur&#x27;:
+    case &#x27;auteurs&#x27;:
+    case &#x27;realisateur&#x27;:
+    case &#x27;acteurs&#x27;:
+      return &#x27;textarea&#x27;
+    default:
+      return &#x27;input&#x27;
+    }
+  },
+  /*
+   *  Transforme les données string des people en donnée pour l&#x27;enregistrement
+   *  
+   *  @param  str           Le contenant entier du textarea de la propriété
+   *  @param  people_type   Le type de personne concerné (&#x27;acteur&#x27;, &#x27;producteur&#x27;, etc.)
+   *
+   */
+  dataify_people:function(str, people_type)
+  {
+    if(str.trim() == &quot;&quot;) return null
+    var my = this
+    return L(str.trim().split(&quot;\n&quot;)).collect(function(line){
+      return my.dataify_person(line.trim(), people_type)
+    })
+  },
+  /*
+   *  Prend une ligne {String} et la transforme en {Object} pour
+   *  l&#x27;enregistrement.
+   *  
+   */
+  dataify_person:function(line, person_type)
+  {
+    var d = {}
+    var dline = line.split(&#x27;,&#x27;)
+    dline = L(dline).collect(function(mot){ 
+      mot = mot.trim()
+      return (mot == &quot;&quot; || mot == &quot;null&quot;) ? null : mot ;
+    })
+    d.prenom = dline.shift()
+    d.nom    = dline.shift()
+    switch(person_type)
+    {
+    case &#x27;auteur&#x27;:
+      d.objet = dline.shift()
+      break
+    case &#x27;acteur&#x27;:
+      d.prenom_perso = dline.shift()
+      d.nom_perso    = dline.shift()
+      d.fct_perso    = dline.shift()
+      break
+    }
+    return d
+  },
+  
+  
+  /**
+    *  Recherche le film sur imdb
+    *
+    * @method search_in_imdb
+    *  
+    *  NOTES
+    *  -----
+    *    * Mis en vraie méthode car appelé depuis le formulaire sans argument
+    *      en proxy.
+    *
+    * @param  titre {String} Le titre du film qu&#x27;il faut chercher sur IMDb
+    *
+    */
+  search_in_imdb:function(titre)
+  {
+    if(undefined == titre) titre = $(&#x27;input#filmEdit-titre&#x27;).val().trim()
+    else titre = titre.trim()
+    if(titre == &quot;&quot;) titre = $(&#x27;input#filmEdit-titre_fr&#x27;).val().trim()
+    if(titre == &quot;&quot;) F.error( LOCALE.film.error[&#x27;no titre to find&#x27;] )
+    else
+    {
+      var path = &#x27;http://www.imdb.com/find?q=&#x27;+titre.split(&#x27; &#x27;).join(&#x27;+&#x27;)+&#x27;&amp;s=all&#x27;
+      window.open(path, &quot;SearchInImdb&quot;)
+    }
+  }
+  
+})
+
+Object.defineProperties(FILMS.Edition,{
+  
+  /**
+    *  Initialisation du formulaire
+    * 
+    * @method init_form
+    *
+    */
+  &quot;init_form&quot;:{
+    get:function(){
+      
+    }
+  },
+  
+  /**
+    *  Code HTML du formulaire de film
+    *  
+    * @method html_formulaire
+    * @return {HTML} Code HTML du formulaire pour un {Film}
+    *
+    */
+  &quot;html_formulaire&quot;:{
+    get:function(){
+      var c = &#x27;&lt;div id=&quot;&#x27;+this.prefix+&#x27;form&quot; class=&quot;items_form&quot;&gt;&#x27;
+      L([
+        &#x27;&lt;div id=&quot;film_titres&quot; class=&quot;main_data&quot;&gt;&#x27;,
+        {id:&#x27;id&#x27;, type:&#x27;hidden&#x27;},
+        {id:&#x27;titre&#x27;, placeholder:&quot;Titre original&quot;, class:&quot;main_prop&quot;, data_type:UI.FIELD_NOT_EMPTY}, 
+        image(&quot;picto/imdb/projectors.png&quot;, {
+          id:&quot;img_imdb&quot;, 
+          title:&quot;Cliquer pour rechercher le titre sur IMDb&quot;,
+          onclick:&quot;$.proxy(FILMS.Edition.search_in_imdb, FILMS.Edition)()&quot;}
+        ),
+        {id:&#x27;titre_fr&#x27;, placeholder:&quot;Titre français (s&#x27;il existe)&quot;},
+        &#x27;&lt;/div&gt;&#x27;,
+        &#x27;&lt;div id=&quot;div_item_resume&quot;&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;resume&#x27;, class:&#x27;haut&#x27;, placeholder:&quot;Résumé du film&quot;},
+        &#x27;&lt;/div&gt;&#x27;,
+        &#x27;&lt;div id=&quot;film_data&quot;&gt;&#x27;,
+        {id:&#x27;duree&#x27;, label:&quot;Durée&quot;, placeholder:&quot;h:mm:ss&quot;, data_type:&#x27;horloge&#x27;}, 
+        {id:&#x27;annee&#x27;, label:&#x27;Année&#x27;, placeholder: &quot;AAAA&quot;, data_type:UI.FIELD_NUMBER, data_format:&#x27;(18|19|20)[0-9]{2}&#x27;},
+        {id:&#x27;pays&#x27;, label:&quot;Pays&quot;, data_type:UI.FIELD_PAYS, data_format:&#x27;[a-zA-Z]{2}&#x27;}, 
+        &#x27;&lt;/div&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;film_producteur_div&quot;&gt;&lt;legend&gt;&lt;b&gt;Producteur&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;producteur&#x27;, data_type:&#x27;people&#x27;, placeholder:&quot;Prénom, nom [↵]&quot;},
+        &#x27;&lt;/fieldset&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;film_auteurs_div&quot;&gt;&lt;legend&gt;&lt;b&gt;Auteurs&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;auteurs&#x27;, data_type:&#x27;people&#x27;, data_format:&#x27;auteur&#x27;, placeholder:&quot;prénom, nom[, roman/scénario/story] [↵]&quot;},
+        &#x27;&lt;/fieldset&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;film_realisateurs_div&quot;&gt;&lt;legend&gt;&lt;b&gt;Réalisateur&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;realisateur&#x27;, data_type:&#x27;people&#x27;, placeholder:&quot;prénom, nom [↵]&quot;},
+        &#x27;&lt;/fieldset&gt;&#x27;,
+        &#x27;&lt;fieldset id=&quot;film_acteurs_div&quot;&gt;&lt;legend&gt;&lt;b&gt;Acteurs&lt;/b&gt;&lt;/legend&gt;&#x27;,
+        {type:&#x27;textarea&#x27;, id:&#x27;acteurs&#x27;, data_type:&#x27;people&#x27;, data_format:&#x27;acteur&#x27;, placeholder:&quot;prénom, nom, prénom/surnom perso, nom perso, fonction [↵]&quot;, class:&#x27;haut&#x27;},
+        &#x27;&lt;/fieldset&gt;&#x27;
+        ]).each(function(dfield){c += FILMS.Edition.html_field(dfield)})
+      c += &#x27;&lt;/div&gt;&#x27;
+      return c
+    }
+  }
+
+})
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

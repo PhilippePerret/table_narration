@@ -1,12 +1,65 @@
-/*
+/**
+ *  @module UI
+ */
+
+/**
  *  Object UI
  *  ---------
  *  Gestion de l'interface utilisateur
  *
- *  
+ *  @class UI
+ *  @static
+ * 
  */
 if('undefined' == typeof UI) UI = {}
 $.extend(UI, {
+  
+  /**
+   *  data-type pour un champ qui ne peut rester vide
+   *
+   *  @property   {String} FIELD_NOT_EMPTY
+   *  @final
+   */
+  FIELD_NOT_EMPTY: 'not_empty',
+
+  /**
+   *  data-type pour un champ de type 'horloge'. La valeur de ce champ
+   *  sera automatiquement transformée en horloge valide, ou une erreur sera
+   *  produite si la valeur donnée est incompatible avec une horloge.
+   *
+   *  @property   {String} FIELD_HORLOGE
+   *  @final
+   */
+  FIELD_HORLOGE: 'horloge',
+
+  /**
+   *  data-type pour un champ de type nombre.
+   *
+   *  @property   {String} FIELD_NUMBER
+   *  @final
+   */
+  FIELD_NUMBER:'number',
+
+  /**
+   *  data-type pour un champ de type pays (sur deux lettres minuscules).
+   *
+   *  @property   {String} FIELD_PAYS
+   *  @final
+   */
+  FIELD_PAYS:'pays',
+  
+  /**
+   *  data-type pour un champ de type « people », c'est-à-dire une liste de personnes.
+   *  
+   *  NOTES
+   *  -----
+   *    * Le `data-format' du champ doit définir s'il s'agit d'un auteur, d'un
+   *      réalisateur, d'un acteur, etc.
+   *
+   *  @property   {String} FIELD_PEOPLE
+   *  @final
+   */
+  FIELD_PEOPLE:'people',
   
   GRID_X    : 80,       // Snap horizontal
   GRID_Y    : 40,       // Snap vertical

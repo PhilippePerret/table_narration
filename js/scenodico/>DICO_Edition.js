@@ -1,3 +1,8 @@
+/**
+ *  @submodule  Edition
+ *  @module     DICO
+ *  @namespace  Edition
+ **/
 
 if(undefined == DICO.Edition) DICO.Edition = {}
 
@@ -17,22 +22,30 @@ $.extend(DICO.Edition,{
   class_min         : "dico",
   folder_ajax       : "scenodico",
 
-  /*
+  /**
    *  Liste des propriétés du mot qui pourront être
-   *  éditées.
+   *  éditées et qui seront enregistrées.
    *
    *  NOTES
    *  -----
    *    = Le champ les recevant porte toujours l'id `dicoEdit-<property>'
    *  
+   *  @property   {Array} ITEM_PROPERTIES
+   *  @static
+   *  @final
    */
   ITEM_PROPERTIES:['id', 'mot', 'definition'],
  
-
+  /**
+   *  Mets les valeurs de l'instance +mot+ dans le formulaire.
+   *
+   *  @method set_values
+   *  @param  mot {Mot} Instance du mot à éditer.
+   */
   set_values:function(mot)
   {
     var idm = this.NAME+".set_values(mot #"+mot.id+")"
-    dlog("-> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    dlog("-> "+idm, DB_FCT_ENTER)
     // On remonte toujours au-dessus
     $('div#'+this.prefix+'form').scrollTo(0) ;
     var my = this
@@ -50,9 +63,11 @@ $.extend(DICO.Edition,{
       $(my.tag_for(prop)+'#dicoEdit-'+prop).val( val )
     })
   },
-  /*
-   *  Récupère les valeurs éditées
+  /**
+   *  Récupère les valeurs éditées (pour enregistrement de l'instance Mot)
    *  
+   *  @method   get_values
+   *
    */
   get_values:function()
   {

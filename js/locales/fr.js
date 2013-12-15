@@ -46,6 +46,7 @@ window.LOCALE = {
     
     // LOCALE.film.error
     error:{
+      'title is required'           : "Le titre est absolument requis !",
       'no id supplied'              : "Aucun identifiant fourni à l'instanciation. Je renonce",
       'no titre to find'            : "Il faut donner un titre à chercher !"
     }

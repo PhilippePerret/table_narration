@@ -13,6 +13,8 @@ panneau.main_panneau_items div.div_item div.titre {
   cursor      : pointer;
 }
 
+.resume {text-align: justify;}
+
 panneau.main_panneau_items div.items_form div#film_data input[type="text"] {
   width         : 52px;
   text-align    : center;

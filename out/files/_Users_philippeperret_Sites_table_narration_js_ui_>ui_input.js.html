@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>/Users/philippeperret/Sites/table_narration/js/ui/&gt;ui_input.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Input.Input.html">Input.Input</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/ui/&gt;ui_input.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @module    UI
+ * @submodule Input
+ * @namespace Input
+ *
+ **/
+
+/**
+ *  Sous-Objet UI.Input
+ *  -------------------
+ *  Gestionnaire de champ de saisie.
+ *  Malgré son nom, gère aussi bien les input de type &quot;text&quot; que les textarea.
+ *
+ *  @class  Input
+ *  @static
+ *
+ */
+UI.Input = {
+  
+  /**
+   *  La cible courante
+   *
+   *  C&#x27;est un {Object} tel que défini par la méthode &#x60;eventTextField&#x27; ci-dessous,
+   *  qui contient notamment les propriétés &#x27;dom&#x27; ({HTMLDom}), &#x60;jq&#x27; ({jQuerySet})
+   *  &#x60;id&#x27;, &#x60;jid&#x27;, &#x60;value&#x27; ou encore &#x60;tag&#x27;.
+   *
+   *  @property target
+   *  @default  null
+   *
+   */
+  target: null, 
+  
+  /**
+   *  Les champs de saisie mémorisés par la méthode &#x60;memorize_current&#x27;
+   *
+   *  En clé, un timestamp permettant de récupérer le champ de saisie et
+   *  de le remettre dans le même état (sélection)
+   *  En valeur, une {Target} telle que définie par la méthode
+   *  this.eventTextField
+   * 
+   *  @property targets
+   *  @type     {Hash}
+   *  @default  null 
+   */
+  targets:null,
+  
+  /**
+   *  Méthode appelée pour placer les observers sur les champs fournis
+   *  en argument.
+   *
+   *  @method bind
+   *  @param  field     {DOM Element|Set jQuery} Le champs qui doit être
+   *                    géré par UI.Input ou son container.
+   *  @return {jQuerySet} Le set jQuery bindé.
+   */
+  bind:function(field)
+  {
+    var real_field = this.real_field_from( field )
+    this.bind_or_unbind( real_field, bind = true)
+    return real_field
+  },
+  
+  /**
+   *  Détache le gestionnaire d&#x27;évènement du champ
+   *
+   *  @method unbind  
+   *  @param  field     {HTMLDom|Set jQuery} Le champs qui doit être
+   *                    géré par UI.Input
+   *
+   */
+  unbind:function(field)
+  {
+    this.bind_or_unbind( this.real_field_from( field ), bind = false)
+  },
+  
+  /**
+   *  Attache ou détache le gestionnaire d&#x27;évènement &#x27;focus&#x27;, &#x27;blur&#x27;
+   *  aux champs de saisie de texte +field+
+   * 
+   *  @method bind_or_unbind
+   *  @param  fields  {jQuerySet} Set jquery des éléments à binder ou unbinder.
+   *  @param  binding {Boolean} Si TRUE, bind le set jquery, sinon le unbind.
+   *
+   */
+  bind_or_unbind:function(fields, binding)
+  {
+    fields[binding?&#x27;bind&#x27;:&#x27;unbind&#x27;](&#x27;focus&#x27;, $.proxy(this.onfocus, this))
+    fields[binding?&#x27;bind&#x27;:&#x27;unbind&#x27;](&#x27;blur&#x27;,  $.proxy(this.onblur,  this))
+    fields[binding?&#x27;bind&#x27;:&#x27;unbind&#x27;](&#x27;click dblclick&#x27;, $.proxy(this.unpropage, this))
+  },
+  
+  /**
+   *  Méthode appelée quand on focusse dans le champ
+   *  
+   *  @method onfocus
+   *  @param  evt   {Event} L&#x27;évènement &#x60;focus&#x27; déclenché sur le set courant.
+   *
+   */
+  onfocus:function(evt)
+  {
+    var target = this.eventTextField(evt) 
+        // =&gt; {Object} complexe (cf. eventTextFieldci-dessous)
+    dlog(&quot;-&gt; UI.Input.onfocus (dans &quot; + target.tag + &#x27;#&#x27; + target.id +&quot;)&quot;, DB_FCT_ENTER)
+    this.target = target
+    this.target.jq.select()
+    this.set_keypress(focus = true)
+    return this.unpropage(evt)
+  },
+  
+  /**
+   *  Méthode appelée quand on blur du champ
+   * 
+   *  @method onblur
+   *  @param  evt   {BlurEvent} L&#x27;évènement &#x60;blur&#x27; déclenché sur le set courant.
+   *
+   */
+  onblur:function(evt)
+  {
+    var target = this.eventTextField(evt)
+        // =&gt; {Object} complexe (cf. eventTextFieldci-dessous)
+    if(target.jid != this.target.jid) this.error(&#x27;target doesnt match&#x27;, evt, target)
+    dlog(&quot;-&gt; UI.Input.onblur (dans &quot; + target.tag + &#x27;#&#x27; + target.id +&quot;)&quot;, DB_FCT_ENTER)
+    
+    // Traitement spéciaux (par exemple champs d&#x27;édition de type &quot;people&quot;)
+    // Si la touche TAB a été utilisée, le traitement a eu lieu avant et on
+    // reste dans le champ
+    if(target.data_type &amp;&amp; this.check_value() == false){
+      this.target.jq.select()
+      return stop_event(evt)
+    } 
+    
+    // Traitements spéciaux dans le cas d&#x27;une fiche
+    if(this.target.hasFiche)
+    {
+      var fiche     = get_fiche(this.target.fiche_id)
+      var new_value = this.target.jq.val()
+      if(fiche.main_prop == this.target.property )
+      {
+        fiche.onchange_titre_or_texte( new_value )
+        fiche.disable_main_field
+      }
+      else
+      {
+        if(&#x27;function&#x27; == typeof fiche[&#x27;onchange_&#x27;+this.target.property])
+        {
+          dlog(&quot;Méthode &#x60;onchange_&quot;+this.target.property+&quot;&#x27; appelée sur &quot;+fiche.type_id)
+          fiche[&#x27;onchange_&#x27;+this.target.property](new_value)
+        }
+      }
+    }
+    
+    this.set_keypress(focus = false)
+    return this.unpropage(evt)
+  },
+  
+  /**
+   *  Méthode appelée quand on presse une touche sur le champ courant. Gère
+   *  l&#x27;utilisation de touches ou combinaisons de touches spéciales, comme 
+   *  CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
+   * 
+   *  @method onkeypress 
+   *  @param  evt   {Event} Évènement &#x60;keypress&#x27; déclenché sur l&#x27;input courant.
+   */
+  onkeypress:function(evt)
+  {
+    this.infos_keypress(&#x27;onkeypress&#x27;, evt) // seulement si DB_INFOS_EVENT
+    
+    /* Test du KEYCODE */
+    switch(evt.keyCode)
+    {
+    case K_RETURN:
+      /*
+       *  La touche retour produit des choses différentes en fonction
+       *  du contexte.
+       *  Pour un INPUT-text, on blure simplement le champ (ce qui 
+       *  entraînera la correction/validation du texte entré)
+       *  Pour un TEXTAREA, le comportement est différent suivant qu&#x27;on se
+       *  trouve dans un champ quelconque ou dans le texte d&#x27;un paragraphe.
+       *  Pour un paragraphe, cela provoque la création d&#x27;un nouveau
+       *  paragraphe juste au-dessous du champ courant, et ce nouveau
+       *  champ prend la place du champ courant
+       *
+       *  NOTES
+       *  -----
+       *    = Pour qu&#x27;un champ textarea se comporte normalement, lui ajouter
+       *      la classe css &quot;returnable&quot;
+       *  
+       */
+      // Un champ &quot;returnable&quot; se comporte normalement
+      if(this.target.jq.hasClass(&#x27;returnable&#x27;)) return true
+      // Quelque soit le champ, on doit blurer
+      this.target.jq.blur()
+      // Traitement spécial pour un champ texte de fiche paragraphe
+      if(this.target.hasFiche &amp;&amp; this.target.property == &#x27;texte&#x27;)
+      {
+        var fiche = get_fiche( this.target.fiche_id )
+        if(evt.metaKey)
+        {
+          // CMD + ENTER =&gt; Création d&#x27;un nouveau paragraphe
+          var data = {type:&#x27;para&#x27;}
+          // Si le style du paragraphe courant définit un style after,
+          // on l&#x27;utilise.
+          if(fiche.next_style) data.style = [fiche.next_style]
+          var ipara = FICHES.full_create( data )
+          // On l&#x27;ajoute au parent en dessous du paragraphe courant
+          fiche.parent.add_child( ipara, {after:fiche} )
+          // Et on le met en édition
+          ipara.select
+          ipara.enable_main_field
+        }
+        else
+        {
+          // =&gt; Un message d&#x27;aide
+          F.show(&quot;Tip: Pour créer un nouveau paragraphe à la suite d&#x27;un paragraphe édité, utiliser CMD + ENTER.&quot;)
+        }
+      }
+      return stop_event(evt)
+    case K_TAB:
+      var targ  = this.target ;
+      var fiche = FICHES.list[targ.fiche_id] ; // défini seulement pour les fiches
+      if(this.check_value() == false /* bad data */)
+      { 
+        this.target.jq.select()
+        return stop_event(evt)
+      }
+      /*
+       *  Si c&#x27;est le champ principal d&#x27;une fiche (titre/texte), alors
+       *  on doit stopper complètement l&#x27;évènement est remettre le
+       *  DIV.
+       *  
+       */
+      if(fiche &amp;&amp; targ.property == fiche.main_prop)
+      {
+        fiche.disable_main_field
+        return stop_event(evt)
+      }
+      break; // on passe au champ suivant
+    default:
+      var kmeta = evt.metaKey, kctrl = evt.ctrlKey, kmaj = evt.shiftKey ;
+      if(kctrl || kmeta)
+      {
+        /* Test du CHARCODE (seulement si CTRL ou CMD pressés)*/
+        this.infos_keypress(&#x27;onkeypress&#x27;, evt)
+        switch(evt.charCode)
+        {
+        case Key_b:
+          if(kmeta) this.set_selection_to(&#x27;&lt;strong&gt;_$_&lt;/strong&gt;&#x27;)
+          return stop_event(evt) // toujours
+        case Key_d:
+          if(kmeta) this.set_selection_to(kmaj ? &#x27;&lt;ins&gt;_$_&lt;/ins&gt;&#x27; : &#x27;&lt;del&gt;_$_&lt;/del&gt;&#x27;)
+          return stop_event(evt) // toujours
+        case Key_i:
+          if(kmeta) this.set_selection_to(&#x27;&lt;i&gt;_$_&lt;/i&gt;&#x27;)
+          return stop_event(evt) // toujours
+        case Key_f: //=&gt; Insérer un film
+          FILMS.choose_an_item($.proxy(FILMS.insert_in_input, FILMS))
+          return stop_event(evt)
+        case Key_m: //=&gt; Insérer un mot du scénodico
+          DICO.choose_an_item($.proxy(DICO.insert_in_input, DICO))
+          return stop_event(evt)
+        case Key_r: //=&gt; Insérer une référence vers une fiche
+          console.log(&quot;---&gt; Insertion d&#x27;une référence vers une fiche&quot;)
+          return stop_event(evt)
+        case Key_u:
+          if(kmeta) this.set_selection_to(&#x27;&lt;u&gt;_$_&lt;/u&gt;&#x27;)
+          return stop_event(evt) // toujours
+        }
+      }
+    }
+    // Si on arrive ici, on bloque la propagation de l&#x27;évènement
+    return this.unpropage(evt)
+  },
+  
+  /**
+   *  Traite la donnée du champ courant en fonction de son data-type, peut la modifier
+   *  à la volée ou interrompre la suite dans le cas d&#x27;une donnée incorrecte.
+   *
+   *
+   *  NOTES
+   *  -----
+   *    * La méthode est appelée dans le onblur, pour le moment
+   *      + quand on tab sur le champ
+   *    * Aucun traitement si le champ est vide
+   *    * Si une valeur est modifiée, il faut la remettre dans
+   *      le champ à l&#x27;aide de &#x60;this.target.jq.val(nouvelle valeur)&#x27;
+   *  
+   *  @method check_value
+   *  @return TRUE si tout est OK ou false dans le cas contraire, ce qui interrompt
+   *          la procédure en cours.
+   */
+  check_value:function()
+  {
+    // Valeur dans le champ
+    var value       = this.target.jq.val().trim()
+    var data_types  = this.target.data_type.split(&#x27; &#x27;)
+    if(value == &quot;&quot; &amp;&amp; data_types.indexOf(&#x27;not_empty&#x27;) &lt; 0) return true
+    // Format attendu (if any)
+    // @note: Mis dans une variable car pourra être mis à null pour
+    //        empêcher le check du format général, lorsque la data est particulière.
+    var data_format = this.target.format
+    for(var itype=0, len=data_types.length; itype&lt;len; ++itype)
+    {
+      var data_type = data_types[itype]
+      switch(data_type)
+      {
+        // TODO Plus tard, ça devra être un data_format
+      case UI.FIELD_NOT_EMPTY:
+        if(value == &quot;&quot;) return F.error(&quot;Cette donnée est absolument requise.&quot;)
+        break
+      case UI.FIELD_NUMBER:
+        // La donnée doit être un nombre
+        if( isNaN(value)) return F.error(&quot;La donnée devrait être un nombre&quot;)
+        break
+      case UI.FIELD_HORLOGE:
+        value = value.trim().replace(/,/g, &#x27;:&#x27;).replace(/ /g, &#x27;&#x27;)
+        this.target.jq.val(Time.m2h(Time.h2m(value)))
+        break
+      case UI.FIELD_PEOPLE:
+        switch(this.target.format)
+        {
+          case &#x27;auteur&#x27;:
+            expected = &#x27;Prénom, Nom, Objet (scénario|roman|etc.)&#x27;
+            break
+          case &#x27;acteur&#x27;:
+            expected = &quot;Prénom, Nom, Prénom/surnom personnage, Nom personnage, Fonction personnage&quot;
+            break
+          default:
+            expected = &quot;Prénom, Nom&quot;          
+        }
+        var lines = value.trim().split(&quot;\n&quot;), line, iline = 0;
+        var newlines = []
+        var nombre_elements_expected = expected.split(&#x27;,&#x27;).length
+        for(len=lines.length; iline &lt; len; ++iline )
+        {
+          line = lines[iline]
+          if(line.split(&#x27;,&#x27;).length != nombre_elements_expected){
+            // On essaie de corriger, si les espaces remplacent les virgules
+            if(line.split(&#x27; &#x27;).length == nombre_elements_expected)
+            { // =&gt; Correction de la donnée
+              line = line.split(&#x27; &#x27;).join(&#x27;, &#x27;)
+            }
+            else
+            { // =&gt; Erreur
+              return F.error(&quot;La donnée “&quot;+line+&quot;” n&#x27;est pas au bon format (requis : &quot;+expected+&quot;)&quot;)
+            }
+          }
+          newlines.push( line )
+        }
+        newlines = newlines.join(&quot;\n&quot;)
+        if(newlines != value) this.target.jq.val(newlines)
+        data_format = null // pour ne pas passer ci-dessous
+      }
+    }
+
+    // Si un format précis est attendu
+    if(data_format)
+    {
+      var regexp = new RegExp(data_format)
+      if(value.replace(regexp, &#x27;&#x27;) != &quot;&quot;) return F.error(&quot;La donnée “&quot;+value+&quot;” n&#x27;est pas au bon format (requis : &quot;+data_format+&quot;)&quot;)
+    }
+    
+    Flash.clean()
+    return true 
+  },
+  /*
+   *  Remplace la sélection de la cible courante
+   *  
+   *  @param  valeur    Le texte (utiliser &#x60;_$_&#x27; pour faire référence au texte sélectionné)
+   *  @param  options   Optionnel, un {Hash} pour Selection.set
+   *                    Par défaut, c&#x27;est &#x60;{end:true}&#x27; qui placera le curseur après
+   *                    le texte remplacé.
+   */
+  set_selection_to:function(valeur, options)
+  {
+    Selection.set(this.target.dom, valeur, options || {end:true})  
+  },
+  
+  /*
+   *  Mémorise le champ courant, s&#x27;il est défini
+   *
+   *  NOTES
+   *  -----
+   *    = La méthode peut être appelée sans qu&#x27;il y ait de champ courant.
+   *      Par exemple, quand on affiche l&#x27;aperçu d&#x27;un mot (en passant sa souris
+   *      sur son nom) et qu&#x27;on clique sur la définition pour mettre le mot
+   *      en édition.
+   *  
+   */
+  memorize_current:function(options)
+  {
+    if(undefined == options) options = {}
+    if(!this.target) return null // pas d&#x27;édition courante
+    var id = Time.now()
+    if(!this.targets) this.targets = {}
+    // On prend la sélection courante
+    this.target.selection = Selection.of(this.target.dom)
+    
+    this.targets[id] = $.extend({}, this.target)
+    if(options.blur)
+    {
+      this.target.dom.blur()
+      if(this.target.hasFiche)
+      {
+        var fiche = get_fiche(this.target.fiche_id)
+        if(fiche.main_prop == this.target.property ) fiche.disable_main_field
+      }
+    }
+    return id
+  },
+  
+  retreive_current:function(id, options)
+  {
+    if(undefined == options) options = {}
+    this.target = this.targets[id]
+    // Il faut reprendre la sélection dans this.target maintenant, car
+    // this.target sera modifié ci-dessous quand on ré-activera
+    // le champ the this.targets[id]
+    var selection = $.extend({}, this.target.selection)
+    if(!this.target) throw &quot;La target d&#x27;identifiant &quot;+id+&quot; n&#x27;est pas définie…&quot;
+    if(options.focus)
+    {
+      if(this.target.hasFiche)
+      {
+        var fiche = get_fiche(this.target.fiche_id)
+        if(fiche.main_prop == this.target.property )
+        {
+          fiche.enable_main_field
+        }
+      }
+      // On remet la sélection précédente
+      Selection.select(this.target.dom, selection)
+    }
+  },
+  
+  /*
+   *  Débug les infos sur l&#x27;évènement &#x27;keypress&#x27;
+   *  (si DL contient DB_INFOS_EVENT)
+   *  
+   */
+  infos_keypress:function(method, evt)
+  {
+    dlog(&quot;-&gt; UI.Input.&quot;+method+&quot; &quot;+
+            &quot;[charCode:&quot;+evt.charCode+&quot;, keyCode:&quot;+evt.keyCode+&quot;, &quot;+
+            &quot;shift:&quot;+evt.shiftKey+&quot;, ctrl:&quot;+evt.ctrlKey+&quot;, cmd:&quot;+evt.metaKey+&quot;]&quot;, DB_INFOS_EVENT)
+  },
+  
+  /*
+   *  Définit le keypress à utiliser sur l&#x27;élément
+   *  
+   *  @requis this.target, définissant la cible courante
+   *  @param  focusing    TRUE si on focus sur le champ, FALSE otherwise
+   */
+  set_keypress:function(focusing)
+  {
+    if(focusing)
+    {
+      // Pour le moment, le même, mais pourra changer suivant le contexte
+      this.target.binding = $.proxy(this.onkeypress, this) // pour le unbind ci-dessous
+      this.target.jq.bind(&#x27;keypress&#x27;, this.target.binding)
+    }
+    else
+    {
+      this.target.jq.unbind(&#x27;keypress&#x27;, this.target.binding)
+    }
+  },
+  
+  /**
+   *  Return le vrai jQuery Set de champ de text de +obj+
+   *  
+   *  @param  obj   {HTMLDom} ou {jQuerySet} Soit un champ de saisie de text
+   *                Soit un container ({HTMLDom} ou {jQuerySet}) contenant des
+   *                champs de saisie de texte.
+   *
+   *  @method real_field_from
+   *  @return Un {jQuerySet} du ou des champs de texte.
+   *
+   */
+  real_field_from:function(obj)
+  {
+    if(UI.is_text_field(obj)) return $(obj)
+    else return $(obj).find(&#x27;textarea, input&#x27;)
+  },
+  
+  /*
+   *  Retourne l&#x27;élément DOM ciblé par l&#x27;évènement +evt+
+   *  
+   *  
+   *  @param  evt   Event quelconque.
+   *
+   *  @return un {Hash} contenant :
+   *
+   *    dom     DOMElement de l&#x27;élément
+   *    jq      jQuery Set de l&#x27;élément
+   *    id      Identifiant du champ
+   *    jid     jQuery Selector du champ
+   *    tag     Le tagname de l&#x27;élément
+   *    type    Le type de l&#x27;élément
+   *    value   La valeur de l&#x27;élément (if any)
+   *
+   */
+  eventTextField:function(evt)
+  {
+    var target = $(evt.currentTarget)
+    var domObj = target[0]
+    var data = {
+             jq : target,
+            obj : target, // parce que j&#x27;utilise souvent &#x27;obj&#x27; par réflexe
+            dom : domObj,
+             id : domObj.id,
+            jid : domObj.tagName+&#x27;#&#x27;+domObj.id,
+            tag : domObj.tagName,
+           type : target.attr(&#x27;type&#x27;),
+          value : domObj.value,
+      selection : Selection.of(domObj),
+      data_type : target.attr(&#x27;data-type&#x27;),
+         format : target.attr(&#x27;data-format&#x27;),
+       is_input : null,
+    is_textarea : null,
+       /* Seulement si c&#x27;est le champ d&#x27;une fiche */
+       hasFiche : null,
+       property : null,
+       fiche_id : null
+    }
+    data.is_input     = data.tag == &#x27;INPUT&#x27;
+    data.is_textarea  = !data.is_input
+    
+    /* On regarde si c&#x27;est une fiche */
+    var dId = domObj.id.split(&#x27;-&#x27;)
+    if(dId[0] == &#x27;f&#x27;)
+    {
+      data.hasFiche = true
+      data.fiche_id = dId[1]
+      data.property = dId[2]
+    }
+        
+    return data
+  },
+  
+  /*
+   *  Gestion des erreurs
+   *  
+   */
+  ERRORS:{
+    &#x27;target doesnt match&#x27;:&quot;### ERREUR : Les champs ne correspondant pas (UI.Input.current et celui de l&#x27;évènement)&quot;
+  },
+  /*
+   *  Provoque l&#x27;erreur
+   *  
+   *  NOTE: On peut ajouter autant d&#x27;arguments que l&#x27;on veut, ils seront
+   *        envoyés en console.
+   */
+  error:function(err_id)
+  {
+    for(var i=1, len=arguments.length; i&lt;len; ++i) dlog(arguments[i])
+    throw this.ERRORS[err_id]
+  },
+  
+  /*
+   *  Empêche l&#x27;Event +evt+ de se propager et renvoie true.
+   *
+   *  @usage :  Simplement à la fin d&#x27;une méthode gérant un type d&#x27;évènement
+   *            avec &#x60;return this.unpropage(&lt;evt&gt;)&#x27;
+   *  
+   */
+  unpropage:function(evt)
+  {
+    evt.stopPropagation()
+    return true
+  }
+  
+}
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

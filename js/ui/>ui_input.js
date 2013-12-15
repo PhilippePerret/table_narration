@@ -1,44 +1,58 @@
-/*
- *  Sous-Objet UI.Input
- *  -------------------
- *  Gestionnaire de champ de saisie.
- *  Malgré son nom, gère aussi bien les input de type "text" que les textarea.
+/**
+ * @module    UI
+ * @submodule Input
+ * @namespace Input
  *
- *
- */
+ **/
+
+/**
+  *  Sous-Objet UI.Input
+  *
+  *  Gestionnaire de champ de saisie.
+  *  Malgré son nom, gère aussi bien les input de type "text" que les textarea.
+  *
+  *  @class  UI.Input
+  *  @static
+  *
+  **/
 UI.Input = {
   
-  /*
-   *  La cible courante
-   *  -----------------
-   *
-   *  C'est un {Object} tel que défini par la méthode `eventTextField' ci-dessous,
-   *  qui contient notamment les propriétés 'dom' ({DOMElement}), `jq' ({jQuerySet})
-   *  `id', `jid', `value' ou encore `tag'.
-   *
-   */
+  /**
+    *  La cible courante
+    *
+    *  C'est un {Object} tel que défini par la méthode `eventTextField' ci-dessous,
+    *  qui contient notamment les propriétés 'dom' ({HTMLDom}), `jq' ({jQuerySet})
+    *  `id', `jid', `value' ou encore `tag'.
+    *
+    *  @property target {Object}
+    *  @default  null
+    *
+    */
   target: null, 
   
-  /*
-   *  Les champs de saisie mémorisés par la méthode `memorize_current'
-   *
-   *  En clé, un timestamp permettant de récupérer le champ de saisie et
-   *  de le remettre dans le même état (sélection)
-   *  En valeur, une {Target} telle que définie par la méthode
-   *  this.eventTextField
-   *  
-   */
+  /**
+    *  Les champs de saisie mémorisés par la méthode `memorize_current'
+    *
+    *  En clé, un timestamp permettant de récupérer le champ de saisie et
+    *  de le remettre dans le même état (sélection)
+    *  En valeur, une {Target} telle que définie par la méthode
+    *  this.eventTextField
+    * 
+    *  @property targets
+    *  @type     {Hash}
+    *  @default  null 
+    */
   targets:null,
   
-  /*
-   *  Méthode appelée pour placer les observers sur les champs fournis
-   *  en argument.
-   *
-   *  @param  field     Le champs {DOM Element} ou {Set jQuery} qui doit être
-   *                    géré par UI.Input
-   *                    OU le container dans lequel on va fouiller.
-   *
-   */
+  /**
+    *  Méthode appelée pour placer les observers sur les champs fournis
+    *  en argument.
+    *
+    *  @method bind
+    *  @param  field     {DOM Element|Set jQuery} Le champs qui doit être
+    *                    géré par UI.Input ou son container.
+    *  @return {jQuerySet} Le set jQuery bindé.
+    */
   bind:function(field)
   {
     var real_field = this.real_field_from( field )
@@ -46,22 +60,28 @@ UI.Input = {
     return real_field
   },
   
-  /*
-   *  Détache le gestionnaire d'évènement du champ
-   *  
-   *  @param  field     Le champs {DOM Element} ou {Set jQuery} qui doit être
-   *                    géré par UI.Input
-   */
+  /**
+    *  Détache le gestionnaire d'évènement du champ
+    *
+    *  @method unbind  
+    *  @param  field     {HTMLDom|Set jQuery} Le champs qui doit être
+    *                    géré par UI.Input
+    *
+    */
   unbind:function(field)
   {
     this.bind_or_unbind( this.real_field_from( field ), bind = false)
   },
   
-  /*
-   *  Attache ou détache le gestionnaire d'évènement 'focus', 'blur'
-   *  aux champs de saisie de texte +field+
-   *  
-   */
+  /**
+    *  Attache ou détache le gestionnaire d'évènement 'focus', 'blur'
+    *  aux champs de saisie de texte +field+
+    * 
+    *  @method bind_or_unbind
+    *  @param  fields  {jQuerySet} Set jquery des éléments à binder ou unbinder.
+    *  @param  binding {Boolean} Si TRUE, bind le set jquery, sinon le unbind.
+    *
+    */
   bind_or_unbind:function(fields, binding)
   {
     fields[binding?'bind':'unbind']('focus', $.proxy(this.onfocus, this))
@@ -69,10 +89,13 @@ UI.Input = {
     fields[binding?'bind':'unbind']('click dblclick', $.proxy(this.unpropage, this))
   },
   
-  /*
-   *  Méthode appelée quand on focusse dans le champ
-   *  
-   */
+  /**
+    *  Méthode appelée quand on focusse dans le champ
+    *  
+    *  @method onfocus
+    *  @param  evt   {Event} L'évènement `focus' déclenché sur le set courant.
+    *
+    */
   onfocus:function(evt)
   {
     var target = this.eventTextField(evt) 
@@ -84,10 +107,13 @@ UI.Input = {
     return this.unpropage(evt)
   },
   
-  /*
-   *  Méthode appelée quand on blur du champ
-   *  
-   */
+  /**
+    *  Méthode appelée quand on blur du champ
+    * 
+    *  @method onblur
+    *  @param  evt   {BlurEvent} L'évènement `blur' déclenché sur le set courant.
+    *
+    */
   onblur:function(evt)
   {
     var target = this.eventTextField(evt)
@@ -117,7 +143,6 @@ UI.Input = {
       {
         if('function' == typeof fiche['onchange_'+this.target.property])
         {
-          dlog("Méthode `onchange_"+this.target.property+"' appelée sur "+fiche.type_id)
           fiche['onchange_'+this.target.property](new_value)
         }
       }
@@ -127,11 +152,14 @@ UI.Input = {
     return this.unpropage(evt)
   },
   
-  /*
-   *  Méthode appelée quand on presse une touche sur le champ courant
-   *  
-   *  @param  evt   {Keypress Event}
-   */
+  /**
+    *  Méthode appelée quand on presse une touche sur le champ courant. Gère
+    *  l'utilisation de touches ou combinaisons de touches spéciales, comme 
+    *  CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
+    * 
+    *  @method onkeypress 
+    *  @param  evt   {Event} Évènement `keypress' déclenché sur l'input courant.
+    */
   onkeypress:function(evt)
   {
     this.infos_keypress('onkeypress', evt) // seulement si DB_INFOS_EVENT
@@ -242,75 +270,88 @@ UI.Input = {
     return this.unpropage(evt)
   },
   
-  /*
-   *  Traite la donnée du champ courant en fonction de son data-type
-   *
-   *  NOTES
-   *  -----
-   *    • La méthode est appelée dans le onblur, pour le moment
-   *      + quand on tab sur le champ
-   *
-   *    • Aucun traitement si le champ est vide
-   *
-   *    • Si une valeur est modifiée, il faut la remettre dans
-   *      le champ à l'aide de `this.target.jq.val(nouvelle valeur)'
-   *  
-   *  @return TRUE si tout est OK ou false dans le cas contraire
-   */
+  /**
+    *  Traite la donnée du champ courant en fonction de son data-type, peut la modifier
+    *  à la volée ou interrompre la suite dans le cas d'une donnée incorrecte.
+    *
+    *
+    *  NOTES
+    *  -----
+    *    * La méthode est appelée dans le onblur, pour le moment
+    *      + quand on tab sur le champ
+    *    * Aucun traitement si le champ est vide
+    *    * Si une valeur est modifiée, il faut la remettre dans
+    *      le champ à l'aide de `this.target.jq.val(nouvelle valeur)'
+    *  
+    *  @method check_value
+    *  @return TRUE si tout est OK ou false dans le cas contraire, ce qui interrompt
+    *          la procédure en cours.
+    */
   check_value:function()
   {
     // Valeur dans le champ
     var value       = this.target.jq.val().trim()
-    if(value == "") return true
+    var data_types  = this.target.data_type.split(' ')
+    if(value == "" && data_types.indexOf('not_empty') < 0) return true
     // Format attendu (if any)
     // @note: Mis dans une variable car pourra être mis à null pour
     //        empêcher le check du format général, lorsque la data est particulière.
     var data_format = this.target.format
-
-    switch(this.target.data_type)
+    for(var itype=0, len=data_types.length; itype<len; ++itype)
     {
-    case 'number':
-      // La donnée doit être un nombre
-      if( isNaN(value)) return F.error("La donnée devrait être un nombre")
-      break
-    case 'horloge':
-      value = value.trim().replace(/,/g, ':').replace(/ /g, '')
-      this.target.jq.val(Time.m2h(Time.h2m(value)))
-      break
-    case 'people':
-      switch(this.target.format)
+      var data_type = data_types[itype]
+      switch(data_type)
       {
-        case 'auteur':
-          expected = 'Prénom, Nom, Objet (scénario|roman|etc.)'
-          break
-        case 'acteur':
-          expected = "Prénom, Nom, Prénom/surnom personnage, Nom personnage, Fonction personnage"
-          break
-        default:
-          expected = "Prénom, Nom"          
-      }
-      var lines = value.trim().split("\n"), line, iline = 0;
-      var newlines = []
-      var nombre_elements_expected = expected.split(',').length
-      for(len=lines.length; iline < len; ++iline )
-      {
-        line = lines[iline]
-        if(line.split(',').length != nombre_elements_expected){
-          // On essaie de corriger, si les espaces remplacent les virgules
-          if(line.split(' ').length == nombre_elements_expected)
-          { // => Correction de la donnée
-            line = line.split(' ').join(', ')
-          }
-          else
-          { // => Erreur
-            return F.error("La donnée “"+line+"” n'est pas au bon format (requis : "+expected+")")
-          }
+        // TODO Plus tard, ça devra être un data_format
+      case UI.FIELD_NOT_EMPTY:
+        if(value == "") return F.error("Cette donnée est absolument requise.")
+        break
+      case UI.FIELD_NUMBER:
+        // La donnée doit être un nombre
+        if( isNaN(value)) return F.error("La donnée devrait être un nombre")
+        break
+      case UI.FIELD_HORLOGE:
+        value = value.trim().replace(/,/g, ':').replace(/ /g, '')
+        this.target.jq.val(Time.m2h(Time.h2m(value)))
+        break
+      case UI.FIELD_PEOPLE:
+        switch(this.target.format)
+        {
+          case 'auteur':
+            expected = 'Prénom, Nom, Objet (scénario|roman|etc.)'
+            break
+          case 'acteur':
+            expected = "Prénom, Nom, Prénom/surnom personnage, Nom personnage, Fonction personnage"
+            init_value = "" + value
+            value = this.traite_as_acteurs_from_imdb( value )
+            if (init_value != value) this.target.jq.val(value)
+            break
+          default:
+            expected = "Prénom, Nom"          
         }
-        newlines.push( line )
+        var lines = value.trim().split("\n"), line, iline = 0;
+        var newlines = []
+        var nombre_elements_expected = expected.split(',').length
+        for(len=lines.length; iline < len; ++iline )
+        {
+          line = lines[iline]
+          if(line.split(',').length != nombre_elements_expected){
+            // On essaie de corriger, si les espaces remplacent les virgules
+            if(line.split(' ').length == nombre_elements_expected)
+            { // => Correction de la donnée
+              line = line.split(' ').join(', ')
+            }
+            else
+            { // => Erreur
+              return F.error("La donnée “"+line+"” n'est pas au bon format (requis : "+expected+")")
+            }
+          }
+          newlines.push( line )
+        }
+        newlines = newlines.join("\n")
+        if(newlines != value) this.target.jq.val(newlines)
+        data_format = null // pour ne pas passer ci-dessous
       }
-      newlines = newlines.join("\n")
-      if(newlines != value) this.target.jq.val(newlines)
-      data_format = null // pour ne pas passer ci-dessous
     }
 
     // Si un format précis est attendu
@@ -323,6 +364,40 @@ UI.Input = {
     Flash.clean()
     return true 
   },
+  
+  /**
+    * Traite la donnée +acteurs+ avant sa vérification par la méthode {check_values}
+    * dans le cas d'un copié/collé d'une donnée prise dans IMDb.
+    * 
+    * NOTES
+    * -----
+    *   * On reconnait une donnée IMDb pour un acteur car elle sépare le patronyme
+    *     de l'acteur du patronyme du personnage par un "...\n". Noter que le 
+    *     patronyme de l'acteur est répété au début, donc la donnée a le format :
+    *         <patronyme acteur> <patronyme acteur> ...
+    *         <patronyme personnage>
+    *
+    * @method traite_as_acteurs_from_imdb
+    *
+    * @param  value {String} La valeur complète contenu dans le champ acteurs.
+    * @return {String} La valeur corrigée, si nécessaire.
+    */
+  traite_as_acteurs_from_imdb:function(value)
+  {
+    if(value.indexOf('...') < 0) return value
+    value = value.replace(/( |\t)+/g, ' ')
+    value = L(value.split("\n")).collect(function(line){
+      return line.trim()
+    }).join("\n").replace(/ ?\.\.\. ?\n/g, " ")
+    return L(value.split("\n")).collect(function(line){
+      dline = line.split(" ")
+      // On retire le doublement du patronyme (if any)
+      if(dline[0] == dline[2] && dline[1] == dline[3]) dline.splice(0,2)
+      dline.push('null')
+      return dline.join(', ')
+    }).join("\n")
+  },
+  
   /*
    *  Remplace la sélection de la cible courante
    *  
@@ -425,13 +500,14 @@ UI.Input = {
     }
   },
   
-  /*
+  /**
    *  Return le vrai jQuery Set de champ de text de +obj+
    *  
-   *  @param  obj   Soit un champ de saisie de text ({Dom Element} ou {jQuery Set})
-   *                Soit un container ({DOMElement} ou {jQuerySet}) contenant des
+   *  @param  obj   {HTMLDom} ou {jQuerySet} Soit un champ de saisie de text
+   *                Soit un container ({HTMLDom} ou {jQuerySet}) contenant des
    *                champs de saisie de texte.
    *
+   *  @method real_field_from
    *  @return Un {jQuerySet} du ou des champs de texte.
    *
    */

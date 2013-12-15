@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>/Users/philippeperret/Sites/table_narration/js/ui/ui.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Input.Input.html">Input.Input</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/ui/ui.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ *  @module UI
+ */
+
+/**
+ *  Object UI
+ *  ---------
+ *  Gestion de l&#x27;interface utilisateur
+ *
+ *  @class UI
+ *  @static
+ * 
+ */
+if(&#x27;undefined&#x27; == typeof UI) UI = {}
+$.extend(UI, {
+  
+  /**
+   *  data-type pour un champ qui ne peut rester vide
+   *
+   *  @property   {String} FIELD_NOT_EMPTY
+   *  @final
+   */
+  FIELD_NOT_EMPTY: &#x27;not_empty&#x27;,
+
+  /**
+   *  data-type pour un champ de type &#x27;horloge&#x27;. La valeur de ce champ
+   *  sera automatiquement transformée en horloge valide, ou une erreur sera
+   *  produite si la valeur donnée est incompatible avec une horloge.
+   *
+   *  @property   {String} FIELD_HORLOGE
+   *  @final
+   */
+  FIELD_HORLOGE: &#x27;horloge&#x27;,
+
+  /**
+   *  data-type pour un champ de type nombre.
+   *
+   *  @property   {String} FIELD_NUMBER
+   *  @final
+   */
+  FIELD_NUMBER:&#x27;number&#x27;,
+
+  /**
+   *  data-type pour un champ de type pays (sur deux lettres minuscules).
+   *
+   *  @property   {String} FIELD_PAYS
+   *  @final
+   */
+  FIELD_PAYS:&#x27;pays&#x27;,
+  
+  /**
+   *  data-type pour un champ de type « people », c&#x27;est-à-dire une liste de personnes.
+   *  
+   *  NOTES
+   *  -----
+   *    * Le &#x60;data-format&#x27; du champ doit définir s&#x27;il s&#x27;agit d&#x27;un auteur, d&#x27;un
+   *      réalisateur, d&#x27;un acteur, etc.
+   *
+   *  @property   {String} FIELD_PEOPLE
+   *  @final
+   */
+  FIELD_PEOPLE:&#x27;people&#x27;,
+  
+  GRID_X    : 80,       // Snap horizontal
+  GRID_Y    : 40,       // Snap vertical
+  
+  prepared  :false,     // Mis à true quand l&#x27;UI est prête
+  preparing :false,     // True pendant la préparation de l&#x27;interface
+  
+  /*
+   *  Retourne la position +pos+ sur la grille ou val est [x, y]
+   *  @return {left: &lt;position horizontal&gt;, top:&lt;position verticale&gt;}
+   *  
+   *  @param  pos       Couple [x, y]
+   *  @param  snaping   Ne snap la position que si true
+   */
+  position_on_grid:function(pos, snaping){
+    if(!snaping) return {left:pos[0], top:pos[1]} ;
+    return {
+      left: this.position_xy_on_grid(pos[0], this.GRID_X),
+      top : this.position_xy_on_grid(pos[1], this.GRID_Y)
+    }
+  },
+  position_xy_on_grid:function(pos, snap)
+  {
+    prev = pos - pos % snap
+    next = snap + prev
+    if( Math.abs(pos - prev) &gt; Math.abs(pos - next)) return next
+    else return prev
+  },
+  
+  /*
+   *  Méthode appelée quand on droppe un outil fiche (card-tool)
+   *  sur la table
+   *
+   *  Cela provoque la création d&#x27;une nouvelle fiche SUR LA TABLE.
+   *
+   *  NOTES
+   *  -----
+   *    # Si l&#x27;outil est déplacé sur une autre fiche qui peut être parent,
+   *      cette méthode est court-circuitée en mettant drop_on_fiche à true
+   *      cf. Fiche.prototype.on_drop
+   *
+   *    # Noter qu&#x27;il s&#x27;agit d&#x27;un déplacement sur un coin vide de la table, pas
+   *      sur une autre fiche.
+   *
+   *    # Cette méthode étant appelée avant le drop sur un élément
+   *      on la retarde à peine.
+   *
+   *  PARAMS
+   *  ------ 
+   *  @param  evt   L&#x27;évènement Drop généré (permet de connaitre la position)
+   *  @param  ui    Objet ui (ui.helper =&gt; card-tool jQuery) 
+   *
+   */
+  rappelle_ondrop_on_table:function(evt, ui){
+    this.ondrop_on_table(evt, ui)
+  },
+  ondrop_on_table:function(evt, ui)
+  {
+    if(undefined == this.timer_ondrop)
+    {
+      return this.timer_ondrop = setTimeout($.proxy(UI.rappelle_ondrop_on_table, UI, evt, ui), 4*100)
+    }
+    delete this.timer_ondrop
+    var idm = &quot;UI.ondrop_on_table&quot;
+    dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER )
+    if(this.drop_on_fiche)
+    {
+      delete this.drop_on_fiche
+      return
+    }
+    var ctool = ui.helper
+    dlog(&quot;---&gt; UI.ondrop_on_table (ctool &quot;+ctool.attr(&#x27;data-type&#x27;)+&quot;)&quot;, DB_FCT_ENTER)
+    
+    // Déterminer la position approximative du drop sur la table
+    var pos_table = $(&#x27;section#table&#x27;).position()
+    var x = evt.clientX - pos_table.left  // | Pas tout à fait exact mais
+    var y = evt.clientY - pos_table.top   // | ça n&#x27;importe pas trop
+    
+    // On crée la fiche
+    var ifiche = FICHES.full_create({
+      type  : ctool.attr(&#x27;data-type&#x27;),
+      left  : x,
+      top   : y
+    })
+    ifiche.positionne
+    ifiche.open
+    dlog(&quot;&lt;- UI.ondrop_on_table&quot;, DB_FCT_ENTER)
+  }
+  
+})
+
+Object.defineProperties(UI,{
+ 
+  /*
+   *  Préparation de l&#x27;interface
+   *  --------------------------
+   *  Et principalement le placement des observers
+   *
+   */
+  &quot;prepare&quot;:{
+    get:function(){
+      this.preparing = true
+      // La table doit accepter les drops des &quot;card tool&quot; (tous les types)
+      $(&#x27;section#table&#x27;).droppable({
+        accept  : &#x27;.card_tool&#x27;,
+        drop    : $.proxy(this.ondrop_on_table, this)
+      })
+    
+      // Prépation des &quot;card-tools&quot;
+      CardTools.prepare
+ 
+ 
+      this.preparing  = false
+      this.prepared   = true
+    }
+  }
+})
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

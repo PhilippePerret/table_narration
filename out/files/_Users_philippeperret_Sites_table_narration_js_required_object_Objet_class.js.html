@@ -45,11 +45,15 @@
             
                 <li><a href="../classes/DICO.html">DICO</a></li>
             
+                <li><a href="../classes/Input.Input.html">Input.Input</a></li>
+            
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
                 <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
             
             </ul>
 
@@ -57,15 +61,27 @@
             
                 <li><a href="../modules/ColText.html">ColText</a></li>
             
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
             
             </ul>
         </div>
@@ -153,6 +169,7 @@ $.extend(ObjetClass.prototype,{
    *
    *    * L&#x27;aperçu est également décalé à droite ou à gauche suivant la
    *      position de son contenant dans le texte pour être parfaitement visible.
+   *    * On affiche pas l&#x27;aperçu si le mot se trouve dans un aperçu.
    *
    *  @method apercu_in
    *
@@ -161,13 +178,18 @@ $.extend(ObjetClass.prototype,{
    */
   apercu_in:function(domObj)
   {
+    if($(domObj).parents().hasClass(&#x27;apercu&#x27;))
+    {
+      dlog(&quot;Je n&#x27;affiche pas l&#x27;aperçu dans un aperçu&quot;)
+      return
+    }
     if(this.apercu.length == 0) this.create_apercu(domObj)
     else $(domObj).append(this.apercu)
     var agauche = $(domObj).position().left &lt; ($(domObj).parent().width() / 2)
-    this.apercu.css{
+    this.apercu.css({
       &#x27;right&#x27;: agauche ? null : &#x27;0&#x27;,
       &#x27;left&#x27; : agauche ? &#x27;0&#x27; : null
-    }
+    })
   },
   
   /*

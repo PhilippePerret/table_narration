@@ -6,14 +6,14 @@
 .lk:hover   {z-index:1000 !important;}
 .lk:hover .apercu {display:block;}
 /* Les liens doivent apparaitre plus petits dans les apercus */
-div.apercu .lk { font-size: inherit; }
+div.apercu .lk { font-size: inherit !important; }
 
 div.apercu {
   position          : absolute;
   top               : 0;
 /*  right             : 0; défini dynamiquement */
   background-color  : white;
-  padding           : 1em;
+  padding           : 20px 30px;
   min-width         : 240px;
   max-height        : 200px;
   max-width         : 400px;
