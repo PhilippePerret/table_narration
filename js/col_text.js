@@ -1,24 +1,45 @@
-/*
+/**
+ *
+ *  @module ColText
+ *
+ **/
+
+/**
  *  Objet ColText
  *  -------------
- *  Gestion des textes de la collection (toutes les fiches)
+ *  Gestion des textes de la collection (toutes les fiches).
+ *  C'est cet objet par exemple qui va traiter les balises que contient un texte
+ *  avant de l'afficher.
  *  
- */
+ *  @class ColText
+ *  @static
+ *
+ **/
 window.ColText = {
   
-  /*
+  /**
+   *
    *  Le code en traitement courant
-   *  
+   *
+   *  @property code 
+   *  @type     {String}  
+   *  @default  null
    */
   code:null,
   
-  /*
+  /**
    *  Met en forme le texte +code+ pour son affichage humain
    *
    *
+   *  @method formate
    *  @param  code    {String} du texte à formater
+   *  @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
+   *                    ou un aperçu.
    *
-   *  @return Le code mis en forme, prêt à être affiché dans un DIV/SPAN
+   *  @example
+   *      ColText.formate(<le texte>)
+   *      # Mais on peut utiliser aussi :
+   *      <le texte>.formate
    *
    */
   formate:function(code)

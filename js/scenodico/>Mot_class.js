@@ -1,3 +1,11 @@
+/**
+ *
+ *  @module       Mot
+ *  @submodule    dom
+ *  @main         Mot
+ *
+ **/
+
 /*
  *  Class Mot
  *  ---------
@@ -8,20 +16,21 @@
  *  
  */
 
-// // On l'étend avec les méthodes et propriétés partagées
-// $.extend(Mot.prototype, ObjetClass.prototype)
-
 
 $.extend(Mot.prototype,{
-  /*
+  /**
    *  Construit et retourne la balise à insérer dans une fiche
    *  avec les options +options+
    *
+   *  @method balise
    *  @param  options   {Hash} des options.
    *                    Ces options sont celles disponibles dans DICO.OPTIONS et
    *                    sont insérées si elles existent en 3e paramètre de la
    *                    balise. Elles permettront de composer le mot affiché
    *  
+   *  @return {String}  La balise construite pour le {Mot}, qui sera inséré dans
+   *                    le code est formaté à l'aide de la méthode `formate'.
+   *
    */
   balise:function(options)
   {
@@ -43,7 +52,7 @@ $.extend(Mot.prototype,{
   {
     var t ;
     // Simple pour le moment
-    t = '<a onmouseover="DICO.show(this, \''+this.id+'\')" class="lk lk_mot">'+this.mot+'</a>'
+    t = '<a onmouseover="DICO.show_apercu(this, \''+this.id+'\')" class="lk lk_mot">'+this.mot+'</a>'
     return t
   }
 
@@ -75,7 +84,7 @@ Object.defineProperties(Mot.prototype,{
     get:function(){
       if(this.apercu.length == 0) return
       this.apercu.find('.mainprop').html(this.mot)
-      this.apercu.find('.resume').html(this.definition)
+      this.apercu.find('.resume').html(this.definition.formate)
     }
   }
 })

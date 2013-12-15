@@ -1,4 +1,8 @@
-/*
+/**
+ *  @module DICO.js
+ */
+
+/**
  *  Object DICO
  *  ------------
  *  Gestion des mots du scénodico pour l'application.
@@ -8,7 +12,10 @@
  *    ::  L'application charge le fichier '../interdata/scenodico/data_js/dico_data.js'
  *        qui définit DICO.DATA, les données raccourcis des mots.
  *
- *  
+ *  @class DICO
+ *  @static
+ *
+ *  @extend OBJET
  */
 
 if('undefined'==typeof DICO) DICO = {}

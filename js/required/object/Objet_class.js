@@ -1,3 +1,17 @@
+/**
+ *  @module ObjetClass
+ */
+
+/**
+ *  Class qui sera héritée par les « Items » de l'application, qui peuvent être
+ *  des {Film}s, des {Mot}s, etc.
+ *
+ *  @class  ObjetClass
+ *  @constructor
+ *
+ *  @param  id  {String} Identifiant de l'item.
+ *
+ */
 window.ObjetClass = function(id){
   this.id             = id
   this.loaded         = false  
@@ -22,15 +36,30 @@ $.extend(ObjetClass.prototype,{
     }
   },
   
-  /*
+  /**
    *  Place l'apercu de l'item dans l'objet DOM +domObj+
    *  en le créant si nécessaire.
-   *  
+   * 
+   *  NOTES
+   *  -----
+   *
+   *    * L'aperçu est également décalé à droite ou à gauche suivant la
+   *      position de son contenant dans le texte pour être parfaitement visible.
+   *
+   *  @method apercu_in
+   *
+   *  @param  domObj  {DOMElement} Element du DOM dans lequel placer l'aperçu.
+   *                  C'est normalement un lien/balise dans le texte.
    */
   apercu_in:function(domObj)
   {
     if(this.apercu.length == 0) this.create_apercu(domObj)
     else $(domObj).append(this.apercu)
+    var agauche = $(domObj).position().left < ($(domObj).parent().width() / 2)
+    this.apercu.css({
+      'right': agauche ? null : '0',
+      'left' : agauche ? '0' : null
+    })
   },
   
   /*

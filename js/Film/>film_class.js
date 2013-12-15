@@ -125,7 +125,7 @@ $.extend(Film.prototype,{
     }
 
     // Dans un lien ou un span
-    var bal = options.nolink ? '<span' : '<a onmouseover="FILMS.show(this, \''+this.id+'\')"' ;
+    var bal = options.nolink ? '<span' : '<a onmouseover="FILMS.show_apercu(this, \''+this.id+'\')"' ;
     t = bal + ' class="lk lk_film">' + t 
     t += options.nolink ? '</span>' : '</a>'
 
@@ -232,7 +232,7 @@ Object.defineProperties(Film.prototype,{
     get:function(){
       if(this.apercu.length == 0) return
       this.apercu.find('.mainprop').html(this.titre)
-      this.apercu.find('.resume').html(this.resume)
+      this.apercu.find('.resume').html(this.resume.formate)
     }
   }
   

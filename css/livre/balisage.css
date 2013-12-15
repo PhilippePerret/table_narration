@@ -5,12 +5,14 @@
 .lk .apercu {display:none;}
 .lk:hover   {z-index:1000 !important;}
 .lk:hover .apercu {display:block;}
+/* Les liens doivent apparaitre plus petits dans les apercus */
+div.apercu .lk { font-size: inherit; }
 
 div.apercu {
   position          : absolute;
   top               : 0;
-  right             : 0;
-  background-color  : #FBFFF9;
+/*  right             : 0; défini dynamiquement */
+  background-color  : white;
   padding           : 1em;
   min-width         : 240px;
   max-height        : 200px;
@@ -21,6 +23,7 @@ div.apercu {
   z-index           : 1000 !important;
   border-radius     : 11px;
   border            : 1px solid;
+  opacity           : 0.9;
 }
 /*div.apercu:hover{display:block;}*/
 
@@ -46,7 +49,6 @@ fiche.para .lk_film {
   color       : #00009C;
   z-index     : 1;
 }
-
 fiche.para .lk_mot {
   position    : relative;
   font-family : Verdana;

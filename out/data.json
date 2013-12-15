@@ -1,0 +1,361 @@
+{
+    "project": {},
+    "files": {
+        "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js",
+            "modules": {},
+            "classes": {
+                "Mot": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
+            "modules": {
+                "OBJETS": 1
+            },
+            "classes": {
+                "OBJETS": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
+            "modules": {
+                "ObjetClass": 1
+            },
+            "classes": {
+                "ObjetClass": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js",
+            "modules": {
+                "Mot": 1,
+                "dom": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js",
+            "modules": {
+                "DICO.js": 1
+            },
+            "classes": {
+                "DICO": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/col_text.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "modules": {
+                "ColText": 1
+            },
+            "classes": {
+                "ColText": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Mot": {
+            "name": "Mot",
+            "submodules": {
+                "dom": 1
+            },
+            "classes": {
+                "Mot": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js",
+            "line": 7,
+            "itemtype": "main"
+        },
+        "OBJETS": {
+            "name": "OBJETS",
+            "submodules": {},
+            "classes": {
+                "OBJETS": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
+            "line": 13,
+            "description": "Objet OBJETS mixé dans les FILMS, DICO et REFS\n\nNOTES\n-----\n  * Les descriptions ci-dessous, lorsqu'elles ne parlent que de \"Film\"\n    peuvent être comprise pour tout objet pluriel mixant ces méthodes."
+        },
+        "ObjetClass": {
+            "name": "ObjetClass",
+            "submodules": {},
+            "classes": {
+                "ObjetClass": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
+            "line": 5
+        },
+        "dom": {
+            "name": "dom",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Mot",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js",
+            "line": 1,
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "DICO.js": {
+            "name": "DICO.js",
+            "submodules": {},
+            "classes": {
+                "DICO": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js",
+            "line": 5
+        },
+        "ColText": {
+            "name": "ColText",
+            "submodules": {},
+            "classes": {
+                "ColText": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "line": 7
+        }
+    },
+    "classes": {
+        "Mot": {
+            "name": "Mot",
+            "shortname": "Mot",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Mot",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js",
+            "line": 7,
+            "description": "Class Mot\n----------\nPour la gestion d'un mot du scénodico\n\nNOTES\n-----\n  *  C'est juste la première définition, car l'objet DICO en aura\n      besoin à sa création",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Identifiant du mot.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Une instance de la class Mot.",
+                "type": "Mot"
+            }
+        },
+        "OBJETS": {
+            "name": "OBJETS",
+            "shortname": "OBJETS",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [
+                "DICO",
+                "FILMS"
+            ],
+            "module": "OBJETS",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
+            "line": 13,
+            "description": "Objet OBJETS",
+            "static": 1
+        },
+        "ObjetClass": {
+            "name": "ObjetClass",
+            "shortname": "ObjetClass",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ObjetClass",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
+            "line": 5,
+            "description": "Class qui sera héritée par les « Items » de l'application, qui peuvent être\ndes {Film}s, des {Mot}s, etc.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Identifiant de l'item.",
+                    "type": "String"
+                }
+            ]
+        },
+        "DICO": {
+            "name": "DICO",
+            "shortname": "DICO",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "DICO.js",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js",
+            "line": 5,
+            "description": "Object DICO\n------------\nGestion des mots du scénodico pour l'application.\n\nNOTES\n-----\n  ::  L'application charge le fichier '../interdata/scenodico/data_js/dico_data.js'\n      qui définit DICO.DATA, les données raccourcis des mots.",
+            "static": 1,
+            "extends": "OBJET"
+        },
+        "ColText": {
+            "name": "ColText",
+            "shortname": "ColText",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ColText",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "line": 7,
+            "description": "Objet ColText\n-------------\nGestion des textes de la collection (toutes les fiches).\nC'est cet objet par exemple qui va traiter les balises que contient un texte\navant de l'afficher.",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
+            "line": 23,
+            "description": "Table de tous les items connus, avec leurs data minimum.\nPar exemple, pour les films, il s'agit du titre, du titre français, de\nl'identifiant et du code ascii de la première lettre.\n\n# NOTES\n\n    * Pour les films, cf. :\n      ../interdata/film/data_js/films_data.js\n    * Pour les mots cf. :\n      ../interdata/scenodico/data_js/dico_data.js",
+            "itemtype": "property",
+            "name": "DATA",
+            "type": "Hash",
+            "class": "OBJETS",
+            "module": "OBJETS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
+            "line": 149,
+            "description": "Affiche l'aperçu de l'item survolé dans le texte.\n\nLa méthode doit afficher une version détaillée de l'élément concerné.\n\n# NOTES\n\n  * Méthode appelée quand on glisse la souris sur un item (mot, film, etc.)\n  * Un bind click est placé sur l'aperçu, pour pouvoir éditer l'élément.",
+            "itemtype": "method",
+            "name": "show_apercu",
+            "params": [
+                {
+                    "name": "domObj",
+                    "description": "Dom element sur lequel on glisse la souris. C'est dans\n                  celui-ci qu'on mettre le panneau de détail de l'élément.",
+                    "type": "DOMELement"
+                },
+                {
+                    "name": "id",
+                    "description": "Identifiant  de l'item.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "OBJETS",
+            "module": "OBJETS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
+            "line": 39,
+            "description": "Place l'apercu de l'item dans l'objet DOM +domObj+\nen le créant si nécessaire.\n \nNOTES\n-----\n\n  * L'aperçu est également décalé à droite ou à gauche suivant la\n    position de son contenant dans le texte pour être parfaitement visible.",
+            "itemtype": "method",
+            "name": "apercu_in",
+            "params": [
+                {
+                    "name": "domObj",
+                    "description": "Element du DOM dans lequel placer l'aperçu.\n                C'est normalement un lien/balise dans le texte.",
+                    "type": "DOMElement"
+                }
+            ],
+            "class": "ObjetClass",
+            "module": "ObjetClass"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js",
+            "line": 21,
+            "description": "Construit et retourne la balise à insérer dans une fiche\navec les options +options+",
+            "itemtype": "method",
+            "name": "balise",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "des options.\n                  Ces options sont celles disponibles dans DICO.OPTIONS et\n                  sont insérées si elles existent en 3e paramètre de la\n                  balise. Elles permettront de composer le mot affiché",
+                    "type": "Hash"
+                }
+            ],
+            "return": {
+                "description": "La balise construite pour le {Mot}, qui sera inséré dans\n                  le code est formaté à l'aide de la méthode `formate'.",
+                "type": "String"
+            },
+            "class": "DICO",
+            "module": "Mot",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "line": 20,
+            "description": "Le code en traitement courant",
+            "itemtype": "property",
+            "name": "code",
+            "type": "{String}",
+            "default": "null",
+            "class": "ColText",
+            "module": "ColText"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "line": 30,
+            "description": "Met en forme le texte +code+ pour son affichage humain",
+            "itemtype": "method",
+            "name": "formate",
+            "params": [
+                {
+                    "name": "code",
+                    "description": "du texte à formater",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Le code mis en forme, prêt à être affiché dans un DIV/SPAN\n                  ou un aperçu.",
+                "type": "String"
+            },
+            "example": [
+                "\n    ColText.formate(<le texte>)\n"
+            ],
+            "class": "ColText",
+            "module": "ColText"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: extend with extends",
+            "line": " /Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js:5"
+        }
+    ]
+}

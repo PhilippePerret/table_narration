@@ -1,20 +1,38 @@
-/*
+/**
  *  Objet OBJETS mixé dans les FILMS, DICO et REFS
  *
  *  NOTES
  *  -----
- *    = Les descriptions ci-dessous, lorsqu'elles ne parlent que de "Film"
+ *    * Les descriptions ci-dessous, lorsqu'elles ne parlent que de "Film"
  *      peuvent être comprise pour tout objet pluriel mixant ces méthodes.
- *  
+ * 
+ *  @module OBJETS
+ * 
+ */
+
+/**
+ *  Objet OBJETS
+ *
+ *  @class   OBJETS
+ *  @static
+ *  @extensionFor DICO
+ *  @extensionFor FILMS
+ *
  */
 window.OBJETS = {
-  /*
-   *  Data mini de L'objet
+  /**
+   *  Table de tous les items connus, avec leurs data minimum.
+   *  Par exemple, pour les films, il s'agit du titre, du titre français, de
+   *  l'identifiant et du code ascii de la première lettre.
    *
-   *  Pour les films, cf. :
-   *    ../interdata/film/data_js/films_data.js
-   *  Pour les mots cf. :
-   *    ../interdata/scenodico/data_js/dico_data.js
+   *  # NOTES
+   *
+   *      * Pour les films, cf. :
+   *        ../interdata/film/data_js/films_data.js
+   *      * Pour les mots cf. :
+   *        ../interdata/scenodico/data_js/dico_data.js
+   *
+   *  @property {Hash} DATA
    *
    */
   DATA:null,      
@@ -64,11 +82,11 @@ window.OBJETS = {
    */
   get:function(id)
   {
-    dlog("-> "+this.idm('get')+"("+id+")")
+    dlog("-> "+this.idm('get')+"("+id+")", DB_FCT_ENTER)
     if( undefined != this.list[id] ) return this.list[id]
     var item = new this.Class(id)
     item.dispatch( this.DATA[id] )
-    dlog("<- "+this.idm('get'))
+    dlog("<- "+this.idm('get'), DB_FCT_ENTER)
     return item
   },
   
@@ -128,21 +146,24 @@ window.OBJETS = {
     this.on_choose_item.poursuivre(film_id)
   },
   
-  /*
-   *  Méthode appelée quand on glisse la souris sur un item (mot, film, etc.)
+  /**
+   *  Affiche l'aperçu de l'item survolé dans le texte.
    *  
    *  La méthode doit afficher une version détaillée de l'élément concerné.
    *
-   *  NOTES
-   *  -----
-   *    = Un bind click est placé sur l'aperçu, pour pouvoir éditer l'élément.
+   *  # NOTES
    *
+   *    * Méthode appelée quand on glisse la souris sur un item (mot, film, etc.)
+   *    * Un bind click est placé sur l'aperçu, pour pouvoir éditer l'élément.
    *
-   *  @param  domObj    Le {DOMELement} sur lequel on glisse la souris. C'est dans
+   *  @method show_apercu
+   *
+   *  @param  domObj    {DOMELement} Dom element sur lequel on glisse la souris. C'est dans
    *                    celui-ci qu'on mettre le panneau de détail de l'élément.
-   *  @param  id        Identifiant {String} de l'item.
+   *  @param  id        {String} Identifiant  de l'item.
+   *  @return {void}
    */
-  show:function(domObj, item_id)
+  show_apercu:function(domObj, item_id)
   {
     if($(domObj).find('.apercu').length) return true
     else this.get(item_id).apercu_in( domObj )

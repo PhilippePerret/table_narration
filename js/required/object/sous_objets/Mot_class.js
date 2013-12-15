@@ -1,12 +1,24 @@
-/*
+/**
+ *
+ *  @module Mot
+ *
+ **/
+
+/**
  *  Class Mot
  *  ----------
  *  Pour la gestion d'un mot du scénodico
  *
  *  NOTES
  *  -----
- *    ::  C'est juste la première définition, car l'objet DICO en aura
+ *    *  C'est juste la première définition, car l'objet DICO en aura
  *        besoin à sa création
+ *
+ *  @class Mot
+ *  @constructor
+ *  @param  id  {String} Identifiant du mot.
+ *  @return {Mot} Une instance de la class Mot.
+ *
  */
 
 window.Mot = function(id)
