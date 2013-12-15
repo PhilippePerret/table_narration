@@ -1,3 +1,6 @@
+/**
+  * @module Data
+  */
 /*
  *  Test de l'Objet Data
  *  --------------------

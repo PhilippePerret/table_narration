@@ -1,3 +1,7 @@
+/**
+  * @module jQueryExtension
+  */
+
 $.fn.extend({
   /*
    *  Pour définir la valeur d'un élément quelque soit sont type

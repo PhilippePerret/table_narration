@@ -14,11 +14,9 @@
  *
  *  @class DICO
  *  @static
- *
- *  @extend OBJET
+ *  @extends OBJET
  */
-
-if('undefined'==typeof DICO) DICO = {}
+window.DICO = DICO || {}
 $.extend(DICO, {
   
   NAME:"DICO",

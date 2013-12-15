@@ -1,3 +1,7 @@
+/**
+  * @module Debug
+  */
+
 DB_SIMPLE       = 1
 DB_MAIN_STEPS   = 2
 DB_CURRENT      = 4

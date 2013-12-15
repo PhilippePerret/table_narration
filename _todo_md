@@ -1,25 +1,18 @@
 IMPLÉMENTER
 -----------
 
--# Empêcher de pouvoir sauver un film sans titre
 -# Le titre de la page semble disparaitre parfois.
+
+CHARGEMENT DE LA COLLECTION
+Dans collection/load, il faut lire le fichier de configuration pour connaitre les
+fiches ouvertes.
+
 
 APERCU (souris hover un mot/film)
 - Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet
   apercu existe dans le DOM
+
   
-- click sur l'apercu va met l'item en édition
-  J'EN SUIS À : Il faut faire vraiment comme si on choisissait l'item
-  dans le listing :
-    - ouvrir le panneau correspondant (OK)
-    - cliquer sur l'onglet de l'item
-    - sélectionner l'item
-    - ouvrir le formulaire (OK)
-    etc (ça doit être OK)
-  > Pour les films, mots, il faut donc procéder à l'ouverture du panneau
-    correspondant.
-  > Pour les références, il faut soit les afficher dans leur contexte et si
-    c'est une page, on l'ouvre.
 - Pour l'aperçu d'une page, le début de son texte ou peut-être même tout
   son texte.
   > Mais quid s'il s'agit d'un chapitre ou d'un livre ? Peut-être faire un

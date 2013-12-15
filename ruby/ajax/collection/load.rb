@@ -35,6 +35,7 @@ NOTES
     en mode test et remonte l'information ::mode_test => true/false
 
 =end
+require 'json'
 
 log "---> #{__FILE__}"
 
@@ -84,14 +85,32 @@ def get_all_non_ranged
   log "<- get_all_non_ranged"
 end
 
+# Retourne la configuration courante si elle existe
+# 
+# @note Détruit toujours le fichier, qui doit être ré-enregistré
+#       quand on quitte l'application.
+# 
+def get_config
+  @data[:data][:current_configuration] = 
+    if File.exists? Collection::path_current_config
+      # Marshal.load(File.read Collection::path_current_config)
+      config = JSON.parse(File.read Collection::path_current_config)
+      File.unlink Collection::path_current_config
+      config
+    else
+      nil
+    end
+end
 
 @data = {
   :fiches   => [],
   :prefs    => {},
   :data     => {
-    :last_id_fiche => Fiche::last_id
+    :last_id_fiche => Fiche::last_id,
+    :current_configuration => nil
   }
 }
 get_all_fiches_needed
+get_config
 RETOUR_AJAX[:data] = @data
 RETOUR_AJAX[:mode_test] = File.exists?('./.mode_test')

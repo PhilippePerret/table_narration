@@ -1,3 +1,9 @@
+/**
+  * @module     FicheClass
+  * @submodule  data
+  * @main       Fiche
+  */
+
 $.extend(Fiche.prototype,{
   /*
    *  Place la fiche courante APRÈS la fiche +bfiche+ {Fiche}
@@ -65,16 +71,17 @@ $.extend(Fiche.prototype,{
  *  
  */
 Object.defineProperties(Fiche.prototype,{
-  /*
-   *  Retourne les données à enregistrer
-   *  
-   */
+  /**
+    * Retourne les données à enregistrer
+    *
+    * @property data
+    * @return   {Hash} Les données à enregistrer dans la fiche
+    *
+    */
   "data":{
-    configurable:true,
     get:function(){
       data = {
         id:this.id, type:this.type, titre:this.titre, deleted:this.deleted,
-        opened:this.opened, ranged:this.ranged,
         top:this.top, left:this.left
       }
       if(this.parent)  data.parent = {id:this.parent.id, type:this.parent.type}
@@ -86,7 +93,6 @@ Object.defineProperties(Fiche.prototype,{
         }
       }
       if(this.is_book) data.real_titre  = this.real_titre
-      if(this.is_chapter || this.is_paragraph) data.opened   = false
       if(this.is_paragraph)
       {
         data.texte  = this.texte

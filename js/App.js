@@ -1,23 +1,98 @@
-/*
- *  Pour empêcher de quitter la page quand des données n'ont pas été
- *  enregistrées.
- *  
- */
+/**
+  * @module App.js
+  */
+
+/**
+  * Sécurité pour empêcher de quitter la page quand des données n'ont pas été
+  * enregistrées.
+  *  
+  * S'il n'y a aucune modification en cours, on sauve la configuration courante des
+  * fiche pour récupérer le même état au relancement de l'application. Noter cependant
+  * que si un “flash” d'une configuration a déjà été demandé, on ne procède pas
+  * à l'enregistrement de la configuration.
+  *
+  * @method confirmExit
+  * @param  {Event} Event beforeUnload généré.
+  * @return Rien si la collection n'a pas été modifiée ou le texte à afficher
+  *         pour confirmer de quitter la page. Mais à cause d'un bug de Firefox,
+  *         ce texte ne s'affiche pas.
+  * 
+  */
 function confirmExit(evt)
 {
   if(Collection.modified)
   {
     evt.returnValue = "Veux-tu vraiment quitter ?"
     return "Veux-tu vraiment quitter ?"
-  }  
+  }
+  else
+  {
+    if(false == APP.flashed) APP.save_current_configuration(forcer = false)
+  }
 }
 window.onbeforeunload = confirmExit
 
-/*
- *	Objet App
- */
+/**
+  *	Objet App, pour la gestion de l'application
+  *
+  * @class App
+  * @static
+  *
+  */
 window.App = {
 	
+  /**
+    * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
+    * empêcher d'en enregistrer un nouveau à la fermeture de la collection.
+    * Noter cependant que de toute façon, il sera impossible d'enregistrer la 
+    * configuration courante si un fichier de configuration (qui est supprimé à
+    * chaque chargement) se trouve déjà créé (par un flash).
+    *
+    * @property flashed
+    * @type     {Boolean}
+    * @default  false
+    */
+  flashed:false,
+  
+  /**
+    * Enregistre la configuration d'ouverture (et de rangement) actuelle pour
+    * la replacer au prochain chargement de l'application.
+    * 
+    * NOTES
+    * -----
+    *
+    *   * Envoi la requête Ajax pour créer le fichier "current_config.config"
+    *
+    * @method save_current_configuration
+    * @async
+    *
+    * @param  forcer  {Boolean} Si TRUE (quand appelé depuis l'appareil photo),
+    *                 on force la destruction du fichier configuration pour prendre
+    *                 cette nouvelle configuration.
+    * @param  rajax   {Object} Retourn de la requête ajax. Donc indéfini à l'appel
+    *                 de la méthode.
+    * 
+    */
+  save_current_configuration:function(forcer, rajax)
+  {
+    if(undefined == rajax)
+    {
+      Ajax.send(
+        {script:'app/save_config', config:this.current_config, force:forcer},
+        $.proxy(this.save_current_configuration, forcer, this)
+      )
+    }
+    else
+    {
+      if(rajax.ok)
+      { 
+        this.flashed = true
+        F.show("Configuration courante enregistrée. Elle sera utilisée au prochain chargement de la table.")
+      }
+      else F.error(rajax.message)
+    }
+  },
+  
   // Pour lancer le test de l'application
   // 
   // @note: la méthode lance aussi un appel à un script ajax 
@@ -81,3 +156,66 @@ window.App = {
     "\n\nRuby version: " + rajax.ruby_version)
   }
 }
+
+Object.defineProperties(App,{
+  
+  /**
+    * Analyse la configuration actuelle (ouvertures et rangements) et retourne
+    * un {Object} à enregistrer dans le fichier de configuration courante.
+    *
+    * NOTES
+    * -----
+    *   * Pour procéder, cette propriété/méthode regarde simplement les fiches
+    *     qui sont visibles sur la table.
+    *
+    * @property current_config
+    * @return   {Object} Configuration courante, contenant `visibles', les fiches
+    *           actuellement visibles (juste pour info) et `openeds', les fiches
+    *           actuellement ouvertes (opened = true)
+    *
+    */
+  "current_config":{
+    get:function(){
+      var config = {
+        openeds   : [],
+        visibles  : []
+      }
+      $('section#table > fiche:visible').each(function(){
+        var fiche = FICHES.domObj_to_fiche($(this))
+        var datam = {id:fiche.id, type:fiche.type}
+        config.visibles.push(datam)
+        if(fiche.opened) config.openeds.push(datam)
+      })
+      return JSON.stringify(config)
+    }
+  },
+  
+  /**
+    * Applique la configuration courante. En d'autres termes, ouvre les fiches qui
+    * doivent être ouvertes.
+    *
+    * @method current_configuration
+    *
+    */
+  "current_configuration":{
+    set:function(conf){
+      this._current_configuration = conf
+      if(conf == null) return
+      var errors = []
+      // Juste pour voir, on regarde si les fiches visibles sont bien visibles
+      L(conf.visibles).each(function(fdata){
+        if($('section#table > fiche#f-'+fdata.id).length == 0) errors.push("La fiche #"+fdata.id+" devrait être visible.")
+      })
+      // On ouvre les fiches qui doivent l'être
+      L(conf.openeds).each(function(fdata){
+        if(undefined == FICHES.list[fdata.id]) errors.push("La fiche #"+fdata.id+" devrait exister…")
+        else get_fiche(fdata.id).open
+      })
+      if(errors.length)
+      {
+        Flash.error("Des erreurs sont survenues en essayant d'application la configuration courante :\n"+errors.join("\n\t"))
+      }
+    }
+  }
+  
+})

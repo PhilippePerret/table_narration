@@ -1,20 +1,23 @@
-/*
- *  Class Fiche
- *  -----------
- *
- *  Toutes les instances Book, Page, Chapter et Paragraph héritent d'elle
- *
- *
- *  RAPPELS
- *  -------
- *
- *  * C'est en ajoutant un enfant à une fiche qu'on détermine les propriétés
- *    `parent' et `enfants' des deux fiches concernant.
- *    cf. la méthode "add_enfant".
- *
- */
+/**
+  * @module FicheClass
+  */
 
-// Classe Fiche
+/**
+  *  Class Fiche
+  *  -----------
+  *
+  *  Toutes les instances Book, Page, Chapter et Paragraph héritent d'elle
+  *
+  *
+  *  RAPPELS
+  *  -------
+  *    * C'est en ajoutant un enfant à une fiche qu'on détermine les propriétés
+  *      `parent' et `enfants' des deux fiches concernant.
+  *      cf. la méthode "add_enfant".
+  *
+  * @class  Fiche
+  *
+  */
 window.Fiche = function(data)
 {
   dlog("---> Fiche (instanciation)", DB_FCT_ENTER)
@@ -443,19 +446,7 @@ Object.defineProperties(Fiche.prototype, {
       this.retourned = !this.retourned
       if(this.retourned) this.regle_verso
     }
-  },
-  
-  /*
-   *  Sauvegarde de la fiche (utile ?)
-   *  
-   */
-  "save":{
-    configurable:true,
-    get:function(){
-      return true
-    }
-  },
-  
+  },  
   
   /*
    *  Destruction totale d'une fiche

@@ -1,20 +1,32 @@
-/*
- *  Objet Pluriel FICHES
- *  --------------------
- *
- */
+/**
+  * @module FICHES
+  *
+  */
 // Raccourci
 window.get_fiche = function(id)
 {
   return FICHES.get(id)
 }
 
+/**
+  * Objet FICHES
+  * ------------
+  * Pour la gestion des fiches comme ensemble.
+  *
+  * @class  FICHES
+  * @static
+  *
+  */
 window.FICHES = {
   
-  /*
-   *  CONSTANTES
-   *  
-   */
+  /**
+    * Données pour les types de fiche
+    *  
+    * @property datatype
+    * @type     {Object}
+    * @static
+    * @final
+    */
   datatype:{
     'para'  : {level: 5 , defvalue: "",                 child_type:null,    parent_type:'page', hname:"paragraphe"},
     'page'  : {level: 10, defvalue: "TITRE_PAGE",       child_type:'para',  parent_type:'chap', hname: "page"},
@@ -28,15 +40,21 @@ window.FICHES = {
    */
   last_id: -1,
   
-  /*
-   *  List {Hash} des fiches instanciées
-   *  ----------------------------------
-   *  En clé, l'identifiant ({Number}), en valeur l'instance de la fiche
-   *
-   *  C'est la méthode `create' de la fiche qui la met dans la liste
-   *
-   */
+  /**
+    *  Table des fiches instanciées
+    *  ----------------------------
+    *
+    * NOTES
+    * -----
+    *   * En clé, l'identifiant ({Number}), en valeur l'instance de la fiche
+    *   * C'est la méthode `create' de la fiche qui la met dans la liste
+    *   * Utiliser la méthode `FICHES.get' pour obtenir une fiche de cette liste.
+    *
+    * @property {Object} list
+    *
+    */
   list:{},
+  
   /*
    *  Nombre de fiches dans `list'
    */
@@ -77,11 +95,16 @@ window.FICHES = {
     return fi
   },
   
-  /*
-   *  Reçoit un objet DOM de fiche (class fiche) et
-   *  retourne la fiche correspondante.
-   *  
-   */
+  /**
+    *  Reçoit un objet DOM de fiche (class fiche) et
+    *  retourne la fiche correspondante.
+    *
+    * @param  obj {HTMLDom|jQuerySet} Element Dom appartenant à une fiche ou l'objet
+    *             (tag:fiche) de la fiche elle-même.
+    * @return {Fiche} L'instance Fiche ({Book}, {Chapter} etc) de la fiche propriétaire
+    *         de ce DOM Element.
+    *
+    */
   domObj_to_fiche:function(obj)
   {
     var fi = this.list[ $(obj).attr('id').split('-')[1] ]
@@ -224,35 +247,37 @@ window.FICHES = {
   },
   
   
-  /*
-   *  Dispatch des fiches
-   *
-   *  NOTES
-   *  -----
-   *    = Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
-   *      des parents ou des enfants. Les fiches sont instanciées à leur première
-   *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
-   *      puis elles sont ensuites "remplies" avec les données si la fiche est
-   *      traitées plus tard ici.
-   *
-   *    = Par défaut, les fiches sont maintenant créées fermées, donc on doit
-   *      passer seulement en revue les fiches qui doivent être ouvertes.
-   *
-   *    = Pour le moment, cette méthode n'est appelée qu'au chargement de la
-   *      collection. Mais à l'avenir on pourra imaginer qu'elle soit aussi
-   *      utilisée en cas de chargement en masse de fiches. Il faut donc en
-   *      tenir compte et utiliser la propriété `Collected.loaded' pour savoir
-   *      si c'est un tout premier chargement.
-   *
-   *  PRODUIT
-   *  -------
-   *    = La création de la fiche (toujours, entendu qu'une fiche passant par
-   *      ce dispatch a forcément toutes ses données)
-   *
-   *    = La tenue à jour de `Collection.books'
-   *
-   *  @param  data   {Array} Liste des fiches remontées par Collection.load.data  
-   */
+  /**
+    *  Dispatch des fiches
+    *
+    *  NOTES
+    *  -----
+    *    = Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
+    *      des parents ou des enfants. Les fiches sont instanciées à leur première
+    *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
+    *      puis elles sont ensuites "remplies" avec les données si la fiche est
+    *      traitées plus tard ici.
+    *
+    *    = Par défaut, les fiches sont maintenant créées fermées, donc on doit
+    *      passer seulement en revue les fiches qui doivent être ouvertes.
+    *
+    *    = Pour le moment, cette méthode n'est appelée qu'au chargement de la
+    *      collection. Mais à l'avenir on pourra imaginer qu'elle soit aussi
+    *      utilisée en cas de chargement en masse de fiches. Il faut donc en
+    *      tenir compte et utiliser la propriété `Collected.loaded' pour savoir
+    *      si c'est un tout premier chargement.
+    *
+    *  PRODUIT
+    *  -------
+    *    = La création de la fiche (toujours, entendu qu'une fiche passant par
+    *      ce dispatch a forcément toutes ses données)
+    *
+    *    = La tenue à jour de `Collection.books'
+    *
+    * @method dispatch
+    * @param  data   {Array} Liste des fiches remontées par `Collection.load.data`
+    *
+    */
   dispatch:function( data )
   {
     dlog("---> FICHES.dispatch", DB_FCT_ENTER)
@@ -279,17 +304,11 @@ window.FICHES = {
     L(instances).each(function(instance){
       instance.create
     })
-
-    // Ouverture/fermeture des fiches
-    L(instances).each(function(instance){
-      if(instance.opened) instance.open
-                     else instance.close
-    })
     
-    // Rangement des fiches
+    // Rangement des enfants (toujours)
     L(instances).each(function(instance){
-      if(instance.ranged) instance.range
-                     else instance.positionne
+      if(instance.has_parent) instance.range
+                         else instance.positionne
     })
     
     // Réglage de l'indice des fiches enfants
@@ -300,7 +319,7 @@ window.FICHES = {
     
     dlog("<- FICHES.dispatch", DB_FCT_ENTER)
   },
-  
+    
   /*
    *  Bascule entre l'ouverture et la fermeture les fiches
    *  dans +arr+

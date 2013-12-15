@@ -1,3 +1,7 @@
+/**
+  * @module KeyEvents
+  */
+
 /* keyCode */
 const K_TAB     = KeyEvent.DOM_VK_TAB
 const K_RETURN  = KeyEvent.DOM_VK_RETURN

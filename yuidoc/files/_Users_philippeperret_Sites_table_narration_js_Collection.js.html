@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>/Users/philippeperret/Sites/table_narration/js/Collection.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/App.html">App</a></li>
+            
+                <li><a href="../classes/Collection.html">Collection</a></li>
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Fiche.html">Fiche</a></li>
+            
+                <li><a href="../classes/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/Input.UI.Input.html">Input.UI.Input</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Collection.html">Collection</a></li>
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/Debug.html">Debug</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+            
+                <li><a href="../modules/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../modules/FilmClass.html">FilmClass</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
+            
+                <li><a href="../modules/KeyboardEvents.html">KeyboardEvents</a></li>
+            
+                <li><a href="../modules/KeyEvents.html">KeyEvents</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/Collection.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @module Collection
+  */
+
+/**
+  *  Objet Collection
+  *  ----------------
+  *  Gestion de la collection dans son ensemble
+  *
+  *  Hiérarchie
+  *  ----------
+  *    Collection
+  *      Livres {Book &lt; Fiche}
+  *        Chapters {Chapter &lt; Fiche}
+  *          Pages {Page &lt; Fiche}
+  *            Paragraphs {Paragraph &lt; Fiche}
+  *
+  * @class Collection
+  * @static
+  *
+  */
+window.Collection = {
+  /*
+   *  CONSTANTE
+   *  
+   */
+  frequence_saving: 20 * 1000, // 5*1000
+  
+  /*
+   *  PROPRIÉTÉS GÉNÉRALES
+   *  
+   */
+  /* Propriétés d&#x27;état */
+  saving        : false,
+  loading       : false,
+  loaded        : false,
+  
+  /*
+   *  {Array} Livres de {Book} de la collection
+   *
+   *  NOTES
+   *  -----
+   *  Cette liste est établie au chargement de la collection en insérant
+   *  toutes les fiches de type {Book}. C&#x27;est la méthode FICHES.dispatch qui
+   *  s&#x27;en charge.
+   *
+   */
+  books:[],
+  
+  /*
+   *  Retour du chargement de la collection
+   *  Il faut maintenant dispatcher les éléments et remplir la table
+   *  
+   *  À la fin du chargement, on lance une sauvegarde et on prépare l&#x27;interface
+   *  si nécessaire.
+   */
+  retour_load:function(rajax)
+  {
+    if(rajax.ok)
+    {
+      this.dispatch( rajax.data )
+    }
+    else F.error(rajax.message)
+    this.loading = false
+    if(false == UI.prepared) UI.prepare
+    if(rajax.mode_test == true){ 
+      // NON :
+      // App.test();
+      // Sinon, ça arrive chaque fois qu&#x27;un test recharge
+      F.show(&quot;Penser à quitter le mode test en finissant, par commodité.&quot;, {keep:true})
+    }
+    if( rajax.paragraph_styles_updated ) F.show(&quot;La liste des styles de paragraphe a été updatée.&quot;)
+    this.backup
+  },
+  
+  // Noter que ce retour n&#x27;est utilisé que lorsqu&#x27;on force un backup
+  // différent du backup quotidien.
+  retour_backup:function(rajax)
+  {
+    if(rajax.ok) F.show(&quot;Backup done!&quot;, {keep:true})
+    else F.error(rajax.message)
+  },
+  
+  /*
+   *  Ajoute une fiche modifiée et marque la collection modifiée, pour sauver
+   *  les éléments au prochain tour de sauvegarde.
+   *  
+   */
+  add_modified:function(fiche)
+  {
+    if(!this.modifieds_list) this.modifieds_list = []
+    this.modifieds_list.push( fiche )
+    this.modified = true
+  },
+  
+  check_if_needs_save:function()
+  {
+    // console.log(&quot;---&gt; Collection.check_if_needs_save (modified:&quot;+this.modified+&quot;)&quot;)
+    if(this.modified === true)
+    {
+      this.save
+      return true
+    } 
+    else
+    {
+      return false
+    }
+  },
+  
+  /*
+   *  Méthode qui dispatche toutes les données +data+ remontées par
+   *  la requête ajax &#x60;collection/load&#x27;
+   *
+   *  Il s&#x27;agit de dispatcher :
+   *    - Les fiches (et d&#x27;afficher/ouvrir celles qui doivent l&#x27;être)
+   *    - Les préférences de l&#x27;application
+   *  
+   *  WARNING
+   *  -------
+   *  Cette méthode ne doit pas être utilisée pour charger seulement une
+   *  portion de la collection en cours de travail, car elle ré-initialise la
+   *  liste des modifications en fin de dispatch (car la création des fiches
+   *  les a marquées modifiées).
+   *  En d&#x27;autres termes, si des fiches sont chargées en groupe plus tard, il
+   *  faut passer par FICHES.dispatch (TODO: mais n&#x27;est-ce pas le même problème ?
+   *  et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)
+   */
+  dispatch:function(data)
+  {
+    // Dispatch des fiches (le plus gros)
+    FICHES.dispatch(data.fiches)
+    
+    // Dispatch des préférences
+    // TODO
+    
+    // Dispatch des autres données
+    this.dispatch_data(data.data)
+    
+    // On supprime toutes les fiches marquées modifiées
+    // (cf. le WARNING ci-dessus)
+    delete this.modifieds_list
+    this.modified = false
+    
+    // On peut remettre la boucle de sauvegarde en route
+    // @note Sauf si la sauvegarde automatique n&#x27;est pas activée
+    this.start_automatic_saving
+    
+    this.loaded = true
+  },
+  
+  /*
+   *  Dispatch des autres données remontées au chargement
+   *  
+   */
+  dispatch_data:function(data)
+  {
+    FICHES.last_id = parseInt(data.last_id_fiche, 10)
+    // Configuration courante (note: le fait de la définir l&#x27;applique)
+    App.current_configuration = data.current_configuration
+  }
+  
+}
+
+Object.defineProperties(Collection,{
+  
+  /*
+   *  Les deux méthodes &#x60;disable_save&#x27; et &#x27;enable_save&#x27; permettent
+   *  d&#x27;activer ou non la sauvegarde automatique (lorsque l&#x27;option AUTO
+   *  est activé)
+   *  
+   *  UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
+   *  start_automatic_saving
+   *
+   */
+  &quot;disable_save&quot;:{
+    get:function(){
+      this.save_in_disable = true
+      this.stop_automatic_saving
+      this.regle_mark_saved
+    }
+  },
+  
+  &quot;enable_save&quot;:{
+    get:function(){
+      this.save_in_disable = false
+      this.start_automatic_saving
+      this.regle_mark_saved
+    }
+  },
+  
+  &quot;regle_mark_saved&quot;:{
+    get:function()
+    {
+      var mod = this.modified, forb = this.save_in_disable ;
+      $(&#x27;span#mark_saved_no&#x27;)       [!forb &amp;&amp; mod  ? &#x27;show&#x27; : &#x27;hide&#x27;]()
+      $(&#x27;span#mark_saved_yes&#x27;)      [!mod &amp;&amp; !forb ? &#x27;show&#x27;: &#x27;hide&#x27;]()
+      $(&#x27;span#mark_saved_forbidden&#x27;)[forb ? &#x27;show&#x27;:&#x27;hide&#x27;]()
+    }
+  },
+  
+  &quot;start_automatic_saving&quot;:{
+    get:function(){
+      if(this.timer_save || $(&#x27;input#cb_automatic_save&#x27;)[0].checked==false) return
+      this.timer_save = setInterval(
+        $.proxy(this.check_if_needs_save, this), this.frequence_saving
+      )
+    }
+  },
+  &quot;stop_automatic_saving&quot;:{
+    get:function(){
+      if(!this.timer_save) return
+      clearInterval(this.timer_save)
+      delete this.timer_save
+    }
+  },
+  /*
+   *  Méthode appelée quand on clique sur le &quot;Auto&quot; de l&#x27;enregistrement
+   *  automatique. L&#x27;active ou le désactive.
+   *
+   *  La méthode est aussi appelée quand on charge l&#x27;application, pour
+   *  remettre l&#x27;état précédent.
+   *
+   *  NOTES
+   *  -----
+   *    :: La méthode &#x60;save&#x27; est appelée dès qu&#x27;on active le bouton
+   *  
+   */
+  &quot;enable_automatic_saving&quot;:{
+    value:function(oui){
+      if(oui){ 
+        this.start_automatic_saving
+        if(this.loaded) this.save
+      }
+      else if(this.timer_save){ 
+        this.stop_automatic_saving
+      }
+      $(&#x27;label[for=&quot;cb_automatic_save&quot;]&#x27;)[oui ? &#x27;addClass&#x27; : &#x27;removeClass&#x27;](&#x27;on&#x27;)
+    }
+  },
+  
+  /*
+   *  Chargement de la collection (normale ou test)
+   *  
+   */
+  &quot;load&quot;:{
+    get:function(){
+      this.loading = true
+      this.stop_automatic_saving
+      F.show(&quot;Chargement de la collection…&quot;, {timer:false})
+      Ajax.send({script:&#x27;collection/load&#x27;}, $.proxy(this.retour_load, this))
+    }
+    
+  },
+  
+  
+  /*
+   *  Sauvegarde de tous les éléments de la collection
+   *  (principalement les fiches)
+   *  
+   *  NOTES
+   *  -----
+   *    * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste
+   *      this.modifieds_list (sous forme d&#x27;instances)
+   *
+   *    * C&#x27;est la méthode &#x60;check_if_needs_save&#x27; qui est appelée en premier
+   *      lieu pour voir si un enregistrement est nécessaire (c&#x27;est un peu bête,
+   *      mais c&#x27;est juste parce que j&#x27;ai utilisé une propriété, ici.)
+   */
+  &quot;save&quot;:{
+    get:function(){
+      dlog(&quot;Sauvegarde de la collection&quot;, DB_SIMPLE)
+      F.show(&quot;Sauvegarde en cours…&quot;, {no_timer:true})
+      this.saving = true
+      this.save_fiches
+    }
+  },
+  /* Sauvegarde des fiches */
+  &quot;save_fiches&quot;:{
+    get:function(){
+      // console.log(&quot;---&gt; Collection.save_fiches&quot;)
+      FICHES.save( $.proxy(this.end_save, this ))
+    }
+  },
+  /* Fin de la sauvegarde de la collection */
+  &quot;end_save&quot;:{
+    get:function(){ 
+      this.saving   = false
+      this.modified = false
+      F.clean()
+    }
+  },
+  
+  /*
+   *  Marque la collection modifiée/non modifié
+   *    
+   */
+  &quot;modified&quot;:{
+    get:function(){ return this._modified || false },
+    set:function( modified ){
+      this._modified = modified
+      this.regle_mark_saved
+    }
+  },
+  
+  /*
+   *  Lance le backup journalier
+   *  
+   *  Cette procédure est lancée tout de suite après le chargement de la
+   *  collection courante (sauf en mode test).
+   *
+   */
+  &quot;backup&quot;:{
+    get:function(){Ajax.send({script:&#x27;collection/backup&#x27;})}
+  },
+  /*
+   *  Force un nouveau backup (avec l&#x27;heure)
+   *  
+   *  Sauf en mode test
+   *
+   */
+  &quot;force_backup&quot;:{
+    get:function(){
+      Ajax.send({script:&#x27;collection/backup&#x27;, force_backup:1}, $.proxy(this.retour_backup,this))
+    }
+  }
+  
+})
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

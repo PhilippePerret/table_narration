@@ -1,8 +1,8 @@
 /**
-  * @submodule  Edition
   * @module     FILMS
+  * @submodule  Edition
   * @namespace  Edition
-**/
+  */
 
 /*
  *  Object FILMS.Edition

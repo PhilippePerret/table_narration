@@ -8,6 +8,8 @@ REL_PATH = '.'
 
 
 FOLDER = File.expand_path(File.join('.', 'js', REL_PATH))
+# Pour tester :
+# FOLDER = File.expand_path(File.join('.', 'yuidoc_js_test', REL_PATH))
 puts "YUIDoc #{FOLDER}"
 
-`yuidoc #{FOLDER}`
+`yuidoc --outdir ./yuidoc #{FOLDER}`

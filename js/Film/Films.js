@@ -1,17 +1,22 @@
-/*
- *  Object FILMS
- *  ------------
- *  Gestion des films pour l'application.
- *
- *  NOTES
- *  -----
- *    ::  L'application charge le fichier '../interdata/film/data_js/films_data.js'
- *        qui définit FILMS.DATA, les données raccourcis des films.
- *
- *  
- */
+/**
+  * @module FILMS
+  */
 
-if('undefined'==typeof FILMS) FILMS = {}
+/**
+  *  Object FILMS
+  *  ------------
+  *  Gestion des films pour l'application.
+  *
+  *  NOTES
+  *  -----
+  *    ::  L'application charge le fichier '../interdata/film/data_js/films_data.js'
+  *        qui définit FILMS.DATA, les données raccourcis des films.
+  *
+  * @class FILMS
+  * @static
+  * @extends OBJETS
+  */
+window.FILMS = FILMS || {}
 $.extend(FILMS, {
 
   NAME:"FILMS",

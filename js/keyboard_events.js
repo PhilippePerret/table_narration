@@ -1,3 +1,6 @@
+/**
+  * @module KeyboardEvents
+  */
 
 window.dispay_code_event = function(evt)
 {

@@ -1,17 +1,24 @@
-/*
- *  Objet Collection
- *  ----------------
- *  Gestion de la collection dans son ensemble
- *
- *  Hiérarchie
- *  ----------
- *    Collection
- *      Livres {Book < Fiche}
- *        Chapters {Chapter < Fiche}
- *          Pages {Page < Fiche}
- *            Paragraphs {Paragraph < Fiche}
- *
- */
+/**
+  * @module Collection
+  */
+
+/**
+  *  Objet Collection
+  *  ----------------
+  *  Gestion de la collection dans son ensemble
+  *
+  *  Hiérarchie
+  *  ----------
+  *    Collection
+  *      Livres {Book < Fiche}
+  *        Chapters {Chapter < Fiche}
+  *          Pages {Page < Fiche}
+  *            Paragraphs {Paragraph < Fiche}
+  *
+  * @class Collection
+  * @static
+  *
+  */
 window.Collection = {
   /*
    *  CONSTANTE
@@ -148,6 +155,8 @@ window.Collection = {
   dispatch_data:function(data)
   {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
+    // Configuration courante (note: le fait de la définir l'applique)
+    App.current_configuration = data.current_configuration
   }
   
 }

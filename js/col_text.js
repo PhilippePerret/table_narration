@@ -1,20 +1,18 @@
 /**
- *
- *  @module ColText
- *
- **/
+  * @module ColText
+  */
 
 /**
- *  Objet ColText
- *  -------------
- *  Gestion des textes de la collection (toutes les fiches).
- *  C'est cet objet par exemple qui va traiter les balises que contient un texte
- *  avant de l'afficher.
- *  
- *  @class ColText
- *  @static
- *
- **/
+  *  Objet ColText
+  *  -------------
+  *  Gestion des textes de la collection (toutes les fiches).
+  *  C'est cet objet par exemple qui va traiter les balises que contient un texte
+  *  avant de l'afficher.
+  *  
+  *  @class ColText
+  *  @static
+  *
+  **/
 window.ColText = {
   
   /**

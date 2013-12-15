@@ -1,3 +1,7 @@
+/**
+  * @module ready.js
+  */
+
 $(document).ready(function(){
 
   ContextualHelp.init()

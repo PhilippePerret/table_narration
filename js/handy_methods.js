@@ -1,3 +1,7 @@
+/**
+  * @module HandyMethods
+  */
+
 /*
  *  Méthodes pratiques
  *  ------------------

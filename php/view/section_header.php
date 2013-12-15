@@ -17,6 +17,14 @@
     // Note:  Les plus en haut seront les plus à gauche
   ?>
   <div id="buttons_right">
+    <!-- Pour mémoriser la configuration courante -->
+    <img
+      src="../lib/img/device/camera/camera-3.png"
+      style="width:25px;opacity:0.5;margin-right:1em;"
+      class="fleft"
+      onclick="$.proxy(App.save_current_configuration, App, forcer=true)()"
+      title="Enregistrer la configuration courante pour la prochaine ouverture"
+      />
     <!-- Affichage des raccourcis-clavier -->
     <input 
       type="button"

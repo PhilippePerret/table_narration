@@ -1,3 +1,9 @@
+/**
+  * @module     FILMS
+  * @submodule  Dom
+  * @namespace  Dom
+  */
+
 FILMS.Dom = {}
 
 // On l'étend avec les méthodes et propriété partagées

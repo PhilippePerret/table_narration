@@ -16,12 +16,16 @@ class Collection
       end
     end
     
-    def folder
-      @folder ||= File.join('.', 'collection', mode_test? ? 'test' : 'current')
+    # Retourne le path au fichier contenant la configuration actuelle
+    #
+    def path_current_config
+      @path_current_config ||= File.join(folder, 'CURRENT_CONFIG.conf')
     end
+    
     def path_liste_non_ranged
       @path_liste_non_ranged ||= File.join(folder_listes, 'non_ranged')
     end
+
     def folder_listes
       @folder_listes ||= begin
         d = File.join(folder, 'liste')
@@ -35,6 +39,10 @@ class Collection
         Dir.mkdir(dos, 0755) unless File.exists?(dos)
         dos
       end
+    end
+
+    def folder
+      @folder ||= File.join('.', 'collection', mode_test? ? 'test' : 'current')
     end
     
     # Return TRUE si on est en mode test

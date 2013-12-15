@@ -1,10 +1,17 @@
-/*
- *  Objet ContextualHelp
- *  --------------------
- *  Gestion de l'aide contextuelle
- *  
- *  Raccourci : CH
- */
+/**
+  * @module ContextualHelp
+  */
+
+/**
+  *  Objet ContextualHelp
+  *  --------------------
+  *  Gestion de l'aide contextuelle
+  *  
+  *  Raccourci : CH
+  * @class ContextualHelp
+  * @static
+  *
+  */
 window.ContextualHelp = {
   /*
    *  Initialisation (appelée quand ready)
@@ -130,8 +137,8 @@ ContextualHelp.AIDES = {
   /* 
     Aide lorsqu'aucune fiche n'est sélectionnée 
   */
-  'no fiche' :  CH.img_click +"sur fiche ou " + CH.img_up + CH.img_down +
-                " pour en sélectionner une. Glisser un picto fiche (Book, Chapter, etc.)"+
-                " sur la table pour en créer une."
+  'no fiche' :  CH.img_click +"sur LIVRE ou " + CH.img_up + CH.img_down +
+                " pour en sélectionner un. Glisser un picto fiche (Book, Chapter, etc.)"+
+                " sur la table pour en créer une nouvelle."
 }
 
