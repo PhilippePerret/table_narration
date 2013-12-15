@@ -20,7 +20,8 @@ OBJETS_Edition = {
    */
   edit:function(id)
   {
-    if(!this.form_prepared) this.prepare_formulaire ;
+    if(!this.Dom.panneau_opened) this.Dom.show_panneau()
+    if(!this.form_prepared) this.prepare_formulaire
     this.OBJS.Dom.show_formulaire
     if(undefined == id)
     {
@@ -174,6 +175,11 @@ OBJETS_Edition = {
  */
 OBJETS_Edition_defined_properties = {
   
+  /*
+   *  Raccourci pour obtenir <parent>.Dom (et pouvoir donc utiliser `this.Dom...')
+   *  
+   */
+  "Dom":{get:function(){return this.OBJS.Dom}},
   /*
    *  Raccourci pour obtenir l'identifiant du panneau
    *  

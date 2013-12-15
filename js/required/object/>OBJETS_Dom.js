@@ -85,10 +85,7 @@ OBJETS.Dom = {
     if(false == this.main_panneau_ready) this.prepare_panneau
     else this.panneau.show()
         
-    // Il faut mémoriser le champ de saisie et sa sélection courante pour
-    // pouvoir y revenir, car le panneau blur
-    // @note: `current_textfield' est un timestamp qui permettrait
-    // de "retreiver" le champ de saisie courant
+    // Mémoriser le champ courant s'il existe
     this.current_textfield = UI.Input.memorize_current({blur:true})
 
     // Pour le moment :
@@ -99,7 +96,7 @@ OBJETS.Dom = {
   },
   
   /*
-   *  Ferme le panneau des films
+   *  Ferme le panneau des items
    *  
    *  NOTES
    *  -----
@@ -109,7 +106,10 @@ OBJETS.Dom = {
   hide_panneau:function()
   {
     this.panneau.hide()
-    UI.Input.retreive_current(this.current_textfield, {focus:true})
+    if(this.current_textfield)
+    {
+      UI.Input.retreive_current(this.current_textfield, {focus:true})
+    }
     window.onkeypress = this.old_window_onkeypress
     Collection.enable_save
     help('')
@@ -407,6 +407,15 @@ OBJETS.Dom = {
  *  
  */
 OBJETS_Dom_defined_properties = {
+  /*
+   *  STATES
+   *  
+   */
+  "panneau_opened":{
+    get:function(){
+      return $(this.jid_panneau).length > 0
+    }
+  },
   /* ---------------------------------------------------------------------
    *
    *  ÉLÉMENTS DOM
@@ -459,11 +468,6 @@ OBJETS_Dom_defined_properties = {
    --------------------------------------------------------------------- */
   
   /*
-   *  Les trois méthodes suivantes gèrent l'utilisation des raccourcis
-   *  clavier sur le div listing.
-   *  
-   */
-  /*
    *  Retourne ou définit l'IDENTIFIANT de l'item courant
    *
    *  Lors de la définition (this.current_item = ID), la méthode désactive
@@ -473,6 +477,11 @@ OBJETS_Dom_defined_properties = {
    */
   "current_item":{
     get:function(){return this._current_item || null},
+    /*
+     *  Définition de l'item courant
+     *
+     *  @param  cur   Identifiant de l'item (?)
+     */
     set:function(cur){
       if(this.current_item) this.div_item(this.current_item).removeClass('selected')
       if(cur) // car la méthode peut être appelée pour déselectionner le courant
@@ -484,6 +493,12 @@ OBJETS_Dom_defined_properties = {
       this._current_item = cur
     }
   },
+  
+  /*
+   *  Les trois méthodes suivantes gèrent l'utilisation des raccourcis
+   *  clavier sur le div listing.
+   *  
+   */
   /* Sélectionne l'item suivant dans le listing */
   "select_next_item":{
     get:function(){

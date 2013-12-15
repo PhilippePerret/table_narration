@@ -43,7 +43,7 @@ $.extend(Mot.prototype,{
   {
     var t ;
     // Simple pour le moment
-    t = '<a onmouseover="DICO.show(this, \''+this.id+'\')" class="lk_mot">'+this.mot+'</a>'
+    t = '<a onmouseover="DICO.show(this, \''+this.id+'\')" class="lk lk_mot">'+this.mot+'</a>'
     return t
   }
 
@@ -60,8 +60,22 @@ Object.defineProperties(Mot.prototype,{
    */
   "html_apercu":{
     get:function(){
-      return  '<div class="mainprop">'+this.mot+'</div>' +
-              '<div class="resume">'+this.definition+'</div>'
+      return  '<div id="'+this.id_apercu+'" class="apercu">'+
+                '<div class="mainprop"></div>' +
+                '<div class="resume"></div>' +
+              '</div>'
+    }
+  },
+  
+  /*
+   *  Actualise l'affichage de l'aperçu de l'item
+   *  
+   */
+  "update_apercu":{
+    get:function(){
+      if(this.apercu.length == 0) return
+      this.apercu.find('.mainprop').html(this.mot)
+      this.apercu.find('.resume').html(this.definition)
     }
   }
 })

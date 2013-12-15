@@ -22,6 +22,16 @@ $.extend(ObjetClass.prototype,{
     }
   },
   
+  /*
+   *  Place l'apercu de l'item dans l'objet DOM +domObj+
+   *  en le créant si nécessaire.
+   *  
+   */
+  apercu_in:function(domObj)
+  {
+    if(this.apercu.length == 0) this.create_apercu(domObj)
+    else $(domObj).append(this.apercu)
+  },
   
   /*
    *  Construit l'aperçu de l'affichage lorsqu'on passe la 
@@ -30,12 +40,14 @@ $.extend(ObjetClass.prototype,{
    *  NOTES
    *    = La méthode gère le fait que l'item ne soit pas encore chargé
    *  
-   *  @param  options   {Hash} des options (inutilisé pour le moment)
+   *  @param  inObj   {DomElement} dans lequel placer l'aperçu à sa création
    */
-  apercu:function(options)
+  create_apercu:function(inObj)
   {
-    if(false == this.loaded) return this.load($.proxy(this.apercu, this, options))
-    $('div#apercu-'+this.id).html( this.html_apercu )
+    if(false == this.loaded) return this.load($.proxy(this.create_apercu, this, inObj))
+    $(inObj).append(this.html_apercu)
+    this.update_apercu
+    this.apercu.bind('click', $.proxy(this.OBJS.Edition.edit, this.OBJS.Edition, this.id))
   }
   
 })
@@ -60,6 +72,27 @@ Object.defineProperties(ObjetClass.prototype, {
       return this._let 
     },
     set:function(let){ this._let = let}
+  },
+  
+  /* ---------------------------------------------------------------------
+   *
+   *  DOM
+   *  
+   --------------------------------------------------------------------- */
+  
+  /*
+   *  Retourne l'identifiant du div apercu
+   *  
+   */
+  "id_apercu":{get:function(){return this.class_min+'_apercu-'+this.id}},
+  /*
+   *  Retourne le {jQuerySet} de l'apercu de l'item
+   *  
+   */
+  "apercu":{
+    get:function(){
+      return $('div#'+this.id_apercu)
+    }
   },
   
   /* ---------------------------------------------------------------------

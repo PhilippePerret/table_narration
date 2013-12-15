@@ -133,6 +133,11 @@ window.OBJETS = {
    *  
    *  La méthode doit afficher une version détaillée de l'élément concerné.
    *
+   *  NOTES
+   *  -----
+   *    = Un bind click est placé sur l'aperçu, pour pouvoir éditer l'élément.
+   *
+   *
    *  @param  domObj    Le {DOMELement} sur lequel on glisse la souris. C'est dans
    *                    celui-ci qu'on mettre le panneau de détail de l'élément.
    *  @param  id        Identifiant {String} de l'item.
@@ -140,13 +145,7 @@ window.OBJETS = {
   show:function(domObj, item_id)
   {
     if($(domObj).find('.apercu').length) return true
-    else
-    {
-      $(domObj).append(
-        '<div id="apercu-'+item_id+'" class="apercu"></div>'
-      )
-      this.get(item_id).apercu()
-    }
+    else this.get(item_id).apercu_in( domObj )
   }
 }
 

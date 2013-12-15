@@ -336,9 +336,21 @@ UI.Input = {
     Selection.set(this.target.dom, valeur, options || {end:true})  
   },
   
+  /*
+   *  Mémorise le champ courant, s'il est défini
+   *
+   *  NOTES
+   *  -----
+   *    = La méthode peut être appelée sans qu'il y ait de champ courant.
+   *      Par exemple, quand on affiche l'aperçu d'un mot (en passant sa souris
+   *      sur son nom) et qu'on clique sur la définition pour mettre le mot
+   *      en édition.
+   *  
+   */
   memorize_current:function(options)
   {
     if(undefined == options) options = {}
+    if(!this.target) return null // pas d'édition courante
     var id = Time.now()
     if(!this.targets) this.targets = {}
     // On prend la sélection courante

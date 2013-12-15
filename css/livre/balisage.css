@@ -2,18 +2,25 @@
  *    APERÇU DU CONTENU
  --------------------------------------------------------------------- */
 
+.lk .apercu {display:none;}
+.lk:hover   {z-index:1000 !important;}
+.lk:hover .apercu {display:block;}
+
 div.apercu {
   position          : absolute;
   top               : 0;
-  left              : 0;
-  background-color  : #EEFFB0;
+  right             : 0;
+  background-color  : #FBFFF9;
   padding           : 1em;
   min-width         : 240px;
+  max-height        : 200px;
   max-width         : 400px;
   font-size         : 9pt;
-  max-height        : 100px;
+  color             : black;
   overflow          : auto;
   z-index           : 1000 !important;
+  border-radius     : 11px;
+  border            : 1px solid;
 }
 /*div.apercu:hover{display:block;}*/
 
@@ -31,9 +38,6 @@ div.apercu {
 /* ---------------------------------------------------------------------
  *    LES LIENS
  --------------------------------------------------------------------- */
-.lk_mot .apercu {display:none;}
-.lk_mot:hover {z-index:1000 !important;}
-.lk_mot:hover .apercu {display:block;}
 
 fiche.para .lk_film {
   position    : relative;
