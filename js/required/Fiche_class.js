@@ -31,10 +31,10 @@ window.Fiche = function(data)
   // (ci-dessous les valeurs par défaut)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
-  // this.opened     = true   // Propriété complexe
-  // this.ranged     = false  // propriété complexe
+  this._opened    = false   // cf. propriété complexe `opened'
+  this._ranged    = false   // cf. propriété complexe `ranged'
   this.selected   = false
-  this.built      = false  // mis à true quand la fiche est construite
+  this.built      = false   // mis à true quand la fiche est construite
   this.retourned  = false   // Mis à true quand c'est le verso affiché
   this.draggable  = false
   this.sortable   = false

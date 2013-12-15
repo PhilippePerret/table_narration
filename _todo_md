@@ -1,11 +1,16 @@
 IMPLÉMENTER
 -----------
 
+CHARGEMENT DE LA COLLECTION
+  # Régler les problèmes à l'ouverture (pour le moment, les livres se mettent bien,
+    mais lorsque j'en ouvre un contenant des chapitres, les chapitres ne rentrent pas
+    dans le livre — cf. du côté de la propriété `_ranged` qui doit peut-être être mise
+    à true chaque fois)
+  # La configuration ne semble pas s'enregistrer quand on quitte la page ou
+    qu'on la recharge
+
 -# Le titre de la page semble disparaitre parfois.
 
-CHARGEMENT DE LA COLLECTION
-Dans collection/load, il faut lire le fichier de configuration pour connaitre les
-fiches ouvertes.
 
 
 APERCU (souris hover un mot/film)

@@ -12,13 +12,34 @@ Object.defineProperties(Fiche.prototype,{
   "is_paragraph"      :{get:function(){ return this._type == 'para'}},
   "is_not_paragraph"  :{get:function(){ return this._type != "para"}},
 
-  /* Retourne true si la fiche a des enfants */
+  /**
+    * Pour savoir si la fiche a des enfants
+    * @property {Boolean} has_children
+    * @return TRUE si la fiche possède des {Fiche}s enfants.
+    */
   "has_children":{
     get:function(){
       return ('object' == typeof this.enfants) && this.enfants.length > 0
     }
   },
   
+  /**
+    * Pour savoir si la fiche est orpheline (sans parent)
+    * @property {Boolean} is_orpheline
+    * @return   TRUE si la fiche n'a pas de parent.
+    */
+  "is_orpheline":{
+    get:function(){return undefined == this.parent || this.parent == null}
+  },
+  
+  /**
+    * Pour savoir si la fiche à un parent
+    * @property {Boolean} has_parent
+    * @return TRUE si la fiche n'est pas orpheline.
+    */
+  "has_parent":{
+    get:function(){return false == this.is_orpheline }
+  },
   /*
    *  ---------------------------------------------------------------------
    *    Changement d'état

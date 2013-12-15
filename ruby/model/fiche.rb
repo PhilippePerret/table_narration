@@ -81,10 +81,13 @@ class Fiche
   def exists?
     return File.exists? path
   end
-  
-  def ranged?; data['ranged'] == "true"  end
-  def opened?; data['opened'] == "true"  end
-  def closed?; data['opened'] == "false" end
+
+  # L'ouverture de la fiche n'est plus enregistrée dans ses données,
+  # mais dans le fichier de configuration courante.
+  def opened? 
+    false == Collection::current_configuration[:openeds][id.to_i].nil?
+  end
+  def closed?; false == opened? end
   
   def book?;      @type == 'book' end
   def chapter?;   @type == 'chap' end

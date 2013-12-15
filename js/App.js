@@ -177,14 +177,21 @@ Object.defineProperties(App,{
   "current_config":{
     get:function(){
       var config = {
-        openeds   : [],
-        visibles  : []
+        openeds     : [],
+        visibles    : [],
+        orphelines  : []
       }
       $('section#table > fiche:visible').each(function(){
         var fiche = FICHES.domObj_to_fiche($(this))
         var datam = {id:fiche.id, type:fiche.type}
         config.visibles.push(datam)
-        if(fiche.opened) config.openeds.push(datam)
+        if(fiche.opened){
+          config.openeds.push(datam)
+        } 
+        if(fiche.is_not_book && fiche.is_orpheline)
+        {
+          config.orphelines.push(datam)
+        }
       })
       return JSON.stringify(config)
     }

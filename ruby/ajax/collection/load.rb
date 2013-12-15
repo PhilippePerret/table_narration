@@ -27,6 +27,13 @@ Par nature, les fiches à charger sont :
   - Toutes les fiches (hors livres) qui ne sont pas rangées dans leur parent (qui
     sont donc `opened`).
 
+Configuration courante
+----------------------
+Pour connaitre les fiches ouvertes, le script se sert maintenant de la 
+configuration courante qui définit quelles fiches sont visibles et surtout
+ouvertes (les propriétés `opened` et `ranged` ne sont plus enregistrées dans
+les fiches, elles sont respectivement false et true par défaut à la création
+des fiches).
 
 NOTES
 -----
@@ -87,7 +94,11 @@ end
 
 # Retourne la configuration courante si elle existe
 # 
-# @note Détruit toujours le fichier, qui doit être ré-enregistré
+# @note CE N'EST PAS la valeur retournée par Collection::current_configuration,
+#       qui est une donnée ruby utile pour ce chargement, mais la donnée du fichier
+#       simplement parsée par JSON.
+# 
+# @note Détruit toujours le fichier configuration, qui doit être ré-enregistré
 #       quand on quitte l'application.
 # 
 def get_config

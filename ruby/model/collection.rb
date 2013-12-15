@@ -1,8 +1,36 @@
 class Collection
   class << self
     
+    # Données de configuration courante (si le fichier CURRENT_CONFIG.conf
+    # existe)
+    # 
+    # @return {Hash} Table contenant :
+    #   {
+    #     'openeds':{}
+    #   }
+    # 
+    def current_configuration
+      @current_configuration ||= begin
+        dconf = {
+          :visibles => {},
+          :openeds  => {}
+        }
+        if File.exists? path_current_config
+          raw_dconf = JSON.parse(File.read path_current_config)
+          raw_dconf['openeds'].each do |fdata|
+            dconf[:openeds] = dconf[:openeds].merge( fdata['id'].to_i => {:opened=>true, :type=>fdata['type']})
+          end
+          raw_dconf['visibles'].each do |fdata|
+            dconf[:visibles] = dconf[:visibles].merge( fdata['id'].to_i => {:visible=>true, :type=>fdata['type']})
+          end
+        end
+        dconf
+      end
+    end
+    
     # Return la liste ({Array}) des fiches non rangées
     # Chaque élément est un {String} "<id>:<type>"
+    # OBSOLÈTE
     def non_rangeds
       return [] unless File.exists? path_liste_non_ranged
       File.read(path_liste_non_ranged).split("\n").reject{|el| el == ""}
@@ -22,6 +50,7 @@ class Collection
       @path_current_config ||= File.join(folder, 'CURRENT_CONFIG.conf')
     end
     
+    # OBSOLÈTE
     def path_liste_non_ranged
       @path_liste_non_ranged ||= File.join(folder_listes, 'non_ranged')
     end
