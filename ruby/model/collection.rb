@@ -6,42 +6,73 @@ class Collection
     # 
     # @return {Hash} Table contenant :
     #   {
+    #     'visibles':[] # {Array} des :id, :type des fiches visibles
     #     'openeds':{}
     #   }
     # 
     def current_configuration
       @current_configuration ||= begin
-        dconf = {
-          :visibles => {},
-          :openeds  => {}
-        }
-        if File.exists? path_current_config
-          raw_dconf = JSON.parse(File.read path_current_config)
-          raw_dconf['openeds'].each do |fdata|
-            dconf[:openeds] = dconf[:openeds].merge( fdata['id'].to_i => {:opened=>true, :type=>fdata['type']})
-          end
-          raw_dconf['visibles'].each do |fdata|
-            dconf[:visibles] = dconf[:visibles].merge( fdata['id'].to_i => {:visible=>true, :type=>fdata['type']})
+        fiches_visibles = get_visibles # {Array} d'instances {Fiche}
+        if raw_current_config
+          raw_current_config['openeds'].each do |dfiche|
+            Fiche::get(dfiche['id'].to_i).is_opened = true
+            log "Fiche #{dfiche['id']} marquée ouverte"
           end
         end
-        dconf
+        log "Fiches visibles à la fin de Collection::current_configuration :"
+        log fiches_visibles.inspect
+        log "États d'ouverture :"+
+          "\n-------------------"
+        fiches_visibles.each do |fiche|
+          log "\tFiche ##{fiche.id} : " + (fiche.opened? ? "OPENED" : "CLOSED")
+        end
+        {
+          :visibles => fiches_visibles, 
+        }
       end
     end
     
-    # Return la liste ({Array}) des fiches non rangées
-    # Chaque élément est un {String} "<id>:<type>"
-    # OBSOLÈTE
-    def non_rangeds
-      return [] unless File.exists? path_liste_non_ranged
-      File.read(path_liste_non_ranged).split("\n").reject{|el| el == ""}
-    end
-    # Enregistre la nouvelle liste des non rangées
-    def save_non_rangeds liste
-      File.unlink path_liste_non_ranged if File.exists? path_liste_non_ranged
-      liste.uniq!
-      if liste.count > 0
-        File.open(path_liste_non_ranged, 'wb'){|f| f.write liste.join("\n") }
+    # Retourne les fiches visibles
+    # 
+    # La méthode utilise le fichier de configuration courante où sont consignées
+    # les fiches courantes, ou prend tous les livres.
+    # 
+    # @return un {Array} d'instances {Fiche}
+    # 
+    def get_visibles
+      if raw_current_config
+        log "[Collection::get_visibles] Fichier configuration existant"
+        raw_current_config['visibles'].collect do |dfiche|
+          Fiche.new dfiche['id'], dfiche['type']
+        end
+      else
+        log "[Collection::get_visibles] Fichier configuration INEXISTANT"
+        # Si le fichier de configuration n'existe pas, les fiches visibles
+        # sont seulement les livres.
+        Dir["#{Collection::folder_fiches}/book/*.msh"].collect do |path|
+          get_fiche_with_path path
+        end
       end
+    end
+    
+    # Retourne les données de configuration courante ou null si
+    # le fichier CURRENT_CONFIG.conf n'existe pas
+    # 
+    def raw_current_config
+      @raw_current_config ||= begin
+        if File.exists? path_current_config
+          JSON.parse(File.read path_current_config)
+        else
+          nil
+        end
+      end
+    end
+    
+    # Retourne l'instance {Fiche} de la fiche de path +path+
+    # 
+    def get_fiche_with_path path
+      dfiche = Marshal.load(File.read path)
+      Fiche.new dfiche['id'], dfiche['type']
     end
     
     # Retourne le path au fichier contenant la configuration actuelle
@@ -50,28 +81,23 @@ class Collection
       @path_current_config ||= File.join(folder, 'CURRENT_CONFIG.conf')
     end
     
-    # OBSOLÈTE
-    def path_liste_non_ranged
-      @path_liste_non_ranged ||= File.join(folder_listes, 'non_ranged')
+    def folder_fiches
+      @folder_fiches ||= (getfolder File.join(folder, 'fiche'))
     end
-
     def folder_listes
-      @folder_listes ||= begin
-        d = File.join(folder, 'liste')
-        Dir.mkdir(d, 0755) unless File.exists?(d)
-        d
-      end
+      @folder_listes ||= (getfolder File.join(folder, 'liste'))
     end
     def folder_backups
-      @folder_backups ||= begin
-        dos = File.join('.', 'collection', 'backup')
-        Dir.mkdir(dos, 0755) unless File.exists?(dos)
-        dos
-      end
+      @folder_backups ||= (getfolder File.join('.', 'collection', 'backup'))
     end
 
     def folder
       @folder ||= File.join('.', 'collection', mode_test? ? 'test' : 'current')
+    end
+    
+    def getfolder path
+      Dir.mkdir(path, 0777) unless File.exists? path
+      path
     end
     
     # Return TRUE si on est en mode test

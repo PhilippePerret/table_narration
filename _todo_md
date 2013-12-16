@@ -2,6 +2,7 @@ IMPLÉMENTER
 -----------
 
 CHARGEMENT DE LA COLLECTION
+- Charger "à l'envers", pour que les enfants soient traités avant leurs parents
   # Régler les problèmes à l'ouverture (pour le moment, les livres se mettent bien,
     mais lorsque j'en ouvre un contenant des chapitres, les chapitres ne rentrent pas
     dans le livre — cf. du côté de la propriété `_ranged` qui doit peut-être être mise

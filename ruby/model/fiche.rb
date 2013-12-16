@@ -9,6 +9,24 @@ class Fiche
     # 
     attr_accessor :folder
     
+    # Récupère l'instance de la fiche d'identifiant +id+
+    # 
+    def get id
+      @list[id]
+    end
+    
+    # Ajoute l'instance {Fiche} +fiche+ à la liste des fiches instanciées
+    # cf. initialize
+    # 
+    # @note   On peut ensuite récupérer cette fiche avec `get <id>'
+    # @note   La clé est toujours un {Integer}
+    # 
+    def add fiche
+      @list ||= {}
+      @list = @list.merge fiche.id.to_i => fiche
+    end
+    
+    
     # Return le dernier ID utilisé pour une fiche (le plus grand)
     # 
     def last_id
@@ -68,9 +86,16 @@ class Fiche
   attr_reader :id
   attr_reader :type
   
+  # Pour savoir si la fiche est ouverte dans la configuration
+  # actuelle.
+  # 
+  attr_accessor :is_opened
+    
   def initialize id, type
     @id   = id.to_i
     @type = type
+    # On consigne cette fiche pour pouvoir la retriever par `Fiche::get <id>'
+    self.class.add self
   end
   
   # Return l'id:type de la fiche (pour les listes)
@@ -84,9 +109,14 @@ class Fiche
 
   # L'ouverture de la fiche n'est plus enregistrée dans ses données,
   # mais dans le fichier de configuration courante.
-  def opened? 
-    false == Collection::current_configuration[:openeds][id.to_i].nil?
+  # 
+  # Avant de pouvoir utiliser cette propriété, il est INDISPENSABLE de faire
+  # appel à : Collection::current_configuration
+  # 
+  def opened?
+    @is_opened == true
   end
+  
   def closed?; false == opened? end
   
   def book?;      @type == 'book' end
@@ -94,6 +124,12 @@ class Fiche
   def page?;      @type == 'page' end
   def paragraph?; @type == 'para' end
   
+  def orpheline?
+    @is_orpheline ||= !hasParent?
+  end
+  def hasParent?
+    false == data['parent'].nil?
+  end
   def hasChildren?
     false == ( data['enfants'].nil? || data['enfants'] == [] )
   end

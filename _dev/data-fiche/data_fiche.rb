@@ -15,5 +15,5 @@ def data_fiche_in_file
 end
 
 data_fiche_in_file.each do |k, v|
-  puts "#{k}: #{v.inspect}"
+  puts "#{k.inspect}: #{v.inspect}"
 end
