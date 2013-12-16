@@ -12,7 +12,6 @@ CHARGEMENT DE LA COLLECTION
 -# Le titre de la page semble disparaitre parfois.
 
 
-
 APERCU (souris hover un mot/film)
 - Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet
   apercu existe dans le DOM

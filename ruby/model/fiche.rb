@@ -110,6 +110,20 @@ class Fiche
     self.class.add self
   end
   
+  # Merge les données de la fiche avec les données transmises
+  # 
+  def merge hash_data
+    @data = Marshal.load( File.read path )
+    @data = @data.merge hash_data
+    save
+  end
+  
+  def save
+    File.unlink path if File.exists? path
+    @data['updated_at'] = Time.now
+    File.open(path, 'wb'){|f| f.write (Marshal.dump @data)}
+  end
+  
   # Return l'id:type de la fiche (pour les listes)
   def idtype
     @idtype ||= "#{id}:#{type}"
@@ -158,6 +172,10 @@ class Fiche
   end
   def hasChildren?
     false == ( data['enfants'].nil? || data['enfants'] == [] )
+  end
+  
+  def printed?
+    data['printed'] != false
   end
   
   # Return toutes les données des enfants de la fiche.
