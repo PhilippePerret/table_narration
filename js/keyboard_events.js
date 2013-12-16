@@ -71,14 +71,14 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     return keypress_when_no_selection_no_edition(evt)
   }
   
-  var complex_method = null
+  var cplx_meth = null
   switch(evt.keyCode)
   {
   /* TAB => retourner la fiche */
-  case K_TAB:     complex_method = 'retourne'; break
+  case K_TAB:     cplx_meth = 'retourne'; break
   
   /* ENTER => édite main field */
-  case K_RETURN:  complex_method = 'enable_main_field'; break
+  case K_RETURN:  cplx_meth = 'enable_main_field'; break
   
   /*
    *  ->    Sélectionner le premier enfant (if any)
@@ -86,37 +86,37 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
    *  up    Sibling précédent (if any)
    *  down  Sibling suivant (if any)
    */
-  case K_LEFT_ARROW:  complex_method = 'select_parent';       break
-  case K_RIGHT_ARROW: complex_method = 'select_first_child';  break
-  case K_UP_ARROW:    complex_method = 'select_previous';     break
-  case K_DOWN_ARROW:  complex_method = 'select_next';         break
+  case K_LEFT_ARROW:  cplx_meth = 'select_parent';       break
+  case K_RIGHT_ARROW: cplx_meth = 'select_first_child';  break
+  case K_UP_ARROW:    cplx_meth = evt.metaKey ? 'move_up'    : 'select_previous'; break
+  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? 'move_down'  : 'select_next';         break
     
   /* ERASE => supprimer la fiche */
-  case K_ERASE: complex_method = 'want_delete'; break
+  case K_ERASE: cplx_meth = 'want_delete'; break
   default:
     // console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
     // return true // Non, on doit poursuivre
   }
-  if(complex_method) 
+  if(cplx_meth) 
   {
-    FICHES.current[complex_method]
+    FICHES.current[cplx_meth]
     return stop_event(evt)
   }
   
-  complex_method = null
+  cplx_meth = null
   switch(evt.charCode)
   {
-  case K_SPACE: complex_method = 'toggle'   ; break
-  case Key_o:   complex_method = 'open'     ; break
-  case Key_f:   complex_method = 'close'    ; break
-  case Key_d:   complex_method = 'deselect' ; break
+  case K_SPACE: cplx_meth = 'toggle'   ; break
+  case Key_o:   cplx_meth = 'open'     ; break
+  case Key_f:   cplx_meth = 'close'    ; break
+  case Key_d:   cplx_meth = 'deselect' ; break
   default:
     console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
     // return stop_event(evt)
   }
-  if(complex_method)
+  if(cplx_meth)
   {
-    FICHES.current[complex_method]
+    FICHES.current[cplx_meth]
     return stop_event(evt)
   }
       

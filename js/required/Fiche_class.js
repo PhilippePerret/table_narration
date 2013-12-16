@@ -589,13 +589,17 @@ Fiche.prototype.on_drop = function(evt, ui)
 $.extend(Fiche.prototype,{
   
   /**
-    * Appelé quand on change l'ordre des enfants de la fiche
+    * Appelé quand on change l'ordre des enfants de la fiche, soit par le
+    * sortable du div_items, soit par `move_up` ou `move_down` d'un des
+    * enfant.
     *
     * NOTES
     * -----
     *   * Plutôt que de s'embêter à étudier +ui+ pour savoir quel
     *     élément a été déplacé, on compare la liste du DOM avec la liste des
     *     enfants et on commence à traiter à partir de cet indice.
+    *   * Les deux arguments ne sont pas définis lorsque la méthode est appelée
+    *     depuis `move_up` et `move_down`.
     *
     * @method onchange_ordre_enfants
     * @param  evt {Event}   UpdateEvent généré par sortable
@@ -604,6 +608,8 @@ $.extend(Fiche.prototype,{
     */
   onchange_ordre_enfants:function(evt, ui)
   {
+    stop_save
+    dlog("onchange_ordre_enfants sur la fiche "+this.type_id + " : " + this.titre)
     var sorted_id, sorted_ids = 
       L(this.div_items.sortable('toArray')).
       collect(function(domid){ return parseInt(domid.split('-')[1],10)})
@@ -612,6 +618,7 @@ $.extend(Fiche.prototype,{
     while(sorted_id = sorted_ids.shift()) this.enfants.push(get_fiche(sorted_id))
     this.update_indice_enfants()
     this.modified = true
+    restart_save
   },
   
   /*

@@ -89,6 +89,69 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
 
+
+
+  /* ---------------------------------------------------------------------
+   *
+   *  MÉTHODES DE DÉPLACEMENT
+   *  
+   --------------------------------------------------------------------- */
+  /**
+    * Déplacement de l'enfant vers le haut
+    *
+    * Notes
+    * -----
+    *   * Méthode "complexe", donc invoquée sans parenthèses
+    *   * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre
+    *     le nouvel ordre à chaque fois, mais ça risque d'être intense pour rien.
+    *     Au lieu de ça, j'utilise un timeout qui appelera la méthode seulement 
+    *     lorsque les déplacements sembleront terminés.
+    *
+    * @method move_up
+    */
+  "move_up":{
+    get:function(){
+      if(this.is_orpheline) return false
+      this.unset_timer_move
+      if(this.obj.prev().length)
+      {
+        this.obj.insertBefore(this.obj.prev())
+      }
+      else F.show("Impossible d'aller plus haut…")
+      this.set_timer_move
+    }
+  },
+  /**
+    * Déplacement de l'enfant vers le bas
+    * Notes
+    * -----
+    *   * Cf. les notes de la méthode `move_up`.
+    * @method move_down
+    *
+    */
+  "move_down":{
+    get:function(){
+      if(this.is_orpheline) return false
+      this.unset_timer_move
+      if(this.obj.next().length)
+      {
+        this.obj.insertAfter(this.obj.next())
+      }
+      else F.show("Impossible d'aller plus bas…")
+      this.set_timer_move
+    }
+  },
+  "set_timer_move":{
+    get:function(){
+      stop_save
+      this.timer_move = setTimeout($.proxy(this.parent.onchange_ordre_enfants, this.parent), 2000)
+    }
+  },
+  "unset_timer_move":{
+    get:function(){
+      if(this.timer_move) clearTimeout(this.timer_move)
+    }
+  },
   /* ---------------------------------------------------------------------
    *
    *  MÉTHODES DE SÉLECTION
