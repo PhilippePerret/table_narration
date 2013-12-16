@@ -5,6 +5,7 @@ window.LOCALE = {
     
     // LOCALE.fiche.error
     error:{
+      'no empty text'               : "Impossible d'enregistrer un texte vide !",
       'parent should be an object'  : "Le parent doit être un object (une fiche)",
       'parent should be a fiche'    : "Le parent doit être une fiche",
       'parent bad type'             : "Le parent n'est pas d'un type valide",
@@ -22,6 +23,15 @@ window.LOCALE = {
       'book has no parent'          : "Un livre ne peut pas avoir de parent…",
       'no parent'                   : "Cette fiche n'a pas de parent, elle est orpheline.",
       'no children'                 : "Cette fiche n'a pas d'enfants",
+    }
+  },
+  
+  // LOCALE.paragraph
+  paragraph:{
+    
+    // LOCALE.paragraph.tip
+    tip:{
+      'how to create a new para'    : "Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER."
     }
   },
   

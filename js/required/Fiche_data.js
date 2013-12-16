@@ -241,6 +241,12 @@ Object.defineProperties(Fiche.prototype,{
   
 })
 
+/**
+  * Dispatch les données +data+ dans la fiche.
+  *
+  * @method dispatch
+  * @param  {Object} data Les données à dispatcher dans la fiche.
+  */
 Fiche.prototype.dispatch = function(data){
   dlog("---> Fiche::dispatch("+JSON.stringify(data)+")", DB_FCT_ENTER)
   var prop, val ;

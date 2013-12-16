@@ -208,8 +208,7 @@ UI.Input = {
         }
         else
         {
-          // => Un message d'aide
-          F.show("Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER.")
+          F.show(LOCALE.paragraph.tip['how to create a new para'],{keep:true})
         }
       }
       return stop_event(evt)

@@ -687,25 +687,31 @@ $.extend(Fiche.prototype,{
     
   },
   
-  /*
-   *  Méthode appelée quand on change le titre de la fiche
-   *  
-   *  NOTES
-   *  -----
-   *  @ Cela peut se produire lorsqu'on quitte le champ, ou lorsque
-   *    l'on presse la touche RETURN sur le champ.
-   *
-   *  @ C'est vraiment cette fonction qui inaugure le changement du
-   *    titre, car si c'était `titre=` (propriété complexe), on aura
-   *    une difficulté à la définition des fiches remontées.
-   *
-   */
+  /**
+    * Méthode appelée quand on change le texte (paragraphe) ou le titre (autres
+    * fiches) d'une fiche.
+    *
+    * NOTES
+    * -----
+    *   * La méthode interdit d'enregistrer une donnée vide.
+    *   * Cela peut se produire lorsqu'on quitte le champ, ou lorsque
+    *     l'on presse la touche RETURN sur le champ.
+    *   * C'est vraiment cette fonction qui inaugure le changement du
+    *     titre, car si c'était `titre=` (propriété complexe), on aura
+    *     une difficulté à la définition des fiches remontées.
+    *
+    *
+    * @method onchange_texte
+    * @param  {Event} evt   L'Onchange Event.
+    * @return {True} si la donnée a été prise en compte, {False} dans le cas contraire.
+    */
   onchange_titre_or_texte:function(evt)
   {
     var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
     dlog("---> "+idm, DB_FCT_ENTER)
     var obj=this.main_field, prop=this.main_prop ;
-    var new_value = obj.val()
+    var new_value = obj.val().trim()
+    if(new_value == "") return F.error(LOCALE.fiche.error['no empty text'])
     if(this[prop] != new_value)
     {
       this[prop]    = new_value
@@ -713,6 +719,7 @@ $.extend(Fiche.prototype,{
     }
     if(this.is_chapter) this.close
     dlog("<- "+idm, DB_FCT_ENTER)
+    return true
   }
   
 })

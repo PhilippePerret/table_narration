@@ -34,6 +34,7 @@ Object.defineProperties(Paragraph.prototype,{
     */
   "style":{
     set:function(selectors){
+      if('string'==typeof selectors) selectors = selectors.split('.')
       this._style = selectors
       this.main_field.attr('class', this.class_css)
       delete this._next_style
@@ -50,7 +51,10 @@ Object.defineProperties(Paragraph.prototype,{
     get:function(){
       if(undefined == this._next_style)
       {
-        this._next_style = this.style ? DATA_STYLES[this.style[0]].style_after : null
+        if(this.style && DATA_STYLES[this.style[0]])
+        {
+          this._next_style = DATA_STYLES[this.style[0]].style_after
+        }
       }
       return this._next_style
     }
@@ -142,15 +146,6 @@ Object.defineProperties(Paragraph.prototype,{
   }
   
 })
-
-/*
- *  Méthode appelée quand on change le texte d'un paragraphe
- *  
- */
-Paragraph.prototype.onchange_texte = function(evt)
-{
-  this.texte = this.textarea_texte.val()
-}
 
 /*
  *  Méthode appelée quand on applique les styles choisis pour
