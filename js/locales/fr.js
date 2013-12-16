@@ -1,4 +1,16 @@
 window.LOCALE = {
+  
+  // LOCALE.app
+  app:{
+    // LOCALE.app.error
+    error:{
+      'current config error': "Des erreurs sont survenues en essayant d'application la"+
+                              " configuration courante (le problème peut peut-être se "+
+                              "résoudre simplement en prenant un flash de la configuration"+
+                              "courante) :\n"
+    }
+  },
+  
   fiche:{
     'want delete fiche'             : "Détruire définitivement cette fiche ?",
     'kill children'                 : "Détruire aussi tout son contenu",

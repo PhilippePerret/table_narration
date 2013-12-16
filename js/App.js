@@ -220,7 +220,7 @@ Object.defineProperties(App,{
       })
       if(errors.length)
       {
-        Flash.error("Des erreurs sont survenues en essayant d'application la configuration courante :\n"+errors.join("\n\t"))
+        F.error(LOCALE.app.error['current config error']+errors.join("\n\t"))
       }
     }
   }

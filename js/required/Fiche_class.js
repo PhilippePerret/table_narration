@@ -244,6 +244,7 @@ Object.defineProperties(Fiche.prototype, {
       {
         this.obj.droppable({
           hoverClass  :'dropped',
+          tolerance   : 'pointer',
           greedy      : true, // pour empêcher la table de prendre le drop
           accept      : '.fiche.'+accepted_child+
                         ', .card_tool[data-type="'+accepted_child+'"]',

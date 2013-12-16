@@ -56,8 +56,16 @@ def get_all_fiches_visibles
     return
   end
   Collection::current_configuration[:visibles].each do |fiche|
-    # @note: `fiche' est une instance {Fiche}
-    @data[:fiches] += fiche.get_data :children => :if_opened
+    # @note (ci-dessus): `fiche' est une instance {Fiche}
+    # @note (ci-dessous): Pour palier certains problèmes, comme lorsqu'un chapitre
+    # a été créé d'abord sur la table, puis la configuration a été enregistré (donc le
+    # chapitre a été marqué visible), puis le chapitre a été inséré dans un livre
+    # fermé. Il n'est alors plus visible.
+    # On part du principe que tout élément qui a un parent ne peut pas être
+    # visible, il peut être ouvert, en revanche.
+    unless fiche.hasParent?
+      @data[:fiches] += fiche.get_data :children => :if_opened
+    end
   end
 end
 
