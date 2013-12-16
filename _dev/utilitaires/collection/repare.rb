@@ -10,6 +10,8 @@ L'opération de réparation consiste à :
     les fiches orphelines soient bien marquées visibles.
   - indiquer les erreurs de références (liens vers une fiche inexistante)
   - indiquer les erreurs de parentés (non concordance entre parent et enfants)
+  - indiquer/réparer les erreurs de styles de paragraphe qui n'existent plus
+
 =end
 require './ruby/lib/functions'
 require './ruby/model/fiche'

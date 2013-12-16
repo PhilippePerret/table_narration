@@ -244,6 +244,7 @@ Object.defineProperties(Fiche.prototype, {
       {
         this.obj.droppable({
           hoverClass  :'dropped',
+          greedy      : true, // pour empêcher la table de prendre le drop
           accept      : '.fiche.'+accepted_child+
                         ', .card_tool[data-type="'+accepted_child+'"]',
           drop        :$.proxy(this.on_drop, this)
@@ -499,15 +500,17 @@ Object.defineProperties(Fiche.prototype, {
   }  
 })
 
-/*
- *  Appelé quand on droppe un enfant sur la fiche courante
- *  
- *  @param  evt   L'évènement drop
- *  @param  ui    L'objet déplacé (ui.element est l'original)
- *                Note : l'original peut être soit une fiche réelle, soit
- *                un card-tool. Lorsque c'est une card-tool, il faut créer la
- *                nouvelle fiche.
- */
+/**
+  * Appelé quand on droppe un enfant sur la fiche courante
+  *  
+  * @method on_drop
+  * @param   {Event} evt   L'évènement drop
+  * @param   {jQuerySet} ui    
+  *          L'objet déplacé (ui.element est l'original)
+  *               Note : l'original peut être soit une fiche réelle, soit
+  *               un card-tool. Lorsque c'est une card-tool, il faut créer la
+  *               nouvelle fiche.
+  */
 Fiche.prototype.on_drop = function(evt, ui)
 {
   var idm = "Fiche::on_drop ["+this.type_id+"]"
@@ -521,10 +524,14 @@ Fiche.prototype.on_drop = function(evt, ui)
   if(is_tool)
   {
     // On crée la fiche
-    ichild = FICHES.full_create({
+    var data = {
       type: obj_moved.attr('data-type'),
       left: 100, top: 100
-    })
+    }
+    var dtype = FICHES.datatype[data.type]
+    data[data.type == 'para' ? 'texte' : 'titre'] = dtype.defvalue
+    
+    ichild = FICHES.full_create(data)
   }
   else
   {
@@ -539,6 +546,9 @@ Fiche.prototype.on_drop = function(evt, ui)
   // endroit précis, pour le placer au bon endroit dans les enfants
   // F.error("La méthode Fiche.on_drop doit être implémentée"+
   // "\nÉlément #"+obj_moved.attr('id')+" (outil ? "+is_tool+") glissé sur fiche #"+this.id)
+  
+  // Si c'est une création, on met aussi l'enfant en édition
+  if(is_tool) ichild.enable_main_field
   
   return stop_event( evt )
 }
@@ -564,21 +574,24 @@ $.extend(Fiche.prototype,{
     }
   },
   
-  /*
-   *  Ajout d'un enfant à la fiche
-   *
-   *  NOTES
-   *  -----
-   *    = C'est cette méthode qui doit être utilisée pour tout ajout
-   *      d'enfant.
-   *
-   *  @param  enfant    {Fiche} de l'enfant à ajouter
-   *  @param  options   {Hash} Options d'insertion :
-   *                      after  : <fiche>    Ajouter après cet enfant
-   *                      before : <fiche>    Ajouter avant cet enfant
-   */
+  /**
+    *  Ajout d'un enfant à la fiche
+    *
+    *  NOTES
+    *  -----
+    *    * C'est cette méthode qui doit être utilisée pour tout ajout
+    *      d'enfant.
+    *
+    * @method add_child
+    * @param  enfant    {Fiche} de l'enfant à ajouter
+    * @param  options   {Object} Options d'insertion :
+    *                      after  : <fiche>    Ajouter après cet enfant
+    *                      before : <fiche>    Ajouter avant cet enfant
+    */
   add_child:function(enfant, options)
   {
+    var idm = "Fiche::add_child("+enfant.type+":"+enfant.id+") ["+this.type_id+"]"
+    dlog("-> "+idm, DB_FCT_ENTER | DB_CURRENT)
     if(undefined == options) options = {}
     try
     {
@@ -637,10 +650,13 @@ $.extend(Fiche.prototype,{
     
   },
   
-  /*
-   *  Supprime un enfant 
-   *  
-   */
+  /**
+    *  Supprime un enfant de la fiche
+    *  
+    * @method remove_child
+    * @param  {Fiche} enfant  L'enfant à retirer.
+    *
+    */
   remove_child:function(enfant)
   {
     try

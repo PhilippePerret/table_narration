@@ -63,6 +63,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Paragraph.html">Paragraph</a></li>
+            
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
                 <li><a href="../classes/UI.html">UI</a></li>
@@ -81,9 +83,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -91,9 +93,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -122,6 +124,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
@@ -208,6 +212,8 @@ cf. la méthode &quot;add_enfant&quot;.</li>
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
@@ -219,6 +225,21 @@ cf. la méthode &quot;add_enfant&quot;.</li>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_on_drop">on_drop</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -241,6 +262,15 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_main_prop">main_prop</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -250,6 +280,126 @@ cf. la méthode &quot;add_enfant&quot;.</li>
             
         </div>
 
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_on_drop" class="method item">
+    <h3 class="name"><code>on_drop</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>ui</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l503"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:503</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Appelé quand on droppe un enfant sur la fiche courante</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;évènement drop</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">ui</code>
+                        <span class="type">JQuerySet</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <pre><code>     L&#39;objet déplacé (ui.element est l&#39;original)
+          Note : l&#39;original peut être soit une fiche réelle, soit
+          un card-tool. Lorsque c&#39;est une card-tool, il faut créer la
+          nouvelle fiche.</code></pre>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         
@@ -340,6 +490,57 @@ cf. la méthode &quot;add_enfant&quot;.</li>
 
     <div class="description">
         <p>Définit et retourne le JID (selector jQuery) de la fiche</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_main_prop" class="property item">
+    <h3 class="name"><code>main_prop</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/fiche.dom.html">fiche.dom</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l290"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:290</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Propriété principale en fonction du type de la fiche. Pour un paragraphe,
+la propriété principale est <code>texte</code>, pour toutes les autres fiches, c&#39;est
+<code>titre</code></p>
 
     </div>
 

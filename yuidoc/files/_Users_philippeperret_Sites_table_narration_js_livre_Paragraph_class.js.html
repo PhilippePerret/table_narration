@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>KeyEvents</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -170,37 +170,180 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>KeyEvents Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @module Paragraph
+  */
+/**
+  *  Class d&#x27;une fiche de type Paragraph
+  *
+  * @class Paragraph
+  *
+  */
+window.Paragraph = function(data)
+{
+  if(undefined == data) data = {}
+  data.type = &#x27;para&#x27;
+  Fiche.call(this, data)
+}
+Paragraph.prototype = Object.create( Fiche.prototype )
+Paragraph.prototype.constructor = Paragraph
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_key_events.js.html#l1"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;key_events.js:1</code></a>
-        </div>
-    
+Object.defineProperties(Paragraph.prototype,{
+  
+  /**
+    *  Liste des styles du paragraphe (ou null/indéfini)
+    *
+    * NOTES
+    * -----
+    *   * Les styles sont définis dans le fichier &#x60;./js/data/paragraph_styles.js&#x60;
+    *     qui est un fichier produit programmatiquement à partir des informations
+    *     sur les styles contenus dans &#x60;./data/asset/paragraph_styles.txt&#x60;.
+    *  
+    * @property style
+    * @type     {Array}
+    * @default  {Undefined|Null}
+    *
+    */
+  &quot;style&quot;:{
+    set:function(selectors){
+      this._style = selectors
+      this.main_field.attr(&#x27;class&#x27;, this.class_css)
+      delete this._next_style
+    },
+    get:function(){return this._style}
+  },
+  
+  /**
+    * Retourne le style par défaut du paragraphe suivant s&#x27;il est défini
+    *
+    * @property {String} next_style
+    */
+  &quot;next_style&quot;:{
+    get:function(){
+      if(undefined == this._next_style)
+      {
+        this._next_style = this.style ? DATA_STYLES[this.style[0]].style_after : null
+      }
+      return this._next_style
+    }
+  },
+  
+  /**
+    * Retourne le code pour l&#x27;attribut &#x60;class&#x60; de la balise en fonction des styles
+    * du paragraphe.
+    *
+    * @property {String} class_css
+    * @default  &quot;&quot; (chaine vide)
+    */
+  &quot;class_css&quot;:{
+    get:function(){
+      var css = $.merge([], this._style || [])
+      css.push(&#x27;texte&#x27;)
+      return css.join(&#x27; &#x27;)
+    }
+  },
+  
+  /*
+   *  Méthode appelée quand on règle le verso de la fiche
+   *
+   *  Pour un paragraphe, on doit préparer l&#x27;affichage si nécessaire
+   *  et régler les valeurs propres, comme le style du paragraphe.  
+   */
+  &quot;after_regle_verso&quot;:{
+    get:function(){
+      if(PARAGRAPHS.html_menu_styles == null) PARAGRAPHS.build_menu_styles
+      this.append_menu_styles
+      this.set_style
+    }
+  },
 
-    
-</div>
+  /* ---------------------------------------------------------------------
+   *  Pour le style du paragraphe
+   */
+  /* Retourne l&#x27;objet DOM jQuery du menu des styles */
+  &quot;menu_styles&quot;:{get:function(){return $(this.menu_styles_jid)}},
+  /* Identifiant du menu */
+  &quot;menu_styles_id&quot;:{get:function(){return this.dom_id+&#x27;-style&#x27;}},
+  &quot;menu_styles_jid&quot;:{get:function(){return &quot;select#&quot;+this.menu_styles_id}},
+  /*
+   *  Déplace le menu des styles (unique) dans cette fiche
+   *  
+   */
+  &quot;append_menu_styles&quot;:{
+    get:function(){
+      this.verso.find(&#x27;.div_menu_styles&#x27;).append($(&#x27;div#divuniq_menu_styles&#x27;))
+    }
+  },
+  /* Règle le style dans le menu style du paragraphe (verso) */
+  &quot;set_style&quot;:{
+    get:function(){
+      // On active tous les styles du paragraphes
+      PARAGRAPHS.active_styles( this.style )
+    }
+  },  
+  /*
+   *  Concernant le TEXTE du paragraphe
+   *  
+   */
+  &quot;texte_id&quot;:{get:function(){return this.dom_id+&#x27;-texte&#x27;}},
+  &quot;textearea_texte_jid&quot;:{get:function(){return &quot;textarea#&quot;+this.texte_id}},
+  &quot;textarea_texte&quot;:{get:function(){return $(this.textearea_texte_jid)}},
+  &quot;div_texte_jid&quot;:{get:function(){return &quot;div#&quot;+this.texte_id}},
+  &quot;div_texte&quot;:{get:function(){ return $(this.div_texte_jid)}},
+  &quot;texte&quot;:{
+    get:function(){ return this._texte || null },
+    set:function(texte){
+      if(texte == this._texte) return
+      this._texte = texte
+      this.main_field.val( texte )
+    }
+  },
+  
+  
+  /* Code HTML du textarea pour &#x60;texte&#x27; */
+  &quot;html_textarea_texte&quot;:{
+    get:function(){
+      return &#x27;&lt;textarea id=&quot;&#x27;+this.texte_id+&#x27;&quot; class=&quot;&#x27;+this.class_css+&#x27;&quot;&gt;&#x27;+this.main_field_value(false)+&#x27;&lt;/textarea&gt;&#x27;
+    }
+  },
+  /* Code HTML du Div pour &#x60;texte&#x27; */
+  &quot;html_div_texte&quot;:{
+    get:function(){
+      return &#x27;&lt;div id=&quot;&#x27;+this.texte_id+&#x27;&quot; class=&quot;&#x27;+this.class_css+&#x27;&quot;&gt;&#x27;+this.main_field_value(true)+&#x27;&lt;/div&gt;&#x27;
+    }
+  }
+  
+})
+
+/*
+ *  Méthode appelée quand on change le texte d&#x27;un paragraphe
+ *  
+ */
+Paragraph.prototype.onchange_texte = function(evt)
+{
+  this.texte = this.textarea_texte.val()
+}
+
+/*
+ *  Méthode appelée quand on applique les styles choisis pour
+ *  le paragraphe.
+ *  
+ */
+Paragraph.prototype.on_change_styles = function(selectors){
+  var idm = &quot;Paragraph.on_change_styles(&quot;+selectors.join(&#x27;, &#x27;)+&quot;) [&quot;+this.type_id+&quot;]&quot;
+  dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
+  if(selectors.length == 0) selectors = null
+  this.style    = selectors
+  this.modified = true
+  dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
+}
 
 
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    </pre>
 </div>
 
                     </div>

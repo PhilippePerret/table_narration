@@ -13,6 +13,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "OBJETS",
         "ObjetClass",
         "PARAGRAPHES",
+        "Paragraph",
         "UI",
         "UI.Input"
     ],
@@ -39,6 +40,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "OBJETS",
         "ObjetClass",
         "PARAGRAPHS",
+        "Paragraph",
         "String",
         "UI",
         "data",
@@ -65,12 +67,12 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "ContextualHelp"
         },
         {
-            "displayName": "Data",
-            "name": "Data"
-        },
-        {
             "displayName": "data",
             "name": "data"
+        },
+        {
+            "displayName": "Data",
+            "name": "Data"
         },
         {
             "displayName": "Debug",
@@ -85,12 +87,12 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "DICO.js"
         },
         {
-            "displayName": "dom",
-            "name": "dom"
-        },
-        {
             "displayName": "Dom",
             "name": "Dom"
+        },
+        {
+            "displayName": "dom",
+            "name": "dom"
         },
         {
             "displayName": "Edition",
@@ -149,6 +151,10 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "OBJETS",
             "name": "OBJETS",
             "description": "Objet OBJETS mixé dans les FILMS, DICO et REFS\n\nNOTES\n-----\n  * Les descriptions ci-dessous, lorsqu'elles ne parlent que de \"Film\"\n    peuvent être comprise pour tout objet pluriel mixant ces méthodes."
+        },
+        {
+            "displayName": "Paragraph",
+            "name": "Paragraph"
         },
         {
             "displayName": "PARAGRAPHS",

@@ -66,10 +66,11 @@ window.PARAGRAPHS = {
    */
   selectionne_selectors:function(selectors)
   {
-    var id ;
+    var id, osel ;
     if(!selectors || selectors.length == 0) return
     L(selectors).each(function(selector){
-      $('ul#paragraphs_menu_styles > li.'+selector+' input[type="checkbox"]')[0].checked = true
+      osel = $('ul#paragraphs_menu_styles > li.'+selector+' input[type="checkbox"]')
+      if(osel.length) osel[0].checked = true
     })
   },
   /* Décoche la checkbox pour le style de paragraphe +style+ */

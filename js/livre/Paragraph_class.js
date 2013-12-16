@@ -1,9 +1,12 @@
-/*
- *  Class Paragraph
- *  ---------------
- *  Pour la gestion d'une fiche de type Paragraph
- *  
- */
+/**
+  * @module Paragraph
+  */
+/**
+  *  Class d'une fiche de type Paragraph
+  *
+  * @class Paragraph
+  *
+  */
 window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
@@ -15,14 +18,20 @@ Paragraph.prototype.constructor = Paragraph
 
 Object.defineProperties(Paragraph.prototype,{
   
-  /*
-   *  Définition ou récupération du style du paragraphe
-   *
-   *  NOTES
-   *  -----
-   *    :: `style' peut être null, indéfini, ou une liste de selectors
-   *  
-   */
+  /**
+    *  Liste des styles du paragraphe (ou null/indéfini)
+    *
+    * NOTES
+    * -----
+    *   * Les styles sont définis dans le fichier `./js/data/paragraph_styles.js`
+    *     qui est un fichier produit programmatiquement à partir des informations
+    *     sur les styles contenus dans `./data/asset/paragraph_styles.txt`.
+    *  
+    * @property style
+    * @type     {Array}
+    * @default  {Undefined|Null}
+    *
+    */
   "style":{
     set:function(selectors){
       this._style = selectors
@@ -32,10 +41,11 @@ Object.defineProperties(Paragraph.prototype,{
     get:function(){return this._style}
   },
   
-  /*
-   *  Retourne le style par défaut du paragraphe suivant s'il est défini
-   *  
-   */
+  /**
+    * Retourne le style par défaut du paragraphe suivant s'il est défini
+    *
+    * @property {String} next_style
+    */
   "next_style":{
     get:function(){
       if(undefined == this._next_style)
@@ -46,7 +56,13 @@ Object.defineProperties(Paragraph.prototype,{
     }
   },
   
-  /* Retourne le code pour `class' en fonction des styles */
+  /**
+    * Retourne le code pour l'attribut `class` de la balise en fonction des styles
+    * du paragraphe.
+    *
+    * @property {String} class_css
+    * @default  "" (chaine vide)
+    */
   "class_css":{
     get:function(){
       var css = $.merge([], this._style || [])
@@ -63,7 +79,6 @@ Object.defineProperties(Paragraph.prototype,{
    */
   "after_regle_verso":{
     get:function(){
-      console.log("Entrée dans Paragraph.after_regle_verso")
       if(PARAGRAPHS.html_menu_styles == null) PARAGRAPHS.build_menu_styles
       this.append_menu_styles
       this.set_style

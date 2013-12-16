@@ -74,6 +74,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "modules": {
+                "Paragraph": 1
+            },
+            "classes": {
+                "Paragraph": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js",
             "modules": {},
@@ -392,6 +403,18 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
             "line": 4
         },
+        "Paragraph": {
+            "name": "Paragraph",
+            "submodules": {},
+            "classes": {
+                "Paragraph": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 4
+        },
         "Mot": {
             "name": "Mot",
             "submodules": {
@@ -701,6 +724,20 @@
             "line": 4,
             "description": "Pour la gestion des paragraphes ({Fiche} de type {Paragraph}) comme un ensemble",
             "static": 1
+        },
+        "Paragraph": {
+            "name": "Paragraph",
+            "shortname": "Paragraph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Paragraph",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 4,
+            "description": "Class d'une fiche de type Paragraph"
         },
         "Mot": {
             "name": "Mot",
@@ -1073,6 +1110,22 @@
             "module": "FICHES"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 462,
+            "description": "Instancie une fiche avec les données `data`.",
+            "itemtype": "method",
+            "name": "create_instance_fiche_of_type",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Contient au mininum `type` pour instancier une nouvelle\n        fiche de ce type (création) et contient `id` si c'est l'instanciation\n        d'une fiche existante.",
+                    "type": "Object"
+                }
+            ],
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
             "line": 13,
             "description": "La fiche du paragraphe courant",
@@ -1082,6 +1135,38 @@
             "default": "null",
             "class": "PARAGRAPHES",
             "module": "PARAGRAPHS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 21,
+            "description": "Liste des styles du paragraphe (ou null/indéfini)\n\n NOTES\n -----\n * Les styles sont définis dans le fichier `./js/data/paragraph_styles.js`\n   qui est un fichier produit programmatiquement à partir des informations\n   sur les styles contenus dans `./data/asset/paragraph_styles.txt`.",
+            "itemtype": "property",
+            "name": "style",
+            "type": "{Array}",
+            "default": "{Undefined|Null}",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 44,
+            "description": "Retourne le style par défaut du paragraphe suivant s'il est défini",
+            "itemtype": "property",
+            "name": "next_style",
+            "type": "String",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 59,
+            "description": "Retourne le code pour l'attribut `class` de la balise en fonction des styles\ndu paragraphe.",
+            "itemtype": "property",
+            "name": "class_css",
+            "type": "String",
+            "default": "\"\" (chaine vide)",
+            "class": "Paragraph",
+            "module": "Paragraph"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
@@ -1145,6 +1230,17 @@
             "module": "fiche.dom"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 290,
+            "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
+            "itemtype": "property",
+            "name": "main_prop",
+            "type": "String",
+            "static": 1,
+            "class": "Fiche",
+            "module": "fiche.dom"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "line": 66,
             "description": "Retourne un {Array} des minidata des enfants",
@@ -1152,6 +1248,27 @@
             "name": "enfants_as_minidata",
             "type": "{Array}",
             "default": "[]",
+            "class": "Fiche",
+            "module": "FicheClass"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 503,
+            "description": "Appelé quand on droppe un enfant sur la fiche courante",
+            "itemtype": "method",
+            "name": "on_drop",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "L'évènement drop",
+                    "type": "Event"
+                },
+                {
+                    "name": "ui",
+                    "description": "\n         L'objet déplacé (ui.element est l'original)\n              Note : l'original peut être soit une fiche réelle, soit\n              un card-tool. Lorsque c'est une card-tool, il faut créer la\n              nouvelle fiche.",
+                    "type": "JQuerySet"
+                }
+            ],
             "class": "Fiche",
             "module": "FicheClass"
         },
@@ -1512,6 +1629,26 @@
             "name": "FIELD_PEOPLE",
             "type": "String",
             "final": 1,
+            "class": "UI",
+            "module": "UI"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
+            "line": 119,
+            "itemtype": "method",
+            "name": "ondrop_on_table",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "Drop event",
+                    "type": "Event"
+                },
+                {
+                    "name": "ui",
+                    "description": "Set jQuery transmis par droppable.",
+                    "type": "Object"
+                }
+            ],
             "class": "UI",
             "module": "UI"
         },

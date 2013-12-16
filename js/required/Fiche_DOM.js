@@ -287,7 +287,14 @@ Object.defineProperties(Fiche.prototype,{
    *
    */
   
-  /* Propriété principale */
+  /** 
+    * Propriété principale en fonction du type de la fiche. Pour un paragraphe,
+    * la propriété principale est `texte`, pour toutes les autres fiches, c'est
+    * `titre`
+    *
+    * @property {String} main_prop
+    * @static
+    */
   "main_prop":{
     get:function(){return this.is_paragraph ? 'texte' : 'titre' }
   },
@@ -419,29 +426,31 @@ Object.defineProperties(Fiche.prototype,{
    *  
    --------------------------------------------------------------------- */
   
-  /*
-   *  Passe le titre/texte en édition
-   *  -------------------------------
-   *  
-   *  PRODUIT
-   *  -------
-   *    - Remplace le div contenant le titre (ou le texte) par un champ
-   *      de saisie.
-   *    - Place les observers sur le champ de saisie.
-   *    - Sélectionne le texte
-   *
-   */
+  /**
+    * Passe le titre/texte en édition
+    * 
+    * NOTES
+    * -----
+    *   * C'est une méthode composée avec un propriété complexe. Elle
+    *     s'appelle sans arguments ni parenthèses.
+    *
+    * PRODUIT
+    * -------
+    *   * Sélectionne la fiche
+    *   * Remplace le div contenant le titre (ou le texte) par un champ
+    *     de saisie.
+    *   * Place les observers sur le champ de saisie.
+    *   * Sélectionne le texte
+    *
+    * @method enable_main_field
+    */
   "enable_main_field":{
     get:function(){
       var idm = "Fiche::enable_main_field ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-
-      // On remplace le DIV par un INPUT/TEXTAREA
+      this.select
       this.set_main_field_as_input
-
-      // On le suit
       UI.Input.bind( this.main_field ).select()
-      
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },

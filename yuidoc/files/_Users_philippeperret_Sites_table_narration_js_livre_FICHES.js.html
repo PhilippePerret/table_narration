@@ -63,6 +63,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Paragraph.html">Paragraph</a></li>
+            
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
                 <li><a href="../classes/UI.html">UI</a></li>
@@ -81,9 +83,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -91,9 +93,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -122,6 +124,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
@@ -631,9 +635,25 @@ window.FICHES = {
     return ifiche
   },
   // @data  Peut contenir &#x27;id&#x27; et &#x27;type&#x27; au minimum
+  /**
+    * Instancie une fiche avec les données &#x60;data&#x60;.
+    *
+    * @method create_instance_fiche_of_type
+    * @param  {Object} data Contient au mininum &#x60;type&#x60; pour instancier une nouvelle
+    *         fiche de ce type (création) et contient &#x60;id&#x60; si c&#x27;est l&#x27;instanciation
+    *         d&#x27;une fiche existante.
+    *
+    */
   create_instance_fiche_of_type:function(data)
   {
-    dlog(&quot;---&gt; FICHES.create_instance_fiche_of_type [&quot;+data.type+&quot;#&quot;+data.id+&quot;]&quot;, DB_FCT_ENTER)
+    if( DL &amp; DB_FCT_ENTER )
+    { 
+      var spec = data.type
+      if(data.id) spec += &quot;#&quot;+data.id
+      dlog(&quot;---&gt; FICHES.create_instance_fiche_of_type [&quot;+spec+&quot;]&quot;)
+    }
+      
+      
     switch(data.type)
     {
     case &#x27;book&#x27; : return new Book(data)

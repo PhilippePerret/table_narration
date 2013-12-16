@@ -28,7 +28,7 @@ window.FICHES = {
     * @final
     */
   datatype:{
-    'para'  : {level: 5 , defvalue: "",                 child_type:null,    parent_type:'page', hname:"paragraphe"},
+    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,    parent_type:'page', hname:"paragraphe"},
     'page'  : {level: 10, defvalue: "TITRE_PAGE",       child_type:'para',  parent_type:'chap', hname: "page"},
     'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE",   child_type:'page',  parent_type:'book', hname: "chapitre"},
     'book'  : {level: 20, defvalue: "TITRE_LIVRE",      child_type:'chap',  parent_type:null,   hname: "livre"}
@@ -459,9 +459,25 @@ window.FICHES = {
     return ifiche
   },
   // @data  Peut contenir 'id' et 'type' au minimum
+  /**
+    * Instancie une fiche avec les données `data`.
+    *
+    * @method create_instance_fiche_of_type
+    * @param  {Object} data Contient au mininum `type` pour instancier une nouvelle
+    *         fiche de ce type (création) et contient `id` si c'est l'instanciation
+    *         d'une fiche existante.
+    *
+    */
   create_instance_fiche_of_type:function(data)
   {
-    dlog("---> FICHES.create_instance_fiche_of_type ["+data.type+"#"+data.id+"]", DB_FCT_ENTER)
+    if( DL & DB_FCT_ENTER )
+    { 
+      var spec = data.type
+      if(data.id) spec += "#"+data.id
+      dlog("---> FICHES.create_instance_fiche_of_type ["+spec+"]")
+    }
+      
+      
     switch(data.type)
     {
     case 'book' : return new Book(data)

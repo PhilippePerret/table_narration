@@ -116,22 +116,16 @@ $.extend(UI, {
   rappelle_ondrop_on_table:function(evt, ui){
     this.ondrop_on_table(evt, ui)
   },
+  /**
+    * @method ondrop_on_table
+    * @param  {Event}   evt   Drop event
+    * @param  {Object}  ui    Set jQuery transmis par droppable.
+    */
   ondrop_on_table:function(evt, ui)
   {
-    if(undefined == this.timer_ondrop)
-    {
-      return this.timer_ondrop = setTimeout($.proxy(UI.rappelle_ondrop_on_table, UI, evt, ui), 4*100)
-    }
-    delete this.timer_ondrop
     var idm = "UI.ondrop_on_table"
     dlog("---> "+idm, DB_FCT_ENTER )
-    if(this.drop_on_fiche)
-    {
-      delete this.drop_on_fiche
-      return
-    }
     var ctool = ui.helper
-    dlog("---> UI.ondrop_on_table (ctool "+ctool.attr('data-type')+")", DB_FCT_ENTER)
     
     // Déterminer la position approximative du drop sur la table
     var pos_table = $('section#table').position()
@@ -145,7 +139,7 @@ $.extend(UI, {
       top   : y
     })
     ifiche.positionne
-    ifiche.open
+    if(ifiche.is_not_paragraph) ifiche.open
     dlog("<- UI.ondrop_on_table", DB_FCT_ENTER)
   }
   

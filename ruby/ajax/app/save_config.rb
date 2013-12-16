@@ -23,5 +23,5 @@ end
 unless File.exists? path_config
   # Pour le moment, j'essaie d'enregistrer simplement la donnée, qui doit être sous
   # forme de string.
-  Collection::save_current_configuration (param :config).gsub(/\\"/, '"')}
+  Collection::save_current_configuration (param :config).gsub(/\\"/, '"')
 end
