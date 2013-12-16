@@ -21,7 +21,7 @@ require './ruby/model/collection'
 #   Définition de l'opération
 #   -------------------------
 # 
-REPARER = false # mettre à true pour réparer (sinon, simple check)
+REPARER = true # mettre à true pour réparer (sinon, simple check)
 
 # Si true, supprimera de la liste des enfants les fiches qui n'ont pas
 # été trouvées. À utiliser en toute connaissance de cause ! Dans la plupart
