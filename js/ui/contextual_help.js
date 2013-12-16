@@ -92,21 +92,28 @@ Object.defineProperties(ContextualHelp, {
   "adapt_with_fiche_active":{
     get:function(){
       var fi = this.current_fiche, aide = "" ;
-      var ispara = fi.is_paragraph
-      // Construire l'aide
-                      aide += this.info_current_fiche
-                      aide += this['space_'+(fi.opened ? 'close':'open')]
-      if(fi.parent)   aide += this.left_choose_parent
-      if(fi.enfants)  aide += this.right_choose_child
-                      aide += this['show_'+(fi.retourned?'recto':'verso')]
-      if($(fi.div_main_prop_jid).length){
-        aide += this['return_change_'+(ispara?'texte':'titre')]
-      }
-      else 
-      {
+      var ispara  = fi.is_paragraph
+      var editing = $(fi.div_main_prop_jid).length == 0
+      
+      // === Construire l'aide ===
+      aide += this.info_current_fiche
+      if(editing){
         aide += this['return_save_'+(ispara?'texte':'titre')]
         aide += this.raccourcis_textuels
         if( ispara ) aide += this.shortcut_paragraph
+      }
+      else 
+      {
+        aide += this['space_'+(fi.opened ? 'close':'open')]
+        if(fi.parent)   aide += this.left_choose_parent
+        if(fi.enfants)  aide += this.right_choose_child
+        if(fi.parent && fi.parent.enfants)
+        {
+          aide += this.up_choose_next + this.down_choose_prev +
+                  this.cmd_up_move_up + this.cmd_down_move_down
+        }
+        aide += this['show_'+(fi.retourned?'recto':'verso')]
+        aide += this['return_change_'+(ispara?'texte':'titre')]
       }
         
       help( aide )
@@ -232,8 +239,12 @@ $.extend(CH, {
   'raccourcis_textuels' : CH.del + CH.k_cmd+CH.k_f+" Insert Film"+
                           CH.del + CH.k_cmd+CH.k_m+" Insert Mot",
   'shortcut_paragraph'  : CH.del + CH.k_cmd+CH.k_return+" Nouveau paragraphe",
-  'left_choose_parent'  : CH.del + CH.k_left+" => Parent",
-  'right_choose_child'  : CH.del + CH.k_right+" => 1er enfant",
+  'left_choose_parent'  : CH.del + CH.k_left+" Parent",
+  'right_choose_child'  : CH.del + CH.k_right+" 1er enfant",
+  'up_choose_next'      : CH.del + CH.k_up + " item suivant",
+  'down_choose_prev'    : CH.del + CH.k_down + " item précédent",
+  'cmd_up_move_up'      : CH.del + CH.k_cmd+CH.k_up+" Remonte",
+  'cmd_down_move_down'  : CH.del + CH.k_cmd+CH.k_down+" Descend",
   'space_open'          : CH.del + CH.k_space+" Ouvre ",
   'space_close'         : CH.del + CH.k_space+" Ferme ",
   'return_change_titre' : CH.del + CH.k_return+" Éditer titre",
