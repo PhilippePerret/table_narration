@@ -77,6 +77,8 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/window.html">window</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -119,8 +121,6 @@
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
             
-                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
-            
                 <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
@@ -150,6 +150,8 @@
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
             
             </ul>
         </div>
@@ -263,14 +265,14 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     return keypress_when_no_selection_no_edition(evt)
   }
   
-  var complex_method = null
+  var cplx_meth = null
   switch(evt.keyCode)
   {
   /* TAB =&gt; retourner la fiche */
-  case K_TAB:     complex_method = &#x27;retourne&#x27;; break
+  case K_TAB:     cplx_meth = &#x27;retourne&#x27;; break
   
   /* ENTER =&gt; édite main field */
-  case K_RETURN:  complex_method = &#x27;enable_main_field&#x27;; break
+  case K_RETURN:  cplx_meth = &#x27;enable_main_field&#x27;; break
   
   /*
    *  -&gt;    Sélectionner le premier enfant (if any)
@@ -278,37 +280,37 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
    *  up    Sibling précédent (if any)
    *  down  Sibling suivant (if any)
    */
-  case K_LEFT_ARROW:  complex_method = &#x27;select_parent&#x27;;       break
-  case K_RIGHT_ARROW: complex_method = &#x27;select_first_child&#x27;;  break
-  case K_UP_ARROW:    complex_method = &#x27;select_previous&#x27;;     break
-  case K_DOWN_ARROW:  complex_method = &#x27;select_next&#x27;;         break
+  case K_LEFT_ARROW:  cplx_meth = &#x27;select_parent&#x27;;       break
+  case K_RIGHT_ARROW: cplx_meth = &#x27;select_first_child&#x27;;  break
+  case K_UP_ARROW:    cplx_meth = evt.metaKey ? &#x27;move_up&#x27;    : &#x27;select_previous&#x27;; break
+  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? &#x27;move_down&#x27;  : &#x27;select_next&#x27;;         break
     
   /* ERASE =&gt; supprimer la fiche */
-  case K_ERASE: complex_method = &#x27;want_delete&#x27;; break
+  case K_ERASE: cplx_meth = &#x27;want_delete&#x27;; break
   default:
     // console.log(&quot;which:&quot;+evt.which+&quot; / keyCode:&quot;+evt.keyCode+&quot; / charCode:&quot;+evt.charCode)
     // return true // Non, on doit poursuivre
   }
-  if(complex_method) 
+  if(cplx_meth) 
   {
-    FICHES.current[complex_method]
+    FICHES.current[cplx_meth]
     return stop_event(evt)
   }
   
-  complex_method = null
+  cplx_meth = null
   switch(evt.charCode)
   {
-  case K_SPACE: complex_method = &#x27;toggle&#x27;   ; break
-  case Key_o:   complex_method = &#x27;open&#x27;     ; break
-  case Key_f:   complex_method = &#x27;close&#x27;    ; break
-  case Key_d:   complex_method = &#x27;deselect&#x27; ; break
+  case K_SPACE: cplx_meth = &#x27;toggle&#x27;   ; break
+  case Key_o:   cplx_meth = &#x27;open&#x27;     ; break
+  case Key_f:   cplx_meth = &#x27;close&#x27;    ; break
+  case Key_d:   cplx_meth = &#x27;deselect&#x27; ; break
   default:
     console.log(&quot;which:&quot;+evt.which+&quot; / keyCode:&quot;+evt.keyCode+&quot; / charCode:&quot;+evt.charCode)
     // return stop_event(evt)
   }
-  if(complex_method)
+  if(cplx_meth)
   {
-    FICHES.current[complex_method]
+    FICHES.current[cplx_meth]
     return stop_event(evt)
   }
       

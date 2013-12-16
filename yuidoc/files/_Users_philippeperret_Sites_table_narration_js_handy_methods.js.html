@@ -77,6 +77,8 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/window.html">window</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -119,8 +121,6 @@
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
             
-                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
-            
                 <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
@@ -150,6 +150,8 @@
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
             
             </ul>
         </div>
@@ -191,12 +193,20 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-  * @module HandyMethods
+  * @module window
   */
 
+/**
+  * @class window
+  * @static
+  */
+  
 /*
  *  Méthodes pratiques
  *  ------------------
+ *
+ *    stop_save
+ *    restart_save
  *
  *    {Film}    get_film(&lt;id film&gt;)
  *    {Mot}     get_mot(&lt;id mot&gt;)
@@ -204,42 +214,90 @@
  *    {String}  image(&lt;path in ../lib/img/&gt;)
  *  
  */
-/*
- *  Retourne l&#x27;instance {Mot} du mot d&#x27;identifiant +mid+
- *  en la créant si nécessaire
- *
- *  NOTES
- *  -----
- *    = C&#x27;est un raccourci de la méthode DICO.get
- *  
- */
+
+Object.defineProperties(window,{
+  /**
+    * Interrompt la sauvegarde provisoirement si elle est en automatique
+    *
+    * Notes
+    * -----
+    *   * La relancer avec &#x60;restart_save&#x60;
+    *
+    * @method stop_save
+    */
+  &quot;stop_save&quot;:{
+    get:function(){
+      if(Collection.AUTOMATIC_SAVING)
+      {
+        Collection.disable_save
+      }
+    }
+  },
+  /**
+    * Relance la sauvegarde automatique interrompue par &#x60;stop_save&#x60;
+    *
+    * Notes
+    * -----
+    *   * Seulement si la sauvegarde automatique étant en cours
+    *
+    * @method restart_save
+    */
+  &quot;restart_save&quot;:{
+    get:function(){
+      if(Collection.AUTOMATIC_SAVING)
+      {
+        Collection.enable_save
+      }
+    }
+  }
+  
+})
+/**
+  * Retourne l&#x27;instance {Mot} du mot d&#x27;identifiant +mid+
+  * en la créant si nécessaire
+  *
+  * NOTES
+  * -----
+  *   * C&#x27;est un raccourci de la méthode DICO.get
+  *
+  * @method get_mot
+  * @param  {String} mid  Identifiant du mot
+  * @return {Mot} Instance du mot voulu, ou null si mot introuvable
+  */
 window.get_mot = function(mid)
 {
   return DICO.get(mid)
 }
-/*
- *  Retourne l&#x27;instance {Film} du film d&#x27;identifiant +fid+
- *  en la créant si nécessaire.
- *
- *  NOTES
- *  -----
- *    = Cette méthode est un raccourci de &#x60;FILMS.get(id)&#x27;
- *  
- */
+/**
+  * Retourne l&#x27;instance {Film} du film d&#x27;identifiant +fid+
+  * en la créant si nécessaire.
+  *
+  * NOTES
+  * -----
+  *   * Cette méthode est un raccourci de &#x60;FILMS.get(id)&#x27;
+  * 
+  * @method get_film
+  * @param  {String} fid  Identifiant du film
+  * @return {Film} L&#x27;instance du film ou null s&#x27;il n&#x27;existe pas.
+  *
+  */
 window.get_film = function(fid)
 {
   return FILMS.get(fid)
 }
 
-/*
- *  Retourne l&#x27;instance {Ref} de la référence d&#x27;identifiant +rid+
- *  en la créant si nécessaire.
- *
- *  NOTES
- *  -----
- *    = Cette méthode est un raccourci de &#x60;REFS.get(rid)&#x27;
- *  
- */
+/**
+  * Retourne l&#x27;instance {Ref} de la référence d&#x27;identifiant +rid+
+  * en la créant si nécessaire.
+  *
+  * NOTES
+  * -----
+  *   * Cette méthode est un raccourci de &#x60;REFS.get(rid)&#x27;
+  * 
+  * @method get_ref
+  * @param  {String}  Identifiant de la référence.
+  * @return {Ref}     L&#x27;instance Ref de la référence.
+  */
 window.get_ref = function(rid)
 {
   return REFS.get(rid)
@@ -254,12 +312,23 @@ window.help = function(message)
   $(&#x27;div#div_help&#x27;).html( message )
 }
 
-/*
- *  Retourne le code HTML pour afficher l&#x27;image de path +path+
- *
- *  Pour le moment, l&#x27;image doit se trouver dans le dossier lib/img
- *  
- */
+/**
+  * Retourne le code HTML pour afficher l&#x27;image de path +path+
+  *
+  * Notes
+  * -----
+  *   * Pour le moment, l&#x27;image doit se trouver dans le dossier lib/img
+  * 
+  * @method image
+  * @param  {String} path
+  * @param  [attrs=null] {Object} Attributs à ajouter à la balise
+  * @return {String} Code HTML de la balise image à insérer.
+  * @example
+  *     imgHtml = image(&#x27;clavier/K_Tab.png&#x27;, {id:&quot;touche_tab&quot;, class:&#x27;rleft&#x27;})
+  *     # Produira le code :
+  *     &lt;img src=&quot;../lib/img/clavier/K_Tab.png&quot; id=&quot;touche_tab&quot; class=&quot;rleft&quot; /&gt;
+  *
+  */
 window.image = function(path, attrs)
 {
   var real_path = &#x27;../lib/img/&#x27; + path

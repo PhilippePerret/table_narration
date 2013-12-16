@@ -308,9 +308,11 @@
         "/Users/philippeperret/Sites/table_narration/js/handy_methods.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
             "modules": {
-                "HandyMethods": 1
+                "window": 1
             },
-            "classes": {},
+            "classes": {
+                "window": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -722,15 +724,17 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/debug.js",
             "line": 1
         },
-        "HandyMethods": {
-            "name": "HandyMethods",
+        "window": {
+            "name": "window",
             "submodules": {},
-            "classes": {},
+            "classes": {
+                "window": 1
+            },
             "fors": {},
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
-            "line": 1
+            "line": 5
         },
         "jQueryExtension": {
             "name": "jQueryExtension",
@@ -1061,6 +1065,20 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
             "line": 5,
             "description": "Objet ColText\n-------------\nGestion des textes de la collection (toutes les fiches).\nC'est cet objet par exemple qui va traiter les balises que contient un texte\navant de l'afficher.",
+            "static": 1
+        },
+        "window": {
+            "name": "window",
+            "shortname": "window",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "window",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 5,
             "static": 1
         }
     },
@@ -1486,7 +1504,27 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 300,
+            "line": 99,
+            "description": "Déplacement de l'enfant vers le haut\n\nNotes\n-----\n  * Méthode \"complexe\", donc invoquée sans parenthèses\n  * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre\n    le nouvel ordre à chaque fois, mais ça risque d'être intense pour rien.\n    Au lieu de ça, j'utilise un timeout qui appelera la méthode seulement \n    lorsque les déplacements sembleront terminés.",
+            "itemtype": "method",
+            "name": "move_up",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 119,
+            "description": "Déplacement de l'enfant vers le bas\nNotes\n-----\n  * Cf. les notes de la méthode `move_up`.",
+            "itemtype": "method",
+            "name": "move_down",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 353,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
@@ -1498,7 +1536,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 439,
+            "line": 492,
             "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
             "itemtype": "method",
             "name": "enable_main_field",
@@ -1508,7 +1546,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 490,
+            "line": 543,
             "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * Propriété complexe (appelé sans parenthèses)\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
             "itemtype": "method",
             "name": "clone",
@@ -1562,7 +1600,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 535,
+            "line": 536,
             "description": "Appelé quand on droppe un enfant sur la fiche courante",
             "itemtype": "method",
             "name": "on_drop",
@@ -1583,7 +1621,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 590,
+            "line": 591,
             "description": "Appelé quand on change l'ordre des enfants de la fiche\n\nNOTES\n-----\n  * Plutôt que de s'embêter à étudier +ui+ pour savoir quel\n    élément a été déplacé, on compare la liste du DOM avec la liste des\n    enfants et on commence à traiter à partir de cet indice.",
             "itemtype": "method",
             "name": "onchange_ordre_enfants",
@@ -1604,7 +1642,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 645,
+            "line": 639,
             "description": "Ajout d'un enfant à la fiche\n\nNOTES\n-----\n  * C'est cette méthode qui doit être utilisée pour tout ajout\n    d'enfant.",
             "itemtype": "method",
             "name": "add_child",
@@ -1625,7 +1663,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 721,
+            "line": 715,
             "description": "Supprime un enfant de la fiche",
             "itemtype": "method",
             "name": "remove_child",
@@ -1641,7 +1679,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 758,
+            "line": 752,
             "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.",
             "itemtype": "method",
             "name": "onchange_texte",
@@ -2216,6 +2254,24 @@
             "module": "App.js"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 166,
+            "description": "Les deux méthodes `disable_save' et 'enable_save' permettent\nd'activer ou non la sauvegarde automatique (lorsque l'option AUTO\nest activé)\n\nNotes\n-----\n  * Ce sont des méthodes complexes, donc à invoquer sans parenthèses.  \n  * UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et\n    start_automatic_saving.\n  * L'idéal est même d'utiliser `stop_save` (exactement) et `restart_save`\n    qui arrête et relance la sauvegarde automatique seulement dans le cas\n    où elle est activée (cf. les handy methods)",
+            "itemtype": "method",
+            "name": "disable_save",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 190,
+            "description": "Réactive la sauvegarde automatique\nNotes\n-----\n  * Lire les notes de la méthode `disable_save`",
+            "itemtype": "method",
+            "name": "enable_save",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
             "line": 18,
             "description": "Le code en traitement courant",
@@ -2248,6 +2304,114 @@
             ],
             "class": "ColText",
             "module": "ColText"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 25,
+            "description": "Interrompt la sauvegarde provisoirement si elle est en automatique\n\nNotes\n-----\n  * La relancer avec `restart_save`",
+            "itemtype": "method",
+            "name": "stop_save",
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 42,
+            "description": "Relance la sauvegarde automatique interrompue par `stop_save`\n\nNotes\n-----\n  * Seulement si la sauvegarde automatique étant en cours",
+            "itemtype": "method",
+            "name": "restart_save",
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 61,
+            "description": "Retourne l'instance {Mot} du mot d'identifiant +mid+\nen la créant si nécessaire\n\nNOTES\n-----\n  * C'est un raccourci de la méthode DICO.get",
+            "itemtype": "method",
+            "name": "get_mot",
+            "params": [
+                {
+                    "name": "mid",
+                    "description": "Identifiant du mot",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Instance du mot voulu, ou null si mot introuvable",
+                "type": "Mot"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 77,
+            "description": "Retourne l'instance {Film} du film d'identifiant +fid+\nen la créant si nécessaire.\n\nNOTES\n-----\n  * Cette méthode est un raccourci de `FILMS.get(id)'",
+            "itemtype": "method",
+            "name": "get_film",
+            "params": [
+                {
+                    "name": "fid",
+                    "description": "Identifiant du film",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "L'instance du film ou null s'il n'existe pas.",
+                "type": "Film"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 95,
+            "description": "Retourne l'instance {Ref} de la référence d'identifiant +rid+\nen la créant si nécessaire.\n\nNOTES\n-----\n  * Cette méthode est un raccourci de `REFS.get(rid)'",
+            "itemtype": "method",
+            "name": "get_ref",
+            "params": [
+                {
+                    "name": "Identifiant",
+                    "description": "de la référence.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "L'instance Ref de la référence.",
+                "type": "Ref"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 121,
+            "description": "Retourne le code HTML pour afficher l'image de path +path+\n\nNotes\n-----\n  * Pour le moment, l'image doit se trouver dans le dossier lib/img",
+            "itemtype": "method",
+            "name": "image",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "attrs",
+                    "description": "Attributs à ajouter à la balise",
+                    "type": "Object",
+                    "optional": true,
+                    "optdefault": "null"
+                }
+            ],
+            "return": {
+                "description": "Code HTML de la balise image à insérer.",
+                "type": "String"
+            },
+            "example": [
+                "\n    imgHtml = image('clavier/K_Tab.png', {id:\"touche_tab\", class:'rleft'})\n    # Produira le code :\n    <img src=\"../lib/img/clavier/K_Tab.png\" id=\"touche_tab\" class=\"rleft\" />\n"
+            ],
+            "class": "window",
+            "module": "window"
         }
     ],
     "warnings": [

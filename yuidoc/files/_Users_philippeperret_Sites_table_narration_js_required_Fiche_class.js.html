@@ -77,6 +77,8 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/window.html">window</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -119,8 +121,6 @@
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
             
-                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
-            
                 <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
@@ -150,6 +150,8 @@
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
             
             </ul>
         </div>
@@ -434,6 +436,7 @@ Object.defineProperties(Fiche.prototype, {
       // Rend ses enfants sortable
       this.div_items.sortable({
         &#x27;axis&#x27;        :&quot;y&quot;,
+        &#x27;helper&#x27;      :&quot;clone&quot;,
         &#x27;placeholder&#x27; :&#x27;newplace&#x27;,
         &#x27;update&#x27;      :$.proxy(this.onchange_ordre_enfants, this)
       })
@@ -795,36 +798,29 @@ $.extend(Fiche.prototype,{
     */
   onchange_ordre_enfants:function(evt, ui)
   {
-    var ichild = 0, child_dom, child_lst, new_enfants = [] ;
-    var enfants_dom = this.div_items.find(&#x27;&gt; fiche&#x27;)
-    var enfants_count = this.enfants.length
-    for(; ichild &lt; enfants_count; ++ichild)
-    {
-      child_dom = enfants_dom[ichild]
-      child_lst = this.enfants[ichild]
-      if(child_dom.id != child_lst.dom_id)
-      {
-        dlog(&quot;Ça change à partir de la fiche #&quot;+child_lst.id+&quot; : &quot;+child_lst.texte)
-        break
-      }
-      new_enfants.push(child_lst)
-    }
-    for(; ichild &lt; enfants_count; ++ichild)
-    {
-      
-    }
+    var sorted_id, sorted_ids = 
+      L(this.div_items.sortable(&#x27;toArray&#x27;)).
+      collect(function(domid){ return parseInt(domid.split(&#x27;-&#x27;)[1],10)})
+    
+    this.enfants = []
+    while(sorted_id = sorted_ids.shift()) this.enfants.push(get_fiche(sorted_id))
+    this.update_indice_enfants()
+    this.modified = true
+    restart_save
   },
   
   /*
-   *  Actualise l&#x27;indice des enfants
-   *
-   *  NOTES
-   *  -----
-   *    = L&#x27;indice des enfants (0-start) est une propriété volatile
-   *      utile à quelques méthodes, par exemple l&#x27;insertion d&#x27;enfants
-   *      à un endroit précis.
-   *  
-   */
+    * Actualise l&#x27;indice des enfants à partir de +from+
+    *
+    * NOTES
+    * -----
+    *   * L&#x27;indice des enfants (0-start) est une propriété volatile
+    *     utile à quelques méthodes, par exemple l&#x27;insertion d&#x27;enfants
+    *     à un endroit précis.
+    *
+    * @method update_indice_enfants
+    * @param [from=0] {Number} from  Indice de départ
+    */
   update_indice_enfants:function(from)
   {
     if(undefined == from) from = 0

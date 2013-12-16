@@ -77,6 +77,8 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/window.html">window</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -119,8 +121,6 @@
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
             
-                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
-            
                 <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
@@ -150,6 +150,8 @@
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
             
             </ul>
         </div>
@@ -281,6 +283,59 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
 
+
+
+  /* ---------------------------------------------------------------------
+   *
+   *  MÉTHODES DE DÉPLACEMENT
+   *  
+   --------------------------------------------------------------------- */
+  /**
+    * Déplacement de l&#x27;enfant vers le haut
+    *
+    * Notes
+    * -----
+    *   * Méthode &quot;complexe&quot;, donc invoquée sans parenthèses
+    *   * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre
+    *     le nouvel ordre à chaque fois, mais ça risque d&#x27;être intense pour rien.
+    *     Au lieu de ça, j&#x27;utilise un timeout qui appelera la méthode seulement 
+    *     lorsque les déplacements sembleront terminés.
+    *
+    * @method move_up
+    */
+  &quot;move_up&quot;:{
+    get:function(){
+      this.unset_timer_move
+      
+      this.set_timer_move
+    }
+  },
+  /**
+    * Déplacement de l&#x27;enfant vers le bas
+    * Notes
+    * -----
+    *   * Cf. les notes de la méthode &#x60;move_up&#x60;.
+    * @method move_down
+    *
+    */
+  &quot;move_down&quot;:{
+    get:function(){
+      this.unset_timer_move
+      
+      this.set_timer_move
+    }
+  },
+  &quot;set_timer_move&quot;:{
+    get:function(){
+      stop_save
+      this.timer_move = setTimeout($.proxy(this.onchange_ordre_enfants, this), 2000)
+    }
+  },
+  &quot;unset_timer_move&quot;:{
+    get:function(){
+      if(this.timer_move) clearTimeout(this.timer_move)
+    }
+  },
   /* ---------------------------------------------------------------------
    *
    *  MÉTHODES DE SÉLECTION

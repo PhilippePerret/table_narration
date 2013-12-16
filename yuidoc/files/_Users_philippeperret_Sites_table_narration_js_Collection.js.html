@@ -77,6 +77,8 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/window.html">window</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
@@ -119,8 +121,6 @@
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
             
-                <li><a href="../modules/HandyMethods.html">HandyMethods</a></li>
-            
                 <li><a href="../modules/Input.html">Input</a></li>
             
                 <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
@@ -150,6 +150,8 @@
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
             
             </ul>
         </div>
@@ -355,26 +357,42 @@ window.Collection = {
 
 Object.defineProperties(Collection,{
   
-  /*
-   *  Les deux méthodes &#x60;disable_save&#x27; et &#x27;enable_save&#x27; permettent
-   *  d&#x27;activer ou non la sauvegarde automatique (lorsque l&#x27;option AUTO
-   *  est activé)
-   *  
-   *  UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
-   *  start_automatic_saving
-   *
-   */
+  /**
+    * Les deux méthodes &#x60;disable_save&#x27; et &#x27;enable_save&#x27; permettent
+    * d&#x27;activer ou non la sauvegarde automatique (lorsque l&#x27;option AUTO
+    * est activé)
+    * 
+    * Notes
+    * -----
+    *   * Ce sont des méthodes complexes, donc à invoquer sans parenthèses.  
+    *   * UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
+    *     start_automatic_saving.
+    *   * L&#x27;idéal est même d&#x27;utiliser &#x60;stop_save&#x60; (exactement) et &#x60;restart_save&#x60;
+    *     qui arrête et relance la sauvegarde automatique seulement dans le cas
+    *     où elle est activée (cf. les handy methods)
+    *
+    * @method disable_save
+    *
+    */
   &quot;disable_save&quot;:{
     get:function(){
-      this.save_in_disable = true
+      this.save_is_disable = true
       this.stop_automatic_saving
       this.regle_mark_saved
     }
   },
-  
+  /**
+    * Réactive la sauvegarde automatique
+    * Notes
+    * -----
+    *   * Lire les notes de la méthode &#x60;disable_save&#x60;
+    *
+    * @method enable_save
+    *
+    */
   &quot;enable_save&quot;:{
     get:function(){
-      this.save_in_disable = false
+      this.save_is_disable = false
       this.start_automatic_saving
       this.regle_mark_saved
     }
@@ -383,7 +401,7 @@ Object.defineProperties(Collection,{
   &quot;regle_mark_saved&quot;:{
     get:function()
     {
-      var mod = this.modified, forb = this.save_in_disable ;
+      var mod = this.modified, forb = this.save_is_disable ;
       $(&#x27;span#mark_saved_no&#x27;)       [!forb &amp;&amp; mod  ? &#x27;show&#x27; : &#x27;hide&#x27;]()
       $(&#x27;span#mark_saved_yes&#x27;)      [!mod &amp;&amp; !forb ? &#x27;show&#x27;: &#x27;hide&#x27;]()
       $(&#x27;span#mark_saved_forbidden&#x27;)[forb ? &#x27;show&#x27;:&#x27;hide&#x27;]()
@@ -419,6 +437,7 @@ Object.defineProperties(Collection,{
    */
   &quot;enable_automatic_saving&quot;:{
     value:function(oui){
+      this.AUTOMATIC_SAVING = oui
       if(oui){ 
         this.start_automatic_saving
         if(this.loaded) this.save
@@ -437,7 +456,7 @@ Object.defineProperties(Collection,{
   &quot;load&quot;:{
     get:function(){
       this.loading = true
-      this.stop_automatic_saving
+      stop_save
       F.show(&quot;Chargement de la collection…&quot;, {timer:false})
       Ajax.send({script:&#x27;collection/load&#x27;}, $.proxy(this.retour_load, this))
     }

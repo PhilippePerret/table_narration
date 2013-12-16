@@ -18,7 +18,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Page",
         "Paragraph",
         "UI",
-        "UI.Input"
+        "UI.Input",
+        "window"
     ],
     "modules": [
         "App.js",
@@ -36,7 +37,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "FILMS",
         "Fiche",
         "FilmClass",
-        "HandyMethods",
         "Input",
         "KeyEvents",
         "KeyboardEvents",
@@ -55,7 +55,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "fiche_dom",
         "jQueryExtension",
         "objets",
-        "ready.js"
+        "ready.js",
+        "window"
     ],
     "allModules": [
         {
@@ -135,10 +136,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "FILMS"
         },
         {
-            "displayName": "HandyMethods",
-            "name": "HandyMethods"
-        },
-        {
             "displayName": "Input",
             "name": "Input",
             "description": "Sous-Objet UI.Input\n\nGestionnaire de champ de saisie.\nMalgré son nom, gère aussi bien les input de type \"text\" que les textarea."
@@ -200,6 +197,10 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "UI",
             "name": "UI"
+        },
+        {
+            "displayName": "window",
+            "name": "window"
         }
     ]
 } };

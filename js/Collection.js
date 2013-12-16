@@ -163,26 +163,42 @@ window.Collection = {
 
 Object.defineProperties(Collection,{
   
-  /*
-   *  Les deux méthodes `disable_save' et 'enable_save' permettent
-   *  d'activer ou non la sauvegarde automatique (lorsque l'option AUTO
-   *  est activé)
-   *  
-   *  UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
-   *  start_automatic_saving
-   *
-   */
+  /**
+    * Les deux méthodes `disable_save' et 'enable_save' permettent
+    * d'activer ou non la sauvegarde automatique (lorsque l'option AUTO
+    * est activé)
+    * 
+    * Notes
+    * -----
+    *   * Ce sont des méthodes complexes, donc à invoquer sans parenthèses.  
+    *   * UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et
+    *     start_automatic_saving.
+    *   * L'idéal est même d'utiliser `stop_save` (exactement) et `restart_save`
+    *     qui arrête et relance la sauvegarde automatique seulement dans le cas
+    *     où elle est activée (cf. les handy methods)
+    *
+    * @method disable_save
+    *
+    */
   "disable_save":{
     get:function(){
-      this.save_in_disable = true
+      this.save_is_disable = true
       this.stop_automatic_saving
       this.regle_mark_saved
     }
   },
-  
+  /**
+    * Réactive la sauvegarde automatique
+    * Notes
+    * -----
+    *   * Lire les notes de la méthode `disable_save`
+    *
+    * @method enable_save
+    *
+    */
   "enable_save":{
     get:function(){
-      this.save_in_disable = false
+      this.save_is_disable = false
       this.start_automatic_saving
       this.regle_mark_saved
     }
@@ -191,7 +207,7 @@ Object.defineProperties(Collection,{
   "regle_mark_saved":{
     get:function()
     {
-      var mod = this.modified, forb = this.save_in_disable ;
+      var mod = this.modified, forb = this.save_is_disable ;
       $('span#mark_saved_no')       [!forb && mod  ? 'show' : 'hide']()
       $('span#mark_saved_yes')      [!mod && !forb ? 'show': 'hide']()
       $('span#mark_saved_forbidden')[forb ? 'show':'hide']()
@@ -227,6 +243,7 @@ Object.defineProperties(Collection,{
    */
   "enable_automatic_saving":{
     value:function(oui){
+      this.AUTOMATIC_SAVING = oui
       if(oui){ 
         this.start_automatic_saving
         if(this.loaded) this.save
@@ -245,7 +262,7 @@ Object.defineProperties(Collection,{
   "load":{
     get:function(){
       this.loading = true
-      this.stop_automatic_saving
+      stop_save
       F.show("Chargement de la collection…", {timer:false})
       Ajax.send({script:'collection/load'}, $.proxy(this.retour_load, this))
     }
