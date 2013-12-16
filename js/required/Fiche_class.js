@@ -1,5 +1,5 @@
 /**
-  * @module FicheClass
+  * @module Fiche
   */
 
 /**
@@ -32,7 +32,7 @@ window.Fiche = function(data)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
   this._opened    = false   // cf. propriété complexe `opened'
-  this._ranged    = false   // cf. propriété complexe `ranged'
+  // this._ranged    = false   // cf. propriété complexe `ranged'
   this.selected   = false
   this.built      = false   // mis à true quand la fiche est construite
   this.retourned  = false   // Mis à true quand c'est le verso affiché
@@ -92,10 +92,13 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){return this._modified || false }
   },
   
-  /*
-   *  Marque la fiche ouverte ou fermé (ou retourne la propriété)
-   *  
-   */
+  /**
+    * Marque la fiche ouverte ou fermée (ou retourne la propriété)
+    * True si la fiche est ouverte, false dans le cas contraire.
+    *
+    * @property {Boolean} opened
+    * @default false
+    */
   "opened":{
     get:function(){ return this._opened || false },
     set:function(opened){
@@ -103,16 +106,33 @@ Object.defineProperties(Fiche.prototype, {
       this.obj[opened?'addClass':'removeClass']('opened')
     }
   },
-
-  /*
-   *  Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)
-   *  
-   */
+  /**
+    * Returne true si la fiche est fermée, false si ouverte
+    *
+    * @property {Boolean} closed
+    * @default  true
+    * @readOnly
+    */
+  "closed":{get:function(){return this.opened == false}},
+  
+  /**
+    * Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)
+    *
+    * NOTES
+    * -----
+    *   * La valeur retournée dépend du type de fiche.
+    *       * Pour un livre, la valeur est toujours false
+    *       * Pour un chapitre ou un paragraphe, dès qu'ils ont un parent,
+    *         ils sont toujours rangés.
+    *       * Pour un page, dépend de son ouverture / fermeture.
+    *
+    * @property {Boolean} ranged
+    */
   "ranged":{
-    get:function(){ return this._ranged || false },
-    set:function(ranged){
-      this._ranged = ranged
-      this.obj[ranged?'addClass':'removeClass']('ranged')
+    get:function(){
+      if(this.is_book) return false
+      if(this.parent && (this.is_chapter || this.is_paragraph)) return true
+      if(this.is_page) return this.parent && this.closed
     }
   },
 
@@ -370,7 +390,8 @@ Object.defineProperties(Fiche.prototype, {
       dlog("---> "+idm, DB_FCT_ENTER)
       if(this.is_not_openable) return this.rend_openable('open')
       this.opened = true
-      if(this.is_page && this.ranged) this.unrange
+      if(this.parent && this.is_page) this.unrange
+      this.positionne
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -417,7 +438,7 @@ Object.defineProperties(Fiche.prototype, {
         this.draggable = false
       }
       this.rend_sortable
-      this.ranged = true
+      this.obj.addClass('ranged')
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -429,13 +450,13 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error['unable to unrange orphelin']
       this.clone
+      this.obj.removeClass('ranged')
       if(this.sortable)
       {
         this.obj.sortable("destroy")
         this.sortable = false
       }
       this.rend_draggable
-      this.ranged = false
     }
   },
   

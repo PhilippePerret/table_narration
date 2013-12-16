@@ -13,7 +13,7 @@ class Fiche
     # 
     def get id
       @list ||= {}
-      @list[id]
+      @list[id.to_i]
     end
     
     # Ajoute l'instance {Fiche} +fiche+ à la liste des fiches instanciées
@@ -137,7 +137,7 @@ class Fiche
   # configuration courante.
   # 
   # @note : si le fichier de configuration courante n'existe pas, seuls les
-  # livres sont marqués visibles
+  # livres sont marqués on_table
   # 
   def visible?
     @is_visible ||= false
@@ -147,6 +147,11 @@ class Fiche
     @is_invisible ||= false == visible?
   end
   
+  # Retourne l'instance {Fiche} du parent s'il est défini
+  def parent
+    return null if data['parent'].nil?
+    Fiche::get(data['parent']["id"])
+  end
   # L'ouverture de la fiche n'est plus enregistrée dans ses données,
   # mais dans le fichier de configuration courante.
   # 

@@ -2,6 +2,7 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "App",
+        "Chapter",
         "ColText",
         "Collection",
         "ContextualHelp",
@@ -13,12 +14,14 @@ YUI.add("yuidoc-meta", function(Y) {
         "OBJETS",
         "ObjetClass",
         "PARAGRAPHES",
+        "Page",
         "Paragraph",
         "UI",
         "UI.Input"
     ],
     "modules": [
         "App.js",
+        "Chapter",
         "ColText",
         "Collection",
         "ContextualHelp",
@@ -30,7 +33,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Edition",
         "FICHES",
         "FILMS",
-        "FicheClass",
+        "Fiche",
         "FilmClass",
         "HandyMethods",
         "Input",
@@ -40,12 +43,14 @@ YUI.add("yuidoc-meta", function(Y) {
         "OBJETS",
         "ObjetClass",
         "PARAGRAPHS",
+        "Page",
         "Paragraph",
         "String",
         "UI",
         "data",
         "dom",
-        "fiche.dom",
+        "fiche_data",
+        "fiche_dom",
         "jQueryExtension",
         "ready.js"
     ],
@@ -53,6 +58,10 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "App.js",
             "name": "App.js"
+        },
+        {
+            "displayName": "Chapter",
+            "name": "Chapter"
         },
         {
             "displayName": "Collection",
@@ -87,24 +96,28 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "DICO.js"
         },
         {
-            "displayName": "Dom",
-            "name": "Dom"
-        },
-        {
             "displayName": "dom",
             "name": "dom"
+        },
+        {
+            "displayName": "Dom",
+            "name": "Dom"
         },
         {
             "displayName": "Edition",
             "name": "Edition"
         },
         {
-            "displayName": "fiche.dom",
-            "name": "fiche.dom"
+            "displayName": "Fiche",
+            "name": "Fiche"
         },
         {
-            "displayName": "FicheClass",
-            "name": "FicheClass"
+            "displayName": "fiche_data",
+            "name": "fiche_data"
+        },
+        {
+            "displayName": "fiche_dom",
+            "name": "fiche_dom"
         },
         {
             "displayName": "FICHES",
@@ -151,6 +164,10 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "OBJETS",
             "name": "OBJETS",
             "description": "Objet OBJETS mixé dans les FILMS, DICO et REFS\n\nNOTES\n-----\n  * Les descriptions ci-dessous, lorsqu'elles ne parlent que de \"Film\"\n    peuvent être comprise pour tout objet pluriel mixant ces méthodes."
+        },
+        {
+            "displayName": "Page",
+            "name": "Page"
         },
         {
             "displayName": "Paragraph",

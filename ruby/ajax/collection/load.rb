@@ -30,7 +30,7 @@ Par nature, les fiches à charger sont :
 Configuration courante
 ----------------------
 Pour connaitre les fiches ouvertes, le script se sert maintenant de la 
-configuration courante qui définit quelles fiches sont visibles et surtout
+configuration courante qui définit quelles fiches sont on_table et surtout
 ouvertes (les propriétés `opened` et `ranged` ne sont plus enregistrées dans
 les fiches, elles sont respectivement false et true par défaut à la création
 des fiches).
@@ -49,13 +49,13 @@ log "---> #{__FILE__}"
 
 # Méthode principale appelée pour charger les fiches nécessaires
 # de la collection à son chargement.
-def get_all_fiches_visibles
-  log "---> get_all_fiches_visibles"
+def get_all_fiches_on_table
+  log "---> get_all_fiches_on_table"
   unless File.exists? File.join(Fiche::folder)
-    log "<- get_all_fiches_visibles (dossier collection inexistant => aucune fiche à lire)"
+    log "<- get_all_fiches_on_table (dossier collection inexistant => aucune fiche à lire)"
     return
   end
-  Collection::current_configuration[:visibles].each do |fiche|
+  Collection::current_configuration[:on_table].each do |fiche|
     # @note (ci-dessus): `fiche' est une instance {Fiche}
     # @note (ci-dessous): Pour palier certains problèmes, comme lorsqu'un chapitre
     # a été créé d'abord sur la table, puis la configuration a été enregistré (donc le
@@ -63,8 +63,10 @@ def get_all_fiches_visibles
     # fermé. Il n'est alors plus visible.
     # On part du principe que tout élément qui a un parent ne peut pas être
     # visible, il peut être ouvert, en revanche.
-    unless fiche.hasParent?
+    if fiche.orpheline?
       @data[:fiches] += fiche.get_data :children => :if_opened
+    elsif fiche.page?
+      @data[:fiches] += fiche.get_data :children => true
     end
   end
 end
@@ -77,7 +79,7 @@ end
     :current_configuration  => Collection::raw_current_config
   }
 }
-get_all_fiches_visibles
+get_all_fiches_on_table
 
 # Détruire la configuration courante (ce qui permettra d'enregistrer la
 # nouvelle configuration)

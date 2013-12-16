@@ -1,16 +1,18 @@
 IMPLÉMENTER
 -----------
-
-CONFIGURATION COURANTE
-- Voir s'il ne faut pas enregistrer la configuration courante chaque fois qu'on
-  crée une fiche.
   
-CHARGEMENT DE LA COLLECTION
-  # La configuration ne semble pas s'enregistrer quand on quitte la page ou
-    qu'on la recharge
-
 -# Le titre de la page semble disparaitre parfois.
+-# L'ouverture d'une page dans la configuration courante pose encore problème
+    Cela tient au fait que par exemple :
+    - un livre est fermé, qui contient une page ouverte.
+    - déjà, à l'ouverture de la page, l'app voudrait placer un clone dans le parent,
+      mais le parent de la page (le chapitre contenu par le livre) n'existe pas, 
+      puisque le livre est fermé. Idem à la fermeture de la page.
+      La solution serait-elle d'ouvrir tous les parents de la fiche ? ou plus
+      exactement, d'ouvrir le livre de la page on_table (ce qui "ouvrirait" de fait
+      le chapitre)
 
+* Sauver la configuration courante à chaque save de la collection
 
 APERCU (souris hover un mot/film)
 - Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet

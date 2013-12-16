@@ -206,10 +206,6 @@ UI.Input = {
           ipara.select
           ipara.enable_main_field
         }
-        else
-        {
-          F.show(LOCALE.paragraph.tip['how to create a new para'],{keep:true})
-        }
       }
       return stop_event(evt)
     case K_TAB:

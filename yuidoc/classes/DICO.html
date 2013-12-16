@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -240,7 +250,21 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_dispatch">dispatch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_get_values">get_values</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_main_field_value">main_field_value</a>
 
                                 
                                 
@@ -296,6 +320,20 @@
 
                                 
                                     <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_type">type</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_type_id">type_id</a>
+
                                 
                                 
                             </li>
@@ -428,6 +466,97 @@ avec les options +options+</p>
 </div>
 
                 
+                    <div id="method_dispatch" class="method item">
+    <h3 class="name"><code>dispatch</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>data</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/data.html">data</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l280"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:280</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Dispatch les données +data+ dans la fiche.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">data</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les données à dispatcher dans la fiche.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_get_values" class="method item">
     <h3 class="name"><code>get_values</code></h3>
 
@@ -477,6 +606,105 @@ avec les options +options+</p>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_main_field_value" class="method item">
+    <h3 class="name"><code>main_field_value</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>formate</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/data.html">data</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l251"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:251</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne une valeur pour le champ principal (titre ou texte)</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>Cette méthode renvoie le texte brut si +formate+ est FALSE
+Dans le cas contraire, elle le met en forme.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">formate</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <pre><code>             Si TRUE le texte est interprété, i.e. par exemple que
+             ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
+             en forme. 
+             Si FALSE, le texte est renvoyé tel qu&#39;il est enregistré.</code></pre>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -647,7 +875,7 @@ avec les options +options+</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/FicheClass.html">FicheClass</a> module.</p>
+                    <p>Provided by the <a href="../modules/fiche_data.html">fiche_data</a> module.</p>
                 
                 <p>
                 
@@ -694,7 +922,7 @@ avec les options +options+</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/FicheClass.html">FicheClass</a> module.</p>
+                    <p>Provided by the <a href="../modules/fiche_data.html">fiche_data</a> module.</p>
                 
                 <p>
                 
@@ -741,7 +969,7 @@ avec les options +options+</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/FicheClass.html">FicheClass</a> module.</p>
+                    <p>Provided by the <a href="../modules/fiche_data.html">fiche_data</a> module.</p>
                 
                 <p>
                 
@@ -815,6 +1043,106 @@ avec les options +options+</p>
 éditées et qui seront enregistrées.</p>
 <h2 id="notes">NOTES</h2>
 <p>  = Le champ les recevant porte toujours l&#39;id `dicoEdit-<property>&#39;</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_type" class="property item">
+    <h3 class="name"><code>type</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/data.html">data</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l108"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:108</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Le type de la fiche, qui détermine s&#39;il s&#39;agit d&#39;un livre, d&#39;un chapitre
+d&#39;une page ou d&#39;un paragraphe.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une donnée sur 4 lettres (&#39;book&#39;, &#39;chap&#39;, &#39;page&#39; ou &#39;para&#39;)</li>
+<li>Ne pas confondre cette propriété avec le <code>ptype</code> du paragraphe.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_type_id" class="property item">
+    <h3 class="name"><code>type_id</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/data.html">data</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l124"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:124</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode pratique, pour le débuggage, retournant <type>#<id> (p.e. &#39;book#12&#39;)</p>
 
     </div>
 

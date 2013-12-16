@@ -248,31 +248,27 @@ window.FICHES = {
   
   
   /**
-    *  Dispatch des fiches
+    * Dispatch des fiches
     *
-    *  NOTES
-    *  -----
-    *    = Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
-    *      des parents ou des enfants. Les fiches sont instanciées à leur première
-    *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
-    *      puis elles sont ensuites "remplies" avec les données si la fiche est
-    *      traitées plus tard ici.
+    * NOTES
+    * -----
+    *   * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau
+    *     des parents ou des enfants. Les fiches sont instanciées à leur première
+    *     détection (soit ici, soit dans les enfants/parent des fiches traitées),
+    *     puis elles sont ensuites "remplies" avec les données si la fiche est
+    *     traitées plus tard ici.
+    *   * Par défaut, les fiches sont maintenant créées fermées, donc on doit
+    *     passer seulement en revue les fiches qui doivent être ouvertes.
+    *   * Cette méthode est appelée à tout chargement de fiches par groupe
+    *   * Seule une fiche passant par cette méthode peut voir si `loaded` marqué
+    *     true. Toutes les autres fiches sont considérées comme non chargées.
     *
-    *    = Par défaut, les fiches sont maintenant créées fermées, donc on doit
-    *      passer seulement en revue les fiches qui doivent être ouvertes.
+    * PRODUIT
+    * -------
+    *   * La création de la fiche (toujours, entendu qu'une fiche passant par
+    *     ce dispatch a forcément toutes ses données)
     *
-    *    = Pour le moment, cette méthode n'est appelée qu'au chargement de la
-    *      collection. Mais à l'avenir on pourra imaginer qu'elle soit aussi
-    *      utilisée en cas de chargement en masse de fiches. Il faut donc en
-    *      tenir compte et utiliser la propriété `Collected.loaded' pour savoir
-    *      si c'est un tout premier chargement.
-    *
-    *  PRODUIT
-    *  -------
-    *    = La création de la fiche (toujours, entendu qu'une fiche passant par
-    *      ce dispatch a forcément toutes ses données)
-    *
-    *    = La tenue à jour de `Collection.books'
+    *   * La tenue à jour de `Collection.books'
     *
     * @method dispatch
     * @param  data   {Array} Liste des fiches remontées par `Collection.load.data`
@@ -296,7 +292,7 @@ window.FICHES = {
     for( ; i < nombre_fiches; ++i)
     {
       ifiche = this.fiche_from( data[i] )
-      ifiche.loaded = true // Une fiche passant par ici est forcément chargée
+      ifiche.loaded = true
       instances.push( ifiche )
     }
 
@@ -305,7 +301,8 @@ window.FICHES = {
       instance.create
     })
     
-    // Rangement des enfants (toujours)
+    // Rangement des enfants (toujours - ils seront "dérangés" ensuite
+    // si la configuration courante le nécessite)
     L(instances).each(function(instance){
       if(instance.has_parent) instance.range
                          else instance.positionne
@@ -470,7 +467,7 @@ window.FICHES = {
     */
   create_instance_fiche_of_type:function(data)
   {
-    if( DL & DB_FCT_ENTER )
+    if( DL & (DB_FCT_ENTER) )
     { 
       var spec = data.type
       if(data.id) spec += "#"+data.id

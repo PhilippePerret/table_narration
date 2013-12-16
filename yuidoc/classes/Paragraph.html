@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -175,6 +185,10 @@
     
 
     
+        <div class="extends">
+            Extends <a href="../classes/Fiche.html" class="crosslink">Fiche</a>
+        </div>
+    
 
     
         <div class="foundat">
@@ -205,6 +219,8 @@
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
@@ -217,12 +233,62 @@
             <h2 class="off-left">Item Index</h2>
 
             
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_add_child">add_child</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_enable_main_field">enable_main_field</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_on_drop">on_drop</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_onchange_texte">onchange_texte</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_remove_child">remove_child</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
 
             
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
-                    <ul class="index-list properties">
+                    <ul class="index-list properties extends">
+                        
+                            <li class="index-item property">
+                                <a href="#property_book Le livre auquel appartient le paragraphe (ou null)">book Le livre auquel appartient le paragraphe (ou null)</a>
+
+                                
+                                
+                            </li>
                         
                             <li class="index-item property">
                                 <a href="#property_class_css">class_css</a>
@@ -231,8 +297,43 @@
                                 
                             </li>
                         
+                            <li class="index-item property inherited">
+                                <a href="#property_closed">closed</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_enfants_as_minidata">enfants_as_minidata</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_jid">jid</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item property">
                                 <a href="#property_next_style">next_style</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_opened">opened</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_ranged">ranged</a>
 
                                 
                                 
@@ -255,10 +356,551 @@
         </div>
 
         
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_add_child" class="method item inherited">
+    <h3 class="name"><code>add_child</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>enfant</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_add_child">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l599"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:599</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Ajout d&#39;un enfant à la fiche</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>C&#39;est cette méthode qui doit être utilisée pour tout ajout
+d&#39;enfant.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">enfant</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>de l&#39;enfant à ajouter</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Options d&#39;insertion :
+                    after  : <fiche>    Ajouter après cet enfant
+                    before : <fiche>    Ajouter avant cet enfant</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_enable_main_field" class="method item inherited">
+    <h3 class="name"><code>enable_main_field</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_enable_main_field">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l431"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:431</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Passe le titre/texte en édition</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>C&#39;est une méthode composée avec un propriété complexe. Elle
+s&#39;appelle sans arguments ni parenthèses.</li>
+</ul>
+<h2 id="produit">PRODUIT</h2>
+<ul>
+<li>Sélectionne la fiche</li>
+<li>Remplace le div contenant le titre (ou le texte) par un champ
+de saisie.</li>
+<li>Place les observers sur le champ de saisie.</li>
+<li>Sélectionne le texte</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_on_drop" class="method item inherited">
+    <h3 class="name"><code>on_drop</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>ui</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_on_drop">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l525"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:525</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Appelé quand on droppe un enfant sur la fiche courante</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;évènement drop</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">ui</code>
+                        <span class="type">JQuerySet</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <pre><code>     L&#39;objet déplacé (ui.element est l&#39;original)
+          Note : l&#39;original peut être soit une fiche réelle, soit
+          un card-tool. Lorsque c&#39;est une card-tool, il faut créer la
+          nouvelle fiche.</code></pre>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onchange_texte" class="method item inherited">
+    <h3 class="name"><code>onchange_texte</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">True</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_onchange_texte">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l712"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:712</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode appelée quand on change le texte (paragraphe) ou le titre (autres
+fiches) d&#39;une fiche.</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>La méthode interdit d&#39;enregistrer une donnée vide.</li>
+<li>Cela peut se produire lorsqu&#39;on quitte le champ, ou lorsque
+l&#39;on presse la touche RETURN sur le champ.</li>
+<li>C&#39;est vraiment cette fonction qui inaugure le changement du
+titre, car si c&#39;était <code>titre=</code> (propriété complexe), on aura
+une difficulté à la définition des fiches remontées.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;Onchange Event.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">True</span>:
+                    
+                    <p>si la donnée a été prise en compte, {False} dans le cas contraire.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_remove_child" class="method item inherited">
+    <h3 class="name"><code>remove_child</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>enfant</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_remove_child">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l675"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:675</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Supprime un enfant de la fiche</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">enfant</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;enfant à retirer.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
 
         
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_book Le livre auquel appartient le paragraphe (ou null)" class="property item">
+    <h3 class="name"><code>book Le livre auquel appartient le paragraphe (ou null)</code></h3>
+    <span class="type">Book</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l23"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:23</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="property_class_css" class="property item">
@@ -284,7 +926,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l59"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:59</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l91"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:91</code></a>
         
         </p>
 
@@ -301,6 +943,136 @@ du paragraphe.</p>
 
     
         <p><strong>Default:</strong> &quot;&quot; (chaine vide)</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_closed" class="property item inherited">
+    <h3 class="name"><code>closed</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_closed">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l109"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:109</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Returne true si la fiche est fermée, false si ouverte</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> true</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_enfants_as_minidata" class="property item inherited">
+    <h3 class="name"><code>enfants_as_minidata</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_enfants_as_minidata">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l66"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:66</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne un {Array} des minidata des enfants</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> []</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_jid" class="property item inherited">
+    <h3 class="name"><code>jid</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_jid">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l21"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:21</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Définit et retourne le JID (selector jQuery) de la fiche</p>
+
+    </div>
+
     
 
     
@@ -332,7 +1104,7 @@ du paragraphe.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l44"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:44</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l73"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:73</code></a>
         
         </p>
 
@@ -343,6 +1115,103 @@ du paragraphe.</p>
 
     <div class="description">
         <p>Retourne le style par défaut du paragraphe suivant s&#39;il est défini</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_opened" class="property item inherited">
+    <h3 class="name"><code>opened</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_opened">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l95"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:95</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Marque la fiche ouverte ou fermée (ou retourne la propriété)
+True si la fiche est ouverte, false dans le cas contraire.</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_ranged" class="property item inherited">
+    <h3 class="name"><code>ranged</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_ranged">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l118"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:118</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Marque l&#39;élément rangé ou non rangé (ou retourne la propriété ranged)</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>La valeur retournée dépend du type de fiche.<ul>
+<li>Pour un livre, la valeur est toujours false</li>
+<li>Pour un chapitre ou un paragraphe, dès qu&#39;ils ont un parent,
+ils sont toujours rangés.</li>
+<li>Pour un page, dépend de son ouverture / fermeture.</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -377,7 +1246,7 @@ du paragraphe.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l21"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:21</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Paragraph_class.js.html#l49"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Paragraph_class.js:49</code></a>
         
         </p>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>/Users/philippeperret/Sites/table_narration/js/ui/ui.js</title>
+    <title>Page</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -180,185 +180,134 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/ui/ui.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
-/**
- *  @module UI
- */
-
-/**
-  *  Object UI
-  *  ---------
-  *  Gestion de l&#x27;interface utilisateur
-  *
-  *  @class UI
-  *  @static
-  * 
-  */
-if(&#x27;undefined&#x27; == typeof UI) UI = {}
-$.extend(UI, {
-  
-  /**
-   *  data-type pour un champ qui ne peut rester vide
-   *
-   *  @property   {String} FIELD_NOT_EMPTY
-   *  @final
-   */
-  FIELD_NOT_EMPTY: &#x27;not_empty&#x27;,
-
-  /**
-   *  data-type pour un champ de type &#x27;horloge&#x27;. La valeur de ce champ
-   *  sera automatiquement transformée en horloge valide, ou une erreur sera
-   *  produite si la valeur donnée est incompatible avec une horloge.
-   *
-   *  @property   {String} FIELD_HORLOGE
-   *  @final
-   */
-  FIELD_HORLOGE: &#x27;horloge&#x27;,
-
-  /**
-   *  data-type pour un champ de type nombre.
-   *
-   *  @property   {String} FIELD_NUMBER
-   *  @final
-   */
-  FIELD_NUMBER:&#x27;number&#x27;,
-
-  /**
-   *  data-type pour un champ de type pays (sur deux lettres minuscules).
-   *
-   *  @property   {String} FIELD_PAYS
-   *  @final
-   */
-  FIELD_PAYS:&#x27;pays&#x27;,
-  
-  /**
-   *  data-type pour un champ de type « people », c&#x27;est-à-dire une liste de personnes.
-   *  
-   *  NOTES
-   *  -----
-   *    * Le &#x60;data-format&#x27; du champ doit définir s&#x27;il s&#x27;agit d&#x27;un auteur, d&#x27;un
-   *      réalisateur, d&#x27;un acteur, etc.
-   *
-   *  @property   {String} FIELD_PEOPLE
-   *  @final
-   */
-  FIELD_PEOPLE:&#x27;people&#x27;,
-  
-  GRID_X    : 80,       // Snap horizontal
-  GRID_Y    : 40,       // Snap vertical
-  
-  prepared  :false,     // Mis à true quand l&#x27;UI est prête
-  preparing :false,     // True pendant la préparation de l&#x27;interface
-  
-  /*
-   *  Retourne la position +pos+ sur la grille ou val est [x, y]
-   *  @return {left: &lt;position horizontal&gt;, top:&lt;position verticale&gt;}
-   *  
-   *  @param  pos       Couple [x, y]
-   *  @param  snaping   Ne snap la position que si true
-   */
-  position_on_grid:function(pos, snaping){
-    if(!snaping) return {left:pos[0], top:pos[1]} ;
-    return {
-      left: this.position_xy_on_grid(pos[0], this.GRID_X),
-      top : this.position_xy_on_grid(pos[1], this.GRID_Y)
-    }
-  },
-  position_xy_on_grid:function(pos, snap)
-  {
-    prev = pos - pos % snap
-    next = snap + prev
-    if( Math.abs(pos - prev) &gt; Math.abs(pos - next)) return next
-    else return prev
-  },
-  
-  /*
-   *  Méthode appelée quand on droppe un outil fiche (card-tool)
-   *  sur la table
-   *
-   *  Cela provoque la création d&#x27;une nouvelle fiche SUR LA TABLE.
-   *
-   *  NOTES
-   *  -----
-   *    # Si l&#x27;outil est déplacé sur une autre fiche qui peut être parent,
-   *      cette méthode est court-circuitée en mettant drop_on_fiche à true
-   *      cf. Fiche.prototype.on_drop
-   *
-   *    # Noter qu&#x27;il s&#x27;agit d&#x27;un déplacement sur un coin vide de la table, pas
-   *      sur une autre fiche.
-   *
-   *    # Cette méthode étant appelée avant le drop sur un élément
-   *      on la retarde à peine.
-   *
-   *  PARAMS
-   *  ------ 
-   *  @param  evt   L&#x27;évènement Drop généré (permet de connaitre la position)
-   *  @param  ui    Objet ui (ui.helper =&gt; card-tool jQuery) 
-   *
-   */
-  rappelle_ondrop_on_table:function(evt, ui){
-    this.ondrop_on_table(evt, ui)
-  },
-  /**
-    * @method ondrop_on_table
-    * @param  {Event}   evt   Drop event
-    * @param  {Object}  ui    Set jQuery transmis par droppable.
-    */
-  ondrop_on_table:function(evt, ui)
-  {
-    var idm = &quot;UI.ondrop_on_table&quot;
-    dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER )
-    var ctool = ui.helper
+                        <h1>Page Class</h1>
+<div class="box meta">
     
-    // Déterminer la position approximative du drop sur la table
-    var pos_table = $(&#x27;section#table&#x27;).position()
-    var x = evt.clientX - pos_table.left  // | Pas tout à fait exact mais
-    var y = evt.clientY - pos_table.top   // | ça n&#x27;importe pas trop
-    
-    // On crée la fiche
-    var ifiche = FICHES.full_create({
-      type  : ctool.attr(&#x27;data-type&#x27;),
-      left  : x,
-      top   : y
-    })
-    ifiche.positionne
-    if(ifiche.is_not_paragraph) ifiche.open
-    dlog(&quot;&lt;- UI.ondrop_on_table&quot;, DB_FCT_ENTER)
-  }
-  
-})
 
-Object.defineProperties(UI,{
- 
-  /*
-   *  Préparation de l&#x27;interface
-   *  --------------------------
-   *  Et principalement le placement des observers
-   *
-   */
-  &quot;prepare&quot;:{
-    get:function(){
-      this.preparing = true
-      // La table doit accepter les drops des &quot;card tool&quot; (tous les types)
-      $(&#x27;section#table&#x27;).droppable({
-        accept  : &#x27;.card_tool&#x27;,
-        drop    : $.proxy(this.ondrop_on_table, this)
-      })
     
-      // Prépation des &quot;card-tools&quot;
-      CardTools.prepare
- 
- 
-      this.preparing  = false
-      this.prepared   = true
-    }
-  }
-})
 
-    </pre>
+    
+        <div class="foundat">
+            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Page_class.js.html#l4"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Page_class.js:4</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/Page.html">Page</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Pour la gestion d&#39;une fiche de type Page</p>
+
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_book Le livre auquel appartient la page (ou null)">book Le livre auquel appartient la page (ou null)</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_book Le livre auquel appartient la page (ou null)" class="property item">
+    <h3 class="name"><code>book Le livre auquel appartient la page (ou null)</code></h3>
+    <span class="type">Book</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Page_class.js.html#l19"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Page_class.js:19</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

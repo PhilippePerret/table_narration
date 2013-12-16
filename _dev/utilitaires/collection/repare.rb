@@ -7,7 +7,7 @@ Module de "réparation" de la collection
 
 L'opération de réparation consiste à :
   - réparer le fichier de configuration courante, en vérifiant que toutes
-    les fiches orphelines soient bien marquées visibles.
+    les fiches orphelines soient bien marquées on_table.
   - indiquer les erreurs de références (liens vers une fiche inexistante)
   - indiquer les erreurs de parentés (non concordance entre parent et enfants)
   - indiquer/réparer les erreurs de styles de paragraphe qui n'existent plus
@@ -26,7 +26,7 @@ REPARER = false # mettre à true pour réparer (sinon, simple check)
 # Si true, supprimera de la liste des enfants les fiches qui n'ont pas
 # été trouvées. À utiliser en toute connaissance de cause ! Dans la plupart
 # des cas, il est préférable de retrouver la fiche dans un backup.
-SUP_UNFOUND_CHILDREN = false
+SUP_UNFOUND_CHILDREN = REPARER && false
 
 # / fin de définition de l'opération
 # ---------------------------------------------------------------------
@@ -40,7 +40,7 @@ def autorise path
 end
 
 
-$new_config = {:visibles=>[], :openeds=>[], :orphelines=>[]}
+$new_config = {:on_table=>[], :openeds=>[], :orphelines=>[]}
 
 log "#{REPARER ? 'Réparation' : 'Check'} de la collection : #{Collection::folder}"
 
@@ -134,9 +134,16 @@ class Fiche
   def check_enfants
     new_enfants = []
     (children || []).each do |dchild|
-      if Fiche::get(dchild['id'].to_i).nil?
+      child = Fiche::get(dchild['id'].to_i)
+      if child.nil?
         error "L'enfant #{dchild['id']}:#{dchild['type']} est introuvable…"
       else
+        # L'enfant doit définir le bon parent
+        if child.parent.nil? || child.parent.id != id
+          error "L'enfant #{child.id}:#{child.type} ne définit pas le bon parent "+
+              "(expected:#{id}:#{type}, valeur:"+
+              (child.parent.nil? ? "Aucun parent défini (#{child.data['parent']})" : "#{child.parent.id}:#{child.parent.type})")
+        end
         new_enfants << dchild
       end
     end
@@ -156,7 +163,7 @@ class Fiche
       error "devrait être visible"
       incremente_reparation if REPARER
     end
-    $new_config[:visibles] << {:id => id, :type => type} if orpheline?
+    $new_config[:on_table] << {:id => id, :type => type} if orpheline?
   end
 end
 # C'est ici qu'on lance la procédure

@@ -52,6 +52,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "modules": {
+                "Chapter": 1
+            },
+            "classes": {
+                "Chapter": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
             "modules": {
@@ -70,6 +81,17 @@
             },
             "classes": {
                 "PARAGRAPHES": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
+            "modules": {
+                "Page": 1
+            },
+            "classes": {
+                "Page": 1
             },
             "fors": {},
             "namespaces": {}
@@ -119,7 +141,7 @@
         "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
             "modules": {
-                "fiche.dom": 1
+                "dom": 1
             },
             "classes": {},
             "fors": {},
@@ -128,7 +150,7 @@
         "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "modules": {
-                "FicheClass": 1
+                "Fiche": 1
             },
             "classes": {
                 "Fiche": 1
@@ -164,8 +186,7 @@
         "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js",
             "modules": {
-                "Mot": 1,
-                "dom": 1
+                "Mot": 1
             },
             "classes": {},
             "fors": {},
@@ -353,7 +374,7 @@
             "namespaces": {
                 "Edition": 1
             },
-            "module": "FicheClass",
+            "module": "fiche_data",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/Film/>FILMS_Edition.js",
             "line": 1
@@ -379,6 +400,18 @@
             "line": 1,
             "description": "Extensions de la classe String propre à l'application."
         },
+        "Chapter": {
+            "name": "Chapter",
+            "submodules": {},
+            "classes": {
+                "Chapter": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "line": 4
+        },
         "FICHES": {
             "name": "FICHES",
             "submodules": {},
@@ -401,6 +434,18 @@
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 4
+        },
+        "Page": {
+            "name": "Page",
+            "submodules": {},
+            "classes": {
+                "Page": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
             "line": 4
         },
         "Paragraph": {
@@ -455,22 +500,30 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
             "line": 5
         },
-        "fiche.dom": {
-            "name": "fiche.dom",
+        "fiche_dom": {
+            "name": "fiche_dom",
             "submodules": {},
             "classes": {},
             "fors": {},
-            "namespaces": {},
-            "tag": "module",
-            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 1
+            "namespaces": {}
         },
-        "FicheClass": {
-            "name": "FicheClass",
-            "submodules": {
-                "Edition": 1,
-                "data": 1
-            },
+        "dom": {
+            "name": "dom",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Mot",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 1,
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "Fiche": {
+            "name": "Fiche",
+            "submodules": {},
             "classes": {
                 "Fiche": 1
             },
@@ -480,6 +533,16 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "line": 5
         },
+        "fiche_data": {
+            "name": "fiche_data",
+            "submodules": {
+                "Edition": 1,
+                "data": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "data": {
             "name": "data",
             "submodules": {},
@@ -487,7 +550,7 @@
             "fors": {},
             "is_submodule": 1,
             "namespaces": {},
-            "module": "FicheClass",
+            "module": "fiche_data",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
             "line": 1,
@@ -502,20 +565,6 @@
             "namespaces": {
                 "Edition": 1
             }
-        },
-        "dom": {
-            "name": "dom",
-            "submodules": {},
-            "classes": {},
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "Mot",
-            "namespace": "",
-            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/>Mot_class.js",
-            "line": 1,
-            "tag": "main",
-            "itemtype": "main"
         },
         "DICO.js": {
             "name": "DICO.js",
@@ -695,6 +744,21 @@
             "static": 1,
             "extends": "OBJETS"
         },
+        "Chapter": {
+            "name": "Chapter",
+            "shortname": "Chapter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Chapter",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "line": 4,
+            "description": "Class pour les chapitres",
+            "extends": "Fiche"
+        },
         "FICHES": {
             "name": "FICHES",
             "shortname": "FICHES",
@@ -725,6 +789,20 @@
             "description": "Pour la gestion des paragraphes ({Fiche} de type {Paragraph}) comme un ensemble",
             "static": 1
         },
+        "Page": {
+            "name": "Page",
+            "shortname": "Page",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Page",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
+            "line": 4,
+            "description": "Pour la gestion d'une fiche de type Page"
+        },
         "Paragraph": {
             "name": "Paragraph",
             "shortname": "Paragraph",
@@ -737,7 +815,8 @@
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
             "line": 4,
-            "description": "Class d'une fiche de type Paragraph"
+            "description": "Class d'une fiche de type Paragraph",
+            "extends": "Fiche"
         },
         "Mot": {
             "name": "Mot",
@@ -813,7 +892,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "FicheClass",
+            "module": "Fiche",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "line": 5,
@@ -1050,8 +1129,17 @@
             "example": [
                 "\n    <texte>.formate"
             ],
-            "class": "FICHES",
+            "class": "Chapter",
             "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "line": 19,
+            "itemtype": "property",
+            "name": "book Le livre auquel appartient le chapitre (ou null)",
+            "type": "Book",
+            "class": "Chapter",
+            "module": "Chapter"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
@@ -1137,8 +1225,33 @@
             "module": "PARAGRAPHS"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
+            "line": 19,
+            "itemtype": "property",
+            "name": "book Le livre auquel appartient la page (ou null)",
+            "type": "Book",
+            "class": "Page",
+            "module": "Page"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 21,
+            "line": 23,
+            "itemtype": "property",
+            "name": "book Le livre auquel appartient le paragraphe (ou null)",
+            "type": "Book",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 34,
+            "description": "Le « ptype » du paragraphe indique son type propre, à savoir :\n  * null  : Un texte \"normal\" qui sera juste formaté\n  * file  : Un paragraphe qui charge un fichier externe\n  * code  : Du code à interpréter.",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 49,
             "description": "Liste des styles du paragraphe (ou null/indéfini)\n\n NOTES\n -----\n * Les styles sont définis dans le fichier `./js/data/paragraph_styles.js`\n   qui est un fichier produit programmatiquement à partir des informations\n   sur les styles contenus dans `./data/asset/paragraph_styles.txt`.",
             "itemtype": "property",
             "name": "style",
@@ -1149,7 +1262,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 44,
+            "line": 73,
             "description": "Retourne le style par défaut du paragraphe suivant s'il est défini",
             "itemtype": "property",
             "name": "next_style",
@@ -1159,7 +1272,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 59,
+            "line": 91,
             "description": "Retourne le code pour l'attribut `class` de la balise en fonction des styles\ndu paragraphe.",
             "itemtype": "property",
             "name": "class_css",
@@ -1221,24 +1334,36 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 19,
+            "line": 21,
             "description": "Définit et retourne le JID (selector jQuery) de la fiche",
             "itemtype": "property",
             "name": "jid",
             "type": "{String}",
             "class": "Fiche",
-            "module": "fiche.dom"
+            "module": "fiche_dom",
+            "submodule": "dom"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 290,
+            "line": 292,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
             "type": "String",
             "static": 1,
             "class": "Fiche",
-            "module": "fiche.dom"
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 431,
+            "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
+            "itemtype": "method",
+            "name": "enable_main_field",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
@@ -1249,11 +1374,44 @@
             "type": "{Array}",
             "default": "[]",
             "class": "Fiche",
-            "module": "FicheClass"
+            "module": "Fiche"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 503,
+            "line": 95,
+            "description": "Marque la fiche ouverte ou fermée (ou retourne la propriété)\nTrue si la fiche est ouverte, false dans le cas contraire.",
+            "itemtype": "property",
+            "name": "opened",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 109,
+            "description": "Returne true si la fiche est fermée, false si ouverte",
+            "itemtype": "property",
+            "name": "closed",
+            "type": "Boolean",
+            "default": "true",
+            "readonly": "",
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 118,
+            "description": "Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)\n\nNOTES\n-----\n  * La valeur retournée dépend du type de fiche.\n      * Pour un livre, la valeur est toujours false\n      * Pour un chapitre ou un paragraphe, dès qu'ils ont un parent,\n        ils sont toujours rangés.\n      * Pour un page, dépend de son ouverture / fermeture.",
+            "itemtype": "property",
+            "name": "ranged",
+            "type": "Boolean",
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 525,
             "description": "Appelé quand on droppe un enfant sur la fiche courante",
             "itemtype": "method",
             "name": "on_drop",
@@ -1270,7 +1428,64 @@
                 }
             ],
             "class": "Fiche",
-            "module": "FicheClass"
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 599,
+            "description": "Ajout d'un enfant à la fiche\n\nNOTES\n-----\n  * C'est cette méthode qui doit être utilisée pour tout ajout\n    d'enfant.",
+            "itemtype": "method",
+            "name": "add_child",
+            "params": [
+                {
+                    "name": "enfant",
+                    "description": "de l'enfant à ajouter",
+                    "type": "Fiche"
+                },
+                {
+                    "name": "options",
+                    "description": "Options d'insertion :\n                    after  : <fiche>    Ajouter après cet enfant\n                    before : <fiche>    Ajouter avant cet enfant",
+                    "type": "Object"
+                }
+            ],
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 675,
+            "description": "Supprime un enfant de la fiche",
+            "itemtype": "method",
+            "name": "remove_child",
+            "params": [
+                {
+                    "name": "enfant",
+                    "description": "L'enfant à retirer.",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 712,
+            "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.",
+            "itemtype": "method",
+            "name": "onchange_texte",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "L'Onchange Event.",
+                    "type": "Event"
+                }
+            ],
+            "return": {
+                "description": "si la donnée a été prise en compte, {False} dans le cas contraire.",
+                "type": "True"
+            },
+            "class": "Fiche",
+            "module": "Fiche"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
@@ -1283,7 +1498,73 @@
                 "type": "Hash"
             },
             "class": "DICO",
-            "module": "FicheClass",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 108,
+            "description": "Le type de la fiche, qui détermine s'il s'agit d'un livre, d'un chapitre\nd'une page ou d'un paragraphe.\n\nNotes\n-----\n  * C'est une donnée sur 4 lettres ('book', 'chap', 'page' ou 'para')\n  * Ne pas confondre cette propriété avec le `ptype` du paragraphe.",
+            "itemtype": "property",
+            "name": "type",
+            "type": "String",
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 124,
+            "description": "Méthode pratique, pour le débuggage, retournant <type>#<id> (p.e. 'book#12')",
+            "itemtype": "property",
+            "name": "type_id",
+            "type": "String",
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 132,
+            "description": "Définit si la fiche ne doit pas être imprimée dans le livre\n\nNOTES\n-----\n  * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)",
+            "proprety": "{Boolean} not_printed",
+            "default": "{Undefined}",
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 251,
+            "description": "Retourne une valeur pour le champ principal (titre ou texte)\n\nNOTES\n-----\n  * Cette méthode renvoie le texte brut si +formate+ est FALSE\n    Dans le cas contraire, elle le met en forme.",
+            "itemtype": "method",
+            "name": "main_field_value",
+            "params": [
+                {
+                    "name": "formate",
+                    "description": "\n                 Si TRUE le texte est interprété, i.e. par exemple que\n                 ses balises de référence ([<balise>:<valeur>]) sont mises\n                 en forme. \n                 Si FALSE, le texte est renvoyé tel qu'il est enregistré.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 280,
+            "description": "Dispatch les données +data+ dans la fiche.",
+            "itemtype": "method",
+            "name": "dispatch",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Les données à dispatcher dans la fiche.",
+                    "type": "Object"
+                }
+            ],
+            "class": "DICO",
+            "module": "fiche_data",
             "submodule": "data"
         },
         {
@@ -1298,7 +1579,7 @@
                 "type": "Fiche"
             },
             "class": "DICO",
-            "module": "FicheClass"
+            "module": "fiche_data"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
@@ -1311,7 +1592,7 @@
                 "description": "TRUE si la fiche n'a pas de parent."
             },
             "class": "DICO",
-            "module": "FicheClass"
+            "module": "fiche_data"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
@@ -1324,7 +1605,7 @@
                 "description": "TRUE si la fiche n'est pas orpheline."
             },
             "class": "DICO",
-            "module": "FicheClass"
+            "module": "fiche_data"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/>DICO_Edition.js",
@@ -1524,7 +1805,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 272,
+            "line": 267,
             "description": "Traite la donnée du champ courant en fonction de son data-type, peut la modifier\nà la volée ou interrompre la suite dans le cas d'une donnée incorrecte.\n\n\nNOTES\n-----\n  * La méthode est appelée dans le onblur, pour le moment\n    + quand on tab sur le champ\n  * Aucun traitement si le champ est vide\n  * Si une valeur est modifiée, il faut la remettre dans\n    le champ à l'aide de `this.target.jq.val(nouvelle valeur)'",
             "itemtype": "method",
             "name": "check_value",
@@ -1537,7 +1818,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 368,
+            "line": 363,
             "description": "Traite la donnée +acteurs+ avant sa vérification par la méthode {check_values}\ndans le cas d'un copié/collé d'une donnée prise dans IMDb.\n\nNOTES\n-----\n  * On reconnait une donnée IMDb pour un acteur car elle sépare le patronyme\n    de l'acteur du patronyme du personnage par un \"...\\n\". Noter que le \n    patronyme de l'acteur est répété au début, donc la donnée a le format :\n        <patronyme acteur> <patronyme acteur> ...\n        <patronyme personnage>\n\n    Elle sera transformée en :\n        <prenom acteur>, <nom acteur>, <prenom perso>, <nom perso>, null\n\n    note: Le `null` ci-dessus concerne la fonction du personnage dans le film.",
             "itemtype": "method",
             "name": "traite_as_acteurs_from_imdb",
@@ -1558,7 +1839,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 508,
+            "line": 503,
             "description": "Return le vrai jQuery Set de champ de text de +obj+",
             "params": [
                 {
@@ -1576,6 +1857,24 @@
             "class": "UI.Input",
             "module": "UI",
             "submodule": "Input"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
+            "line": 16,
+            "description": "Initialisation (appelée quand ready)\n\n PRODUIT\n -------",
+            "itemtype": "method",
+            "name": "init",
+            "class": "ContextualHelp",
+            "module": "ContextualHelp"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
+            "line": 106,
+            "description": "Infos sur la fiche courante, à afficher en amorce",
+            "itemtype": "property",
+            "name": "info_current_fiche",
+            "class": "ContextualHelp",
+            "module": "ContextualHelp"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
@@ -1707,11 +2006,11 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
             "line": 162,
-            "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont visibles sur la table.",
+            "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont on_table sur la table.",
             "itemtype": "property",
             "name": "current_config",
             "return": {
-                "description": "Configuration courante, contenant `visibles', les fiches\n          actuellement visibles (juste pour info) et `openeds', les fiches\n          actuellement ouvertes (opened = true)",
+                "description": "Configuration courante, contenant `on_table', les fiches\n          actuellement on_table (sur la table) et `openeds', les fiches\n          actuellement ouvertes (opened = true)",
                 "type": "Object"
             },
             "class": "App",
@@ -1719,8 +2018,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 200,
-            "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes.",
+            "line": 195,
+            "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",
             "class": "App",
@@ -1763,8 +2062,20 @@
     ],
     "warnings": [
         {
+            "message": "unknown tag: proprety",
+            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
+        },
+        {
             "message": "Missing item type\nReçoit un objet DOM de fiche (class fiche) et\nretourne la fiche correspondante.",
             "line": " /Users/philippeperret/Sites/table_narration/js/livre/FICHES.js:98"
+        },
+        {
+            "message": "Missing item type\nLe « ptype » du paragraphe indique son type propre, à savoir :\n  * null  : Un texte \"normal\" qui sera juste formaté\n  * file  : Un paragraphe qui charge un fichier externe\n  * code  : Du code à interpréter.",
+            "line": " /Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js:34"
+        },
+        {
+            "message": "Missing item type\nDéfinit si la fiche ne doit pas être imprimée dans le livre\n\nNOTES\n-----\n  * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)",
+            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
         }
     ]
 }

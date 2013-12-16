@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -180,19 +190,47 @@
 /**
   *  Class d&#x27;une fiche de type Paragraph
   *
-  * @class Paragraph
+  * @class    Paragraph
+  * @extends  Fiche
   *
   */
 window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
-  data.type = &#x27;para&#x27;
+  data.type   = &#x27;para&#x27;
+  data.ptype  = null
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
 Paragraph.prototype.constructor = Paragraph
 
 Object.defineProperties(Paragraph.prototype,{
+
+  /**
+    * @property {Book} book Le livre auquel appartient le paragraphe (ou null)
+    *
+    */
+  &quot;book&quot;:{
+    get:function(){
+      if(!this.parent) return null
+      return this.parent.book
+    }
+  },
+
+  /**
+    * Le « ptype » du paragraphe indique son type propre, à savoir :
+    *   * null  : Un texte &quot;normal&quot; qui sera juste formaté
+    *   * file  : Un paragraphe qui charge un fichier externe
+    *   * code  : Du code à interpréter.
+    */
+  &quot;ptype&quot;:{
+    get:function(){return this._ptype || null},
+    set:function(ptype){
+      if(this._ptype == ptype) return
+      this._ptype = ptype
+      this.modified = true
+    }
+  },
   
   /**
     *  Liste des styles du paragraphe (ou null/indéfini)
@@ -210,6 +248,7 @@ Object.defineProperties(Paragraph.prototype,{
     */
   &quot;style&quot;:{
     set:function(selectors){
+      if(&#x27;string&#x27;==typeof selectors) selectors = selectors.split(&#x27;.&#x27;)
       this._style = selectors
       this.main_field.attr(&#x27;class&#x27;, this.class_css)
       delete this._next_style
@@ -226,7 +265,10 @@ Object.defineProperties(Paragraph.prototype,{
     get:function(){
       if(undefined == this._next_style)
       {
-        this._next_style = this.style ? DATA_STYLES[this.style[0]].style_after : null
+        if(this.style &amp;&amp; DATA_STYLES[this.style[0]])
+        {
+          this._next_style = DATA_STYLES[this.style[0]].style_after
+        }
       }
       return this._next_style
     }
@@ -318,15 +360,6 @@ Object.defineProperties(Paragraph.prototype,{
   }
   
 })
-
-/*
- *  Méthode appelée quand on change le texte d&#x27;un paragraphe
- *  
- */
-Paragraph.prototype.onchange_texte = function(evt)
-{
-  this.texte = this.textarea_texte.val()
-}
 
 /*
  *  Méthode appelée quand on applique les styles choisis pour

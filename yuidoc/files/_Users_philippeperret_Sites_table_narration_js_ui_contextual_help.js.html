@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -189,15 +199,18 @@
   *
   */
 window.ContextualHelp = {
-  /*
-   *  Initialisation (appelée quand ready)
-   *  
-   */
+  /**
+    *  Initialisation (appelée quand ready)
+    *
+    * PRODUIT
+    * -------
+    *
+    * @method init
+    */
   init:function()
   {
 
   },
-  img_click : function(){return image(&#x27;clavier/CLICK.png&#x27;)},
   
   /*
    *  Met l&#x27;aide d&#x27;identifiant +id+ dans le footer en la renseignant
@@ -208,34 +221,21 @@ window.ContextualHelp = {
   {
     if(undefined == params) params = {}
     texte_aide = this.AIDES[id]
-    
+    if(undefined != params)
+    {
+      for(var attr in params)
+      { 
+        var reg = new RegExp(&quot;\%\{&quot;+attr+&quot;\}&quot;, &quot;g&quot;)
+        texte_aide = texte_aide.replace(reg, params[attr])
+      }
+    }
+    // dlog(&quot;texte aide:&quot; + texte_aide)
     help(texte_aide)
   },
   
   
 }
 Object.defineProperties(ContextualHelp, {
-  /*
-   *  Raccourcis pour obtenir le code d&#x27;une image
-   *  
-   */
-  &quot;img_click&quot;:{
-    get:function(){
-      if(undefined == this._img_click)
-      {
-        this._img_click = image(&#x27;clavier/CLICK.png&#x27;)
-      }
-      return this._img_click
-    }
-  },
-  &quot;img_up&quot;:{get:function(){
-    if(undefined == this._img_up) this._img_up = image(&#x27;clavier/K_FlecheH.png&#x27;)
-    return this._img_up
-  }},
-  &quot;img_down&quot;:{get:function(){
-    if(undefined == this._img_down) this._img_down = image(&#x27;clavier/K_FlecheB.png&#x27;)
-    return this._img_down
-  }},
   /*
    *  = Main =
    *  Méthode principale adaptant l&#x27;aide contextuelle en fonction
@@ -257,8 +257,25 @@ Object.defineProperties(ContextualHelp, {
    */
   &quot;adapt_with_fiche_active&quot;:{
     get:function(){
-      var fiche = this.current_fiche
-      
+      var fi = this.current_fiche, aide = &quot;&quot; ;
+      var ispara = fi.is_paragraph
+      // Construire l&#x27;aide
+                      aide += this.info_current_fiche
+                      aide += this[&#x27;space_&#x27;+(fi.opened ? &#x27;close&#x27;:&#x27;open&#x27;)]
+      if(fi.parent)   aide += this.left_choose_parent
+      if(fi.enfants)  aide += this.right_choose_child
+                      aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
+      if($(fi.div_main_prop_jid).length){
+        aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
+      }
+      else 
+      {
+        aide += this[&#x27;return_save_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
+        aide += this.raccourcis_textuels
+        if( ispara ) aide += this.shortcut_paragraph
+      }
+        
+      help( aide )
     }    
   },
   
@@ -269,6 +286,22 @@ Object.defineProperties(ContextualHelp, {
   &quot;adapt_with_no_fiche&quot;:{
     get:function(){
       this.write(&#x27;no fiche&#x27;)
+    }
+  },
+  
+  /**
+    * Infos sur la fiche courante, à afficher en amorce
+    *
+    * @property info_current_fiche
+    */
+  &quot;info_current_fiche&quot;:{
+    get:function(){
+      var fi = this.current_fiche
+      var p_type_id = fi.parent ? fi.parent.type_id : &quot;-&quot;
+      var info =  fi.type+&quot;:&quot;+fi.id
+      if(fi.is_not_book)      info += CH.del + &quot;Par:&quot;+p_type_id
+      if(fi.is_not_paragraph) info += &quot; / Enf:&quot;+(fi.enfants||[]).length
+      return info
     }
   },
   /*
@@ -297,7 +330,58 @@ Object.defineProperties(ContextualHelp, {
     get:function(){
       return FICHES.current
     }
-  }
+  },
+  /*
+   *  Raccourcis pour obtenir le code d&#x27;une image
+   *  
+   */
+  &quot;k_lettre&quot;:{
+    value:function(lettre){return image(&#x27;clavier/K_&#x27;+lettre+&#x27;.png&#x27;)}
+  },
+  &quot;m_click&quot;:{get:function(){
+      if(undefined == this._m_click) this._m_click = image(&#x27;clavier/CLICK.png&#x27;)
+      return this._m_click
+  }},
+  &quot;k_f&quot;:{get:function(){
+    if(undefined == this._k_f) this._k_f = this.k_lettre(&#x27;F&#x27;)
+    return this._k_f
+  }},
+  &quot;k_m&quot;:{get:function(){
+    if(undefined == this._k_m) this._k_m = this.k_lettre(&#x27;M&#x27;)
+    return this._k_m
+  }},
+  &quot;k_up&quot;:{get:function(){
+    if(undefined == this._k_up) this._k_up = image(&#x27;clavier/K_FlecheH.png&#x27;)
+    return this._k_up
+  }},
+  &quot;k_down&quot;:{get:function(){
+    if(undefined == this._k_down) this._k_down = image(&#x27;clavier/K_FlecheB.png&#x27;)
+    return this._k_down
+  }},
+  &quot;k_left&quot;:{get:function(){
+    if(undefined == this._k_left) this._k_left = image(&#x27;clavier/K_FlecheG.png&#x27;)
+    return this._k_left
+  }},
+  &quot;k_right&quot;:{get:function(){
+    if(undefined == this._k_right) this._k_right = image(&#x27;clavier/K_FlecheD.png&#x27;)
+    return this._k_right
+  }},
+  &quot;k_return&quot;:{get:function(){
+    if(undefined == this._k_return) this._k_return = image(&#x27;clavier/K_Entree.png&#x27;)
+    return this._k_return
+  }},
+  &quot;k_tab&quot;:{get:function(){
+    if(undefined == this._k_tab) this._k_tab = image(&#x27;clavier/K_Tab.png&#x27;)
+    return this._k_tab
+  }},
+  &quot;k_cmd&quot;:{get:function(){
+    if(undefined == this._k_cmd) this._k_cmd = image(&#x27;clavier/K_Command.png&#x27;)
+    return this._k_cmd
+  }},
+  &quot;k_space&quot;:{get:function(){
+    if(undefined == this._k_space) this._k_space = image(&#x27;clavier/K_Espace.png&#x27;)
+    return this._k_space
+  }}
 })
 CH = CHelp = ContextualHelp
 /* ---------------------------------------------------------------------
@@ -307,13 +391,32 @@ CH = CHelp = ContextualHelp
  *  -----
  *    = Implémenté ici pour :
  *        1. Pouvoir l&#x27;atteindre plus rapidement si ajout
- *        2. Pouvoir profiter des méthodes img_&lt;chose&gt; définies ci-dessus
+ *        2. Pouvoir profiter des méthodes k_&lt;chose&gt; définies ci-dessus
  --------------------------------------------------------------------- */
+CH.del = &#x27; | &#x27;
+$.extend(CH, {
+  &#x27;raccourcis_textuels&#x27; : CH.del + CH.k_cmd+CH.k_f+&quot; Insert Film&quot;+
+                          CH.del + CH.k_cmd+CH.k_m+&quot; Insert Mot&quot;,
+  &#x27;shortcut_paragraph&#x27;  : CH.del + CH.k_cmd+CH.k_return+&quot; Nouveau paragraphe&quot;,
+  &#x27;left_choose_parent&#x27;  : CH.del + CH.k_left+&quot; =&gt; Parent&quot;,
+  &#x27;right_choose_child&#x27;  : CH.del + CH.k_right+&quot; =&gt; 1er enfant&quot;,
+  &#x27;space_open&#x27;          : CH.del + CH.k_space+&quot; Ouvre &quot;,
+  &#x27;space_close&#x27;         : CH.del + CH.k_space+&quot; Ferme &quot;,
+  &#x27;return_change_titre&#x27; : CH.del + CH.k_return+&quot; Éditer titre&quot;,
+  &#x27;return_change_texte&#x27; : CH.del + CH.k_return+&quot; Éditer texte&quot;,
+  &#x27;return_save_titre&#x27;   : CH.del + CH.k_return+&quot; Enregistre titre&quot;,
+  &#x27;return_save_texte&#x27;   : CH.del + CH.k_return+&quot; Enregistre texte&quot;,
+  &#x27;show_recto&#x27;          : CH.del + CH.k_tab+&quot; Recto&quot;,
+  &#x27;show_verso&#x27;          : CH.del + CH.k_tab+&quot; Verso&quot;
+  
+})
 ContextualHelp.AIDES = {
+  &#x27;fiche book&#x27;: &quot;%{info_fiche} &quot;+ CH.left_choose_child + CH.space_open_close + &#x27;|&#x27;
+                ,
   /* 
     Aide lorsqu&#x27;aucune fiche n&#x27;est sélectionnée 
   */
-  &#x27;no fiche&#x27; :  CH.img_click +&quot;sur LIVRE ou &quot; + CH.img_up + CH.img_down +
+  &#x27;no fiche&#x27; :  CH.m_click +&quot;sur LIVRE ou &quot; + CH.k_up + CH.k_down +
                 &quot; pour en sélectionner un. Glisser un picto fiche (Book, Chapter, etc.)&quot;+
                 &quot; sur la table pour en créer une nouvelle.&quot;
 }

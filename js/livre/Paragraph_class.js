@@ -4,19 +4,47 @@
 /**
   *  Class d'une fiche de type Paragraph
   *
-  * @class Paragraph
+  * @class    Paragraph
+  * @extends  Fiche
   *
   */
 window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
-  data.type = 'para'
+  data.type   = 'para'
+  data.ptype  = null
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
 Paragraph.prototype.constructor = Paragraph
 
 Object.defineProperties(Paragraph.prototype,{
+
+  /**
+    * @property {Book} book Le livre auquel appartient le paragraphe (ou null)
+    *
+    */
+  "book":{
+    get:function(){
+      if(!this.parent) return null
+      return this.parent.book
+    }
+  },
+
+  /**
+    * Le « ptype » du paragraphe indique son type propre, à savoir :
+    *   * null  : Un texte "normal" qui sera juste formaté
+    *   * file  : Un paragraphe qui charge un fichier externe
+    *   * code  : Du code à interpréter.
+    */
+  "ptype":{
+    get:function(){return this._ptype || null},
+    set:function(ptype){
+      if(this._ptype == ptype) return
+      this._ptype = ptype
+      this.modified = true
+    }
+  },
   
   /**
     *  Liste des styles du paragraphe (ou null/indéfini)

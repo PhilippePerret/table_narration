@@ -59,7 +59,7 @@ Object.defineProperties(Fiche.prototype,{
   {
     value:function(zindex){
       dlog("Application du z-index "+zindex+" sur les parents", DB_DETAILLED)
-      if(this.is_book || this.ranged == false) return
+      if( this.ranged == false) return
       var p = this.obj.parent()
       try
       {

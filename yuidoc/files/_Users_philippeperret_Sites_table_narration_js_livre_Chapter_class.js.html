@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>fiche.dom</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -170,37 +180,40 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>fiche.dom Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @module Chapter
+  */
+/**
+  * Class pour les chapitres
+  * @class Chapter
+  * @extends Fiche
+  */
+window.Chapter = function(data)
+{
+  if(undefined == data) data = {}
+  data.type = &#x27;chap&#x27;
+  Fiche.call(this, data)
+}
+Chapter.prototype = Object.create( Fiche.prototype )
+Chapter.prototype.constructor = Chapter
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l1"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:1</code></a>
-        </div>
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+Object.defineProperties(Chapter.prototype,{
+  /**
+    * @property {Book} book Le livre auquel appartient le chapitre (ou null)
+    *
+    */
+  &quot;book&quot;:{
+    get:function(){
+      if(!this.parent) return null
+      return this.parent
+    }
+  }
+})
+    </pre>
 </div>
 
                     </div>

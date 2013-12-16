@@ -1,5 +1,5 @@
 /**
-  * @module     FicheClass
+  * @module     fiche_data
   * @submodule  data
   * @main       Fiche
   */
@@ -81,10 +81,12 @@ Object.defineProperties(Fiche.prototype,{
   "data":{
     get:function(){
       data = {
-        id:this.id, type:this.type, titre:this.titre, deleted:this.deleted,
+        id:this.id, type:this.type, titre:this.titre,
         top:this.top, left:this.left
       }
-      if(this.parent)  data.parent = {id:this.parent.id, type:this.parent.type}
+      if(this.deleted)      data.deleted = true
+      if(this.not_printed)  data.not_printed = true
+      if(this.parent)       data.parent = {id:this.parent.id, type:this.parent.type}
       if(this.enfants)
       {
         data.enfants = []
@@ -97,20 +99,54 @@ Object.defineProperties(Fiche.prototype,{
       {
         data.texte  = this.texte
         if(this._style) data.style = this._style.join('.')
+        if(this.ptype)  data.ptype = this.ptype
       } 
       return data
     }
   },
   
+  /**
+    * Le type de la fiche, qui détermine s'il s'agit d'un livre, d'un chapitre
+    * d'une page ou d'un paragraphe.
+    *
+    * Notes
+    * -----
+    *   * C'est une donnée sur 4 lettres ('book', 'chap', 'page' ou 'para')
+    *   * Ne pas confondre cette propriété avec le `ptype` du paragraphe.
+    *
+    * @property {String} type
+    */
   "type":{
     get:function(){ return this._type || null},
     set:function(ty){ this._type = ty }
   },
-  /* Méthode pratique retournant <type>#<id> (p.e. 'book#12') */
+  
+  /**
+    * Méthode pratique, pour le débuggage, retournant <type>#<id> (p.e. 'book#12') 
+    * @property {String} type_id
+    */
   "type_id":{
     get:function(){ return this.type + '#' + this.id}
   },
 
+  /**
+    * Définit si la fiche ne doit pas être imprimée dans le livre
+    *
+    * NOTES
+    * -----
+    *   * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)
+    *
+    * @proprety {Boolean} not_printed
+    * @default {Undefined}
+    */
+  "not_printed":{
+    get:function(){return this._not_printed == true},
+    set:function(value){
+      if(this._not_printed == value) return
+      this._not_printed = value
+    }
+  },
+  
   /*
    *  Retourne le {Hash} des données minimum de la fiche (id et type)
    *  
@@ -285,19 +321,19 @@ Fiche.prototype.dispatch = function(data){
       break;
     case 'parent':
       val = FICHES.fiche( val );
-      this.loaded = true
+      // this.loaded = true
       break;
     case 'enfants':
       if(val!=null && val.length > 0){
         val = FICHES.fiche( val )
       }
-      this.loaded = true
+      // this.loaded = true
       break;
     case 'style':
       if('string' == typeof val) this.style = val.split('.')
       break
     default:
-      this.loaded = true
+      // this.loaded = true
     }
     // On met la donnée dans la propriété
     this[prop] = val

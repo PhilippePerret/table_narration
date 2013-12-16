@@ -1,8 +1,10 @@
 /**
-  * @module fiche.dom
+  * @module     fiche_dom
+  * @submodule  dom
+  * @main       Fiche
   */
 
-/**
+/*
   * @class Fiche
   */
 /*
@@ -319,7 +321,7 @@ Object.defineProperties(Fiche.prototype,{
         else
         {
           if(this.opened) this._main_field = $(this.input_titre_jid)
-          else            this._main_field = $(this.div_titre_jid)
+          else            this._main_field = $(this.div_main_prop_jid)
         }
       }
       return this._main_field
@@ -328,7 +330,7 @@ Object.defineProperties(Fiche.prototype,{
   },
   "main_field_as_div":{
     get:function(){ 
-      return $(this.is_paragraph ? this.div_texte_jid : this.div_titre_jid)
+      return $(this.is_paragraph ? this.div_texte_jid : this.div_main_prop_jid)
     }
   },
   "main_field_as_input":{
@@ -338,7 +340,7 @@ Object.defineProperties(Fiche.prototype,{
   },
   "titre_id"        :{get:function(){return this.dom_id+'-titre'}},
   "input_titre_jid" :{get:function(){return 'input#'+this.titre_id}},
-  "div_titre_jid"   :{get:function(){return 'div#'+this.titre_id}},
+  "div_main_prop_jid"   :{get:function(){return 'div#'+this[(this.is_paragraph?'texte':'titre')+'_id']}},
   
   /* 
    * Remplace le DIV du main field par son champ d'édition (tout type de fiche) 

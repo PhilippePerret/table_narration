@@ -27,7 +27,7 @@ function confirmExit(evt)
   }
   else
   {
-    if(false == APP.flashed) APP.save_current_configuration(forcer = false)
+    if(false == App.flashed) App.save_current_configuration(forcer = false)
   }
 }
 window.onbeforeunload = confirmExit
@@ -166,11 +166,11 @@ Object.defineProperties(App,{
     * NOTES
     * -----
     *   * Pour procéder, cette propriété/méthode regarde simplement les fiches
-    *     qui sont visibles sur la table.
+    *     qui sont on_table sur la table.
     *
     * @property current_config
-    * @return   {Object} Configuration courante, contenant `visibles', les fiches
-    *           actuellement visibles (juste pour info) et `openeds', les fiches
+    * @return   {Object} Configuration courante, contenant `on_table', les fiches
+    *           actuellement on_table (sur la table) et `openeds', les fiches
     *           actuellement ouvertes (opened = true)
     *
     */
@@ -178,20 +178,15 @@ Object.defineProperties(App,{
     get:function(){
       var config = {
         openeds     : [],
-        visibles    : [],
+        on_table    : [],
         orphelines  : []
       }
       $('section#table > fiche:visible').each(function(){
         var fiche = FICHES.domObj_to_fiche($(this))
         var datam = {id:fiche.id, type:fiche.type}
-        config.visibles.push(datam)
-        if(fiche.opened){
-          config.openeds.push(datam)
-        } 
-        if(fiche.is_not_book && fiche.is_orpheline)
-        {
-          config.orphelines.push(datam)
-        }
+        config.on_table.push(datam)
+        if(fiche.opened) config.openeds.push(datam)
+        if(fiche.is_not_book && fiche.is_orpheline) config.orphelines.push(datam)
       })
       return JSON.stringify(config)
     }
@@ -199,7 +194,7 @@ Object.defineProperties(App,{
   
   /**
     * Applique la configuration courante. En d'autres termes, ouvre les fiches qui
-    * doivent être ouvertes.
+    * doivent être ouvertes (en les sortant de leur parent si nécessaire).
     *
     * @method current_configuration
     *
@@ -208,15 +203,31 @@ Object.defineProperties(App,{
     set:function(conf){
       this._current_configuration = conf
       if(conf == null) return
-      var errors = []
-      // Juste pour voir, on regarde si les fiches visibles sont bien visibles
-      L(conf.visibles).each(function(fdata){
-        if($('section#table > fiche#f-'+fdata.id).length == 0) errors.push("La fiche #"+fdata.id+" devrait être visible.")
-      })
+      var errors = [], fiche ;
       // On ouvre les fiches qui doivent l'être
+      // @note : c'est une procédure qui ne doit pas être asynchrone, car tous
+      // les éléments nécessaire ont dû être remontés.
       L(conf.openeds).each(function(fdata){
         if(undefined == FICHES.list[fdata.id]) errors.push("La fiche #"+fdata.id+" devrait exister…")
-        else get_fiche(fdata.id).open
+        else
+        {
+          dlog("Ouverture de la fiche "+fdata.id+ " pour rétablir la configuration.")
+          fiche = get_fiche(fdata.id)
+          // Si c'est une page, et que son livre est fermé, il faut ouvrir le livre,
+          // pour afficher la table des matières, et enfin ouvrir la page.
+          if(fiche.is_page && fiche.book && fiche.book.closed)
+          {
+            fiche.book.open
+            refermer_book = true
+          } 
+          else refermer_book = false
+          fiche.open
+          // if(refermer_book) fiche.book.close
+        } 
+      })
+      // Juste pour voir, on regarde si les fiches visibles sont bien visibles
+      L(conf.on_table).each(function(fdata){
+        if($('section#table > fiche#f-'+fdata.id).length == 0) errors.push("La fiche #"+fdata.id+" devrait être visible.")
       })
       if(errors.length)
       {

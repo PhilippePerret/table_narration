@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -427,7 +437,7 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l200"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:200</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l195"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:195</code></a>
         
         </p>
 
@@ -439,7 +449,7 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
 
     <div class="description">
         <p>Applique la configuration courante. En d&#39;autres termes, ouvre les fiches qui
-doivent être ouvertes.</p>
+doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
 
     </div>
 
@@ -618,7 +628,7 @@ un {Object} à enregistrer dans le fichier de configuration courante.</p>
 <h2 id="notes">NOTES</h2>
 <ul>
 <li>Pour procéder, cette propriété/méthode regarde simplement les fiches
-qui sont visibles sur la table.</li>
+qui sont on_table sur la table.</li>
 </ul>
 
     </div>

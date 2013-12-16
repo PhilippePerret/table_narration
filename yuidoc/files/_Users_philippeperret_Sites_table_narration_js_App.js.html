@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -203,7 +213,7 @@ function confirmExit(evt)
   }
   else
   {
-    if(false == APP.flashed) APP.save_current_configuration(forcer = false)
+    if(false == App.flashed) App.save_current_configuration(forcer = false)
   }
 }
 window.onbeforeunload = confirmExit
@@ -342,11 +352,11 @@ Object.defineProperties(App,{
     * NOTES
     * -----
     *   * Pour procéder, cette propriété/méthode regarde simplement les fiches
-    *     qui sont visibles sur la table.
+    *     qui sont on_table sur la table.
     *
     * @property current_config
-    * @return   {Object} Configuration courante, contenant &#x60;visibles&#x27;, les fiches
-    *           actuellement visibles (juste pour info) et &#x60;openeds&#x27;, les fiches
+    * @return   {Object} Configuration courante, contenant &#x60;on_table&#x27;, les fiches
+    *           actuellement on_table (sur la table) et &#x60;openeds&#x27;, les fiches
     *           actuellement ouvertes (opened = true)
     *
     */
@@ -354,20 +364,15 @@ Object.defineProperties(App,{
     get:function(){
       var config = {
         openeds     : [],
-        visibles    : [],
+        on_table    : [],
         orphelines  : []
       }
       $(&#x27;section#table &gt; fiche:visible&#x27;).each(function(){
         var fiche = FICHES.domObj_to_fiche($(this))
         var datam = {id:fiche.id, type:fiche.type}
-        config.visibles.push(datam)
-        if(fiche.opened){
-          config.openeds.push(datam)
-        } 
-        if(fiche.is_not_book &amp;&amp; fiche.is_orpheline)
-        {
-          config.orphelines.push(datam)
-        }
+        config.on_table.push(datam)
+        if(fiche.opened) config.openeds.push(datam)
+        if(fiche.is_not_book &amp;&amp; fiche.is_orpheline) config.orphelines.push(datam)
       })
       return JSON.stringify(config)
     }
@@ -375,7 +380,7 @@ Object.defineProperties(App,{
   
   /**
     * Applique la configuration courante. En d&#x27;autres termes, ouvre les fiches qui
-    * doivent être ouvertes.
+    * doivent être ouvertes (en les sortant de leur parent si nécessaire).
     *
     * @method current_configuration
     *
@@ -384,19 +389,35 @@ Object.defineProperties(App,{
     set:function(conf){
       this._current_configuration = conf
       if(conf == null) return
-      var errors = []
-      // Juste pour voir, on regarde si les fiches visibles sont bien visibles
-      L(conf.visibles).each(function(fdata){
-        if($(&#x27;section#table &gt; fiche#f-&#x27;+fdata.id).length == 0) errors.push(&quot;La fiche #&quot;+fdata.id+&quot; devrait être visible.&quot;)
-      })
+      var errors = [], fiche ;
       // On ouvre les fiches qui doivent l&#x27;être
+      // @note : c&#x27;est une procédure qui ne doit pas être asynchrone, car tous
+      // les éléments nécessaire ont dû être remontés.
       L(conf.openeds).each(function(fdata){
         if(undefined == FICHES.list[fdata.id]) errors.push(&quot;La fiche #&quot;+fdata.id+&quot; devrait exister…&quot;)
-        else get_fiche(fdata.id).open
+        else
+        {
+          dlog(&quot;Ouverture de la fiche &quot;+fdata.id+ &quot; pour rétablir la configuration.&quot;)
+          fiche = get_fiche(fdata.id)
+          // Si c&#x27;est une page, et que son livre est fermé, il faut ouvrir le livre,
+          // pour afficher la table des matières, et enfin ouvrir la page.
+          if(fiche.is_page &amp;&amp; fiche.book &amp;&amp; fiche.book.closed)
+          {
+            fiche.book.open
+            refermer_book = true
+          } 
+          else refermer_book = false
+          fiche.open
+          // if(refermer_book) fiche.book.close
+        } 
+      })
+      // Juste pour voir, on regarde si les fiches visibles sont bien visibles
+      L(conf.on_table).each(function(fdata){
+        if($(&#x27;section#table &gt; fiche#f-&#x27;+fdata.id).length == 0) errors.push(&quot;La fiche #&quot;+fdata.id+&quot; devrait être visible.&quot;)
       })
       if(errors.length)
       {
-        Flash.error(&quot;Des erreurs sont survenues en essayant d&#x27;application la configuration courante :\n&quot;+errors.join(&quot;\n\t&quot;))
+        F.error(LOCALE.app.error[&#x27;current config error&#x27;]+errors.join(&quot;\n\t&quot;))
       }
     }
   }

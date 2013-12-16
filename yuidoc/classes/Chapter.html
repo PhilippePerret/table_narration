@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Fiche</title>
+    <title>Chapter</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -180,21 +180,25 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Fiche Class</h1>
+                        <h1>Chapter Class</h1>
 <div class="box meta">
     
 
     
+        <div class="extends">
+            Extends <a href="../classes/Fiche.html" class="crosslink">Fiche</a>
+        </div>
+    
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l5"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:5</code></a>
+            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Chapter_class.js.html#l4"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Chapter_class.js:4</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/Fiche.html">Fiche</a>
+            Module: <a href="../modules/Chapter.html">Chapter</a>
         
     
 
@@ -204,14 +208,7 @@
 
 
 <div class="box intro">
-    <h2 id="class-fiche">Class Fiche</h2>
-<p>Toutes les instances Book, Page, Chapter et Paragraph héritent d&#39;elle</p>
-<h2 id="rappels">RAPPELS</h2>
-<ul>
-<li>C&#39;est en ajoutant un enfant à une fiche qu&#39;on détermine les propriétés
-<code>parent&#39; et</code>enfants&#39; des deux fiches concernant.
-cf. la méthode &quot;add_enfant&quot;.</li>
-</ul>
+    <p>Class pour les chapitres</p>
 
 </div>
 
@@ -239,16 +236,16 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                 <div class="index-section methods">
                     <h3>Methods</h3>
 
-                    <ul class="index-list methods">
+                    <ul class="index-list methods extends">
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_add_child">add_child</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_enable_main_field">enable_main_field</a>
 
                                 
@@ -256,20 +253,27 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_formate">formate</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
                                 <a href="#method_on_drop">on_drop</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_onchange_texte">onchange_texte</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_remove_child">remove_child</a>
 
                                 
@@ -284,46 +288,44 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                 <div class="index-section properties">
                     <h3>Properties</h3>
 
-                    <ul class="index-list properties">
+                    <ul class="index-list properties extends">
                         
                             <li class="index-item property">
+                                <a href="#property_book Le livre auquel appartient le chapitre (ou null)">book Le livre auquel appartient le chapitre (ou null)</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
                                 <a href="#property_closed">closed</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_enfants_as_minidata">enfants_as_minidata</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_jid">jid</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_main_prop">main_prop</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_opened">opened</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_ranged">ranged</a>
 
                                 
@@ -344,7 +346,7 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_add_child" class="method item">
+                    <div id="method_add_child" class="method item inherited">
     <h3 class="name"><code>add_child</code></h3>
 
     
@@ -384,11 +386,8 @@ cf. la méthode &quot;add_enfant&quot;.</li>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_add_child">Fiche</a>:
             
         
         
@@ -462,7 +461,7 @@ d&#39;enfant.</li>
 </div>
 
                 
-                    <div id="method_enable_main_field" class="method item">
+                    <div id="method_enable_main_field" class="method item inherited">
     <h3 class="name"><code>enable_main_field</code></h3>
 
     
@@ -486,13 +485,8 @@ d&#39;enfant.</li>
     <div class="meta">
         
             
-                
-                    <p>Provided by the <a href="../modules/dom.html">dom</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_enable_main_field">Fiche</a>:
             
         
         
@@ -532,7 +526,96 @@ de saisie.</li>
 </div>
 
                 
-                    <div id="method_on_drop" class="method item">
+                    <div id="method_formate" class="method item">
+    <h3 class="name"><code>formate</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l15"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:15</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Formate le string pour affichage (en remplaçant notamment les balises films,
+scénodico, etc.)  </p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>C&#39;est un raccourci pour ColText.formate(<this>)</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    <p>Le string courant formaté.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>&lt;texte&gt;.formate</code></pre>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_on_drop" class="method item inherited">
     <h3 class="name"><code>on_drop</code></h3>
 
     
@@ -572,11 +655,8 @@ de saisie.</li>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_on_drop">Fiche</a>:
             
         
         
@@ -646,7 +726,7 @@ de saisie.</li>
 </div>
 
                 
-                    <div id="method_onchange_texte" class="method item">
+                    <div id="method_onchange_texte" class="method item inherited">
     <h3 class="name"><code>onchange_texte</code></h3>
 
     
@@ -684,11 +764,8 @@ de saisie.</li>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_onchange_texte">Fiche</a>:
             
         
         
@@ -763,7 +840,7 @@ une difficulté à la définition des fiches remontées.</li>
 </div>
 
                 
-                    <div id="method_remove_child" class="method item">
+                    <div id="method_remove_child" class="method item inherited">
     <h3 class="name"><code>remove_child</code></h3>
 
     
@@ -797,11 +874,8 @@ une difficulté à la définition des fiches remontées.</li>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_remove_child">Fiche</a>:
             
         
         
@@ -860,9 +934,9 @@ une difficulté à la définition des fiches remontées.</li>
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_closed" class="property item">
-    <h3 class="name"><code>closed</code></h3>
-    <span class="type">Boolean</span>
+                    <div id="property_book Le livre auquel appartient le chapitre (ou null)" class="property item">
+    <h3 class="name"><code>book Le livre auquel appartient le chapitre (ou null)</code></h3>
+    <span class="type">Book</span>
 
     
 
@@ -880,6 +954,47 @@ une difficulté à la définition des fiches remontées.</li>
                 
                 Defined in
                 
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Chapter_class.js.html#l19"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Chapter_class.js:19</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_closed" class="property item inherited">
+    <h3 class="name"><code>closed</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_closed">Fiche</a>:
             
         
         
@@ -907,7 +1022,7 @@ une difficulté à la définition des fiches remontées.</li>
 </div>
 
                 
-                    <div id="property_enfants_as_minidata" class="property item">
+                    <div id="property_enfants_as_minidata" class="property item inherited">
     <h3 class="name"><code>enfants_as_minidata</code></h3>
     <span class="type">Array</span>
 
@@ -922,11 +1037,8 @@ une difficulté à la définition des fiches remontées.</li>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_enfants_as_minidata">Fiche</a>:
             
         
         
@@ -954,7 +1066,7 @@ une difficulté à la définition des fiches remontées.</li>
 </div>
 
                 
-                    <div id="property_jid" class="property item">
+                    <div id="property_jid" class="property item inherited">
     <h3 class="name"><code>jid</code></h3>
     <span class="type">String</span>
 
@@ -969,13 +1081,8 @@ une difficulté à la définition des fiches remontées.</li>
     <div class="meta">
         
             
-                
-                    <p>Provided by the <a href="../modules/dom.html">dom</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_jid">Fiche</a>:
             
         
         
@@ -1001,58 +1108,7 @@ une difficulté à la définition des fiches remontées.</li>
 </div>
 
                 
-                    <div id="property_main_prop" class="property item">
-    <h3 class="name"><code>main_prop</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/dom.html">dom</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l292"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:292</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Propriété principale en fonction du type de la fiche. Pour un paragraphe,
-la propriété principale est <code>texte</code>, pour toutes les autres fiches, c&#39;est
-<code>titre</code></p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_opened" class="property item">
+                    <div id="property_opened" class="property item inherited">
     <h3 class="name"><code>opened</code></h3>
     <span class="type">Boolean</span>
 
@@ -1067,11 +1123,8 @@ la propriété principale est <code>texte</code>, pour toutes les autres fiches,
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_opened">Fiche</a>:
             
         
         
@@ -1100,7 +1153,7 @@ True si la fiche est ouverte, false dans le cas contraire.</p>
 </div>
 
                 
-                    <div id="property_ranged" class="property item">
+                    <div id="property_ranged" class="property item inherited">
     <h3 class="name"><code>ranged</code></h3>
     <span class="type">Boolean</span>
 
@@ -1115,11 +1168,8 @@ True si la fiche est ouverte, false dans le cas contraire.</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_ranged">Fiche</a>:
             
         
         

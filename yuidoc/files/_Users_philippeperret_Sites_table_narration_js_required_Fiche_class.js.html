@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -175,7 +185,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-  * @module FicheClass
+  * @module Fiche
   */
 
 /**
@@ -208,7 +218,7 @@ window.Fiche = function(data)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
   this._opened    = false   // cf. propriété complexe &#x60;opened&#x27;
-  this._ranged    = false   // cf. propriété complexe &#x60;ranged&#x27;
+  // this._ranged    = false   // cf. propriété complexe &#x60;ranged&#x27;
   this.selected   = false
   this.built      = false   // mis à true quand la fiche est construite
   this.retourned  = false   // Mis à true quand c&#x27;est le verso affiché
@@ -268,10 +278,13 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){return this._modified || false }
   },
   
-  /*
-   *  Marque la fiche ouverte ou fermé (ou retourne la propriété)
-   *  
-   */
+  /**
+    * Marque la fiche ouverte ou fermée (ou retourne la propriété)
+    * True si la fiche est ouverte, false dans le cas contraire.
+    *
+    * @property {Boolean} opened
+    * @default false
+    */
   &quot;opened&quot;:{
     get:function(){ return this._opened || false },
     set:function(opened){
@@ -279,16 +292,33 @@ Object.defineProperties(Fiche.prototype, {
       this.obj[opened?&#x27;addClass&#x27;:&#x27;removeClass&#x27;](&#x27;opened&#x27;)
     }
   },
-
-  /*
-   *  Marque l&#x27;élément rangé ou non rangé (ou retourne la propriété ranged)
-   *  
-   */
+  /**
+    * Returne true si la fiche est fermée, false si ouverte
+    *
+    * @property {Boolean} closed
+    * @default  true
+    * @readOnly
+    */
+  &quot;closed&quot;:{get:function(){return this.opened == false}},
+  
+  /**
+    * Marque l&#x27;élément rangé ou non rangé (ou retourne la propriété ranged)
+    *
+    * NOTES
+    * -----
+    *   * La valeur retournée dépend du type de fiche.
+    *       * Pour un livre, la valeur est toujours false
+    *       * Pour un chapitre ou un paragraphe, dès qu&#x27;ils ont un parent,
+    *         ils sont toujours rangés.
+    *       * Pour un page, dépend de son ouverture / fermeture.
+    *
+    * @property {Boolean} ranged
+    */
   &quot;ranged&quot;:{
-    get:function(){ return this._ranged || false },
-    set:function(ranged){
-      this._ranged = ranged
-      this.obj[ranged?&#x27;addClass&#x27;:&#x27;removeClass&#x27;](&#x27;ranged&#x27;)
+    get:function(){
+      if(this.is_book) return false
+      if(this.parent &amp;&amp; (this.is_chapter || this.is_paragraph)) return true
+      if(this.is_page) return this.parent &amp;&amp; this.closed
     }
   },
 
@@ -420,6 +450,7 @@ Object.defineProperties(Fiche.prototype, {
       {
         this.obj.droppable({
           hoverClass  :&#x27;dropped&#x27;,
+          tolerance   : &#x27;pointer&#x27;,
           greedy      : true, // pour empêcher la table de prendre le drop
           accept      : &#x27;.fiche.&#x27;+accepted_child+
                         &#x27;, .card_tool[data-type=&quot;&#x27;+accepted_child+&#x27;&quot;]&#x27;,
@@ -545,7 +576,8 @@ Object.defineProperties(Fiche.prototype, {
       dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
       if(this.is_not_openable) return this.rend_openable(&#x27;open&#x27;)
       this.opened = true
-      if(this.is_page &amp;&amp; this.ranged) this.unrange
+      if(this.parent &amp;&amp; this.is_page) this.unrange
+      this.positionne
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
   },
@@ -592,7 +624,7 @@ Object.defineProperties(Fiche.prototype, {
         this.draggable = false
       }
       this.rend_sortable
-      this.ranged = true
+      this.obj.addClass(&#x27;ranged&#x27;)
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
   },
@@ -604,13 +636,13 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       if(!this.parent) throw LOCALE.fiche.error[&#x27;unable to unrange orphelin&#x27;]
       this.clone
+      this.obj.removeClass(&#x27;ranged&#x27;)
       if(this.sortable)
       {
         this.obj.sortable(&quot;destroy&quot;)
         this.sortable = false
       }
       this.rend_draggable
-      this.ranged = false
     }
   },
   
@@ -700,11 +732,14 @@ Fiche.prototype.on_drop = function(evt, ui)
   if(is_tool)
   {
     // On crée la fiche
-    ichild = FICHES.full_create({
+    var data = {
       type: obj_moved.attr(&#x27;data-type&#x27;),
       left: 100, top: 100
-    })
-    ichild[ichild.main_prop] = FICHES.datatype[ichild.type].defvalue
+    }
+    var dtype = FICHES.datatype[data.type]
+    data[data.type == &#x27;para&#x27; ? &#x27;texte&#x27; : &#x27;titre&#x27;] = dtype.defvalue
+    
+    ichild = FICHES.full_create(data)
   }
   else
   {
@@ -719,6 +754,9 @@ Fiche.prototype.on_drop = function(evt, ui)
   // endroit précis, pour le placer au bon endroit dans les enfants
   // F.error(&quot;La méthode Fiche.on_drop doit être implémentée&quot;+
   // &quot;\nÉlément #&quot;+obj_moved.attr(&#x27;id&#x27;)+&quot; (outil ? &quot;+is_tool+&quot;) glissé sur fiche #&quot;+this.id)
+  
+  // Si c&#x27;est une création, on met aussi l&#x27;enfant en édition
+  if(is_tool) ichild.enable_main_field
   
   return stop_event( evt )
 }
@@ -744,21 +782,24 @@ $.extend(Fiche.prototype,{
     }
   },
   
-  /*
-   *  Ajout d&#x27;un enfant à la fiche
-   *
-   *  NOTES
-   *  -----
-   *    = C&#x27;est cette méthode qui doit être utilisée pour tout ajout
-   *      d&#x27;enfant.
-   *
-   *  @param  enfant    {Fiche} de l&#x27;enfant à ajouter
-   *  @param  options   {Hash} Options d&#x27;insertion :
-   *                      after  : &lt;fiche&gt;    Ajouter après cet enfant
-   *                      before : &lt;fiche&gt;    Ajouter avant cet enfant
-   */
+  /**
+    *  Ajout d&#x27;un enfant à la fiche
+    *
+    *  NOTES
+    *  -----
+    *    * C&#x27;est cette méthode qui doit être utilisée pour tout ajout
+    *      d&#x27;enfant.
+    *
+    * @method add_child
+    * @param  enfant    {Fiche} de l&#x27;enfant à ajouter
+    * @param  options   {Object} Options d&#x27;insertion :
+    *                      after  : &lt;fiche&gt;    Ajouter après cet enfant
+    *                      before : &lt;fiche&gt;    Ajouter avant cet enfant
+    */
   add_child:function(enfant, options)
   {
+    var idm = &quot;Fiche::add_child(&quot;+enfant.type+&quot;:&quot;+enfant.id+&quot;) [&quot;+this.type_id+&quot;]&quot;
+    dlog(&quot;-&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
     if(undefined == options) options = {}
     try
     {
@@ -817,10 +858,13 @@ $.extend(Fiche.prototype,{
     
   },
   
-  /*
-   *  Supprime un enfant 
-   *  
-   */
+  /**
+    *  Supprime un enfant de la fiche
+    *  
+    * @method remove_child
+    * @param  {Fiche} enfant  L&#x27;enfant à retirer.
+    *
+    */
   remove_child:function(enfant)
   {
     try
@@ -851,25 +895,31 @@ $.extend(Fiche.prototype,{
     
   },
   
-  /*
-   *  Méthode appelée quand on change le titre de la fiche
-   *  
-   *  NOTES
-   *  -----
-   *  @ Cela peut se produire lorsqu&#x27;on quitte le champ, ou lorsque
-   *    l&#x27;on presse la touche RETURN sur le champ.
-   *
-   *  @ C&#x27;est vraiment cette fonction qui inaugure le changement du
-   *    titre, car si c&#x27;était &#x60;titre=&#x60; (propriété complexe), on aura
-   *    une difficulté à la définition des fiches remontées.
-   *
-   */
+  /**
+    * Méthode appelée quand on change le texte (paragraphe) ou le titre (autres
+    * fiches) d&#x27;une fiche.
+    *
+    * NOTES
+    * -----
+    *   * La méthode interdit d&#x27;enregistrer une donnée vide.
+    *   * Cela peut se produire lorsqu&#x27;on quitte le champ, ou lorsque
+    *     l&#x27;on presse la touche RETURN sur le champ.
+    *   * C&#x27;est vraiment cette fonction qui inaugure le changement du
+    *     titre, car si c&#x27;était &#x60;titre=&#x60; (propriété complexe), on aura
+    *     une difficulté à la définition des fiches remontées.
+    *
+    *
+    * @method onchange_texte
+    * @param  {Event} evt   L&#x27;Onchange Event.
+    * @return {True} si la donnée a été prise en compte, {False} dans le cas contraire.
+    */
   onchange_titre_or_texte:function(evt)
   {
     var idm = &quot;Fiche::onchange_titre_or_texte [&quot;+this.type_id+&quot;]&quot;
     dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
     var obj=this.main_field, prop=this.main_prop ;
-    var new_value = obj.val()
+    var new_value = obj.val().trim()
+    if(new_value == &quot;&quot;) return F.error(LOCALE.fiche.error[&#x27;no empty text&#x27;])
     if(this[prop] != new_value)
     {
       this[prop]    = new_value
@@ -877,6 +927,7 @@ $.extend(Fiche.prototype,{
     }
     if(this.is_chapter) this.close
     dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
+    return true
   }
   
 })

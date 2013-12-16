@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
                 <li><a href="../classes/Collection.html">Collection</a></li>
             
                 <li><a href="../classes/ColText.html">ColText</a></li>
@@ -63,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/Page.html">Page</a></li>
+            
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
@@ -76,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/App.js.html">App.js</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
             
                 <li><a href="../modules/Collection.html">Collection</a></li>
             
@@ -93,15 +99,17 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/Dom.html">Dom</a></li>
-            
                 <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
-                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
             
-                <li><a href="../modules/FicheClass.html">FicheClass</a></li>
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
             
                 <li><a href="../modules/FICHES.html">FICHES</a></li>
             
@@ -124,6 +132,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
             
                 <li><a href="../modules/Paragraph.html">Paragraph</a></li>
             
@@ -175,7 +185,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-  * @module     FicheClass
+  * @module     fiche_data
   * @submodule  data
   * @main       Fiche
   */
@@ -257,10 +267,12 @@ Object.defineProperties(Fiche.prototype,{
   &quot;data&quot;:{
     get:function(){
       data = {
-        id:this.id, type:this.type, titre:this.titre, deleted:this.deleted,
+        id:this.id, type:this.type, titre:this.titre,
         top:this.top, left:this.left
       }
-      if(this.parent)  data.parent = {id:this.parent.id, type:this.parent.type}
+      if(this.deleted)      data.deleted = true
+      if(this.not_printed)  data.not_printed = true
+      if(this.parent)       data.parent = {id:this.parent.id, type:this.parent.type}
       if(this.enfants)
       {
         data.enfants = []
@@ -273,20 +285,54 @@ Object.defineProperties(Fiche.prototype,{
       {
         data.texte  = this.texte
         if(this._style) data.style = this._style.join(&#x27;.&#x27;)
+        if(this.ptype)  data.ptype = this.ptype
       } 
       return data
     }
   },
   
+  /**
+    * Le type de la fiche, qui détermine s&#x27;il s&#x27;agit d&#x27;un livre, d&#x27;un chapitre
+    * d&#x27;une page ou d&#x27;un paragraphe.
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est une donnée sur 4 lettres (&#x27;book&#x27;, &#x27;chap&#x27;, &#x27;page&#x27; ou &#x27;para&#x27;)
+    *   * Ne pas confondre cette propriété avec le &#x60;ptype&#x60; du paragraphe.
+    *
+    * @property {String} type
+    */
   &quot;type&quot;:{
     get:function(){ return this._type || null},
     set:function(ty){ this._type = ty }
   },
-  /* Méthode pratique retournant &lt;type&gt;#&lt;id&gt; (p.e. &#x27;book#12&#x27;) */
+  
+  /**
+    * Méthode pratique, pour le débuggage, retournant &lt;type&gt;#&lt;id&gt; (p.e. &#x27;book#12&#x27;) 
+    * @property {String} type_id
+    */
   &quot;type_id&quot;:{
     get:function(){ return this.type + &#x27;#&#x27; + this.id}
   },
 
+  /**
+    * Définit si la fiche ne doit pas être imprimée dans le livre
+    *
+    * NOTES
+    * -----
+    *   * Ça peut concerner tout un livre (par exemple pour de l&#x27;aide ou des notes)
+    *
+    * @proprety {Boolean} not_printed
+    * @default {Undefined}
+    */
+  &quot;not_printed&quot;:{
+    get:function(){return this._not_printed == true},
+    set:function(value){
+      if(this._not_printed == value) return
+      this._not_printed = value
+    }
+  },
+  
   /*
    *  Retourne le {Hash} des données minimum de la fiche (id et type)
    *  
@@ -388,19 +434,21 @@ Object.defineProperties(Fiche.prototype,{
       return a
     }
   },
-  /*
-   *  Retourne une valeur pour le champ principal (titre ou texte)
-   *
-   *  NOTES
-   *  -----
-   *    = Cette méthode renvoie le texte brut si +brut+ est TRUE
-   *      Dans le cas contraire, elle le met en forme.
-   *
-   *  @param  formate   Si TRUE le texte est interprété, i.e. par exemple que
-   *                    ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
-   *                    en forme. 
-   *                    Si FALSE, le texte est renvoyé tel qu&#x27;il est enregistré.
-   */
+  /**
+    *  Retourne une valeur pour le champ principal (titre ou texte)
+    *
+    *  NOTES
+    *  -----
+    *    * Cette méthode renvoie le texte brut si +formate+ est FALSE
+    *      Dans le cas contraire, elle le met en forme.
+    *
+    * @method main_field_value
+    * @param  {Boolean} formate   
+    *                   Si TRUE le texte est interprété, i.e. par exemple que
+    *                   ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
+    *                   en forme. 
+    *                   Si FALSE, le texte est renvoyé tel qu&#x27;il est enregistré.
+    */
   &quot;main_field_value&quot;:{
     value:function( formate ){
       var code = &quot;&quot; ;
@@ -415,6 +463,12 @@ Object.defineProperties(Fiche.prototype,{
   
 })
 
+/**
+  * Dispatch les données +data+ dans la fiche.
+  *
+  * @method dispatch
+  * @param  {Object} data Les données à dispatcher dans la fiche.
+  */
 Fiche.prototype.dispatch = function(data){
   dlog(&quot;---&gt; Fiche::dispatch(&quot;+JSON.stringify(data)+&quot;)&quot;, DB_FCT_ENTER)
   var prop, val ;

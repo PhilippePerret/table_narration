@@ -27,50 +27,50 @@ class Collection
     # 
     # @return {Hash} Table contenant :
     #   {
-    #     'visibles':[] # {Array} des :id, :type des fiches visibles
+    #     'on_table':[] # {Array} des :id, :type des fiches on_table
     #     'openeds':{}
     #   }
     # 
     def current_configuration
       @current_configuration ||= begin
-        fiches_visibles = get_visibles # {Array} d'instances {Fiche}
+        fiches_on_table = get_on_table # {Array} d'instances {Fiche}
         if raw_current_config
           raw_current_config['openeds'].each do |dfiche|
             Fiche::get(dfiche['id'].to_i).is_opened = true
             # log "Fiche #{dfiche['id']} marquée ouverte"
           end
         end
-        # log "Fiches visibles à la fin de Collection::current_configuration :"
-        # log fiches_visibles.inspect
+        # log "Fiches on_table à la fin de Collection::current_configuration :"
+        # log fiches_on_table.inspect
         # log "États d'ouverture :"+
         #   "\n-------------------"
-        # fiches_visibles.each do |fiche|
+        # fiches_on_table.each do |fiche|
         #   log "\tFiche ##{fiche.id} : " + (fiche.opened? ? "OPENED" : "CLOSED")
         # end
         {
-          :visibles => fiches_visibles, 
+          :on_table => fiches_on_table, 
         }
       end
     end
     
-    # Retourne les fiches visibles
+    # Retourne les fiches on_table
     # 
     # La méthode utilise le fichier de configuration courante où sont consignées
     # les fiches courantes, ou prend tous les livres.
     # 
     # @return un {Array} d'instances {Fiche}
     # 
-    def get_visibles
+    def get_on_table
       if raw_current_config
-        # log "[Collection::get_visibles] Fichier configuration existant"
-        raw_current_config['visibles'].collect do |dfiche|
+        # log "[Collection::get_on_table] Fichier configuration existant"
+        raw_current_config['on_table'].collect do |dfiche|
           fiche = Fiche::get dfiche['id']
           fiche = Fiche.new dfiche['id'], dfiche['type'] if fiche.nil?
           fiche.is_visible = true
           fiche
         end
       else
-        # log "[Collection::get_visibles] Fichier configuration INEXISTANT"
+        # log "[Collection::get_on_table] Fichier configuration INEXISTANT"
         # Si le fichier de configuration n'existe pas, les fiches visibles
         # sont seulement les livres.
         Dir["#{Collection::folder_fiches}/book/*.msh"].collect do |path|
