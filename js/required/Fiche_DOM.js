@@ -251,7 +251,7 @@ Object.defineProperties(Fiche.prototype,{
   },
   "html_div_titre":{
     get:function(){
-      return '<div id="'+this.titre_id+'" class="titre"></div>'
+      return '<div id="'+this.titre_id+'" class="titre">'+this.titre+'</div>'
     }
   },
   

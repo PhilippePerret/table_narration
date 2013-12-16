@@ -70,5 +70,6 @@ end
   }
 }
 get_all_fiches_visibles
+# Collection::kill_current_configuration
 RETOUR_AJAX[:data]      = @data
 RETOUR_AJAX[:mode_test] = File.exists?('./.mode_test')

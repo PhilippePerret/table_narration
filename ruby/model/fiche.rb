@@ -12,6 +12,7 @@ class Fiche
     # Récupère l'instance de la fiche d'identifiant +id+
     # 
     def get id
+      @list ||= {}
       @list[id]
     end
     
@@ -26,7 +27,13 @@ class Fiche
       @list = @list.merge fiche.id.to_i => fiche
     end
     
-    
+    # Retourne l'instance {Fiche} de la fiche de path +path+
+    # 
+    def get_fiche_with_path path
+      dfiche = Marshal.load(File.read path)
+      Fiche.new dfiche['id'], dfiche['type']
+    end
+        
     # Return le dernier ID utilisé pour une fiche (le plus grand)
     # 
     def last_id
@@ -90,6 +97,11 @@ class Fiche
   # actuelle.
   # 
   attr_accessor :is_opened
+  
+  # Pour savoir si la fiche est visible dans le fichier de configuration
+  # courante
+  # 
+  attr_accessor :is_visible
     
   def initialize id, type
     @id   = id.to_i
@@ -107,6 +119,20 @@ class Fiche
     return File.exists? path
   end
 
+  # Return TRUE si la fiche est visible dans le fichier de
+  # configuration courante.
+  # 
+  # @note : si le fichier de configuration courante n'existe pas, seuls les
+  # livres sont marqués visibles
+  # 
+  def visible?
+    @is_visible ||= false
+  end
+  
+  def invisible?
+    @is_invisible ||= false == visible?
+  end
+  
   # L'ouverture de la fiche n'est plus enregistrée dans ses données,
   # mais dans le fichier de configuration courante.
   # 

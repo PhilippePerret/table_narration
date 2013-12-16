@@ -291,7 +291,8 @@ UI.Input = {
   {
     // Valeur dans le champ
     var value       = this.target.jq.val().trim()
-    var data_types  = this.target.data_type.split(' ')
+    var data_type   = this.target.data_type || ""
+    var data_types  = data_type.split(' ')
     if(value == "" && data_types.indexOf('not_empty') < 0) return true
     // Format attendu (if any)
     // @note: Mis dans une variable car pourra être mis à null pour

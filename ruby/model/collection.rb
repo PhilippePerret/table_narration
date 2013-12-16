@@ -1,6 +1,27 @@
+require 'json'
+
 class Collection
   class << self
     
+    # Opération sur toutes les fiches de la collection
+    # 
+    def each_fiche
+      if block_given?
+        all_fiches.each {|fiche| yield fiche }
+      else
+        raise "Il faut fournir un block de code"
+      end
+    end
+    
+    # Récupère toutes les fiches de la collection courante
+    # 
+    def all_fiches
+      @all_fiches ||= begin
+        Dir["#{Collection::folder_fiches}/**/*.msh"].collect do |path|
+          Fiche::get_fiche_with_path path
+        end
+      end
+    end
     # Données de configuration courante (si le fichier CURRENT_CONFIG.conf
     # existe)
     # 
@@ -16,16 +37,16 @@ class Collection
         if raw_current_config
           raw_current_config['openeds'].each do |dfiche|
             Fiche::get(dfiche['id'].to_i).is_opened = true
-            log "Fiche #{dfiche['id']} marquée ouverte"
+            # log "Fiche #{dfiche['id']} marquée ouverte"
           end
         end
-        log "Fiches visibles à la fin de Collection::current_configuration :"
-        log fiches_visibles.inspect
-        log "États d'ouverture :"+
-          "\n-------------------"
-        fiches_visibles.each do |fiche|
-          log "\tFiche ##{fiche.id} : " + (fiche.opened? ? "OPENED" : "CLOSED")
-        end
+        # log "Fiches visibles à la fin de Collection::current_configuration :"
+        # log fiches_visibles.inspect
+        # log "États d'ouverture :"+
+        #   "\n-------------------"
+        # fiches_visibles.each do |fiche|
+        #   log "\tFiche ##{fiche.id} : " + (fiche.opened? ? "OPENED" : "CLOSED")
+        # end
         {
           :visibles => fiches_visibles, 
         }
@@ -41,16 +62,21 @@ class Collection
     # 
     def get_visibles
       if raw_current_config
-        log "[Collection::get_visibles] Fichier configuration existant"
+        # log "[Collection::get_visibles] Fichier configuration existant"
         raw_current_config['visibles'].collect do |dfiche|
-          Fiche.new dfiche['id'], dfiche['type']
+          fiche = Fiche::get dfiche['id']
+          fiche = Fiche.new dfiche['id'], dfiche['type'] if fiche.nil?
+          fiche.is_visible = true
+          fiche
         end
       else
-        log "[Collection::get_visibles] Fichier configuration INEXISTANT"
+        # log "[Collection::get_visibles] Fichier configuration INEXISTANT"
         # Si le fichier de configuration n'existe pas, les fiches visibles
         # sont seulement les livres.
         Dir["#{Collection::folder_fiches}/book/*.msh"].collect do |path|
-          get_fiche_with_path path
+          fiche = Fiche::get_fiche_with_path path
+          fiche.is_visible = true
+          fiche
         end
       end
     end
@@ -68,11 +94,22 @@ class Collection
       end
     end
     
-    # Retourne l'instance {Fiche} de la fiche de path +path+
+    # Enregistre la configuration
     # 
-    def get_fiche_with_path path
-      dfiche = Marshal.load(File.read path)
-      Fiche.new dfiche['id'], dfiche['type']
+    # @param  str   {String} de la configuration (stringifié par JSON) ou table
+    #               qui sera jisonifiée.
+    # 
+    def save_current_configuration str
+      str = str.to_json unless str.class == String
+      File.open(path_current_config, 'wb'){|f| f.write str}
+    end
+    
+    # Détruit le fichier configuration s'il existe
+    # 
+    # @note L'opération est appelée à chaque chargement de la collection
+    # 
+    def kill_current_configuration
+     File.unlink path_current_config if File.exists? path_current_config
     end
     
     # Retourne le path au fichier contenant la configuration actuelle

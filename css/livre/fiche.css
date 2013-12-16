@@ -26,6 +26,11 @@ fiche.selected.opened, fiche.selected.opened * {
   z-index : 15;
 }
 
+/* Une fiche qui n'est pas un book et qui n'est ni rangée, ni ouverte */
+fiche:not(.book):not(.ranged):not(.opened){
+  width   : 300px;
+  border  : 1px solid #ccc;
+}
 /* Une fiche rangée perd sa position absolute */
 fiche.ranged { 
   position: static !important ;

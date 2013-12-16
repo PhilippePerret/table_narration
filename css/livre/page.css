@@ -21,9 +21,17 @@ fiche.page.ranged {
   border-width  : 1px !solid;
 }
 
-fiche.page:not(.ranged) > recto {
+fiche.page.opened > recto {
   padding-left  : 1.6em;
   padding-top   : 2em;
+}
+fiche.page:not(.ranged):not(.opened){
+  /* cf. aussi les définitions dans fiche.css */
+  width   : 500px !important;
+}
+/* Le titre quand la page n'est ni rangée ni ouverte (=> orpheline) */
+fiche.page:not(.ranged):not(.opened) > recto > .titre {
+  font-size     : larger;
 }
 
 fiche.page.ranged > recto > .titre {

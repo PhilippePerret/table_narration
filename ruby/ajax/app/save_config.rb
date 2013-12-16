@@ -17,14 +17,11 @@ NOTES
 path_config = Collection::path_current_config
 
 unless (param :force).nil?
-  File.unlink path_config if File.exists? path_config
+  Collection::kill_current_configuration
 end
 
 unless File.exists? path_config
-  # File.open(path_config, 'wb'){ |f| f.write Marshal.dump(param :config)}
   # Pour le moment, j'essaie d'enregistrer simplement la donnée, qui doit être sous
   # forme de string.
-  File.open(path_config, 'wb'){ |f| f.write (param :config).gsub(/\\"/, '"')}
+  Collection::save_current_configuration (param :config).gsub(/\\"/, '"')}
 end
-  
-  
