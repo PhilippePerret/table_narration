@@ -25,13 +25,6 @@
       onclick="$.proxy(App.save_current_configuration, App, forcer=true)()"
       title="Enregistrer la configuration courante pour la prochaine ouverture"
       />
-    <!-- Affichage des raccourcis-clavier -->
-    <input 
-      type="button"
-      id="btn_toggle_shortcuts"
-      value="Shortcuts"
-      onclick="$('table#shortcuts_panel').toggle()"
-      />
     <!-- Bouton pour forcer un backup -->
     <input
       id="btn_force_backup"
@@ -65,7 +58,11 @@
   <!-- BOUTONS OUTILS POUR AJOUTER PAGE, BOOK, ETC. -->
   <div id="header_card_tools">
     <?php 
-      $table = array('book'=>"Book", 'chap' => "Chapter", 'page'=> "Page", 'para'=> "Paragraph");
+      $table = array(
+        'book'=>"Book", 
+        'chap' => "Chapter", 
+        'page'=> "Page", 
+        'para'=> "Paragraph");
       foreach($table as $type => $name) { ?>
       <div 
         id="card_tool-<?php echo $type ?>" 
@@ -73,6 +70,18 @@
         data-type="<?php echo $type ?>"
         ><?php echo $name ?></div>
     <?php } ?>
+    <div id="div_bd_tool" style="display:inline-block;margin-left:1em;">
+      <div
+        id="card_tool-film"
+        class="bd_tool"
+        onclick="$.proxy(FILMS.Dom.show_panneau, FILMS.Dom)()"
+        >Films</div>
+      <div
+        id="card_tool-film"
+        class="bd_tool"
+        onclick="$.proxy(FILMS.Dom.show_panneau, FILMS.Dom)()"
+        >Dico</div>
+    </div>
   </div>
   <!-- AIDE RACCOURCIS-CLAVIER -->
   <?php include "./php/view/shortcuts_panel.php" ?>

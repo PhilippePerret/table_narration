@@ -172,5 +172,5 @@ REPARER ? reparer : verifier
 log ERROR::rapport
 Collection::each_fiche do |fiche| log fiche.resultat_line end
 if REPARER
-  log "Nouvelle configuration courante enregistrée :\n#{$new_config.inspect}"
+  log "\nNouvelle configuration courante enregistrée :\n#{$new_config.inspect}"
 end

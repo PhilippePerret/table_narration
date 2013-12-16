@@ -48,7 +48,7 @@ $.extend(FILMS, {
    *  Class des items de l'objet ({Classe})
    *  
    */
-  Class: Film,
+  Class: Film
   
     
 })

@@ -7,7 +7,8 @@ section#header > div#header_card_tools {
   top         : 10px;
 }
 
-section#header > div#header_card_tools > div.card_tool {
+section#header > div#header_card_tools > div.card_tool,
+section#header > div#header_card_tools div.bd_tool {
   display           : inline-block;
   width             : 84px;
   background-color  : #DDD;
@@ -16,4 +17,9 @@ section#header > div#header_card_tools > div.card_tool {
   color             : #565656;
   text-align        : center;
   padding           : 5px 0;
+}
+
+section#header > div#header_card_tools div.bd_tool {
+  font-variant : small-caps;
+  font-weight  : bold;
 }

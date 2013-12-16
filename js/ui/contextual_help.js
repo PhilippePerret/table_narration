@@ -47,7 +47,27 @@ window.ContextualHelp = {
     help(texte_aide)
   },
   
-  
+  /**
+    * Attend +seconds+ avant d'adapter l'interface (utile par exemple lorsqu'un
+    * panneau est en train de se fermer).
+    *
+    * @method adapt_after
+    * @param  [seconds=0.5] {Float} seconds Nombre de secondes à attendre
+    *
+    */
+  adapt_after:function(seconds, ok)
+  {
+    if(undefined == ok)
+    {
+      if(undefined == seconds) seconds = 0.5
+      this.timer_wait = setTimeout($.proxy(this.adapt_after, this, null, true), seconds * 1000)
+    }
+    else
+    {
+      clearTimeout(this.timer_wait)
+      this.adapt
+    }
+  }
 }
 Object.defineProperties(ContextualHelp, {
   /*

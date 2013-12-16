@@ -142,8 +142,10 @@ window.OBJETS = {
    */
   on_choose_item:function(film_id)
   {
-    if(!this.Dom.options.keep_opened) this.Dom.hide_panneau()
-    this.on_choose_item.poursuivre(film_id)
+    if(!this.Dom.options || !this.Dom.options.keep_opened) this.Dom.hide_panneau()
+    if('function' == typeof this.on_choose_item.poursuivre) this.on_choose_item.poursuivre(film_id)
+    delete this.on_choose_item.poursuivre
+    ContextualHelp.adapt
   },
   
   /**
