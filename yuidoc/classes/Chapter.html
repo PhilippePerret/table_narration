@@ -252,9 +252,7 @@
                             </li>
                         
                             <li class="index-item method inherited">
-                                <a href="#method_clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
-                parenthèses.">clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
-                parenthèses.</a>
+                                <a href="#method_clone">clone</a>
 
                                 
                                 
@@ -276,6 +274,13 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_on_drop">on_drop</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_onchange_ordre_enfants">onchange_ordre_enfants</a>
 
                                 
                                 
@@ -413,7 +418,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l599"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:599</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l645"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:645</code></a>
         
         </p>
 
@@ -483,10 +488,8 @@ d&#39;enfant.</li>
 </div>
 
                 
-                    <div id="method_clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
-                parenthèses." class="method item inherited">
-    <h3 class="name"><code>clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
-                parenthèses.</code></h3>
+                    <div id="method_clone" class="method item inherited">
+    <h3 class="name"><code>clone</code></h3>
 
     
         <span class="paren">()</span>
@@ -510,8 +513,7 @@ d&#39;enfant.</li>
         
             
                 <p>Inherited from
-                <a href="../classes/Fiche.html#method_clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
-                parenthèses.">Fiche</a>:
+                <a href="../classes/Fiche.html#method_clone">Fiche</a>:
             
         
         
@@ -529,6 +531,7 @@ d&#39;enfant.</li>
         <p>Clone/Déclone la fiche courante</p>
 <h2 id="notes">NOTES</h2>
 <ul>
+<li>Propriété complexe (appelé sans parenthèses)</li>
 <li>&quot;Cloner la fiche&quot; consiste à :<ul>
 <li>Placer un clone de la fiche dans le parent, à la place de la fiche</li>
 <li>Sortir le DOM Objet du parent pour le mettre sur la table</li>
@@ -750,7 +753,7 @@ scénodico, etc.)  </p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l525"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:525</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l535"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:535</code></a>
         
         </p>
 
@@ -816,6 +819,120 @@ scénodico, etc.)  </p>
 </div>
 
                 
+                    <div id="method_onchange_ordre_enfants" class="method item inherited">
+    <h3 class="name"><code>onchange_ordre_enfants</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>ui</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_onchange_ordre_enfants">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l590"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:590</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Appelé quand on change l&#39;ordre des enfants de la fiche</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>Plutôt que de s&#39;embêter à étudier +ui+ pour savoir quel
+élément a été déplacé, on compare la liste du DOM avec la liste des
+enfants et on commence à traiter à partir de cet indice.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>UpdateEvent généré par sortable</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">ui</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;objet envoyé par jquery</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_onchange_texte" class="method item inherited">
     <h3 class="name"><code>onchange_texte</code></h3>
 
@@ -859,7 +976,7 @@ scénodico, etc.)  </p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l712"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:712</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l758"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:758</code></a>
         
         </p>
 
@@ -969,7 +1086,7 @@ une difficulté à la définition des fiches remontées.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l675"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:675</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l721"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:721</code></a>
         
         </p>
 

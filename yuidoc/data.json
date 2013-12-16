@@ -1223,8 +1223,32 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 98,
+            "line": 58,
+            "description": "Nombre de fiches dans `list`",
+            "itemtype": "property",
+            "name": "length",
+            "type": "Number",
+            "default": "0",
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 72,
+            "description": "Fiche courante",
+            "itemtype": "property",
+            "name": "current",
+            "type": "Fiche",
+            "default": "null",
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 91,
             "description": "Reçoit un objet DOM de fiche (class fiche) et\nretourne la fiche correspondante.",
+            "itemtype": "method",
+            "name": "domObj_to_fiche",
             "params": [
                 {
                     "name": "obj",
@@ -1241,7 +1265,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 250,
+            "line": 244,
             "description": "Dispatch des fiches\n\nNOTES\n-----\n  * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau\n    des parents ou des enfants. Les fiches sont instanciées à leur première\n    détection (soit ici, soit dans les enfants/parent des fiches traitées),\n    puis elles sont ensuites \"remplies\" avec les données si la fiche est\n    traitées plus tard ici.\n  * Par défaut, les fiches sont maintenant créées fermées, donc on doit\n    passer seulement en revue les fiches qui doivent être ouvertes.\n  * Cette méthode est appelée à tout chargement de fiches par groupe\n  * Seule une fiche passant par cette méthode peut voir si `loaded` marqué\n    true. Toutes les autres fiches sont considérées comme non chargées.\n\nPRODUIT\n-------\n  * La création de la fiche (toujours, entendu qu'une fiche passant par\n    ce dispatch a forcément toutes ses données)\n\n  * La tenue à jour de `Collection.books'",
             "itemtype": "method",
             "name": "dispatch",
@@ -1257,7 +1281,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 466,
+            "line": 460,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -1485,9 +1509,9 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
             "line": 490,
-            "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
+            "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * Propriété complexe (appelé sans parenthèses)\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
             "itemtype": "method",
-            "name": "clone   Note : c'est une propriété complexe, donc une méthode sans\n                parenthèses.",
+            "name": "clone",
             "class": "Fiche",
             "module": "fiche_dom",
             "submodule": "dom"
@@ -1538,7 +1562,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 525,
+            "line": 535,
             "description": "Appelé quand on droppe un enfant sur la fiche courante",
             "itemtype": "method",
             "name": "on_drop",
@@ -1559,7 +1583,28 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 599,
+            "line": 590,
+            "description": "Appelé quand on change l'ordre des enfants de la fiche\n\nNOTES\n-----\n  * Plutôt que de s'embêter à étudier +ui+ pour savoir quel\n    élément a été déplacé, on compare la liste du DOM avec la liste des\n    enfants et on commence à traiter à partir de cet indice.",
+            "itemtype": "method",
+            "name": "onchange_ordre_enfants",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "UpdateEvent généré par sortable",
+                    "type": "Event"
+                },
+                {
+                    "name": "ui",
+                    "description": "L'objet envoyé par jquery",
+                    "type": "Object"
+                }
+            ],
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 645,
             "description": "Ajout d'un enfant à la fiche\n\nNOTES\n-----\n  * C'est cette méthode qui doit être utilisée pour tout ajout\n    d'enfant.",
             "itemtype": "method",
             "name": "add_child",
@@ -1580,7 +1625,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 675,
+            "line": 721,
             "description": "Supprime un enfant de la fiche",
             "itemtype": "method",
             "name": "remove_child",
@@ -1596,7 +1641,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 712,
+            "line": 758,
             "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.",
             "itemtype": "method",
             "name": "onchange_texte",
@@ -2209,10 +2254,6 @@
         {
             "message": "unknown tag: proprety",
             "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
-        },
-        {
-            "message": "Missing item type\nReçoit un objet DOM de fiche (class fiche) et\nretourne la fiche correspondante.",
-            "line": " /Users/philippeperret/Sites/table_narration/js/livre/FICHES.js:98"
         },
         {
             "message": "Missing item type\nLe « ptype » du paragraphe indique son type propre, à savoir :\n  * null  : Un texte \"normal\" qui sera juste formaté\n  * file  : Un paragraphe qui charge un fichier externe\n  * code  : Du code à interpréter.",

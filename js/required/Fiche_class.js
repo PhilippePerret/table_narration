@@ -239,6 +239,14 @@ Object.defineProperties(Fiche.prototype, {
       // Rend la fiche draggable
       this.rend_draggable
       
+      // Rend ses enfants sortable
+      this.div_items.sortable({
+        'axis'        :"y",
+        'helper'      :"clone",
+        'placeholder' :'newplace',
+        'update'      :$.proxy(this.onchange_ordre_enfants, this)
+      })
+      
       // Un click sur la fiche doit la sélectionner/déselectionner
       // Mais seulement en recto
       this.active_click_on_fiche
@@ -294,33 +302,36 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_sortable":{
     get:function(){
-      this.obj.sortable({
+      // this.obj.sortable({
+      this.div_items.sortable({
         // 'containment': this.parent.div_items,
-        'axis'    : 'y',
-        'opacity' : 0.5,
-        'scroll'  : true,
-        'change'  : function(evt, ui)
-        {
-          /* appelé si changement de position*/
-          dlog(this.type_id+" a changé de position")
-          return true
-        },
-        'out' :function(evt,ui)
-        {
-          dlog(this.type_id+" sort de son parent")
-        },
-        'over':function(evt,ui)
-        {
-          dlog(this.type_id+" passe sur une liste qui peut l'accepter")
-        },
-        'start':function(evt,ui)
-        {
-          dlog("Début du déplacement (sort) de "+this.type_id)
-        },
-        'stop':function(evt,ui)
-        {
-          dlog("Fin du déplacement (sort) de "+this.type_id)
-        }
+        // 'axis'    : 'y',
+        // 'opacity' : 0.5,
+        // 'scroll'  : true,
+        // 'forcePlaceholderSize': true,
+        // 'placeholder':'newplace', 
+        // 'change'  : function(evt, ui)
+        // {
+        //   /* appelé si changement de position*/
+        //   dlog(this.type_id+" a changé de position")
+        //   return true
+        // },
+        // 'out' :function(evt,ui)
+        // {
+        //   dlog(this.type_id+" sort de son parent")
+        // },
+        // 'over':function(evt,ui)
+        // {
+        //   dlog(this.type_id+" passe sur une liste qui peut l'accepter")
+        // },
+        // 'start':function(evt,ui)
+        // {
+        //   dlog("Début du déplacement (sort) de "+this.type_id)
+        // },
+        // 'stop':function(evt,ui)
+        // {
+        //   dlog("Fin du déplacement (sort) de "+this.type_id)
+        // }
       })
       this.sortable = true
     }
@@ -437,7 +448,7 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.draggable("destroy")
         this.draggable = false
       }
-      this.rend_sortable
+      // this.rend_sortable
       this.obj.addClass('ranged')
       dlog("<- "+idm, DB_FCT_ENTER)
     }
@@ -577,16 +588,44 @@ Fiche.prototype.on_drop = function(evt, ui)
 
 $.extend(Fiche.prototype,{
   
+  /**
+    * Appelé quand on change l'ordre des enfants de la fiche
+    *
+    * NOTES
+    * -----
+    *   * Plutôt que de s'embêter à étudier +ui+ pour savoir quel
+    *     élément a été déplacé, on compare la liste du DOM avec la liste des
+    *     enfants et on commence à traiter à partir de cet indice.
+    *
+    * @method onchange_ordre_enfants
+    * @param  evt {Event}   UpdateEvent généré par sortable
+    * @param  ui  {Object}  L'objet envoyé par jquery
+    *
+    */
+  onchange_ordre_enfants:function(evt, ui)
+  {
+    var sorted_id, sorted_ids = 
+      L(this.div_items.sortable('toArray')).
+      collect(function(domid){ return parseInt(domid.split('-')[1],10)})
+    
+    this.enfants = []
+    while(sorted_id = sorted_ids.shift()) this.enfants.push(get_fiche(sorted_id))
+    this.update_indice_enfants()
+    this.modified = true
+  },
+  
   /*
-   *  Actualise l'indice des enfants
-   *
-   *  NOTES
-   *  -----
-   *    = L'indice des enfants (0-start) est une propriété volatile
-   *      utile à quelques méthodes, par exemple l'insertion d'enfants
-   *      à un endroit précis.
-   *  
-   */
+    * Actualise l'indice des enfants à partir de +from+
+    *
+    * NOTES
+    * -----
+    *   * L'indice des enfants (0-start) est une propriété volatile
+    *     utile à quelques méthodes, par exemple l'insertion d'enfants
+    *     à un endroit précis.
+    *
+    * @method update_indice_enfants
+    * @param [from=0] {Number} from  Indice de départ
+    */
   update_indice_enfants:function(from)
   {
     if(undefined == from) from = 0

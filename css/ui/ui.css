@@ -79,6 +79,9 @@ section#table {
   margin-top  : 50px;
 }
 
+/*Pour le moment mis ici : le style d'un endroit où peut se poser un sortable*/
+.newplace {background-color:blue;height:2px;width:10em;margin-left:3em;}
+
 /* Div de bas de page affichant des messages d'aide */
 div#div_help {
   position    : fixed;

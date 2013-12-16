@@ -431,6 +431,13 @@ Object.defineProperties(Fiche.prototype, {
       // Rend la fiche draggable
       this.rend_draggable
       
+      // Rend ses enfants sortable
+      this.div_items.sortable({
+        &#x27;axis&#x27;        :&quot;y&quot;,
+        &#x27;placeholder&#x27; :&#x27;newplace&#x27;,
+        &#x27;update&#x27;      :$.proxy(this.onchange_ordre_enfants, this)
+      })
+      
       // Un click sur la fiche doit la sélectionner/déselectionner
       // Mais seulement en recto
       this.active_click_on_fiche
@@ -486,33 +493,36 @@ Object.defineProperties(Fiche.prototype, {
    */
   &quot;rend_sortable&quot;:{
     get:function(){
-      this.obj.sortable({
+      // this.obj.sortable({
+      this.div_items.sortable({
         // &#x27;containment&#x27;: this.parent.div_items,
-        &#x27;axis&#x27;    : &#x27;y&#x27;,
-        &#x27;opacity&#x27; : 0.5,
-        &#x27;scroll&#x27;  : true,
-        &#x27;change&#x27;  : function(evt, ui)
-        {
-          /* appelé si changement de position*/
-          dlog(this.type_id+&quot; a changé de position&quot;)
-          return true
-        },
-        &#x27;out&#x27; :function(evt,ui)
-        {
-          dlog(this.type_id+&quot; sort de son parent&quot;)
-        },
-        &#x27;over&#x27;:function(evt,ui)
-        {
-          dlog(this.type_id+&quot; passe sur une liste qui peut l&#x27;accepter&quot;)
-        },
-        &#x27;start&#x27;:function(evt,ui)
-        {
-          dlog(&quot;Début du déplacement (sort) de &quot;+this.type_id)
-        },
-        &#x27;stop&#x27;:function(evt,ui)
-        {
-          dlog(&quot;Fin du déplacement (sort) de &quot;+this.type_id)
-        }
+        // &#x27;axis&#x27;    : &#x27;y&#x27;,
+        // &#x27;opacity&#x27; : 0.5,
+        // &#x27;scroll&#x27;  : true,
+        // &#x27;forcePlaceholderSize&#x27;: true,
+        // &#x27;placeholder&#x27;:&#x27;newplace&#x27;, 
+        // &#x27;change&#x27;  : function(evt, ui)
+        // {
+        //   /* appelé si changement de position*/
+        //   dlog(this.type_id+&quot; a changé de position&quot;)
+        //   return true
+        // },
+        // &#x27;out&#x27; :function(evt,ui)
+        // {
+        //   dlog(this.type_id+&quot; sort de son parent&quot;)
+        // },
+        // &#x27;over&#x27;:function(evt,ui)
+        // {
+        //   dlog(this.type_id+&quot; passe sur une liste qui peut l&#x27;accepter&quot;)
+        // },
+        // &#x27;start&#x27;:function(evt,ui)
+        // {
+        //   dlog(&quot;Début du déplacement (sort) de &quot;+this.type_id)
+        // },
+        // &#x27;stop&#x27;:function(evt,ui)
+        // {
+        //   dlog(&quot;Fin du déplacement (sort) de &quot;+this.type_id)
+        // }
       })
       this.sortable = true
     }
@@ -629,7 +639,7 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.draggable(&quot;destroy&quot;)
         this.draggable = false
       }
-      this.rend_sortable
+      // this.rend_sortable
       this.obj.addClass(&#x27;ranged&#x27;)
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
@@ -768,6 +778,42 @@ Fiche.prototype.on_drop = function(evt, ui)
 }
 
 $.extend(Fiche.prototype,{
+  
+  /**
+    * Appelé quand on change l&#x27;ordre des enfants de la fiche
+    *
+    * NOTES
+    * -----
+    *   * Plutôt que de s&#x27;embêter à étudier +ui+ pour savoir quel
+    *     élément a été déplacé, on compare la liste du DOM avec la liste des
+    *     enfants et on commence à traiter à partir de cet indice.
+    *
+    * @method onchange_ordre_enfants
+    * @param  evt {Event}   UpdateEvent généré par sortable
+    * @param  ui  {Object}  L&#x27;objet envoyé par jquery
+    *
+    */
+  onchange_ordre_enfants:function(evt, ui)
+  {
+    var ichild = 0, child_dom, child_lst, new_enfants = [] ;
+    var enfants_dom = this.div_items.find(&#x27;&gt; fiche&#x27;)
+    var enfants_count = this.enfants.length
+    for(; ichild &lt; enfants_count; ++ichild)
+    {
+      child_dom = enfants_dom[ichild]
+      child_lst = this.enfants[ichild]
+      if(child_dom.id != child_lst.dom_id)
+      {
+        dlog(&quot;Ça change à partir de la fiche #&quot;+child_lst.id+&quot; : &quot;+child_lst.texte)
+        break
+      }
+      new_enfants.push(child_lst)
+    }
+    for(; ichild &lt; enfants_count; ++ichild)
+    {
+      
+    }
+  },
   
   /*
    *  Actualise l&#x27;indice des enfants

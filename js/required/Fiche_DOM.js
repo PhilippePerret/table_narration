@@ -492,6 +492,7 @@ Object.defineProperties(Fiche.prototype,{
     *
     * NOTES
     * -----
+    *   * Propriété complexe (appelé sans parenthèses)
     *   * "Cloner la fiche" consiste à :
     *       * Placer un clone de la fiche dans le parent, à la place de la fiche
     *       * Sortir le DOM Objet du parent pour le mettre sur la table
@@ -499,8 +500,7 @@ Object.defineProperties(Fiche.prototype,{
     *       * Remettre la fiche dans le parent
     *       * Détruire le clone
     *
-    * @method clone   Note : c'est une propriété complexe, donc une méthode sans
-    *                 parenthèses.
+    * @method clone
     *
     */
   "clone":{

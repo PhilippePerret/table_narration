@@ -247,9 +247,11 @@ window.FICHES = {
     */
   list:{},
   
-  /*
-   *  Nombre de fiches dans &#x60;list&#x27;
-   */
+  /**
+    * Nombre de fiches dans &#x60;list&#x60;
+    * @property {Number} length
+    * @default 0
+    */
   length:0,
   
   /*
@@ -259,22 +261,13 @@ window.FICHES = {
    */
   selecteds:{},
   
-  /*
-   *  Fiche courante (instance Fiche)
-   *  
-   */
+  /**
+    * Fiche courante
+    * @property {Fiche} current
+    * @default null
+    */
   current:null,
 
-  /*
-   *  Indique si on se trouve dans un champ de saisie (input-text ou textarea)
-   *  de la fiche courante.
-   *  (Mais c&#x27;est une propriété complexe qui empêche d&#x27;enregistrer le livre
-   *   pendant l&#x27;édition)
-   *
-   *  @value    NULL si aucun text-field, ou un set jQuery
-   */
-  // current_text_field:false,
-  
   /*
    *  Retourne la fiche ({Fiche&gt;something}) d&#x27;identifiant +id+
    *  
@@ -291,6 +284,7 @@ window.FICHES = {
     *  Reçoit un objet DOM de fiche (class fiche) et
     *  retourne la fiche correspondante.
     *
+    * @method domObj_to_fiche
     * @param  obj {HTMLDom|jQuerySet} Element Dom appartenant à une fiche ou l&#x27;objet
     *             (tag:fiche) de la fiche elle-même.
     * @return {Fiche} L&#x27;instance Fiche ({Book}, {Chapter} etc) de la fiche propriétaire
