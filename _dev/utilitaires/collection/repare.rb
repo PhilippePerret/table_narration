@@ -17,7 +17,19 @@ require './ruby/lib/functions'
 require './ruby/model/fiche'
 require './ruby/model/collection'
 
-REPARER = true # mettre à true pour réparer (sinon, simple check)
+# ---------------------------------------------------------------------
+#   Définition de l'opération
+#   -------------------------
+# 
+REPARER = false # mettre à true pour réparer (sinon, simple check)
+
+# Si true, supprimera de la liste des enfants les fiches qui n'ont pas
+# été trouvées. À utiliser en toute connaissance de cause ! Dans la plupart
+# des cas, il est préférable de retrouver la fiche dans un backup.
+SUP_UNFOUND_CHILDREN = false
+
+# / fin de définition de l'opération
+# ---------------------------------------------------------------------
 
 def load_data_phil
   require './data/secret/data_phil'
@@ -35,6 +47,7 @@ log "#{REPARER ? 'Réparation' : 'Check'} de la collection : #{Collection::folde
 def verifier
   Collection::each_fiche do |fiche|
     fiche.check_if_visible_in_configuration
+    fiche.check_enfants
   end
   print "Consulter le fichier log pour voir le résultat"
 end
@@ -91,19 +104,50 @@ class Fiche
   def resultat_line
     err_counter = "%-3s" % (@error_counter || '-').to_s
     reparation_counter = "%-3s" % (@reparation_counter || '-').to_s
-    line = "Fiche ##{id6} #{type} #{mark_child} ERRORS:#{err_counter}"
+    line = "#{data_fiche_for_line} ERRORS:#{err_counter}"
     if REPARER
       line += " REPARATIONS:#{reparation_counter}"
     end
     line += "\n\t" + @errors.join("\n\t") unless @error_counter.nil?
     line
   end
+  # Les données générales de la fiche
+  def data_fiche_for_line
+    enfants_count = "%-3i" % (children || []).count
+    "Fiche ##{id6} #{type} #{mark_child} Enfants:#{enfants_count}"
+  end
   def mark_child
     if book? then '     '
-    elsif hasParent? then 'CHILD'
-    else 'ORPHE'
+    elsif hasParent? then 'child'
+    else 'orphe'
     end
   end
+  
+  # ---------------------------------------------------------------------
+  # 
+  #   MÉTHODES DE CHECK
+  # 
+  # ---------------------------------------------------------------------
+  
+  # Vérifie si les enfants définis dans la fiche existent toujours
+  # 
+  def check_enfants
+    new_enfants = []
+    (children || []).each do |dchild|
+      if Fiche::get(dchild['id'].to_i).nil?
+        error "L'enfant #{dchild['id']}:#{dchild['type']} est introuvable…"
+      else
+        new_enfants << dchild
+      end
+    end
+    if REPARER && SUP_UNFOUND_CHILDREN
+      # Il faut enregistrer la nouvelle liste d'enfants
+      merge( 'enfants' => new_enfants )
+    end
+  end
+  # Vérifie si les fiches orphelines sont bien dans la configuration
+  # générale
+  # 
   def check_if_visible_in_configuration
     # Pour provoquer la lecture du fichier de configuration courante
     Collection::current_configuration
