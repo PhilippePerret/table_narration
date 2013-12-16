@@ -1,3 +1,8 @@
+/**
+  * @module OBJET
+  * @submodule Edition
+  * @main OBJET
+  */ 
 OBJETS_Edition = {
  
   /*
@@ -35,13 +40,22 @@ OBJETS_Edition = {
     }
   },
   
-  /*
-   *  Pour enregistrer les modifications (ou créer un nouveau item)
-   *  
-   */
+  /**
+    *  Pour enregistrer les modifications (ou créer un nouveau item)
+    *
+    * NOTES
+    * -----
+    *   * Si la méthode `get_values` rencontre des valeurs invalides, elle renvoie
+    *     false ce qui interrompt la procédure de sauvegarde.
+    *
+    * @method save
+    * @return true en cas de succès, false en cas de valeur invalide.
+    *
+    */
   save:function()
   {
     var values = this.get_values()
+    if(values == false /* Donnée invalide */) return false
     var is_new_item = values.id == null
     if(is_new_item)
     {
@@ -55,6 +69,7 @@ OBJETS_Edition = {
     this.current.save( 
       $.proxy(this[is_new_item ? 'update_item_list_with_new_item' : 'end'], this) 
     )
+    return true
   },
   
   /*

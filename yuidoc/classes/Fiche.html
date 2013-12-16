@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -249,6 +255,15 @@ cf. la méthode &quot;add_enfant&quot;.</li>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
+                parenthèses.">clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
+                parenthèses.</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_enable_main_field">enable_main_field</a>
 
                                 
@@ -312,6 +327,13 @@ cf. la méthode &quot;add_enfant&quot;.</li>
 
                                 
                                     <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_obj">obj</a>
+
                                 
                                 
                             </li>
@@ -462,6 +484,78 @@ d&#39;enfant.</li>
 </div>
 
                 
+                    <div id="method_clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
+                parenthèses." class="method item">
+    <h3 class="name"><code>clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
+                parenthèses.</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/dom.html">dom</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l490"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:490</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Clone/Déclone la fiche courante</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>&quot;Cloner la fiche&quot; consiste à :<ul>
+<li>Placer un clone de la fiche dans le parent, à la place de la fiche</li>
+<li>Sortir le DOM Objet du parent pour le mettre sur la table</li>
+</ul>
+</li>
+<li>&quot;Décloner&quot; la fiche consiste à :<ul>
+<li>Remettre la fiche dans le parent</li>
+<li>Détruire le clone</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_enable_main_field" class="method item">
     <h3 class="name"><code>enable_main_field</code></h3>
 
@@ -496,7 +590,7 @@ d&#39;enfant.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l431"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:431</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l439"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:439</code></a>
         
         </p>
 
@@ -1028,7 +1122,7 @@ une difficulté à la définition des fiches remontées.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l292"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:292</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l300"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:300</code></a>
         
         </p>
 
@@ -1041,6 +1135,60 @@ une difficulté à la définition des fiches remontées.</li>
         <p>Propriété principale en fonction du type de la fiche. Pour un paragraphe,
 la propriété principale est <code>texte</code>, pour toutes les autres fiches, c&#39;est
 <code>titre</code></p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_obj" class="property item">
+    <h3 class="name"><code>obj</code></h3>
+    <span class="type">JQuerySet</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/dom.html">dom</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l62"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:62</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Définit si nécessaire l&#39;objet jQuery de la fiche et le retourne</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>C&#39;est un set jQuery, mais il n&#39;est défini QUE si l&#39;objet existe
+vraiment dans le DOM. Inutile de faire <code>fiche.obj.length == 0</code> pour
+s&#39;assurer qu&#39;il existe bien, <code>fiche.obj</code> suffit car il renvoie null
+si la fiche n&#39;est pas encore construite.</li>
+</ul>
 
     </div>
 

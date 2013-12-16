@@ -1,18 +1,39 @@
+/**
+  * @module OBJETS.Dom
+  * @submodule Dom
+  * @main objets
+  */
+
 OBJETS.Dom = {
+  /**
+    * Constante définissant les raccourcis classiques
+    * @deprecated Préférer les objets de ContextualHelp.
+    * @property SHORTCUTS_COMMUNS
+    * @static
+    * @for OBJETS.Dom
+    */
   SHORTCUTS_COMMUNS:
     image('clavier/K_Entree.png') + " Balise, " +
     image('clavier/K_Escape.png') + " Fermer, " +
     image('clavier/K_Tab.png') + " Section suivante." ,
     
-  /*
-   *  Données pour focus
-   *  
-   *  PROPERTIES
-   *  ----------
-   *    next    Identifiant dans DFOCUS du prochain focus si TAB est utilisé
-   *    obj     {jQuery Set} de l'élément DOM sur lequel placer le focus
-   *
-   */
+  /**
+    * Données pour les trois focus possibles dans le panneau. Celui sur la
+    * bande l'onglet, celui sur le listing et celui sur les options d'affichage.
+    *  
+    * PROPERTIES
+    * ----------
+    *   * id      {String} Identifiant du focus
+    *   * next    {String} Identifiant du prochain focus si TAB est utilisé
+    *   * prev    {String} Focus précédent avec TAB
+    *   * obj     {jQuery Set} de l'élément DOM sur lequel placer le focus
+    *   * help    {String} Message d'aide à afficher.
+    *
+    * @property DFOCUS
+    * @type {Object}
+    * @static
+    * @for OBJETS.Dom
+    */
   DFOCUS: {
     'onglets':{id:'onglets', prev:'options', next:'listing', obj:null, 
     help:
@@ -73,10 +94,12 @@ OBJETS.Dom = {
    */
   current_letter: null,
   
-  /*
-   *  Ouvre le panneau des films
-   *  
-   */
+  /**
+    * Ouvre le panneau des films
+    *
+    * @method show_panneau
+    * @for OBJETS.Dom
+    */
   show_panneau:function()
   {
     // Pas de sauvegarde pendant l'édition des films
@@ -749,8 +772,8 @@ OBJETS_Dom_defined_properties = {
   "html_div_boutons":{
     get:function(){
       return '<div id="'+this.id_panneau+'_buttons" class="buttons">' +
-      '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, '+this.parent_as_string+'.Edition)()" class="fleft" />' +
-      '<input type="button" value="Renoncer" onclick="$.proxy('+this.NAME+'.hide_panneau, '+this.NAME+')()" />' +
+      '<input type="button" value="Renoncer" onclick="$.proxy('+this.NAME+'.hide_panneau, '+this.NAME+')()" class="fleft" />' +
+      '<input type="button" value="+" onclick="$.proxy('+this.parent_as_string+'.Edition.edit, '+this.parent_as_string+'.Edition)()" />' +
       '</div>'
     }
   }

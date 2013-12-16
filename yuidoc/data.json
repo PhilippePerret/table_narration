@@ -116,10 +116,28 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Dom.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Dom.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "OBJETS.Dom": 1
+            },
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Edition.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Edition.js",
+            "modules": {
+                "OBJET": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
             "modules": {
-                "OBJETS": 1
+                "objets": 1
             },
             "classes": {
                 "OBJETS": 1
@@ -336,9 +354,7 @@
     "modules": {
         "FILMS": {
             "name": "FILMS",
-            "submodules": {
-                "Dom": 1
-            },
+            "submodules": {},
             "classes": {
                 "FILMS": 1
             },
@@ -354,16 +370,20 @@
         "Dom": {
             "name": "Dom",
             "submodules": {},
-            "classes": {},
+            "classes": {
+                "OBJETS.Dom": 1
+            },
             "fors": {},
             "is_submodule": 1,
             "namespaces": {
                 "Dom": 1
             },
-            "module": "FILMS",
+            "module": "OBJETS.Dom",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/Film/>FILMS_Dom.js",
-            "line": 1
+            "line": 1,
+            "tag": "main",
+            "itemtype": "main"
         },
         "Edition": {
             "name": "Edition",
@@ -377,7 +397,9 @@
             "module": "fiche_data",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/Film/>FILMS_Edition.js",
-            "line": 1
+            "line": 1,
+            "tag": "main",
+            "itemtype": "main"
         },
         "FilmClass": {
             "name": "FilmClass",
@@ -475,8 +497,32 @@
             "line": 7,
             "itemtype": "main"
         },
-        "OBJETS": {
-            "name": "OBJETS",
+        "OBJETS.Dom": {
+            "name": "OBJETS.Dom",
+            "submodules": {
+                "Dom": 1
+            },
+            "classes": {
+                "OBJETS.Dom": 1
+            },
+            "fors": {
+                "OBJETS.Dom": 1
+            },
+            "namespaces": {}
+        },
+        "OBJET": {
+            "name": "OBJET",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {},
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Edition.js",
+            "line": 1,
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "objets": {
+            "name": "objets",
             "submodules": {},
             "classes": {
                 "OBJETS": 1
@@ -844,6 +890,18 @@
                 "type": "Mot"
             }
         },
+        "OBJETS.Dom": {
+            "name": "OBJETS.Dom",
+            "shortname": "OBJETS.Dom",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "OBJETS.Dom",
+            "submodule": "Dom",
+            "namespace": ""
+        },
         "OBJETS": {
             "name": "OBJETS",
             "shortname": "OBJETS",
@@ -855,7 +913,7 @@
                 "DICO",
                 "FILMS"
             ],
-            "module": "OBJETS",
+            "module": "objets",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
             "line": 13,
@@ -1184,7 +1242,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
             "line": 250,
-            "description": "Dispatch des fiches\n\nNOTES\n-----\n  = Avec le nouveau fonctionnement, il n'y a plus de problème au niveau\n    des parents ou des enfants. Les fiches sont instanciées à leur première\n    détection (soit ici, soit dans les enfants/parent des fiches traitées),\n    puis elles sont ensuites \"remplies\" avec les données si la fiche est\n    traitées plus tard ici.\n\n  = Par défaut, les fiches sont maintenant créées fermées, donc on doit\n    passer seulement en revue les fiches qui doivent être ouvertes.\n\n  = Pour le moment, cette méthode n'est appelée qu'au chargement de la\n    collection. Mais à l'avenir on pourra imaginer qu'elle soit aussi\n    utilisée en cas de chargement en masse de fiches. Il faut donc en\n    tenir compte et utiliser la propriété `Collected.loaded' pour savoir\n    si c'est un tout premier chargement.\n\nPRODUIT\n-------\n  = La création de la fiche (toujours, entendu qu'une fiche passant par\n    ce dispatch a forcément toutes ses données)\n\n  = La tenue à jour de `Collection.books'",
+            "description": "Dispatch des fiches\n\nNOTES\n-----\n  * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau\n    des parents ou des enfants. Les fiches sont instanciées à leur première\n    détection (soit ici, soit dans les enfants/parent des fiches traitées),\n    puis elles sont ensuites \"remplies\" avec les données si la fiche est\n    traitées plus tard ici.\n  * Par défaut, les fiches sont maintenant créées fermées, donc on doit\n    passer seulement en revue les fiches qui doivent être ouvertes.\n  * Cette méthode est appelée à tout chargement de fiches par groupe\n  * Seule une fiche passant par cette méthode peut voir si `loaded` marqué\n    true. Toutes les autres fiches sont considérées comme non chargées.\n\nPRODUIT\n-------\n  * La création de la fiche (toujours, entendu qu'une fiche passant par\n    ce dispatch a forcément toutes ses données)\n\n  * La tenue à jour de `Collection.books'",
             "itemtype": "method",
             "name": "dispatch",
             "params": [
@@ -1199,7 +1257,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 462,
+            "line": 466,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -1282,6 +1340,54 @@
             "module": "Paragraph"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Dom.js",
+            "line": 8,
+            "description": "Constante définissant les raccourcis classiques",
+            "deprecated": true,
+            "deprecationMessage": "Préférer les objets de ContextualHelp.",
+            "itemtype": "property",
+            "name": "SHORTCUTS_COMMUNS",
+            "static": 1,
+            "class": "OBJETS.Dom",
+            "module": "OBJETS.Dom",
+            "submodule": "Dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Dom.js",
+            "line": 20,
+            "description": "Données pour les trois focus possibles dans le panneau. Celui sur la\nbande l'onglet, celui sur le listing et celui sur les options d'affichage.\n \nPROPERTIES\n----------\n  * id      {String} Identifiant du focus\n  * next    {String} Identifiant du prochain focus si TAB est utilisé\n  * prev    {String} Focus précédent avec TAB\n  * obj     {jQuery Set} de l'élément DOM sur lequel placer le focus\n  * help    {String} Message d'aide à afficher.",
+            "itemtype": "property",
+            "name": "DFOCUS",
+            "type": "{Object}",
+            "static": 1,
+            "class": "OBJETS.Dom",
+            "module": "OBJETS.Dom",
+            "submodule": "Dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Dom.js",
+            "line": 97,
+            "description": "Ouvre le panneau des films",
+            "itemtype": "method",
+            "name": "show_panneau",
+            "class": "OBJETS.Dom",
+            "module": "OBJETS.Dom",
+            "submodule": "Dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Edition.js",
+            "line": 43,
+            "description": "Pour enregistrer les modifications (ou créer un nouveau item)\n\n NOTES\n -----\n * Si la méthode `get_values` rencontre des valeurs invalides, elle renvoie\n   false ce qui interrompt la procédure de sauvegarde.",
+            "itemtype": "method",
+            "name": "save",
+            "return": {
+                "description": "true en cas de succès, false en cas de valeur invalide."
+            },
+            "class": "OBJETS",
+            "module": "OBJET",
+            "submodule": "Edition"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
             "line": 23,
             "description": "Table de tous les items connus, avec leurs data minimum.\nPar exemple, pour les films, il s'agit du titre, du titre français, de\nl'identifiant et du code ascii de la première lettre.\n\n# NOTES\n\n    * Pour les films, cf. :\n      ../interdata/film/data_js/films_data.js\n    * Pour les mots cf. :\n      ../interdata/scenodico/data_js/dico_data.js",
@@ -1289,11 +1395,11 @@
             "name": "DATA",
             "type": "Hash",
             "class": "OBJETS",
-            "module": "OBJETS"
+            "module": "objets"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
-            "line": 149,
+            "line": 151,
             "description": "Affiche l'aperçu de l'item survolé dans le texte.\n\nLa méthode doit afficher une version détaillée de l'élément concerné.\n\n# NOTES\n\n  * Méthode appelée quand on glisse la souris sur un item (mot, film, etc.)\n  * Un bind click est placé sur l'aperçu, pour pouvoir éditer l'élément.",
             "itemtype": "method",
             "name": "show_apercu",
@@ -1314,7 +1420,7 @@
                 "type": "Void"
             },
             "class": "OBJETS",
-            "module": "OBJETS"
+            "module": "objets"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
@@ -1345,7 +1451,18 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 292,
+            "line": 62,
+            "description": "Définit si nécessaire l'objet jQuery de la fiche et le retourne\n\nNOTES\n-----\n  * C'est un set jQuery, mais il n'est défini QUE si l'objet existe\n    vraiment dans le DOM. Inutile de faire `fiche.obj.length == 0` pour\n    s'assurer qu'il existe bien, `fiche.obj` suffit car il renvoie null\n    si la fiche n'est pas encore construite.",
+            "itemtype": "property",
+            "name": "obj",
+            "type": "JQuerySet",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 300,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
@@ -1357,10 +1474,20 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 431,
+            "line": 439,
             "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
             "itemtype": "method",
             "name": "enable_main_field",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 490,
+            "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
+            "itemtype": "method",
+            "name": "clone   Note : c'est une propriété complexe, donc une méthode sans\n                parenthèses.",
             "class": "Fiche",
             "module": "fiche_dom",
             "submodule": "dom"
@@ -1869,7 +1996,25 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
-            "line": 106,
+            "line": 50,
+            "description": "Attend +seconds+ avant d'adapter l'interface (utile par exemple lorsqu'un\npanneau est en train de se fermer).",
+            "itemtype": "method",
+            "name": "adapt_after",
+            "params": [
+                {
+                    "name": "seconds",
+                    "description": "seconds Nombre de secondes à attendre",
+                    "type": "Float",
+                    "optional": true,
+                    "optdefault": "0.5"
+                }
+            ],
+            "class": "ContextualHelp",
+            "module": "ContextualHelp"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
+            "line": 126,
             "description": "Infos sur la fiche courante, à afficher en amorce",
             "itemtype": "property",
             "name": "info_current_fiche",
@@ -2018,7 +2163,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 195,
+            "line": 209,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",

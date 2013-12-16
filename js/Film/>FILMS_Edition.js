@@ -136,7 +136,7 @@ $.extend(FILMS.Edition, {
       switch(prop)
       {
       case 'titre':
-        if(val == "") throw LOCALE.film.error['title is required']
+        if(val == "") return F.error(LOCALE.film.error['title is required'])
         break
       case 'producteur':
         val = my.dataify_people(val, 'producteur')

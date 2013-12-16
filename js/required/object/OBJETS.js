@@ -1,24 +1,24 @@
 /**
- *  Objet OBJETS mixé dans les FILMS, DICO et REFS
- *
- *  NOTES
- *  -----
- *    * Les descriptions ci-dessous, lorsqu'elles ne parlent que de "Film"
- *      peuvent être comprise pour tout objet pluriel mixant ces méthodes.
- * 
- *  @module OBJETS
- * 
- */
+  * Objet OBJETS mixé dans les FILMS, DICO et REFS
+  *
+  * NOTES
+  * -----
+  *   * Les descriptions ci-dessous, lorsqu'elles ne parlent que de "Film"
+  *     peuvent être comprise pour tout objet pluriel mixant ces méthodes.
+  *
+  * @module objets
+  *
+  */
 
 /**
- *  Objet OBJETS
- *
- *  @class   OBJETS
- *  @static
- *  @extensionFor DICO
- *  @extensionFor FILMS
- *
- */
+  * Objet OBJETS
+  *
+  * @class   OBJETS
+  * @static
+  * @extensionFor DICO
+  * @extensionFor FILMS
+  *
+  */
 window.OBJETS = {
   /**
    *  Table de tous les items connus, avec leurs data minimum.

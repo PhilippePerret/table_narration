@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -434,31 +440,27 @@ window.FICHES = {
   
   
   /**
-    *  Dispatch des fiches
+    * Dispatch des fiches
     *
-    *  NOTES
-    *  -----
-    *    = Avec le nouveau fonctionnement, il n&#x27;y a plus de problème au niveau
-    *      des parents ou des enfants. Les fiches sont instanciées à leur première
-    *      détection (soit ici, soit dans les enfants/parent des fiches traitées),
-    *      puis elles sont ensuites &quot;remplies&quot; avec les données si la fiche est
-    *      traitées plus tard ici.
+    * NOTES
+    * -----
+    *   * Avec le nouveau fonctionnement, il n&#x27;y a plus de problème au niveau
+    *     des parents ou des enfants. Les fiches sont instanciées à leur première
+    *     détection (soit ici, soit dans les enfants/parent des fiches traitées),
+    *     puis elles sont ensuites &quot;remplies&quot; avec les données si la fiche est
+    *     traitées plus tard ici.
+    *   * Par défaut, les fiches sont maintenant créées fermées, donc on doit
+    *     passer seulement en revue les fiches qui doivent être ouvertes.
+    *   * Cette méthode est appelée à tout chargement de fiches par groupe
+    *   * Seule une fiche passant par cette méthode peut voir si &#x60;loaded&#x60; marqué
+    *     true. Toutes les autres fiches sont considérées comme non chargées.
     *
-    *    = Par défaut, les fiches sont maintenant créées fermées, donc on doit
-    *      passer seulement en revue les fiches qui doivent être ouvertes.
+    * PRODUIT
+    * -------
+    *   * La création de la fiche (toujours, entendu qu&#x27;une fiche passant par
+    *     ce dispatch a forcément toutes ses données)
     *
-    *    = Pour le moment, cette méthode n&#x27;est appelée qu&#x27;au chargement de la
-    *      collection. Mais à l&#x27;avenir on pourra imaginer qu&#x27;elle soit aussi
-    *      utilisée en cas de chargement en masse de fiches. Il faut donc en
-    *      tenir compte et utiliser la propriété &#x60;Collected.loaded&#x27; pour savoir
-    *      si c&#x27;est un tout premier chargement.
-    *
-    *  PRODUIT
-    *  -------
-    *    = La création de la fiche (toujours, entendu qu&#x27;une fiche passant par
-    *      ce dispatch a forcément toutes ses données)
-    *
-    *    = La tenue à jour de &#x60;Collection.books&#x27;
+    *   * La tenue à jour de &#x60;Collection.books&#x27;
     *
     * @method dispatch
     * @param  data   {Array} Liste des fiches remontées par &#x60;Collection.load.data&#x60;
@@ -482,26 +484,34 @@ window.FICHES = {
     for( ; i &lt; nombre_fiches; ++i)
     {
       ifiche = this.fiche_from( data[i] )
-      ifiche.loaded = true // Une fiche passant par ici est forcément chargée
+      ifiche.loaded = true
       instances.push( ifiche )
     }
-
+    
+    // alert(&quot;Après création instance&quot;)
+    
     // Création des fiches sur la table
     L(instances).each(function(instance){
-      instance.create
+      if(!instance.obj) instance.create
     })
     
-    // Rangement des enfants (toujours)
+    // alert(&quot;Après create de l&#x27;instance&quot;)
+
+    // Rangement des enfants (toujours - ils seront &quot;dérangés&quot; ensuite
+    // si la configuration courante le nécessite)
     L(instances).each(function(instance){
       if(instance.has_parent) instance.range
                          else instance.positionne
     })
+    
+    // alert(&quot;Après rangement&quot;)
     
     // Réglage de l&#x27;indice des fiches enfants
     L(instances).each(function(instance){
       if(instance.has_children) instance.update_indice_enfants()
     })
     
+    // alert(&quot;Après update indices enfants&quot;)
     
     dlog(&quot;&lt;- FICHES.dispatch&quot;, DB_FCT_ENTER)
   },
@@ -656,7 +666,7 @@ window.FICHES = {
     */
   create_instance_fiche_of_type:function(data)
   {
-    if( DL &amp; DB_FCT_ENTER )
+    if( DL &amp; (DB_FCT_ENTER) )
     { 
       var spec = data.type
       if(data.id) spec += &quot;#&quot;+data.id
@@ -699,7 +709,7 @@ window.FICHES = {
   {
     dlog(&quot;---&gt; FICHES.full_create&quot;, DB_FCT_ENTER)
     var ifiche = FICHES.create_instance_fiche_of_type(data)
-    ifiche.create
+    if(!ifiche.obj) ifiche.create
     if(options)
     {
       // La fiche a été créée à la fin de son parent, il faut la placer

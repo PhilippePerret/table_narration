@@ -12,6 +12,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Fiche",
         "Mot",
         "OBJETS",
+        "OBJETS.Dom",
         "ObjetClass",
         "PARAGRAPHES",
         "Page",
@@ -40,7 +41,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "KeyEvents",
         "KeyboardEvents",
         "Mot",
-        "OBJETS",
+        "OBJET",
+        "OBJETS.Dom",
         "ObjetClass",
         "PARAGRAPHS",
         "Page",
@@ -52,6 +54,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "fiche_data",
         "fiche_dom",
         "jQueryExtension",
+        "objets",
         "ready.js"
     ],
     "allModules": [
@@ -96,12 +99,12 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "DICO.js"
         },
         {
-            "displayName": "dom",
-            "name": "dom"
-        },
-        {
             "displayName": "Dom",
             "name": "Dom"
+        },
+        {
+            "displayName": "dom",
+            "name": "dom"
         },
         {
             "displayName": "Edition",
@@ -157,13 +160,21 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "Mot"
         },
         {
+            "displayName": "OBJET",
+            "name": "OBJET"
+        },
+        {
             "displayName": "ObjetClass",
             "name": "ObjetClass"
         },
         {
-            "displayName": "OBJETS",
-            "name": "OBJETS",
+            "displayName": "objets",
+            "name": "objets",
             "description": "Objet OBJETS mixé dans les FILMS, DICO et REFS\n\nNOTES\n-----\n  * Les descriptions ci-dessous, lorsqu'elles ne parlent que de \"Film\"\n    peuvent être comprise pour tout objet pluriel mixant ces méthodes."
+        },
+        {
+            "displayName": "OBJETS.Dom",
+            "name": "OBJETS.Dom"
         },
         {
             "displayName": "Page",

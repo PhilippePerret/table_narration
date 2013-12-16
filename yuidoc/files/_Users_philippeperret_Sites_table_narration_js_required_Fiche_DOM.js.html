@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -245,10 +251,18 @@ Object.defineProperties(Fiche.prototype,{
   },
   
   
-  /*
-   *  Définit si nécessaire l&#x27;objet jQuery de la fiche et le retourne
-   *  
-   */
+  /**
+    * Définit si nécessaire l&#x27;objet jQuery de la fiche et le retourne
+    *
+    * NOTES
+    * -----
+    *   * C&#x27;est un set jQuery, mais il n&#x27;est défini QUE si l&#x27;objet existe
+    *     vraiment dans le DOM. Inutile de faire &#x60;fiche.obj.length == 0&#x60; pour
+    *     s&#x27;assurer qu&#x27;il existe bien, &#x60;fiche.obj&#x60; suffit car il renvoie null
+    *     si la fiche n&#x27;est pas encore construite.
+    *
+    * @property {jQuerySet} obj
+    */
   &quot;obj&quot;:{
     get:function(){
       if(undefined == this._obj){
@@ -665,16 +679,22 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){return $(&#x27;fiche#&#x27;+this.dom_id_clone)}
   },
   
-  /*
-   *  Clone/Déclone la fiche courante
-   *
-   *  &quot;Cloner la fiche&quot; consiste à :
-   *    - Placer un clone de la fiche dans le parent, à la place de la fiche
-   *    - Sortir le DOM Objet du parent pour le mettre sur la table
-   *  &quot;Décloner&quot; la fiche consiste à :
-   *    - Remettre la fiche dans le parent
-   *    - Détruire le clone
-   */
+  /**
+    * Clone/Déclone la fiche courante
+    *
+    * NOTES
+    * -----
+    *   * &quot;Cloner la fiche&quot; consiste à :
+    *       * Placer un clone de la fiche dans le parent, à la place de la fiche
+    *       * Sortir le DOM Objet du parent pour le mettre sur la table
+    *   * &quot;Décloner&quot; la fiche consiste à :
+    *       * Remettre la fiche dans le parent
+    *       * Détruire le clone
+    *
+    * @method clone   Note : c&#x27;est une propriété complexe, donc une méthode sans
+    *                 parenthèses.
+    *
+    */
   &quot;clone&quot;:{
     get:function(){
       this.clone_in_parent

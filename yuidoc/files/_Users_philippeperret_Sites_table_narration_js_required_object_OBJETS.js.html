@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -192,7 +198,7 @@
  *    * Les descriptions ci-dessous, lorsqu&#x27;elles ne parlent que de &quot;Film&quot;
  *      peuvent être comprise pour tout objet pluriel mixant ces méthodes.
  * 
- *  @module OBJETS
+ *  @module objets
  * 
  */
 
@@ -328,8 +334,10 @@ window.OBJETS = {
    */
   on_choose_item:function(film_id)
   {
-    if(!this.Dom.options.keep_opened) this.Dom.hide_panneau()
-    this.on_choose_item.poursuivre(film_id)
+    if(!this.Dom.options || !this.Dom.options.keep_opened) this.Dom.hide_panneau()
+    if(&#x27;function&#x27; == typeof this.on_choose_item.poursuivre) this.on_choose_item.poursuivre(film_id)
+    delete this.on_choose_item.poursuivre
+    ContextualHelp.adapt
   },
   
   /**

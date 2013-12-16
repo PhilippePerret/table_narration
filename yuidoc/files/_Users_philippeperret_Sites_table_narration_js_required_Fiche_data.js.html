@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -468,6 +474,7 @@ Object.defineProperties(Fiche.prototype,{
   *
   * @method dispatch
   * @param  {Object} data Les données à dispatcher dans la fiche.
+  *
   */
 Fiche.prototype.dispatch = function(data){
   dlog(&quot;---&gt; Fiche::dispatch(&quot;+JSON.stringify(data)+&quot;)&quot;, DB_FCT_ENTER)
@@ -496,8 +503,6 @@ Fiche.prototype.dispatch = function(data){
       break;
     case &#x27;type&#x27;:
     case &#x27;class&#x27;:
-      // Juste pour ne pas passer par default: qui mettrait
-      // loaded à true
       break
     case &#x27;titre&#x27;:
     case &#x27;real_titre&#x27;:
@@ -507,19 +512,15 @@ Fiche.prototype.dispatch = function(data){
       break;
     case &#x27;parent&#x27;:
       val = FICHES.fiche( val );
-      this.loaded = true
       break;
     case &#x27;enfants&#x27;:
       if(val!=null &amp;&amp; val.length &gt; 0){
         val = FICHES.fiche( val )
       }
-      this.loaded = true
       break;
     case &#x27;style&#x27;:
       if(&#x27;string&#x27; == typeof val) this.style = val.split(&#x27;.&#x27;)
       break
-    default:
-      this.loaded = true
     }
     // On met la donnée dans la propriété
     this[prop] = val

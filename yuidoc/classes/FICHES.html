@@ -65,6 +65,8 @@
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
                 <li><a href="../classes/Page.html">Page</a></li>
             
                 <li><a href="../classes/Paragraph.html">Paragraph</a></li>
@@ -99,9 +101,9 @@
             
                 <li><a href="../modules/DICO.js.html">DICO.js</a></li>
             
-                <li><a href="../modules/dom.html">dom</a></li>
-            
                 <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
             
@@ -129,9 +131,13 @@
             
                 <li><a href="../modules/Mot.html">Mot</a></li>
             
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
-                <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
             
                 <li><a href="../modules/Page.html">Page</a></li>
             
@@ -331,7 +337,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l462"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:462</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l466"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:466</code></a>
         
         </p>
 
@@ -435,22 +441,26 @@
     <div class="description">
         <p>Dispatch des fiches</p>
 <h2 id="notes">NOTES</h2>
-<p>  = Avec le nouveau fonctionnement, il n&#39;y a plus de problème au niveau
-    des parents ou des enfants. Les fiches sont instanciées à leur première
-    détection (soit ici, soit dans les enfants/parent des fiches traitées),
-    puis elles sont ensuites &quot;remplies&quot; avec les données si la fiche est
-    traitées plus tard ici.</p>
-<p>  = Par défaut, les fiches sont maintenant créées fermées, donc on doit
-    passer seulement en revue les fiches qui doivent être ouvertes.</p>
-<p>  = Pour le moment, cette méthode n&#39;est appelée qu&#39;au chargement de la
-    collection. Mais à l&#39;avenir on pourra imaginer qu&#39;elle soit aussi
-    utilisée en cas de chargement en masse de fiches. Il faut donc en
-    tenir compte et utiliser la propriété `Collected.loaded&#39; pour savoir
-    si c&#39;est un tout premier chargement.</p>
+<ul>
+<li>Avec le nouveau fonctionnement, il n&#39;y a plus de problème au niveau
+des parents ou des enfants. Les fiches sont instanciées à leur première
+détection (soit ici, soit dans les enfants/parent des fiches traitées),
+puis elles sont ensuites &quot;remplies&quot; avec les données si la fiche est
+traitées plus tard ici.</li>
+<li>Par défaut, les fiches sont maintenant créées fermées, donc on doit
+passer seulement en revue les fiches qui doivent être ouvertes.</li>
+<li>Cette méthode est appelée à tout chargement de fiches par groupe</li>
+<li>Seule une fiche passant par cette méthode peut voir si <code>loaded</code> marqué
+true. Toutes les autres fiches sont considérées comme non chargées.</li>
+</ul>
 <h2 id="produit">PRODUIT</h2>
-<p>  = La création de la fiche (toujours, entendu qu&#39;une fiche passant par
-    ce dispatch a forcément toutes ses données)</p>
-<p>  = La tenue à jour de `Collection.books&#39;</p>
+<ul>
+<li><p>La création de la fiche (toujours, entendu qu&#39;une fiche passant par
+ce dispatch a forcément toutes ses données)</p>
+</li>
+<li><p>La tenue à jour de `Collection.books&#39;</p>
+</li>
+</ul>
 
     </div>
 
