@@ -57,15 +57,17 @@
             
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
             
-                <li><a href="../classes/Input.UI.Input.html">Input.UI.Input</a></li>
-            
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
                 <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
             </ul>
 
@@ -79,9 +81,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -94,6 +96,8 @@
                 <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
             
                 <li><a href="../modules/FicheClass.html">FicheClass</a></li>
             
@@ -118,6 +122,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
@@ -168,18 +174,33 @@
   * @module App.js
   */
 
-/*
- *  Pour empêcher de quitter la page quand des données n&#x27;ont pas été
- *  enregistrées.
- *  
- */
+/**
+  * Sécurité pour empêcher de quitter la page quand des données n&#x27;ont pas été
+  * enregistrées.
+  *  
+  * S&#x27;il n&#x27;y a aucune modification en cours, on sauve la configuration courante des
+  * fiche pour récupérer le même état au relancement de l&#x27;application. Noter cependant
+  * que si un “flash” d&#x27;une configuration a déjà été demandé, on ne procède pas
+  * à l&#x27;enregistrement de la configuration.
+  *
+  * @method confirmExit
+  * @param  {Event} Event beforeUnload généré.
+  * @return Rien si la collection n&#x27;a pas été modifiée ou le texte à afficher
+  *         pour confirmer de quitter la page. Mais à cause d&#x27;un bug de Firefox,
+  *         ce texte ne s&#x27;affiche pas.
+  * 
+  */
 function confirmExit(evt)
 {
   if(Collection.modified)
   {
     evt.returnValue = &quot;Veux-tu vraiment quitter ?&quot;
     return &quot;Veux-tu vraiment quitter ?&quot;
-  }  
+  }
+  else
+  {
+    if(false == APP.flashed) APP.save_current_configuration(forcer = false)
+  }
 }
 window.onbeforeunload = confirmExit
 
@@ -192,6 +213,19 @@ window.onbeforeunload = confirmExit
   */
 window.App = {
 	
+  /**
+    * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
+    * empêcher d&#x27;en enregistrer un nouveau à la fermeture de la collection.
+    * Noter cependant que de toute façon, il sera impossible d&#x27;enregistrer la 
+    * configuration courante si un fichier de configuration (qui est supprimé à
+    * chaque chargement) se trouve déjà créé (par un flash).
+    *
+    * @property flashed
+    * @type     {Boolean}
+    * @default  false
+    */
+  flashed:false,
+  
   /**
     * Enregistre la configuration d&#x27;ouverture (et de rangement) actuelle pour
     * la replacer au prochain chargement de l&#x27;application.
@@ -222,7 +256,11 @@ window.App = {
     }
     else
     {
-      if(rajax.ok) F.show(&quot;Configuration courante enregistrée. Elle sera utilisée au prochain chargement de la table.&quot;)
+      if(rajax.ok)
+      { 
+        this.flashed = true
+        F.show(&quot;Configuration courante enregistrée. Elle sera utilisée au prochain chargement de la table.&quot;)
+      }
       else F.error(rajax.message)
     }
   },
@@ -311,14 +349,21 @@ Object.defineProperties(App,{
   &quot;current_config&quot;:{
     get:function(){
       var config = {
-        openeds   : [],
-        visibles  : []
+        openeds     : [],
+        visibles    : [],
+        orphelines  : []
       }
       $(&#x27;section#table &gt; fiche:visible&#x27;).each(function(){
         var fiche = FICHES.domObj_to_fiche($(this))
         var datam = {id:fiche.id, type:fiche.type}
         config.visibles.push(datam)
-        if(fiche.opened) config.openeds.push(datam)
+        if(fiche.opened){
+          config.openeds.push(datam)
+        } 
+        if(fiche.is_not_book &amp;&amp; fiche.is_orpheline)
+        {
+          config.orphelines.push(datam)
+        }
       })
       return JSON.stringify(config)
     }

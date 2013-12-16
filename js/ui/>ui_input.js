@@ -1,7 +1,6 @@
 /**
  * @module    UI
  * @submodule Input
- * @namespace Input
  *
  **/
 
@@ -377,6 +376,11 @@ UI.Input = {
     *     patronyme de l'acteur est répété au début, donc la donnée a le format :
     *         <patronyme acteur> <patronyme acteur> ...
     *         <patronyme personnage>
+    *
+    *     Elle sera transformée en :
+    *         <prenom acteur>, <nom acteur>, <prenom perso>, <nom perso>, null
+    *
+    *     note: Le `null` ci-dessus concerne la fonction du personnage dans le film.
     *
     * @method traite_as_acteurs_from_imdb
     *

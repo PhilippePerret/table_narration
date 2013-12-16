@@ -57,15 +57,17 @@
             
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
             
-                <li><a href="../classes/Input.UI.Input.html">Input.UI.Input</a></li>
-            
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
                 <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
             </ul>
 
@@ -79,9 +81,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -94,6 +96,8 @@
                 <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
             
                 <li><a href="../modules/FicheClass.html">FicheClass</a></li>
             
@@ -118,6 +122,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
@@ -197,10 +203,10 @@ window.Fiche = function(data)
   // (ci-dessous les valeurs par défaut)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
-  // this.opened     = true   // Propriété complexe
-  // this.ranged     = false  // propriété complexe
+  this._opened    = false   // cf. propriété complexe &#x60;opened&#x27;
+  this._ranged    = false   // cf. propriété complexe &#x60;ranged&#x27;
   this.selected   = false
-  this.built      = false  // mis à true quand la fiche est construite
+  this.built      = false   // mis à true quand la fiche est construite
   this.retourned  = false   // Mis à true quand c&#x27;est le verso affiché
   this.draggable  = false
   this.sortable   = false
@@ -229,10 +235,14 @@ Object.defineProperties(Fiche.prototype, {
   /* ---------------------------------------------------------------------
    *      DONNÉES DE LA FICHE
    --------------------------------------------------------------------- */
-  /*
-   *  Retourne un {Array} des minidata des enfants 
-   *  
-   */
+  /**
+    *  Retourne un {Array} des minidata des enfants 
+    *
+    * @property enfants_as_minidata
+    * @type     {Array}
+    * @default  []
+    *
+    */
   &quot;enfants_as_minidata&quot;:{
     get:function(){
       arr = []

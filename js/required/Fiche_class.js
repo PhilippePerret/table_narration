@@ -63,10 +63,14 @@ Object.defineProperties(Fiche.prototype, {
   /* ---------------------------------------------------------------------
    *      DONNÉES DE LA FICHE
    --------------------------------------------------------------------- */
-  /*
-   *  Retourne un {Array} des minidata des enfants 
-   *  
-   */
+  /**
+    *  Retourne un {Array} des minidata des enfants 
+    *
+    * @property enfants_as_minidata
+    * @type     {Array}
+    * @default  []
+    *
+    */
   "enfants_as_minidata":{
     get:function(){
       arr = []

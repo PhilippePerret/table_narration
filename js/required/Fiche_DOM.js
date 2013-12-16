@@ -1,3 +1,10 @@
+/**
+  * @module fiche.dom
+  */
+
+/**
+  * @class Fiche
+  */
 /*
  *  Méthodes DOM des Fiches
  *  -----------------------
@@ -9,7 +16,13 @@ Object.defineProperties(Fiche.prototype,{
    *  Raccourcis pour obtenir les éléments DOM de la fiche
    *    
    */
-  /* Définit et retourne le JID de la fiche */
+  /**
+    * Définit et retourne le JID (selector jQuery) de la fiche
+    *
+    * @property jid
+    * @type     {String}
+    * 
+    */
   "jid":{
     get:function(){
       if(this._jid == undefined) this._jid = "fiche#"+this.dom_id ;

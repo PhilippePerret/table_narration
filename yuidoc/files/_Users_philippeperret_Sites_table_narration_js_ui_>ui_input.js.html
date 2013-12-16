@@ -57,15 +57,17 @@
             
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
             
-                <li><a href="../classes/Input.UI.Input.html">Input.UI.Input</a></li>
-            
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
                 <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
             </ul>
 
@@ -79,9 +81,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -94,6 +96,8 @@
                 <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
             
                 <li><a href="../modules/FicheClass.html">FicheClass</a></li>
             
@@ -118,6 +122,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
@@ -167,7 +173,6 @@
 /**
  * @module    UI
  * @submodule Input
- * @namespace Input
  *
  **/
 
@@ -457,7 +462,8 @@ UI.Input = {
   {
     // Valeur dans le champ
     var value       = this.target.jq.val().trim()
-    var data_types  = this.target.data_type.split(&#x27; &#x27;)
+    var data_type   = this.target.data_type || &quot;&quot;
+    var data_types  = data_type.split(&#x27; &#x27;)
     if(value == &quot;&quot; &amp;&amp; data_types.indexOf(&#x27;not_empty&#x27;) &lt; 0) return true
     // Format attendu (if any)
     // @note: Mis dans une variable car pourra être mis à null pour
@@ -542,6 +548,11 @@ UI.Input = {
     *     patronyme de l&#x27;acteur est répété au début, donc la donnée a le format :
     *         &lt;patronyme acteur&gt; &lt;patronyme acteur&gt; ...
     *         &lt;patronyme personnage&gt;
+    *
+    *     Elle sera transformée en :
+    *         &lt;prenom acteur&gt;, &lt;nom acteur&gt;, &lt;prenom perso&gt;, &lt;nom perso&gt;, null
+    *
+    *     note: Le &#x60;null&#x60; ci-dessus concerne la fonction du personnage dans le film.
     *
     * @method traite_as_acteurs_from_imdb
     *

@@ -3,14 +3,14 @@
  */
 
 /**
- *  Object UI
- *  ---------
- *  Gestion de l'interface utilisateur
- *
- *  @class UI
- *  @static
- * 
- */
+  *  Object UI
+  *  ---------
+  *  Gestion de l'interface utilisateur
+  *
+  *  @class UI
+  *  @static
+  * 
+  */
 if('undefined' == typeof UI) UI = {}
 $.extend(UI, {
   

@@ -1,15 +1,22 @@
-/*
- *  Objet PARAGRAPHS
- *  ----------------
- *  Pour la gestion des paragraphes dans leur ensemble
- *  
- */
+/**
+  * @module PARAGRAPHS
+  */
+/**
+  * Pour la gestion des paragraphes ({Fiche} de type {Paragraph}) comme un ensemble
+  *  
+  * @class PARAGRAPHES
+  * @static
+  *
+  */
 window.PARAGRAPHS = {
   
-  /*
-   *  La fiche du paragraphe courant (instance Fiche::Paragraph)
-   *  
-   */
+  /**
+    *  La fiche du paragraphe courant
+    *  
+    * @property current
+    * @type {Paragraph}
+    * @default  null
+    */
   current: null,
   /* ---------------------------------------------------------------------
    *

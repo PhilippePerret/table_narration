@@ -63,6 +63,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "modules": {
+                "PARAGRAPHS": 1
+            },
+            "classes": {
+                "PARAGRAPHES": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/object/sous_objets/Mot_class.js",
             "modules": {},
@@ -94,6 +105,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "modules": {
+                "fiche.dom": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "modules": {
@@ -110,6 +130,13 @@
             "modules": {
                 "data": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -150,12 +177,10 @@
                 "Input": 1
             },
             "classes": {
-                "Input.UI.Input": 1
+                "UI.Input": 1
             },
             "fors": {},
-            "namespaces": {
-                "Input": 1
-            }
+            "namespaces": {}
         },
         "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
@@ -355,6 +380,18 @@
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
             "line": 11
         },
+        "PARAGRAPHS": {
+            "name": "PARAGRAPHS",
+            "submodules": {},
+            "classes": {
+                "PARAGRAPHES": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 4
+        },
         "Mot": {
             "name": "Mot",
             "submodules": {
@@ -394,6 +431,16 @@
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
             "line": 5
+        },
+        "fiche.dom": {
+            "name": "fiche.dom",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 1
         },
         "FicheClass": {
             "name": "FicheClass",
@@ -465,13 +512,11 @@
                 "Input": 1
             },
             "classes": {
-                "Input.UI.Input": 1,
+                "UI.Input": 1,
                 "UI": 1
             },
             "fors": {},
-            "namespaces": {
-                "Input": 1
-            },
+            "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
             "line": 5
@@ -480,17 +525,15 @@
             "name": "Input",
             "submodules": {},
             "classes": {
-                "Input.UI.Input": 1
+                "UI.Input": 1
             },
             "fors": {},
             "is_submodule": 1,
-            "namespaces": {
-                "Input": 1
-            },
+            "namespaces": {},
             "module": "UI",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 8,
+            "line": 7,
             "description": "Sous-Objet UI.Input\n\nGestionnaire de champ de saisie.\nMalgré son nom, gère aussi bien les input de type \"text\" que les textarea."
         },
         "ContextualHelp": {
@@ -515,7 +558,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 20
+            "line": 35
         },
         "Collection": {
             "name": "Collection",
@@ -644,6 +687,21 @@
             "description": "Objet FICHES\n------------\nPour la gestion des fiches comme ensemble.",
             "static": 1
         },
+        "PARAGRAPHES": {
+            "name": "PARAGRAPHES",
+            "shortname": "PARAGRAPHES",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PARAGRAPHS",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 4,
+            "description": "Pour la gestion des paragraphes ({Fiche} de type {Paragraph}) comme un ensemble",
+            "static": 1
+        },
         "Mot": {
             "name": "Mot",
             "shortname": "Mot",
@@ -740,8 +798,8 @@
             "static": 1,
             "extends": "OBJET"
         },
-        "Input.UI.Input": {
-            "name": "Input.UI.Input",
+        "UI.Input": {
+            "name": "UI.Input",
             "shortname": "UI.Input",
             "classitems": [],
             "plugins": [],
@@ -750,9 +808,9 @@
             "extension_for": [],
             "module": "UI",
             "submodule": "Input",
-            "namespace": "Input",
+            "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 8,
+            "line": 7,
             "description": "Sous-Objet UI.Input\n\nGestionnaire de champ de saisie.\nMalgré son nom, gère aussi bien les input de type \"text\" que les textarea.",
             "static": 1
         },
@@ -797,7 +855,7 @@
             "module": "App.js",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 20,
+            "line": 35,
             "description": "Objet App, pour la gestion de l'application",
             "static": 1
         },
@@ -1015,6 +1073,17 @@
             "module": "FICHES"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 13,
+            "description": "La fiche du paragraphe courant",
+            "itemtype": "property",
+            "name": "current",
+            "type": "{Paragraph}",
+            "default": "null",
+            "class": "PARAGRAPHES",
+            "module": "PARAGRAPHS"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
             "line": 23,
             "description": "Table de tous les items connus, avec leurs data minimum.\nPar exemple, pour les films, il s'agit du titre, du titre français, de\nl'identifiant et du code ascii de la première lettre.\n\n# NOTES\n\n    * Pour les films, cf. :\n      ../interdata/film/data_js/films_data.js\n    * Pour les mots cf. :\n      ../interdata/scenodico/data_js/dico_data.js",
@@ -1066,6 +1135,27 @@
             "module": "ObjetClass"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 19,
+            "description": "Définit et retourne le JID (selector jQuery) de la fiche",
+            "itemtype": "property",
+            "name": "jid",
+            "type": "{String}",
+            "class": "Fiche",
+            "module": "fiche.dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 66,
+            "description": "Retourne un {Array} des minidata des enfants",
+            "itemtype": "property",
+            "name": "enfants_as_minidata",
+            "type": "{Array}",
+            "default": "[]",
+            "class": "Fiche",
+            "module": "FicheClass"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
             "line": 74,
             "description": "Retourne les données à enregistrer",
@@ -1078,6 +1168,46 @@
             "class": "DICO",
             "module": "FicheClass",
             "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
+            "line": 15,
+            "description": "Pour savoir si la fiche a des enfants",
+            "itemtype": "property",
+            "name": "has_children",
+            "type": "Boolean",
+            "return": {
+                "description": "TRUE si la fiche possède des s enfants.",
+                "type": "Fiche"
+            },
+            "class": "DICO",
+            "module": "FicheClass"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
+            "line": 26,
+            "description": "Pour savoir si la fiche est orpheline (sans parent)",
+            "itemtype": "property",
+            "name": "is_orpheline",
+            "type": "Boolean",
+            "return": {
+                "description": "TRUE si la fiche n'a pas de parent."
+            },
+            "class": "DICO",
+            "module": "FicheClass"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js",
+            "line": 35,
+            "description": "Pour savoir si la fiche à un parent",
+            "itemtype": "property",
+            "name": "has_parent",
+            "type": "Boolean",
+            "return": {
+                "description": "TRUE si la fiche n'est pas orpheline."
+            },
+            "class": "DICO",
+            "module": "FicheClass"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/>DICO_Edition.js",
@@ -1142,33 +1272,31 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 20,
+            "line": 19,
             "description": "La cible courante\n\nC'est un {Object} tel que défini par la méthode `eventTextField' ci-dessous,\nqui contient notamment les propriétés 'dom' ({HTMLDom}), `jq' ({jQuerySet})\n`id', `jid', `value' ou encore `tag'.",
             "itemtype": "property",
             "name": "target",
             "type": "Object",
             "default": "null",
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 33,
+            "line": 32,
             "description": "Les champs de saisie mémorisés par la méthode `memorize_current'\n\nEn clé, un timestamp permettant de récupérer le champ de saisie et\nde le remettre dans le même état (sélection)\nEn valeur, une {Target} telle que définie par la méthode\nthis.eventTextField",
             "itemtype": "property",
             "name": "targets",
             "type": "{Hash}",
             "default": "null",
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 47,
+            "line": 46,
             "description": "Méthode appelée pour placer les observers sur les champs fournis\nen argument.",
             "itemtype": "method",
             "name": "bind",
@@ -1183,14 +1311,13 @@
                 "description": "Le set jQuery bindé.",
                 "type": "JQuerySet"
             },
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 63,
+            "line": 62,
             "description": "Détache le gestionnaire d'évènement du champ",
             "itemtype": "method",
             "name": "unbind",
@@ -1201,14 +1328,13 @@
                     "type": "HTMLDom|Set jQuery"
                 }
             ],
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 76,
+            "line": 75,
             "description": "Attache ou détache le gestionnaire d'évènement 'focus', 'blur'\naux champs de saisie de texte +field+",
             "itemtype": "method",
             "name": "bind_or_unbind",
@@ -1224,14 +1350,13 @@
                     "type": "Boolean"
                 }
             ],
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 92,
+            "line": 91,
             "description": "Méthode appelée quand on focusse dans le champ",
             "itemtype": "method",
             "name": "onfocus",
@@ -1242,14 +1367,13 @@
                     "type": "Event"
                 }
             ],
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 110,
+            "line": 109,
             "description": "Méthode appelée quand on blur du champ",
             "itemtype": "method",
             "name": "onblur",
@@ -1260,14 +1384,13 @@
                     "type": "BlurEvent"
                 }
             ],
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 155,
+            "line": 154,
             "description": "Méthode appelée quand on presse une touche sur le champ courant. Gère\nl'utilisation de touches ou combinaisons de touches spéciales, comme \nCMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.",
             "itemtype": "method",
             "name": "onkeypress",
@@ -1278,29 +1401,27 @@
                     "type": "Event"
                 }
             ],
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 273,
+            "line": 272,
             "description": "Traite la donnée du champ courant en fonction de son data-type, peut la modifier\nà la volée ou interrompre la suite dans le cas d'une donnée incorrecte.\n\n\nNOTES\n-----\n  * La méthode est appelée dans le onblur, pour le moment\n    + quand on tab sur le champ\n  * Aucun traitement si le champ est vide\n  * Si une valeur est modifiée, il faut la remettre dans\n    le champ à l'aide de `this.target.jq.val(nouvelle valeur)'",
             "itemtype": "method",
             "name": "check_value",
             "return": {
                 "description": "TRUE si tout est OK ou false dans le cas contraire, ce qui interrompt\n        la procédure en cours."
             },
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
             "line": 368,
-            "description": "Traite la donnée +acteurs+ avant sa vérification par la méthode {check_values}\ndans le cas d'un copié/collé d'une donnée prise dans IMDb.\n\nNOTES\n-----\n  * On reconnait une donnée IMDb pour un acteur car elle sépare le patronyme\n    de l'acteur du patronyme du personnage par un \"...\\n\". Noter que le \n    patronyme de l'acteur est répété au début, donc la donnée a le format :\n        <patronyme acteur> <patronyme acteur> ...\n        <patronyme personnage>",
+            "description": "Traite la donnée +acteurs+ avant sa vérification par la méthode {check_values}\ndans le cas d'un copié/collé d'une donnée prise dans IMDb.\n\nNOTES\n-----\n  * On reconnait une donnée IMDb pour un acteur car elle sépare le patronyme\n    de l'acteur du patronyme du personnage par un \"...\\n\". Noter que le \n    patronyme de l'acteur est répété au début, donc la donnée a le format :\n        <patronyme acteur> <patronyme acteur> ...\n        <patronyme personnage>\n\n    Elle sera transformée en :\n        <prenom acteur>, <nom acteur>, <prenom perso>, <nom perso>, null\n\n    note: Le `null` ci-dessus concerne la fonction du personnage dans le film.",
             "itemtype": "method",
             "name": "traite_as_acteurs_from_imdb",
             "params": [
@@ -1314,14 +1435,13 @@
                 "description": "La valeur corrigée, si nécessaire.",
                 "type": "String"
             },
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 503,
+            "line": 508,
             "description": "Return le vrai jQuery Set de champ de text de +obj+",
             "params": [
                 {
@@ -1336,10 +1456,9 @@
                 "description": "Un  du ou des champs de texte.",
                 "type": "JQuerySet"
             },
-            "class": "Input.UI.Input",
+            "class": "UI.Input",
             "module": "UI",
-            "submodule": "Input",
-            "namespace": "Input"
+            "submodule": "Input"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
@@ -1398,7 +1517,37 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 29,
+            "line": 5,
+            "description": "Sécurité pour empêcher de quitter la page quand des données n'ont pas été\nenregistrées.\n \nS'il n'y a aucune modification en cours, on sauve la configuration courante des\nfiche pour récupérer le même état au relancement de l'application. Noter cependant\nque si un “flash” d'une configuration a déjà été demandé, on ne procède pas\nà l'enregistrement de la configuration.",
+            "itemtype": "method",
+            "name": "confirmExit",
+            "params": [
+                {
+                    "name": "Event",
+                    "description": "beforeUnload généré.",
+                    "type": "Event"
+                }
+            ],
+            "return": {
+                "description": "Rien si la collection n'a pas été modifiée ou le texte à afficher\n        pour confirmer de quitter la page. Mais à cause d'un bug de Firefox,\n        ce texte ne s'affiche pas."
+            },
+            "class": "App",
+            "module": "App.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 44,
+            "description": "Mis à TRUE si un flash de la configuration courante a été demandé. Pour \nempêcher d'en enregistrer un nouveau à la fermeture de la collection.\nNoter cependant que de toute façon, il sera impossible d'enregistrer la \nconfiguration courante si un fichier de configuration (qui est supprimé à\nchaque chargement) se trouve déjà créé (par un flash).",
+            "itemtype": "property",
+            "name": "flashed",
+            "type": "{Boolean}",
+            "default": "false",
+            "class": "App",
+            "module": "App.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 57,
             "description": "Enregistre la configuration d'ouverture (et de rangement) actuelle pour\nla replacer au prochain chargement de l'application.\n\nNOTES\n-----\n\n  * Envoi la requête Ajax pour créer le fichier \"current_config.config\"",
             "itemtype": "method",
             "name": "save_current_configuration",
@@ -1420,7 +1569,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 130,
+            "line": 162,
             "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont visibles sur la table.",
             "itemtype": "property",
             "name": "current_config",
@@ -1433,7 +1582,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 161,
+            "line": 200,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes.",
             "itemtype": "method",
             "name": "current_configuration",

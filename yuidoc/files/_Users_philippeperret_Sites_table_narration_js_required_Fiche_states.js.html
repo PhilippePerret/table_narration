@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>/Users/philippeperret/Sites/table_narration/js/col_text.js</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -166,116 +166,90 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/col_text.js</h1>
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/required/Fiche_states.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
-  * @module ColText
-  */
+/*
+ *  Méthodes Fiche concernant l&#x27;état de la fiche
+ *  
+ */
+Object.defineProperties(Fiche.prototype,{
+  &quot;is_book&quot;           :{get:function(){ return this._type == &#x27;book&#x27;}},
+  &quot;is_not_book&quot;       :{get:function(){ return this._type != &#x27;book&#x27;}},
+  &quot;is_chapter&quot;        :{get:function(){ return this._type == &#x27;chap&#x27;}},
+  &quot;is_not_chapter&quot;    :{get:function(){ return this._type != &#x27;chap&#x27;}},
+  &quot;is_page&quot;           :{get:function(){ return this._type == &#x27;page&#x27;}},
+  &quot;is_not_page&quot;       :{get:function(){ return this._type != &#x27;page&#x27;}},
+  &quot;is_paragraph&quot;      :{get:function(){ return this._type == &#x27;para&#x27;}},
+  &quot;is_not_paragraph&quot;  :{get:function(){ return this._type != &quot;para&quot;}},
 
-/**
-  *  Objet ColText
-  *  -------------
-  *  Gestion des textes de la collection (toutes les fiches).
-  *  C&#x27;est cet objet par exemple qui va traiter les balises que contient un texte
-  *  avant de l&#x27;afficher.
-  *  
-  *  @class ColText
-  *  @static
-  *
-  **/
-window.ColText = {
+  /**
+    * Pour savoir si la fiche a des enfants
+    * @property {Boolean} has_children
+    * @return TRUE si la fiche possède des {Fiche}s enfants.
+    */
+  &quot;has_children&quot;:{
+    get:function(){
+      return (&#x27;object&#x27; == typeof this.enfants) &amp;&amp; this.enfants.length &gt; 0
+    }
+  },
   
   /**
-   *
-   *  Le code en traitement courant
-   *
-   *  @property code 
-   *  @type     {String}  
-   *  @default  null
-   */
-  code:null,
+    * Pour savoir si la fiche est orpheline (sans parent)
+    * @property {Boolean} is_orpheline
+    * @return   TRUE si la fiche n&#x27;a pas de parent.
+    */
+  &quot;is_orpheline&quot;:{
+    get:function(){return undefined == this.parent || this.parent == null}
+  },
   
   /**
-   *  Met en forme le texte +code+ pour son affichage humain
-   *
-   *
-   *  @method formate
-   *  @param  code    {String} du texte à formater
-   *  @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
-   *                    ou un aperçu.
-   *
-   *  @example
-   *      ColText.formate(&lt;le texte&gt;)
-   *      # Mais on peut utiliser aussi :
-   *      &lt;le texte&gt;.formate
-   *
-   */
-  formate:function(code)
-  {
-    this.code = code
-    if(code.indexOf(&#x27;[film:&#x27;)) this.traite_balises_films()
-    if(code.indexOf(&#x27;[mot:]&#x27;)) this.traite_balises_mots()
-    if(code.indexOf(&#x27;[ref:]&#x27;)) this.traite_balises_refs()
-    return this.code
+    * Pour savoir si la fiche à un parent
+    * @property {Boolean} has_parent
+    * @return TRUE si la fiche n&#x27;est pas orpheline.
+    */
+  &quot;has_parent&quot;:{
+    get:function(){return false == this.is_orpheline }
   },
-  
   /*
-   *  Traitement des balises films
+   *  ---------------------------------------------------------------------
+   *    Changement d&#x27;état
    *  
    */
-  traite_balises_films:function()
-  {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, fid, ftitre, options, offset){ 
-      return get_film(fid).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage du film nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
-  },
   
   /*
-   *  Traitement des balises mots
+   *  Répercute le z-index de la fiche courant sur les parents
+   *  Dans le cas contraire, les parents apparaitraient en dessous
+   *  d&#x27;une autre fiche (ouverte par exemple) et l&#x27;élément serait
+   *  lui-même masqué alors que son z-index est plus grand.
+   * 
+   *  @note: Les enfants de la fiche courante sont traités en CSS
    *  
    */
-  traite_balises_mots:function()
+  &quot;repercute_zindex_on_ancestors&quot;:
   {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[mot:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_mot(id).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage du film nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
-  },
-  
-  /*
-   *  Traitement des balises références
-   *  
-   */
-  traite_balises_refs:function()
-  {
-    var c, dfilm ;
-    this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_ref(id).formate(options.split(&#x27; &#x27;), skip_loading = true)
-      /*
-       *  La précision skip_loading ci-dessus permet de passer les données
-       *  manquante, lorsque des options d&#x27;affichage de la référence nécessite d&#x27;avoir
-       *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
-       */
-    })
+    value:function(zindex){
+      dlog(&quot;Application du z-index &quot;+zindex+&quot; sur les parents&quot;, DB_DETAILLED)
+      if(this.is_book || this.ranged == false) return
+      var p = this.obj.parent()
+      try
+      {
+        do { 
+          p = p.parent()
+          if(p.length) p.css(&#x27;z-index&#x27;, zindex)
+        } while(p.length &amp;&amp; p.attr(&#x27;id&#x27;) != &quot;table&quot; &amp;&amp; p.attr(&#x27;class&#x27;).indexOf(&#x27;fiche book&#x27;) == -1)
+      }catch(err){
+        console.error(
+          &quot;Erreur dans Fiche::repercute_zindex_on_ancestors [&quot;+this.type_id+&quot;]&quot;+
+          &quot;\nErr : &quot;+err+
+          &quot;\nCf la valeur de &#x60;p&#x27; ci-dessous&quot;
+        )
+        console.dir(p)
+      }
+    }
   }
-  
-  
-  
-}
-
+})
     </pre>
 </div>
 

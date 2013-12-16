@@ -57,15 +57,17 @@
             
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
             
-                <li><a href="../classes/Input.UI.Input.html">Input.UI.Input</a></li>
-            
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
                 <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../classes/OBJETS.html">OBJETS</a></li>
             
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
             </ul>
 
@@ -79,9 +81,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -94,6 +96,8 @@
                 <li><a href="../modules/Dom.html">Dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/fiche.dom.html">fiche.dom</a></li>
             
                 <li><a href="../modules/FicheClass.html">FicheClass</a></li>
             
@@ -118,6 +122,8 @@
                 <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
             
                 <li><a href="../modules/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
@@ -168,7 +174,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l20"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:20</code></a>
+            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l35"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:35</code></a>
         </div>
     
 
@@ -215,6 +221,13 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_confirmExit">confirmExit</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_current_configuration">current_configuration</a>
 
                                 
@@ -245,6 +258,13 @@
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_flashed">flashed</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -257,6 +277,118 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_confirmExit" class="method item">
+    <h3 class="name"><code>confirmExit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>Event</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l5"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:5</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Sécurité pour empêcher de quitter la page quand des données n&#39;ont pas été
+enregistrées.</p>
+<p>S&#39;il n&#39;y a aucune modification en cours, on sauve la configuration courante des
+fiche pour récupérer le même état au relancement de l&#39;application. Noter cependant
+que si un “flash” d&#39;une configuration a déjà été demandé, on ne procède pas
+à l&#39;enregistrement de la configuration.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">Event</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>beforeUnload généré.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                    <p>Rien si la collection n&#39;a pas été modifiée ou le texte à afficher
+        pour confirmer de quitter la page. Mais à cause d&#39;un bug de Firefox,
+        ce texte ne s&#39;affiche pas.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method_current_configuration" class="method item">
@@ -291,7 +423,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l161"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:161</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l200"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:200</code></a>
         
         </p>
 
@@ -365,7 +497,7 @@ doivent être ouvertes.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l29"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:29</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l57"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:57</code></a>
         
         </p>
 
@@ -467,7 +599,7 @@ la replacer au prochain chargement de l&#39;application.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l130"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:130</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l162"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:162</code></a>
         
         </p>
 
@@ -487,6 +619,57 @@ qui sont visibles sur la table.</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_flashed" class="property item">
+    <h3 class="name"><code>flashed</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l44"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:44</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
+empêcher d&#39;en enregistrer un nouveau à la fermeture de la collection.
+Noter cependant que de toute façon, il sera impossible d&#39;enregistrer la 
+configuration courante si un fichier de configuration (qui est supprimé à
+chaque chargement) se trouve déjà créé (par un flash).</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
     
 
     
