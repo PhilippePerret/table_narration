@@ -181,8 +181,22 @@ Object.defineProperties(App,{
         on_table    : [],
         orphelines  : []
       }
+      /* Pour écarter certaines erreurs, je tiens à jour une table des
+       * fiches traitées. Ça évitera d'enregistrer deux fois une même fiche
+       * comme ouverte.
+       */
+      var table_fiches_traited = {}
       $('section#table > fiche:visible').each(function(){
         var fiche = FICHES.domObj_to_fiche($(this))
+        if(table_fiches_traited[fiche.id])
+        {
+          F.error("La fiche "+fiche.type_id+" se trouve en double sur la table…", {keep:true})
+          return
+        }
+        else
+        {
+          table_fiches_traited[fiche.id] = true
+        }
         var datam = {id:fiche.id, type:fiche.type}
         config.on_table.push(datam)
         if(fiche.opened) config.openeds.push(datam)
@@ -211,7 +225,6 @@ Object.defineProperties(App,{
         if(undefined == FICHES.list[fdata.id]) errors.push("La fiche #"+fdata.id+" devrait exister…")
         else
         {
-          dlog("Ouverture de la fiche "+fdata.id+ " pour rétablir la configuration.")
           fiche = get_fiche(fdata.id)
           // Si c'est une page, et que son livre est fermé, il faut ouvrir le livre,
           // pour afficher la table des matières, et enfin ouvrir la page.
@@ -222,7 +235,7 @@ Object.defineProperties(App,{
           } 
           else refermer_book = false
           fiche.open
-          // if(refermer_book) fiche.book.close
+          if(refermer_book) fiche.book.close
         } 
       })
       // Juste pour voir, on regarde si les fiches visibles sont bien visibles

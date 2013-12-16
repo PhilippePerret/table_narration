@@ -11,9 +11,13 @@ class Fiche
     
     # Récupère l'instance de la fiche d'identifiant +id+
     # 
-    def get id
+    def get id, type = nil
       @list ||= {}
-      @list[id.to_i]
+      fiche = @list[id.to_i]
+      if fiche.nil? && type != nil
+        fiche = new id, type
+      end
+      return fiche
     end
     
     # Ajoute l'instance {Fiche} +fiche+ à la liste des fiches instanciées
@@ -147,11 +151,23 @@ class Fiche
     @is_invisible ||= false == visible?
   end
   
-  # Retourne l'instance {Fiche} du parent s'il est défini
+  # Retourne l'instance {Fiche} du parent (si la fiche a un parent)
   def parent
-    return null if data['parent'].nil?
-    Fiche::get(data['parent']["id"])
+    return nil if data['parent'].nil?
+    Fiche::get(data['parent']['id'], data['parent']['type'])
   end
+  
+  # Retourne l'instance {Fiche} du livre de la fiche si elle est dans un livre
+  # 
+  def book
+    @book ||= get_book
+  end
+  def get_book
+    return nil if parent.nil?
+    return parent if chapter?
+    return parent.book
+  end
+  
   # L'ouverture de la fiche n'est plus enregistrée dans ses données,
   # mais dans le fichier de configuration courante.
   # 
@@ -161,7 +177,11 @@ class Fiche
   def opened?
     @is_opened == true
   end
-  
+  # Return TRUE si la fiche n'est pas ouverte
+  # Même note que ci-dessus : pour faire usage de cete propriété, il est INDISPENSABLE
+  # d'avoir fait appel à Collection::current_configuration (qui est la seule à 
+  # connaître l'état d'ouverture/fermeture des fiches).
+  # 
   def closed?; false == opened? end
   
   def book?;      @type == 'book' end

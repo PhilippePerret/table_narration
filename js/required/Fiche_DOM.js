@@ -59,10 +59,18 @@ Object.defineProperties(Fiche.prototype,{
   },
   
   
-  /*
-   *  Définit si nécessaire l'objet jQuery de la fiche et le retourne
-   *  
-   */
+  /**
+    * Définit si nécessaire l'objet jQuery de la fiche et le retourne
+    *
+    * NOTES
+    * -----
+    *   * C'est un set jQuery, mais il n'est défini QUE si l'objet existe
+    *     vraiment dans le DOM. Inutile de faire `fiche.obj.length == 0` pour
+    *     s'assurer qu'il existe bien, `fiche.obj` suffit car il renvoie null
+    *     si la fiche n'est pas encore construite.
+    *
+    * @property {jQuerySet} obj
+    */
   "obj":{
     get:function(){
       if(undefined == this._obj){
@@ -479,16 +487,22 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){return $('fiche#'+this.dom_id_clone)}
   },
   
-  /*
-   *  Clone/Déclone la fiche courante
-   *
-   *  "Cloner la fiche" consiste à :
-   *    - Placer un clone de la fiche dans le parent, à la place de la fiche
-   *    - Sortir le DOM Objet du parent pour le mettre sur la table
-   *  "Décloner" la fiche consiste à :
-   *    - Remettre la fiche dans le parent
-   *    - Détruire le clone
-   */
+  /**
+    * Clone/Déclone la fiche courante
+    *
+    * NOTES
+    * -----
+    *   * "Cloner la fiche" consiste à :
+    *       * Placer un clone de la fiche dans le parent, à la place de la fiche
+    *       * Sortir le DOM Objet du parent pour le mettre sur la table
+    *   * "Décloner" la fiche consiste à :
+    *       * Remettre la fiche dans le parent
+    *       * Détruire le clone
+    *
+    * @method clone   Note : c'est une propriété complexe, donc une méthode sans
+    *                 parenthèses.
+    *
+    */
   "clone":{
     get:function(){
       this.clone_in_parent

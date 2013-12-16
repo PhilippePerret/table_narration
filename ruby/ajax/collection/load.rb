@@ -67,6 +67,16 @@ def get_all_fiches_on_table
       @data[:fiches] += fiche.get_data :children => :if_opened
     elsif fiche.page?
       @data[:fiches] += fiche.get_data :children => true
+      # Si le livre de la page n'est pas ouverte, il faut charger quand même ses
+      # enfants, car le clone ne saurait pas où se mettre dans le cas contraire.
+      log "fiche #{fiche.id}:#{fiche.type}"
+      log "   Parent : #{fiche.parent.inspect}"
+      log "   Book   : #{fiche.book.inspect}"
+      if fiche.book && fiche.book.closed?
+        @data[:fiches] += fiche.book.data_children
+      elsif fiche.parent && fiche.parent.closed?
+        @data[:fiches] += fiche.parent.data_children
+      end
     end
   end
 end
@@ -83,7 +93,7 @@ get_all_fiches_on_table
 
 # Détruire la configuration courante (ce qui permettra d'enregistrer la
 # nouvelle configuration)
-Collection::kill_current_configuration
+# Collection::kill_current_configuration
 
 RETOUR_AJAX[:data]      = @data
 RETOUR_AJAX[:mode_test] = File.exists?('./.mode_test')

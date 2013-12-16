@@ -282,6 +282,7 @@ Object.defineProperties(Fiche.prototype,{
   *
   * @method dispatch
   * @param  {Object} data Les données à dispatcher dans la fiche.
+  *
   */
 Fiche.prototype.dispatch = function(data){
   dlog("---> Fiche::dispatch("+JSON.stringify(data)+")", DB_FCT_ENTER)
@@ -310,8 +311,6 @@ Fiche.prototype.dispatch = function(data){
       break;
     case 'type':
     case 'class':
-      // Juste pour ne pas passer par default: qui mettrait
-      // loaded à true
       break
     case 'titre':
     case 'real_titre':
@@ -321,19 +320,15 @@ Fiche.prototype.dispatch = function(data){
       break;
     case 'parent':
       val = FICHES.fiche( val );
-      // this.loaded = true
       break;
     case 'enfants':
       if(val!=null && val.length > 0){
         val = FICHES.fiche( val )
       }
-      // this.loaded = true
       break;
     case 'style':
       if('string' == typeof val) this.style = val.split('.')
       break
-    default:
-      // this.loaded = true
     }
     // On met la donnée dans la propriété
     this[prop] = val

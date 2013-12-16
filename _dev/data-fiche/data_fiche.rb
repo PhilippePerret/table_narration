@@ -5,8 +5,8 @@
 
 
 FOLDER_COLLECTION = "test" # "current"
-FICHE_TYPE  = 'para'
-FICHE_ID    = 10
+FICHE_TYPE  = 'page'
+FICHE_ID    = 5
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
 
 

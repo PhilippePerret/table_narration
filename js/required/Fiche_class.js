@@ -198,10 +198,10 @@ Object.defineProperties(Fiche.prototype, {
    */
   "create":{
     get:function(){
-      dlog("---> Fiche::create ("+this.type_id+")", DB_FCT_ENTER)
+      dlog("---> Fiche::CREATE ("+this.type_id+")", DB_FCT_ENTER)
       this.build
       this.set_values
-      dlog("<- Fiche::create ("+this.type_id+")", DB_FCT_ENTER)
+      dlog("<- Fiche::CREATE ("+this.type_id+")", DB_FCT_ENTER)
       return true
     }
   },

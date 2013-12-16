@@ -295,12 +295,16 @@ window.FICHES = {
       ifiche.loaded = true
       instances.push( ifiche )
     }
-
+    
+    // alert("Après création instance")
+    
     // Création des fiches sur la table
     L(instances).each(function(instance){
-      instance.create
+      if(!instance.obj) instance.create
     })
     
+    // alert("Après create de l'instance")
+
     // Rangement des enfants (toujours - ils seront "dérangés" ensuite
     // si la configuration courante le nécessite)
     L(instances).each(function(instance){
@@ -308,11 +312,14 @@ window.FICHES = {
                          else instance.positionne
     })
     
+    // alert("Après rangement")
+    
     // Réglage de l'indice des fiches enfants
     L(instances).each(function(instance){
       if(instance.has_children) instance.update_indice_enfants()
     })
     
+    // alert("Après update indices enfants")
     
     dlog("<- FICHES.dispatch", DB_FCT_ENTER)
   },
@@ -510,7 +517,7 @@ window.FICHES = {
   {
     dlog("---> FICHES.full_create", DB_FCT_ENTER)
     var ifiche = FICHES.create_instance_fiche_of_type(data)
-    ifiche.create
+    if(!ifiche.obj) ifiche.create
     if(options)
     {
       // La fiche a été créée à la fin de son parent, il faut la placer
