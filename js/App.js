@@ -45,7 +45,7 @@ $.extend(window.App, {
   /**
     * Indique que l'application est prête (collection chargée)
     *
-    * @property ready
+    * @property {Boolean} ready
     * @default  false
     */
   ready:false,
@@ -75,11 +75,14 @@ $.extend(window.App, {
     *   * Cf. l'objet {Prefs} qui gère ces préférences
     *
     * @property preferences
+    * @type     {Object}
     * @static
     * @default Les préférences par défaut
     */
   preferences:{
-    snap: true
+    snap        : true,   // place les fiches sur la grille
+    autosave    : false,  // sauvegarde automatique
+    saveconfig  : false   // sauvegarde de la config à chaque sauvegarde
   },
   
   
@@ -89,8 +92,10 @@ $.extend(window.App, {
     * 
     * NOTES
     * -----
-    *
+    *   * La méthode est appelée à chaque sauvegarde si les préférences l'exigent.
     *   * Envoi la requête Ajax pour créer le fichier "current_config.config"
+    *   * Si une méthode doit suivre, renseigner avec cette méthode (proxy)
+    *     `App.save_current_configuration.poursuivre`
     *
     * @method save_current_configuration
     * @async
@@ -116,7 +121,8 @@ $.extend(window.App, {
       if(rajax.ok)
       { 
         this.flashed = true
-        F.show("Configuration courante enregistrée. Elle sera utilisée au prochain chargement de la table.")
+        if('function'==typeof this.save_current_configuration.poursuivre) this.save_current_configuration.poursuivre()
+        else F.show("Configuration courante enregistrée. Elle sera utilisée au prochain chargement de la table.")
       }
       else F.error(rajax.message)
     }

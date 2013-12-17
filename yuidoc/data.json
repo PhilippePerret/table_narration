@@ -1776,6 +1776,27 @@
             "module": "Fiche"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 796,
+            "description": "Invoquée à la fin du drag d'une fiche, cette méthode enregistre la nouvelle\nposition de la fiche, la place sur la grille si les préférences l'exigent et\nindique que la fiche a été modifiée.\n \nNotes\n-----\n  * C'est la préférence `App.preferences.snap` qui détermine s'il faut placer\n    la fiche sur la grille (true par défaut)",
+            "itemtype": "method",
+            "name": "stop_drag",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "DragStopEvent déclenché.",
+                    "type": "Event"
+                },
+                {
+                    "name": "L'objet",
+                    "description": "jQuery ayant déclenché le drag.",
+                    "type": "jQuery.ui"
+                }
+            ],
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
             "line": 74,
             "description": "Retourne les données à enregistrer",
@@ -2282,6 +2303,7 @@
             "description": "Indique que l'application est prête (collection chargée)",
             "itemtype": "property",
             "name": "ready",
+            "type": "Boolean",
             "default": "false",
             "class": "App",
             "module": "app"
@@ -2303,6 +2325,7 @@
             "description": "Préférences de l'application\n\nPréférences\n-----------\n  * snap    Si true, les fiches sont disposées sur la grille\n\nNotes\n-----\n  * Cf. l'objet {Prefs} qui gère ces préférences",
             "itemtype": "property",
             "name": "preferences",
+            "type": "{Object}",
             "static": 1,
             "default": "Les préférences par défaut",
             "class": "App",
@@ -2310,8 +2333,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 86,
-            "description": "Enregistre la configuration d'ouverture (et de rangement) actuelle pour\nla replacer au prochain chargement de l'application.\n\nNOTES\n-----\n\n  * Envoi la requête Ajax pour créer le fichier \"current_config.config\"",
+            "line": 89,
+            "description": "Enregistre la configuration d'ouverture (et de rangement) actuelle pour\nla replacer au prochain chargement de l'application.\n\nNOTES\n-----\n  * La méthode est appelée à chaque sauvegarde si les préférences l'exigent.\n  * Envoi la requête Ajax pour créer le fichier \"current_config.config\"\n  * Si une méthode doit suivre, renseigner avec cette méthode (proxy)\n    `App.save_current_configuration.poursuivre`",
             "itemtype": "method",
             "name": "save_current_configuration",
             "async": 1,
@@ -2332,7 +2355,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 191,
+            "line": 197,
             "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont on_table sur la table.",
             "itemtype": "property",
             "name": "current_config",
@@ -2345,7 +2368,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 238,
+            "line": 244,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",
@@ -2354,8 +2377,31 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 10,
-            "description": "Enregistre les préférences de l'application (et reçoit le retour de la \nrequête ajax)",
+            "line": 11,
+            "description": "Indique si le panneau des préférences est prêt à être affiché (construit)",
+            "itemtype": "property",
+            "name": "prepared",
+            "default": "false",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 18,
+            "description": "Données pour construire le panneau des préférences",
+            "itemtype": "property",
+            "name": "DATA",
+            "type": "{Array}",
+            "static": 1,
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 36,
+            "description": "Enregistre les préférences de l'application (et reçoit le retour de la \nrequête ajax)\n\nNotes\n-----\n  * Les préférences sont définies dans {App.preferences}",
             "itemtype": "method",
             "name": "save",
             "params": [
@@ -2370,11 +2416,105 @@
             "submodule": "app-prefs"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 69,
+            "description": "Ouvre le panneau des préférences\n\nNotes\n-----\n  * C'est la méthode principale à appeler. Elle se charge de construire le\n    panneau des préférences si nécessaire.",
+            "itemtype": "method",
+            "name": "show",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 86,
+            "description": "Ferme le panneau des préférences",
+            "itemtype": "method",
+            "name": "close",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 101,
+            "description": "Objet DOM du panneau ({jQuerySet})",
+            "itemtype": "property",
+            "name": "panneau",
+            "type": "{jQuerySet}",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 112,
+            "description": "Récupère les valeurs des préférences dans le panneau et les met\ndans App.preferences",
+            "itemtype": "method",
+            "name": "get_values (complexe)",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 142,
+            "description": "Prépare le panneau des préférences\nNotes\n-----\n  * C'est une propriété complexe, donc l'appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "prepare_panneau",
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 169,
+            "description": "Retourne le code HTML du panneau de préférences\n\nNotes\n-----\n  * Cf. le fichier de style `./css/ui/preferences.css` pour l'aspect",
+            "itemtype": "method",
+            "name": "html_panneau (complexe)",
+            "return": {
+                "description": "Code à insérer dans le body.",
+                "type": "HTML"
+            },
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 188,
+            "description": "Retourne le code HTML pour la liste des options des préférences",
+            "itemtype": "method",
+            "name": "liste_options",
+            "return": {
+                "description": "Code à insérer dans le panneau des préférences",
+                "type": "HTML"
+            },
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 219,
+            "description": "Retourne le code HTML pour les boutons du bas",
+            "itemtype": "method",
+            "name": "html_buttons",
+            "return": {
+                "description": "Code des boutons dans leur div",
+                "type": "HTML"
+            },
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
             "line": 29,
             "description": "Nom de la collection courante (nom du dossier dans `./collection`)",
             "itemtype": "property",
             "name": "name",
+            "type": "String",
             "static": 1,
             "default": "null",
             "class": "Collection",
@@ -2386,13 +2526,58 @@
             "description": "Fréquence de sauvegarde en mode de sauvegarde automatique.",
             "itemtype": "property",
             "name": "frequence_saving",
+            "type": "Number",
             "static": 1,
             "class": "Collection",
             "module": "Collection"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 128,
+            "line": 49,
+            "description": "Indique que la sauvegarde est en cours",
+            "itemtype": "property",
+            "name": "saving",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 55,
+            "description": "Indique que le chargement est en cours",
+            "itemtype": "property",
+            "name": "loading",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 62,
+            "description": "Indique que la collection est chargée",
+            "itemtype": "property",
+            "name": "loaded",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 69,
+            "description": "Liste des livres de la collection (liste d'instances {Book})\n\nNOTES\n-----\nCette liste est établie au chargement de la collection en insérant\ntoutes les fiches de type {Book}. C'est la méthode FICHES.dispatch qui\ns'en charge.",
+            "itemtype": "property",
+            "name": "books",
+            "type": "Array",
+            "default": "[]",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 145,
             "description": "Méthode qui dispatche toutes les données +data+ remontées par\nla requête ajax `collection/load`.\n\nNotes\n-----\n  * Il s'agit de dispatcher :\n      * Les fiches (et d'afficher/ouvrir celles qui doivent l'être)\n      * Les données de l'application courante (comme le nom de la collection)\n      * Les préférences de l'application\n\nWARNING\n-------\nCette méthode ne doit pas être utilisée pour charger seulement une\nportion de la collection en cours de travail, car elle ré-initialise la\nliste des modifications en fin de dispatch (car la création des fiches\nles a marquées modifiées).\nEn d'autres termes, si des fiches sont chargées en groupe plus tard, il\nfaut passer par FICHES.dispatch (TODO: mais n'est-ce pas le même problème ?\net ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)",
             "itemtype": "method",
             "name": "dispatch",
@@ -2408,7 +2593,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 176,
+            "line": 193,
             "description": "Dispatch les données remontées au chargement (en dehors des données fiches)\n\nNotes\n-----\n  * Il s'agit des données :\n    * Le dernier identifiant de fiche utilisé.\n    * Le nom de la collection courante\n    * La configuration courante (ouverte/visibilité des fiches)\n    * Les préférences de l'application.",
             "itemtype": "method",
             "name": "dispatch_data",
@@ -2424,7 +2609,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 203,
+            "line": 220,
             "description": "Les deux méthodes `disable_save' et 'enable_save' permettent\nd'activer ou non la sauvegarde automatique (lorsque l'option AUTO\nest activé)\n\nNotes\n-----\n  * Ce sont des méthodes complexes, donc à invoquer sans parenthèses.  \n  * UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et\n    start_automatic_saving.\n  * L'idéal est même d'utiliser `stop_save` (exactement) et `restart_save`\n    qui arrête et relance la sauvegarde automatique seulement dans le cas\n    où elle est activée (cf. les handy methods)",
             "itemtype": "method",
             "name": "disable_save",
@@ -2433,7 +2618,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 227,
+            "line": 244,
             "description": "Réactive la sauvegarde automatique\nNotes\n-----\n  * Lire les notes de la méthode `disable_save`",
             "itemtype": "method",
             "name": "enable_save",
@@ -2442,7 +2627,34 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 328,
+            "description": "Sauvegarde de tous les éléments de la collection\n(fiches, configuration, etc.)\n\nNOTES\n-----\n  * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste\n    this.modifieds_list (sous forme d'instances)\n  * C'est la méthode `check_if_needs_save' qui est appelée en premier\n    lieu pour voir si un enregistrement est nécessaire (c'est un peu bête,\n    mais c'est juste parce que j'ai utilisé une propriété, ici.)\n  * La méthode lance une \"chaine de sauvegarde\" appelant `save_fiches`,\n    `save_config`, etc. jusqu'à `save_end`",
+            "itemtype": "method",
+            "name": "save (complexe)",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
             "line": 360,
+            "description": "Demande de la sauvegarde de la configuration courante\nNotes\n-----\n  * Seulement si les préférences le réclament",
+            "itemtype": "method",
+            "name": "save_config",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 376,
+            "description": "Fin de la sauvegarde générale",
+            "itemtype": "method",
+            "name": "end_save",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 400,
             "description": "Lance le backup journalier\nNotes\n-----\n  * Cette procédure est lancée tout de suite après le chargement de la\n    collection courante (sauf en mode test).\n  * C'est une pseudo-méthode, donc à appeler sans parenthèses.",
             "itemtype": "method",
             "name": "backup",
@@ -2451,7 +2663,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 375,
+            "line": 415,
             "description": "Retour du backup quotidien\nNotes\n-----\n  * Même si c'est un backup quotidien unique, il est appelé à chaque\n    chargement de l'application.\n  * En mode normal (non test), c'est cette méthode qui définit que \n    l'application est prête à travailler (`App.ready`)",
             "itemtype": "method",
             "name": "retour_backup",

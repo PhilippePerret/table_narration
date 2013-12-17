@@ -207,9 +207,39 @@
   */
 window.App = window.App || {}
 App.Prefs = {
+  
+  /**
+    * Indique si le panneau des préférences est prêt à être affiché (construit)
+    * @property prepared
+    * @default  false
+    */
+  prepared:false,
+  
+  /**
+    * Données pour construire le panneau des préférences
+    *
+    * @property DATA
+    * @type {Array}
+    * @static
+    */
+  DATA:[
+    /* L&#x27;id doit correspondre à celui dans App.preferences */
+    {id:&#x27;general&#x27;,    type:&#x27;fieldset&#x27;,  legend:&quot;Générales&quot;},
+    {id:&#x27;autosave&#x27;,   type:&#x27;cb&#x27;,        label:&quot;Sauvegarde automatique&quot;},
+    {id:&#x27;saveconfig&#x27;, type:&#x27;cb&#x27;,        label:&quot;Sauver la configuration des fiches à chaque sauvegarde&quot;},
+    {id:&#x27;general&#x27;,    type:&#x27;/fieldset&#x27;},
+    {id:&#x27;fiches&#x27;,     type:&#x27;fieldset&#x27;,  legend:&quot;Fiches&quot;},
+    {id:&#x27;snap&#x27;,       type:&#x27;cb&#x27;,        label:&quot;Aligner les fiches sur la grille&quot;},
+    {id:&#x27;fiches&#x27;,     type:&#x27;/fieldset&#x27;}
+    ],
+  
   /**
     * Enregistre les préférences de l&#x27;application (et reçoit le retour de la 
     * requête ajax)
+    *
+    * Notes
+    * -----
+    *   * Les préférences sont définies dans {App.preferences}
     *
     * @method save
     * @param  {Object} rajax    Retour de la requête Ajax (if any)
@@ -219,6 +249,7 @@ App.Prefs = {
   {
     if(undefined == rajax)
     {
+      this.get_values
       Ajax.send(
         {script:&#x27;app/save_preferences&#x27;, preferences:App.preferences},
         $.proxy(this.save, this)
@@ -226,12 +257,180 @@ App.Prefs = {
     }
     else
     {
-      if(rajax.ok) F.show(&quot;Préférences enregistrées.&quot;)
+      if(rajax.ok)
+      {
+        F.show(&quot;Préférences enregistrées.&quot;)
+        this.close()
+      } 
       else F.error(rajax.message)
     }
   },
   
+  /**
+    * Ouvre le panneau des préférences
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est la méthode principale à appeler. Elle se charge de construire le
+    *     panneau des préférences si nécessaire.
+    *
+    * @method show
+    * 
+    */
+  show:function()
+  {
+    if(!this.prepared) this.prepare_panneau
+    this.panneau.show()
+  },
+  
+  /**
+    * Ferme le panneau des préférences
+    *
+    * @method close
+    */
+  close:function()
+  {
+    this.panneau.hide()
+  }
+  
+  
 }
+
+Object.defineProperties(App.Prefs, {
+  
+  /**
+    * Objet DOM du panneau ({jQuerySet})
+    * @property panneau
+    * @type {jQuerySet}
+    */
+  &quot;panneau&quot;:{
+    get:function(){
+      return $(&#x27;div#preferences&#x27;)
+    }
+  },
+  
+  /**
+    * Récupère les valeurs des préférences dans le panneau et les met
+    * dans App.preferences
+    *
+    * @method get_values (complexe)
+    *
+    */
+  &quot;get_values&quot;:{
+    get:function(){
+      var id, obj ;
+      L(this.DATA).each(function(data){
+        id  = data.id
+        obj = $(&#x27;input#pref-&#x27;+id)
+        if(obj.length == 0) return
+        switch(data.type)
+        {
+        case &#x27;cb&#x27;:
+          App.preferences[id] = obj[0].checked == true
+          if(id==&#x27;autosave&#x27;)
+          {
+            $(&#x27;input#cb_automatic_save&#x27;)[0].checked = App.preferences[id]
+            Collection.enable_automatic_saving(App.preferences[id])
+          }
+
+          break
+        }
+      })
+    }
+  },
+  
+  /**
+    * Prépare le panneau des préférences
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe, donc l&#x27;appeler sans parenthèses
+    *
+    * @method prepare_panneau
+    */
+  &quot;prepare_panneau&quot;:{
+    get:function(){
+      $(&#x27;body&#x27;).append(this.html_panneau)
+      // On met les valeurs par défaut
+      var id, obj ;
+      L(this.DATA).each(function(data){
+        id = data.id
+        obj = $(&#x27;input#pref-&#x27;+id)
+        switch(data.type)
+        {
+        case &#x27;cb&#x27;:
+          obj[0].checked = App.preferences[id]
+          break
+        }
+      })
+      this.prepared = true
+    }
+  },
+  
+  /**
+    * Retourne le code HTML du panneau de préférences
+    *
+    * Notes
+    * -----
+    *   * Cf. le fichier de style &#x60;./css/ui/preferences.css&#x60; pour l&#x27;aspect
+    *
+    * @method html_panneau (complexe)
+    * @return {HTML} Code à insérer dans le body.
+    */
+  &quot;html_panneau&quot;:{
+    get:function(){
+      return  &#x27;&lt;div id=&quot;preferences&quot;&gt;&#x27;+
+                &#x27;&lt;div class=&quot;titre&quot;&gt;Préférences&lt;/div&gt;&#x27;+
+                this.html_options +
+                this.html_buttons +
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  /**
+    * Retourne le code HTML pour la liste des options des préférences
+    *
+    * @method liste_options
+    * @return {HTML} Code à insérer dans le panneau des préférences
+    */
+  &quot;html_options&quot;:{
+    get:function(){
+      var code = &quot;&quot;
+      L(this.DATA).each(function(data){
+        var id = data.id
+        switch(data.type)
+        {
+        case &#x27;cb&#x27;:
+          code += &#x27;&lt;div class=&quot;div_cb_pref&quot;&gt;&#x27;+
+                    &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;pref-&#x27;+id+&#x27;&quot; /&gt;&#x27;+
+                    &#x27;&lt;label for=&quot;pref-&#x27;+id+&#x27;&quot;&gt;&#x27;+data.label+&#x27;&lt;/label&gt;&#x27;+
+                  &#x27;&lt;/div&gt;&#x27;
+          break
+        case &#x27;fieldset&#x27;:
+          code += &#x27;&lt;fieldset id=&quot;prefs-&#x27;+id+&#x27;&quot;&gt;&lt;legend&gt;&#x27;+data.legend+&#x27;&lt;/legend&gt;&#x27;
+          break
+        case &#x27;/fieldset&#x27;:
+          code += &#x27;&lt;/fieldset&gt;&#x27;
+          break
+        }
+      })
+      return code
+    }
+  },
+  
+  /**
+    * Retourne le code HTML pour les boutons du bas
+    *
+    * @method html_buttons
+    * @return {HTML} Code des boutons dans leur div
+    */
+  &quot;html_buttons&quot;:{
+    get:function(){
+      return  &#x27;&lt;div class=&quot;buttons&quot;&gt;&#x27;+
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;Renoncer&quot; class=&quot;fleft&quot; onclick=&quot;$.proxy(App.Prefs.close, App.Prefs)()&quot; /&gt;&#x27; +
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;Enregistrer&quot; onclick=&quot;$.proxy(App.Prefs.save, App.Prefs)()&quot; /&gt;&#x27; +
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  }
+})
     </pre>
 </div>
 

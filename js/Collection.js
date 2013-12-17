@@ -29,7 +29,7 @@ $.extend(Collection, {
   /**
     * Nom de la collection courante (nom du dossier dans `./collection`)
     *
-    * @property name
+    * @property {String} name
     * @static
     * @default  null
     */
@@ -37,7 +37,7 @@ $.extend(Collection, {
   
   /**
     * Fréquence de sauvegarde en mode de sauvegarde automatique.
-    * @property frequence_saving
+    * @property {Number} frequence_saving
     * @static
     */
   frequence_saving: 20 * 1000, // 5*1000
@@ -46,21 +46,38 @@ $.extend(Collection, {
    *  PROPRIÉTÉS GÉNÉRALES
    *  
    */
-  /* Propriétés d'état */
+  /** 
+    * Indique que la sauvegarde est en cours
+    * @property {Boolean} saving
+    * @default  false
+    */
   saving        : false,
+  /** 
+    * Indique que le chargement est en cours
+    * @property {Boolean} loading
+    * @default  false
+    */
   loading       : false,
+  
+  /** 
+    * Indique que la collection est chargée
+    * @property {Boolean} loaded
+    * @default  false
+    */
   loaded        : false,
   
-  /*
-   *  {Array} Livres de {Book} de la collection
-   *
-   *  NOTES
-   *  -----
-   *  Cette liste est établie au chargement de la collection en insérant
-   *  toutes les fiches de type {Book}. C'est la méthode FICHES.dispatch qui
-   *  s'en charge.
-   *
-   */
+  /**
+    * Liste des livres de la collection (liste d'instances {Book})
+    *
+    * NOTES
+    * -----
+    * Cette liste est établie au chargement de la collection en insérant
+    * toutes les fiches de type {Book}. C'est la méthode FICHES.dispatch qui
+    * s'en charge.
+    *
+    * @property {Array} books
+    * @default  []
+    */
   books:[],
   
   /*
@@ -308,19 +325,23 @@ Object.defineProperties(Collection,{
   },
   
   
-  /*
-   *  Sauvegarde de tous les éléments de la collection
-   *  (principalement les fiches)
-   *  
-   *  NOTES
-   *  -----
-   *    * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste
-   *      this.modifieds_list (sous forme d'instances)
-   *
-   *    * C'est la méthode `check_if_needs_save' qui est appelée en premier
-   *      lieu pour voir si un enregistrement est nécessaire (c'est un peu bête,
-   *      mais c'est juste parce que j'ai utilisé une propriété, ici.)
-   */
+  /**
+    * Sauvegarde de tous les éléments de la collection
+    * (fiches, configuration, etc.)
+    * 
+    * NOTES
+    * -----
+    *   * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste
+    *     this.modifieds_list (sous forme d'instances)
+    *   * C'est la méthode `check_if_needs_save' qui est appelée en premier
+    *     lieu pour voir si un enregistrement est nécessaire (c'est un peu bête,
+    *     mais c'est juste parce que j'ai utilisé une propriété, ici.)
+    *   * La méthode lance une "chaine de sauvegarde" appelant `save_fiches`,
+    *     `save_config`, etc. jusqu'à `save_end`
+    *
+    * @method save (complexe)
+    *
+    */
   "save":{
     get:function(){
       dlog("Sauvegarde de la collection", DB_SIMPLE)
@@ -333,12 +354,31 @@ Object.defineProperties(Collection,{
   "save_fiches":{
     get:function(){
       // console.log("---> Collection.save_fiches")
-      FICHES.save( $.proxy(this.end_save, this ))
+      FICHES.save( $.proxy(this.save_config, this ))
     }
   },
-  /* Fin de la sauvegarde de la collection */
+  /**
+    * Demande de la sauvegarde de la configuration courante
+    * Notes
+    * -----
+    *   * Seulement si les préférences le réclament
+    * @method save_config
+    */
+  "save_config":{
+    value:function(){
+      if(App.preferences.saveconfig)
+      {
+        App.save_current_configuration.poursuivre = $.proxy(this.end_save, this )
+        App.save_current_configuration(forcer = true)
+      }
+    }
+  },
+  /**
+    * Fin de la sauvegarde générale
+    * @method end_save
+    */
   "end_save":{
-    get:function(){ 
+    value:function(){ 
       this.saving   = false
       this.modified = false
       F.clean()

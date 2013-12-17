@@ -23,11 +23,13 @@ App.Prefs = {
     * @static
     */
   DATA:[
+    /* L'id doit correspondre à celui dans App.preferences */
     {id:'general',    type:'fieldset',  legend:"Générales"},
-    {id:'snap',       type:'cb',        label:"Aligner les fiches sur la grille"},
+    {id:'autosave',   type:'cb',        label:"Sauvegarde automatique"},
+    {id:'saveconfig', type:'cb',        label:"Sauver la configuration des fiches à chaque sauvegarde"},
     {id:'general',    type:'/fieldset'},
     {id:'fiches',     type:'fieldset',  legend:"Fiches"},
-    {id:'autosave',   type:'cb',        label:"Sauvegarde automatique"},
+    {id:'snap',       type:'cb',        label:"Aligner les fiches sur la grille"},
     {id:'fiches',     type:'/fieldset'}
     ],
   
@@ -125,6 +127,12 @@ Object.defineProperties(App.Prefs, {
         {
         case 'cb':
           App.preferences[id] = obj[0].checked == true
+          if(id=='autosave')
+          {
+            $('input#cb_automatic_save')[0].checked = App.preferences[id]
+            Collection.enable_automatic_saving(App.preferences[id])
+          }
+
           break
         }
       })
