@@ -16,6 +16,21 @@ div#preferences div.titre {
   margin-bottom : 11px;
 }
 
+div#preferences input[type="checkbox"] {
+    margin-right: 12px;
+}
+div#preferences div.div_cb_pref {
+  
+}
+div#preferences div.div_cb_pref label {
+  font-size     : 11pt;
+}
+
+div#preferences fieldset {
+  border      : 1px solid #CACACA;
+  margin-top  : 14px;
+}
+
 div#preferences div.buttons {
   position    : absolute;
   left        : 20px;

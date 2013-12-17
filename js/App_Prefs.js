@@ -19,12 +19,17 @@ App.Prefs = {
     * Données pour construire le panneau des préférences
     *
     * @property DATA
+    * @type {Array}
     * @static
     */
-  DATA:{
-    'snap'      :{id:'snap',      type:'cb', label:"Aligner les fiches sur la grille", default:true},
-    'autosave'  :{id:'autosave',  type:'cb', label:"Sauvegarde automatique", default:false}
-  },
+  DATA:[
+    {id:'general',    type:'fieldset',  legend:"Générales"},
+    {id:'snap',       type:'cb',        label:"Aligner les fiches sur la grille"},
+    {id:'general',    type:'/fieldset'},
+    {id:'fiches',     type:'fieldset',  legend:"Fiches"},
+    {id:'autosave',   type:'cb',        label:"Sauvegarde automatique"},
+    {id:'fiches',     type:'/fieldset'}
+    ],
   
   /**
     * Enregistre les préférences de l'application (et reçoit le retour de la 
@@ -42,6 +47,7 @@ App.Prefs = {
   {
     if(undefined == rajax)
     {
+      this.get_values
       Ajax.send(
         {script:'app/save_preferences', preferences:App.preferences},
         $.proxy(this.save, this)
@@ -102,6 +108,30 @@ Object.defineProperties(App.Prefs, {
   },
   
   /**
+    * Récupère les valeurs des préférences dans le panneau et les met
+    * dans App.preferences
+    *
+    * @method get_values (complexe)
+    *
+    */
+  "get_values":{
+    get:function(){
+      var id, obj ;
+      L(this.DATA).each(function(data){
+        id  = data.id
+        obj = $('input#pref-'+id)
+        if(obj.length == 0) return
+        switch(data.type)
+        {
+        case 'cb':
+          App.preferences[id] = obj[0].checked == true
+          break
+        }
+      })
+    }
+  },
+  
+  /**
     * Prépare le panneau des préférences
     * Notes
     * -----
@@ -113,12 +143,14 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       $('body').append(this.html_panneau)
       // On met les valeurs par défaut
-      L(this.DATA).each(function(id,data){
-        var obj = $('input#pref-'+id)
+      var id, obj ;
+      L(this.DATA).each(function(data){
+        id = data.id
+        obj = $('input#pref-'+id)
         switch(data.type)
         {
         case 'cb':
-          obj[0].checked = data.default
+          obj[0].checked = App.preferences[id]
           break
         }
       })
@@ -140,7 +172,7 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       return  '<div id="preferences">'+
                 '<div class="titre">Préférences</div>'+
-                this.html_liste_options +
+                this.html_options +
                 this.html_buttons +
               '</div>'
     }
@@ -151,15 +183,26 @@ Object.defineProperties(App.Prefs, {
     * @method liste_options
     * @return {HTML} Code à insérer dans le panneau des préférences
     */
-  "html_liste_options":{
+  "html_options":{
     get:function(){
       var code = ""
-      L(this.DATA).each(function(id, data){
-        if( data.type != 'cb' ) return 
-        code += '<div class="div_cb_pref">'+
-                  '<input type="checkbox" id="pref-'+id+'" />'+
-                  '<label for="pref-'+id+'">'+data.label+'</label>'+
-                '</div>'
+      L(this.DATA).each(function(data){
+        var id = data.id
+        switch(data.type)
+        {
+        case 'cb':
+          code += '<div class="div_cb_pref">'+
+                    '<input type="checkbox" id="pref-'+id+'" />'+
+                    '<label for="pref-'+id+'">'+data.label+'</label>'+
+                  '</div>'
+          break
+        case 'fieldset':
+          code += '<fieldset id="prefs-'+id+'"><legend>'+data.legend+'</legend>'
+          break
+        case '/fieldset':
+          code += '</fieldset>'
+          break
+        }
       })
       return code
     }

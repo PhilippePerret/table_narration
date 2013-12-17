@@ -20,17 +20,22 @@
     <!-- Pour mémoriser la configuration courante -->
     <img
       src="../lib/img/device/camera/camera-3.png"
-      style="width:25px;opacity:0.5;margin-right:1em;"
-      class="fleft"
       onclick="$.proxy(App.save_current_configuration, App, forcer=true)()"
       title="Enregistrer la configuration courante pour la prochaine ouverture"
       />
-    <!-- Bouton pour forcer un backup -->
-    <input
+    <!-- Pour forcer un backup -->
+    <img
       id="btn_force_backup"
-      type="button"
-      value="Force Backup"
+      src="../lib/img/picto/backup-fond-blanc.png"
       onclick="Collection.force_backup"
+      title="Forcer l'enregistrement d'un backup complet de la collection courante"
+      />
+    <!-- Pour afficher les préférences -->
+    <img
+      id="btn_preferences"
+      src="../lib/img/picto/preferences-fond-blanc.png"
+      onclick="$.proxy(App.Prefs.show, App.Prefs)()"
+      title="Affichage des préférences de l'application"
       />
     <!-- Bouton pour lancer les tests (ouvrir Pure-JS-Tests) -->
   	<input 
@@ -83,6 +88,4 @@
         >Dico</div>
     </div>
   </div>
-  <!-- AIDE RACCOURCIS-CLAVIER -->
-  <?php include "./php/view/shortcuts_panel.php" ?>
 </section>

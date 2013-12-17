@@ -39,6 +39,15 @@ section#header > div#buttons_right {
   margin-top    : 10px;
   margin-right  : 1em;
 }
+section#header > div#buttons_right img {
+  width         : 30px;
+  opacity       : 0.5;
+  margin-right  : 3px;
+  float         : left;
+  cursor        : pointer;
+}
+section#header > div#buttons_right img:hover { opacity:1; }
+
 section#header > div#buttons_right input[type="button"] {
   font-size: 10px;
 }

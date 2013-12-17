@@ -90,7 +90,16 @@ class Collection
     def preferences
       @preferences ||= begin
         if File.exists? path_preferences
-          Marshal.load(File.read path_preferences)
+          prefs = Marshal.load(File.read path_preferences)
+          prefs.each do |k, v|
+            prefs[k] = case v 
+            when "false"  then false
+            when "true"   then true
+            when "null"   then null
+            else v
+            end
+          end
+          prefs
         else
           nil
         end

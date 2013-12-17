@@ -83,7 +83,6 @@ end
 
 @data = {
   :fiches   => [],
-  :prefs    => {},
   :data     => {
     :last_id_fiche          => Fiche::last_id,
     :current_configuration  => Collection::raw_current_config,
