@@ -22,7 +22,7 @@ function integration_creation_complete()
     my.wait.while.file('./collection/test/liste').exists
     break
   case "Attente que l'application soit prête":
-    my.wait.until(function(){return APP.App.ready == true})
+    my.wait.until(function(){return APP.ready == true})
     break
   default:
     pending("Step '"+my.step+"' should be implanted")

@@ -102,7 +102,7 @@ $.extend(Collection, {
       // App.test();
       // Sinon, ça arrive chaque fois qu'un test recharge
       F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
-      App.ready = true
+      window.ready = true
     }
     if( rajax.paragraph_styles_updated ) F.show("La liste des styles de paragraphe a été updatée.")
     this.backup
@@ -315,7 +315,7 @@ Object.defineProperties(Collection,{
    */
   "load":{
     get:function(){
-      App.ready     = false
+      window.ready  = false
       this.loading  = true
       stop_save
       F.show("Chargement de la collection…", {timer:false})
@@ -419,14 +419,14 @@ Object.defineProperties(Collection,{
     *   * Même si c'est un backup quotidien unique, il est appelé à chaque
     *     chargement de l'application.
     *   * En mode normal (non test), c'est cette méthode qui définit que 
-    *     l'application est prête à travailler (`App.ready`)
+    *     l'application est prête à travailler (`window.ready`)
     *
     * @method retour_backup
     *
     */
   "retour_backup":{
     value:function(rajax){
-      if(rajax.ok) App.ready = true
+      if(rajax.ok) window.ready = true
       else F.error( rajax.message )
     }
   },

@@ -41,14 +41,6 @@ window.onbeforeunload = confirmExit
   */
 window.App = window.App || {}
 $.extend(window.App, {
-	
-  /**
-    * Indique que l'application est prête (collection chargée)
-    *
-    * @property {Boolean} ready
-    * @default  false
-    */
-  ready:false,
   
   /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 

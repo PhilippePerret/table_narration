@@ -24,6 +24,16 @@
   * @static
   */
 window.MODE_TEST = false
+
+
+/**
+  * Indique que l'application est prête (collection chargée et interface prêt)
+  *
+  * @property {Boolean} ready
+  * @default  false
+  */
+ready:false,
+
 /*
  *  Méthodes pratiques
  *  ------------------
