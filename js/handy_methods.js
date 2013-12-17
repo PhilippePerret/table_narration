@@ -6,7 +6,24 @@
   * @class window
   * @static
   */
-  
+
+/* 
+  * CONSTANTES
+  * ----------
+  */
+
+/**
+  * Indicateur du mode test.
+  *
+  * Notes
+  * -----
+  *   * En réalité, c'est une pseudo constante puisqu'elle est défini au chargement
+  *     de la collection, si le fichier `./mode_test` a été trouvé.
+  *
+  * @property MODE_TEST
+  * @static
+  */
+window.MODE_TEST = false
 /*
  *  Méthodes pratiques
  *  ------------------

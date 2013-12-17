@@ -1,5 +1,5 @@
 /**
-  * @module App.js
+  * @module app
   */
 
 /**
@@ -27,20 +27,29 @@ function confirmExit(evt)
   }
   else
   {
-    if(false == App.flashed) App.save_current_configuration(forcer = false)
+    if(false == (App.flashed || MODE_TEST)) App.save_current_configuration(forcer = false)
   }
 }
 window.onbeforeunload = confirmExit
 
 /**
-  *	Objet App, pour la gestion de l'application
+  *	Pour la gestion de l'application
   *
   * @class App
   * @static
   *
   */
-window.App = {
+window.App = window.App || {}
+$.extend(window.App, {
 	
+  /**
+    * Indique que l'application est prête (collection chargée)
+    *
+    * @property ready
+    * @default  false
+    */
+  ready:false,
+  
   /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
     * empêcher d'en enregistrer un nouveau à la fermeture de la collection.
@@ -53,6 +62,26 @@ window.App = {
     * @default  false
     */
   flashed:false,
+  
+  /**
+    * Préférences de l'application
+    *
+    * Préférences
+    * -----------
+    *   * snap    Si true, les fiches sont disposées sur la grille
+    *
+    * Notes
+    * -----
+    *   * Cf. l'objet {Prefs} qui gère ces préférences
+    *
+    * @property preferences
+    * @static
+    * @default Les préférences par défaut
+    */
+  preferences:{
+    snap: true
+  },
+  
   
   /**
     * Enregistre la configuration d'ouverture (et de rangement) actuelle pour
@@ -155,7 +184,7 @@ window.App = {
     if(rajax.ok) alert("Tout s'est bien passé en ajax" +
     "\n\nRuby version: " + rajax.ruby_version)
   }
-}
+})
 
 Object.defineProperties(App,{
   

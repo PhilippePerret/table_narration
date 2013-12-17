@@ -19,13 +19,29 @@
   * @static
   *
   */
-window.Collection = {
+window.Collection = window.Collection || {}
+$.extend(Collection, {
   /*
-   *  CONSTANTE
+   *  CONSTANTES
    *  
    */
-  frequence_saving: 20 * 1000, // 5*1000
   
+  /**
+    * Nom de la collection courante (nom du dossier dans `./collection`)
+    *
+    * @property name
+    * @static
+    * @default  null
+    */
+  name:null,
+  
+  /**
+    * Fréquence de sauvegarde en mode de sauvegarde automatique.
+    * @property frequence_saving
+    * @static
+    */
+  frequence_saving: 20 * 1000, // 5*1000
+    
   /*
    *  PROPRIÉTÉS GÉNÉRALES
    *  
@@ -63,11 +79,13 @@ window.Collection = {
     else F.error(rajax.message)
     this.loading = false
     if(false == UI.prepared) UI.prepare
-    if(rajax.mode_test == true){ 
+    window.MODE_TEST = rajax.mode_test || this.name == 'test'
+    if(MODE_TEST){ 
       // NON :
       // App.test();
       // Sinon, ça arrive chaque fois qu'un test recharge
       F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
+      App.ready = true
     }
     if( rajax.paragraph_styles_updated ) F.show("La liste des styles de paragraphe a été updatée.")
     this.backup
@@ -75,7 +93,7 @@ window.Collection = {
   
   // Noter que ce retour n'est utilisé que lorsqu'on force un backup
   // différent du backup quotidien.
-  retour_backup:function(rajax)
+  retour_force_backup:function(rajax)
   {
     if(rajax.ok) F.show("Backup done!", {keep:true})
     else F.error(rajax.message)
@@ -107,24 +125,31 @@ window.Collection = {
     }
   },
   
-  /*
-   *  Méthode qui dispatche toutes les données +data+ remontées par
-   *  la requête ajax `collection/load'
-   *
-   *  Il s'agit de dispatcher :
-   *    - Les fiches (et d'afficher/ouvrir celles qui doivent l'être)
-   *    - Les préférences de l'application
-   *  
-   *  WARNING
-   *  -------
-   *  Cette méthode ne doit pas être utilisée pour charger seulement une
-   *  portion de la collection en cours de travail, car elle ré-initialise la
-   *  liste des modifications en fin de dispatch (car la création des fiches
-   *  les a marquées modifiées).
-   *  En d'autres termes, si des fiches sont chargées en groupe plus tard, il
-   *  faut passer par FICHES.dispatch (TODO: mais n'est-ce pas le même problème ?
-   *  et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)
-   */
+  /**
+    * Méthode qui dispatche toutes les données +data+ remontées par
+    * la requête ajax `collection/load`.
+    *
+    * Notes
+    * -----
+    *   * Il s'agit de dispatcher :
+    *       * Les fiches (et d'afficher/ouvrir celles qui doivent l'être)
+    *       * Les données de l'application courante (comme le nom de la collection)
+    *       * Les préférences de l'application
+    * 
+    * WARNING
+    * -------
+    * Cette méthode ne doit pas être utilisée pour charger seulement une
+    * portion de la collection en cours de travail, car elle ré-initialise la
+    * liste des modifications en fin de dispatch (car la création des fiches
+    * les a marquées modifiées).
+    * En d'autres termes, si des fiches sont chargées en groupe plus tard, il
+    * faut passer par FICHES.dispatch (TODO: mais n'est-ce pas le même problème ?
+    * et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)
+    *
+    * @method dispatch
+    * @param  {Object} data Toutes les données remontées par ajax.
+    *
+    */
   dispatch:function(data)
   {
     // Dispatch des fiches (le plus gros)
@@ -148,18 +173,30 @@ window.Collection = {
     this.loaded = true
   },
   
-  /*
-   *  Dispatch des autres données remontées au chargement
-   *  
-   */
+  /**
+    * Dispatch les données remontées au chargement (en dehors des données fiches)
+    * 
+    * Notes
+    * -----
+    *   * Il s'agit des données :
+    *     * Le dernier identifiant de fiche utilisé.
+    *     * Le nom de la collection courante
+    *     * La configuration courante (ouverte/visibilité des fiches)
+    *     * Les préférences de l'application.
+    *
+    * @method dispatch_data
+    * @param  {Object} data   La table des données à dispatcher
+    */
   dispatch_data:function(data)
   {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
+    this.name = data.collection_name
+    if(data.preferences) App.preferences = data.preferences
     // Configuration courante (note: le fait de la définir l'applique)
     App.current_configuration = data.current_configuration
   }
   
-}
+})
 
 Object.defineProperties(Collection,{
   
@@ -261,7 +298,8 @@ Object.defineProperties(Collection,{
    */
   "load":{
     get:function(){
-      this.loading = true
+      App.ready     = false
+      this.loading  = true
       stop_save
       F.show("Chargement de la collection…", {timer:false})
       Ajax.send({script:'collection/load'}, $.proxy(this.retour_load, this))
@@ -319,15 +357,38 @@ Object.defineProperties(Collection,{
     }
   },
   
-  /*
-   *  Lance le backup journalier
-   *  
-   *  Cette procédure est lancée tout de suite après le chargement de la
-   *  collection courante (sauf en mode test).
-   *
-   */
+  /**
+    * Lance le backup journalier
+    * Notes
+    * -----
+    *   * Cette procédure est lancée tout de suite après le chargement de la
+    *     collection courante (sauf en mode test).
+    *   * C'est une pseudo-méthode, donc à appeler sans parenthèses.
+    *
+    * @method backup
+    */
   "backup":{
-    get:function(){Ajax.send({script:'collection/backup'})}
+    get:function(){
+      Ajax.send({script:'collection/backup'},$.proxy)
+    }
+  },
+  /**
+    * Retour du backup quotidien
+    * Notes
+    * -----
+    *   * Même si c'est un backup quotidien unique, il est appelé à chaque
+    *     chargement de l'application.
+    *   * En mode normal (non test), c'est cette méthode qui définit que 
+    *     l'application est prête à travailler (`App.ready`)
+    *
+    * @method retour_backup
+    *
+    */
+  "retour_backup":{
+    value:function(rajax){
+      if(rajax.ok) App.ready = true
+      else F.error( rajax.message )
+    }
   },
   /*
    *  Force un nouveau backup (avec l'heure)
@@ -337,7 +398,7 @@ Object.defineProperties(Collection,{
    */
   "force_backup":{
     get:function(){
-      Ajax.send({script:'collection/backup', force_backup:1}, $.proxy(this.retour_backup,this))
+      Ajax.send({script:'collection/backup', force_backup:1}, $.proxy(this.retour_force_backup,this))
     }
   }
   

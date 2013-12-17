@@ -1,0 +1,24 @@
+div#preferences {
+  position  : fixed;
+  width     : 500px;
+  height    : 260px;
+  overflow  : auto;
+  top       : 50px;
+  left      : 300px;
+  padding   : 20px;
+  background-color: white;
+  border    :2px solid #ccc;
+  z-index   : 5000;
+}
+
+div#preferences div.titre {
+  font-size     : 21.0pt;
+  margin-bottom : 11px;
+}
+
+div#preferences div.buttons {
+  position    : absolute;
+  left        : 20px;
+  right       : 20px;
+  bottom      : 13px;
+}

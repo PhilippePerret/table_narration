@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -193,7 +199,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
-  * @module App.js
+  * @module app
   */
 
 /**
@@ -221,20 +227,29 @@ function confirmExit(evt)
   }
   else
   {
-    if(false == App.flashed) App.save_current_configuration(forcer = false)
+    if(false == (App.flashed || MODE_TEST)) App.save_current_configuration(forcer = false)
   }
 }
 window.onbeforeunload = confirmExit
 
 /**
-  *	Objet App, pour la gestion de l&#x27;application
+  *	Pour la gestion de l&#x27;application
   *
   * @class App
   * @static
   *
   */
-window.App = {
+window.App = window.App || {}
+$.extend(window.App, {
 	
+  /**
+    * Indique que l&#x27;application est prête (collection chargée)
+    *
+    * @property ready
+    * @default  false
+    */
+  ready:false,
+  
   /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
     * empêcher d&#x27;en enregistrer un nouveau à la fermeture de la collection.
@@ -247,6 +262,26 @@ window.App = {
     * @default  false
     */
   flashed:false,
+  
+  /**
+    * Préférences de l&#x27;application
+    *
+    * Préférences
+    * -----------
+    *   * snap    Si true, les fiches sont disposées sur la grille
+    *
+    * Notes
+    * -----
+    *   * Cf. l&#x27;objet {Prefs} qui gère ces préférences
+    *
+    * @property preferences
+    * @static
+    * @default Les préférences par défaut
+    */
+  preferences:{
+    snap: true
+  },
+  
   
   /**
     * Enregistre la configuration d&#x27;ouverture (et de rangement) actuelle pour
@@ -349,7 +384,7 @@ window.App = {
     if(rajax.ok) alert(&quot;Tout s&#x27;est bien passé en ajax&quot; +
     &quot;\n\nRuby version: &quot; + rajax.ruby_version)
   }
-}
+})
 
 Object.defineProperties(App,{
   

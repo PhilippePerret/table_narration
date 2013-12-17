@@ -793,13 +793,24 @@ $.extend(Fiche.prototype,{
 })
 
 
-/*
- *  Appelé à la fin du drag d'une fiche
- *  
- */
+/**
+  * Invoquée à la fin du drag d'une fiche, cette méthode enregistre la nouvelle
+  * position de la fiche, la place sur la grille si les préférences l'exigent et
+  * indique que la fiche a été modifiée.
+  *  
+  * Notes
+  * -----
+  *   * C'est la préférence `App.preferences.snap` qui détermine s'il faut placer
+  *     la fiche sur la grille (true par défaut)
+  *
+  * @method stop_drag
+  * @param  {Event} evt DragStopEvent déclenché.
+  * @param  {jQuery.ui} L'objet jQuery ayant déclenché le drag.
+  *
+  */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
-  pos_on_grid = UI.position_on_grid([pos.left, pos.top], evt.metaKey)
+  pos_on_grid = UI.position_on_grid([pos.left, pos.top], App.preferences.snap)
   this.left = pos_on_grid.left
   this.top  = pos_on_grid.top
   this.positionne

@@ -2,6 +2,7 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "App",
+        "App.Prefs",
         "Chapter",
         "ColText",
         "Collection",
@@ -22,7 +23,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "window"
     ],
     "modules": [
-        "App.js",
         "Chapter",
         "ColText",
         "Collection",
@@ -49,8 +49,11 @@ YUI.add("yuidoc-meta", function(Y) {
         "Paragraph",
         "String",
         "UI",
+        "app",
+        "app-prefs",
         "data",
         "dom",
+        "edition.collection.js",
         "fiche_data",
         "fiche_dom",
         "jQueryExtension",
@@ -60,8 +63,13 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "allModules": [
         {
-            "displayName": "App.js",
-            "name": "App.js"
+            "displayName": "app",
+            "name": "app"
+        },
+        {
+            "displayName": "app-prefs",
+            "name": "app-prefs",
+            "description": "Gestion des préférences de l'application."
         },
         {
             "displayName": "Chapter",
@@ -80,12 +88,12 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "ContextualHelp"
         },
         {
-            "displayName": "data",
-            "name": "data"
-        },
-        {
             "displayName": "Data",
             "name": "Data"
+        },
+        {
+            "displayName": "data",
+            "name": "data"
         },
         {
             "displayName": "Debug",
@@ -110,6 +118,10 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Edition",
             "name": "Edition"
+        },
+        {
+            "displayName": "edition.collection.js",
+            "name": "edition.collection.js"
         },
         {
             "displayName": "Fiche",

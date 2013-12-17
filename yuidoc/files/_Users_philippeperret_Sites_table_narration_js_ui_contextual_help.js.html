@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -286,21 +292,28 @@ Object.defineProperties(ContextualHelp, {
   &quot;adapt_with_fiche_active&quot;:{
     get:function(){
       var fi = this.current_fiche, aide = &quot;&quot; ;
-      var ispara = fi.is_paragraph
-      // Construire l&#x27;aide
-                      aide += this.info_current_fiche
-                      aide += this[&#x27;space_&#x27;+(fi.opened ? &#x27;close&#x27;:&#x27;open&#x27;)]
-      if(fi.parent)   aide += this.left_choose_parent
-      if(fi.enfants)  aide += this.right_choose_child
-                      aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
-      if($(fi.div_main_prop_jid).length){
-        aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
-      }
-      else 
-      {
+      var ispara  = fi.is_paragraph
+      var editing = $(fi.div_main_prop_jid).length == 0
+      
+      // === Construire l&#x27;aide ===
+      aide += this.info_current_fiche
+      if(editing){
         aide += this[&#x27;return_save_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
         aide += this.raccourcis_textuels
         if( ispara ) aide += this.shortcut_paragraph
+      }
+      else 
+      {
+        aide += this[&#x27;space_&#x27;+(fi.opened ? &#x27;close&#x27;:&#x27;open&#x27;)]
+        if(fi.parent)   aide += this.left_choose_parent
+        if(fi.enfants)  aide += this.right_choose_child
+        if(fi.parent &amp;&amp; fi.parent.enfants)
+        {
+          aide += this.up_choose_next + this.down_choose_prev +
+                  this.cmd_up_move_up + this.cmd_down_move_down
+        }
+        aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
+        aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
       }
         
       help( aide )
@@ -426,8 +439,12 @@ $.extend(CH, {
   &#x27;raccourcis_textuels&#x27; : CH.del + CH.k_cmd+CH.k_f+&quot; Insert Film&quot;+
                           CH.del + CH.k_cmd+CH.k_m+&quot; Insert Mot&quot;,
   &#x27;shortcut_paragraph&#x27;  : CH.del + CH.k_cmd+CH.k_return+&quot; Nouveau paragraphe&quot;,
-  &#x27;left_choose_parent&#x27;  : CH.del + CH.k_left+&quot; =&gt; Parent&quot;,
-  &#x27;right_choose_child&#x27;  : CH.del + CH.k_right+&quot; =&gt; 1er enfant&quot;,
+  &#x27;left_choose_parent&#x27;  : CH.del + CH.k_left+&quot; Parent&quot;,
+  &#x27;right_choose_child&#x27;  : CH.del + CH.k_right+&quot; 1er enfant&quot;,
+  &#x27;up_choose_next&#x27;      : CH.del + CH.k_up + &quot; Suivant&quot;,
+  &#x27;down_choose_prev&#x27;    : CH.del + CH.k_down + &quot; Précédent&quot;,
+  &#x27;cmd_up_move_up&#x27;      : CH.del + CH.k_cmd+CH.k_up+&quot; Remonte&quot;,
+  &#x27;cmd_down_move_down&#x27;  : CH.del + CH.k_cmd+CH.k_down+&quot; Descend&quot;,
   &#x27;space_open&#x27;          : CH.del + CH.k_space+&quot; Ouvre &quot;,
   &#x27;space_close&#x27;         : CH.del + CH.k_space+&quot; Ferme &quot;,
   &#x27;return_change_titre&#x27; : CH.del + CH.k_return+&quot; Éditer titre&quot;,

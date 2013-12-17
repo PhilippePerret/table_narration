@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -200,7 +206,24 @@
   * @class window
   * @static
   */
-  
+
+/* 
+  * CONSTANTES
+  * ----------
+  */
+
+/**
+  * Indicateur du mode test.
+  *
+  * Notes
+  * -----
+  *   * En réalité, c&#x27;est une pseudo constante puisqu&#x27;elle est défini au chargement
+  *     de la collection, si le fichier &#x60;./mode_test&#x60; a été trouvé.
+  *
+  * @property MODE_TEST
+  * @static
+  */
+window.MODE_TEST = false
 /*
  *  Méthodes pratiques
  *  ------------------

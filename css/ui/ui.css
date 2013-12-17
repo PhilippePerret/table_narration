@@ -62,7 +62,11 @@ label.libelle {
 }
 
 div.buttons {
-  text-align  : right;
+  text-align        : right;
+  background-color  : white;
+}
+.buttons input[type="button"] {
+  font-size: 18px;
 }
 
 img[onclick] { cursor:pointer;}

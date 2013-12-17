@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -233,6 +239,8 @@
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
         
         
     </ul>
@@ -248,7 +256,35 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_backup">backup</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_destroy">destroy</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_disable_save">disable_save</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_dispatch">dispatch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_dispatch_data">dispatch_data</a>
 
                                 
                                 
@@ -261,10 +297,43 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_retour_backup">retour_backup</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
 
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_frequence_saving">frequence_saving</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_name">name</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -275,6 +344,130 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_backup" class="method item">
+    <h3 class="name"><code>backup</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l360"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:360</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Lance le backup journalier</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Cette procédure est lancée tout de suite après le chargement de la
+collection courante (sauf en mode test).</li>
+<li>C&#39;est une pseudo-méthode, donc à appeler sans parenthèses.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_destroy" class="method item">
+    <h3 class="name"><code>destroy</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/edition.collection.js.html">edition.collection.js</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_edition_Collection.js.html#l18"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;edition&#x2F;Collection.js:18</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Destruction de la collection courante</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Par mesure de prudence, il n&#39;est possible de détruire que la collection
+test, pas la &quot;current&quot;.</li>
+<li>L&#39;application est rechargée en fin de processus pour tout ré-initialiser.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_disable_save" class="method item">
@@ -309,7 +502,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l166"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:166</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l203"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:203</code></a>
         
         </p>
 
@@ -335,6 +528,212 @@ où elle est activée (cf. les handy methods)</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatch" class="method item">
+    <h3 class="name"><code>dispatch</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>data</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l128"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:128</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode qui dispatche toutes les données +data+ remontées par
+la requête ajax <code>collection/load</code>.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Il s&#39;agit de dispatcher :<ul>
+<li>Les fiches (et d&#39;afficher/ouvrir celles qui doivent l&#39;être)</li>
+<li>Les données de l&#39;application courante (comme le nom de la collection)</li>
+<li>Les préférences de l&#39;application</li>
+</ul>
+</li>
+</ul>
+<h2 id="warning">WARNING</h2>
+<p>Cette méthode ne doit pas être utilisée pour charger seulement une
+portion de la collection en cours de travail, car elle ré-initialise la
+liste des modifications en fin de dispatch (car la création des fiches
+les a marquées modifiées).
+En d&#39;autres termes, si des fiches sont chargées en groupe plus tard, il
+faut passer par FICHES.dispatch (TODO: mais n&#39;est-ce pas le même problème ?
+et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">data</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Toutes les données remontées par ajax.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatch_data" class="method item">
+    <h3 class="name"><code>dispatch_data</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>data</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l176"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:176</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Dispatch les données remontées au chargement (en dehors des données fiches)</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Il s&#39;agit des données :<ul>
+<li>Le dernier identifiant de fiche utilisé.</li>
+<li>Le nom de la collection courante</li>
+<li>La configuration courante (ouverte/visibilité des fiches)</li>
+<li>Les préférences de l&#39;application.</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">data</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>La table des données à dispatcher</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -375,7 +774,7 @@ où elle est activée (cf. les handy methods)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l190"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:190</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l227"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:227</code></a>
         
         </p>
 
@@ -402,9 +801,173 @@ où elle est activée (cf. les handy methods)</li>
 </div>
 
                 
+                    <div id="method_retour_backup" class="method item">
+    <h3 class="name"><code>retour_backup</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l375"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:375</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retour du backup quotidien</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Même si c&#39;est un backup quotidien unique, il est appelé à chaque
+chargement de l&#39;application.</li>
+<li>En mode normal (non test), c&#39;est cette méthode qui définit que 
+l&#39;application est prête à travailler (<code>App.ready</code>)</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_frequence_saving" class="property item">
+    <h3 class="name"><code>frequence_saving</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l38"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:38</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fréquence de sauvegarde en mode de sauvegarde automatique.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_name" class="property item">
+    <h3 class="name"><code>name</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l29"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:29</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Nom de la collection courante (nom du dossier dans <code>./collection</code>)</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> null</p>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

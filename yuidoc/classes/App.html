@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -202,7 +208,7 @@
 
     
         
-            Module: <a href="../modules/App.js.html">App.js</a>
+            Module: <a href="../modules/app.html">app</a>
         
     
 
@@ -212,7 +218,7 @@
 
 
 <div class="box intro">
-    <p>Objet App, pour la gestion de l&#39;application</p>
+    <p>Pour la gestion de l&#39;application</p>
 
 </div>
 
@@ -282,6 +288,22 @@
                         
                             <li class="index-item property">
                                 <a href="#property_flashed">flashed</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_preferences">preferences</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_ready">ready</a>
 
                                 
                                 
@@ -445,7 +467,7 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l209"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:209</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l238"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:238</code></a>
         
         </p>
 
@@ -519,7 +541,7 @@ doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l57"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:57</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l86"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:86</code></a>
         
         </p>
 
@@ -621,7 +643,7 @@ la replacer au prochain chargement de l&#39;application.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l162"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:162</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l191"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:191</code></a>
         
         </p>
 
@@ -672,7 +694,7 @@ qui sont on_table sur la table.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l44"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:44</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l53"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:53</code></a>
         
         </p>
 
@@ -687,6 +709,110 @@ empêcher d&#39;en enregistrer un nouveau à la fermeture de la collection.
 Noter cependant que de toute façon, il sera impossible d&#39;enregistrer la 
 configuration courante si un fichier de configuration (qui est supprimé à
 chaque chargement) se trouve déjà créé (par un flash).</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_preferences" class="property item">
+    <h3 class="name"><code>preferences</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l66"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:66</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Préférences de l&#39;application</p>
+<h2 id="pr-f-rences">Préférences</h2>
+<ul>
+<li>snap    Si true, les fiches sont disposées sur la grille</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Cf. l&#39;objet {Prefs} qui gère ces préférences</li>
+</ul>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> Les préférences par défaut</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_ready" class="property item">
+    <h3 class="name"><code>ready</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l45"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:45</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Indique que l&#39;application est prête (collection chargée)</p>
 
     </div>
 

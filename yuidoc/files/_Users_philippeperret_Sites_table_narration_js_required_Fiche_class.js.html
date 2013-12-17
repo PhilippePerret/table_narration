@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -783,13 +789,17 @@ Fiche.prototype.on_drop = function(evt, ui)
 $.extend(Fiche.prototype,{
   
   /**
-    * Appelé quand on change l&#x27;ordre des enfants de la fiche
+    * Appelé quand on change l&#x27;ordre des enfants de la fiche, soit par le
+    * sortable du div_items, soit par &#x60;move_up&#x60; ou &#x60;move_down&#x60; d&#x27;un des
+    * enfant.
     *
     * NOTES
     * -----
     *   * Plutôt que de s&#x27;embêter à étudier +ui+ pour savoir quel
     *     élément a été déplacé, on compare la liste du DOM avec la liste des
     *     enfants et on commence à traiter à partir de cet indice.
+    *   * Les deux arguments ne sont pas définis lorsque la méthode est appelée
+    *     depuis &#x60;move_up&#x60; et &#x60;move_down&#x60;.
     *
     * @method onchange_ordre_enfants
     * @param  evt {Event}   UpdateEvent généré par sortable
@@ -798,6 +808,8 @@ $.extend(Fiche.prototype,{
     */
   onchange_ordre_enfants:function(evt, ui)
   {
+    stop_save
+    dlog(&quot;onchange_ordre_enfants sur la fiche &quot;+this.type_id + &quot; : &quot; + this.titre)
     var sorted_id, sorted_ids = 
       L(this.div_items.sortable(&#x27;toArray&#x27;)).
       collect(function(domid){ return parseInt(domid.split(&#x27;-&#x27;)[1],10)})

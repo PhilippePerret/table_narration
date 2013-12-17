@@ -81,6 +81,43 @@ class Collection
       end
     end
     
+    # ---------------------------------------------------------------------
+    #   PRÉFÉRENCES
+    # ---------------------------------------------------------------------
+    
+    # Retourne les préférences ou null si le fichier PREFERENCES.msh n'existe pas
+    # 
+    def preferences
+      @preferences ||= begin
+        if File.exists? path_preferences
+          Marshal.load(File.read path_preferences)
+        else
+          nil
+        end
+      end
+    end
+    
+    # Enregistre les préférences
+    # 
+    # @param  preferences   {Hash} contenant les préférences de l'application
+    # 
+    def save_preferences preferences
+      File.unlink path_preferences if File.exists? path_preferences
+      File.open(path_preferences, 'wb'){ |f| f.write Marshal.dump(preferences) }
+      @preferences = preferences
+    end
+    
+    # Path au fichier préférence
+    # 
+    # Noter que ce fichier concerne toutes les collections
+    # 
+    def path_preferences
+      @path_preferences ||= File.join('.', 'collection', 'PREFERENCES.msh')
+    end
+    # ---------------------------------------------------------------------
+    #   CONFIGURATION COURANTE
+    # ---------------------------------------------------------------------
+    
     # Retourne les données de configuration courante ou null si
     # le fichier CURRENT_CONFIG.conf n'existe pas
     # 
@@ -128,8 +165,13 @@ class Collection
       @folder_backups ||= (getfolder File.join('.', 'collection', 'backup'))
     end
 
+    # Le nom de la collection courante
+    def name
+      @name ||= (mode_test? ? 'test' : 'current')
+    end
+    
     def folder
-      @folder ||= File.join('.', 'collection', mode_test? ? 'test' : 'current')
+      @folder ||= File.join('.', 'collection', name)
     end
     
     def getfolder path

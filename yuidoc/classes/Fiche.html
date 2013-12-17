@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
             
                 <li><a href="../classes/Collection.html">Collection</a></li>
@@ -83,7 +85,9 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/App.js.html">App.js</a></li>
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -93,9 +97,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/data.html">data</a></li>
-            
                 <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../modules/dom.html">dom</a></li>
             
                 <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
             
                 <li><a href="../modules/Fiche.html">Fiche</a></li>
             
@@ -435,7 +441,7 @@ cf. la méthode &quot;add_enfant&quot;.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l639"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:639</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l645"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:645</code></a>
         
         </p>
 
@@ -539,7 +545,7 @@ d&#39;enfant.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l543"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:543</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l553"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:553</code></a>
         
         </p>
 
@@ -610,7 +616,7 @@ d&#39;enfant.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l492"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:492</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l502"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:502</code></a>
         
         </p>
 
@@ -680,7 +686,7 @@ de saisie.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l119"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:119</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l124"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:124</code></a>
         
         </p>
 
@@ -945,12 +951,16 @@ lorsque les déplacements sembleront terminés.</li>
     </div>
 
     <div class="description">
-        <p>Appelé quand on change l&#39;ordre des enfants de la fiche</p>
+        <p>Appelé quand on change l&#39;ordre des enfants de la fiche, soit par le
+sortable du div_items, soit par <code>move_up</code> ou <code>move_down</code> d&#39;un des
+enfant.</p>
 <h2 id="notes">NOTES</h2>
 <ul>
 <li>Plutôt que de s&#39;embêter à étudier +ui+ pour savoir quel
 élément a été déplacé, on compare la liste du DOM avec la liste des
 enfants et on commence à traiter à partir de cet indice.</li>
+<li>Les deux arguments ne sont pas définis lorsque la méthode est appelée
+depuis <code>move_up</code> et <code>move_down</code>.</li>
 </ul>
 
     </div>
@@ -1049,7 +1059,7 @@ enfants et on commence à traiter à partir de cet indice.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l752"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:752</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l758"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:758</code></a>
         
         </p>
 
@@ -1162,7 +1172,7 @@ une difficulté à la définition des fiches remontées.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l715"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:715</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l721"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:721</code></a>
         
         </p>
 
@@ -1385,7 +1395,7 @@ une difficulté à la définition des fiches remontées.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l353"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:353</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l363"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:363</code></a>
         
         </p>
 

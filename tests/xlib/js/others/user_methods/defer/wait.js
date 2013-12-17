@@ -189,9 +189,11 @@ window.Wait = {
     // console.log(this.fin_ok.callee)
     if(false == this.suite.onresultat(true))
     {
-  		if('function' == typeof this.options.success) this.options.success(true)
-      else if (undefined != this.options.success_message) w(this.options.success_message, GREEN+" SFP")
-      // console.log("---> Wait.fin_ok (appel de stop_check)")
+      if(this.options)
+      {
+    		if('function' == typeof this.options.success) this.options.success(true)
+        else if (undefined != this.options.success_message) w(this.options.success_message, GREEN+" SFP")
+      }
   		this.stop_check( true )
     } 
     else

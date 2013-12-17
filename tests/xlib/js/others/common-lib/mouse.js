@@ -53,13 +53,13 @@ Object.defineProperties(FakedMouseEvent.prototype, {
         // ev.target = this.domObj
         // ev.originalTarget = this.domObj
         // ev.explicitOriginalTarget = this.domObj
-        if(console)
-        {
-          console.log("EVENT dispatché :")
-          console.dir(ev)
-          console.log("Dispatché sur :")
-          console.dir(this.domObj)
-        }
+        // if(console)
+        // {
+        //   console.log("EVENT dispatché :")
+        //   console.dir(ev)
+        //   console.log("Dispatché sur :")
+        //   console.dir(this.domObj)
+        // }
   			this.domObj.dispatchEvent(ev)
       }
       else
