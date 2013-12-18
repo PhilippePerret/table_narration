@@ -219,28 +219,53 @@ window.Mouse = {
     return data
   },
   
-  /*
-   *  Simule un click sur l'objet +obj+
-   *  
-   *  @param  obj   Un objet jQuery ou Natif
-   */
-  click:function(obj)
+  // /*
+  //  *  Simule un click sur l'objet +obj+
+  //  *  
+  //  *  @param  obj   Un objet jQuery ou Natif
+  //  */
+  // click:function(obj)
+  // {
+  //   this.fireFakedEvent({domObj: obj, type:'click'})
+  // },
+  // 
+  /**
+    * Simule un click sur l'objet +obj+ avec les données +data+
+    *
+    * Notes
+    * -----
+    *   * À la différence d'un click() normal ou jQuery, cette méthode
+    *     permet de définir des modifiers (CTRL, CMD etc.)
+    *
+    * @method click
+    * @param  {HTMLElement|jQuerySet} Objet cible du click
+    * @param  {Object} data Données à utiliser pour le click (modifiers, etc.)
+    *
+    */
+  click:function(obj, data)
   {
-    this.fireFakedEvent({domObj: obj, type:'click'})
+    data = $.extend(data || {}, {domObj: obj, type:'click'})
+    this.fireFakedEvent(data)
   },
-  
-  // Simule un click dans drag sur l'objet +obj+ avec les données +data+
-  // 
-  // @param   obj     L'objet DOM (natif ou jQuery)
-  // @param   data    Les données du déplacement (cf. la méthode `move_on' ci-dessous)
-  // 
-  // @produit Le déplacement de l'objet (s'il est draggable)
-  // 
-  press_and_drag:function(obj, data){
+  /**
+    * Simule un click and drag sur l'objet +obj+ avec les données +data+
+    *
+    * @method   click_and_drag
+    * @param   {HTMLElement|jQuerySet} obj     L'objet DOM cible du click and drag
+    * @param   {Object} data    Les données du déplacement (cf. la méthode `move_on' ci-dessous)
+    */
+  click_and_drag:function(obj, data){
     this.down_on(obj)
     this.move_on(obj, data)
-    this.up_on(obj)
+    if(!data.no_mouse_up)this.up_on(obj)
   },
+  /**
+    * Alias de `click_and_drag`
+    * @method press_and_drag
+    * @param  {HTMLElement|jQuerySet} obj Objet cible du click and drag
+    * @data   {Object} Données pour le click and drag
+    */
+  press_and_drag:function(obj,data){this.click_and_drag(obj,data)},
   // Génère un mousedown sur l'objet +obj+ avec les options éventuelles
   // @param   obj   Un objet DOM (natif ou jQuery)
   down_on:function(obj, options){

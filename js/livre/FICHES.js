@@ -212,13 +212,18 @@ window.FICHES = {
   save:function(poursuivre)
   {
     this.saving = true
+    F.show("Sauvegarde des fiches ("+Collection.modifieds_list.length+" fiches à sauver)", {keep:true})
     this.poursuivre_save = poursuivre
     var fiches = []
     for(var i in Collection.modifieds_list)
     {
       fiches.push(Collection.modifieds_list[i].data)
     }
-    Ajax.send({script:'fiche/save', fiches:fiches}, $.proxy(this.retour_save,this))
+    if(fiches.length)
+    {
+      Ajax.send({script:'fiche/save', fiches:fiches}, $.proxy(this.retour_save,this))
+    }
+    else this.retour_save({ok:true})
   },
   retour_save:function(rajax)
   {

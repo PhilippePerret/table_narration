@@ -28,6 +28,11 @@ window.LOCALES = {
 	'should not stand'			: " should not stand ",
 	'it stands in'					: "it stands in ",
 
+  'be in'                 : " is in ",
+  'should be in'          : " should be in ",
+  'does not be in'        : " isn't in ",
+  'should not be in'      : " should not be in ",
+  
 	'is' 					 					: " is ",
 	'is not' 					 			: " is not ",
 	'should be'		 					: " should be ",

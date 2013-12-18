@@ -37,6 +37,14 @@ function create_page(data) {
 }
 
 /**
+  * Simule le click sur le bouton "auto save" (intégration)
+  * @method presse_bouton_auto_save
+  */
+function presse_bouton_auto_save()
+{
+  jq('label[for="cb_automatic_save"]').click
+}
+/**
   * Donne un type de fiche ('book', 'chap', 'page', 'para'), une fiche
   * sur la table et retourne l'objet {to_x, to_y} des to_x/to_y qu'il
   * faut appliquer à l'objet outil du type donné, dans un press_and_drag,

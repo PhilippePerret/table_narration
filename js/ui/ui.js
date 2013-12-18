@@ -117,6 +117,15 @@ $.extend(UI, {
     this.ondrop_on_table(evt, ui)
   },
   /**
+    * Méthode appelée lorsque l'on glisse un outil sur la table (principalement
+    * pour créer une nouvelle fiche).
+    * 
+    * Notes
+    * -----
+    *   * Les deux utilisations principales sont :
+    *     * La création d'une nouvelle fiche (à l'aide d'un outil-fiche)
+    *     * La sortie d'une fiche d'un de ses parents.
+    *
     * @method ondrop_on_table
     * @param  {Event}   evt   Drop event
     * @param  {Object}  ui    Set jQuery transmis par droppable.
@@ -140,6 +149,7 @@ $.extend(UI, {
     })
     ifiche.positionne
     if(ifiche.is_not_paragraph) ifiche.open
+    ifiche.modified = true
     dlog("<- UI.ondrop_on_table", DB_FCT_ENTER)
   }
   

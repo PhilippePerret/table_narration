@@ -127,21 +127,7 @@ $.extend(Collection, {
     this.modifieds_list.push( fiche )
     this.modified = true
   },
-  
-  check_if_needs_save:function()
-  {
-    // console.log("---> Collection.check_if_needs_save (modified:"+this.modified+")")
-    if(this.modified === true)
-    {
-      this.save
-      return true
-    } 
-    else
-    {
-      return false
-    }
-  },
-  
+      
   /**
     * Méthode qui dispatche toutes les données +data+ remontées par
     * la requête ajax `collection/load`.
@@ -272,7 +258,7 @@ Object.defineProperties(Collection,{
     get:function(){
       if(this.timer_save || $('input#cb_automatic_save')[0].checked==false) return
       this.timer_save = setInterval(
-        $.proxy(this.check_if_needs_save, this), this.frequence_saving
+        $.proxy(this.save, this), this.frequence_saving
       )
     }
   },
@@ -292,7 +278,7 @@ Object.defineProperties(Collection,{
    *
    *  NOTES
    *  -----
-   *    :: La méthode `save' est appelée dès qu'on active le bouton
+   *    :: La méthode `save` est appelée dès qu'on active le bouton
    *  
    */
   "enable_automatic_saving":{
@@ -300,7 +286,7 @@ Object.defineProperties(Collection,{
       this.AUTOMATIC_SAVING = oui
       if(oui){ 
         this.start_automatic_saving
-        if(this.loaded) this.save
+        if(this.loaded) this.save()
       }
       else if(this.timer_save){ 
         this.stop_automatic_saving
@@ -324,6 +310,28 @@ Object.defineProperties(Collection,{
     
   },
   
+  /**
+    * Retourne FALSE si quelque chose doit être sauvé (fiches, etc.)
+    *
+    * Notes
+    * -----
+    *   * La méthode est appelée par Collection.save()
+    *
+    * @method nothing_to_save (sans parenthèses)
+    * @return FALSE si des choses sont à enregistrer, TRUE dans le cas contraire.
+    */
+  "nothing_to_save":{
+    get:function(){
+      if(this.modified === true)
+      {
+        return false
+      }
+      else
+      {
+        return true
+      }
+    }
+  },
   
   /**
     * Sauvegarde de tous les éléments de la collection
@@ -333,28 +341,31 @@ Object.defineProperties(Collection,{
     * -----
     *   * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste
     *     this.modifieds_list (sous forme d'instances)
-    *   * C'est la méthode `check_if_needs_save' qui est appelée en premier
-    *     lieu pour voir si un enregistrement est nécessaire (c'est un peu bête,
-    *     mais c'est juste parce que j'ai utilisé une propriété, ici.)
+    *   * C'est la méthode `nothing_to_save` qui est appelée en premier
+    *     lieu pour voir si un enregistrement est nécessaire.
     *   * La méthode lance une "chaine de sauvegarde" appelant `save_fiches`,
     *     `save_config`, etc. jusqu'à `save_end`
     *
-    * @method save (complexe)
-    *
+    * @method save
+    * @async
+    * @return TRUE si quelque chose est en train d'être sauvé. FALSE dans le
+    *         cas contraire.
     */
   "save":{
-    get:function(){
+    value:function(){
+      if(this.nothing_to_save) return false
+      this.saving = true
       dlog("Sauvegarde de la collection", DB_SIMPLE)
       F.show("Sauvegarde en cours…", {no_timer:true})
-      this.saving = true
       this.save_fiches
+      return true
     }
   },
   /* Sauvegarde des fiches */
   "save_fiches":{
     get:function(){
       // console.log("---> Collection.save_fiches")
-      FICHES.save( $.proxy(this.save_config, this ))
+      FICHES.save( $.proxy(this.save_config, this ) )
     }
   },
   /**
@@ -371,6 +382,7 @@ Object.defineProperties(Collection,{
         App.save_current_configuration.poursuivre = $.proxy(this.end_save, this )
         App.save_current_configuration(forcer = true)
       }
+      else this.end_save()
     }
   },
   /**

@@ -1,9 +1,12 @@
-/*
- *  Class TStep
- *  -----------
- *  Classe pour les étapes (utilisé par TScript)
- *
- */
+/**
+  * @module TStep
+  */
+/**
+  * Classe pour les étapes (utilisé par TScript)
+  *
+  * @class TStep
+  *
+  */
 // Instanciation
 window.TStep = function(data){
   this.class      = 'TStep'

@@ -1,20 +1,31 @@
 /**
   * @module KeyboardEvents
+  * @class window
   */
 
+/**
+  * Méthode de débuggage pour afficher les données simples de l'évènement
+  *
+  * @method dispay_code_event
+  * @param  {Event} Evènement déclenché
+  * @return TRUE
+  */
 window.dispay_code_event = function(evt)
 {
   console.dir({charCode:evt.charCode, keyCode:evt.keyCode, which:evt.which})
   return true
 }
-/*
- *  Gestion des touches pressées quand aucune fiche n'est sélectionnée
- *  
- *  NOTES
- *  -----
- *  * C'est la méthode par défaut
- *
- */
+/**
+  * Gestion des touches pressées quand aucune fiche n'est sélectionnée
+  * 
+  * Notes
+  * -----
+  *   * C'est la méthode par défaut
+  *
+  * @method keypress_when_no_selection_no_edition
+  * @param  {KeypressEvent} Evènement touche-pressée déclenché.
+  * @return {Boolean} FALSE si l'évènement doit être stoppé, TRUE dans le cas contraire.
+  */
 window.keypress_when_no_selection_no_edition = function(evt)
 {
   // var idm = "keypress_when_no_selection_no_edition"
@@ -48,11 +59,14 @@ window.keypress_when_no_selection_no_edition = function(evt)
   // dlog("<- "+idm, DB_FCT_ENTER)
   return true
 }
-/*
- *  Gestion des touches pressées quand une fiche est sélectionnée,
- *  mais que l'on ne se trouve pas dans un champ d'édition.
- *  
- */
+/**
+  * Gestion des touches pressées quand une fiche est sélectionnée,
+  * mais que l'on ne se trouve pas dans un champ d'édition.
+  *
+  * @method keypress_when_fiche_selected_out_textfield
+  * @param  {KeypressEvent} evt Évènement touche-pressée déclenchée
+  * @return {Boolean} True si l'évènement doit se poursuivre, False dans le cas contraire.
+  */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
   // var idm = "keypress_when_fiche_selected_out_textfield"
@@ -123,5 +137,5 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   // dlog("<- "+idm, DB_FCT_ENTER)
 }
 
-/* Méthode par défaut */
+/* Application de la méthode par défaut */
 window.onkeypress = keypress_when_no_selection_no_edition

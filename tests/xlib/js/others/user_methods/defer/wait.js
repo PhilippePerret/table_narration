@@ -80,7 +80,7 @@ window.Wait = {
     //     if(undefined != message) this.options = {message:message}
     // this.traite_options(options);
 		var s = nombre_secondes > 1 ? "s" : ""
-    if(nombre_secondes > 0)
+    if(nombre_secondes > 0 && message != '')
     {
       w((message || LOCALES.messages['wait for']+nombre_secondes+LOCALES['second']+s)+"…",SYSTEM);
     }

@@ -1,3 +1,13 @@
+const NOTICE  = 'NOTICE'
+const WARNING = 'WARNING'
+const SYSTEM  = 'SYSTEM'
+const GREEN   = 'GREEN'
+const BLUE    = 'BLUE'
+const RED     = 'RED'
+const ORANGE  = 'ORANGE'
+const WHITE   = 'WHITE'
+
+
 /*
  *	Sous objet Test.Messages
  *	------------------------
@@ -32,6 +42,14 @@ window.Test.Messages = {
   // Écriture d'un "message bleu" dans le rapport
 	blue:function(message){
 	  w("\n"+message, BLUE)
+	},
+  // Écriture d'un "message vert" dans le rapport
+	green:function(message){
+	  w("\n"+message, GREEN)
+	},
+  // Écriture d'un "message orange" dans le rapport
+	orange:function(message){
+	  w("\n"+message, ORANGE)
 	},
   
 	// Construit le message de résultat du test en fonction de :
@@ -152,3 +170,5 @@ window.Test.Messages = {
 }
 window.specs      = Test.Messages.specs
 window.blue       = Test.Messages.blue
+window.green      = Test.Messages.green
+window.faire      = Test.Messages.orange

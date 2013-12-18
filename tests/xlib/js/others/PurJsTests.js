@@ -1,12 +1,12 @@
-const NOTICE  = 'NOTICE'
-const WARNING = 'WARNING'
-const SYSTEM  = 'SYSTEM'
-const GREEN   = 'GREEN'
-const BLUE    = 'BLUE'
-const RED     = 'RED'
-const ORANGE  = 'ORANGE'
-const WHITE   = 'WHITE'
-
+// const NOTICE  = 'NOTICE'
+// const WARNING = 'WARNING'
+// const SYSTEM  = 'SYSTEM'
+// const GREEN   = 'GREEN'
+// const BLUE    = 'BLUE'
+// const RED     = 'RED'
+// const ORANGE  = 'ORANGE'
+// const WHITE   = 'WHITE'
+// 
 window.Test = {
   failure_list  :null,        // Liste des échecs
   verbose         :false,     // Si FALSE, des astéristiques, sinon le

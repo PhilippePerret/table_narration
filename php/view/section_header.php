@@ -6,7 +6,7 @@
   // -- Marque de sauvegarde de la collection --
   ?>
   <div id="mark_saved" class="fleft">
-    <span id="mark_saved_no" style="display:none;" onclick="Collection.save">🔴</span>
+    <span id="mark_saved_no" style="display:none;" onclick="$.proxy(Collection.save, Collection)()">🔴</span>
     <span id="mark_saved_yes">🔵</span>
     <span id="mark_saved_forbidden" style="display:none;font-size:1.3em;">⛔</span>
     <!-- CB d'enregistrement automatique -->

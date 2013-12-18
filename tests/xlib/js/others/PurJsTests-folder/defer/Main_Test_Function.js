@@ -1,3 +1,12 @@
+/**
+  * @module Main_Test_Function
+  */
+/**
+  * Classe pour la fonction principale de test
+  *
+  * @class Function
+  *
+  */
 /*
  *  Propriétés définies (defineProperties) pour la fonction principale d'un test
  *  (propriété `fonction' — avec un "o" — du test)
@@ -335,18 +344,29 @@ _PropertiesMainTestFunction = {
     }
   },
   
-  // Écrit le STOP POINT dans le rapport et le retourne
-  // 
-  // @noter que c'est cette méthode qui doit être appelée par la fonction (l'étape)
-  // pour connaitre le stop point courant.
+  /**
+    * Écrit le STOP POINT dans le rapport et le retourne
+    *
+    * Notes
+    * -----
+    *   * C'est cette méthode qui doit être appelée par la fonction (l'étape)
+    *     pour connaitre le stop point courant.
+    *
+    * Options
+    * -------
+    *   * Si <function>.NO_MARK_STOP_POINT est true, la méthode n'écrit pas
+    *     le stop point en retour console. Définir en début de fonction ou
+    *     à l'endroit où ça doit être utile :
+    *         my.NO_MARK_STOP_POINT = true/false
+    *
+    * @method stop_point (sans parenthèses)
+    *
+    */
   "stop_point":{
     get:function(){
       if(!this.script.stop_point) this.script.stop_point = 1
-      this.mark_stop_point(this.script.stop_point)
+      if(this.NO_MARK_STOP_POINT != true) this.mark_stop_point(this.script.stop_point)
       return this.script.stop_point
-      // --- Remettre le code ci-dessous s'il ne faut pas redéfinir le stop point ---
-      // this.mark_stop_point(this.script.stop_point || 1)
-      // return this.script.stop_point || 1
     }
   },
   // Return TRUE si c'est la dernière étape

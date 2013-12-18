@@ -270,10 +270,44 @@ Object.defineProperties(_jq.prototype,{
 		get:function(){
 			// this.obj.click() // Pour le moment, comme un objet jQuery
 			if(this.not_exists) return false
-			this.obj[0].click()
+      this.obj[0].click()
 			return true
 		}
 	},
+  /**
+    * Simule un click sur l'objet avec les données +data+
+    *
+    * Notes
+    * -----
+    *   * Cf. `Mouse.click` pour le détail des données qu'on peut transmettre.
+    *
+    * @method click_with
+    * @param  {Object} data Les données à transmettre au Mouse.click, par exemple
+    *                       les modifiers
+    *
+    */
+  "click_with":{
+    value:function(data){
+      if(this.not_exists) return false
+      Mouse.click(this.obj, data)
+    }
+  },
+  /**
+    * Simule une touche pressée sur l'élément DOM
+    *
+    * Notes
+    * -----
+    *   * Pour ne fournir que la touche à presser, il faut qu'elle soit définie
+    *     par un charCode. Dans le cas contraire, il est obligatoire de passer par
+    *     {key_code:<valeur keyCode>}
+    *
+    * @method press
+    * @param  {Object|Number} data Soit un objet comme l'attend l'objet Keyboard
+    *                         soit simplement la touche à presser (charCode).
+    */
+  "press":{
+    value:function(data){Keyboard.press(data)}
+  },
   // Définit le contenu de l'objet (et provoque un onchange)
 	"content":{
 		get:function(){return this._content},
@@ -388,6 +422,8 @@ var HumanPropertiesJQIs = {
       return res
 		}
 	},
+  // Alias de `contained_by'
+  "in":{value:function(foo){return this.contained_by(foo)}},
 	"contained_by"	:{
 		value:function(foo){
 			var res = this.positif == (this.parent.obj.parent()[0] == _obJOf(foo)[0])
@@ -645,6 +681,20 @@ const HumanProperties_JQ_Should_Be = {
       }
     }
   },
+  // Alias de `contained_by'
+  "in":{value:function(foo){return this.contained_by(foo)}},
+	"contained_by"	:{
+		value:function(foo){
+      return _estime(this.is.contained_by(foo), data_estimation_jq(this,{
+				test:'be.in',
+				result:{
+					positif:{success:LOCALES['be in'], failure:LOCALES['should be in']},
+					negatif:{success:LOCALES['does not be in'], failure:LOCALES['should not be in']}
+				},
+				expected:"`"+_jqOf(foo).jid+"`"
+      }))
+		}
+	},
 	"after"   :{
 		value:function(before){
 			return _estime(this.is.after(before), data_estimation_jq(this, {

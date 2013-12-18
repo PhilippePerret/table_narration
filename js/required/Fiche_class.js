@@ -85,9 +85,12 @@ Object.defineProperties(Fiche.prototype, {
    *      PROPRIÉTÉS D'ÉTAT
    --------------------------------------------------------------------- */
   "modified":{
-    set:function(val){ 
-      this._modified      = val;
-      if(val) Collection.add_modified( this ) ;
+    set:function(val){
+      if(val && !this._modified)
+      {
+        this._modified      = val;
+        if(val) Collection.add_modified( this ) ;
+      }
     },
     get:function(){return this._modified || false }
   },
@@ -273,6 +276,7 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.droppable({
           hoverClass  :'dropped',
           tolerance   : 'pointer',
+          greedy      : true, // pour empêcher de se propager à la table
           accept      : function(drags){
             // Pour empêcher la propagation
             if(drags.attr('drg_time'))
