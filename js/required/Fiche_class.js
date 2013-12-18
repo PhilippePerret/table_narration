@@ -88,9 +88,9 @@ Object.defineProperties(Fiche.prototype, {
     set:function(val){
       if(val && !this._modified)
       {
-        this._modified      = val;
         if(val) Collection.add_modified( this ) ;
       }
+      this._modified = val
     },
     get:function(){return this._modified || false }
   },
@@ -796,7 +796,7 @@ $.extend(Fiche.prototype,{
   onchange_titre_or_texte:function(evt)
   {
     var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
-    dlog("---> "+idm, DB_FCT_ENTER)
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val().trim()
     if(new_value == "") return F.error(LOCALE.fiche.error['no empty text'])

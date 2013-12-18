@@ -289,7 +289,7 @@ function CreationCollection_Premiers_tests()
     my.wait.while(function(){return APP.Collection.saving == true}).and(NEXT_POINT)
     break
   case 9:
-    'Collection.modifieds_list'.should.be.empty
+    'Collection.modifieds_list'.should.be.undefined
     file('./collection/test/fiche/book/0.msh').should.exist.and(NEXT_POINT)
     break
   case 10:
@@ -298,12 +298,13 @@ function CreationCollection_Premiers_tests()
   case 11:
     file('./collection/test/fiche/chap/2.msh').should.exist.and(NEXT_POINT)
     break
-  case 12:
+  case 16:
     // Garder pour la fin
+    w("Je passe par 16")
     my.wait.for(0)
     break
-    
-    
+  default:
+    my.wait.for(0)
   }
   
   

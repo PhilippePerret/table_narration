@@ -128,13 +128,6 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = 'open'     ; break
   case Key_f:   cplx_meth = 'close'    ; break
   case Key_d:   cplx_meth = 'deselect' ; break
-  case Key_s:
-    if(evt.metaKey)
-    {
-      Collection.save()
-      return stop_event()
-    }
-    break
   }
   if(cplx_meth)
   {
@@ -172,7 +165,7 @@ window.keypress_default = function(evt)
     if(evt.metaKey)
     {
       Collection.save()
-      return stop_event()
+      return stop_event(evt)
     }
     break
   }
