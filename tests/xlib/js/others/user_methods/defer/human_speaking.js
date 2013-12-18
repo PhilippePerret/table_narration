@@ -30,22 +30,6 @@
 var _default_before_result_equality
 
 /*
- *  Retourn un DOM jQuery Objet dans l'application
- *  
- *  @param  jid   Un 'jQuery ID' conforme (sélecteur tag#id ou tag.class etc.)
- *
- *  @return L'objet jQuery correspond.
- */
-function get_obj_in_app(jid) 
-{
-  with(APP)
-  {
-    return $(jid)
-  }
-}
-
-
-/*
  * Évaluation de l'expression dans l'application
  */
 function eval_in_app( code ) 

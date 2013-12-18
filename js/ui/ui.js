@@ -129,8 +129,8 @@ $.extend(UI, {
     
     // Déterminer la position approximative du drop sur la table
     var pos_table = $('section#table').position()
-    var x = evt.clientX - pos_table.left  // | Pas tout à fait exact mais
-    var y = evt.clientY - pos_table.top   // | ça n'importe pas trop
+    var x = evt.clientX //- pos_table.left  // | Pas tout à fait exact mais
+    var y = evt.clientY //- pos_table.top   // | ça n'importe pas trop
     
     // On crée la fiche
     var ifiche = FICHES.full_create({

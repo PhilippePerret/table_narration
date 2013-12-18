@@ -60,10 +60,9 @@ CardTool.prototype.on_mousedown = function(evt)
  *  Reçoit l'évènement dragstop
  *  
  */
-CardTool.prototype.on_stopdrag = function(evt)
-{
-  console.log("Stop-drag de l'outil #"+this.id)
-}
+// CardTool.prototype.on_stopdrag = function(evt)
+// {
+// }
 /*
  *  Reçoit le mouseup sur l'outil (inusité pour le moment)
  *  
@@ -106,7 +105,8 @@ Object.defineProperties(CardTool.prototype,{
         cursor    : 'move',
         zIndex    : 1000,
         helper    : "clone",
-        stop      : $.proxy(this.on_stopdrag, this)
+        // stop      : $.proxy(this.on_stopdrag, this),
+        // drag      : function(evt, ui){F.show('left:'+ui.position.left+'/top:'+ui.position.top)}
       })
     }
   },

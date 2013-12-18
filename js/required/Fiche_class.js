@@ -276,7 +276,8 @@ Object.defineProperties(Fiche.prototype, {
           greedy      : true, // pour empêcher la table de prendre le drop
           accept      : '.fiche.'+accepted_child+
                         ', .card_tool[data-type="'+accepted_child+'"]',
-          drop        :$.proxy(this.on_drop, this)
+          drop        :$.proxy(this.on_drop, this),
+          over        :function(evt,ui){return stop_event(evt)}
         })
       }
       dlog("<- " + idm, DB_FCT_ENTER)
@@ -534,7 +535,7 @@ Object.defineProperties(Fiche.prototype, {
 })
 
 /**
-  * Appelé quand on droppe un enfant sur la fiche courante
+  * Appelé quand on relâche un enfant sur la fiche courante
   *  
   * @method on_drop
   * @param   {Event} evt   L'évènement drop
@@ -546,6 +547,7 @@ Object.defineProperties(Fiche.prototype, {
   */
 Fiche.prototype.on_drop = function(evt, ui)
 {
+  stop_event(evt)
   var idm = "Fiche::on_drop ["+this.type_id+"]"
   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT )
   UI.drop_on_fiche = true
@@ -714,6 +716,7 @@ $.extend(Fiche.prototype,{
   
     this.modified   = true
     enfant.ranged   = true
+    enfant.obj.addClass('ranged')
     enfant.modified = true
     
   },
@@ -810,9 +813,12 @@ $.extend(Fiche.prototype,{
   */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
+  dlog("-> Fiche::stop_drag", DB_FCT_ENTER | DB_CURRENT)
+  dlog("App.preferences.snap:"+App.preferences.snap)
   pos_on_grid = UI.position_on_grid([pos.left, pos.top], App.preferences.snap)
   this.left = pos_on_grid.left
   this.top  = pos_on_grid.top
   this.positionne
   this.modified = true
+  // return stop_event(evt) // Car ça interromprait la procédure
 }

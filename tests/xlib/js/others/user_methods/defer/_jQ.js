@@ -70,7 +70,7 @@ APP.jq = jq
 window._jq = function(jid){
 	// console.log("---> instanciation de "+jid)
   this.jid 			= jid
-	this.obj			= null		// L'énumérateur jQuery
+  // this.obj      = null    // L'énumérateur jQuery
 	this.obj_dom	= null		// Véritable objet DOM
   this._get_obj()
 	
@@ -147,9 +147,9 @@ Object.defineProperties(_jq.prototype, {
 
 // Récupérer l'objet DOM dans l'application testée (méthode interne seulement)
 _jq.prototype._get_obj = function(){
-  var obj = get_obj_in_app(this.jid)
+  this.obj = get_obj_in_app(this.jid)
   // console.log("this.jid:"+this.jid + " / obj est défini ? " + (undefined != obj))
-	this.obj_dom 	= obj ? obj[0] : null
+	this.obj_dom 	= this.obj ? this.obj[0] : null
 }
 
 // -------------------------------------------------------------------
@@ -237,6 +237,17 @@ window.data_estimation_jq = function(obj, data){
  */
 Object.defineProperties(_jq.prototype,{
 	
+  /*
+   *  Retourne l'objet DOM ou le définit
+   *  
+   */
+  "obj":{
+    get:function(){
+      if(!this._obj) this._obj = this._get_obj()
+      return this._obj
+    },
+    set:function(obj){this._obj = obj}
+  },
 	// --- Méthodes utilitaires ---
   // Reset <jq>
   // ----------
@@ -302,7 +313,18 @@ Object.defineProperties(_jq.prototype,{
     get:function(){this.mode='set';return this}
   },
 	// --- Méthodes d'interrogation ---
-	"exists":{ get:function(){return this.obj.length > 0}},
+	"exists":{ get:function()
+    {
+      try{
+        return this.obj.length > 0
+      } catch (err) {
+        console.log("ERREUR DANS exists : "+err+"\nthis est égal à :")
+        console.dir(this)
+        console.log("/this")
+        return false
+      }    
+    }
+  },
 	"not_exists":{ get:function(){return false == this.exists}},
 
 })

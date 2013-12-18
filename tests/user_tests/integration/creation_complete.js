@@ -29,6 +29,20 @@ function integration_creation_complete()
   }
 }
 
+/**
+  * Méthode partique pour récupérer la position de la table dans la page
+  *
+  */
+function position_table()
+{
+  if(!this.position_table.pos)
+  {
+    var pos_table ;
+    with(APP){ pos_table = $('section#table').position() }
+    this.position_table.pos = pos_table
+  }
+  return this.position_table.pos
+}
 
 /**
   * Premiers tests de la collection
@@ -56,13 +70,13 @@ function CreationCollection_Premiers_tests()
      *  
      */
     w("Je simule un déplacement de l'outil livre")
-    var pos_table ;
-    with(APP){ pos_table = $('section#table').position() }
-    my.pos_table = pos_table
+    my.pos_table = position_table()
     var booktool = jq('div#card_tool-book')
+    dest_pos = offset_tool(200, 100, 'book')
+    w("destination pos : x:"+dest_pos.left+" y:"+dest_pos.top)
     booktool.press_and_drag({
-      to_x: my.pos_table.left  + 200,
-      to_y: my.pos_table.top   + 100
+      to_x: dest_pos.left,
+      to_y: dest_pos.top
     })
     // On attend un tout petit peu que le livre soit construit
     my.wait.for(0.5).and(NEXT_POINT)
@@ -74,17 +88,61 @@ function CreationCollection_Premiers_tests()
     'FICHES.list[0]'.should.be.an_instanceof(APP.Book)
     APP.book = APP.FICHES.list[0]
     'book.id'.should = 0
+    'book.jid'.should = "fiche#f-0"
     'book.titre'.should.be.null
     'book.enfants'.should.be.null
     'book.parent'.should.be.null
+    'book.is_book'.should.be.true
+    'book.is_chapter'.should.be.false
+    my.left_book = APP.book.obj.position().left
+    my.top_book  = APP.book.obj.position().top
+    w("Position du livre = x:"+my.left_book+" y:"+my.top_book)
+    w("On doit trouver le livre sur la table, avec les bons éléments DOM."+
+    "@note: il s'agit d'un test “léger” qui ne checke pas tous les éléments.")
+    var exactjid = "section#table > fiche#f-0"
+    var jqfiche = jq(exactjid)
+    jqfiche.should.be.visible
+    jqfiche.should.have.class('fiche')
+    jqfiche.should.have.class('book')
+    jq(exactjid+' > recto').should.exist
+    jq(exactjid+' > verso').should.exist
+    jq(exactjid+' > recto > div.titre').should.exist
+    jq(exactjid+' > recto > div.items').should.exist
     
-    w("On doit trouver le livre sur la table")
-  
-    my.wait.for(1).and(NEXT_POINT)
+    my.wait.for(0).and(NEXT_POINT)
     break
   case 3:
-  
-    my.wait.for(0)
+    blue("On crée un chapitre qu'on glisse directement dans livre")
+    w("Je simule un déplacement de l'outil chapitre sur le livre")
+    var chaptool = jq('div#card_tool-chap')
+    toxy = to_xy_on_fiche('chap', APP.book.obj)
+    w("Déplacement du chapitre à x:"+toxy.to_x+" y:"+toxy.to_y)
+    chaptool.press_and_drag(toxy)
+    my.wait.for(1).and(NEXT_POINT)
+    break
+  case 4:
+    var pos = APP.book.obj.position()
+    w("Position du livre = x:"+pos.left+" y:"+pos.top)
+    var pos = jq('fiche#f-1').obj.position()
+    w("Position du chapitre = x:"+pos.left+" y:"+pos.top)
+    w("On doit trouver le chapitre dans les données")
+    'FICHES.length'.should = 2
+    'FICHES.last_id'.should = 1
+    'FICHES.list[1]'.should.be.an_instanceof(APP.Chapter)
+    APP.chap = APP.FICHES.list[1]
+    'chap.id'.should = 1
+    'chap.jid'.should = "fiche#f-1"
+    'chap.titre'.should.be.null
+    'chap.enfants'.should.be.null
+    'chap.is_book'.should.be.false
+    'chap.is_chapter'.should.be.true
+    
+    // Vérification de l'appartenance au livre
+    'chap.parent.id'.should.be = 1
+    
+    my.wait.for(1).and(NEXT_POINT)
+    break
+    
   }
   
   

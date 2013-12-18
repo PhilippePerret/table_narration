@@ -1,3 +1,23 @@
+
+/*
+ *  Retourn un DOM jQuery Objet dans l'application
+ *  
+ *  @param  jid   Un 'jQuery ID' conforme (sélecteur tag#id ou tag.class etc.)
+ *
+ *  @return L'objet jQuery correspond.
+ */
+function get_obj_in_app(jid) 
+{
+  with(APP)
+  {
+    return $(jid)
+  }
+}
+function px2n(val)
+{
+  return parseInt(val,10)
+}
+
 /*
     Objet Dom
     ---------
