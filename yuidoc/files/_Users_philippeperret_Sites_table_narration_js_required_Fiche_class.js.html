@@ -285,9 +285,12 @@ Object.defineProperties(Fiche.prototype, {
    *      PROPRIÉTÉS D&#x27;ÉTAT
    --------------------------------------------------------------------- */
   &quot;modified&quot;:{
-    set:function(val){ 
-      this._modified      = val;
-      if(val) Collection.add_modified( this ) ;
+    set:function(val){
+      if(val &amp;&amp; !this._modified)
+      {
+        this._modified      = val;
+        if(val) Collection.add_modified( this ) ;
+      }
     },
     get:function(){return this._modified || false }
   },
@@ -473,10 +476,25 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.droppable({
           hoverClass  :&#x27;dropped&#x27;,
           tolerance   : &#x27;pointer&#x27;,
-          greedy      : true, // pour empêcher la table de prendre le drop
-          accept      : &#x27;.fiche.&#x27;+accepted_child+
-                        &#x27;, .card_tool[data-type=&quot;&#x27;+accepted_child+&#x27;&quot;]&#x27;,
-          drop        :$.proxy(this.on_drop, this)
+          greedy      : true, // pour empêcher de se propager à la table
+          accept      : function(drags){
+            // Pour empêcher la propagation
+            if(drags.attr(&#x27;drg_time&#x27;))
+            {
+              return drags.attr(&#x27;drg_time&#x27;) == this.drg_time
+            }
+            if(drags.hasClass(&#x27;card_tool&#x27;)) return drags.attr(&#x27;data-type&#x27;)==accepted_child
+            if(drags.hasClass(&#x27;fiche&#x27;)) return drags.hasClass(accepted_child)
+            return false
+          },
+          drop        :$.proxy(this.on_drop, this),
+          over        :function(evt,ui){
+            ui.draggable.attr(&#x27;drg_time&#x27;, this.drg_time = evt.timeStamp)
+          },
+          out:function(evt,ui){
+            // not required but cleaner
+            ui.draggable.removeAttr(&#x27;drg_time&#x27;)
+          }
         })
       }
       dlog(&quot;&lt;- &quot; + idm, DB_FCT_ENTER)
@@ -734,7 +752,7 @@ Object.defineProperties(Fiche.prototype, {
 })
 
 /**
-  * Appelé quand on droppe un enfant sur la fiche courante
+  * Appelé quand on relâche un enfant sur la fiche courante
   *  
   * @method on_drop
   * @param   {Event} evt   L&#x27;évènement drop
@@ -746,6 +764,7 @@ Object.defineProperties(Fiche.prototype, {
   */
 Fiche.prototype.on_drop = function(evt, ui)
 {
+  stop_event(evt)
   var idm = &quot;Fiche::on_drop [&quot;+this.type_id+&quot;]&quot;
   dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT )
   UI.drop_on_fiche = true
@@ -914,6 +933,7 @@ $.extend(Fiche.prototype,{
   
     this.modified   = true
     enfant.ranged   = true
+    enfant.obj.addClass(&#x27;ranged&#x27;)
     enfant.modified = true
     
   },
@@ -1010,11 +1030,14 @@ $.extend(Fiche.prototype,{
   */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
+  dlog(&quot;-&gt; Fiche::stop_drag&quot;, DB_FCT_ENTER | DB_CURRENT)
+  dlog(&quot;App.preferences.snap:&quot;+App.preferences.snap)
   pos_on_grid = UI.position_on_grid([pos.left, pos.top], App.preferences.snap)
   this.left = pos_on_grid.left
   this.top  = pos_on_grid.top
   this.positionne
   this.modified = true
+  // return stop_event(evt) // Car ça interromprait la procédure
 }
 
     </pre>

@@ -302,7 +302,7 @@ $.extend(Collection, {
       // App.test();
       // Sinon, ça arrive chaque fois qu&#x27;un test recharge
       F.show(&quot;Penser à quitter le mode test en finissant, par commodité.&quot;, {keep:true})
-      App.ready = true
+      window.ready = true
     }
     if( rajax.paragraph_styles_updated ) F.show(&quot;La liste des styles de paragraphe a été updatée.&quot;)
     this.backup
@@ -327,21 +327,7 @@ $.extend(Collection, {
     this.modifieds_list.push( fiche )
     this.modified = true
   },
-  
-  check_if_needs_save:function()
-  {
-    // console.log(&quot;---&gt; Collection.check_if_needs_save (modified:&quot;+this.modified+&quot;)&quot;)
-    if(this.modified === true)
-    {
-      this.save
-      return true
-    } 
-    else
-    {
-      return false
-    }
-  },
-  
+      
   /**
     * Méthode qui dispatche toutes les données +data+ remontées par
     * la requête ajax &#x60;collection/load&#x60;.
@@ -472,7 +458,7 @@ Object.defineProperties(Collection,{
     get:function(){
       if(this.timer_save || $(&#x27;input#cb_automatic_save&#x27;)[0].checked==false) return
       this.timer_save = setInterval(
-        $.proxy(this.check_if_needs_save, this), this.frequence_saving
+        $.proxy(this.save, this), this.frequence_saving
       )
     }
   },
@@ -492,7 +478,7 @@ Object.defineProperties(Collection,{
    *
    *  NOTES
    *  -----
-   *    :: La méthode &#x60;save&#x27; est appelée dès qu&#x27;on active le bouton
+   *    :: La méthode &#x60;save&#x60; est appelée dès qu&#x27;on active le bouton
    *  
    */
   &quot;enable_automatic_saving&quot;:{
@@ -500,7 +486,7 @@ Object.defineProperties(Collection,{
       this.AUTOMATIC_SAVING = oui
       if(oui){ 
         this.start_automatic_saving
-        if(this.loaded) this.save
+        if(this.loaded) this.save()
       }
       else if(this.timer_save){ 
         this.stop_automatic_saving
@@ -515,7 +501,7 @@ Object.defineProperties(Collection,{
    */
   &quot;load&quot;:{
     get:function(){
-      App.ready     = false
+      window.ready  = false
       this.loading  = true
       stop_save
       F.show(&quot;Chargement de la collection…&quot;, {timer:false})
@@ -524,6 +510,28 @@ Object.defineProperties(Collection,{
     
   },
   
+  /**
+    * Retourne FALSE si quelque chose doit être sauvé (fiches, etc.)
+    *
+    * Notes
+    * -----
+    *   * La méthode est appelée par Collection.save()
+    *
+    * @method nothing_to_save (sans parenthèses)
+    * @return FALSE si des choses sont à enregistrer, TRUE dans le cas contraire.
+    */
+  &quot;nothing_to_save&quot;:{
+    get:function(){
+      if(this.modified === true)
+      {
+        return false
+      }
+      else
+      {
+        return true
+      }
+    }
+  },
   
   /**
     * Sauvegarde de tous les éléments de la collection
@@ -533,28 +541,31 @@ Object.defineProperties(Collection,{
     * -----
     *   * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste
     *     this.modifieds_list (sous forme d&#x27;instances)
-    *   * C&#x27;est la méthode &#x60;check_if_needs_save&#x27; qui est appelée en premier
-    *     lieu pour voir si un enregistrement est nécessaire (c&#x27;est un peu bête,
-    *     mais c&#x27;est juste parce que j&#x27;ai utilisé une propriété, ici.)
+    *   * C&#x27;est la méthode &#x60;nothing_to_save&#x60; qui est appelée en premier
+    *     lieu pour voir si un enregistrement est nécessaire.
     *   * La méthode lance une &quot;chaine de sauvegarde&quot; appelant &#x60;save_fiches&#x60;,
     *     &#x60;save_config&#x60;, etc. jusqu&#x27;à &#x60;save_end&#x60;
     *
-    * @method save (complexe)
-    *
+    * @method save
+    * @async
+    * @return TRUE si quelque chose est en train d&#x27;être sauvé. FALSE dans le
+    *         cas contraire.
     */
   &quot;save&quot;:{
-    get:function(){
+    value:function(){
+      if(this.nothing_to_save) return false
+      this.saving = true
       dlog(&quot;Sauvegarde de la collection&quot;, DB_SIMPLE)
       F.show(&quot;Sauvegarde en cours…&quot;, {no_timer:true})
-      this.saving = true
       this.save_fiches
+      return true
     }
   },
   /* Sauvegarde des fiches */
   &quot;save_fiches&quot;:{
     get:function(){
       // console.log(&quot;---&gt; Collection.save_fiches&quot;)
-      FICHES.save( $.proxy(this.save_config, this ))
+      FICHES.save( $.proxy(this.save_config, this ) )
     }
   },
   /**
@@ -571,6 +582,7 @@ Object.defineProperties(Collection,{
         App.save_current_configuration.poursuivre = $.proxy(this.end_save, this )
         App.save_current_configuration(forcer = true)
       }
+      else this.end_save()
     }
   },
   /**
@@ -619,14 +631,14 @@ Object.defineProperties(Collection,{
     *   * Même si c&#x27;est un backup quotidien unique, il est appelé à chaque
     *     chargement de l&#x27;application.
     *   * En mode normal (non test), c&#x27;est cette méthode qui définit que 
-    *     l&#x27;application est prête à travailler (&#x60;App.ready&#x60;)
+    *     l&#x27;application est prête à travailler (&#x60;window.ready&#x60;)
     *
     * @method retour_backup
     *
     */
   &quot;retour_backup&quot;:{
     value:function(rajax){
-      if(rajax.ok) App.ready = true
+      if(rajax.ok) window.ready = true
       else F.error( rajax.message )
     }
   },

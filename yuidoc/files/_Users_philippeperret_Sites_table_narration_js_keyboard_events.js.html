@@ -200,21 +200,32 @@
     <pre class="code prettyprint linenums">
 /**
   * @module KeyboardEvents
+  * @class window
   */
 
+/**
+  * Méthode de débuggage pour afficher les données simples de l&#x27;évènement
+  *
+  * @method dispay_code_event
+  * @param  {Event} Evènement déclenché
+  * @return TRUE
+  */
 window.dispay_code_event = function(evt)
 {
   console.dir({charCode:evt.charCode, keyCode:evt.keyCode, which:evt.which})
   return true
 }
-/*
- *  Gestion des touches pressées quand aucune fiche n&#x27;est sélectionnée
- *  
- *  NOTES
- *  -----
- *  * C&#x27;est la méthode par défaut
- *
- */
+/**
+  * Gestion des touches pressées quand aucune fiche n&#x27;est sélectionnée
+  * 
+  * Notes
+  * -----
+  *   * C&#x27;est la méthode par défaut
+  *
+  * @method keypress_when_no_selection_no_edition
+  * @param  {KeypressEvent} Evènement touche-pressée déclenché.
+  * @return {Boolean} FALSE si l&#x27;évènement doit être stoppé, TRUE dans le cas contraire.
+  */
 window.keypress_when_no_selection_no_edition = function(evt)
 {
   // var idm = &quot;keypress_when_no_selection_no_edition&quot;
@@ -246,13 +257,20 @@ window.keypress_when_no_selection_no_edition = function(evt)
     
   }
   // dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
-  return true
+  /*
+   *  Si aucune touche n&#x27;a été traitée, on regarde du côté des méthodes par défaut
+   *  
+   */
+  return window.keypress_default(evt)
 }
-/*
- *  Gestion des touches pressées quand une fiche est sélectionnée,
- *  mais que l&#x27;on ne se trouve pas dans un champ d&#x27;édition.
- *  
- */
+/**
+  * Gestion des touches pressées quand une fiche est sélectionnée,
+  * mais que l&#x27;on ne se trouve pas dans un champ d&#x27;édition.
+  *
+  * @method keypress_when_fiche_selected_out_textfield
+  * @param  {KeypressEvent} evt Évènement touche-pressée déclenchée
+  * @return {Boolean} True si l&#x27;évènement doit se poursuivre, False dans le cas contraire.
+  */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
   // var idm = &quot;keypress_when_fiche_selected_out_textfield&quot;
@@ -310,20 +328,59 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = &#x27;open&#x27;     ; break
   case Key_f:   cplx_meth = &#x27;close&#x27;    ; break
   case Key_d:   cplx_meth = &#x27;deselect&#x27; ; break
-  default:
-    console.log(&quot;which:&quot;+evt.which+&quot; / keyCode:&quot;+evt.keyCode+&quot; / charCode:&quot;+evt.charCode)
-    // return stop_event(evt)
+  case Key_s:
+    if(evt.metaKey)
+    {
+      Collection.save()
+      return stop_event()
+    }
+    break
   }
   if(cplx_meth)
   {
     FICHES.current[cplx_meth]
     return stop_event(evt)
   }
-      
+  
+  /*
+   *  Si aucune touche n&#x27;a été traitée, on regarde du côté des méthodes par défaut
+   *  
+   */
+  return window.keypress_default(evt)
+  
   // dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
 }
 
-/* Méthode par défaut */
+/**
+  * Méthode de gestion des évènements Keypress lorsqu&#x27;ils n&#x27;ont pas été traités
+  * par une méthode propre. C&#x27;est en quelque sorte les traitements par défaut.
+  * Par exemple, quel que soit le contexte, le raccourci CMD+S sauvera toujours la
+  * collection.
+  *
+  * @method keypress_default
+  * @param  {KeypressEvent} evt Evènement Keypress déclenché
+  * @return {Boolean} False si l&#x27;évènement a été traité (a déclenché une action),
+  *                   True dans le cas contraire.
+  */
+window.keypress_default = function(evt)
+{
+  if(!(evt.ctrlKey||evt.metaKey||evt.altKey))return true
+  
+  switch(evt.charCode)
+  {
+  case Key_s:
+    if(evt.metaKey)
+    {
+      Collection.save()
+      return stop_event()
+    }
+    break
+  }
+  return true
+}
+
+
+/* Application de la méthode par défaut */
 window.onkeypress = keypress_when_no_selection_no_edition
     </pre>
 </div>

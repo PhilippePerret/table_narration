@@ -261,7 +261,12 @@ UI.Input = {
       }
     }
     // Si on arrive ici, on bloque la propagation de l'évènement
-    return this.unpropage(evt)
+    this.unpropage(evt)
+    /*
+     *  Si aucune touche n'a été traitée, on regarde du côté des méthodes par défaut
+     *  
+     */
+    return window.keypress_default(evt)
   },
   
   /**

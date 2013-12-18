@@ -273,6 +273,27 @@ Malgré son nom, gère aussi bien les input de type &quot;text&quot; que les tex
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_error">error</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_eventTextField">eventTextField</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_memorize_current">memorize_current</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_onblur">onblur</a>
 
                                 
@@ -301,6 +322,27 @@ Malgré son nom, gère aussi bien les input de type &quot;text&quot; que les tex
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_retreive_current">retreive_current</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_set_keypress">set_keypress</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_set_selection_to">set_selection_to</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_traite_as_acteurs_from_imdb">traite_as_acteurs_from_imdb</a>
 
                                 
@@ -309,6 +351,13 @@ Malgré son nom, gère aussi bien les input de type &quot;text&quot; que les tex
                         
                             <li class="index-item method">
                                 <a href="#method_unbind">unbind</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_unpropage">unpropage</a>
 
                                 
                                 
@@ -323,6 +372,15 @@ Malgré son nom, gère aussi bien les input de type &quot;text&quot; que les tex
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_ERRORS">ERRORS</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
                         
                             <li class="index-item property">
                                 <a href="#property_target">target</a>
@@ -609,7 +667,7 @@ aux champs de saisie de texte +field+</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l267"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:267</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l272"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:272</code></a>
         
         </p>
 
@@ -646,6 +704,348 @@ le champ à l&#39;aide de `this.target.jq.val(nouvelle valeur)&#39;</li>
                     
                     <p>TRUE si tout est OK ou false dans le cas contraire, ce qui interrompt
         la procédure en cours.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_error" class="method item">
+    <h3 class="name"><code>error</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>err_id</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l630"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:630</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Provoque l&#39;erreur d&#39;identifiant +err_id+ dans <code>ERRORS</code></p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une erreur fatale (throw)</li>
+<li>On peut ajouter autant d&#39;arguments que l&#39;on veut, ils seront
+envoyés en console.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">err_id</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Identifiant de l&#39;erreur dans <code>ERRORS</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_eventTextField" class="method item">
+    <h3 class="name"><code>eventTextField</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l559"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:559</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne l&#39;élément DOM ciblé par l&#39;évènement +evt+</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Event quelconque.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    <p>un {Hash} définissant :</p>
+<ul>
+<li>dom         {HTMLDom}   DOMElement de l&#39;élément</li>
+<li>jq          {jQuerySet} jQuery Set de l&#39;élément</li>
+<li>id          {Number}    Identifiant du champ</li>
+<li>jid         {Selector}  Sélecteur jQuery du champ</li>
+<li>tag         {String}    Le tagname de l&#39;élément</li>
+<li>type        {String}    Le type de l&#39;élément (&quot;text&quot;, &quot;button&quot;, etc.)</li>
+<li>value       {String|Null} La valeur de l&#39;élément (if any)</li>
+<li>selection   {Object}    La sélection courante ({start, end, content})</li>
+<li>data_type   {String}    Le “data-type” du champ de saisie, qui permet de<pre><code>                    traiter et surveiller sa valeur.</code></pre>
+</li>
+<li>format      {String}    Le “format” de la donnée, si spécial (travaille souvent<pre><code>                    en conjugaison avec le <code>data_type</code>)</code></pre>
+</li>
+<li>is_input    {Boolean}   True si le champ est un input-text</li>
+<li>is_textarea {Boolean}   True si le champ est un textarea</li>
+<li>hasFiche    {Boolean}   True si le champ appartient à une fiche</li>
+<li>fiche_id    {String|Null} L&#39;identifiant de la fiche, if any</li>
+<li>property    {String|Null} La propriété de la fiche que ce champ met en édition</li>
+</ul>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_memorize_current" class="method item">
+    <h3 class="name"><code>memorize_current</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l420"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:420</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Mémorise le champ courant, s&#39;il est défini, et notamment sa sélection courante,
+pour pouvoir retrouver le même état. Utilisé lorsque l&#39;on doit par exemple
+“blurer” un champ de saisie pour choisir un film ou un mot, pour l&#39;insérer
+ensuite dans ce champ.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La méthode peut être appelée sans qu&#39;il y ait de champ courant.
+Par exemple, quand on affiche l&#39;aperçu d&#39;un mot (en passant sa souris
+sur son nom) et qu&#39;on clique sur la définition pour mettre le mot
+en édition.</li>
+<li>C&#39;est ensuite la méthode <code>retreive_current</code> qui remet le champ mémorisé
+dans son état précédent.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Liste des options à prendre en compte. Pour le moment,
+                          ces options se résument à <code>blur</code> qui, si true, blur
+                          le champ courant.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                    <p>id Identifiant (dans <code>targets</code>) du champ mémorisé.</p>
 
                 
             </div>
@@ -938,6 +1338,12 @@ CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code>obj</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -971,7 +1377,7 @@ CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l503"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:503</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l540"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:540</code></a>
         
         </p>
 
@@ -1010,6 +1416,23 @@ CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type">HTMLDom | JQuerySet</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Retourne le &quot;vrai&quot; champ de texte, même lorsque
+                            c&#39;est son container (parent) qui est tranmis.</p>
+
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -1023,11 +1446,336 @@ CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
                     
                         <span class="type">JQuerySet</span>:
                     
-                    <p>Un  du ou des champs de texte.</p>
+                    <p>Le set jQuery du ou des champs de texte.</p>
 
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_retreive_current" class="method item">
+    <h3 class="name"><code>retreive_current</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>id</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l464"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:464</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Réactive le champ d&#39;édition mémorisé par <code>memorize_current</code> en le remettant
+dans le même état de sélection.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Resélectionne ce qui était sélectionné dans le champ, très exactement.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">id</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Identifiant dans <code>targets</code> du champ à réactiver.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les options à prendre en compte. Pour le moment, 
+                          seule le propriété <code>focus</code> est utilisée. Si sa valeur
+                          est True, on focusse dans le champ.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_set_keypress" class="method item">
+    <h3 class="name"><code>set_keypress</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>focusing</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l514"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:514</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Bind ou Unbind le &#39;keypress&#39; sur la <code>target</code> courante, en fonction de la valeur
+de +focusing+</p>
+<h2 id="requis">Requis</h2>
+<ul>
+<li>{Object} this.target, définissant le champ courant (donnée complexe)</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">focusing</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>TRUE si on focus sur le champ, FALSE otherwise</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_set_selection_to" class="method item">
+    <h3 class="name"><code>set_selection_to</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>valeur</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l406"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:406</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Remplace la sélection de la cible courante</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">valeur</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Le texte (utiliser `<em>$</em>&#39; pour faire référence au texte sélectionné)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optionnel, un {Hash} pour Selection.set
+                  Par défaut, c&#39;est `{end:true}&#39; qui placera le curseur après
+                  le texte remplacé.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -1080,7 +1828,7 @@ CMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l363"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:363</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l368"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:368</code></a>
         
         </p>
 
@@ -1244,12 +1992,166 @@ patronyme de l&#39;acteur est répété au début, donc la donnée a le format :
 </div>
 
                 
+                    <div id="method_unpropage" class="method item">
+    <h3 class="name"><code>unpropage</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l649"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:649</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Empêche l&#39;Event +evt+ de se propager mais renvoie true.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;évènement à traiter</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <p>true</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
             </div>
         
 
         
             <div id="properties" class="api-class-tabpanel">
                 <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_ERRORS" class="property item">
+    <h3 class="name"><code>ERRORS</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_&gt;ui_input.js.html#l622"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;&gt;ui_input.js:622</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Constantes erreurs pour l&#39;objet UI.Input</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="property_target" class="property item">

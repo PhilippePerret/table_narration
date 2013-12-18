@@ -57,7 +57,11 @@ window.keypress_when_no_selection_no_edition = function(evt)
     
   }
   // dlog("<- "+idm, DB_FCT_ENTER)
-  return true
+  /*
+   *  Si aucune touche n'a été traitée, on regarde du côté des méthodes par défaut
+   *  
+   */
+  return window.keypress_default(evt)
 }
 /**
   * Gestion des touches pressées quand une fiche est sélectionnée,
@@ -124,18 +128,57 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = 'open'     ; break
   case Key_f:   cplx_meth = 'close'    ; break
   case Key_d:   cplx_meth = 'deselect' ; break
-  default:
-    console.log("which:"+evt.which+" / keyCode:"+evt.keyCode+" / charCode:"+evt.charCode)
-    // return stop_event(evt)
+  case Key_s:
+    if(evt.metaKey)
+    {
+      Collection.save()
+      return stop_event()
+    }
+    break
   }
   if(cplx_meth)
   {
     FICHES.current[cplx_meth]
     return stop_event(evt)
   }
-      
+  
+  /*
+   *  Si aucune touche n'a été traitée, on regarde du côté des méthodes par défaut
+   *  
+   */
+  return window.keypress_default(evt)
+  
   // dlog("<- "+idm, DB_FCT_ENTER)
 }
+
+/**
+  * Méthode de gestion des évènements Keypress lorsqu'ils n'ont pas été traités
+  * par une méthode propre. C'est en quelque sorte les traitements par défaut.
+  * Par exemple, quel que soit le contexte, le raccourci CMD+S sauvera toujours la
+  * collection.
+  *
+  * @method keypress_default
+  * @param  {KeypressEvent} evt Evènement Keypress déclenché
+  * @return {Boolean} False si l'évènement a été traité (a déclenché une action),
+  *                   True dans le cas contraire.
+  */
+window.keypress_default = function(evt)
+{
+  if(!(evt.ctrlKey||evt.metaKey||evt.altKey))return true
+  
+  switch(evt.charCode)
+  {
+  case Key_s:
+    if(evt.metaKey)
+    {
+      Collection.save()
+      return stop_event()
+    }
+    break
+  }
+  return true
+}
+
 
 /* Application de la méthode par défaut */
 window.onkeypress = keypress_when_no_selection_no_edition

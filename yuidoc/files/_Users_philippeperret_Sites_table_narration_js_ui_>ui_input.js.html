@@ -461,7 +461,12 @@ UI.Input = {
       }
     }
     // Si on arrive ici, on bloque la propagation de l&#x27;évènement
-    return this.unpropage(evt)
+    this.unpropage(evt)
+    /*
+     *  Si aucune touche n&#x27;a été traitée, on regarde du côté des méthodes par défaut
+     *  
+     */
+    return window.keypress_default(evt)
   },
   
   /**
@@ -598,30 +603,42 @@ UI.Input = {
     }).join(&quot;\n&quot;)
   },
   
-  /*
-   *  Remplace la sélection de la cible courante
-   *  
-   *  @param  valeur    Le texte (utiliser &#x60;_$_&#x27; pour faire référence au texte sélectionné)
-   *  @param  options   Optionnel, un {Hash} pour Selection.set
-   *                    Par défaut, c&#x27;est &#x60;{end:true}&#x27; qui placera le curseur après
-   *                    le texte remplacé.
-   */
+  /**
+    * Remplace la sélection de la cible courante
+    * 
+    * @method set_selection_to
+    * @param  {String} valeur    Le texte (utiliser &#x60;_$_&#x27; pour faire référence au texte sélectionné)
+    * @param  {Object} options   Optionnel, un {Hash} pour Selection.set
+    *                   Par défaut, c&#x27;est &#x60;{end:true}&#x27; qui placera le curseur après
+    *                   le texte remplacé.
+    */
   set_selection_to:function(valeur, options)
   {
     Selection.set(this.target.dom, valeur, options || {end:true})  
   },
   
-  /*
-   *  Mémorise le champ courant, s&#x27;il est défini
-   *
-   *  NOTES
-   *  -----
-   *    = La méthode peut être appelée sans qu&#x27;il y ait de champ courant.
-   *      Par exemple, quand on affiche l&#x27;aperçu d&#x27;un mot (en passant sa souris
-   *      sur son nom) et qu&#x27;on clique sur la définition pour mettre le mot
-   *      en édition.
-   *  
-   */
+  /**
+    * Mémorise le champ courant, s&#x27;il est défini, et notamment sa sélection courante,
+    * pour pouvoir retrouver le même état. Utilisé lorsque l&#x27;on doit par exemple
+    * “blurer” un champ de saisie pour choisir un film ou un mot, pour l&#x27;insérer
+    * ensuite dans ce champ.
+    *
+    * Notes
+    * -----
+    *   * La méthode peut être appelée sans qu&#x27;il y ait de champ courant.
+    *     Par exemple, quand on affiche l&#x27;aperçu d&#x27;un mot (en passant sa souris
+    *     sur son nom) et qu&#x27;on clique sur la définition pour mettre le mot
+    *     en édition.
+    *   * C&#x27;est ensuite la méthode &#x60;retreive_current&#x60; qui remet le champ mémorisé
+    *     dans son état précédent.
+    *
+    * @method memorize_current
+    * @param  {Object} options  Liste des options à prendre en compte. Pour le moment,
+    *                           ces options se résument à &#x60;blur&#x60; qui, si true, blur
+    *                           le champ courant.
+    * @return {Number} id Identifiant (dans &#x60;targets&#x60;) du champ mémorisé.
+    *
+    */
   memorize_current:function(options)
   {
     if(undefined == options) options = {}
@@ -644,6 +661,20 @@ UI.Input = {
     return id
   },
   
+  /**
+    * Réactive le champ d&#x27;édition mémorisé par &#x60;memorize_current&#x60; en le remettant
+    * dans le même état de sélection.
+    *
+    * Notes
+    * -----
+    *   * Resélectionne ce qui était sélectionné dans le champ, très exactement.
+    *
+    * @method retreive_current
+    * @param  {Number} id Identifiant dans &#x60;targets&#x60; du champ à réactiver.
+    * @param  {Object} options  Les options à prendre en compte. Pour le moment, 
+    *                           seule le propriété &#x60;focus&#x60; est utilisée. Si sa valeur
+    *                           est True, on focusse dans le champ.
+    */
   retreive_current:function(id, options)
   {
     if(undefined == options) options = {}
@@ -680,18 +711,24 @@ UI.Input = {
             &quot;shift:&quot;+evt.shiftKey+&quot;, ctrl:&quot;+evt.ctrlKey+&quot;, cmd:&quot;+evt.metaKey+&quot;]&quot;, DB_INFOS_EVENT)
   },
   
-  /*
-   *  Définit le keypress à utiliser sur l&#x27;élément
-   *  
-   *  @requis this.target, définissant la cible courante
-   *  @param  focusing    TRUE si on focus sur le champ, FALSE otherwise
-   */
+  /**
+    * Bind ou Unbind le &#x27;keypress&#x27; sur la &#x60;target&#x60; courante, en fonction de la valeur
+    * de +focusing+
+    * 
+    * Requis
+    * ------
+    *   * {Object} this.target, définissant le champ courant (donnée complexe)
+    *
+    * @method set_keypress
+    * @param  {Boolean} focusing    TRUE si on focus sur le champ, FALSE otherwise
+    *
+    */
   set_keypress:function(focusing)
   {
+    this.target.binding = $.proxy(this.onkeypress, this) // pour le unbind ci-dessous
     if(focusing)
     {
       // Pour le moment, le même, mais pourra changer suivant le contexte
-      this.target.binding = $.proxy(this.onkeypress, this) // pour le unbind ci-dessous
       this.target.jq.bind(&#x27;keypress&#x27;, this.target.binding)
     }
     else
@@ -701,39 +738,49 @@ UI.Input = {
   },
   
   /**
-   *  Return le vrai jQuery Set de champ de text de +obj+
-   *  
-   *  @param  obj   {HTMLDom} ou {jQuerySet} Soit un champ de saisie de text
-   *                Soit un container ({HTMLDom} ou {jQuerySet}) contenant des
-   *                champs de saisie de texte.
-   *
-   *  @method real_field_from
-   *  @return Un {jQuerySet} du ou des champs de texte.
-   *
-   */
+    * Return le vrai jQuery Set de champ de text de +obj+
+    * 
+    * @param  obj   {HTMLDom} ou {jQuerySet} Soit un champ de saisie de text
+    *               Soit un container ({HTMLDom} ou {jQuerySet}) contenant des
+    *               champs de saisie de texte.
+    *
+    * @method real_field_from
+    * @param  {HTMLDom|jQuerySet} obj Retourne le &quot;vrai&quot; champ de texte, même lorsque
+    *                             c&#x27;est son container (parent) qui est tranmis.
+    * @return {jQuerySet} Le set jQuery du ou des champs de texte.
+    *
+    */
   real_field_from:function(obj)
   {
     if(UI.is_text_field(obj)) return $(obj)
     else return $(obj).find(&#x27;textarea, input&#x27;)
   },
   
-  /*
-   *  Retourne l&#x27;élément DOM ciblé par l&#x27;évènement +evt+
-   *  
-   *  
-   *  @param  evt   Event quelconque.
-   *
-   *  @return un {Hash} contenant :
-   *
-   *    dom     DOMElement de l&#x27;élément
-   *    jq      jQuery Set de l&#x27;élément
-   *    id      Identifiant du champ
-   *    jid     jQuery Selector du champ
-   *    tag     Le tagname de l&#x27;élément
-   *    type    Le type de l&#x27;élément
-   *    value   La valeur de l&#x27;élément (if any)
-   *
-   */
+  /**
+    * Retourne l&#x27;élément DOM ciblé par l&#x27;évènement +evt+
+    * 
+    * @method eventTextField
+    * @param  {Event} evt   Event quelconque.
+    *
+    * @return {Object} un {Hash} définissant :
+    *   * dom         {HTMLDom}   DOMElement de l&#x27;élément
+    *   * jq          {jQuerySet} jQuery Set de l&#x27;élément
+    *   * id          {Number}    Identifiant du champ
+    *   * jid         {Selector}  Sélecteur jQuery du champ
+    *   * tag         {String}    Le tagname de l&#x27;élément
+    *   * type        {String}    Le type de l&#x27;élément (&quot;text&quot;, &quot;button&quot;, etc.)
+    *   * value       {String|Null} La valeur de l&#x27;élément (if any)
+    *   * selection   {Object}    La sélection courante ({start, end, content})
+    *   * data_type   {String}    Le “data-type” du champ de saisie, qui permet de
+    *                             traiter et surveiller sa valeur.
+    *   * format      {String}    Le “format” de la donnée, si spécial (travaille souvent
+    *                             en conjugaison avec le &#x60;data_type&#x60;)
+    *   * is_input    {Boolean}   True si le champ est un input-text
+    *   * is_textarea {Boolean}   True si le champ est un textarea
+    *   * hasFiche    {Boolean}   True si le champ appartient à une fiche
+    *   * fiche_id    {String|Null} L&#x27;identifiant de la fiche, if any
+    *   * property    {String|Null} La propriété de la fiche que ce champ met en édition
+    */
   eventTextField:function(evt)
   {
     var target = $(evt.currentTarget)
@@ -772,32 +819,43 @@ UI.Input = {
     return data
   },
   
-  /*
-   *  Gestion des erreurs
-   *  
-   */
+  /**
+    * Constantes erreurs pour l&#x27;objet UI.Input
+    * @property ERRORS
+    * @static
+    */
   ERRORS:{
     &#x27;target doesnt match&#x27;:&quot;### ERREUR : Les champs ne correspondant pas (UI.Input.current et celui de l&#x27;évènement)&quot;
   },
-  /*
-   *  Provoque l&#x27;erreur
-   *  
-   *  NOTE: On peut ajouter autant d&#x27;arguments que l&#x27;on veut, ils seront
-   *        envoyés en console.
-   */
+  /**
+    * Provoque l&#x27;erreur d&#x27;identifiant +err_id+ dans &#x60;ERRORS&#x60;
+    * 
+    * Notes
+    * -----
+    *   * C&#x27;est une erreur fatale (throw)
+    *   * On peut ajouter autant d&#x27;arguments que l&#x27;on veut, ils seront
+    *     envoyés en console.
+    *
+    * @method error
+    * @param  {String} err_id   Identifiant de l&#x27;erreur dans &#x60;ERRORS&#x60;
+    *
+    */
   error:function(err_id)
   {
     for(var i=1, len=arguments.length; i&lt;len; ++i) dlog(arguments[i])
     throw this.ERRORS[err_id]
   },
   
-  /*
-   *  Empêche l&#x27;Event +evt+ de se propager et renvoie true.
-   *
-   *  @usage :  Simplement à la fin d&#x27;une méthode gérant un type d&#x27;évènement
-   *            avec &#x60;return this.unpropage(&lt;evt&gt;)&#x27;
-   *  
-   */
+  /**
+    *  Empêche l&#x27;Event +evt+ de se propager mais renvoie true.
+    *
+    *  @usage :  Simplement à la fin d&#x27;une méthode gérant un type d&#x27;évènement
+    *            avec &#x60;return this.unpropage(&lt;evt&gt;)&#x27;
+    * @method unpropage
+    * @param  {Event} evt   L&#x27;évènement à traiter
+    * @return {Boolean} true
+    *
+    */
   unpropage:function(evt)
   {
     evt.stopPropagation()
