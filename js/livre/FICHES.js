@@ -34,6 +34,37 @@ window.FICHES = {
     'book'  : {level: 20, defvalue: "TITRE_LIVRE",      child_type:'chap',  parent_type:null,   hname: "livre"}
     },
 
+  /**
+    * Données pour les paramètres des fiches (verso)
+    * Notes
+    * -----
+    *   * L'`id` correspond au nom de la propriété de classe
+    * @property PARAMETRES_FICHE
+    * @type     {Array} d'{Object}
+    * @statif
+    * @final
+    */
+  PARAMETRES_FICHE:[
+  {id:'ptype', hname:"Type de paragraphe", only:'para', value:['text':"Texte", 'code':"Code", 'file':"Fichier"]}
+  ],
+  
+  /**
+    * Données pour les options des fiches (verso)
+    * Notes
+    * -----
+    *   * Pour des types propres à un type de fiche particulier, utiliser
+    *     `only:<type>` ou `sauf:<type>`
+    *   * L'`id` correspond au nom de la propriété de classe
+    *
+    * @property OPTIONS_FICHE
+    * @type     {Array} d'{Object}
+    * @static
+    * @final
+    */
+  OPTIONS_FICHE:[
+    {id:'not_printed', label:"Ne pas imprimer", default:false}
+    ],
+
   /*
    *  PROPRIÉTÉS GÉNÉRALES
    *  

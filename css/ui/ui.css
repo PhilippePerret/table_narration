@@ -11,6 +11,11 @@ body {
 .small { font-size: 0.8em;  }
 .tiny  { font-size: 0.65em; }
 
+
+input[type="checkbox"] + label {
+  margin-left: 6px;
+}
+
 textarea {
   font-family: inherit;
   font-size: inherit;

@@ -44,3 +44,7 @@ fiche.book.opened > recto > div.items {
   padding-top    : 0.1em;
   padding-left   : -1em;
 }
+
+fiche.book > verso {
+  color         :black;
+}

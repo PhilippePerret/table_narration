@@ -1,11 +1,14 @@
 IMPLÉMENTER
 -----------
+
+- Ne construire le verso de la fiche que lorsque la fiche est retounée
+  > propriété volatile 'verso_prepared' (undefined au départ)
+  > proprité méthode `prepare_verso`
+  
 - Prévoir un upload des backups sur le site Icare
   Il faut que ça se fasse de façon automatique.
   Tenir à jour un fichier qui indiquera les backup déjà téléchargés
 
-- Aide contextuelle : quand un enfant est sélectionné, et qu'il y en a
-  plusieurs indiquer que CMD + Fleche (H/B) permet de le déplacer
 
 APERCU (souris hover un mot/film)
 - Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet

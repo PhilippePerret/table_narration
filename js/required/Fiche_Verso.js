@@ -13,6 +13,7 @@ Object.defineProperties(Fiche.prototype,{
       return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
                 '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
                 this.html_fieldset_parametres +
+                this.html_fieldset_options +
                 '<div style="clear:both;"></div>' +
               '</verso>'
     }
@@ -48,6 +49,34 @@ Object.defineProperties(Fiche.prototype,{
         '<legend>Paramètres</legend>'+
         (this.is_paragraph ? '<div class="div_menu_styles"></div>' : '') +
         '</fieldset>'
+    }
+  },
+  /**
+    * Code HTML du fieldset des options à l'arrière de toute fiche
+    *
+    * Notes
+    * -----
+    *   * Des options propres à chaque type de fiche peuvent être ajoutées en
+    *     définissant la propriété complexe `options_supplementaires` qui doit
+    *     renvoyer la liste des options.
+    *
+    * @property html_fieldset_options
+    * @type     {String}
+    *
+    */
+  "html_fieldset_options":{
+    get:function(){
+      if(undefined != this.options_supplementaires) options = $.merge(options, this.options_supplementaires)
+      var c = "", id, prefix = "fiche_option-"+this.id+"-" ;
+      L(FICHES.OPTIONS_FICHE).each(function(option){
+        id = prefix + option.id
+        c += '<div class="fiche_option">'+
+          '<input type="checkbox" id="'+id+'" class="fiche_option_'+option.id+'" '+
+          'onchange="get_fiche('+this.id+').onchange_option(\''+option.id+'\')" />'+
+          '<label for="'+id+'">'+option.label+'</label>'
+        '</div>'
+      })
+      return '<fieldset class="fiche_options">'+'<legend>Options</legend>'+c+'</fieldset>'
     }
   },
   
