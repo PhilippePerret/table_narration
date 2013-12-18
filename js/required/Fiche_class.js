@@ -273,11 +273,24 @@ Object.defineProperties(Fiche.prototype, {
         this.obj.droppable({
           hoverClass  :'dropped',
           tolerance   : 'pointer',
-          greedy      : true, // pour empêcher la table de prendre le drop
-          accept      : '.fiche.'+accepted_child+
-                        ', .card_tool[data-type="'+accepted_child+'"]',
+          accept      : function(drags){
+            // Pour empêcher la propagation
+            if(drags.attr('drg_time'))
+            {
+              return drags.attr('drg_time') == this.drg_time
+            }
+            if(drags.hasClass('card_tool')) return drags.attr('data-type')==accepted_child
+            if(drags.hasClass('fiche')) return drags.hasClass(accepted_child)
+            return false
+          },
           drop        :$.proxy(this.on_drop, this),
-          over        :function(evt,ui){return stop_event(evt)}
+          over        :function(evt,ui){
+            ui.draggable.attr('drg_time', this.drg_time = evt.timeStamp)
+          },
+          out:function(evt,ui){
+            // not required but cleaner
+            ui.draggable.removeAttr('drg_time')
+          }
         })
       }
       dlog("<- " + idm, DB_FCT_ENTER)
