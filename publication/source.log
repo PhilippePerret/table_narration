@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.12.19)  19 DEC 2013 16:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.12.19)  19 DEC 2013 21:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2011/06/27>
 Babel <3.9f> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2013/texmf-dist/tex/latex/base/bk12.clo
-File: bk12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/bk11.clo
+File: bk11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -53,13 +53,37 @@ Package babel Info: Making ? an active character on input line 243.
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/local/texlive/2013/texmf-dist/tex/latex/ntgclass/a4.sty
-Package: a4 2004/04/15 v1.2g A4 based page layout
+(/usr/local/texlive/2013/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
+)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count92
+\Gm@cntv=\count93
+\c@Gm@tempcnt=\count94
+\Gm@bindingoffset=\dimen106
+\Gm@wd@mp=\dimen107
+\Gm@odd@mp=\dimen108
+\Gm@even@mp=\dimen109
+\Gm@layoutwidth=\dimen110
+\Gm@layoutheight=\dimen111
+\Gm@layouthoffset=\dimen112
+\Gm@layoutvoffset=\dimen113
+\Gm@dimlist=\toks15
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
-\inpenc@prehook=\toks15
-\inpenc@posthook=\toks16
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
@@ -471,18 +495,18 @@ Package graphics Info: Driver file: dvips.def on input line 91.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/dvips.def
 File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
 ))
-\Gin@req@height=\dimen106
-\Gin@req@width=\dimen107
+\Gin@req@height=\dimen114
+\Gin@req@width=\dimen115
 )
-\epsfxsize=\dimen108
-\epsfysize=\dimen109
+\epsfxsize=\dimen116
+\epsfysize=\dimen117
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count92
-\float@exts=\toks17
+\c@float@type=\count95
+\float@exts=\toks18
 \float@box=\box26
-\@float@everytoks=\toks18
+\@float@everytoks=\toks19
 \@floatcapt=\box27
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/color.sty
@@ -496,51 +520,91 @@ Package color Info: Driver file: dvips.def on input line 130.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
 ))
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `source.idx'.
+
+
+Writing index file source.idx
 (/Users/philippeperret/Sites/table_narration/publication/source.aux)
 \openout1 = `source.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT2/cmr/m/n on input line 17.
-LaTeX Font Info:    Try loading font information for OT2+cmr on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT2/cmr/m/n on input line 19.
+LaTeX Font Info:    Try loading font information for OT2+cmr on input line 19.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/cyrillic/ot2cmr.fd
 File: ot2cmr.fd 2001/08/11 v3.2c Computer Modern Cyrillic font definitions
 )
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Info: Redefining \degres on input line 17.
-LaTeX Info: Redefining \dots on input line 17.
-LaTeX Info: Redefining \up on input line 17.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Info: Redefining \degres on input line 19.
+LaTeX Info: Redefining \dots on input line 19.
+LaTeX Info: Redefining \up on input line 19.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: dvips
+*geometry* verbose mode - [ preamble ] result:
+* driver: dvips
+* paper: a5paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(50.5326pt, 294.76926pt, 75.79893pt)
+* v-part:(T,H,B)=(71.70166pt, 418.25368pt, 107.55254pt)
+* \paperwidth=421.10078pt
+* \paperheight=597.50787pt
+* \textwidth=294.76926pt
+* \textheight=418.25368pt
+* \oddsidemargin=-21.7374pt
+* \evensidemargin=3.52895pt
+* \topmargin=-32.44212pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=11.0pt
+* \footskip=27.46295pt
+* \marginparwidth=51.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 18.
+(Font)              <12> on input line 20.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 18.
- [1
+(Font)              <8> on input line 20.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 20.
+[1
 
 
 ] [2
 
-]
-(/Users/philippeperret/Sites/table_narration/publication/source.toc
+] (/Users/philippeperret/Sites/table_narration/publication/source.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+(Font)              <10.95> on input line 3.
 )
-\tf@toc=\write3
-\openout3 = `source.toc'.
+\tf@toc=\write4
+\openout4 = `source.toc'.
 
 
 (/Users/philippeperret/Sites/table_narration/publication/content.tex [3]
@@ -548,19 +612,36 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ]
 Chapitre 1.
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--6
+
+ []
+
 [5] [6
 
 ]
 Chapitre 2.
-) [7] (/Users/philippeperret/Sites/table_narration/publication/source.aux) ) 
+
+Overfull \hbox (1.03236pt too wide) in paragraph at lines 9--9
+[]\T1/aer/bx/n/14.4 Deuxième page du deuxième cha-pitre 
+ []
+
+) (/Users/philippeperret/Sites/table_narration/publication/biblio.tex [7]
+[8
+
+]) (/Users/philippeperret/Sites/table_narration/publication/source.ind
+[9] [10
+
+
+]) (/Users/philippeperret/Sites/table_narration/publication/source.aux) ) 
 Here is how much of TeX's memory you used:
- 2487 strings out of 493316
- 32438 string characters out of 6137929
- 86759 words of memory out of 5000000
- 5903 multiletter control sequences out of 15000+600000
- 21617 words of font info for 36 fonts, out of 8000000 for 9000
+ 2996 strings out of 493316
+ 40152 string characters out of 6137929
+ 99702 words of memory out of 5000000
+ 6389 multiletter control sequences out of 15000+600000
+ 24623 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 35i,6n,23p,272b,314s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 35i,6n,23p,417b,318s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on /Users/philippeperret/Sites/table_narration/publication/sourc
-e.dvi (7 pages, 3568 bytes).
+e.dvi (10 pages, 4532 bytes).

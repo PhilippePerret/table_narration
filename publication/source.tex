@@ -1,17 +1,19 @@
-\documentclass[12pt,french,twoside,a4paper]{book}
+\documentclass[11pt,french,twoside,a5paper]{book}
 
 %=============== Entête ==================
 \usepackage[french]{babel}
-\usepackage{a4}
+\usepackage[a5paper]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[cyr]{aeguill}
 \usepackage{epsfig}
 \usepackage{float}
 \usepackage{color}
+\usepackage{makeidx}
 \bibliographystyle{plain} % Style bibliographique
 \title{Le vrai titre du livre}
 \author{Philippe Perret}
+\makeindex
 %=============== /Entête ==================
 
 \begin{document}
@@ -19,4 +21,6 @@
 
 \tableofcontents
 \input{content.tex}
+\input{biblio.tex}
+\printindex
 \end{document}

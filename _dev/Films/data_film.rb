@@ -9,11 +9,11 @@ Voir les données du film (régler l'identifiant ci-dessus)
 
 require '../interdata/film/ruby/model/film'
 
-FILM_ID = 'EtUnAutrePourVoir'
+FILM_ID = 'Metropolis'
 
 film = Film.new FILM_ID
 if film.exists?
-  puts film.data.collect{|k,v| "#{k} => #{v.inspect}"}.join("\n")
+  puts film.data.collect{|k,v| "#{k.inspect} => #{v.inspect}"}.join("\n")
 else
   puts "### LE FILM D'IDENTIFIANT \n\t`#{FILM_ID}'\nN'EXISTE PAS dans\n\t`#{Film::folder_fiches_identite}/'…"
 end

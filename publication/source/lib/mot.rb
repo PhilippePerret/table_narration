@@ -33,6 +33,19 @@ class Mot
       return unless MOTS[mot].nil?
       MOTS[mot] = imot
     end
+    
+    # Construction de l'annexe contenant la définition des mots
+    # 
+    # Notes
+    # -----
+    #   * Je ne sais pas encore comment je vais la faire, mais je n'ai pas
+    #     envie de passer par la bibliographie. Ça sera certainement un fichier
+    #     simplement à inclure dans le fichier source.tex (\input{file})
+    # 
+    def build_annexe
+      # TODO À implémenter
+    end
+    
   end
   
   # ---------------------------------------------------------------------
@@ -56,7 +69,7 @@ class Mot
     # On le mémorise si ce n'est pas encore fait.
     self.class.add self
     displayed_mot = options.shift
-    "\\index{#{mot}}#{displayed_mot}"
+    "#{displayed_mot}\\index{#{id}@#{mot}}"
   end
   
 end

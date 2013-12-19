@@ -23,7 +23,11 @@ document = RLatex::document
 # Définir le document
 document.author = "Philippe Perret"
 document.type 'book'
-document.options.font_size    '12pt'
+document.options.paper_size   'a5paper'
+document.options.font_size    '11pt'
+document.options.with_index   true
+document.options.with_biblio  true
+
 # @note : les autres options sont définies dans le fichier `defaults.yml` de RLatex
 
 # Ici, tout ce qu'il y a à faire pour nourir RLatex
@@ -60,6 +64,12 @@ document.options.font_size    '12pt'
 COLLECTION_ID = 'test'
 BOOK_ID       = 0
 Fiche::new(BOOK_ID, 'book').publish
+
+# Fabrication de la bibliographie (custom)
+Film::build_biblio
+
+# On construit l'annexe définition des mots du scénodico
+Mot::build_annexe
 
 # On produit le fichier `source.tex`
 document.build_source
