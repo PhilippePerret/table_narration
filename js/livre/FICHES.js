@@ -45,7 +45,8 @@ window.FICHES = {
     * @final
     */
   PARAMETRES_FICHE:[
-  {id:'ptype', hname:"Type de paragraphe", only:'para', value:['text':"Texte", 'code':"Code", 'file':"Fichier"]}
+    {id:'ptype', hname:"Type de paragraphe", only:'para', 
+      value:["text:Texte", "code:Code", "file:Fichier", "list:Liste"]}
   ],
   
   /**

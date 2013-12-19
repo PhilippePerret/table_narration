@@ -128,10 +128,36 @@ class Fiche
     File.open(path, 'wb'){|f| f.write (Marshal.dump @data)}
   end
   
+  # ---------------------------------------------------------------------
+  #   Data
+  # ---------------------------------------------------------------------
+  
+  # Retourne la "main prop" de la fiche, c'est-à-dire son titre ou son
+  # texte (pour les paragraphes)
+  def main_value
+    data[paragraph? ? 'texte' : 'titre']
+  end
+  
   # Return l'id:type de la fiche (pour les listes)
   def idtype
     @idtype ||= "#{id}:#{type}"
   end
+  
+  # Retourne l'instance {Fiche} du parent (si la fiche a un parent)
+  def parent
+    return nil if data['parent'].nil?
+    Fiche::get(data['parent']['id'], data['parent']['type'])
+  end
+  
+  # Retourne l'instance {Fiche} du livre de la fiche si elle est dans un livre
+  # 
+  def book
+    @book ||= get_book
+  end
+  
+  # ---------------------------------------------------------------------
+  #   Status
+  # ---------------------------------------------------------------------
   
   def exists?
     return File.exists? path
@@ -151,17 +177,6 @@ class Fiche
     @is_invisible ||= false == visible?
   end
   
-  # Retourne l'instance {Fiche} du parent (si la fiche a un parent)
-  def parent
-    return nil if data['parent'].nil?
-    Fiche::get(data['parent']['id'], data['parent']['type'])
-  end
-  
-  # Retourne l'instance {Fiche} du livre de la fiche si elle est dans un livre
-  # 
-  def book
-    @book ||= get_book
-  end
   def get_book
     return nil if parent.nil?
     return parent if chapter?
@@ -200,7 +215,7 @@ class Fiche
   end
   
   def printed?
-    data['printed'] != false
+    data['not_printed'] != true
   end
   
   # Return toutes les données des enfants de la fiche.
@@ -235,6 +250,17 @@ class Fiche
     return d
   end
   
+  # Retourne la liste {Array} des enfants comme liste d'instances
+  # fiche
+  # 
+  def children_as_fiches
+    return [] unless hasChildren?
+    children.collect{|dchild| Fiche::new( dchild['id'], dchild['type'])}
+  end
+  
+  # Retourne la donnée enfants comme liste de {Hash} contenant
+  # 'id' et 'type'
+  # 
   def children
     @children ||= data['enfants']
   end

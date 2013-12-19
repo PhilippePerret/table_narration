@@ -1,0 +1,7 @@
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Premier chapitre}{5}
+\contentsline {section}{\numberline {1.1}Premi\IeC {\`e}re page du premier chapitre}{5}
+\contentsline {section}{\numberline {1.2}Deuxi\IeC {\`e}me page du premier chapitre}{5}
+\contentsline {chapter}{\numberline {2}Deuxi\IeC {\`e}me chapitre}{7}
+\contentsline {section}{\numberline {2.1}Premi\IeC {\`e}re page du deuxi\IeC {\`e}me chapitre}{7}
+\contentsline {section}{\numberline {2.2}Deuxi\IeC {\`e}me page du deuxi\IeC {\`e}me chapitre}{7}
