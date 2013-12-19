@@ -98,11 +98,11 @@ class Film
   def to_biblio
     <<-EOI
 \\bibitem{#{id}}
-  \\textbf{#{titre.to_latex}},
+  \\textsc{\\textbf{#{formate_titre}}},
   #{writers.to_latex},
-  #{annee},\\newline
-  #{resume.to_latex}
-
+  #{annee}.\\newline
+  {\\advance\\baselineskip -3pt {\\scriptsize #{resume.to_latex}} \\par}\\newline
+  \\backref
     EOI
   end
   # Retourne le titre formaté pour la bibliographie
@@ -110,14 +110,15 @@ class Film
   def formate_titre
     ftitre = titre_fr || titre
     ftitre += " (#{titre})" unless titre_fr.nil?
-    ftitre
+    ftitre.to_latex
   end
   
   # Retourne les auteurs du film
   # 
   def writers
     (data[:auteurs] + data[:realisateur]).collect do |dauteur|
-      "#{dauteur[:prenom]} #{dauteur[:nom]}"
+      "#{dauteur[:prenom]} #{dauteur[:nom]}" +
+      (dauteur[:objet].to_s == "" ? "" : " (#{dauteur[:objet]})")
     end.join(', ')
   end
 end

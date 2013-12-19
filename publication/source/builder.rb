@@ -5,6 +5,16 @@ Constructeur des livres
 
 C'est ce script principal qu'utilise RLatex pour produire le fichier `source.tex` et autres fichiers utiles pour produire les livres et/ou les fichiers indispensables.
 
+
+=== TO DO TO DO TO DO ===
+
+Reprendre le dernier signet ajouter et ré-essayer la bibliographie en ajoutant 
+le :
+
+    \printbibliography
+
+… que je pense avoir oublié…
+
 =end
 require './ruby/model/collection'
 require './ruby/model/fiche'
@@ -23,10 +33,12 @@ document = RLatex::document
 # Définir le document
 document.author = "Philippe Perret"
 document.type 'book'
-document.options.paper_size   'a5paper'
-document.options.font_size    '11pt'
-document.options.with_index   true
-document.options.with_biblio  true
+document.options.paper_size     'a5paper'
+document.options.font_size      '11pt'
+document.options.with_index     true
+document.options.with_biblio    true
+document.options.bibliography_title  'Filmographie'
+document.options.back_references true
 
 # @note : les autres options sont définies dans le fichier `defaults.yml` de RLatex
 
