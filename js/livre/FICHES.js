@@ -681,6 +681,16 @@ window.FICHES = {
 }
 
 Object.defineProperties(FICHES,{
+  /**
+    * Initialisation complète des fiches
+    *
+    * Notes
+    * -----
+    *   * C'est une propriété complexe (=> à appeler sans parenthèses)
+    *   * Elle procède aussi au nettoyage de la table.
+    *
+    * @method init_all
+    */
   "init_all":{
     get:function(){
       this.length     = 0

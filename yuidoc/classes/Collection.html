@@ -263,6 +263,27 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_choose">choose</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_clear (sans parenthèses)">clear (sans parenthèses)</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_confirm_load">confirm_load</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_destroy">destroy</a>
 
                                 
@@ -313,6 +334,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_retour_backup">retour_backup</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_retour_load">retour_load</a>
 
                                 
                                 
@@ -434,7 +462,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l412"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:412</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l488"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:488</code></a>
         
         </p>
 
@@ -455,6 +483,303 @@ collection courante (sauf en mode test).</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_choose" class="method item">
+    <h3 class="name"><code>choose</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>name</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>confirmed</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag async">async</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l83"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:83</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Permet de choisir la collection à afficher.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Pour le moment, il y a trois collections possibles : la collection
+&quot;narration&quot; (pour laquelle a été créée cette app), la collection &quot;test&quot;
+qui permet de faire les tests unitaires et d&#39;intégration et la collection
+&quot;publishing&quot; qui permet de faire les tests de publication.</li>
+<li>La méthode produit une alerte si des éléments modifiés n&#39;ont pas été
+enregistrés.</li>
+<li>La méthode initialise tout avant de charger (Collection.clear).</li>
+<li>Si on n&#39;est pas en mode test, un backup est lancé à la fin du chargement.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Le nom de la collection à charger.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">confirmed</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Lorsque des éléments étaient modifiés, la fonction
+                  a demandé confirmation. Le résultat de la confirmation, lorsqu&#39;il
+                  est positif, est renvoyé par cet argument.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <p>True si le chargement de la collection a été lancé. False sinon.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_clear (sans parenthèses)" class="method item">
+    <h3 class="name"><code>clear (sans parenthèses)</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l269"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:269</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Efface complètement la collection courante (avant chargement d&#39;une autre
+collection)</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_confirm_load" class="method item">
+    <h3 class="name"><code>confirm_load</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>poursuivre</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag async">async</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l242"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:242</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Demande confirmation avant de charger une nouvelle collection, quand des
+éléments n&#39;ont pas été sauvés (this.modified est true).</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La méthode utilise <code>UI.confirm</code>.</li>
+<li>Elle est considérée comme asynchrone puisque la méthode UI.confirm l&#39;est.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">poursuivre</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>La méthode pour suivre.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -558,7 +883,7 @@ test, pas la &quot;current&quot;.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l206"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:206</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l282"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:282</code></a>
         
         </p>
 
@@ -634,7 +959,7 @@ où elle est activée (cf. les handy methods)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l131"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:131</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l171"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:171</code></a>
         
         </p>
 
@@ -741,7 +1066,7 @@ et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l179"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:179</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l219"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:219</code></a>
         
         </p>
 
@@ -830,7 +1155,7 @@ et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l230"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:230</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l306"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:306</code></a>
         
         </p>
 
@@ -889,7 +1214,7 @@ et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l388"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:388</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l464"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:464</code></a>
         
         </p>
 
@@ -948,7 +1273,7 @@ et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l313"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:313</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l389"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:389</code></a>
         
         </p>
 
@@ -1019,7 +1344,7 @@ et ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)</
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l427"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:427</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l503"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:503</code></a>
         
         </p>
 
@@ -1041,6 +1366,105 @@ l&#39;application est prête à travailler (<code>window.ready</code>)</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_retour_load" class="method item">
+    <h3 class="name"><code>retour_load</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>rajax</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l117"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:117</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <h2 id="retour-du-chargement-de-la-collection">Retour du chargement de la collection</h2>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Cette méthode produit :<ul>
+<li>Dispatch des informations</li>
+<li>Construction de la collection</li>
+<li>Lancement d&#39;un backup (sauf en mode test)</li>
+<li>Préparation de l&#39;interface utilisateur</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">rajax</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Le retour ajax de la méthode load.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -1087,7 +1511,7 @@ l&#39;application est prête à travailler (<code>window.ready</code>)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l336"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:336</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l412"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:412</code></a>
         
         </p>
 
@@ -1165,7 +1589,7 @@ lieu pour voir si un enregistrement est nécessaire.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l371"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:371</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Collection.js.html#l447"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Collection.js:447</code></a>
         
         </p>
 

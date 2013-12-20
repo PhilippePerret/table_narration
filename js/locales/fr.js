@@ -11,6 +11,15 @@ window.LOCALE = {
     }
   },
   
+  // LOCALE.collection
+  collection:{
+    // LOCALE.collection.ask
+    ask:{
+      'things not save'       : "Des éléments ne sont pas sauvés. ",
+      'follow though'         : "Veux-tu réellement poursuivre ?"
+    }
+  },
+  
   fiche:{
     'want delete fiche'             : "Détruire définitivement cette fiche ?",
     'kill children'                 : "Détruire aussi tout son contenu",

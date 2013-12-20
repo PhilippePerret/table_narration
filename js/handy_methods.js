@@ -18,7 +18,7 @@
   * Notes
   * -----
   *   * En réalité, c'est une pseudo constante puisqu'elle est défini au chargement
-  *     de la collection, si le fichier `./mode_test` a été trouvé.
+  *     de la collection, si la collection courante (Collection.name) est "test"
   *
   * @property MODE_TEST
   * @static

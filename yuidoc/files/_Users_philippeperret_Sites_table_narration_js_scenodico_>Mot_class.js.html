@@ -236,7 +236,7 @@ $.extend(Mot.prototype,{
   {
     if(undefined == options) options = {}
     var bal = &quot;[mot:&quot;+this.id+&quot;|&quot;
-    bal += this.mot
+    bal += this.mot.toLowerCase()
     bal += &quot;]&quot;
     return bal
   },

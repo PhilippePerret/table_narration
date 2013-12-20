@@ -1,6 +1,11 @@
 <section id="header">
   <?php
-  $mode_normal = file_exists('./.mode_test') == false
+  // On est en mode "normal" si la collection courante n'est pas "test"
+  $mode_normal = true ;
+  if(file_exists('./.current'))
+  {
+    $mode_normal = file_get_contents('./.current') != "test";
+  }
   ?>
   <?php
   // -- Marque de sauvegarde de la collection --
@@ -37,13 +42,11 @@
       onclick="$.proxy(App.Prefs.show, App.Prefs)()"
       title="Affichage des préférences de l'application"
       />
-    <!-- Bouton pour lancer les tests (ouvrir Pure-JS-Tests) -->
-  	<input 
-      id="btn_test" 
-      style="display:<?php echo ($mode_normal ? 'inline' : 'none') ?>;" 
-      type="button" 
-      value="---> TEST" 
-      onclick="App.test()" />
+    <!-- Menu des collections courantes -->
+    <select
+      id="collections"
+      onchange="$.proxy(Collection.choose, Collection, this.value)()"
+      ></select>
     <!-- Bouton pour revenir au mode normal -->
     <input 
       id="btn_collection_originale" 

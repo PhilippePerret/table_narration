@@ -280,13 +280,56 @@ $.extend(Collection, {
     */
   books:[],
   
-  /*
-   *  Retour du chargement de la collection
-   *  Il faut maintenant dispatcher les éléments et remplir la table
-   *  
-   *  À la fin du chargement, on lance une sauvegarde et on prépare l&#x27;interface
-   *  si nécessaire.
-   */
+  /**
+    * Permet de choisir la collection à afficher.
+    *
+    * Notes
+    * -----
+    *   * Pour le moment, il y a trois collections possibles : la collection
+    *     &quot;narration&quot; (pour laquelle a été créée cette app), la collection &quot;test&quot;
+    *     qui permet de faire les tests unitaires et d&#x27;intégration et la collection
+    *     &quot;publishing&quot; qui permet de faire les tests de publication.
+    *   * La méthode produit une alerte si des éléments modifiés n&#x27;ont pas été
+    *     enregistrés.
+    *   * La méthode initialise tout avant de charger (Collection.clear).
+    *   * Si on n&#x27;est pas en mode test, un backup est lancé à la fin du chargement.
+    *
+    * @method choose
+    * @async
+    *
+    * @param  {String} name   Le nom de la collection à charger.
+    * @param  {Boolean} confirmed Lorsque des éléments étaient modifiés, la fonction
+    *                   a demandé confirmation. Le résultat de la confirmation, lorsqu&#x27;il
+    *                   est positif, est renvoyé par cet argument.
+    *
+    * @return {Boolean} True si le chargement de la collection a été lancé. False sinon.
+    *
+    */
+  choose:function(name, confirmed)
+  {
+    if(undefined == confirmed &amp;&amp; this.modified) return this.confirm_load($.proxy(this.choose, this, name))
+    this.clear
+    Ajax.send({script:&quot;collection/load&quot;, collection_name:name}, $.proxy(this.retour_load, this))
+    return true
+  },
+  
+  
+  /**
+    * Retour du chargement de la collection
+    * -------------------------------------
+    *
+    * Notes
+    * -----
+    *   * Cette méthode produit :
+    *     * Dispatch des informations
+    *     * Construction de la collection
+    *     * Lancement d&#x27;un backup (sauf en mode test)
+    *     * Préparation de l&#x27;interface utilisateur
+    *
+    * @method retour_load
+    * @param  {Object} rajax  Le retour ajax de la méthode load.
+    *
+    */
   retour_load:function(rajax)
   {
     if(rajax.ok)
@@ -296,16 +339,13 @@ $.extend(Collection, {
     else F.error(rajax.message)
     this.loading = false
     if(false == UI.prepared) UI.prepare
-    window.MODE_TEST = rajax.mode_test || this.name == &#x27;test&#x27;
+    window.MODE_TEST = (this.name == &#x27;test&#x27;)
     if(MODE_TEST){ 
-      // NON :
-      // App.test();
-      // Sinon, ça arrive chaque fois qu&#x27;un test recharge
       F.show(&quot;Penser à quitter le mode test en finissant, par commodité.&quot;, {keep:true})
-      window.ready = true
     }
+    window.ready = true
     if( rajax.paragraph_styles_updated ) F.show(&quot;La liste des styles de paragraphe a été updatée.&quot;)
-    this.backup
+    if(!MODE_TEST) this.backup
   },
   
   // Noter que ce retour n&#x27;est utilisé que lorsqu&#x27;on force un backup
@@ -397,11 +437,47 @@ $.extend(Collection, {
     if(data.preferences) App.preferences = data.preferences
     // Configuration courante (note: le fait de la définir l&#x27;applique)
     App.current_configuration = data.current_configuration
+  },
+  
+  /**
+    * Demande confirmation avant de charger une nouvelle collection, quand des
+    * éléments n&#x27;ont pas été sauvés (this.modified est true).
+    *
+    * Notes
+    * -----
+    *   * La méthode utilise &#x60;UI.confirm&#x60;.
+    *   * Elle est considérée comme asynchrone puisque la méthode UI.confirm l&#x27;est.
+    *
+    * @method confirm_load
+    * @async
+    * @param  {Function} poursuivre La méthode pour suivre.
+    *
+    */
+  confirm_load:function(poursuivre){
+    UI.confirm(
+      LOCALE.collection.ask[&#x27;things not save&#x27;]+LOCALE.collection.ask[&#x27;follow though&#x27;],
+      poursuivre, undefined,
+      {ok_name:&quot;Ignorer les changements&quot;}
+    )
   }
+  
   
 })
 
 Object.defineProperties(Collection,{
+  
+  /**
+    * Efface complètement la collection courante (avant chargement d&#x27;une autre
+    * collection)
+    *
+    * @method clear (sans parenthèses)
+    *
+    */
+  &quot;clear&quot;:{
+    get:function(){
+      FICHES.init_all
+    }
+  },
   
   /**
     * Les deux méthodes &#x60;disable_save&#x27; et &#x27;enable_save&#x27; permettent

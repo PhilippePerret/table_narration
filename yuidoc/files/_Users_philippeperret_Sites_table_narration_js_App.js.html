@@ -320,52 +320,34 @@ $.extend(window.App, {
     }
   },
   
-  // Pour lancer le test de l&#x27;application
-  // 
-  // @note: la méthode lance aussi un appel à un script ajax 
-  // qui va mettre de côté la collection actuelle pour ne pas y 
-  // toucher pendant les tests
+  /**
+    * Pour passer en mode test.
+    * Notes
+    * -----
+    *   * En mode test, c&#x27;est le document ./collection/test/ qui sera utilisé
+    *     donc aucun risque de modifier les collections en cours.
+    *
+    * @method test
+    */
 	test:function()
 	{
     window.open(&quot;./tests.php&quot;, &#x27;pure-javascript-test&#x27;)
-    Ajax.send({script:&quot;tests/mode_test&quot;}, $.proxy(this.suite_test, this))
-	},
-  suite_test:function(rajax)
-  {
-    if(rajax.ok)
-    {
-      F.show(&quot;Cliquer sur le bouton “-&gt; Mode normal” pour revenir à la collection originale&quot;+
-      &quot;\n\nDossier courant : &quot; + rajax.current_folder, {keep:true})
-      Collection.load
-      $(&#x27;input#btn_test&#x27;).hide()
-      $(&#x27;input#btn_collection_originale&#x27;).show()
-    }
-    else
-    {
-      F.error(rajax.message)
-    }
-  },
-  
-  // Repasser en mode normal (ce qui aura surtout pour effet de remettre le
-  // dossier collection courante)
+    F.show(&quot;Cliquer sur le bouton “-&gt; Mode normal” pour revenir à la collection originale&quot;+
+    $(&#x27;input#btn_test&#x27;).hide()
+    $(&#x27;input#btn_collection_originale&#x27;).show()
+    return Collection.choose(&#x27;test&#x27;)
+	},  
+  /**
+    * Pour repasser en mode normal, c&#x27;est-à-dire sortir du mode test
+    *
+    * @method mode_normal
+    *
+    */
   mode_normal:function()
   {
-    Ajax.send({script:&quot;tests/mode_normal&quot;}, $.proxy(this.suite_mode_normal,this))
-  },
-  suite_mode_normal:function(rajax)
-  {
-    if(rajax.ok)
-    {
-      F.show(&quot;Retour au mode normal. Rechargement de la collection en cours.&quot;+
-      &quot;\n\nDossier courant : &quot; + rajax.current_folder, {keep:true})
-      Collection.load
-      $(&#x27;input#btn_test&#x27;).show()
-      $(&#x27;input#btn_collection_originale&#x27;).hide()
-    }
-    else
-    {
-      F.error(rajax.message)
-    }
+    $(&#x27;input#btn_test&#x27;).show()
+    $(&#x27;input#btn_collection_originale&#x27;).hide()
+    return Collection.choose(&#x27;narration&#x27;)
   },
   
   

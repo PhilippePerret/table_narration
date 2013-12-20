@@ -80,13 +80,56 @@ $.extend(Collection, {
     */
   books:[],
   
-  /*
-   *  Retour du chargement de la collection
-   *  Il faut maintenant dispatcher les éléments et remplir la table
-   *  
-   *  À la fin du chargement, on lance une sauvegarde et on prépare l'interface
-   *  si nécessaire.
-   */
+  /**
+    * Permet de choisir la collection à afficher.
+    *
+    * Notes
+    * -----
+    *   * Pour le moment, il y a trois collections possibles : la collection
+    *     "narration" (pour laquelle a été créée cette app), la collection "test"
+    *     qui permet de faire les tests unitaires et d'intégration et la collection
+    *     "publishing" qui permet de faire les tests de publication.
+    *   * La méthode produit une alerte si des éléments modifiés n'ont pas été
+    *     enregistrés.
+    *   * La méthode initialise tout avant de charger (Collection.clear).
+    *   * Si on n'est pas en mode test, un backup est lancé à la fin du chargement.
+    *
+    * @method choose
+    * @async
+    *
+    * @param  {String} name   Le nom de la collection à charger.
+    * @param  {Boolean} confirmed Lorsque des éléments étaient modifiés, la fonction
+    *                   a demandé confirmation. Le résultat de la confirmation, lorsqu'il
+    *                   est positif, est renvoyé par cet argument.
+    *
+    * @return {Boolean} True si le chargement de la collection a été lancé. False sinon.
+    *
+    */
+  choose:function(name, confirmed)
+  {
+    if(undefined == confirmed && this.modified) return this.confirm_load($.proxy(this.choose, this, name))
+    this.clear
+    Ajax.send({script:"collection/load", collection_name:name}, $.proxy(this.retour_load, this))
+    return true
+  },
+  
+  
+  /**
+    * Retour du chargement de la collection
+    * -------------------------------------
+    *
+    * Notes
+    * -----
+    *   * Cette méthode produit :
+    *     * Dispatch des informations
+    *     * Construction de la collection
+    *     * Lancement d'un backup (sauf en mode test)
+    *     * Préparation de l'interface utilisateur
+    *
+    * @method retour_load
+    * @param  {Object} rajax  Le retour ajax de la méthode load.
+    *
+    */
   retour_load:function(rajax)
   {
     if(rajax.ok)
@@ -96,16 +139,13 @@ $.extend(Collection, {
     else F.error(rajax.message)
     this.loading = false
     if(false == UI.prepared) UI.prepare
-    window.MODE_TEST = rajax.mode_test || this.name == 'test'
+    window.MODE_TEST = (this.name == 'test')
     if(MODE_TEST){ 
-      // NON :
-      // App.test();
-      // Sinon, ça arrive chaque fois qu'un test recharge
       F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
-      window.ready = true
     }
+    window.ready = true
     if( rajax.paragraph_styles_updated ) F.show("La liste des styles de paragraphe a été updatée.")
-    this.backup
+    if(!MODE_TEST) this.backup
   },
   
   // Noter que ce retour n'est utilisé que lorsqu'on force un backup
@@ -186,6 +226,9 @@ $.extend(Collection, {
     *     * Le nom de la collection courante
     *     * La configuration courante (ouverte/visibilité des fiches)
     *     * Les préférences de l'application.
+    *     * Au premier chargement, définit aussi `collections`, la liste
+    *       des noms des collections courantes, pour établir le menu qui 
+    *       permettra de passer de l'une à l'autre.
     *
     * @method dispatch_data
     * @param  {Object} data   La table des données à dispatcher
@@ -195,13 +238,50 @@ $.extend(Collection, {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
     this.name = data.collection_name
     if(data.preferences) App.preferences = data.preferences
+    if(data.collections) UI.peuple_menu_collections(data.collections)
     // Configuration courante (note: le fait de la définir l'applique)
     App.current_configuration = data.current_configuration
+  },
+  
+  /**
+    * Demande confirmation avant de charger une nouvelle collection, quand des
+    * éléments n'ont pas été sauvés (this.modified est true).
+    *
+    * Notes
+    * -----
+    *   * La méthode utilise `UI.confirm`.
+    *   * Elle est considérée comme asynchrone puisque la méthode UI.confirm l'est.
+    *
+    * @method confirm_load
+    * @async
+    * @param  {Function} poursuivre La méthode pour suivre.
+    *
+    */
+  confirm_load:function(poursuivre){
+    UI.confirm(
+      LOCALE.collection.ask['things not save']+LOCALE.collection.ask['follow though'],
+      poursuivre, undefined,
+      {ok_name:"Ignorer les changements"}
+    )
   }
+  
   
 })
 
 Object.defineProperties(Collection,{
+  
+  /**
+    * Efface complètement la collection courante (avant chargement d'une autre
+    * collection)
+    *
+    * @method clear (sans parenthèses)
+    *
+    */
+  "clear":{
+    get:function(){
+      FICHES.init_all
+    }
+  },
   
   /**
     * Les deux méthodes `disable_save' et 'enable_save' permettent

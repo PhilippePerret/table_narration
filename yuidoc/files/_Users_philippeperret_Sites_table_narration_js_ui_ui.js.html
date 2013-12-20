@@ -203,8 +203,6 @@
  */
 
 /**
-  *  Object UI
-  *  ---------
   *  Gestion de l&#x27;interface utilisateur
   *
   *  @class UI
@@ -215,27 +213,30 @@ if(&#x27;undefined&#x27; == typeof UI) UI = {}
 $.extend(UI, {
   
   /**
-   *  data-type pour un champ qui ne peut rester vide
-   *
-   *  @property   {String} FIELD_NOT_EMPTY
-   *  @final
-   */
+    * data-type pour un champ qui ne peut rester vide
+    *
+    * @property   {String} FIELD_NOT_EMPTY
+    * @static
+    * @final
+    */
   FIELD_NOT_EMPTY: &#x27;not_empty&#x27;,
 
   /**
-   *  data-type pour un champ de type &#x27;horloge&#x27;. La valeur de ce champ
-   *  sera automatiquement transformée en horloge valide, ou une erreur sera
-   *  produite si la valeur donnée est incompatible avec une horloge.
-   *
-   *  @property   {String} FIELD_HORLOGE
-   *  @final
-   */
+    * data-type pour un champ de type &#x27;horloge&#x27;. La valeur de ce champ
+    * sera automatiquement transformée en horloge valide, ou une erreur sera
+    * produite si la valeur donnée est incompatible avec une horloge.
+    *
+    * @property   {String} FIELD_HORLOGE
+    * @static
+    * @final
+    */
   FIELD_HORLOGE: &#x27;horloge&#x27;,
 
   /**
    *  data-type pour un champ de type nombre.
    *
    *  @property   {String} FIELD_NUMBER
+   *  @static
    *  @final
    */
   FIELD_NUMBER:&#x27;number&#x27;,
@@ -244,6 +245,7 @@ $.extend(UI, {
    *  data-type pour un champ de type pays (sur deux lettres minuscules).
    *
    *  @property   {String} FIELD_PAYS
+   *  @static
    *  @final
    */
   FIELD_PAYS:&#x27;pays&#x27;,
@@ -257,6 +259,7 @@ $.extend(UI, {
    *      réalisateur, d&#x27;un acteur, etc.
    *
    *  @property   {String} FIELD_PEOPLE
+   *  @static
    *  @final
    */
   FIELD_PEOPLE:&#x27;people&#x27;,
@@ -267,13 +270,48 @@ $.extend(UI, {
   prepared  :false,     // Mis à true quand l&#x27;UI est prête
   preparing :false,     // True pendant la préparation de l&#x27;interface
   
-  /*
-   *  Retourne la position +pos+ sur la grille ou val est [x, y]
-   *  @return {left: &lt;position horizontal&gt;, top:&lt;position verticale&gt;}
-   *  
-   *  @param  pos       Couple [x, y]
-   *  @param  snaping   Ne snap la position que si true
-   */
+  
+  /**
+    * Substitut à la méthode &#x60;confirm&#x60; affreuse de Firefox
+    *
+    * Notes
+    * -----
+    *   * Si aucune méthode de renoncement n&#x27;est défini (3e paramètres) et que
+    *     l&#x27;utilisateur renonce, ça interrompt simplement le processus courant.
+    *
+    * @method confirm
+    * @async
+    * @param  {String}    message       Le message de confirmation.
+    * @param  {Function}  suivreOk      La méthode qui sera appelée pour suivre si OK
+    * @param  {Function}  suivreCancel  (if any) la méthode poursuivre si renoncement.
+    * @param  {Object}    options       Optionnellement on peut définir d&#x27;autres valeurs :
+    *                                   cancel_name : Nom à donner au bouton Cancel
+    *                                   ok_name     : Nom à donner au bouton OK (confirmation)
+    *                                   id          : Identifiant à donner à la boite
+    */
+  confirm:function(message, suivreOk, suivreCancel, options)
+  {
+    if(undefined == options) options = {}
+    Edit.show({
+      id      : options.id || &#x27;confirm_&#x27;+Time.now(),
+      title   : message,
+      buttons : {
+        cancel :{name:(options.cancel_name || &quot;Renoncer&quot;), onclick:suivreCancel},
+        ok     :{name:(options.ok_name || &quot;OK&quot;), onclick:suivreOk}
+      }
+    })
+  },
+  
+  /**
+    * Retourne la position +pos+ sur la grille ou val est [x, y]
+    * 
+    * @method position_on_grid
+    *
+    * @param  {Array}   pos       Couple [x, y]
+    * @param  {Boolean} snaping   Ne snap la position que si true
+    * @return {Object} {left, top}
+    *
+    */
   position_on_grid:function(pos, snaping){
     if(!snaping) return {left:pos[0], top:pos[1]} ;
     return {

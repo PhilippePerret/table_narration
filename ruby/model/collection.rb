@@ -3,6 +3,47 @@ require 'json'
 class Collection
   class << self
     
+    # Nom de la collection courante
+    # 
+    # Il va déterminer le path de `folder` et donc le path de tous les éléments
+    # 
+    # @return {String} Le contenu du fichier './.current' ou le nom 'current'
+    # par défaut.
+    # 
+    def name
+      @name ||= begin
+        if File.exists? path_current
+          File.read path_current
+        else
+          'narration'
+        end
+      end
+    end
+    
+    # Retourne la liste de toutes les collections
+    # 
+    # @return {Array} Liste des noms des collections dans le dossier ./collection
+    # 
+    def all_names
+      Dir["./collection/*"].collect do |path|
+        next nil unless (File.directory? path )
+        next nil if File.basename(path) == 'backup'
+        File.basename(path)
+      end.reject{|el| el.nil? }
+    end
+    # Choisit la collection courante
+    # 
+    # @param  {String}  name Le nom de la collection à utiliser, correspondant au
+    #                   nom de son dossier dans ./collection/
+    def choose new_name
+      if name != new_name
+        reset_values
+        File.unlink path_current if File.exists? path_current
+        File.open(path_current, 'wb'){|f| f.write new_name}
+        @name = new_name
+      end
+    end
+    
     # Opération sur toutes les fiches de la collection
     # 
     def each_fiche
@@ -174,10 +215,6 @@ class Collection
       @folder_backups ||= (getfolder File.join('.', 'collection', 'backup'))
     end
 
-    # Le nom de la collection courante
-    def name
-      @name ||= (mode_test? ? 'test' : 'current')
-    end
     
     def folder
       @folder ||= File.join('.', 'collection', name)
@@ -190,7 +227,7 @@ class Collection
     
     # Return TRUE si on est en mode test
     def mode_test?
-      @mode_test ||= File.exists?('./.mode_test')
+      @mode_test ||= (name == 'test')
     end
     
     def reset_values
@@ -199,16 +236,13 @@ class Collection
       @mode_test = nil
       Fiche::folder = nil
     end
-    # Pour basculer vers le mode test.
-    # La méthode met en dossier de collection courant le dossier de la collection
-    # test
-    def bascule_vers_mode_test
-      reset_values
-      File.open('./.mode_test', 'wb'){|f| f.write("Application en mode test")}
+
+    
+    # Path au fichier contenant le nom de la collection courante
+    # 
+    def path_current
+      @path_current ||= File.join('.', '.current')
     end
-    def bascule_vers_mode_normal
-      reset_values
-      File.unlink('./.mode_test')
-    end
-  end
-end
+    
+  end # /self
+end # /Collection

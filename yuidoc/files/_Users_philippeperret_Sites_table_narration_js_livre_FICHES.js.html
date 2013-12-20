@@ -234,6 +234,38 @@ window.FICHES = {
     &#x27;book&#x27;  : {level: 20, defvalue: &quot;TITRE_LIVRE&quot;,      child_type:&#x27;chap&#x27;,  parent_type:null,   hname: &quot;livre&quot;}
     },
 
+  /**
+    * Données pour les paramètres des fiches (verso)
+    * Notes
+    * -----
+    *   * L&#x27;&#x60;id&#x60; correspond au nom de la propriété de classe
+    * @property PARAMETRES_FICHE
+    * @type     {Array} d&#x27;{Object}
+    * @statif
+    * @final
+    */
+  PARAMETRES_FICHE:[
+    {id:&#x27;ptype&#x27;, hname:&quot;Type de paragraphe&quot;, only:&#x27;para&#x27;, 
+      value:[&quot;text:Texte&quot;, &quot;code:Code&quot;, &quot;file:Fichier&quot;, &quot;list:Liste&quot;]}
+  ],
+  
+  /**
+    * Données pour les options des fiches (verso)
+    * Notes
+    * -----
+    *   * Pour des types propres à un type de fiche particulier, utiliser
+    *     &#x60;only:&lt;type&gt;&#x60; ou &#x60;sauf:&lt;type&gt;&#x60;
+    *   * L&#x27;&#x60;id&#x60; correspond au nom de la propriété de classe
+    *
+    * @property OPTIONS_FICHE
+    * @type     {Array} d&#x27;{Object}
+    * @static
+    * @final
+    */
+  OPTIONS_FICHE:[
+    {id:&#x27;not_printed&#x27;, label:&quot;Ne pas imprimer&quot;, default:false}
+    ],
+
   /*
    *  PROPRIÉTÉS GÉNÉRALES
    *  
@@ -849,6 +881,16 @@ window.FICHES = {
 }
 
 Object.defineProperties(FICHES,{
+  /**
+    * Initialisation complète des fiches
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe (=&gt; à appeler sans parenthèses)
+    *   * Elle procède aussi au nettoyage de la table.
+    *
+    * @method init_all
+    */
   &quot;init_all&quot;:{
     get:function(){
       this.length     = 0

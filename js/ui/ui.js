@@ -3,8 +3,6 @@
  */
 
 /**
-  *  Object UI
-  *  ---------
   *  Gestion de l'interface utilisateur
   *
   *  @class UI
@@ -15,27 +13,30 @@ if('undefined' == typeof UI) UI = {}
 $.extend(UI, {
   
   /**
-   *  data-type pour un champ qui ne peut rester vide
-   *
-   *  @property   {String} FIELD_NOT_EMPTY
-   *  @final
-   */
+    * data-type pour un champ qui ne peut rester vide
+    *
+    * @property   {String} FIELD_NOT_EMPTY
+    * @static
+    * @final
+    */
   FIELD_NOT_EMPTY: 'not_empty',
 
   /**
-   *  data-type pour un champ de type 'horloge'. La valeur de ce champ
-   *  sera automatiquement transformée en horloge valide, ou une erreur sera
-   *  produite si la valeur donnée est incompatible avec une horloge.
-   *
-   *  @property   {String} FIELD_HORLOGE
-   *  @final
-   */
+    * data-type pour un champ de type 'horloge'. La valeur de ce champ
+    * sera automatiquement transformée en horloge valide, ou une erreur sera
+    * produite si la valeur donnée est incompatible avec une horloge.
+    *
+    * @property   {String} FIELD_HORLOGE
+    * @static
+    * @final
+    */
   FIELD_HORLOGE: 'horloge',
 
   /**
    *  data-type pour un champ de type nombre.
    *
    *  @property   {String} FIELD_NUMBER
+   *  @static
    *  @final
    */
   FIELD_NUMBER:'number',
@@ -44,6 +45,7 @@ $.extend(UI, {
    *  data-type pour un champ de type pays (sur deux lettres minuscules).
    *
    *  @property   {String} FIELD_PAYS
+   *  @static
    *  @final
    */
   FIELD_PAYS:'pays',
@@ -57,6 +59,7 @@ $.extend(UI, {
    *      réalisateur, d'un acteur, etc.
    *
    *  @property   {String} FIELD_PEOPLE
+   *  @static
    *  @final
    */
   FIELD_PEOPLE:'people',
@@ -67,13 +70,71 @@ $.extend(UI, {
   prepared  :false,     // Mis à true quand l'UI est prête
   preparing :false,     // True pendant la préparation de l'interface
   
-  /*
-   *  Retourne la position +pos+ sur la grille ou val est [x, y]
-   *  @return {left: <position horizontal>, top:<position verticale>}
-   *  
-   *  @param  pos       Couple [x, y]
-   *  @param  snaping   Ne snap la position que si true
-   */
+  
+  /**
+    * Substitut à la méthode `confirm` affreuse de Firefox
+    *
+    * Notes
+    * -----
+    *   * Si aucune méthode de renoncement n'est défini (3e paramètres) et que
+    *     l'utilisateur renonce, ça interrompt simplement le processus courant.
+    *
+    * @method confirm
+    * @async
+    * @param  {String}    message       Le message de confirmation.
+    * @param  {Function}  suivreOk      La méthode qui sera appelée pour suivre si OK
+    * @param  {Function}  suivreCancel  (if any) la méthode poursuivre si renoncement.
+    * @param  {Object}    options       Optionnellement on peut définir d'autres valeurs :
+    *                                   cancel_name : Nom à donner au bouton Cancel
+    *                                   ok_name     : Nom à donner au bouton OK (confirmation)
+    *                                   id          : Identifiant à donner à la boite
+    */
+  confirm:function(message, suivreOk, suivreCancel, options)
+  {
+    if(undefined == options) options = {}
+    Edit.show({
+      id      : options.id || 'confirm_'+Time.now(),
+      title   : message,
+      buttons : {
+        cancel :{name:(options.cancel_name || "Renoncer"), onclick:suivreCancel},
+        ok     :{name:(options.ok_name || "OK"), onclick:suivreOk}
+      }
+    })
+  },
+  
+  /**
+    * Peuple le menu des collections permettant de les choisir
+    *
+    * Notes
+    * -----
+    *   * La méthode sélectionne aussi la collection courante, donc elle doit
+    *     être appelée après la définition de Collection.name
+    *   * Puisque la méthode ne vide pas le select, elle peut être appelée
+    *     pour ajouter une collection à la volée, si cette fonctionnalité existe
+    *     à l'avenir.
+    *
+    * @method peuple_menu_collections
+    * @param  {Array} collections   Liste des noms de collections.
+    *
+    */
+  peuple_menu_collections:function(collections)
+  {
+    var menu = $('select#collections')
+    L(collections).each(function(name){
+      menu.append('<option name="'+name+'">'+name+'</option>')
+    })
+    menu.val(Collection.name)
+  },
+  /**
+    * Retourne la position +pos+ sur la grille ou val est [x, y]
+    * 
+    * @method position_on_grid
+    *
+    * @param  {Array}   pos       Couple [x, y]
+    * @param  {Boolean} snaping   Ne snap la position que si true
+    * @return {Object} {left, top}
+    *
+    */
   position_on_grid:function(pos, snaping){
     if(!snaping) return {left:pos[0], top:pos[1]} ;
     return {

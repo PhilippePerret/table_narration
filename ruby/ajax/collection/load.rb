@@ -1,8 +1,10 @@
 #encoding: UTF-8
 =begin
 
-Chargement de la collection (normale ou test)
----------------------------------------------
+Chargement de la collection
+---------------------------
+
+* La collection chargée est déterminée par (param :collection_name)
 
 Ce script retourne TOUTES les informations utiles pour l'affichage de la collection
 
@@ -37,9 +39,10 @@ des fiches).
 
 NOTES
 -----
-
-  @ Le chargement de la collection vérifie aussi si on est en mode normal ou
-    en mode test et remonte l'information ::mode_test => true/false
+  * Il n'y a plus à proprement parler de "mode test", c'est simplement le nom
+    de la collection courante qui détermine ce mode. On est en mode test lorsque
+    le fichier ./current (qui contient le nom de la collection courante) contient
+     "test"
 
 =end
 require 'json'
@@ -81,6 +84,23 @@ def get_all_fiches_on_table
   end
 end
 
+# Définition de la collection courante
+# ------------------------------------
+# 
+# Notes
+# -----
+#   * Si le paramètre :collection_name est défini, on doit changer la
+#     collection courante. Sinon, on utilise la collection courante
+#     définie dans le fichier ./.current
+#   * Si :collection_name n'est pas défini, c'est un premier chargement.
+#     On remonte aussi le nom des collections courantes pour préparer le 
+#     menu des collections dans l'interface (2e temps, après la définition
+#     de @data).
+# 
+unless (param :collection_name).nil?
+  Collection::choose (param :collection_name)
+end
+
 @data = {
   :fiches   => [],
   :data     => {
@@ -90,6 +110,12 @@ end
     :collection_name        => Collection::name
   }
 }
+# On relève tous les noms de collection pour peupler le menu
+# collections de l'interface
+if (param :collection_name).nil?
+  @data[:data][:collections] = Collection::all_names
+end
+
 get_all_fiches_on_table
 
 # Détruire la configuration courante (ce qui permettra d'enregistrer la
@@ -97,4 +123,3 @@ get_all_fiches_on_table
 # Collection::kill_current_configuration
 
 RETOUR_AJAX[:data]      = @data
-RETOUR_AJAX[:mode_test] = File.exists?('./.mode_test')

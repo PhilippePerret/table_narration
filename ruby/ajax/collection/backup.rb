@@ -12,7 +12,7 @@ Pas de backup quand on est en mode test.
 
 =end
 
-unless Collection::mode_test?
+unless Collection::name == "test"
   now = Time.now
   archive_suffixe = now.strftime("%y%m%d")
   archive_suffixe += now.strftime("\_%H\h%M") if param(:force_backup).to_i == 1

@@ -174,6 +174,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js": {
             "name": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "modules": {
@@ -1091,7 +1098,7 @@
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
             "line": 5,
-            "description": "Object UI\n---------\nGestion de l'interface utilisateur",
+            "description": "Gestion de l'interface utilisateur",
             "static": 1
         },
         "App": {
@@ -1309,7 +1316,31 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 43,
+            "line": 37,
+            "description": "Données pour les paramètres des fiches (verso)\nNotes\n-----\n  * L'`id` correspond au nom de la propriété de classe",
+            "itemtype": "property",
+            "name": "PARAMETRES_FICHE",
+            "type": "{Array} d'{Object}",
+            "statif": "",
+            "final": 1,
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 52,
+            "description": "Données pour les options des fiches (verso)\nNotes\n-----\n  * Pour des types propres à un type de fiche particulier, utiliser\n    `only:<type>` ou `sauf:<type>`\n  * L'`id` correspond au nom de la propriété de classe",
+            "itemtype": "property",
+            "name": "OPTIONS_FICHE",
+            "type": "{Array} d'{Object}",
+            "static": 1,
+            "final": 1,
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 75,
             "description": "Table des fiches instanciées\n----------------------------\n\n NOTES\n -----\n * En clé, l'identifiant ({Number}), en valeur l'instance de la fiche\n * C'est la méthode `create' de la fiche qui la met dans la liste\n * Utiliser la méthode `FICHES.get' pour obtenir une fiche de cette liste.",
             "itemtype": "property",
             "name": "list",
@@ -1319,7 +1350,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 58,
+            "line": 90,
             "description": "Nombre de fiches dans `list`",
             "itemtype": "property",
             "name": "length",
@@ -1330,7 +1361,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 72,
+            "line": 104,
             "description": "Fiche courante",
             "itemtype": "property",
             "name": "current",
@@ -1341,7 +1372,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 91,
+            "line": 123,
             "description": "Reçoit un objet DOM de fiche (class fiche) et\nretourne la fiche correspondante.",
             "itemtype": "method",
             "name": "domObj_to_fiche",
@@ -1361,7 +1392,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 249,
+            "line": 281,
             "description": "Dispatch des fiches\n\nNOTES\n-----\n  * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau\n    des parents ou des enfants. Les fiches sont instanciées à leur première\n    détection (soit ici, soit dans les enfants/parent des fiches traitées),\n    puis elles sont ensuites \"remplies\" avec les données si la fiche est\n    traitées plus tard ici.\n  * Par défaut, les fiches sont maintenant créées fermées, donc on doit\n    passer seulement en revue les fiches qui doivent être ouvertes.\n  * Cette méthode est appelée à tout chargement de fiches par groupe\n  * Seule une fiche passant par cette méthode peut voir si `loaded` marqué\n    true. Toutes les autres fiches sont considérées comme non chargées.\n\nPRODUIT\n-------\n  * La création de la fiche (toujours, entendu qu'une fiche passant par\n    ce dispatch a forcément toutes ses données)\n\n  * La tenue à jour de `Collection.books'",
             "itemtype": "method",
             "name": "dispatch",
@@ -1377,7 +1408,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 465,
+            "line": 497,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -1388,6 +1419,15 @@
                     "type": "Object"
                 }
             ],
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 684,
+            "description": "Initialisation complète des fiches\n\nNotes\n-----\n  * C'est une propriété complexe (=> à appeler sans parenthèses)\n  * Elle procède aussi au nettoyage de la table.",
+            "itemtype": "method",
+            "name": "init_all",
             "class": "FICHES",
             "module": "FICHES"
         },
@@ -1631,6 +1671,16 @@
             "class": "Fiche",
             "module": "fiche_dom",
             "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js",
+            "line": 54,
+            "description": "Code HTML du fieldset des options à l'arrière de toute fiche\n\nNotes\n-----\n  * Des options propres à chaque type de fiche peuvent être ajoutées en\n    définissant la propriété complexe `options_supplementaires` qui doit\n    renvoyer la liste des options.",
+            "itemtype": "property",
+            "name": "html_fieldset_options",
+            "type": "{String}",
+            "class": "Fiche",
+            "module": "fiche_dom"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
@@ -2363,22 +2413,24 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 17,
+            "line": 15,
             "description": "data-type pour un champ qui ne peut rester vide",
             "itemtype": "property",
             "name": "FIELD_NOT_EMPTY",
             "type": "String",
+            "static": 1,
             "final": 1,
             "class": "UI",
             "module": "UI"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 25,
+            "line": 24,
             "description": "data-type pour un champ de type 'horloge'. La valeur de ce champ\nsera automatiquement transformée en horloge valide, ou une erreur sera\nproduite si la valeur donnée est incompatible avec une horloge.",
             "itemtype": "property",
             "name": "FIELD_HORLOGE",
             "type": "String",
+            "static": 1,
             "final": 1,
             "class": "UI",
             "module": "UI"
@@ -2390,35 +2442,95 @@
             "itemtype": "property",
             "name": "FIELD_NUMBER",
             "type": "String",
+            "static": 1,
             "final": 1,
             "class": "UI",
             "module": "UI"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 43,
+            "line": 44,
             "description": "data-type pour un champ de type pays (sur deux lettres minuscules).",
             "itemtype": "property",
             "name": "FIELD_PAYS",
             "type": "String",
+            "static": 1,
             "final": 1,
             "class": "UI",
             "module": "UI"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 51,
+            "line": 53,
             "description": "data-type pour un champ de type « people », c'est-à-dire une liste de personnes.\n\nNOTES\n-----\n  * Le `data-format' du champ doit définir s'il s'agit d'un auteur, d'un\n    réalisateur, d'un acteur, etc.",
             "itemtype": "property",
             "name": "FIELD_PEOPLE",
             "type": "String",
+            "static": 1,
             "final": 1,
             "class": "UI",
             "module": "UI"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 119,
+            "line": 74,
+            "description": "Substitut à la méthode `confirm` affreuse de Firefox\n\nNotes\n-----\n  * Si aucune méthode de renoncement n'est défini (3e paramètres) et que\n    l'utilisateur renonce, ça interrompt simplement le processus courant.",
+            "itemtype": "method",
+            "name": "confirm",
+            "async": 1,
+            "params": [
+                {
+                    "name": "message",
+                    "description": "Le message de confirmation.",
+                    "type": "String"
+                },
+                {
+                    "name": "suivreOk",
+                    "description": "La méthode qui sera appelée pour suivre si OK",
+                    "type": "Function"
+                },
+                {
+                    "name": "suivreCancel",
+                    "description": "(if any) la méthode poursuivre si renoncement.",
+                    "type": "Function"
+                },
+                {
+                    "name": "options",
+                    "description": "Optionnellement on peut définir d'autres valeurs :\n                                  cancel_name : Nom à donner au bouton Cancel\n                                  ok_name     : Nom à donner au bouton OK (confirmation)\n                                  id          : Identifiant à donner à la boite",
+                    "type": "Object"
+                }
+            ],
+            "class": "UI",
+            "module": "UI"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
+            "line": 105,
+            "description": "Retourne la position +pos+ sur la grille ou val est [x, y]",
+            "itemtype": "method",
+            "name": "position_on_grid",
+            "params": [
+                {
+                    "name": "pos",
+                    "description": "Couple [x, y]",
+                    "type": "Array"
+                },
+                {
+                    "name": "snaping",
+                    "description": "Ne snap la position que si true",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "{left, top}",
+                "type": "Object"
+            },
+            "class": "UI",
+            "module": "UI"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
+            "line": 157,
             "description": "Méthode appelée lorsque l'on glisse un outil sur la table (principalement\npour créer une nouvelle fiche).\n\nNotes\n-----\n  * Les deux utilisations principales sont :\n    * La création d'une nouvelle fiche (à l'aide d'un outil-fiche)\n    * La sortie d'une fiche d'un de ses parents.",
             "itemtype": "method",
             "name": "ondrop_on_table",
@@ -2503,7 +2615,25 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 189,
+            "line": 123,
+            "description": "Pour passer en mode test.\nNotes\n-----\n  * En mode test, c'est le document ./collection/test/ qui sera utilisé\n    donc aucun risque de modifier les collections en cours.",
+            "itemtype": "method",
+            "name": "test",
+            "class": "App",
+            "module": "app"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 140,
+            "description": "Pour repasser en mode normal, c'est-à-dire sortir du mode test",
+            "itemtype": "method",
+            "name": "mode_normal",
+            "class": "App",
+            "module": "app"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 171,
             "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont on_table sur la table.",
             "itemtype": "property",
             "name": "current_config",
@@ -2516,7 +2646,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 236,
+            "line": 218,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",
@@ -2725,7 +2855,49 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 131,
+            "line": 83,
+            "description": "Permet de choisir la collection à afficher.\n\nNotes\n-----\n  * Pour le moment, il y a trois collections possibles : la collection\n    \"narration\" (pour laquelle a été créée cette app), la collection \"test\"\n    qui permet de faire les tests unitaires et d'intégration et la collection\n    \"publishing\" qui permet de faire les tests de publication.\n  * La méthode produit une alerte si des éléments modifiés n'ont pas été\n    enregistrés.\n  * La méthode initialise tout avant de charger (Collection.clear).\n  * Si on n'est pas en mode test, un backup est lancé à la fin du chargement.",
+            "itemtype": "method",
+            "name": "choose",
+            "async": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Le nom de la collection à charger.",
+                    "type": "String"
+                },
+                {
+                    "name": "confirmed",
+                    "description": "Lorsque des éléments étaient modifiés, la fonction\n                  a demandé confirmation. Le résultat de la confirmation, lorsqu'il\n                  est positif, est renvoyé par cet argument.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "True si le chargement de la collection a été lancé. False sinon.",
+                "type": "Boolean"
+            },
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 117,
+            "description": "Retour du chargement de la collection\n-------------------------------------\n\nNotes\n-----\n  * Cette méthode produit :\n    * Dispatch des informations\n    * Construction de la collection\n    * Lancement d'un backup (sauf en mode test)\n    * Préparation de l'interface utilisateur",
+            "itemtype": "method",
+            "name": "retour_load",
+            "params": [
+                {
+                    "name": "rajax",
+                    "description": "Le retour ajax de la méthode load.",
+                    "type": "Object"
+                }
+            ],
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 171,
             "description": "Méthode qui dispatche toutes les données +data+ remontées par\nla requête ajax `collection/load`.\n\nNotes\n-----\n  * Il s'agit de dispatcher :\n      * Les fiches (et d'afficher/ouvrir celles qui doivent l'être)\n      * Les données de l'application courante (comme le nom de la collection)\n      * Les préférences de l'application\n\nWARNING\n-------\nCette méthode ne doit pas être utilisée pour charger seulement une\nportion de la collection en cours de travail, car elle ré-initialise la\nliste des modifications en fin de dispatch (car la création des fiches\nles a marquées modifiées).\nEn d'autres termes, si des fiches sont chargées en groupe plus tard, il\nfaut passer par FICHES.dispatch (TODO: mais n'est-ce pas le même problème ?\net ne vaudrait-il pas mieux gérer la marque de la modification de la fiche ?)",
             "itemtype": "method",
             "name": "dispatch",
@@ -2741,7 +2913,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 179,
+            "line": 219,
             "description": "Dispatch les données remontées au chargement (en dehors des données fiches)\n\nNotes\n-----\n  * Il s'agit des données :\n    * Le dernier identifiant de fiche utilisé.\n    * Le nom de la collection courante\n    * La configuration courante (ouverte/visibilité des fiches)\n    * Les préférences de l'application.",
             "itemtype": "method",
             "name": "dispatch_data",
@@ -2757,7 +2929,33 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 206,
+            "line": 242,
+            "description": "Demande confirmation avant de charger une nouvelle collection, quand des\néléments n'ont pas été sauvés (this.modified est true).\n\nNotes\n-----\n  * La méthode utilise `UI.confirm`.\n  * Elle est considérée comme asynchrone puisque la méthode UI.confirm l'est.",
+            "itemtype": "method",
+            "name": "confirm_load",
+            "async": 1,
+            "params": [
+                {
+                    "name": "poursuivre",
+                    "description": "La méthode pour suivre.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 269,
+            "description": "Efface complètement la collection courante (avant chargement d'une autre\ncollection)",
+            "itemtype": "method",
+            "name": "clear (sans parenthèses)",
+            "class": "Collection",
+            "module": "Collection"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
+            "line": 282,
             "description": "Les deux méthodes `disable_save' et 'enable_save' permettent\nd'activer ou non la sauvegarde automatique (lorsque l'option AUTO\nest activé)\n\nNotes\n-----\n  * Ce sont des méthodes complexes, donc à invoquer sans parenthèses.  \n  * UTILISER CES DEUX MÉTHODES plutôt que stop_automatic_saving et\n    start_automatic_saving.\n  * L'idéal est même d'utiliser `stop_save` (exactement) et `restart_save`\n    qui arrête et relance la sauvegarde automatique seulement dans le cas\n    où elle est activée (cf. les handy methods)",
             "itemtype": "method",
             "name": "disable_save",
@@ -2766,7 +2964,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 230,
+            "line": 306,
             "description": "Réactive la sauvegarde automatique\nNotes\n-----\n  * Lire les notes de la méthode `disable_save`",
             "itemtype": "method",
             "name": "enable_save",
@@ -2775,7 +2973,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 313,
+            "line": 389,
             "description": "Retourne FALSE si quelque chose doit être sauvé (fiches, etc.)\n\nNotes\n-----\n  * La méthode est appelée par Collection.save()",
             "itemtype": "method",
             "name": "nothing_to_save (sans parenthèses)",
@@ -2787,7 +2985,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 336,
+            "line": 412,
             "description": "Sauvegarde de tous les éléments de la collection\n(fiches, configuration, etc.)\n\nNOTES\n-----\n  * Les fiches à sauvegarder (ou supprimer) sont contenues dans la liste\n    this.modifieds_list (sous forme d'instances)\n  * C'est la méthode `nothing_to_save` qui est appelée en premier\n    lieu pour voir si un enregistrement est nécessaire.\n  * La méthode lance une \"chaine de sauvegarde\" appelant `save_fiches`,\n    `save_config`, etc. jusqu'à `save_end`",
             "itemtype": "method",
             "name": "save",
@@ -2800,7 +2998,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 371,
+            "line": 447,
             "description": "Demande de la sauvegarde de la configuration courante\nNotes\n-----\n  * Seulement si les préférences le réclament",
             "itemtype": "method",
             "name": "save_config",
@@ -2809,7 +3007,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 388,
+            "line": 464,
             "description": "Fin de la sauvegarde générale",
             "itemtype": "method",
             "name": "end_save",
@@ -2818,7 +3016,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 412,
+            "line": 488,
             "description": "Lance le backup journalier\nNotes\n-----\n  * Cette procédure est lancée tout de suite après le chargement de la\n    collection courante (sauf en mode test).\n  * C'est une pseudo-méthode, donc à appeler sans parenthèses.",
             "itemtype": "method",
             "name": "backup",
@@ -2827,7 +3025,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
-            "line": 427,
+            "line": 503,
             "description": "Retour du backup quotidien\nNotes\n-----\n  * Même si c'est un backup quotidien unique, il est appelé à chaque\n    chargement de l'application.\n  * En mode normal (non test), c'est cette méthode qui définit que \n    l'application est prête à travailler (`window.ready`)",
             "itemtype": "method",
             "name": "retour_backup",
@@ -2871,7 +3069,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
             "line": 15,
-            "description": "Indicateur du mode test.\n\nNotes\n-----\n  * En réalité, c'est une pseudo constante puisqu'elle est défini au chargement\n    de la collection, si le fichier `./mode_test` a été trouvé.",
+            "description": "Indicateur du mode test.\n\nNotes\n-----\n  * En réalité, c'est une pseudo constante puisqu'elle est défini au chargement\n    de la collection, si la collection courante (Collection.name) est \"test\"",
             "itemtype": "property",
             "name": "MODE_TEST",
             "static": 1,
@@ -3058,7 +3256,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/keyboard_events.js",
-            "line": 154,
+            "line": 147,
             "description": "Méthode de gestion des évènements Keypress lorsqu'ils n'ont pas été traités\npar une méthode propre. C'est en quelque sorte les traitements par défaut.\nPar exemple, quel que soit le contexte, le raccourci CMD+S sauvera toujours la\ncollection.",
             "itemtype": "method",
             "name": "keypress_default",
@@ -3078,6 +3276,10 @@
         }
     ],
     "warnings": [
+        {
+            "message": "unknown tag: statif",
+            "line": " /Users/philippeperret/Sites/table_narration/js/livre/FICHES.js:37"
+        },
         {
             "message": "unknown tag: proprety",
             "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
