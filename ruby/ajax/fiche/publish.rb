@@ -8,7 +8,9 @@ Publication du livre param :book
 book = Fiche.new (param :book), 'book'
 if book.exists?
   begin
-    book.publish(param :options)    
+    path = File.join('.', './.publishing.rb')
+    File.open(path, 'wb'){|f| f.write "BOOK_ID=#{param :book}\nCOLLECTION='#{Collection::name}'" }
+    book.publish(param :options)
   rescue Exception => e
     RETOUR_AJAX[:ok] = false
     RETOUR_AJAX[:message] = "erreur"

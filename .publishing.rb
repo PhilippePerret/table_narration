@@ -1,0 +1,2 @@
+BOOK_ID=0
+COLLECTION='publishing'

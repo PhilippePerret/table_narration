@@ -42,7 +42,10 @@ $.extend(Book.prototype,{
       // Flash.clean()
       F.show("Publication effectuée avec succès.")
     }
-    else F.error(rajax.message)
+    else{ 
+      F.error(rajax.message)
+      F.show("Pas de panique… Ce livre a été enregistré pour publication. Il suffit de runner le module `./publication/source/builder.rb` dans TextMate pour que le livre soit finalisé.",{keep:true})
+    }
   }
   
 })

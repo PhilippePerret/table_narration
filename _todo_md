@@ -1,6 +1,21 @@
 IMPLÉMENTER
 -----------
-
+FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
+  Fabriquer mes propres procédure pour LaTex
+  - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico
+  - Faire la classe Livre qui fonctionnera comme les Films
+  Procédure :
+    - Passer en revue toutes les références pour renseigner FILMS, MOTS et LIVRES,
+      avec un `index` par élément. Noter qu'on peut très bien construire content.tex
+      en même temps puisque l'index sera toujours créé en même temps. SAUF si on veut
+      que le classement soit alphabétique.
+    - Lors de la construction des balises, utiliser l'index enregistré et le placer
+      derrière la référence, en gardant le style de LaTex pour les références.
+    - Essayer de placer un label derrière la référence pour pouvoir obtenir la page
+      de la référence (si pas possible, garder les mots en indexation normale)
+    - Construire enfin les chapitres fictifs Filmographie et Bibliographie.
+  
+  
 - Ne construire le verso de la fiche que lorsque la fiche est retounée
   > propriété volatile 'verso_prepared' (undefined au départ)
   > proprité méthode `prepare_verso`

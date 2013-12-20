@@ -1,8 +1,8 @@
-===== LOG 20 12 2013 - 15:20 =====
+===== LOG 20 12 2013 - 15:34 =====
 
-"--> Vérification des fichiers/dossiers utiles"
+"--> V\u00E9rification des fichiers/dossiers utiles"
 "--> Netoyage du dossier de publication"
-"Valeurs par défaut :"
+"Valeurs par d\u00E9faut :"
 "{:french=>true, :font_size=>\"11pt\", :recto_verso=>true, :paper_size=>\"a4paper\", :two_column=>false, :table_of_contents=>true, :with_biblio=>false, :back_references=>false, :with_index=>true, :packages=>[\"[french]{babel}\", \"[a5paper]{geometry}\", \"[utf8]{inputenc}\", \"[T1]{fontenc}\", \"[cyr]{aeguill}\", \"epsfig\", \"float\", \"color\", \"makeidx\"]}"
 "--> Production du fichier `content.tex`"
 "--> Production du fichier `source.tex`"
@@ -11,5 +11,5 @@
 "Folder : /Users/philippeperret/Sites/table_narration/publication"
 "--> Production du fichier IND (index)"
 "--> Production du fichier PDF"
-"--> Production du fichier PostScript"
-"=== OPÉRATION TERMINÉE ==="
+"Erreur avec /usr/local/bin/dvipdf -> exit(32512)"
+"Backtrace:\n/Users/philippeperret/Programmation/Programmes/RLatex/lib/model/RLatex.rb:124:in `make_pdf'\n/Users/philippeperret/Programmation/Programmes/RLatex/main.rb:57:in `<top (required)>'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n/Users/philippeperret/Sites/table_narration/publication/source/builder.rb:43:in `<top (required)>'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n/Users/philippeperret/Sites/table_narration/ruby/model/fiche.rb:146:in `publish'\n/Users/philippeperret/Sites/table_narration/ruby/ajax/fiche/publish.rb:13:in `<top (required)>'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n/Users/philippeperret/.rvm/rubies/ruby-2.0.0-p353/lib/ruby/site_ruby/2.0.0/rubygems/core_ext/kernel_require.rb:55:in `require'\n./ruby/ajax.rb:75:in `<main>'"

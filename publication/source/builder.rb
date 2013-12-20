@@ -100,11 +100,27 @@ else
   #   * $BOOK est défini si l'on passe par la procédure normale de publication,
   #     c'est-à-dire par le site. Il n'est pas défini lorsqu'on run directement
   #     ce script.
+  #   =================
+  #   === IMPORTANT ===
+  #   =================
+  #   * PUISQUE ÇA NE FONCTIONNE PAS ENCORE directement depuis le navigateur,
+  #     la demande de publication enregistre un fichier ./.publishing contenant
+  #     les informations sur le livre est la collection. Si $BOOK n'est pas
+  #     défini et qu'on trouve ce fichier, c'est lui qu'on prend pour la publication.
   if $BOOK.nil?
-    if Collection::name != DEFAULT_COLLECTION
-      Collection.define_name DEFAULT_COLLECTION
+    path = File.join('.', './.publishing.rb')
+    if File.exists? path
+      require path
+      $BOOK = Fiche.new BOOK_ID, 'book'
+      Collection::define_name COLLECTION
+      dlog "Fichier à traiter venant de ./publishing.rb (BOOK_ID:#{BOOK_ID}/COLLECTION:#{COLLECTION})"
+      File.unlink path
+    else
+      if Collection::name != DEFAULT_COLLECTION
+        Collection.define_name DEFAULT_COLLECTION
+      end
+      $BOOK = Fiche.new( 0, 'book') 
     end
-    $BOOK = Fiche.new( 0, 'book') 
   end
   document.destination_file File.join('.', 'publication', 'livres', $BOOK.normalized_affixe_from_titre)
   $BOOK.prepare_publication
