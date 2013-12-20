@@ -18,16 +18,17 @@ Object.defineProperties(String.prototype, {
    *
    *  NOTES
    *  -----
-   *    * C'est un raccourci pour ColText.formate(<this>)
+   *    * C'est un raccourci pour ColText.formate(<this>, <cible>)
    *
    *  @method formate
+   *  @param  {Fiche} cible   La fiche cible du lien (utile pour les références)
    *  @return {String} Le string courant formaté.
    *  @example
    *      <texte>.formate
    */
   "formate":{
-    get:function(){
-      return ColText.formate(this.toString())
+    value:function(cible){
+      return ColText.formate(this.toString(), cible)
     }
   }
   

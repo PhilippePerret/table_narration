@@ -16,36 +16,37 @@
 window.ColText = {
   
   /**
-   *
-   *  Le code en traitement courant
-   *
-   *  @property code 
-   *  @type     {String}  
-   *  @default  null
-   */
+    *
+    * Le code en traitement courant
+    *
+    * @property code 
+    * @type     {String}  
+    * @default  null
+    */
   code:null,
   
   /**
-   *  Met en forme le texte +code+ pour son affichage humain
-   *
-   *
-   *  @method formate
-   *  @param  code    {String} du texte à formater
-   *  @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
-   *                    ou un aperçu.
-   *
-   *  @example
-   *      ColText.formate(<le texte>)
-   *      # Mais on peut utiliser aussi :
-   *      <le texte>.formate
-   *
-   */
-  formate:function(code)
+    * Met en forme le texte +code+ pour son affichage humain
+    *
+    *
+    * @method formate
+    * @param  {String}  code    Le texte à formater
+    * @param  {Fiche}   cible   Pour les références, on a besoin de la cible
+    * @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
+    *                   ou un aperçu.
+    *
+    * @example
+    *     ColText.formate(<le texte>)
+    *     # Mais on peut utiliser aussi :
+    *     <le texte>.formate
+    *
+    */
+  formate:function(code, cible)
   {
     this.code = code
     if(code.indexOf('[film:')) this.traite_balises_films()
     if(code.indexOf('[mot:]')) this.traite_balises_mots()
-    if(code.indexOf('[ref:]')) this.traite_balises_refs()
+    if(code.indexOf('[ref:]')) this.traite_balises_refs(cible)
     return this.code
   },
   
@@ -87,11 +88,11 @@ window.ColText = {
    *  Traitement des balises références
    *  
    */
-  traite_balises_refs:function()
+  traite_balises_refs:function(cible)
   {
     var c, dfilm ;
     this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_ref(id).formate(options.split(' '), skip_loading = true)
+      return get_ref(id).formate(cible, options.split(' '), skip_loading = true)
       /*
        *  La précision skip_loading ci-dessus permet de passer les données
        *  manquante, lorsque des options d'affichage de la référence nécessite d'avoir

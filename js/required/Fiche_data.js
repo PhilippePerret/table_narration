@@ -169,7 +169,7 @@ Object.defineProperties(Fiche.prototype,{
       var balise = "[ref:"+this.type+"-"+this.id+"|"+this.main_value+"]"
       App.clipboard = balise
       F.show( image('clavier/K_Command.png')+image('clavier/K_V.png')+
-              " -> insérer référence in texte.")
+              " pour insérer référence.")
     }
   },
   
@@ -298,7 +298,7 @@ Object.defineProperties(Fiche.prototype,{
       var code = "" ;
       if(this.is_paragraph) code = this.texte || ""
       else                  code = this.titre || FICHES.datatype[this.type].defvalue
-      if(formate && code != "") code = ColText.formate( code )
+      if(formate && code != "") code = ColText.formate( code, this )
       return code
     }
   }

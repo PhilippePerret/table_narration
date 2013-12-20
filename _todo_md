@@ -3,7 +3,9 @@ IMPLÉMENTER
 
 - La marque de la référence doit indiquer s'il s'agit d'un autre livre.
 - Le clic sur la référence doit ouvrir la fiche.
-
+- Implémenter FICHES.show qui permettra d'affiche la fiche d'une référence.
+  Attention, il faut absolument tenir compte de son type, un paragraphe ne
+  s'affiche pas comme une page ou un chapitre.
 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure pour LaTex
