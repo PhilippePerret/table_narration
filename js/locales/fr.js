@@ -36,11 +36,14 @@ window.LOCALE = {
       'no fiche for dom obj'        : "Aucune fiche ne correspond à l'objet DOM…",
       'unable to range orphelin'    : "Impossible de ranger une fiche orpheline…",
       'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…",
+      'no book for publishing'      : "Cette fiche n'appartient à aucun livre. Donc impossible de procéder à la publication.",
       'is not child'                : "Impossible de retirer l'enfant, ça n'est pas un enfant de la fiche."
     },
     
     // LOCALE.fiche.message
     message:{
+      'book publishing'             : "Publication du livre “_LIVRE_” demandée.",
+      'book of fiche publishing'    : "Publication du livre de la fiche courante demandée (_LIVRE_).",
       'book has no parent'          : "Un livre ne peut pas avoir de parent…",
       'no parent'                   : "Cette fiche n'a pas de parent, elle est orpheline.",
       'no children'                 : "Cette fiche n'a pas d'enfants",

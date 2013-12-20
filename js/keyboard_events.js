@@ -128,6 +128,28 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = 'open'     ; break
   case Key_f:   cplx_meth = 'close'    ; break
   case Key_d:   cplx_meth = 'deselect' ; break
+  case Key_p:
+    if(evt.metaKey)
+    {
+      var cur = FICHES.current
+      Flash.clean()
+      if(cur.is_book)
+      {
+        F.show(LOCALE.fiche.message['book publishing'].replace(/_LIVRE_/, cur.titre))
+        cur.publish()
+      }
+      else {
+        if(cur.book)
+        {
+          F.show(LOCALE.fiche.message['book of fiche publishing'].replace(/_LIVRE_/, cur.book.titre))
+          cur.book.publish()
+        }
+        else F.error(LOCALE.fiche.error['no book for publishing'],{timer:true})
+      }
+      // Dans tous les cas, on bloque l'event
+      return stop_event(evt)
+    } 
+    break
   }
   if(cplx_meth)
   {
@@ -168,6 +190,9 @@ window.keypress_default = function(evt)
       return stop_event(evt)
     }
     break
+  case Key_p:
+    // Ne jamais imprimer
+    return stop_event(evt)
   }
   return true
 }

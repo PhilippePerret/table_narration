@@ -128,6 +128,29 @@ class Fiche
     File.open(path, 'wb'){|f| f.write (Marshal.dump @data)}
   end
   
+  # Publication 
+  # 
+  # Notes
+  # -----
+  #   * La procédure n'est valide que pour un livre.
+  #   * On se sert de RLatex pour construire le livre
+  # 
+  # @param  {Hash} options    Les options éventuelles :
+  #         ::only_tdm:           Si true, seule la TdM est publiée.
+  #         ::even_not_printed:   Si true, publie même les fiches marquées 
+  #                               'not_printed'
+  # 
+  def publish options = nil
+    begin
+      $BOOK = self
+      require File.join('.', 'publication', 'source', 'builder')
+    rescue Exception => e
+      RETOUR_AJAX[:ok] = false
+      RETOUR_AJAX[:message] = e.message
+      # raise "#{e.message}\n#{e.backtrace.inspect}"
+    end
+    
+  end
   # ---------------------------------------------------------------------
   #   Data
   # ---------------------------------------------------------------------
@@ -136,6 +159,17 @@ class Fiche
   # texte (pour les paragraphes)
   def main_value
     data[paragraph? ? 'texte' : 'titre']
+  end
+  
+  # Retourne le titre
+  # 
+  # Notes
+  # -----
+  #   * La méthode renverra NIL si c'est un paragraphe (ou que le titre n'existe pas)
+  #   * Si on veut une valeur plus sûr (quel que soit le type de fiche), on peut
+  #     utiliser plutôt `main_value` ci-dessus.
+  def titre
+    @titre ||= data['titre']
   end
   
   # Return l'id:type de la fiche (pour les listes)
@@ -169,19 +203,8 @@ class Fiche
   # @note : si le fichier de configuration courante n'existe pas, seuls les
   # livres sont marqués on_table
   # 
-  def visible?
-    @is_visible ||= false
-  end
-  
-  def invisible?
-    @is_invisible ||= false == visible?
-  end
-  
-  def get_book
-    return nil if parent.nil?
-    return parent if chapter?
-    return parent.book
-  end
+  def visible?;     @is_visible ||= false                 end
+  def invisible?;   @is_invisible ||= false == visible?   end
   
   # L'ouverture de la fiche n'est plus enregistrée dans ses données,
   # mais dans le fichier de configuration courante.
@@ -250,6 +273,13 @@ class Fiche
     return d
   end
   
+  def get_book
+    return nil if parent.nil?
+    return parent if chapter?
+    return parent.book
+  end
+  
+  
   # Retourne la liste {Array} des enfants comme liste d'instances
   # fiche
   # 
@@ -267,6 +297,18 @@ class Fiche
   
   def data
     @data ||= Marshal.load( File.read path )
+  end
+  
+  # Renvoie un affixe, calculé d'après le titre, qui permettra
+  # de composer un nom de fichier.
+  # Notes
+  # -----
+  #   * Utilisé pour la publication du livre, pour déterminer les
+  #     noms des fichiers PDF et PostScript
+  # 
+  def normalized_affixe_from_titre
+    require '../lib/ruby/extension/string'
+    @affixe_from_titre ||= titre.normalize.gsub(/ /, '_')
   end
   
   def path

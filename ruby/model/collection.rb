@@ -20,6 +20,12 @@ class Collection
       end
     end
     
+    # Pour forcer la collection à utiliser
+    # 
+    def define_name new_name
+      @name = new_name
+    end
+    
     # Retourne la liste de toutes les collections
     # 
     # @return {Array} Liste des noms des collections dans le dossier ./collection

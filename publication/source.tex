@@ -10,24 +10,11 @@
 \usepackage{float}
 \usepackage{color}
 \usepackage{makeidx}
-\usepackage[xetex, pagebackref]{hyperref}
 \title{Le vrai titre du livre}
 \author{Philippe Perret}
 \makeindex
-\newcommand{\mapolicebackref}[1]{
-    \hspace*{\fill} \mbox{\textit {\small #1}}
-}
-%pour gérer les backref dans la bibliographie
-\renewcommand*{\backref}[1]{}
-\renewcommand*{\backrefalt}[4]{%
-\ifcase #1 \mapolicebackref{pas de citations}
-    \or \mapolicebackref{page #2}
-    \else \mapolicebackref{#1 pages #2}
-\fi
-}
-% Séparateurs :
-\renewcommand*{\backreftwosep}{, }
-\renewcommand*{\backreflastsep}{, }
+\bibliographystyle{plain}
+\bibliography{biblio}
 
 %=============== /Entête ==================
 

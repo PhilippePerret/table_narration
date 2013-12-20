@@ -95,7 +95,7 @@ Object.defineProperties(ContextualHelp, {
       var ispara  = fi.is_paragraph
       var editing = $(fi.div_main_prop_jid).length == 0
       
-      // === Construire l'aide ===
+      // === Construire l'aide contextuelle ===
       aide += this.info_current_fiche
       if(editing){
         aide += this['return_save_'+(ispara?'texte':'titre')]
@@ -114,6 +114,7 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this['show_'+(fi.retourned?'recto':'verso')]
         aide += this['return_change_'+(ispara?'texte':'titre')]
+        if(fi.is_book || fi.book) aide += this.cmd_p_publish
       }
         
       help( aide )
@@ -191,6 +192,10 @@ Object.defineProperties(ContextualHelp, {
     if(undefined == this._k_m) this._k_m = this.k_lettre('M')
     return this._k_m
   }},
+  "k_p":{get:function(){
+    if(undefined == this._k_p) this._k_p = this.k_lettre('P')
+    return this._k_p
+  }},
   "k_up":{get:function(){
     if(undefined == this._k_up) this._k_up = image('clavier/K_FlecheH.png')
     return this._k_up
@@ -252,7 +257,8 @@ $.extend(CH, {
   'return_save_titre'   : CH.del + CH.k_return+" Enregistre titre",
   'return_save_texte'   : CH.del + CH.k_return+" Enregistre texte",
   'show_recto'          : CH.del + CH.k_tab+" Recto",
-  'show_verso'          : CH.del + CH.k_tab+" Verso"
+  'show_verso'          : CH.del + CH.k_tab+" Verso",
+  'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier"
   
 })
 ContextualHelp.AIDES = {

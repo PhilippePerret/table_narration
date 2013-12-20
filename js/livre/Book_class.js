@@ -10,6 +10,43 @@ window.Book = function(data)
 Book.prototype = Object.create( Fiche.prototype )
 Book.prototype.constructor = Book
 
+$.extend(Book.prototype,{
+  /**
+    * Procède à la publication du livre, c'est-à-dire à la fabrication des
+    * fichier postscript et PDF par mon RLatex.
+    *
+    * Notes
+    * -----
+    *
+    * @method publish
+    * @async
+    * @param  {Object} options   Options. TODO Plus tard, permettra de définir
+    *                            ce qu'il faut imprimer (p.e. seulement la TdM)
+    *                             en mettant {only_tdm:true} dans +options+
+    *
+    */
+  publish:function(options){
+    F.show("Publication en cours…",{keep:true})
+    Ajax.send({script:'fiche/publish', book:this.id, options:options}, $.proxy(this.retour_publish,this))
+  },
+  /**
+    * Retour ajax de la méthode `publish`
+    *
+    * @method retour_publish
+    * @param  {Object} rajax  Objet remonté par Ajax
+    *
+    */
+  retour_publish:function(rajax){
+    if(rajax.ok)
+    {
+      // Flash.clean()
+      F.show("Publication effectuée avec succès.")
+    }
+    else F.error(rajax.message)
+  }
+  
+})
+
 Object.defineProperties(Book.prototype,{
   
   /*
@@ -35,7 +72,7 @@ Object.defineProperties(Book.prototype,{
     get:function(){
       return this._real_titre || null
     }
-  }
+  },
   
 })
 

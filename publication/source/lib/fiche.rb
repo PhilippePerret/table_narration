@@ -14,15 +14,22 @@ class Fiche
   # 
   # Notes
   # -----
+  #   * Ne pas utiliser le nom de méthode `publish` qui existe déjà dans
+  #     dans le modèle Fiche général.
   #   * Les fiches marquées `not_printed` seront passées
   # 
-  def publish
-    return if printed? == false
+  # @param  {Hash} options  Les options de publication
+  #                         Cf. la méthode principale `<Fiche>.publish`
+  # 
+  def prepare_publication options = nil
+    options ||= {}
+    return if printed? == false && !options[:even_not_printed]
     case type
-    when 'para' then  publish_as_paragraph
+    when 'para'
+      publish_as_paragraph unless options[:only_tdm]
     else              
       publish_as_titre
-      children_as_fiches.each { |fchild| fchild.publish }
+      children_as_fiches.each { |fchild| fchild.prepare_publication }
     end
   end
 

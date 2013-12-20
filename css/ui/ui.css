@@ -68,7 +68,7 @@ label.libelle {
 
 div.buttons {
   text-align        : right;
-  background-color  : white;
+  background-color  : inherit;
 }
 .buttons input[type="button"] {
   font-size: 18px;

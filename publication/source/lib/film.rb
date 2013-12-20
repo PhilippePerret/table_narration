@@ -24,6 +24,7 @@ class Film
     # Notes
     # -----
     #   * La méthode est appelée à la fin du traitement de builder.rb
+    #   * Désactivé pour essayer la méthode classique
     # 
     def build_biblio
       bpath = RLatex::path_biblio
@@ -41,7 +42,7 @@ class Film
       @ref.close
     end
     def begin_bibliography
-      @ref.write "\\begin{thebibliography}{#{FILMS.count}}\n"
+      @ref.write "\\begin{thebibliography}{#{FILMS.count + 1}}\n"
     end
     def end_bibliography 
       @ref.write "\\end{thebibliography}"
@@ -73,36 +74,40 @@ class Film
     "#{titre} (#{titre_fr || '---'}, #{annee})~\\cite{#{id}}"
   end
   
-  # Retourne le code à écrire dans le fichier bibliographie
-  # 
-  # TODO Mais ne vaudrait-il pas mieux faire une unique fichier avec tous
-  # les titres de la base et l'utiliser pour tous les books entendu que le programme
-  # ne référence que les films/livres trouvés.
-  # 
+#   # Retourne le code à écrire dans le fichier bibliographie
+#   # 
+#   # TODO Mais ne vaudrait-il pas mieux faire une unique fichier avec tous
+#   # les titres de la base et l'utiliser pour tous les books entendu que le programme
+#   # ne référence que les films/livres trouvés.
+#   # 
 #   def to_biblio
 #     <<-EOC
 # @misc{#{id},
 #   title       = {{#{formate_titre}}},
 #   author      = {{#{writers}}},
-#   country     = "#{real_pays}",
-#   shorttitle  = {{#{titre}}},
-#   pitch       = {{#{resume}}},
 #   year        = "#{annee}"
 # }
 # 
 #   EOC
+# =begin
+#   country     = "#{real_pays}",
+#   shorttitle  = {{#{titre}}},
+#   pitch       = {{#{resume}}},
 #   
+# =end
 #   end
   # Comme je n'arrive pas à composer la bibliography avec bibtex, je
   # la construit à la main dans un environnement thebibliography
+  # Et de toute façon c'est mieux pour moi, pour pouvoir ajouter le résumé
+  # et agencer les informations comme je l'entends.
   def to_biblio
     <<-EOI
 \\bibitem{#{id}}
   \\textsc{\\textbf{#{formate_titre}}},
   #{writers.to_latex},
   #{annee}.\\newline
-  {\\advance\\baselineskip -3pt {\\scriptsize #{resume.to_latex}} \\par}\\newline
-  \\backref
+  {\\advance\\baselineskip -3pt {\\scriptsize #{resume.to_latex}} \\par}
+  
     EOI
   end
   # Retourne le titre formaté pour la bibliographie

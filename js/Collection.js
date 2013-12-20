@@ -132,6 +132,7 @@ $.extend(Collection, {
     */
   retour_load:function(rajax)
   {
+    F.clean()
     if(rajax.ok)
     {
       this.dispatch( rajax.data )
