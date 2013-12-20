@@ -140,9 +140,7 @@ $.extend(Collection, {
     this.loading = false
     if(false == UI.prepared) UI.prepare
     window.MODE_TEST = (this.name == 'test')
-    if(MODE_TEST){ 
-      F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
-    }
+    if(MODE_TEST) App.mode_test
     window.ready = true
     if( rajax.paragraph_styles_updated ) F.show("La liste des styles de paragraphe a été updatée.")
     if(!MODE_TEST) this.backup

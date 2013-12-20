@@ -140,6 +140,22 @@ $.extend(window.App, {
 Object.defineProperties(App,{
   
   /**
+    * Pour passer en mode test
+    *
+    * Notes
+    * -----
+    *   * C'est une propriété complexe, donc appeler sans parenthèses
+    *   * La méthode ouvre l'application Pure-JS-Tests.
+    *
+    * @method mode_test
+    */
+  "mode_test":{
+    get:function(){
+      window.open('./tests.php', "pure_js_test")
+      F.show("Penser à quitter le mode test en finissant, par commodité.", {keep:true})
+    }
+  },
+  /**
     * Analyse la configuration actuelle (ouvertures et rangements) et retourne
     * un {Object} à enregistrer dans le fichier de configuration courante.
     *

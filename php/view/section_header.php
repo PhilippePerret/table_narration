@@ -47,12 +47,6 @@
       id="collections"
       onchange="$.proxy(Collection.choose, Collection, this.value)()"
       ></select>
-    <!-- Bouton pour revenir au mode normal -->
-    <input 
-      id="btn_collection_originale" 
-      style="display:<?php echo ($mode_normal ? 'none' : 'inline') ?>;" 
-      type="button"
-      value="---> Mode Normal" onclick="App.mode_normal()" />
   </div>
   
   <div id="div_automatic_save" style="display:inline-block;">
