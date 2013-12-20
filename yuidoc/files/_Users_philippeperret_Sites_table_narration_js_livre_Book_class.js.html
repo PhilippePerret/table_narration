@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>fiche_dom</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -202,33 +202,101 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>fiche_dom Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/livre/Book_class.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/* === CLASSE BOOK === */
+window.Book = function(data)
+{
+  if(undefined == data) data = {}
+  data.type = &#x27;book&#x27;
+  Fiche.call(this, data)
+  this.indice = Collection.books.length
+  Collection.books.push( this )
+}
+Book.prototype = Object.create( Fiche.prototype )
+Book.prototype.constructor = Book
 
-    
+$.extend(Book.prototype,{
+  /**
+    * Procède à la publication du livre, c&#x27;est-à-dire à la fabrication des
+    * fichier postscript et PDF par mon RLatex.
+    *
+    * Notes
+    * -----
+    *
+    * @method publish
+    * @async
+    * @param  {Object} options   Options. TODO Plus tard, permettra de définir
+    *                            ce qu&#x27;il faut imprimer (p.e. seulement la TdM)
+    *                             en mettant {only_tdm:true} dans +options+
+    *
+    */
+  publish:function(options){
+    F.show(&quot;Publication en cours…&quot;,{keep:true})
+    Ajax.send({script:&#x27;fiche/publish&#x27;, book:this.id, options:options}, $.proxy(this.retour_publish,this))
+  },
+  /**
+    * Retour ajax de la méthode &#x60;publish&#x60;
+    *
+    * @method retour_publish
+    * @param  {Object} rajax  Objet remonté par Ajax
+    *
+    */
+  retour_publish:function(rajax){
+    if(rajax.ok)
+    {
+      // Flash.clean()
+      F.show(&quot;Publication effectuée avec succès.&quot;)
+    }
+    else{ 
+      F.error(rajax.message)
+      F.show(&quot;Pas de panique… Ce livre a été enregistré pour publication. Il suffit de runner le module &#x60;./publication/source/builder.rb&#x60; dans TextMate pour que le livre soit finalisé.&quot;,{keep:true})
+    }
+  }
+  
+})
 
-    
-</div>
+Object.defineProperties(Book.prototype,{
+  
+  /*
+   *  Concernant le TITRE RÉEL (real_titre)
+   *  
+   */
+  &quot;real_titre_jid&quot;:{get:function(){return &#x27;input#&#x27;+this.dom_id+&#x27;-real_titre&#x27;}},
+  &quot;input_real_titre&quot;:{get:function(){ return $(this.real_titre_jid) }},
+  &quot;html_input_real_titre&quot;:{
+    get:function(){
+      return &#x27;&lt;div class=&quot;div_real_titre&quot;&gt;&#x27;+
+                &#x27;&lt;label class=&quot;libelle&quot;&gt;Titre réel&lt;/label&gt;&#x27; +
+                &#x27;&lt;input type=&quot;text&quot; value=&quot;&quot; id=&quot;&#x27;+this.dom_id+&#x27;-real_titre&quot; class=&quot;real_titre&quot; /&gt;&#x27;+
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  &quot;real_titre&quot;:{
+    set:function(titre){ 
+      if (titre == this._real_titre) return
+      this._real_titre = titre
+      this.input_real_titre.val( titre )
+    },
+    get:function(){
+      return this._real_titre || null
+    }
+  },
+  
+})
 
-
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+/* Méthode appelée au changement de real titre du livre */
+Book.prototype.onchange_real_titre = function(evt)
+{
+  var idm = &quot;Fiche::onchange_real_titre [&quot;+this.type_id+&quot;]&quot;
+  dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
+  this.real_titre = this.input_real_titre.val()
+  this.modified = true
+  dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
+}
+    </pre>
 </div>
 
                     </div>

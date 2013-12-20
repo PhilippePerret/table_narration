@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -355,10 +363,40 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){return {id:this.id, type:this.type}}
   },
 
+  /**
+    * Produit une balise de référence à insérer dans un texte
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe, donc appeler sans parenthèses
+    *
+    * @method balise_reference
+    */
+  &quot;balise_reference&quot;:{
+    get:function(){
+      var balise = &quot;[ref:&quot;+this.type+&quot;-&quot;+this.id+&quot;|&quot;+this.main_value+&quot;]&quot;
+      App.clipboard = balise
+      F.show( image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;)+
+              &quot; pour insérer référence.&quot;)
+    }
+  },
+  
   /* Retourne ou définit le titre */ 
   &quot;titre&quot;:{
     get:function(){return this._titre || null },
     set:function(titre){ this._titre = titre}
+  },
+  
+  /**
+    * Retourne la valeur principal de la fiche, i.e. son titre si ce n&#x27;est pas
+    * un paragraphe et son texte si c&#x27;est un paragraphe.
+    * Notes
+    *   * Propriété complexe
+    * @property main_value
+    * @type     {String}
+    */
+  &quot;main_value&quot;:{
+    get:function(){return this[this.main_prop]}
   },
   
   &quot;updated_at&quot;:{
@@ -468,7 +506,7 @@ Object.defineProperties(Fiche.prototype,{
       var code = &quot;&quot; ;
       if(this.is_paragraph) code = this.texte || &quot;&quot;
       else                  code = this.titre || FICHES.datatype[this.type].defvalue
-      if(formate &amp;&amp; code != &quot;&quot;) code = ColText.formate( code )
+      if(formate &amp;&amp; code != &quot;&quot;) code = ColText.formate( code, this )
       return code
     }
   }

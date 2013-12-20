@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -328,6 +336,31 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = &#x27;open&#x27;     ; break
   case Key_f:   cplx_meth = &#x27;close&#x27;    ; break
   case Key_d:   cplx_meth = &#x27;deselect&#x27; ; break
+  case Key_p:
+    if(evt.metaKey)
+    {
+      var cur = FICHES.current
+      Flash.clean()
+      if(cur.is_book)
+      {
+        F.show(LOCALE.fiche.message[&#x27;book publishing&#x27;].replace(/_LIVRE_/, cur.titre))
+        cur.publish()
+      }
+      else {
+        if(cur.book)
+        {
+          F.show(LOCALE.fiche.message[&#x27;book of fiche publishing&#x27;].replace(/_LIVRE_/, cur.book.titre))
+          cur.book.publish()
+        }
+        else F.error(LOCALE.fiche.error[&#x27;no book for publishing&#x27;],{timer:true})
+      }
+      // Dans tous les cas, on bloque l&#x27;event
+      return stop_event(evt)
+    } 
+    break
+  case Key_r:
+    if(!evt.metaKey){cplx_meth = &#x27;balise_reference&#x27;}
+    break
   }
   if(cplx_meth)
   {
@@ -368,6 +401,9 @@ window.keypress_default = function(evt)
       return stop_event(evt)
     }
     break
+  case Key_p:
+    // Ne jamais imprimer
+    return stop_event(evt)
   }
   return true
 }

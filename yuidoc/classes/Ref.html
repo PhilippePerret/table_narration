@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FICHES</title>
+    <title>Ref</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -202,7 +202,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>FICHES Class</h1>
+                        <h1>Ref Class</h1>
 <div class="box meta">
     
 
@@ -210,13 +210,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l11"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:11</code></a>
+            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l6"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:6</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/FICHES.html">FICHES</a>
+            Module: <a href="../modules/ref.js.html">ref.js</a>
         
     
 
@@ -226,8 +226,7 @@
 
 
 <div class="box intro">
-    <h2 id="objet-fiches">Objet FICHES</h2>
-<p>Pour la gestion des fiches comme ensemble.</p>
+    <p>Class pour une référence</p>
 
 </div>
 
@@ -258,28 +257,14 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_create_instance_fiche_of_type">create_instance_fiche_of_type</a>
+                                <a href="#method_formate">formate</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_dispatch">dispatch</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_domObj_to_fiche">domObj_to_fiche</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_init_all">init_all</a>
+                                <a href="#method_in_same_book">in_same_book</a>
 
                                 
                                 
@@ -296,46 +281,35 @@
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
-                                <a href="#property_current">current</a>
+                                <a href="#property_book">book</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_datatype">datatype</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_length">length</a>
+                                <a href="#property_book_as_titre">book_as_titre</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_list">list</a>
+                                <a href="#property_book_id">book_id</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_OPTIONS_FICHE">OPTIONS_FICHE</a>
+                                <a href="#property_fiche">fiche</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_PARAMETRES_FICHE">PARAMETRES_FICHE</a>
+                                <a href="#property_is_book">is_book</a>
 
                                 
                                 
@@ -355,8 +329,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_create_instance_fiche_of_type" class="method item">
-    <h3 class="name"><code>create_instance_fiche_of_type</code></h3>
+                    <div id="method_formate" class="method item">
+    <h3 class="name"><code>formate</code></h3>
 
     
         <div class="args">
@@ -364,208 +338,19 @@
             
                 <li class="arg">
                     
-                        <code>data</code>
+                        <code>cible</code>
                     
                 </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l497"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:497</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Instancie une fiche avec les données <code>data</code>.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">data</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Contient au mininum <code>type</code> pour instancier une nouvelle
-        fiche de ce type (création) et contient <code>id</code> si c&#39;est l&#39;instanciation
-        d&#39;une fiche existante.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_dispatch" class="method item">
-    <h3 class="name"><code>dispatch</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
             
                 <li class="arg">
                     
-                        <code>data</code>
+                        <code>options</code>
                     
                 </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l281"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:281</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Dispatch des fiches</p>
-<h2 id="notes">NOTES</h2>
-<ul>
-<li>Avec le nouveau fonctionnement, il n&#39;y a plus de problème au niveau
-des parents ou des enfants. Les fiches sont instanciées à leur première
-détection (soit ici, soit dans les enfants/parent des fiches traitées),
-puis elles sont ensuites &quot;remplies&quot; avec les données si la fiche est
-traitées plus tard ici.</li>
-<li>Par défaut, les fiches sont maintenant créées fermées, donc on doit
-passer seulement en revue les fiches qui doivent être ouvertes.</li>
-<li>Cette méthode est appelée à tout chargement de fiches par groupe</li>
-<li>Seule une fiche passant par cette méthode peut voir si <code>loaded</code> marqué
-true. Toutes les autres fiches sont considérées comme non chargées.</li>
-</ul>
-<h2 id="produit">PRODUIT</h2>
-<ul>
-<li><p>La création de la fiche (toujours, entendu qu&#39;une fiche passant par
-ce dispatch a forcément toutes ses données)</p>
-</li>
-<li><p>La tenue à jour de `Collection.books&#39;</p>
-</li>
-</ul>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">data</code>
-                        <span class="type">Array</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Liste des fiches remontées par <code>Collection.load.data</code></p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_domObj_to_fiche" class="method item">
-    <h3 class="name"><code>domObj_to_fiche</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
             
                 <li class="arg">
                     
-                        <code>obj</code>
+                        <code>skip_loading</code>
                     
                 </li>
             
@@ -575,7 +360,7 @@ ce dispatch a forcément toutes ses données)</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+            <span class="type">String</span>
         </span>
     
 
@@ -602,7 +387,7 @@ ce dispatch a forcément toutes ses données)</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l123"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:123</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l20"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:20</code></a>
         
         </p>
 
@@ -613,8 +398,7 @@ ce dispatch a forcément toutes ses données)</p>
     </div>
 
     <div class="description">
-        <p>Reçoit un objet DOM de fiche (class fiche) et
-retourne la fiche correspondante.</p>
+        <p>Format la balise pour affichage</p>
 
     </div>
 
@@ -626,15 +410,47 @@ retourne la fiche correspondante.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
-                        <span class="type">HTMLDom | JQuerySet</span>
+                        <code class="param-name">cible</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Element Dom appartenant à une fiche ou l&#39;objet
-           (tag:fiche) de la fiche elle-même.</p>
+                        <p>La fiche qui doit recevoir la référence formatée</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les options d&#39;affichage (liste de mots clés)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">skip_loading</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Si True, ne charge pas la fiche si elle n&#39;est pas
+                                encore chargée, donc affichage réduit.</p>
 
                     </div>
 
@@ -652,10 +468,9 @@ retourne la fiche correspondante.</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>:
+                        <span class="type">String</span>:
                     
-                    <p>L&#39;instance Fiche ({Book}, {Chapter} etc) de la fiche propriétaire
-       de ce DOM Element.</p>
+                    <p>La balise formatée pour affichage.</p>
 
                 
             </div>
@@ -666,13 +481,27 @@ retourne la fiche correspondante.</p>
 </div>
 
                 
-                    <div id="method_init_all" class="method item">
-    <h3 class="name"><code>init_all</code></h3>
+                    <div id="method_in_same_book" class="method item">
+    <h3 class="name"><code>in_same_book</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>cible</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
     
 
     
@@ -698,7 +527,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l684"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:684</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l101"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:101</code></a>
         
         </p>
 
@@ -709,17 +538,51 @@ retourne la fiche correspondante.</p>
     </div>
 
     <div class="description">
-        <p>Initialisation complète des fiches</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>C&#39;est une propriété complexe (=&gt; à appeler sans parenthèses)</li>
-<li>Elle procède aussi au nettoyage de la table.</li>
-</ul>
+        <p>Return TRUE si la fiche de la référence est dans le même livre que 
+la cible +fiche+</p>
 
     </div>
 
     
+        <div class="params">
+            <h4>Parameters:</h4>
 
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">cible</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>La fiche cible (qui doit recevoir la référence)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <p>True si la référence appartient au même livre que la +cible+</p>
+
+                
+            </div>
+        </div>
     
 
     
@@ -734,8 +597,8 @@ retourne la fiche correspondante.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_current" class="property item">
-    <h3 class="name"><code>current</code></h3>
+                    <div id="property_book" class="property item">
+    <h3 class="name"><code>book</code></h3>
     <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
 
     
@@ -757,7 +620,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l104"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:104</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l119"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:119</code></a>
         
         </p>
 
@@ -767,155 +630,11 @@ retourne la fiche correspondante.</p>
     </div>
 
     <div class="description">
-        <p>Fiche courante</p>
-
-    </div>
-
-    
-        <p><strong>Default:</strong> null</p>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_datatype" class="property item">
-    <h3 class="name"><code>datatype</code></h3>
-    <span class="type">Object</span>
-
-    
-
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l22"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:22</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Données pour les types de fiche</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_length" class="property item">
-    <h3 class="name"><code>length</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l90"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:90</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Nombre de fiches dans <code>list</code></p>
-
-    </div>
-
-    
-        <p><strong>Default:</strong> 0</p>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_list" class="property item">
-    <h3 class="name"><code>list</code></h3>
-    <span class="type">Object</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l75"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:75</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <h2 id="table-des-fiches-instanci-es">Table des fiches instanciées</h2>
-<h2 id="-notes"> NOTES</h2>
+        <p>Retourne l&#39;instance {Fiche} de la référence courante</p>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>En clé, l&#39;identifiant ({Number}), en valeur l&#39;instance de la fiche</li>
-<li>C&#39;est la méthode `create&#39; de la fiche qui la met dans la liste</li>
-<li>Utiliser la méthode `FICHES.get&#39; pour obtenir une fiche de cette liste.</li>
+<li>Pour obtenir cette information, il faut obligatoirement que
+la fiche de la référence soit chargée.</li>
 </ul>
 
     </div>
@@ -928,20 +647,16 @@ retourne la fiche correspondante.</p>
 </div>
 
                 
-                    <div id="property_OPTIONS_FICHE" class="property item">
-    <h3 class="name"><code>OPTIONS_FICHE</code></h3>
-    <span class="type">Array d'Object</span>
+                    <div id="property_book_as_titre" class="property item">
+    <h3 class="name"><code>book_as_titre</code></h3>
+    <span class="type">String</span>
 
     
 
     
 
     
-        <span class="flag final">final</span>
-    
 
-    
-        <span class="flag static">static</span>
     
 
     <div class="meta">
@@ -955,7 +670,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l52"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:52</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l151"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:151</code></a>
         
         </p>
 
@@ -965,12 +680,11 @@ retourne la fiche correspondante.</p>
     </div>
 
     <div class="description">
-        <p>Données pour les options des fiches (verso)</p>
+        <p>Le titre du livre précédé de &quot;Livre&quot;</p>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>Pour des types propres à un type de fiche particulier, utiliser
-<code>only:&lt;type&gt;</code> ou <code>sauf:&lt;type&gt;</code></li>
-<li>L&#39;<code>id</code> correspond au nom de la propriété de classe</li>
+<li>Cette méthode est appelée lorsque la fiche est chargée et qu&#39;elle
+appartient à un autre livre que le livre où doit apparaitre la référence.</li>
 </ul>
 
     </div>
@@ -983,16 +697,14 @@ retourne la fiche correspondante.</p>
 </div>
 
                 
-                    <div id="property_PARAMETRES_FICHE" class="property item">
-    <h3 class="name"><code>PARAMETRES_FICHE</code></h3>
-    <span class="type">Array d'Object</span>
+                    <div id="property_book_id" class="property item">
+    <h3 class="name"><code>book_id</code></h3>
+    <span class="type">String | Number</span>
 
     
 
     
 
-    
-        <span class="flag final">final</span>
     
 
     
@@ -1008,7 +720,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l37"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:37</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l134"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:134</code></a>
         
         </p>
 
@@ -1018,10 +730,105 @@ retourne la fiche correspondante.</p>
     </div>
 
     <div class="description">
-        <p>Données pour les paramètres des fiches (verso)</p>
+        <p>Retourne l&#39;identifiant du livre de la référence</p>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>L&#39;<code>id</code> correspond au nom de la propriété de classe</li>
+<li>Pour obtenir cette information, il faut obligatoirement que
+la fiche de la référence soit chargée.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_fiche" class="property item">
+    <h3 class="name"><code>fiche</code></h3>
+    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l71"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:71</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Instance Fiche de la fiche de la référence</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_is_book" class="property item">
+    <h3 class="name"><code>is_book</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l86"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:86</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>True si la référence est un livre</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est un raccourci à this.fiche.is_book</li>
 </ul>
 
     </div>

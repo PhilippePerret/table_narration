@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -153,6 +157,10 @@
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
@@ -227,7 +235,9 @@ function confirmExit(evt)
   }
   else
   {
-    if(false == (App.flashed || MODE_TEST)) App.save_current_configuration(forcer = false)
+    // Ce n&#x27;est pas bon, apparemment, de faire ça. Ça produit une erreur, 
+    // certainement parce qu&#x27;on lance une requête ajax en quittant la page
+    // if(false == (App.flashed || MODE_TEST)) App.save_current_configuration(forcer = false)
   }
 }
 window.onbeforeunload = confirmExit
@@ -241,6 +251,19 @@ window.onbeforeunload = confirmExit
   */
 window.App = window.App || {}
 $.extend(window.App, {
+  
+  /**
+    * Clipboard (mémoire tampon) de l&#x27;application. Pour placer du texte qui 
+    * devra ensuite être inséré dans le texte à l&#x27;aide de CMD+V.
+    * Notes
+    * -----
+    *   * Utilisé par exemple pour les références
+    *
+    * @property clipboard
+    * @type     {String}
+    * @default  null
+    */
+  clipboard:null,
   
   /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
@@ -305,7 +328,7 @@ $.extend(window.App, {
     {
       Ajax.send(
         {script:&#x27;app/save_config&#x27;, config:this.current_config, force:forcer},
-        $.proxy(this.save_current_configuration, forcer, this)
+        $.proxy(this.save_current_configuration, this, forcer)
       )
     }
     else
@@ -318,38 +341,7 @@ $.extend(window.App, {
       }
       else F.error(rajax.message)
     }
-  },
-  
-  /**
-    * Pour passer en mode test.
-    * Notes
-    * -----
-    *   * En mode test, c&#x27;est le document ./collection/test/ qui sera utilisé
-    *     donc aucun risque de modifier les collections en cours.
-    *
-    * @method test
-    */
-	test:function()
-	{
-    window.open(&quot;./tests.php&quot;, &#x27;pure-javascript-test&#x27;)
-    F.show(&quot;Cliquer sur le bouton “-&gt; Mode normal” pour revenir à la collection originale&quot;+
-    $(&#x27;input#btn_test&#x27;).hide()
-    $(&#x27;input#btn_collection_originale&#x27;).show()
-    return Collection.choose(&#x27;test&#x27;)
-	},  
-  /**
-    * Pour repasser en mode normal, c&#x27;est-à-dire sortir du mode test
-    *
-    * @method mode_normal
-    *
-    */
-  mode_normal:function()
-  {
-    $(&#x27;input#btn_test&#x27;).show()
-    $(&#x27;input#btn_collection_originale&#x27;).hide()
-    return Collection.choose(&#x27;narration&#x27;)
-  },
-  
+  },  
   
   // Jouer &#x27;App.ajax()&#x27; pour voir si le script ajax fonctionne
   ajax:function()
@@ -368,6 +360,44 @@ $.extend(window.App, {
 
 Object.defineProperties(App,{
   
+  /**
+    * Insert dans le texte le contenu du clipboard s&#x27;il n&#x27;est pas null.
+    * S&#x27;il est null, renvoie FALSE pour que CMD+V agisse par défaut.
+    * Notes
+    * -----
+    *   * Le App.clipboard est vidé dès qu&#x27;il est collé pour ne pas parasiter le
+    *     comportement normal du coller-copier.
+    *   * C&#x27;est une propriété complexe, donc l&#x27;appeler sans parenthèses.
+    *
+    * @method coller_clipboard
+    *
+    */
+  &quot;coller_clipboard&quot;:{
+    get:function(){
+      dlog(&quot;-&gt; App.coller_clipboard&quot;)
+      if(this.clipboard == null) return false
+      UI.Input.set_selection_to( this.clipboard.toString() )
+      this.clipboard = null
+      CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
+      return true
+    }
+  },
+  /**
+    * Pour passer en mode test
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe, donc appeler sans parenthèses
+    *   * La méthode ouvre l&#x27;application Pure-JS-Tests.
+    *
+    * @method mode_test
+    */
+  &quot;mode_test&quot;:{
+    get:function(){
+      window.open(&#x27;./tests.php&#x27;, &quot;pure_js_test&quot;)
+      F.show(&quot;Penser à quitter le mode test en finissant, par commodité.&quot;, {keep:true})
+    }
+  },
   /**
     * Analyse la configuration actuelle (ouvertures et rangements) et retourne
     * un {Object} à enregistrer dans le fichier de configuration courante.

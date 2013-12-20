@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>fiche_dom</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/REFS.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -202,33 +202,50 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>fiche_dom Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/REFS.js</h1>
 
-    
-
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @module REFS.js
+  *
+  */
+/**
+  * @class REFS
+  * @static
+  */
+window.REFS = window.REFS || {}
+$.extend(window.REFS,{
+  /**
+    * Liste {Object} des références instanciées. En clé l&#x27;identifiant de la
+    * référence, composée de &lt;type&gt;-&lt;id&gt; de la fiche et en valeur l&#x27;instance {Ref}.
+    *
+    * @property list
+    * @type     {Object}
+    * @default  {}
+    */
+  list:{},
+  
+  /**
+    * Retourne l&#x27;instance Ref de la référence
+    *
+    * @method get
+    * @param  {String} rid Identifiant de la référence telle qu&#x27;on peut la trouver
+    *                      dans une balise. P.e. &quot;chap-3&quot;
+    * @return {Ref} Instance de la référence
+    *
+    */
+  get:function(rid)
+  {
+    if(this.list[rid]) return this.list[rid]
+    else
+    {
+      // Il faut créer une instance pour cette référence
+      return new Ref(rid)
+    }
+  }
+})
+    </pre>
 </div>
 
                     </div>

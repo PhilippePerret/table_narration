@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -451,12 +459,23 @@ UI.Input = {
         case Key_m: //=&gt; Insérer un mot du scénodico
           DICO.choose_an_item($.proxy(DICO.insert_in_input, DICO))
           return stop_event(evt)
-        case Key_r: //=&gt; Insérer une référence vers une fiche
-          console.log(&quot;---&gt; Insertion d&#x27;une référence vers une fiche&quot;)
-          return stop_event(evt)
         case Key_u:
           if(kmeta) this.set_selection_to(&#x27;&lt;u&gt;_$_&lt;/u&gt;&#x27;)
           return stop_event(evt) // toujours
+        case Key_v:
+          /*
+           * Fonctionnement spécial de la combinaison CMD+V. Elle peut se comporter
+           * normalement (coller le contenu du clipboard), mais si le clipboard de
+           * l&#x27;application (App.clipboard) contient une valeur (comme par exemple une
+           * référence) alors c&#x27;est ce contenu qui est copié (et effacé).
+           */
+          if(kmeta)
+          {
+            dlog(&quot;cmd-v&quot;)
+            if(App.coller_clipboard) return stop_event(evt)
+            else return true
+          }
+          break
         }
       }
     }

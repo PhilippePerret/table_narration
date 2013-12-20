@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -332,6 +340,7 @@ $.extend(Collection, {
     */
   retour_load:function(rajax)
   {
+    F.clean()
     if(rajax.ok)
     {
       this.dispatch( rajax.data )
@@ -340,9 +349,7 @@ $.extend(Collection, {
     this.loading = false
     if(false == UI.prepared) UI.prepare
     window.MODE_TEST = (this.name == &#x27;test&#x27;)
-    if(MODE_TEST){ 
-      F.show(&quot;Penser à quitter le mode test en finissant, par commodité.&quot;, {keep:true})
-    }
+    if(MODE_TEST) App.mode_test
     window.ready = true
     if( rajax.paragraph_styles_updated ) F.show(&quot;La liste des styles de paragraphe a été updatée.&quot;)
     if(!MODE_TEST) this.backup
@@ -426,6 +433,9 @@ $.extend(Collection, {
     *     * Le nom de la collection courante
     *     * La configuration courante (ouverte/visibilité des fiches)
     *     * Les préférences de l&#x27;application.
+    *     * Au premier chargement, définit aussi &#x60;collections&#x60;, la liste
+    *       des noms des collections courantes, pour établir le menu qui 
+    *       permettra de passer de l&#x27;une à l&#x27;autre.
     *
     * @method dispatch_data
     * @param  {Object} data   La table des données à dispatcher
@@ -435,6 +445,7 @@ $.extend(Collection, {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
     this.name = data.collection_name
     if(data.preferences) App.preferences = data.preferences
+    if(data.collections) UI.peuple_menu_collections(data.collections)
     // Configuration courante (note: le fait de la définir l&#x27;applique)
     App.current_configuration = data.current_configuration
   },

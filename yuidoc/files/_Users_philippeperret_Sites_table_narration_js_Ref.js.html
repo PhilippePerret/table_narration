@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>fiche_dom</title>
+    <title>/Users/philippeperret/Sites/table_narration/js/Ref.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -202,33 +202,180 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>fiche_dom Module</h1>
-<div class="box clearfix meta">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/Ref.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * @module ref.js
+  * 
+  */
+
+/**
+  * Class pour une référence
+  *
+  * @class Ref
+  * @param  {String} rid Identifiant de la référence : &lt;type&gt;-&lt;id&gt; de la fiche.
+  */
+window.Ref = function(rid)
+{
+  var did = rid.split(&#x27;-&#x27;)
+  this.type = did[0]
+  this.id   = did[1]
+  REFS.list[rid] = this
+}
+$.extend(Ref.prototype,{
+  /**
+    * Format la balise pour affichage
+    *
+    * @method formate
+    * @param  {Fiche}   cible         La fiche qui doit recevoir la référence formatée
+    * @param  {Array}   options       Les options d&#x27;affichage (liste de mots clés)
+    * @param  {Boolean} skip_loading  Si True, ne charge pas la fiche si elle n&#x27;est pas
+    *                                 encore chargée, donc affichage réduit.
+    * @return {String} La balise formatée pour affichage.
+    */
+  formate:function(cible, options, skip_loading)
+  {
+    if(undefined != FICHES.list[this.id])
+    {
+      // La fiche est déjà chargée, on va pouvoir établir un texte complet
+      dlog(&quot;La fiche est déjà chargée&quot;)
+    }
+    else
+    {
+      if(false == skip_loading)
+      {
+        // S&#x27;il ne faut pas sauter le chargement, on charge la fiche
+        return this.fiche.load($.proxy(this.formate, this, options, skip_loading))
+      }
+    }
     
+    // Construction du texte qui doit être retourné
+    var htype = FICHES.datatype[this.type].hname.capitalize()
+    if (this.fiche)
+    {
+      // Un texte complet pour une fiche chargée
+      if(this.is_book)
+      {
+        formated = &quot;livre “&quot;+this.fiche.real_titre+&quot;”&quot;
+      }
+      else
+      {
+        var livre = this.in_same_book(cible) ? &quot;&quot; : &quot; (&quot;+this.book_as_titre+&quot;)&quot; ;
+        formated = htype + &quot; &quot; + this.fiche.titre + livre
+      }
+    }
+    else
+    {
+      // Un texte basique, juste pour affichage
+      formated =  &quot;[&quot;+htype+&quot; &quot;+this.id+&quot; (non chargé)]&quot;
+    }
+    return &#x27;&lt;ref onclick=&quot;&quot;&gt;&#x27;+formated+&#x27;&lt;/ref&gt;&#x27;
+  }
+})
 
-    
-
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+Object.defineProperties(Ref.prototype, {
+  /**
+    * Instance Fiche de la fiche de la référence
+    *
+    * @property {Fiche} fiche
+    *
+    */
+  &quot;fiche&quot;:{
+    get:function(){
+      if(undefined == this._fiche &amp;&amp; FICHES.list[this.id]){ 
+        this._fiche = get_fiche(this.id)
+      }
+      return this._fiche
+    }
+  },
+  
+  /**
+    * True si la référence est un livre
+    *
+    * Notes
+    * -----
+    *   * C&#x27;est un raccourci à this.fiche.is_book
+    *
+    * @property {Boolean} is_book
+    *
+    */
+  &quot;is_book&quot;:{
+    get:function(){
+      return this.fiche.is_book
+    }
+  },
+  /**
+    * Return TRUE si la fiche de la référence est dans le même livre que 
+    * la cible +fiche+
+    *
+    * @method in_same_book
+    * @param  {Fiche} cible   La fiche cible (qui doit recevoir la référence)
+    * @return {Boolean} True si la référence appartient au même livre que la +cible+
+    *
+    */
+  &quot;in_same_book&quot;:{
+    value:function(cible){
+      if(cible.is_book) book_cible_id = cible.id
+      else if(cible.book) book_cible_id = cible.book.id
+      else return false
+      return book_cible_id == this.book_id
+    }
+  },
+  
+  /**
+    * Retourne l&#x27;instance {Fiche} de la référence courante
+    *
+    * Notes
+    * -----
+    *   * Pour obtenir cette information, il faut obligatoirement que
+    *     la fiche de la référence soit chargée.
+    *
+    * @property {Fiche} book
+    *
+    */
+  &quot;book&quot;:{
+    get:function(){ return this.fiche.book }
+  },
+  
+  /**
+    * Retourne l&#x27;identifiant du livre de la référence
+    *
+    * Notes
+    * -----
+    *   * Pour obtenir cette information, il faut obligatoirement que
+    *     la fiche de la référence soit chargée.
+    *
+    * @property book_id
+    * @type {String|Number}
+    */
+  &quot;book_id&quot;:{
+    get:function(){
+      return this.book.id
+    }
+  },
+  
+  /**
+    * Le titre du livre précédé de &quot;Livre&quot;
+    * Notes
+    * -----
+    *   * Cette méthode est appelée lorsque la fiche est chargée et qu&#x27;elle
+    *     appartient à un autre livre que le livre où doit apparaitre la référence.
+    *
+    * @property book_as_titre
+    * @type     {String}
+    */
+  &quot;book_as_titre&quot;:{
+    get:function(){
+      var titre ;
+      if(this.fiche.is_book) titre = this.fiche.real_titre
+      else titre = this.book.real_titre
+      return &quot;livre “&quot;+titre+&quot;”&quot;
+    }
+  }
+})
+    </pre>
 </div>
 
                     </div>

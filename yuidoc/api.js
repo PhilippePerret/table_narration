@@ -18,6 +18,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "PARAGRAPHES",
         "Page",
         "Paragraph",
+        "REFS",
+        "Ref",
         "UI",
         "UI.Input",
         "window"
@@ -47,6 +49,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "PARAGRAPHS",
         "Page",
         "Paragraph",
+        "REFS.js",
         "String",
         "UI",
         "app",
@@ -59,6 +62,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "jQueryExtension",
         "objets",
         "ready.js",
+        "ref.js",
         "window"
     ],
     "allModules": [
@@ -200,6 +204,14 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "ready.js",
             "name": "ready.js"
+        },
+        {
+            "displayName": "ref.js",
+            "name": "ref.js"
+        },
+        {
+            "displayName": "REFS.js",
+            "name": "REFS.js"
         },
         {
             "displayName": "String",

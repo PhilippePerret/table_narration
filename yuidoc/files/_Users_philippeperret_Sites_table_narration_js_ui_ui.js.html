@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -302,6 +310,29 @@ $.extend(UI, {
     })
   },
   
+  /**
+    * Peuple le menu des collections permettant de les choisir
+    *
+    * Notes
+    * -----
+    *   * La méthode sélectionne aussi la collection courante, donc elle doit
+    *     être appelée après la définition de Collection.name
+    *   * Puisque la méthode ne vide pas le select, elle peut être appelée
+    *     pour ajouter une collection à la volée, si cette fonctionnalité existe
+    *     à l&#x27;avenir.
+    *
+    * @method peuple_menu_collections
+    * @param  {Array} collections   Liste des noms de collections.
+    *
+    */
+  peuple_menu_collections:function(collections)
+  {
+    var menu = $(&#x27;select#collections&#x27;)
+    L(collections).each(function(name){
+      menu.append(&#x27;&lt;option name=&quot;&#x27;+name+&#x27;&quot;&gt;&#x27;+name+&#x27;&lt;/option&gt;&#x27;)
+    })
+    menu.val(Collection.name)
+  },
   /**
     * Retourne la position +pos+ sur la grille ou val est [x, y]
     * 

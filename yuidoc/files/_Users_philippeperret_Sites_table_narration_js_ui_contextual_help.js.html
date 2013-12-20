@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -152,6 +156,10 @@
                 <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
                 <li><a href="../modules/String.html">String</a></li>
             
@@ -295,12 +303,13 @@ Object.defineProperties(ContextualHelp, {
       var ispara  = fi.is_paragraph
       var editing = $(fi.div_main_prop_jid).length == 0
       
-      // === Construire l&#x27;aide ===
+      // === Construire l&#x27;aide contextuelle ===
       aide += this.info_current_fiche
       if(editing){
         aide += this[&#x27;return_save_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
         aide += this.raccourcis_textuels
-        if( ispara ) aide += this.shortcut_paragraph
+        if( ispara ) aide += this[&#x27;shortcut_paragraph&#x27;]
+        if(App.clipboard) aide += this[&#x27;cmd_v_coller_ref&#x27;]
       }
       else 
       {
@@ -314,6 +323,8 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
         aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
+        if(fi.is_book || fi.book) aide += this.cmd_p_publish
+        aide += this[&#x27;r_reference&#x27;]
       }
         
       help( aide )
@@ -391,6 +402,18 @@ Object.defineProperties(ContextualHelp, {
     if(undefined == this._k_m) this._k_m = this.k_lettre(&#x27;M&#x27;)
     return this._k_m
   }},
+  &quot;k_p&quot;:{get:function(){
+    if(undefined == this._k_p) this._k_p = this.k_lettre(&#x27;P&#x27;)
+    return this._k_p
+  }},
+  &quot;k_r&quot;:{get:function(){
+    if(undefined == this._k_r) this._k_r = this.k_lettre(&#x27;R&#x27;)
+    return this._k_r
+  }},
+  &quot;k_v&quot;:{get:function(){
+    if(undefined == this._k_v) this._k_v = this.k_lettre(&#x27;V&#x27;)
+    return this._k_v
+  }},
   &quot;k_up&quot;:{get:function(){
     if(undefined == this._k_up) this._k_up = image(&#x27;clavier/K_FlecheH.png&#x27;)
     return this._k_up
@@ -452,7 +475,10 @@ $.extend(CH, {
   &#x27;return_save_titre&#x27;   : CH.del + CH.k_return+&quot; Enregistre titre&quot;,
   &#x27;return_save_texte&#x27;   : CH.del + CH.k_return+&quot; Enregistre texte&quot;,
   &#x27;show_recto&#x27;          : CH.del + CH.k_tab+&quot; Recto&quot;,
-  &#x27;show_verso&#x27;          : CH.del + CH.k_tab+&quot; Verso&quot;
+  &#x27;show_verso&#x27;          : CH.del + CH.k_tab+&quot; Verso&quot;,
+  &#x27;cmd_p_publish&#x27;       : CH.del + CH.k_cmd+CH.k_p+&quot; Publier&quot;,
+  &#x27;r_reference&#x27;         : CH.del + CH.k_r+&quot; -&gt; Référence&quot;,
+  &#x27;cmd_v_coller_ref&#x27;    : CH.del + CH.k_cmd+CH.k_v+&quot; Coller réf.&quot;
   
 })
 ContextualHelp.AIDES = {

@@ -75,6 +75,10 @@
             
                 <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
             
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
@@ -153,6 +157,10 @@
             
                 <li><a href="../modules/ready.js.html">ready.js</a></li>
             
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
@@ -216,36 +224,37 @@
 window.ColText = {
   
   /**
-   *
-   *  Le code en traitement courant
-   *
-   *  @property code 
-   *  @type     {String}  
-   *  @default  null
-   */
+    *
+    * Le code en traitement courant
+    *
+    * @property code 
+    * @type     {String}  
+    * @default  null
+    */
   code:null,
   
   /**
-   *  Met en forme le texte +code+ pour son affichage humain
-   *
-   *
-   *  @method formate
-   *  @param  code    {String} du texte à formater
-   *  @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
-   *                    ou un aperçu.
-   *
-   *  @example
-   *      ColText.formate(&lt;le texte&gt;)
-   *      # Mais on peut utiliser aussi :
-   *      &lt;le texte&gt;.formate
-   *
-   */
-  formate:function(code)
+    * Met en forme le texte +code+ pour son affichage humain
+    *
+    *
+    * @method formate
+    * @param  {String}  code    Le texte à formater
+    * @param  {Fiche}   cible   Pour les références, on a besoin de la cible
+    * @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
+    *                   ou un aperçu.
+    *
+    * @example
+    *     ColText.formate(&lt;le texte&gt;)
+    *     # Mais on peut utiliser aussi :
+    *     &lt;le texte&gt;.formate
+    *
+    */
+  formate:function(code, cible)
   {
     this.code = code
     if(code.indexOf(&#x27;[film:&#x27;)) this.traite_balises_films()
     if(code.indexOf(&#x27;[mot:]&#x27;)) this.traite_balises_mots()
-    if(code.indexOf(&#x27;[ref:]&#x27;)) this.traite_balises_refs()
+    if(code.indexOf(&#x27;[ref:]&#x27;)) this.traite_balises_refs(cible)
     return this.code
   },
   
@@ -287,11 +296,11 @@ window.ColText = {
    *  Traitement des balises références
    *  
    */
-  traite_balises_refs:function()
+  traite_balises_refs:function(cible)
   {
     var c, dfilm ;
     this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
-      return get_ref(id).formate(options.split(&#x27; &#x27;), skip_loading = true)
+      return get_ref(id).formate(cible, options.split(&#x27; &#x27;), skip_loading = true)
       /*
        *  La précision skip_loading ci-dessus permet de passer les données
        *  manquante, lorsque des options d&#x27;affichage de la référence nécessite d&#x27;avoir
