@@ -128,7 +128,7 @@ window.get_film = function(fid)
   *   * Cette méthode est un raccourci de `REFS.get(rid)'
   * 
   * @method get_ref
-  * @param  {String}  Identifiant de la référence.
+  * @param  {String}  rid Identifiant de la référence.
   * @return {Ref}     L'instance Ref de la référence.
   */
 window.get_ref = function(rid)

@@ -150,6 +150,9 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
       return stop_event(evt)
     } 
     break
+  case Key_r:
+    if(!evt.metaKey){cplx_meth = 'balise_reference'}
+    break
   }
   if(cplx_meth)
   {

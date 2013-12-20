@@ -12,6 +12,13 @@ def require_model model
 end
 
 
+# Permet de mettre les logs dans le retour ajax
+# 
+def alog line
+  RETOUR_AJAX[:log] ||= ""
+  RETOUR_AJAX[:log] << "#{line}\n"
+end
+
 def log line
   openlog if @reflog.nil?
   @reflog.write "#{line}\n"

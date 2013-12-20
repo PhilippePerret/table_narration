@@ -371,15 +371,15 @@ Object.defineProperties(Fiche.prototype,{
   "main_prop":{
     get:function(){return this.is_paragraph ? 'texte' : 'titre' }
   },
-  
-  /* 
-   * Retourne le champ principal (soit div soit saisie suivant le contexte) 
-   *
-   *  NOTES
-   *  -----
-   *  Pour forcer la définition, utiliser `this._main_field = null'
-   *
-   */
+
+  /** 
+    * Retourne le champ principal (soit div soit saisie suivant le contexte) 
+    *
+    *  NOTES
+    *  -----
+    *  Pour forcer la définition, utiliser `this._main_field = null'
+    *
+    */
   "main_field":{
     get:function(){
       if(!this._main_field || this._main_field.length == 0)

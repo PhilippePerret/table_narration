@@ -145,9 +145,9 @@ class Fiche
       $BOOK = self
       require File.join('.', 'publication', 'source', 'builder')
     rescue Exception => e
-      RETOUR_AJAX[:ok] = false
-      RETOUR_AJAX[:message] = e.message
-      # raise "#{e.message}\n#{e.backtrace.inspect}"
+      # RETOUR_AJAX[:ok] = false
+      # RETOUR_AJAX[:message] = e.message
+      raise "#{e.message}\n#{e.backtrace.inspect}"
     end
     
   end

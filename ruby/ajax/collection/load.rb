@@ -47,18 +47,29 @@ NOTES
 =end
 require 'json'
 
-log "---> #{__FILE__}"
-
 
 # Méthode principale appelée pour charger les fiches nécessaires
 # de la collection à son chargement.
 def get_all_fiches_on_table
-  log "---> get_all_fiches_on_table"
   unless File.exists? File.join(Fiche::folder)
-    log "<- get_all_fiches_on_table (dossier collection inexistant => aucune fiche à lire)"
+    alog "Le dossier de la collection n'existe pas. Aucune fiche à remonter."
     return
   end
-  Collection::current_configuration[:on_table].each do |fiche|
+  alog "Configuration courante : #{Collection::current_configuration.inspect}"
+  # On vérifie que tous les livres soient bien "on_table"
+  fiches_on_table = Collection::current_configuration[:on_table]
+  on_table = {}
+  fiches_on_table.each do |fiche|
+    on_table = on_table.merge fiche.id.to_i => true
+  end
+  Dir["#{Collection::folder_fiches}/book/*.msh"].each do |path|
+    bid = File.basename(path, File.extname(path)).to_i
+    if on_table[bid].nil?
+      alog "# Le livre ##{bid} devrait se trouver sur la table… Je l'ajoute."
+      fiches_on_table << Fiche.new( bid, 'book' )
+    end
+  end
+  fiches_on_table.each do |fiche|
     # @note (ci-dessus): `fiche' est une instance {Fiche}
     # @note (ci-dessous): Pour palier certains problèmes, comme lorsqu'un chapitre
     # a été créé d'abord sur la table, puis la configuration a été enregistré (donc le
@@ -100,6 +111,8 @@ end
 unless (param :collection_name).nil?
   Collection::choose (param :collection_name)
 end
+
+alog "Collection courante : #{Collection::name}"
 
 @data = {
   :fiches   => [],

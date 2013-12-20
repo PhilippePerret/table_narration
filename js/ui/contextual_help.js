@@ -100,7 +100,8 @@ Object.defineProperties(ContextualHelp, {
       if(editing){
         aide += this['return_save_'+(ispara?'texte':'titre')]
         aide += this.raccourcis_textuels
-        if( ispara ) aide += this.shortcut_paragraph
+        if( ispara ) aide += this['shortcut_paragraph']
+        if(App.clipboard) aide += this['cmd_v_coller_ref']
       }
       else 
       {
@@ -115,6 +116,7 @@ Object.defineProperties(ContextualHelp, {
         aide += this['show_'+(fi.retourned?'recto':'verso')]
         aide += this['return_change_'+(ispara?'texte':'titre')]
         if(fi.is_book || fi.book) aide += this.cmd_p_publish
+        aide += this['r_reference']
       }
         
       help( aide )
@@ -196,6 +198,14 @@ Object.defineProperties(ContextualHelp, {
     if(undefined == this._k_p) this._k_p = this.k_lettre('P')
     return this._k_p
   }},
+  "k_r":{get:function(){
+    if(undefined == this._k_r) this._k_r = this.k_lettre('R')
+    return this._k_r
+  }},
+  "k_v":{get:function(){
+    if(undefined == this._k_v) this._k_v = this.k_lettre('V')
+    return this._k_v
+  }},
   "k_up":{get:function(){
     if(undefined == this._k_up) this._k_up = image('clavier/K_FlecheH.png')
     return this._k_up
@@ -258,7 +268,9 @@ $.extend(CH, {
   'return_save_texte'   : CH.del + CH.k_return+" Enregistre texte",
   'show_recto'          : CH.del + CH.k_tab+" Recto",
   'show_verso'          : CH.del + CH.k_tab+" Verso",
-  'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier"
+  'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier",
+  'r_reference'         : CH.del + CH.k_r+" -> Référence",
+  'cmd_v_coller_ref'    : CH.del + CH.k_cmd+CH.k_v+" Coller réf."
   
 })
 ContextualHelp.AIDES = {

@@ -1,6 +1,11 @@
 IMPLÉMENTER
 -----------
-FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
+
+- La marque de la référence doit indiquer s'il s'agit d'un autre livre.
+- Le clic sur la référence doit ouvrir la fiche.
+
+
+PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure pour LaTex
   - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico
   - Faire la classe Livre qui fonctionnera comme les Films

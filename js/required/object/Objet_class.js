@@ -156,7 +156,6 @@ Object.defineProperties(ObjetClass.prototype, {
    *  @param  poursuivre  La méthode poursuivre
    */
   "load":{
-    enumerable:true,
     value:function(poursuivre, rajax)
     {
       dlog("-> load")

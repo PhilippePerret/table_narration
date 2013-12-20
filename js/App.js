@@ -45,6 +45,19 @@ window.App = window.App || {}
 $.extend(window.App, {
   
   /**
+    * Clipboard (mémoire tampon) de l'application. Pour placer du texte qui 
+    * devra ensuite être inséré dans le texte à l'aide de CMD+V.
+    * Notes
+    * -----
+    *   * Utilisé par exemple pour les références
+    *
+    * @property clipboard
+    * @type     {String}
+    * @default  null
+    */
+  clipboard:null,
+  
+  /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
     * empêcher d'en enregistrer un nouveau à la fermeture de la collection.
     * Noter cependant que de toute façon, il sera impossible d'enregistrer la 
@@ -107,7 +120,7 @@ $.extend(window.App, {
     {
       Ajax.send(
         {script:'app/save_config', config:this.current_config, force:forcer},
-        $.proxy(this.save_current_configuration, forcer, this)
+        $.proxy(this.save_current_configuration, this, forcer)
       )
     }
     else
@@ -139,6 +152,28 @@ $.extend(window.App, {
 
 Object.defineProperties(App,{
   
+  /**
+    * Insert dans le texte le contenu du clipboard s'il n'est pas null.
+    * S'il est null, renvoie FALSE pour que CMD+V agisse par défaut.
+    * Notes
+    * -----
+    *   * Le App.clipboard est vidé dès qu'il est collé pour ne pas parasiter le
+    *     comportement normal du coller-copier.
+    *   * C'est une propriété complexe, donc l'appeler sans parenthèses.
+    *
+    * @method coller_clipboard
+    *
+    */
+  "coller_clipboard":{
+    get:function(){
+      dlog("-> App.coller_clipboard")
+      if(this.clipboard == null) return false
+      UI.Input.set_selection_to( this.clipboard.toString() )
+      this.clipboard = null
+      CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
+      return true
+    }
+  },
   /**
     * Pour passer en mode test
     *

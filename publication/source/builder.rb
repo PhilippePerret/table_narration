@@ -122,7 +122,7 @@ else
       $BOOK = Fiche.new( 0, 'book') 
     end
   end
-  document.destination_file File.join('.', 'publication', 'livres', $BOOK.normalized_affixe_from_titre)
+  document.destination_file File.join('.', 'publication', 'livres', Collection::name, $BOOK.normalized_affixe_from_titre)
   $BOOK.prepare_publication
 
   # Fabrication de la bibliographie (custom)

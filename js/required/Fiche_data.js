@@ -155,10 +155,40 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){return {id:this.id, type:this.type}}
   },
 
+  /**
+    * Produit une balise de référence à insérer dans un texte
+    *
+    * Notes
+    * -----
+    *   * C'est une propriété complexe, donc appeler sans parenthèses
+    *
+    * @method balise_reference
+    */
+  "balise_reference":{
+    get:function(){
+      var balise = "[ref:"+this.type+"-"+this.id+"|"+this.main_value+"]"
+      App.clipboard = balise
+      F.show( image('clavier/K_Command.png')+image('clavier/K_V.png')+
+              " -> insérer référence in texte.")
+    }
+  },
+  
   /* Retourne ou définit le titre */ 
   "titre":{
     get:function(){return this._titre || null },
     set:function(titre){ this._titre = titre}
+  },
+  
+  /**
+    * Retourne la valeur principal de la fiche, i.e. son titre si ce n'est pas
+    * un paragraphe et son texte si c'est un paragraphe.
+    * Notes
+    *   * Propriété complexe
+    * @property main_value
+    * @type     {String}
+    */
+  "main_value":{
+    get:function(){return this[this.main_prop]}
   },
   
   "updated_at":{

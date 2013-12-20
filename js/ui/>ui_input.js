@@ -251,12 +251,23 @@ UI.Input = {
         case Key_m: //=> Insérer un mot du scénodico
           DICO.choose_an_item($.proxy(DICO.insert_in_input, DICO))
           return stop_event(evt)
-        case Key_r: //=> Insérer une référence vers une fiche
-          console.log("---> Insertion d'une référence vers une fiche")
-          return stop_event(evt)
         case Key_u:
           if(kmeta) this.set_selection_to('<u>_$_</u>')
           return stop_event(evt) // toujours
+        case Key_v:
+          /*
+           * Fonctionnement spécial de la combinaison CMD+V. Elle peut se comporter
+           * normalement (coller le contenu du clipboard), mais si le clipboard de
+           * l'application (App.clipboard) contient une valeur (comme par exemple une
+           * référence) alors c'est ce contenu qui est copié (et effacé).
+           */
+          if(kmeta)
+          {
+            dlog("cmd-v")
+            if(App.coller_clipboard) return stop_event(evt)
+            else return true
+          }
+          break
         }
       }
     }
