@@ -109,14 +109,14 @@ window.FICHES = {
   current:null,
 
   /*
-   *  Retourne la fiche ({Fiche>something}) d'identifiant +id+
+   *  Retourne la fiche ({Fiche>something}) d'identifiant +id+ ou undefined
    *  
    */
   get:function(id)
   {
     if(undefined==id) throw "Il faut fournir l'identifiant de la fiche à retourner";
     var fi = this.list[id]
-    if(undefined==fi) throw "La fiche d'identifiant #"+id+" est inconnue au bataillon";
+    // if(undefined==fi) throw "La fiche d'identifiant #"+id+" est inconnue au bataillon";
     return fi
   },
   
@@ -367,6 +367,37 @@ window.FICHES = {
     dlog("=> FICHES.toggle")
     if(undefined != arr.opened) arr = [arr]
     this[arr[0].opened ? 'close' : 'open'](arr)
+  },
+  
+  /**
+    * Montre la fiche
+    *
+    * Notes
+    * -----
+    *   * Cette fonction est appelée principalement un clic sur une référene
+    *     dans le texte. La fiche peut-être chargée ou non, et d'un type indifférent.
+    *     La méthode s'arrange dans tous les cas pour la montrer. Ce qui consiste, 
+    *     suivant son type, à :
+    *       * "highlighter" un livre (clignotement)
+    *       * "highlighter" un chapitre après avoir ouvert son livre si nécessaire.
+    *       * Ouvrir une page
+    *       * Ouvrir la page d'un paragraphe et scroller jusqu'à lui
+    *   * La fiche peut ne pas être chargée. Et ses parents non plus s'il s'agit
+    *     d'un paragraphe.
+    *   * La question se pose de savoir si je fais une méthode ici qui traite tous
+    *     les cas où si je fais une méthode propre pour chaque type de fiche.
+    *
+    * @method show
+    * @param  {String|Number} id    Identifiant de la fiche à montrer
+    * @param  {String}        type  Type de la fiche à montrer.
+    * 
+    */
+  show:function(id, type)
+  {
+    // Si c'est un livre, il doit être forcément ouvert sur la table, puisque la
+    // méthode qui charge la collection s'assure toujours que tous les livres soient
+    // remontés. Donc on peut se contenter de l'"highligher"
+    this.fiche_from({id:id, type:type}).show
   },
   
   /*

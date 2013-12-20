@@ -89,8 +89,47 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
 
-
-
+  /* ---------------------------------------------------------------------
+   *
+   *   MÉTHODES DOM DIVERSES
+   *
+   --------------------------------------------------------------------- */
+  /**
+    * Fait clignoter la fiche
+    * Notes
+    * -----
+    *   * La méthode/procédure qui appelle cette méthode doit s'assurer que
+    *     la fiche est chargée et visible
+    *
+    * @method highlight
+    *
+    */
+  "highlight":{
+    value:function(){
+      if(undefined == this.highlight_count)
+      { 
+        this.highlight_count = 0
+        this.timer_highlight = setInterval($.proxy(this.highlight, this), 200)
+        this.color_highlight = ""
+      }
+      else 
+      {
+        if(this.highlight_count > 15)
+        {
+          clearInterval(this.timer_highlight)
+          delete this.highlight_count
+          this.color_highlight = "red" // pour ne pas avoir à compter
+        }
+        else
+        {
+          this.highlight_count ++ ;
+        }
+      }
+      this.color_highlight = this.color_highlight=="red" ? "" : "red"
+      this.obj.css('border-color', this.color_highlight)
+    }
+  },
+  
   /* ---------------------------------------------------------------------
    *
    *  MÉTHODES DE DÉPLACEMENT

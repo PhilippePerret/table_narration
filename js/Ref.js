@@ -63,7 +63,7 @@ $.extend(Ref.prototype,{
       // Un texte basique, juste pour affichage
       formated =  "["+htype+" "+this.id+" (non chargé)]"
     }
-    return '<ref onclick="">'+formated+'</ref>'
+    return '<ref onclick="FICHES.show(\''+this.id+'\',\''+this.type+'\')">'+formated+'</ref>'
   }
 })
 
@@ -162,7 +162,8 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       var titre ;
       if(this.fiche.is_book) titre = this.fiche.real_titre
-      else titre = this.book.real_titre
+      else if(this.book) titre = this.book.real_titre
+      else titre = "INEXISTANT"
       return "livre “"+titre+"”"
     }
   }

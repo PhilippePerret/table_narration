@@ -402,25 +402,30 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /*
-   *  Ouvre la fiche
-   *  --------------
-   *
-   *  NOTES
-   *  -----
-   *    # L'opération produit des résultats différents en fonction du type
-   *      de la fiche. Par exemple, pour une page, on la sort de son parent
-   *      et on montre ses enfants (paragraphes). Pour un chapitre, on ne
-   *      fait que mettre son titre en édition.
-   */
+  /**
+    * Ouvre la fiche
+    * --------------
+    *
+    * NOTES
+    * -----
+    *   * L'opération produit des résultats différents en fonction du type
+    *     de la fiche. Par exemple, pour une page, on la sort de son parent
+    *     et on montre ses enfants (paragraphes).
+    *   * Propriété complexe, donc appeler sans parenthèses.
+    *   * Si une méthode doit suivre, définir `this.open.poursuivre`
+    *
+    * @method open
+    *
+    */
   "open":{
     get:function(){
       var idm = "Fiche::open ["+this.type_id+"]" 
       dlog("---> "+idm, DB_FCT_ENTER)
       if(this.is_not_openable) return this.rend_openable('open')
-      this.opened = true
+      this.opened = true // propriété complexe
       if(this.parent && this.is_page) this.unrange
       this.positionne
+      if('function'==typeof this.open.poursuivre) this.open.poursuivre()
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
