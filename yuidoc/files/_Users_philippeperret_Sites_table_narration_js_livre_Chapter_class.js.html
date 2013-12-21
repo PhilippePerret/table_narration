@@ -233,6 +233,31 @@ Object.defineProperties(Chapter.prototype,{
       if(!this.parent) return null
       return this.parent
     }
+  },
+  
+  /**
+    * Monter un chapitre
+    *
+    * Notes
+    * -----
+    *   * Un chapitre, contrairement à un livre, peut ne pas être affiché
+    *     On doit donc s&#x27;assure qu&#x27;il est chargé et ouvrir le livre qui le 
+    *     contient, sauf lorsqu&#x27;il n&#x27;appartient à aucun livre.
+    *
+    * @method show
+    *
+    */
+  &quot;show&quot;:{
+    value:function(){
+      if(this.book)
+      {
+        if(false == this.book.opened){
+          this.book.pour_suivre_open = $.proxy(this.show, this)
+          return this.book.open
+        }
+      }
+      this.highlight()
+    }
   }
 })
     </pre>

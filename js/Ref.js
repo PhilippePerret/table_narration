@@ -4,19 +4,30 @@
   */
 
 /**
-  * Class pour une référence. Une référence est une instance qui correspond
-  * à une fiche cible.
+  * Class pour une référence. Une référence est une instance qui permet de gérer
+  * à la volée les références à d'autres fiches qui sont faites dans des textes
+  * (ou plus rarement des titres). Une référence possède une fiche-cible ({Fiche})
+  * qui correspond à l'instance {Fiche} visée par la référence (comprendre : 
+  * “l'instance {Ref} fait référence à la cible {Fiche}).
+  *
+  * L'instance {Ref} peut posséder également une “porteuse”, qui est la fiche dans
+  * laquelle cette référence est insérée. Elle est définie principalement lorsque
+  * le texte de la porteuse doit être formaté pour affichage "humain".
+  *
+  * L'instance {Ref} est capable de gérer toutes les situations, celle où la cible
+  * n'est pas encore une fiche chargée, où la fichier porteuse de la référence
+  * n'appartient pas au même livre que la fiche-cible de référence, etc.
   *
   * Notes
   * -----
-  *   * Bien que la référence ne soit pas une {Fiche}, on peut utiliser son `id` et
-  *     son `type` comme pour une fiche. Mais pour la clarté, l'instance {Ref}
-  *     possède une propriété `cible_id` et `cible_type` qui sont des alias de.
-  *     ces propriétés.
+  *   * Bien que l'instance {Ref} ne soit pas une {Fiche}, ses propriétés `id` et
+  *     `type` sont les mêmes que sa fiche-cible. Mais pour la clarté, l'instance {Ref}
+  *     possède les propriétés `cible_id` et `cible_type` qui sont des alias.
   *
   * @class Ref
   * @constructor
-  * @param  {String} rid Identifiant de la référence : <type>-<id> de la cible.
+  * @param  {String} rid  Identifiant de la référence correspondant à `<type>-<id>`
+  *                       de la cible.
   */
 window.Ref = function(rid)
 {
@@ -61,8 +72,8 @@ $.extend(Ref.prototype,{
     *       * Si le chargement de la cible peut se faire ou non
     *
     * @method formate
-    * @param  {Fiche}   porteuse      La fiche qui doit recevoir la référence formatée
-    * @param  {Array}   options       Les options d'affichage (liste de mots clés)
+    * @param  {Fiche}   porteuse        La fiche qui doit recevoir la référence formatée
+    * @param  {Array}   default_title   Le titre par défaut contenu dans la balise.
     * @param  {Boolean} skip_loading  
     *                   Pour le moment, ce paramètre n'est pas pris en compte : on ne
     *                   tente jamais de charger la fiche d'une référence inexistante
@@ -70,10 +81,11 @@ $.extend(Ref.prototype,{
     *                   un ensemble de paragraphes.
     * @return {String} La balise formatée pour affichage.
     */
-  formate:function(porteuse, options, skip_loading)
+  formate:function(porteuse, default_title, skip_loading)
   {
-    this.porteuse = porteuse
-    this['titres_for_'+(this.cible?'':'non_')+'loaded_cible'](options)
+    this.porteuse       = porteuse
+    this.default_title  = default_title
+    this['titres_for_'+(this.cible?'':'non_')+'loaded_cible']()
     return this.to_html
   },
   
@@ -84,10 +96,9 @@ $.extend(Ref.prototype,{
     * la référence
     *
     * @method titres_for_loaded_cible
-    * @param  {Object}  options   Options d'affichage (non encore utilisé)
     *
     */
-  titres_for_loaded_cible:function(options)
+  titres_for_loaded_cible:function()
   {
     this.titre_same_book = this.human_type + " “"+this.titre_cible+"”"
     this.titre_hors_book = this.titre_same_book + this.mark_book
@@ -102,11 +113,10 @@ $.extend(Ref.prototype,{
     *     et `titre_hors_book`.
     *
     * @method titres_for_non_loaded_cible
-    * @param  {Object}  options   Options d'affichage (inutilisé pour le moment)
     */
-  titres_for_non_loaded_cible:function(options)
+  titres_for_non_loaded_cible:function()
   {
-    var titre = "[" + this.human_type + " #" + this.cible_id + "]"
+    var titre = "[" + this.human_type + " #" + this.default_title + "]"
     this.titre_same_book = titre
     this.titre_hors_book = titre
   },
@@ -151,8 +161,9 @@ Object.defineProperties(Ref.prototype, {
   "to_html":{
     get:function(){
       return '<ref' +
-                ' class="'+this.class +
-                ' onclick="FICHES.show(\''+this.id+'\',\''+this.type+'\')">' +
+                ' class="'+this.class + '"'+
+                ' onclick="FICHES.show('+this.id+', \''+this.type+'\')"'+
+                '>' +
                 this.titre_for_porteuse +
                 '</ref>'
     }    
@@ -164,14 +175,19 @@ Object.defineProperties(Ref.prototype, {
   
   /**
     * Instance Fiche de la cible de la référence
+    * Notes
+    * -----
+    *   * WARNING: Cette propriété est mise à NULL même si l'instance Fiche
+    *     existe, mais qu'elle n'est pas encore chargée.
     *
     * @property {Fiche} cible
     *
     */
   "cible":{
     get:function(){
-      if(undefined == this._cible && FICHES.list[this.id]){ 
-        this._cible = get_fiche(this.id)
+      if(undefined == this._cible && FICHES.list[this.cible_id]){ 
+        this._cible = get_fiche(this.cible_id)
+        if(!this._cible.loaded) this._cible = null
       }
       return this._cible
     }

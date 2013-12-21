@@ -212,115 +212,371 @@
   */
 
 /**
-  * Class pour une référence
+  * Class pour une référence. Une référence est une instance qui correspond
+  * à une fiche cible.
+  *
+  * Notes
+  * -----
+  *   * Bien que la référence ne soit pas une {Fiche}, on peut utiliser son &#x60;id&#x60; et
+  *     son &#x60;type&#x60; comme pour une fiche. Mais pour la clarté, l&#x27;instance {Ref}
+  *     possède une propriété &#x60;cible_id&#x60; et &#x60;cible_type&#x60; qui sont des alias de.
+  *     ces propriétés.
   *
   * @class Ref
-  * @param  {String} rid Identifiant de la référence : &lt;type&gt;-&lt;id&gt; de la fiche.
+  * @constructor
+  * @param  {String} rid Identifiant de la référence : &lt;type&gt;-&lt;id&gt; de la cible.
   */
 window.Ref = function(rid)
 {
   var did = rid.split(&#x27;-&#x27;)
-  this.type = did[0]
-  this.id   = did[1]
+  /**
+    * Type de la cible de la référence
+    * @property {String} type
+    * @final
+    */
+  this.type = this.cible_type = did[0]
+  /**
+    * Identifiant de la cible de la référence
+    * @property {Number|String} id
+    * @final
+    */
+  this.id   = this.cible_id   = did[1]
+  
+  /**
+    * La fiche porteuse de la référence, c&#x27;est-à-dire qui la possède dans
+    * son texte. La plupart du temps, c&#x27;est un {Paragraph} de page.
+    * Notes
+    * -----
+    *   * Noter que cette propriété est dynamique elle change en fonction de
+    *     la référence à écrire.
+    *
+    * @property {Fiche} porteuse
+    */
+  this.porteuse = null
+  
+  
   REFS.list[rid] = this
 }
 $.extend(Ref.prototype,{
   /**
-    * Format la balise pour affichage
+    * Formate la balise pour affichage
+    *
+    * Notes
+    * -----
+    *   * Le formatage de la balise dépend de :
+    *       * Si la cible est chargée ou non
+    *       * Si la cible appartient au même livre ou non
+    *       * Si le chargement de la cible peut se faire ou non
     *
     * @method formate
-    * @param  {Fiche}   cible         La fiche qui doit recevoir la référence formatée
-    * @param  {Array}   options       Les options d&#x27;affichage (liste de mots clés)
-    * @param  {Boolean} skip_loading  Si True, ne charge pas la fiche si elle n&#x27;est pas
-    *                                 encore chargée, donc affichage réduit.
+    * @param  {Fiche}   porteuse        La fiche qui doit recevoir la référence formatée
+    * @param  {Array}   default_title   Le titre par défaut contenu dans la balise.
+    * @param  {Boolean} skip_loading  
+    *                   Pour le moment, ce paramètre n&#x27;est pas pris en compte : on ne
+    *                   tente jamais de charger la fiche d&#x27;une référence inexistante
+    *                   pour éviter les problèmes (vu que le formatage est un flux sur)
+    *                   un ensemble de paragraphes.
     * @return {String} La balise formatée pour affichage.
     */
-  formate:function(cible, options, skip_loading)
+  formate:function(porteuse, default_title, skip_loading)
   {
-    if(undefined != FICHES.list[this.id])
-    {
-      // La fiche est déjà chargée, on va pouvoir établir un texte complet
-      dlog(&quot;La fiche est déjà chargée&quot;)
-    }
-    else
-    {
-      if(false == skip_loading)
-      {
-        // S&#x27;il ne faut pas sauter le chargement, on charge la fiche
-        return this.fiche.load($.proxy(this.formate, this, options, skip_loading))
-      }
-    }
-    
-    // Construction du texte qui doit être retourné
-    var htype = FICHES.datatype[this.type].hname.capitalize()
-    if (this.fiche)
-    {
-      // Un texte complet pour une fiche chargée
-      if(this.is_book)
-      {
-        formated = &quot;livre “&quot;+this.fiche.real_titre+&quot;”&quot;
-      }
-      else
-      {
-        var livre = this.in_same_book(cible) ? &quot;&quot; : &quot; (&quot;+this.book_as_titre+&quot;)&quot; ;
-        formated = htype + &quot; &quot; + this.fiche.titre + livre
-      }
-    }
-    else
-    {
-      // Un texte basique, juste pour affichage
-      formated =  &quot;[&quot;+htype+&quot; &quot;+this.id+&quot; (non chargé)]&quot;
-    }
-    return &#x27;&lt;ref onclick=&quot;&quot;&gt;&#x27;+formated+&#x27;&lt;/ref&gt;&#x27;
-  }
+    this.porteuse       = porteuse
+    this.default_title  = default_title
+    this[&#x27;titres_for_&#x27;+(this.cible?&#x27;&#x27;:&#x27;non_&#x27;)+&#x27;loaded_cible&#x27;]()
+    return this.to_html
+  },
+  
+  
+  /**
+    * Formatage du titre pour une cible chargée
+    * La méthode définit les valeurs &#x60;titre_same_book&#x60; et &#x60;titre_hors_book&#x60; de
+    * la référence
+    *
+    * @method titres_for_loaded_cible
+    *
+    */
+  titres_for_loaded_cible:function()
+  {
+    this.titre_same_book = this.human_type + &quot; “&quot;+this.titre_cible+&quot;”&quot;
+    this.titre_hors_book = this.titre_same_book + this.mark_book
+  },
+  
+  /**
+    * Définit les titres pour une cible non chargée (simple)
+    * Notes
+    * -----
+    *   * La cible n&#x27;étant pas chargée, on ne peut rien savoir d&#x27;elle, on met
+    *     donc le même texte simple dans les deux propriétés &#x60;titre_same_book&#x60;
+    *     et &#x60;titre_hors_book&#x60;.
+    *
+    * @method titres_for_non_loaded_cible
+    */
+  titres_for_non_loaded_cible:function()
+  {
+    var titre = &quot;[&quot; + this.human_type + &quot; #&quot; + this.default_title + &quot;]&quot;
+    this.titre_same_book = titre
+    this.titre_hors_book = titre
+  },
+  
 })
 
 Object.defineProperties(Ref.prototype, {
+  
+  /* ---------------------------------------------------------------------
+   *  MÉTHODES D&#x27;ÉCRITURE
+   */
+  
   /**
-    * Instance Fiche de la fiche de la référence
-    *
-    * @property {Fiche} fiche
-    *
+    * Retourne la balise [ref:...] à écrire dans le code du texte/titre
+    * @property {String} to_balise
+    * @final
+    * @example
+    *   jq.append(ref.to_balise)
+    *   // Where &#x60;jq&#x60; is a DOMElement
+    *   // And &#x60;ref&#x60; is a Ref Instance
     */
-  &quot;fiche&quot;:{
+  &quot;to_balise&quot;:{
     get:function(){
-      if(undefined == this._fiche &amp;&amp; FICHES.list[this.id]){ 
-        this._fiche = get_fiche(this.id)
+      if(undefined == this._to_balise)
+      {
+        this._to_balise = &quot;[ref:&quot;+this.type+&quot;-&quot;+this.id+&quot;|&quot;+this.titre_cible+&quot;]&quot;
       }
-      return this._fiche
+      return this._to_balise
     }
   },
   
   /**
-    * True si la référence est un livre
+    * Retourne la balise HTML pour la référence
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe, l&#x27;appeler sans parenthèses
+    *   * Le titre (le contenu) de la balise doit avoir été construit avant
+    *     d&#x27;appeler cette méthode
+    * @method balise_html
+    * @return {String} La balise à écrire dans le texte.
+    */
+  &quot;to_html&quot;:{
+    get:function(){
+      return &#x27;&lt;ref&#x27; +
+                &#x27; class=&quot;&#x27;+this.class + &#x27;&quot;&#x27;+
+                &#x27; onclick=&quot;FICHES.show(&#x27;+this.id+&#x27;, \&#x27;&#x27;+this.type+&#x27;\&#x27;)&quot;&#x27;+
+                &#x27;&gt;&#x27; +
+                this.titre_for_porteuse +
+                &#x27;&lt;/ref&gt;&#x27;
+    }    
+  },
+  
+  /* ---------------------------------------------------------------------
+   *  MÉTHODES DE DONNÉES
+   */
+  
+  /**
+    * Instance Fiche de la cible de la référence
+    * Notes
+    * -----
+    *   * WARNING: Cette propriété est mise à NULL même si l&#x27;instance Fiche
+    *     existe, mais qu&#x27;elle n&#x27;est pas encore chargée.
+    *
+    * @property {Fiche} cible
+    *
+    */
+  &quot;cible&quot;:{
+    get:function(){
+      if(undefined == this._cible &amp;&amp; FICHES.list[this.cible_id]){ 
+        this._cible = get_fiche(this.cible_id)
+        if(!this._cible.loaded) this._cible = null
+      }
+      return this._cible
+    }
+  },
+  
+  /**
+    * Titre pour la fiche-porteuse (pour la composition de son texte affiché)
+    * Notes
+    * -----
+    *   * Ce titre varie en fonction du fait que cible et porteuse se trouvent
+    *     ou non dans le même livre.
+    *
+    * @property {String} titre_for_porteuse
+    *
+    */
+  &quot;titre_for_porteuse&quot;:{
+    get:function(){
+      return this[&#x27;titre_&#x27;+(this.same_book?&#x27;same&#x27;:&#x27;hors&#x27;)+&#x27;_book&#x27;]
+    }
+  },
+  
+  /**
+    * Retourne le titre pour la cible
+    * Notes
+    * -----
+    *   * Ce titre dépend du type de la fiche. Pour un book, on prend son titre
+    *     réel (&#x60;real_titre&#x60;), pour un paragraphe, on prend ses 50 premiers signes,
+    *     et on prend le titre normal pour les chapitres et les pages.
+    *   * Cette propriété ne doit être utilisée que pour une fiche-cible chargée.
+    *
+    * @property {String} titre_cible
+    * @static
+    */
+  &quot;titre_cible&quot;:{
+    get:function(){
+      if(undefined == this._titre_cible)
+      {
+        this._titre_cible = function(ref){
+          var fi = ref.cible
+          switch(ref.type)
+          {
+          case &#x27;book&#x27; : return fi.real_titre || fi.titre
+          case &#x27;para&#x27; : return fi.texte.substring(0,50)
+          default     : return fi.titre
+          }
+        }(this)
+      }
+      return this._titre_cible
+    }
+  },
+
+  /**
+    * Marque pour le livre à ajouter dans le titre hors book (quand la cible et
+    * la fiche porteuse n&#x27;appartienne pas au même livre ou que l&#x27;une des deux fiches
+    * n&#x27;est pas dans un livre)
+    * @property {String} mark_book
+    * @final
+    */
+  &quot;mark_book&quot;:{
+    get:function(){
+      if(undefined == this._mark_book)
+      {
+        if(this.book) this._mark_book = &quot; (Livre “&quot;+(this.book.real_titre||this.book.titre)+&quot;”)&quot;
+        else this._mark_book = &quot;&quot;
+      }
+      return this._mark_book
+    }
+  },
+  
+  /**
+    * Renvoie true si la cible de la référence appartient au même livre que la
+    * fiche porteuse (this.porteuse).
     *
     * Notes
     * -----
-    *   * C&#x27;est un raccourci à this.fiche.is_book
+    *   * C&#x27;est une propriété complexe qui est recalculée à chaque nouvelle porteuse.
+    *   * @rappel: this.porteuse est une instanceof {Fiche}
+    *   * Si la cible de la référence courante n&#x27;est pas encore chargée, on ne peut
+    *     pas déterminer son livre. La propriété est alors mise à false.
     *
-    * @property {Boolean} is_book
+    * @property {Boolean} same_book
     *
     */
-  &quot;is_book&quot;:{
+  &quot;same_book&quot;:{
     get:function(){
-      return this.fiche.is_book
+      if(undefined == this.porteuse)
+      {
+        var err = &quot;La porteuse de la référence devrait être définie… Je ne peux rien faire.&quot; 
+        F.error(err)
+        throw err
+      }
+      if(!this.cible || !this.cible.loaded) return false
+      else return this.cible.book_id == this.porteuse.book_id
+    }
+  },
+  
+
+  /**
+    * Retourne la class pour la balise &#x60;ref&#x60; en tenant compte du fait que la
+    * référence appartient ou non au même livre que la fiche porteuse contenant
+    * la référence.
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe car la valeur est redéfini à chaque nouvelle
+    *     insertion dans le texte demandée.
+    * @property {String} class
+    */
+  &quot;class&quot;:{
+    get:function(){
+      return this[&#x27;class_&#x27;+(this.same_book?&#x27;same&#x27;:&#x27;hors&#x27;)+&#x27;_book&#x27;]
     }
   },
   /**
-    * Return TRUE si la fiche de la référence est dans le même livre que 
-    * la cible +fiche+
-    *
-    * @method in_same_book
-    * @param  {Fiche} cible   La fiche cible (qui doit recevoir la référence)
-    * @return {Boolean} True si la référence appartient au même livre que la +cible+
-    *
+    * Retourne la class pour la balise ref dans le cas d&#x27;une référence qui
+    * appartient au même livre que la porteuse.
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe qui redéfinit la valeur à chaque nouvelle
+    *     fiche porteuse (paragraphe)
+    * @property {String} class_same_book
     */
-  &quot;in_same_book&quot;:{
-    value:function(cible){
-      if(cible.is_book) book_cible_id = cible.id
-      else if(cible.book) book_cible_id = cible.book.id
-      else return false
-      return book_cible_id == this.book_id
+  &quot;class_same_book&quot;:{
+    get:function(){
+      return this.type+&quot;-&quot;+this.id+&quot;-in&quot;
+    }
+  },
+
+  /**
+    * Retourne la class pour la balise ref dans le cas d&#x27;une référence qui
+    * N&#x27;appartient PAS au même livre que la porteuse.
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe qui redéfinit la valeur à chaque nouvelle
+    *     fiche porteuse (paragraphe)
+    * @property {String} class_hors_book
+    */
+  &quot;class_hors_book&quot;:{
+    get:function(){
+      return this.type+&quot;-&quot;+this.id+&quot;-out&quot;
+    }
+  },
+
+
+
+  /**
+    * Titre construit pour la référence, tel qu&#x27;il apparaitra dans le texte.
+    * Il dépend de l&#x27;état de chargement de la cible de la référence et de l&#x27;appartenance
+    * ou non au même book que la porteuse.
+    * Notes
+    * -----
+    *   * C&#x27;est une propriété complexe car sa (re)-définition peut faire varier
+    *     toutes les balises références de la même référence.
+    *
+    * @property {String} titre
+    */
+  &quot;titre_same_book&quot;:{
+    get:function(){
+      return this._titre_same_book // doit avoir été défini avant
+    },
+    set:function(titre){
+      this._titre_same_book = titre
+      // On doit modifier toutes les références qu&#x27;on trouve
+      $(&#x27;ref.&#x27;+this.class_same_book).html( titre )
+    }
+  },
+  /**
+    * Propriété similaire à la précédente, mais pour une référence n&#x27;appartenant
+    * pas au livre de la porteuse.
+    * @property {String} titre_hors_book
+    */
+  &quot;titre_hors_book&quot;:{
+    get:function(){
+      return this._titre_hors_book // doit avoir été défini avant
+    },
+    set:function(titre){
+      this._titre_hors_book = titre
+      // On doit modifier toutes les références qu&#x27;on trouve
+      $(&#x27;ref.&#x27;+this.class_hors_book).html( titre )
+    }
+  },
+
+
+  /**
+    * Type humain de la référence (par exemple &quot;Livre&quot; pour le type &#x27;book&#x27;)
+    * @property human_type
+    * @type     {String}
+    * @static
+    */
+  &quot;human_type&quot;:{
+    get:function(){
+      if(undefined == this._human_type) this._human_type = FICHES.datatype[this.type].hname.capitalize();
+      return this._human_type
     }
   },
   
@@ -330,13 +586,16 @@ Object.defineProperties(Ref.prototype, {
     * Notes
     * -----
     *   * Pour obtenir cette information, il faut obligatoirement que
-    *     la fiche de la référence soit chargée.
+    *     la cible de la référence soit chargée.
     *
     * @property {Fiche} book
     *
     */
   &quot;book&quot;:{
-    get:function(){ return this.fiche.book }
+    get:function(){ 
+      if(undefined == this._book) this._book = this.cible.book 
+      return this._book
+    }
   },
   
   /**
@@ -345,7 +604,8 @@ Object.defineProperties(Ref.prototype, {
     * Notes
     * -----
     *   * Pour obtenir cette information, il faut obligatoirement que
-    *     la fiche de la référence soit chargée.
+    *     la cible de la référence soit chargée. Donc à n&#x27;utiliser que dans les
+    *     méthodes/propriétés qui traitent du cas où la cible est loaded.
     *
     * @property book_id
     * @type {String|Number}
@@ -354,26 +614,8 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       return this.book.id
     }
-  },
-  
-  /**
-    * Le titre du livre précédé de &quot;Livre&quot;
-    * Notes
-    * -----
-    *   * Cette méthode est appelée lorsque la fiche est chargée et qu&#x27;elle
-    *     appartient à un autre livre que le livre où doit apparaitre la référence.
-    *
-    * @property book_as_titre
-    * @type     {String}
-    */
-  &quot;book_as_titre&quot;:{
-    get:function(){
-      var titre ;
-      if(this.fiche.is_book) titre = this.fiche.real_titre
-      else titre = this.book.real_titre
-      return &quot;livre “&quot;+titre+&quot;”&quot;
-    }
   }
+  
 })
     </pre>
 </div>

@@ -377,7 +377,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l155"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:155</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l159"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:159</code></a>
         
         </p>
 
@@ -395,6 +395,8 @@ S&#39;il est null, renvoie FALSE pour que CMD+V agisse par défaut.</p>
 <li>Le App.clipboard est vidé dès qu&#39;il est collé pour ne pas parasiter le
 comportement normal du coller-copier.</li>
 <li>C&#39;est une propriété complexe, donc l&#39;appeler sans parenthèses.</li>
+<li>Le <code>clipboard</code> peut être soit un simple {String} soit un {Object} répondant
+à la méthode <code>.to_balise</code> (comme les références).</li>
 </ul>
 
     </div>
@@ -551,7 +553,7 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l240"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:240</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l250"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:250</code></a>
         
         </p>
 
@@ -607,7 +609,7 @@ doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l177"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:177</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l187"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:187</code></a>
         
         </p>
 
@@ -685,7 +687,7 @@ doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l96"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:96</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l100"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:100</code></a>
         
         </p>
 
@@ -769,7 +771,7 @@ la replacer au prochain chargement de l&#39;application.</p>
                 
                     <div id="property_clipboard" class="property item">
     <h3 class="name"><code>clipboard</code></h3>
-    <span class="type">String</span>
+    <span class="type">Object | String</span>
 
     
 
@@ -804,7 +806,11 @@ la replacer au prochain chargement de l&#39;application.</p>
 devra ensuite être inséré dans le texte à l&#39;aide de CMD+V.</p>
 <h2 id="notes">Notes</h2>
 <ul>
+<li>La valeur est soit un {String} à copier tel quel dans le texte, soit
+un {Object} qui doit obligatoirement répondre à la méthode <code>.to_balise</code>
+qui doit retourner le texte à coller dans le texte.</li>
 <li>Utilisé par exemple pour les références</li>
+<li>C&#39;est la pseudo-méthode <code>App.coller_clipboard</code> qui répond au CMD+V</li>
 </ul>
 
     </div>
@@ -842,7 +848,7 @@ devra ensuite être inséré dans le texte à l&#39;aide de CMD+V.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l193"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:193</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l203"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:203</code></a>
         
         </p>
 
@@ -893,7 +899,7 @@ qui sont on_table sur la table.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l60"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:60</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l64"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:64</code></a>
         
         </p>
 
@@ -946,7 +952,7 @@ chaque chargement) se trouve déjà créé (par un flash).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l73"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:73</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l77"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:77</code></a>
         
         </p>
 

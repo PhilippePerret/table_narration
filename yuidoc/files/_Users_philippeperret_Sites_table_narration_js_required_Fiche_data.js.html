@@ -338,6 +338,26 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
+    * Retourne l&#x27;identifiant du livre auquel appartient (ou non) la fiche, quel
+    * que soit le type de la fiche. Lorsqu&#x27;elle est un livre, elle renvoie son propre
+    * identifiant.
+    * @property {Number|String} book_id
+    */
+  &quot;book_id&quot;:{
+    get:function(){
+      if(undefined == this._book_id)
+      {
+        this._book_id = function(m){
+          if(     m.is_book)  return m.id
+          else if(m.book)     return m.book.id
+          else                return null
+        }(this)
+      }
+      return this._book_id
+    }
+  },
+  
+  /**
     * Définit si la fiche ne doit pas être imprimée dans le livre
     *
     * NOTES
@@ -364,18 +384,16 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
-    * Produit une balise de référence à insérer dans un texte
-    *
+    * Met dans le App.clipboard l&#x27;instance {Ref} à la fiche courante. Cette
+    * référence pourra être ensuite collée dans le texte.
     * Notes
     * -----
-    *   * C&#x27;est une propriété complexe, donc appeler sans parenthèses
-    *
-    * @method balise_reference
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method copy_reference
     */
-  &quot;balise_reference&quot;:{
+  &quot;copy_reference&quot;:{
     get:function(){
-      var balise = &quot;[ref:&quot;+this.type+&quot;-&quot;+this.id+&quot;|&quot;+this.main_value+&quot;]&quot;
-      App.clipboard = balise
+      App.clipboard = get_ref(this.type+&quot;-&quot;+this.id)
       F.show( image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;)+
               &quot; pour insérer référence.&quot;)
     }

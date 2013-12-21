@@ -107,7 +107,7 @@ Object.defineProperties(Fiche.prototype,{
   "open":{
     get:function(){
       var idm = "Fiche::open ["+this.type_id+"]" 
-      dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+      dlog("---> "+idm, DB_FCT_ENTER)
       if(this.is_not_openable) return this.rend_openable('open')
       this.opened = true // applique la class 'opened' à l'objet DOM
       if(this.parent && this.is_page) this.unrange

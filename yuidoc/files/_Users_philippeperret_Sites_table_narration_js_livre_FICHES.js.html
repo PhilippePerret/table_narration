@@ -317,14 +317,14 @@ window.FICHES = {
   current:null,
 
   /*
-   *  Retourne la fiche ({Fiche&gt;something}) d&#x27;identifiant +id+
+   *  Retourne la fiche ({Fiche&gt;something}) d&#x27;identifiant +id+ ou undefined
    *  
    */
   get:function(id)
   {
     if(undefined==id) throw &quot;Il faut fournir l&#x27;identifiant de la fiche à retourner&quot;;
     var fi = this.list[id]
-    if(undefined==fi) throw &quot;La fiche d&#x27;identifiant #&quot;+id+&quot; est inconnue au bataillon&quot;;
+    // if(undefined==fi) throw &quot;La fiche d&#x27;identifiant #&quot;+id+&quot; est inconnue au bataillon&quot;;
     return fi
   },
   
@@ -575,6 +575,37 @@ window.FICHES = {
     dlog(&quot;=&gt; FICHES.toggle&quot;)
     if(undefined != arr.opened) arr = [arr]
     this[arr[0].opened ? &#x27;close&#x27; : &#x27;open&#x27;](arr)
+  },
+  
+  /**
+    * Montre la fiche
+    *
+    * Notes
+    * -----
+    *   * Cette fonction est appelée principalement un clic sur une référene
+    *     dans le texte. La fiche peut-être chargée ou non, et d&#x27;un type indifférent.
+    *     La méthode s&#x27;arrange dans tous les cas pour la montrer. Ce qui consiste, 
+    *     suivant son type, à :
+    *       * &quot;highlighter&quot; un livre (clignotement)
+    *       * &quot;highlighter&quot; un chapitre après avoir ouvert son livre si nécessaire.
+    *       * Ouvrir une page
+    *       * Ouvrir la page d&#x27;un paragraphe et scroller jusqu&#x27;à lui
+    *   * La fiche peut ne pas être chargée. Et ses parents non plus s&#x27;il s&#x27;agit
+    *     d&#x27;un paragraphe.
+    *   * La question se pose de savoir si je fais une méthode ici qui traite tous
+    *     les cas où si je fais une méthode propre pour chaque type de fiche.
+    *
+    * @method show
+    * @param  {String|Number} id    Identifiant de la fiche à montrer
+    * @param  {String}        type  Type de la fiche à montrer.
+    * 
+    */
+  show:function(id, type)
+  {
+    // Si c&#x27;est un livre, il doit être forcément ouvert sur la table, puisque la
+    // méthode qui charge la collection s&#x27;assure toujours que tous les livres soient
+    // remontés. Donc on peut se contenter de l&#x27;&quot;highligher&quot;
+    this.fiche_from({id:id, type:type}).show
   },
   
   /*

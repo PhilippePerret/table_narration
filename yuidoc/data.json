@@ -1207,11 +1207,12 @@
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
             "line": 6,
-            "description": "Class pour une référence",
+            "description": "Class pour une référence. Une référence est une instance qui correspond\nà une fiche cible.\n\nNotes\n-----\n  * Bien que la référence ne soit pas une {Fiche}, on peut utiliser son `id` et\n    son `type` comme pour une fiche. Mais pour la clarté, l'instance {Ref}\n    possède une propriété `cible_id` et `cible_type` qui sont des alias de.\n    ces propriétés.",
+            "is_constructor": 1,
             "params": [
                 {
                     "name": "rid",
-                    "description": "Identifiant de la référence : <type>-<id> de la fiche.",
+                    "description": "Identifiant de la référence : <type>-<id> de la cible.",
                     "type": "String"
                 }
             ]
@@ -1422,11 +1423,29 @@
             "module": "String"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 80,
+            "description": "Montre le livre\nNotes\n-----\n  * Pour un livre, ça consiste simplement à le \"highligher\"\n  * Un livre est toujours chargé, donc aucun test sur son chargement\n  * C'est une propriété complexe, donc l'appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "show",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
             "line": 19,
             "itemtype": "property",
             "name": "book Le livre auquel appartient le chapitre (ou null)",
             "type": "Book",
+            "class": "Chapter",
+            "module": "Chapter"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "line": 30,
+            "description": "Monter un chapitre\n\nNotes\n-----\n  * Un chapitre, contrairement à un livre, peut ne pas être affiché\n    On doit donc s'assure qu'il est chargé et ouvrir le livre qui le \n    contient, sauf lorsqu'il n'appartient à aucun livre.",
+            "itemtype": "method",
+            "name": "show",
             "class": "Chapter",
             "module": "Chapter"
         },
@@ -1536,7 +1555,28 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 497,
+            "line": 372,
+            "description": "Montre la fiche\n\nNotes\n-----\n  * Cette fonction est appelée principalement un clic sur une référene\n    dans le texte. La fiche peut-être chargée ou non, et d'un type indifférent.\n    La méthode s'arrange dans tous les cas pour la montrer. Ce qui consiste, \n    suivant son type, à :\n      * \"highlighter\" un livre (clignotement)\n      * \"highlighter\" un chapitre après avoir ouvert son livre si nécessaire.\n      * Ouvrir une page\n      * Ouvrir la page d'un paragraphe et scroller jusqu'à lui\n  * La fiche peut ne pas être chargée. Et ses parents non plus s'il s'agit\n    d'un paragraphe.\n  * La question se pose de savoir si je fais une méthode ici qui traite tous\n    les cas où si je fais une méthode propre pour chaque type de fiche.",
+            "itemtype": "method",
+            "name": "show",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Identifiant de la fiche à montrer",
+                    "type": "String|Number"
+                },
+                {
+                    "name": "type",
+                    "description": "Type de la fiche à montrer.",
+                    "type": "String"
+                }
+            ],
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 528,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -1552,7 +1592,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 684,
+            "line": 715,
             "description": "Initialisation complète des fiches\n\nNotes\n-----\n  * C'est une propriété complexe (=> à appeler sans parenthèses)\n  * Elle procède aussi au nettoyage de la table.",
             "itemtype": "method",
             "name": "init_all",
@@ -1750,7 +1790,27 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 99,
+            "line": 92,
+            "description": "Ouvre la fiche\n--------------\n\nNOTES\n-----\n  * L'opération produit des résultats différents en fonction du type\n    de la fiche. Par exemple, pour une page, on la sort de son parent\n    et on montre ses enfants (paragraphes).\n  * Propriété complexe, donc appeler sans parenthèses.\n  * Si une méthode doit suivre, définir `this.pour_suivre_open`",
+            "itemtype": "method",
+            "name": "open",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 208,
+            "description": "Fait clignoter la fiche\nNotes\n-----\n  * La méthode/procédure qui appelle cette méthode doit s'assurer que\n    la fiche est chargée et visible",
+            "itemtype": "method",
+            "name": "highlight",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 249,
             "description": "Déplacement de l'enfant vers le haut\n\nNotes\n-----\n  * Méthode \"complexe\", donc invoquée sans parenthèses\n  * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre\n    le nouvel ordre à chaque fois, mais ça risque d'être intense pour rien.\n    Au lieu de ça, j'utilise un timeout qui appelera la méthode seulement \n    lorsque les déplacements sembleront terminés.",
             "itemtype": "method",
             "name": "move_up",
@@ -1760,7 +1820,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 124,
+            "line": 274,
             "description": "Déplacement de l'enfant vers le bas\nNotes\n-----\n  * Cf. les notes de la méthode `move_up`.",
             "itemtype": "method",
             "name": "move_down",
@@ -1770,7 +1830,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 363,
+            "line": 513,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
@@ -1782,7 +1842,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 375,
+            "line": 525,
             "description": "Retourne le champ principal (soit div soit saisie suivant le contexte) \n\n NOTES\n -----\n Pour forcer la définition, utiliser `this._main_field = null'",
             "class": "Fiche",
             "module": "fiche_dom",
@@ -1790,7 +1850,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 502,
+            "line": 652,
             "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
             "itemtype": "method",
             "name": "enable_main_field",
@@ -1800,7 +1860,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 553,
+            "line": 703,
             "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * Propriété complexe (appelé sans parenthèses)\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
             "itemtype": "method",
             "name": "clone",
@@ -1832,7 +1892,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
             "line": 98,
-            "description": "Marque la fiche ouverte ou fermée (ou retourne la propriété)\nTrue si la fiche est ouverte, false dans le cas contraire.",
+            "description": "Marque la fiche ouverte ou fermée (ou retourne la propriété)\nTrue si la fiche est ouverte, false dans le cas contraire.\nNotes\n-----\n  * La propriété se contente d'ajouter ou de retirer la class 'opened'\n    à l'objet DOM de la fiche.",
             "itemtype": "property",
             "name": "opened",
             "type": "Boolean",
@@ -1842,7 +1902,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 112,
+            "line": 116,
             "description": "Returne true si la fiche est fermée, false si ouverte",
             "itemtype": "property",
             "name": "closed",
@@ -1854,7 +1914,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 121,
+            "line": 125,
             "description": "Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)\n\nNOTES\n-----\n  * La valeur retournée dépend du type de fiche.\n      * Pour un livre, la valeur est toujours false\n      * Pour un chapitre ou un paragraphe, dès qu'ils ont un parent,\n        ils sont toujours rangés.\n      * Pour un page, dépend de son ouverture / fermeture.",
             "itemtype": "property",
             "name": "ranged",
@@ -1864,7 +1924,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 554,
+            "line": 458,
             "description": "Appelé quand on relâche un enfant sur la fiche courante",
             "itemtype": "method",
             "name": "on_drop",
@@ -1885,7 +1945,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 610,
+            "line": 514,
             "description": "Appelé quand on change l'ordre des enfants de la fiche, soit par le\nsortable du div_items, soit par `move_up` ou `move_down` d'un des\nenfant.\n\nNOTES\n-----\n  * Plutôt que de s'embêter à étudier +ui+ pour savoir quel\n    élément a été déplacé, on compare la liste du DOM avec la liste des\n    enfants et on commence à traiter à partir de cet indice.\n  * Les deux arguments ne sont pas définis lorsque la méthode est appelée\n    depuis `move_up` et `move_down`.",
             "itemtype": "method",
             "name": "onchange_ordre_enfants",
@@ -1906,7 +1966,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 664,
+            "line": 568,
             "description": "Ajout d'un enfant à la fiche\n\nNOTES\n-----\n  * C'est cette méthode qui doit être utilisée pour tout ajout\n    d'enfant.",
             "itemtype": "method",
             "name": "add_child",
@@ -1927,7 +1987,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 741,
+            "line": 645,
             "description": "Supprime un enfant de la fiche",
             "itemtype": "method",
             "name": "remove_child",
@@ -1943,7 +2003,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 778,
+            "line": 682,
             "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.",
             "itemtype": "method",
             "name": "onchange_texte",
@@ -1963,7 +2023,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 816,
+            "line": 720,
             "description": "Invoquée à la fin du drag d'une fiche, cette méthode enregistre la nouvelle\nposition de la fiche, la place sur la grille si les préférences l'exigent et\nindique que la fiche a été modifiée.\n \nNotes\n-----\n  * C'est la préférence `App.preferences.snap` qui détermine s'il faut placer\n    la fiche sur la grille (true par défaut)",
             "itemtype": "method",
             "name": "stop_drag",
@@ -2021,6 +2081,17 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
             "line": 132,
+            "description": "Retourne l'identifiant du livre auquel appartient (ou non) la fiche, quel\nque soit le type de la fiche. Lorsqu'elle est un livre, elle renvoie son propre\nidentifiant.",
+            "itemtype": "property",
+            "name": "book_id",
+            "type": "Number|String",
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 152,
             "description": "Définit si la fiche ne doit pas être imprimée dans le livre\n\nNOTES\n-----\n  * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)",
             "proprety": "{Boolean} not_printed",
             "default": "{Undefined}",
@@ -2030,17 +2101,17 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 158,
-            "description": "Produit une balise de référence à insérer dans un texte\n\nNotes\n-----\n  * C'est une propriété complexe, donc appeler sans parenthèses",
+            "line": 178,
+            "description": "Met dans le App.clipboard l'instance {Ref} à la fiche courante. Cette\nréférence pourra être ensuite collée dans le texte.\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
-            "name": "balise_reference",
+            "name": "copy_reference",
             "class": "DICO",
             "module": "fiche_data",
             "submodule": "data"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 182,
+            "line": 200,
             "description": "Retourne la valeur principal de la fiche, i.e. son titre si ce n'est pas\nun paragraphe et son texte si c'est un paragraphe.\nNotes\n  * Propriété complexe",
             "itemtype": "property",
             "name": "main_value",
@@ -2051,7 +2122,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 281,
+            "line": 299,
             "description": "Retourne une valeur pour le champ principal (titre ou texte)\n\nNOTES\n-----\n  * Cette méthode renvoie le texte brut si +formate+ est FALSE\n    Dans le cas contraire, elle le met en forme.",
             "itemtype": "method",
             "name": "main_field_value",
@@ -2068,7 +2139,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 310,
+            "line": 328,
             "description": "Dispatch les données +data+ dans la fiche.",
             "itemtype": "method",
             "name": "dispatch",
@@ -2744,17 +2815,17 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
             "line": 47,
-            "description": "Clipboard (mémoire tampon) de l'application. Pour placer du texte qui \ndevra ensuite être inséré dans le texte à l'aide de CMD+V.\nNotes\n-----\n  * Utilisé par exemple pour les références",
+            "description": "Clipboard (mémoire tampon) de l'application. Pour placer du texte qui \ndevra ensuite être inséré dans le texte à l'aide de CMD+V.\nNotes\n-----\n  * La valeur est soit un {String} à copier tel quel dans le texte, soit\n    un {Object} qui doit obligatoirement répondre à la méthode `.to_balise`\n    qui doit retourner le texte à coller dans le texte.\n  * Utilisé par exemple pour les références\n  * C'est la pseudo-méthode `App.coller_clipboard` qui répond au CMD+V",
             "itemtype": "property",
             "name": "clipboard",
-            "type": "{String}",
+            "type": "{Object|String}",
             "default": "null",
             "class": "App",
             "module": "app"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 60,
+            "line": 64,
             "description": "Mis à TRUE si un flash de la configuration courante a été demandé. Pour \nempêcher d'en enregistrer un nouveau à la fermeture de la collection.\nNoter cependant que de toute façon, il sera impossible d'enregistrer la \nconfiguration courante si un fichier de configuration (qui est supprimé à\nchaque chargement) se trouve déjà créé (par un flash).",
             "itemtype": "property",
             "name": "flashed",
@@ -2765,7 +2836,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 73,
+            "line": 77,
             "description": "Préférences de l'application\n\nPréférences\n-----------\n  * snap    Si true, les fiches sont disposées sur la grille\n\nNotes\n-----\n  * Cf. l'objet {Prefs} qui gère ces préférences",
             "itemtype": "property",
             "name": "preferences",
@@ -2777,7 +2848,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 96,
+            "line": 100,
             "description": "Enregistre la configuration d'ouverture (et de rangement) actuelle pour\nla replacer au prochain chargement de l'application.\n\nNOTES\n-----\n  * La méthode est appelée à chaque sauvegarde si les préférences l'exigent.\n  * Envoi la requête Ajax pour créer le fichier \"current_config.config\"\n  * Si une méthode doit suivre, renseigner avec cette méthode (proxy)\n    `App.save_current_configuration.poursuivre`",
             "itemtype": "method",
             "name": "save_current_configuration",
@@ -2799,8 +2870,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 155,
-            "description": "Insert dans le texte le contenu du clipboard s'il n'est pas null.\nS'il est null, renvoie FALSE pour que CMD+V agisse par défaut.\nNotes\n-----\n  * Le App.clipboard est vidé dès qu'il est collé pour ne pas parasiter le\n    comportement normal du coller-copier.\n  * C'est une propriété complexe, donc l'appeler sans parenthèses.",
+            "line": 159,
+            "description": "Insert dans le texte le contenu du clipboard s'il n'est pas null.\nS'il est null, renvoie FALSE pour que CMD+V agisse par défaut.\nNotes\n-----\n  * Le App.clipboard est vidé dès qu'il est collé pour ne pas parasiter le\n    comportement normal du coller-copier.\n  * C'est une propriété complexe, donc l'appeler sans parenthèses.\n  * Le `clipboard` peut être soit un simple {String} soit un {Object} répondant\n    à la méthode `.to_balise` (comme les références).",
             "itemtype": "method",
             "name": "coller_clipboard",
             "class": "App",
@@ -2808,7 +2879,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 177,
+            "line": 187,
             "description": "Pour passer en mode test\n\nNotes\n-----\n  * C'est une propriété complexe, donc appeler sans parenthèses\n  * La méthode ouvre l'application Pure-JS-Tests.",
             "itemtype": "method",
             "name": "mode_test",
@@ -2817,7 +2888,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 193,
+            "line": 203,
             "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont on_table sur la table.",
             "itemtype": "property",
             "name": "current_config",
@@ -2830,7 +2901,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 240,
+            "line": 250,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",
@@ -3230,7 +3301,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/REFS.js",
             "line": 21,
-            "description": "Retourne l'instance Ref de la référence",
+            "description": "Retourne l'instance Ref de la référence (la prend dans les références déjà\ninstanciées ou crée une nouvelle instance).",
             "itemtype": "method",
             "name": "get",
             "params": [
@@ -3249,24 +3320,56 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 20,
-            "description": "Format la balise pour affichage",
+            "line": 24,
+            "description": "Type de la cible de la référence",
+            "itemtype": "property",
+            "name": "type",
+            "type": "String",
+            "final": 1,
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 30,
+            "description": "Identifiant de la cible de la référence",
+            "itemtype": "property",
+            "name": "id",
+            "type": "Number|String",
+            "final": 1,
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 37,
+            "description": "La fiche porteuse de la référence, c'est-à-dire qui la possède dans\nson texte. La plupart du temps, c'est un {Paragraph} de page.\nNotes\n-----\n  * Noter que cette propriété est dynamique elle change en fonction de\n    la référence à écrire.",
+            "itemtype": "property",
+            "name": "porteuse",
+            "type": "Fiche",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 53,
+            "description": "Formate la balise pour affichage\n\nNotes\n-----\n  * Le formatage de la balise dépend de :\n      * Si la cible est chargée ou non\n      * Si la cible appartient au même livre ou non\n      * Si le chargement de la cible peut se faire ou non",
             "itemtype": "method",
             "name": "formate",
             "params": [
                 {
-                    "name": "cible",
+                    "name": "porteuse",
                     "description": "La fiche qui doit recevoir la référence formatée",
                     "type": "Fiche"
                 },
                 {
-                    "name": "options",
-                    "description": "Les options d'affichage (liste de mots clés)",
+                    "name": "default_title",
+                    "description": "Le titre par défaut contenu dans la balise.",
                     "type": "Array"
                 },
                 {
                     "name": "skip_loading",
-                    "description": "Si True, ne charge pas la fiche si elle n'est pas\n                                encore chargée, donc affichage réduit.",
+                    "description": "\n                  Pour le moment, ce paramètre n'est pas pris en compte : on ne\n                  tente jamais de charger la fiche d'une référence inexistante\n                  pour éviter les problèmes (vu que le formatage est un flux sur)\n                  un ensemble de paragraphes.",
                     "type": "Boolean"
                 }
             ],
@@ -3279,48 +3382,166 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 71,
-            "description": "Instance Fiche de la fiche de la référence",
-            "itemtype": "property",
-            "name": "fiche",
-            "type": "Fiche",
-            "class": "Ref",
-            "module": "ref.js"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 86,
-            "description": "True si la référence est un livre\n\nNotes\n-----\n  * C'est un raccourci à this.fiche.is_book",
-            "itemtype": "property",
-            "name": "is_book",
-            "type": "Boolean",
-            "class": "Ref",
-            "module": "ref.js"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 101,
-            "description": "Return TRUE si la fiche de la référence est dans le même livre que \nla cible +fiche+",
+            "line": 82,
+            "description": "Formatage du titre pour une cible chargée\nLa méthode définit les valeurs `titre_same_book` et `titre_hors_book` de\nla référence",
             "itemtype": "method",
-            "name": "in_same_book",
-            "params": [
-                {
-                    "name": "cible",
-                    "description": "La fiche cible (qui doit recevoir la référence)",
-                    "type": "Fiche"
-                }
+            "name": "titres_for_loaded_cible",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 96,
+            "description": "Définit les titres pour une cible non chargée (simple)\nNotes\n-----\n  * La cible n'étant pas chargée, on ne peut rien savoir d'elle, on met\n    donc le même texte simple dans les deux propriétés `titre_same_book`\n    et `titre_hors_book`.",
+            "itemtype": "method",
+            "name": "titres_for_non_loaded_cible",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 121,
+            "description": "Retourne la balise [ref:...] à écrire dans le code du texte/titre",
+            "itemtype": "property",
+            "name": "to_balise",
+            "type": "String",
+            "final": 1,
+            "example": [
+                "\n  jq.append(ref.to_balise)\n  // Where `jq` is a DOMElement\n  // And `ref` is a Ref Instance"
             ],
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 140,
+            "description": "Retourne la balise HTML pour la référence\nNotes\n-----\n  * C'est une propriété complexe, l'appeler sans parenthèses\n  * Le titre (le contenu) de la balise doit avoir été construit avant\n    d'appeler cette méthode",
+            "itemtype": "method",
+            "name": "balise_html",
             "return": {
-                "description": "True si la référence appartient au même livre que la +cible+",
-                "type": "Boolean"
+                "description": "La balise à écrire dans le texte.",
+                "type": "String"
             },
             "class": "Ref",
             "module": "ref.js"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 119,
-            "description": "Retourne l'instance {Fiche} de la référence courante\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la fiche de la référence soit chargée.",
+            "line": 165,
+            "description": "Instance Fiche de la cible de la référence\nNotes\n-----\n  * WARNING: Cette propriété est mise à NULL même si l'instance Fiche\n    existe, mais qu'elle n'est pas encore chargée.",
+            "itemtype": "property",
+            "name": "cible",
+            "type": "Fiche",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 185,
+            "description": "Titre pour la fiche-porteuse (pour la composition de son texte affiché)\nNotes\n-----\n  * Ce titre varie en fonction du fait que cible et porteuse se trouvent\n    ou non dans le même livre.",
+            "itemtype": "property",
+            "name": "titre_for_porteuse",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 201,
+            "description": "Retourne le titre pour la cible\nNotes\n-----\n  * Ce titre dépend du type de la fiche. Pour un book, on prend son titre\n    réel (`real_titre`), pour un paragraphe, on prend ses 50 premiers signes,\n    et on prend le titre normal pour les chapitres et les pages.\n  * Cette propriété ne doit être utilisée que pour une fiche-cible chargée.",
+            "itemtype": "property",
+            "name": "titre_cible",
+            "type": "String",
+            "static": 1,
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 231,
+            "description": "Marque pour le livre à ajouter dans le titre hors book (quand la cible et\nla fiche porteuse n'appartienne pas au même livre ou que l'une des deux fiches\nn'est pas dans un livre)",
+            "itemtype": "property",
+            "name": "mark_book",
+            "type": "String",
+            "final": 1,
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 249,
+            "description": "Renvoie true si la cible de la référence appartient au même livre que la\nfiche porteuse (this.porteuse).\n\nNotes\n-----\n  * C'est une propriété complexe qui est recalculée à chaque nouvelle porteuse.\n  * @rappel: this.porteuse est une instanceof {Fiche}\n  * Si la cible de la référence courante n'est pas encore chargée, on ne peut\n    pas déterminer son livre. La propriété est alors mise à false.",
+            "itemtype": "property",
+            "name": "same_book",
+            "type": "Boolean",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 277,
+            "description": "Retourne la class pour la balise `ref` en tenant compte du fait que la\nréférence appartient ou non au même livre que la fiche porteuse contenant\nla référence.\nNotes\n-----\n  * C'est une propriété complexe car la valeur est redéfini à chaque nouvelle\n    insertion dans le texte demandée.",
+            "itemtype": "property",
+            "name": "class",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 292,
+            "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nappartient au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
+            "itemtype": "property",
+            "name": "class_same_book",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 307,
+            "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nN'appartient PAS au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
+            "itemtype": "property",
+            "name": "class_hors_book",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 324,
+            "description": "Titre construit pour la référence, tel qu'il apparaitra dans le texte.\nIl dépend de l'état de chargement de la cible de la référence et de l'appartenance\nou non au même book que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe car sa (re)-définition peut faire varier\n    toutes les balises références de la même référence.",
+            "itemtype": "property",
+            "name": "titre",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 345,
+            "description": "Propriété similaire à la précédente, mais pour une référence n'appartenant\npas au livre de la porteuse.",
+            "itemtype": "property",
+            "name": "titre_hors_book",
+            "type": "String",
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 362,
+            "description": "Type humain de la référence (par exemple \"Livre\" pour le type 'book')",
+            "itemtype": "property",
+            "name": "human_type",
+            "type": "{String}",
+            "static": 1,
+            "class": "Ref",
+            "module": "ref.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
+            "line": 375,
+            "description": "Retourne l'instance {Fiche} de la référence courante\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée.",
             "itemtype": "property",
             "name": "book",
             "type": "Fiche",
@@ -3329,21 +3550,11 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 134,
-            "description": "Retourne l'identifiant du livre de la référence\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la fiche de la référence soit chargée.",
+            "line": 393,
+            "description": "Retourne l'identifiant du livre de la référence\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée. Donc à n'utiliser que dans les\n    méthodes/propriétés qui traitent du cas où la cible est loaded.",
             "itemtype": "property",
             "name": "book_id",
             "type": "{String|Number}",
-            "class": "Ref",
-            "module": "ref.js"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 151,
-            "description": "Le titre du livre précédé de \"Livre\"\nNotes\n-----\n  * Cette méthode est appelée lorsque la fiche est chargée et qu'elle\n    appartient à un autre livre que le livre où doit apparaitre la référence.",
-            "itemtype": "property",
-            "name": "book_as_titre",
-            "type": "{String}",
             "class": "Ref",
             "module": "ref.js"
         },
@@ -3602,7 +3813,7 @@
         },
         {
             "message": "unknown tag: proprety",
-            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
+            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:152"
         },
         {
             "message": "unknown tag: usage",
@@ -3614,11 +3825,11 @@
         },
         {
             "message": "Missing item type\nRetourne le champ principal (soit div soit saisie suivant le contexte) \n\n NOTES\n -----\n Pour forcer la définition, utiliser `this._main_field = null'",
-            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js:375"
+            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js:525"
         },
         {
             "message": "Missing item type\nDéfinit si la fiche ne doit pas être imprimée dans le livre\n\nNOTES\n-----\n  * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)",
-            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:132"
+            "line": " /Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js:152"
         }
     ]
 }

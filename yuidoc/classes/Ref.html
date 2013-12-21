@@ -226,10 +226,109 @@
 
 
 <div class="box intro">
-    <p>Class pour une référence</p>
+    <p>Class pour une référence. Une référence est une instance qui correspond
+à une fiche cible.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Bien que la référence ne soit pas une {Fiche}, on peut utiliser son <code>id</code> et
+son <code>type</code> comme pour une fiche. Mais pour la clarté, l&#39;instance {Ref}
+possède une propriété <code>cible_id</code> et <code>cible_type</code> qui sont des alias de.
+ces propriétés.</li>
+</ul>
 
 </div>
 
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_Ref" class="method item">
+    <h3 class="name"><code>Ref</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>rid</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l6"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:6</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">rid</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Identifiant de la référence : <type>-<id> de la cible.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -257,6 +356,13 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_balise_html">balise_html</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_formate">formate</a>
 
                                 
@@ -264,7 +370,14 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_in_same_book">in_same_book</a>
+                                <a href="#method_titres_for_loaded_cible">titres_for_loaded_cible</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_titres_for_non_loaded_cible">titres_for_non_loaded_cible</a>
 
                                 
                                 
@@ -288,13 +401,6 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_book_as_titre">book_as_titre</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
                                 <a href="#property_book_id">book_id</a>
 
                                 
@@ -302,14 +408,109 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_fiche">fiche</a>
+                                <a href="#property_cible">cible</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_is_book">is_book</a>
+                                <a href="#property_class">class</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_class_hors_book">class_hors_book</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_class_same_book">class_same_book</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_human_type">human_type</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_id">id</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_mark_book">mark_book</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_porteuse">porteuse</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_same_book">same_book</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre">titre</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre_cible">titre_cible</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre_for_porteuse">titre_for_porteuse</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre_hors_book">titre_hors_book</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_to_balise">to_balise</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_type">type</a>
 
                                 
                                 
@@ -329,6 +530,85 @@
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method_balise_html" class="method item">
+    <h3 class="name"><code>balise_html</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l140"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:140</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la balise HTML pour la référence</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une propriété complexe, l&#39;appeler sans parenthèses</li>
+<li>Le titre (le contenu) de la balise doit avoir été construit avant
+d&#39;appeler cette méthode</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    <p>La balise à écrire dans le texte.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_formate" class="method item">
     <h3 class="name"><code>formate</code></h3>
 
@@ -338,13 +618,13 @@
             
                 <li class="arg">
                     
-                        <code>cible</code>
+                        <code>porteuse</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>options</code>
+                        <code>default_title</code>
                     
                 </li>
             
@@ -387,7 +667,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l20"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:20</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l53"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:53</code></a>
         
         </p>
 
@@ -398,7 +678,16 @@
     </div>
 
     <div class="description">
-        <p>Format la balise pour affichage</p>
+        <p>Formate la balise pour affichage</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Le formatage de la balise dépend de :<ul>
+<li>Si la cible est chargée ou non</li>
+<li>Si la cible appartient au même livre ou non</li>
+<li>Si le chargement de la cible peut se faire ou non</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -410,7 +699,7 @@
             
                 <li class="param">
                     
-                        <code class="param-name">cible</code>
+                        <code class="param-name">porteuse</code>
                         <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
                     
 
@@ -426,14 +715,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">options</code>
+                        <code class="param-name">default_title</code>
                         <span class="type">Array</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Les options d&#39;affichage (liste de mots clés)</p>
+                        <p>Le titre par défaut contenu dans la balise.</p>
 
                     </div>
 
@@ -449,8 +738,10 @@
                     
 
                     <div class="param-description">
-                        <p>Si True, ne charge pas la fiche si elle n&#39;est pas
-                                encore chargée, donc affichage réduit.</p>
+                        <pre><code>              Pour le moment, ce paramètre n&#39;est pas pris en compte : on ne
+              tente jamais de charger la fiche d&#39;une référence inexistante
+              pour éviter les problèmes (vu que le formatage est un flux sur)
+              un ensemble de paragraphes.</code></pre>
 
                     </div>
 
@@ -481,27 +772,13 @@
 </div>
 
                 
-                    <div id="method_in_same_book" class="method item">
-    <h3 class="name"><code>in_same_book</code></h3>
+                    <div id="method_titres_for_loaded_cible" class="method item">
+    <h3 class="name"><code>titres_for_loaded_cible</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>cible</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
     
 
     
@@ -527,7 +804,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l101"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:101</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l82"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:82</code></a>
         
         </p>
 
@@ -538,51 +815,75 @@
     </div>
 
     <div class="description">
-        <p>Return TRUE si la fiche de la référence est dans le même livre que 
-la cible +fiche+</p>
+        <p>Formatage du titre pour une cible chargée
+La méthode définit les valeurs <code>titre_same_book</code> et <code>titre_hors_book</code> de
+la référence</p>
 
     </div>
 
     
-        <div class="params">
-            <h4>Parameters:</h4>
 
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">cible</code>
-                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>La fiche cible (qui doit recevoir la référence)</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Boolean</span>:
-                    
-                    <p>True si la référence appartient au même livre que la +cible+</p>
+</div>
 
                 
-            </div>
-        </div>
+                    <div id="method_titres_for_non_loaded_cible" class="method item">
+    <h3 class="name"><code>titres_for_non_loaded_cible</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l96"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:96</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Définit les titres pour une cible non chargée (simple)</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La cible n&#39;étant pas chargée, on ne peut rien savoir d&#39;elle, on met
+donc le même texte simple dans les deux propriétés <code>titre_same_book</code>
+et <code>titre_hors_book</code>.</li>
+</ul>
+
+    </div>
+
+    
+
     
 
     
@@ -620,7 +921,7 @@ la cible +fiche+</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l119"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:119</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l375"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:375</code></a>
         
         </p>
 
@@ -634,57 +935,7 @@ la cible +fiche+</p>
 <h2 id="notes">Notes</h2>
 <ul>
 <li>Pour obtenir cette information, il faut obligatoirement que
-la fiche de la référence soit chargée.</li>
-</ul>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_book_as_titre" class="property item">
-    <h3 class="name"><code>book_as_titre</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l151"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:151</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Le titre du livre précédé de &quot;Livre&quot;</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>Cette méthode est appelée lorsque la fiche est chargée et qu&#39;elle
-appartient à un autre livre que le livre où doit apparaitre la référence.</li>
+la cible de la référence soit chargée.</li>
 </ul>
 
     </div>
@@ -720,7 +971,7 @@ appartient à un autre livre que le livre où doit apparaitre la référence.</l
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l134"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:134</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l393"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:393</code></a>
         
         </p>
 
@@ -734,7 +985,8 @@ appartient à un autre livre que le livre où doit apparaitre la référence.</l
 <h2 id="notes">Notes</h2>
 <ul>
 <li>Pour obtenir cette information, il faut obligatoirement que
-la fiche de la référence soit chargée.</li>
+la cible de la référence soit chargée. Donc à n&#39;utiliser que dans les
+méthodes/propriétés qui traitent du cas où la cible est loaded.</li>
 </ul>
 
     </div>
@@ -747,8 +999,8 @@ la fiche de la référence soit chargée.</li>
 </div>
 
                 
-                    <div id="property_fiche" class="property item">
-    <h3 class="name"><code>fiche</code></h3>
+                    <div id="property_cible" class="property item">
+    <h3 class="name"><code>cible</code></h3>
     <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
 
     
@@ -770,7 +1022,7 @@ la fiche de la référence soit chargée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l71"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:71</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l165"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:165</code></a>
         
         </p>
 
@@ -780,7 +1032,12 @@ la fiche de la référence soit chargée.</li>
     </div>
 
     <div class="description">
-        <p>Instance Fiche de la fiche de la référence</p>
+        <p>Instance Fiche de la cible de la référence</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>WARNING: Cette propriété est mise à NULL même si l&#39;instance Fiche
+existe, mais qu&#39;elle n&#39;est pas encore chargée.</li>
+</ul>
 
     </div>
 
@@ -792,8 +1049,356 @@ la fiche de la référence soit chargée.</li>
 </div>
 
                 
-                    <div id="property_is_book" class="property item">
-    <h3 class="name"><code>is_book</code></h3>
+                    <div id="property_class" class="property item">
+    <h3 class="name"><code>class</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l277"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:277</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la class pour la balise <code>ref</code> en tenant compte du fait que la
+référence appartient ou non au même livre que la fiche porteuse contenant
+la référence.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une propriété complexe car la valeur est redéfini à chaque nouvelle
+insertion dans le texte demandée.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_class_hors_book" class="property item">
+    <h3 class="name"><code>class_hors_book</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l307"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:307</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la class pour la balise ref dans le cas d&#39;une référence qui
+N&#39;appartient PAS au même livre que la porteuse.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une propriété complexe qui redéfinit la valeur à chaque nouvelle
+fiche porteuse (paragraphe)</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_class_same_book" class="property item">
+    <h3 class="name"><code>class_same_book</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l292"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:292</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la class pour la balise ref dans le cas d&#39;une référence qui
+appartient au même livre que la porteuse.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une propriété complexe qui redéfinit la valeur à chaque nouvelle
+fiche porteuse (paragraphe)</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_human_type" class="property item">
+    <h3 class="name"><code>human_type</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l362"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:362</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Type humain de la référence (par exemple &quot;Livre&quot; pour le type &#39;book&#39;)</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_id" class="property item">
+    <h3 class="name"><code>id</code></h3>
+    <span class="type">Number | String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l30"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:30</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Identifiant de la cible de la référence</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_mark_book" class="property item">
+    <h3 class="name"><code>mark_book</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l231"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:231</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Marque pour le livre à ajouter dans le titre hors book (quand la cible et
+la fiche porteuse n&#39;appartienne pas au même livre ou que l&#39;une des deux fiches
+n&#39;est pas dans un livre)</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_porteuse" class="property item">
+    <h3 class="name"><code>porteuse</code></h3>
+    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l37"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:37</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>La fiche porteuse de la référence, c&#39;est-à-dire qui la possède dans
+son texte. La plupart du temps, c&#39;est un {Paragraph} de page.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Noter que cette propriété est dynamique elle change en fonction de
+la référence à écrire.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_same_book" class="property item">
+    <h3 class="name"><code>same_book</code></h3>
     <span class="type">Boolean</span>
 
     
@@ -815,7 +1420,7 @@ la fiche de la référence soit chargée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l86"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:86</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l249"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:249</code></a>
         
         </p>
 
@@ -825,11 +1430,322 @@ la fiche de la référence soit chargée.</li>
     </div>
 
     <div class="description">
-        <p>True si la référence est un livre</p>
+        <p>Renvoie true si la cible de la référence appartient au même livre que la
+fiche porteuse (this.porteuse).</p>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>C&#39;est un raccourci à this.fiche.is_book</li>
+<li>C&#39;est une propriété complexe qui est recalculée à chaque nouvelle porteuse.</li>
+<li>@rappel: this.porteuse est une instanceof {Fiche}</li>
+<li>Si la cible de la référence courante n&#39;est pas encore chargée, on ne peut
+pas déterminer son livre. La propriété est alors mise à false.</li>
 </ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre" class="property item">
+    <h3 class="name"><code>titre</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l324"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:324</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Titre construit pour la référence, tel qu&#39;il apparaitra dans le texte.
+Il dépend de l&#39;état de chargement de la cible de la référence et de l&#39;appartenance
+ou non au même book que la porteuse.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>C&#39;est une propriété complexe car sa (re)-définition peut faire varier
+toutes les balises références de la même référence.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre_cible" class="property item">
+    <h3 class="name"><code>titre_cible</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l201"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:201</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le titre pour la cible</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Ce titre dépend du type de la fiche. Pour un book, on prend son titre
+réel (<code>real_titre</code>), pour un paragraphe, on prend ses 50 premiers signes,
+et on prend le titre normal pour les chapitres et les pages.</li>
+<li>Cette propriété ne doit être utilisée que pour une fiche-cible chargée.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre_for_porteuse" class="property item">
+    <h3 class="name"><code>titre_for_porteuse</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l185"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:185</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Titre pour la fiche-porteuse (pour la composition de son texte affiché)</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Ce titre varie en fonction du fait que cible et porteuse se trouvent
+ou non dans le même livre.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre_hors_book" class="property item">
+    <h3 class="name"><code>titre_hors_book</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l345"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:345</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Propriété similaire à la précédente, mais pour une référence n&#39;appartenant
+pas au livre de la porteuse.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_to_balise" class="property item">
+    <h3 class="name"><code>to_balise</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l121"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:121</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la balise [ref:...] à écrire dans le code du texte/titre</p>
+
+    </div>
+
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p>  jq.append(ref.to_balise)
+  // Where <code>jq</code> is a DOMElement
+  // And <code>ref</code> is a Ref Instance</p>
+
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="property_type" class="property item">
+    <h3 class="name"><code>type</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l24"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:24</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Type de la cible de la référence</p>
 
     </div>
 

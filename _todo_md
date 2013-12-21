@@ -2,29 +2,19 @@ IMPLÉMENTER
 -----------
 
 REFÉRENCES
-  - Quand on fait une référence (touche R), on instancie une référence (ou on la
-    prend) et c'est cette instance qu'on met dans le clipboad. Lorsqu'on colle la
-    référence, on colle le texte `clipboard.to_balise`. De façon générale, tout
-    ce qui est mis dans le clipboard doit répondre à `to_balise` sauf si c'est un
-    string.
-  Poursuivre le développement. Pour le moment, il y a un problème dans la 
-  définition des références lorsqu'une fiche n'est pas encore chargée. Voir par
-  exemple la référence au chapitre dans la page "déictique".
-  En fait, déjà, lorsqu'une fiche n'existe pas, ça devrait toujours mettre une
-  référence basique (type-id)
-  - @note: dès qu'on demande à voir la référence, et donc qu'elle se charge, il
-    faudrait pouvoir actualiser toutes les références à cette fiche
-    =>  une classe 'type_id' qui permette de toutes les modifier d'un seul coup
-        avec jQuery.
-        
-- La marque de la référence doit indiquer s'il s'agit d'un autre livre.
-- Le clic sur la référence doit ouvrir la fiche.
+  - C'est lorsqu'on charge la fiche qu'il faut voir si elle a des références
+    -> FICHES.dispatch
+  # Voir pourquoi on passe deux fois par Ref::formate
+  - Tester l'actualisation de la marque d'une référence : utiliser le chapitre
+    référencé dans la page "les déictiques" : ouvrir la page, qui devrait 
+    contenir une référence simple, puis ouvrir le livre qui contient le chapitre,
+    ça devrait automatiquement actualiser la marque dans la page déictique
 - Implémenter FICHES.show qui permettra d'affiche la fiche d'une référence.
   Attention, il faut absolument tenir compte de son type, un paragraphe ne
   s'affiche pas comme une page ou un chapitre.
 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
-  Fabriquer mes propres procédure pour LaTex
+  Fabriquer mes propres procédure de récupération des films et livres pour LaTex
   - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico
   - Faire la classe Livre qui fonctionnera comme les Films
   Procédure :

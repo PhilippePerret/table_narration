@@ -19,8 +19,8 @@ $.extend(window.REFS,{
   list:{},
   
   /**
-    * Retourne l'instance Ref de la référence
-    *
+    * Retourne l'instance Ref de la référence (la prend dans les références déjà
+    * instanciées ou crée une nouvelle instance).
     * @method get
     * @param  {String} rid Identifiant de la référence telle qu'on peut la trouver
     *                      dans une balise. P.e. "chap-3"

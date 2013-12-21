@@ -176,18 +176,16 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
-    * Produit une balise de référence à insérer dans un texte
-    *
+    * Met dans le App.clipboard l'instance {Ref} à la fiche courante. Cette
+    * référence pourra être ensuite collée dans le texte.
     * Notes
     * -----
-    *   * C'est une propriété complexe, donc appeler sans parenthèses
-    *
-    * @method balise_reference
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method copy_reference
     */
-  "balise_reference":{
+  "copy_reference":{
     get:function(){
-      var balise = "[ref:"+this.type+"-"+this.id+"|"+this.main_value+"]"
-      App.clipboard = balise
+      App.clipboard = get_ref(this.type+"-"+this.id)
       F.show( image('clavier/K_Command.png')+image('clavier/K_V.png')+
               " pour insérer référence.")
     }

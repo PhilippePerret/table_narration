@@ -285,6 +285,22 @@ Object.defineProperties(Book.prototype,{
     }
   },
   
+  /**
+    * Montre le livre
+    * Notes
+    * -----
+    *   * Pour un livre, ça consiste simplement à le &quot;highligher&quot;
+    *   * Un livre est toujours chargé, donc aucun test sur son chargement
+    *   * C&#x27;est une propriété complexe, donc l&#x27;appeler sans parenthèses
+    *
+    * @method show
+    *
+    */
+  &quot;show&quot;:{
+    get:function(){
+      this.highlight()
+    }
+  }
 })
 
 /* Méthode appelée au changement de real titre du livre */

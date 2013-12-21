@@ -151,7 +151,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     } 
     break
   case Key_r:
-    if(!evt.metaKey){cplx_meth = 'balise_reference'}
+    if(!evt.metaKey){cplx_meth = 'copy_reference'}
     break
   }
   if(cplx_meth)

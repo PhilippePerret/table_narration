@@ -285,6 +285,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_show">show</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -397,7 +404,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l497"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:497</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l528"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:528</code></a>
         
         </p>
 
@@ -698,7 +705,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l684"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:684</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l715"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:715</code></a>
         
         </p>
 
@@ -718,6 +725,134 @@ retourne la fiche correspondante.</p>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_show" class="method item">
+    <h3 class="name"><code>show</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>id</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l372"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:372</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Montre la fiche</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Cette fonction est appelée principalement un clic sur une référene
+dans le texte. La fiche peut-être chargée ou non, et d&#39;un type indifférent.
+La méthode s&#39;arrange dans tous les cas pour la montrer. Ce qui consiste, 
+suivant son type, à :<ul>
+<li>&quot;highlighter&quot; un livre (clignotement)</li>
+<li>&quot;highlighter&quot; un chapitre après avoir ouvert son livre si nécessaire.</li>
+<li>Ouvrir une page</li>
+<li>Ouvrir la page d&#39;un paragraphe et scroller jusqu&#39;à lui</li>
+</ul>
+</li>
+<li>La fiche peut ne pas être chargée. Et ses parents non plus s&#39;il s&#39;agit
+d&#39;un paragraphe.</li>
+<li>La question se pose de savoir si je fais une méthode ici qui traite tous
+les cas où si je fais une méthode propre pour chaque type de fiche.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">id</code>
+                        <span class="type">String | Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Identifiant de la fiche à montrer</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Type de la fiche à montrer.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     

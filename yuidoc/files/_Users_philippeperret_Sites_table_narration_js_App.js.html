@@ -257,10 +257,14 @@ $.extend(window.App, {
     * devra ensuite être inséré dans le texte à l&#x27;aide de CMD+V.
     * Notes
     * -----
+    *   * La valeur est soit un {String} à copier tel quel dans le texte, soit
+    *     un {Object} qui doit obligatoirement répondre à la méthode &#x60;.to_balise&#x60;
+    *     qui doit retourner le texte à coller dans le texte.
     *   * Utilisé par exemple pour les références
+    *   * C&#x27;est la pseudo-méthode &#x60;App.coller_clipboard&#x60; qui répond au CMD+V
     *
     * @property clipboard
-    * @type     {String}
+    * @type     {Object|String}
     * @default  null
     */
   clipboard:null,
@@ -368,17 +372,23 @@ Object.defineProperties(App,{
     *   * Le App.clipboard est vidé dès qu&#x27;il est collé pour ne pas parasiter le
     *     comportement normal du coller-copier.
     *   * C&#x27;est une propriété complexe, donc l&#x27;appeler sans parenthèses.
+    *   * Le &#x60;clipboard&#x60; peut être soit un simple {String} soit un {Object} répondant
+    *     à la méthode &#x60;.to_balise&#x60; (comme les références).
     *
     * @method coller_clipboard
     *
     */
   &quot;coller_clipboard&quot;:{
     get:function(){
-      dlog(&quot;-&gt; App.coller_clipboard&quot;)
+      dlog(&quot;-&gt; App.coller_clipboard&quot;, DB_FCT_ENTER)
       if(this.clipboard == null) return false
-      UI.Input.set_selection_to( this.clipboard.toString() )
+      var clip ;
+      if(&#x27;string&#x27;==typeof this.clipboard) clip = this.clipboard.toString()
+      else clip = this.clipboard.to_balise
+      UI.Input.set_selection_to( clip )
       this.clipboard = null
       CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
+      dlog(&quot;&lt;- App.coller_clipboard&quot;, DB_FCT_ENTER)
       return true
     }
   },
