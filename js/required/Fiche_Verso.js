@@ -4,18 +4,41 @@
  */
 Object.defineProperties(Fiche.prototype,{
 
-  /*
-   *  Retourne le code HTML du VERSO de la fiche
-   *  -------------------------------------------
-   */
+  /**
+    * Retourne le code HTML du VERSO de la fiche
+    * 
+    * Notes
+    *   * À la construction initiale de la fiche, on ne renvoie que la balise
+    *     du verso, vide. C'est seulement lorsque la fiche sera retournée la
+    *     première fois que le verso sera défini.
+    * @property html_verso
+    * @type     {String}
+    * @final
+    */
   "html_verso":{
     get:function(){
       return  '<verso id="'+this.dom_id+'-verso" class="'+this.type+'" style="display:none;">'+
-                '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
-                this.html_fieldset_parametres +
-                this.html_fieldset_options +
-                '<div style="clear:both;"></div>' +
               '</verso>'
+    }
+  },
+  
+  /**
+    * Prépare le verso (au premier retournement de la fiche)
+    * Notes
+    *   * C'est cette pseudo méthode qui met `verso_ready` à true
+    * @property prepare_verso
+    * @type     {Method}
+    */
+  "prepare_verso":{
+    get:function(){
+      if(this.verso_ready) return // au cas où…
+      this.verso.append(
+        '<div id="'+this.titre_verso_id+'" class="titre_verso"></div>' +
+        this.html_fieldset_parametres +
+        this.html_fieldset_options +
+        '<div style="clear:both;"></div>'      
+      )
+      this.verso_ready = true
     }
   },
   
@@ -31,6 +54,7 @@ Object.defineProperties(Fiche.prototype,{
    */
   "regle_verso":{
     get:function(){
+      if(!this.verso_ready) this.prepare_verso
       this.set_titre_verso
       if(undefined != this.after_regle_verso) this.after_regle_verso
     }

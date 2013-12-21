@@ -293,6 +293,7 @@ $.extend(Ref.prototype,{
   {
     this.porteuse       = porteuse
     this.default_title  = default_title
+    if(this.type==&#x27;para&#x27;) this.default_title = &#x27;&lt;span class=&quot;small&quot;&gt;&#x27;+this.default_title+&#x27; […]&lt;/span&gt;&#x27;
     this[&#x27;titres_for_&#x27;+(this.cible?&#x27;&#x27;:&#x27;non_&#x27;)+&#x27;loaded_cible&#x27;]()
     return this.to_html
   },
@@ -370,7 +371,7 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       return &#x27;&lt;ref&#x27; +
                 &#x27; class=&quot;&#x27;+this.class + &#x27;&quot;&#x27;+
-                &#x27; onclick=&quot;FICHES.show(&#x27;+this.id+&#x27;, \&#x27;&#x27;+this.type+&#x27;\&#x27;)&quot;&#x27;+
+                &#x27; onclick=&quot;FICHES.show(&#x27;+this.id+&#x27;, \&#x27;&#x27;+this.type+&#x27;\&#x27;, event)&quot;&#x27;+
                 &#x27;&gt;&#x27; +
                 this.titre_for_porteuse +
                 &#x27;&lt;/ref&gt;&#x27;
@@ -391,6 +392,7 @@ Object.defineProperties(Ref.prototype, {
       this.titres_for_loaded_cible()
     }
   },
+  
   /* ---------------------------------------------------------------------
    *  MÉTHODES DE DONNÉES
    */
@@ -452,7 +454,11 @@ Object.defineProperties(Ref.prototype, {
           switch(ref.type)
           {
           case &#x27;book&#x27; : return fi.real_titre || fi.titre
-          case &#x27;para&#x27; : return fi.texte.substring(0,50)
+          case &#x27;para&#x27; :
+            var extrait ;
+            if(fi.texte.length &gt; 50) extrait = fi.texte.substring(0,50) + &#x27;[…]&#x27;
+            else extrait = fi.texte
+            return &#x27;&lt;span class=&quot;small&quot;&gt;&#x27;+extrait+&#x27;&lt;/span&gt;&#x27;
           default     : return fi.titre
           }
         }(this)

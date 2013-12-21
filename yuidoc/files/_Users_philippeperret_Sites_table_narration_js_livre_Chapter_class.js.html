@@ -233,43 +233,7 @@ Object.defineProperties(Chapter.prototype,{
       if(!this.parent) return null
       return this.parent
     }
-  },
-  
-  /**
-    * Montrer un chapitre
-    *
-    * Notes
-    * -----
-    *   * La méthode est principalement appelée quand on clique sur une référence
-    *     dans un texte. Cela produit un appel à &#x60;FICHES.show&#x60; qui appelle la
-    *     méthode &#x60;show&#x60; propre à chaque type de fiche.
-    *   * Un chapitre, contrairement à un livre, peut ne pas être affiché
-    *     On doit donc s&#x27;assure qu&#x27;il est chargé et ouvrir le livre qui le 
-    *     contient, sauf lorsqu&#x27;il n&#x27;appartient à aucun livre.
-    *   * Propriété complexe =&gt; appeler sans parenthèses
-    *
-    * @method show
-    */
-  &quot;show&quot;:{
-    get:function(){
-      dlog(&quot;-&gt; Chapter::show [&quot;+this.type_id+&quot;]&quot;, DB_FCT_ENTER)
-      if(this.loaded == false) return this.load(&#x27;show&#x27;)
-      if(this.book)
-      {
-        if(false == this.book.opened){
-          if(this.book.loaded) this.book.open
-          else
-          {
-            // Normalement un livre est toujours chargé
-            // J&#x27;ajoute quand même cette sécurité  
-            this.book.pour_suivre_open = $.proxy(FICHES.show, FICHES, this.id, this.type)
-            return this.book.open
-          }
-        }
-      }
-      this.highlight()
-    }
-  }
+  }  
 })
     </pre>
 </div>

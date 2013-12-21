@@ -1423,29 +1423,11 @@
             "module": "String"
         },
         {
-            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
-            "line": 80,
-            "description": "Montre le livre\nNotes\n-----\n  * Pour un livre, ça consiste simplement à le \"highligher\"\n  * Un livre est toujours chargé, donc aucun test sur son chargement\n  * C'est une propriété complexe, donc l'appeler sans parenthèses",
-            "itemtype": "method",
-            "name": "show",
-            "class": "Chapter",
-            "module": "String"
-        },
-        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
             "line": 19,
             "itemtype": "property",
             "name": "book Le livre auquel appartient le chapitre (ou null)",
             "type": "Book",
-            "class": "Chapter",
-            "module": "Chapter"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
-            "line": 30,
-            "description": "Montrer un chapitre\n\nNotes\n-----\n  * La méthode est principalement appelée quand on clique sur une référence\n    dans un texte. Cela produit un appel à `FICHES.show` qui appelle la\n    méthode `show` propre à chaque type de fiche.\n  * Un chapitre, contrairement à un livre, peut ne pas être affiché\n    On doit donc s'assure qu'il est chargé et ouvrir le livre qui le \n    contient, sauf lorsqu'il n'appartient à aucun livre.\n  * Propriété complexe => appeler sans parenthèses",
-            "itemtype": "method",
-            "name": "show",
             "class": "Chapter",
             "module": "Chapter"
         },
@@ -1569,6 +1551,11 @@
                     "name": "type",
                     "description": "Type de la fiche à montrer.",
                     "type": "String"
+                },
+                {
+                    "name": "evt",
+                    "description": "Evènement transmit à la méthode. N'est défini\n                              que lors de l'appel direct.",
+                    "type": "Event"
                 }
             ],
             "class": "FICHES",
@@ -1576,7 +1563,23 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 530,
+            "line": 409,
+            "description": "Ouvre la ou les fiches données en argument\n\nNotes\n  * N'ouvre les fiches que si elles sont construites (`built` = true)",
+            "itemtype": "method",
+            "name": "open",
+            "params": [
+                {
+                    "name": "arr",
+                    "description": "Liste d'instance Fiche ou Instance Fiche",
+                    "type": "Array|Fiche"
+                }
+            ],
+            "class": "FICHES",
+            "module": "FICHES"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
+            "line": 538,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -1592,7 +1595,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 717,
+            "line": 725,
             "description": "Initialisation complète des fiches\n\nNotes\n-----\n  * C'est une propriété complexe (=> à appeler sans parenthèses)\n  * Elle procède aussi au nettoyage de la table.",
             "itemtype": "method",
             "name": "init_all",
@@ -1616,15 +1619,6 @@
             "itemtype": "property",
             "name": "book Le livre auquel appartient la page (ou null)",
             "type": "Book",
-            "class": "Page",
-            "module": "Page"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
-            "line": 29,
-            "description": "Montrer la page\n\nNotes\n-----\n  * La méthode est principalement appelée quand on clique sur une référence\n    dans un texte. Cela produit un appel à `FICHES.show` qui appelle la\n    méthode `show` propre à chaque type de fiche.\n  * Pour une page, la montrer consiste à l'ouvrir. Mais cette page peut ne pas\n    être encore chargée, donc il faut s'assurer qu'elle puisse être ouverte\n    en chargeant tous ses parents si elle en a.\n  * Propriété complexe => appeler sans parenthèses. Donc pour les méthodes\n    poursuivre, il faut utiliser impérativement FICHES.show(this.id, this.type)",
-            "itemtype": "method",
-            "name": "show",
             "class": "Page",
             "module": "Page"
         },
@@ -1791,7 +1785,29 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 62,
+            "line": 43,
+            "description": "Objet DOM du recto de la fiche (jQuerySet)",
+            "itemtype": "property",
+            "name": "recto",
+            "type": "JQuerySet",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 51,
+            "description": "Objet DOM du verso de la fiche (jQuerySet)",
+            "itemtype": "property",
+            "name": "verso",
+            "type": "JQuerySet",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 70,
             "description": "Définit si nécessaire l'objet jQuery de la fiche et le retourne\n\nNOTES\n-----\n  * C'est un set jQuery, mais il n'est défini QUE si l'objet existe\n    vraiment dans le DOM. Inutile de faire `fiche.obj.length == 0` pour\n    s'assurer qu'il existe bien, `fiche.obj` suffit car il renvoie null\n    si la fiche n'est pas encore construite.",
             "itemtype": "property",
             "name": "obj",
@@ -1802,17 +1818,79 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 92,
-            "description": "Ouvre la fiche\n--------------\n\nNOTES\n-----\n  * L'opération produit des résultats différents en fonction du type\n    de la fiche. Par exemple, pour une page, on la sort de son parent\n    et on montre ses enfants (paragraphes).\n  * Propriété complexe, donc appeler sans parenthèses.\n  * Si une méthode doit suivre, définir `this.pour_suivre_open`",
+            "line": 100,
+            "description": "Ouvre la fiche\n--------------\n\nNOTES\n-----\n  * L'opération produit des résultats différents en fonction du type\n    de la fiche. Par exemple, pour une page, on la sort de son parent\n    et on montre ses enfants (paragraphes).\n  * Propriété complexe, donc appeler sans parenthèses.\n  * Si une méthode doit suivre, définir `this.pour_suivre_open`\n  * La méthode peut être appelée même si la fiche est ouverte, dans lequel\n    cas seul la méthode pour suivre sera traitée.\n  * La méthode est récursive, c'est-à-dire qu'elle ouvre tous les parents\n    avant de s'ouvrir.",
             "itemtype": "method",
             "name": "open",
+            "async": 1,
             "class": "Fiche",
             "module": "fiche_dom",
             "submodule": "dom"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 208,
+            "line": 210,
+            "description": "Montrer la fiche (quel que soit son type)\n\nNotes\n-----\n  * La méthode est principalement appelée quand on clique sur une référence\n    dans un texte. Cela produit un appel à `FICHES.show` qui appelle la\n    méthode `show` propre à chaque type de fiche.\n  * Pour une page, la montrer consiste à l'ouvrir. Mais cette page peut ne pas\n    être encore chargée, donc il faut s'assurer qu'elle puisse être ouverte\n    en chargeant tous ses parents si elle en a.\n  * La méthode est asynchrone seulement si ses parents et ses enfants ne sont\n    pas encore chargés",
+            "itemtype": "method",
+            "name": "show",
+            "async": 1,
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 243,
+            "description": "Retourne la fiche (sélectionnée)\nNotes\n  * À sa construction, la fiche ne prépare pas son verso (pour être plus efficace)\n    Donc lorsqu'on retourne pour la première fois une fiche, il faut s'assurer\n    que son verso est preparé (`verso_ready`). Cela se fait dans la méthode\n    `regle_verso`.",
+            "itemtype": "property",
+            "name": "retourne",
+            "type": "{Nothing}",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 269,
+            "description": "Méthode appelée à la fin de chaque méthode `show` pour traiter \nla visibilité suivant les options\nNotes\n-----\n  * Les options sont défines dans FICHES.show et dépendent des modifiers\n    utilisés en cliquant sur la référence.\n  * Si aucune option de sélection ou d'ouverture n'est demandé, la méthode\n    fait simplement clignoter la fiche.",
+            "itemtype": "method",
+            "name": "suite_show",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object|Null",
+                    "props": [
+                        {
+                            "name": "select",
+                            "description": "Si true, sélectionne la fiche",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "open",
+                            "description": "Si true, ouvre la fiche",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "suivre",
+                            "description": "La méthode pour suivre, if any",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "no_light",
+                            "description": "Si true, pas de clignotement",
+                            "type": "Boolean"
+                        }
+                    ]
+                }
+            ],
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 295,
             "description": "Fait clignoter la fiche\nNotes\n-----\n  * La méthode/procédure qui appelle cette méthode doit s'assurer que\n    la fiche est chargée et visible",
             "itemtype": "method",
             "name": "highlight",
@@ -1822,7 +1900,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 249,
+            "line": 336,
             "description": "Déplacement de l'enfant vers le haut\n\nNotes\n-----\n  * Méthode \"complexe\", donc invoquée sans parenthèses\n  * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre\n    le nouvel ordre à chaque fois, mais ça risque d'être intense pour rien.\n    Au lieu de ça, j'utilise un timeout qui appelera la méthode seulement \n    lorsque les déplacements sembleront terminés.",
             "itemtype": "method",
             "name": "move_up",
@@ -1832,7 +1910,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 274,
+            "line": 361,
             "description": "Déplacement de l'enfant vers le bas\nNotes\n-----\n  * Cf. les notes de la méthode `move_up`.",
             "itemtype": "method",
             "name": "move_down",
@@ -1842,7 +1920,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 513,
+            "line": 600,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
@@ -1854,7 +1932,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 525,
+            "line": 612,
             "description": "Retourne le champ principal (soit le DIV soit le champ de saisie suivant\nle contexte) \n NOTES\n -----\n Pour forcer la définition, utiliser `this._main_field = null'",
             "itemtype": "property",
             "name": "main_field",
@@ -1865,7 +1943,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 652,
+            "line": 739,
             "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
             "itemtype": "method",
             "name": "enable_main_field",
@@ -1875,7 +1953,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 703,
+            "line": 790,
             "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * Propriété complexe (appelé sans parenthèses)\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
             "itemtype": "method",
             "name": "clone",
@@ -1885,7 +1963,28 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js",
-            "line": 54,
+            "line": 7,
+            "description": "Retourne le code HTML du VERSO de la fiche\n\nNotes\n  * À la construction initiale de la fiche, on ne renvoie que la balise\n    du verso, vide. C'est seulement lorsque la fiche sera retournée la\n    première fois que le verso sera défini.",
+            "itemtype": "property",
+            "name": "html_verso",
+            "type": "{String}",
+            "final": 1,
+            "class": "Fiche",
+            "module": "fiche_dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js",
+            "line": 25,
+            "description": "Prépare le verso (au premier retournement de la fiche)\nNotes\n  * C'est cette pseudo méthode qui met `verso_ready` à true",
+            "itemtype": "property",
+            "name": "prepare_verso",
+            "type": "{Method}",
+            "class": "Fiche",
+            "module": "fiche_dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_Verso.js",
+            "line": 78,
             "description": "Code HTML du fieldset des options à l'arrière de toute fiche\n\nNotes\n-----\n  * Des options propres à chaque type de fiche peuvent être ajoutées en\n    définissant la propriété complexe `options_supplementaires` qui doit\n    renvoyer la liste des options.",
             "itemtype": "property",
             "name": "html_fieldset_options",
@@ -3417,7 +3516,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 93,
+            "line": 94,
             "description": "Formatage du titre pour une cible chargée\nLa méthode définit les valeurs `titre_same_book` et `titre_hors_book` de\nla référence",
             "itemtype": "method",
             "name": "titres_for_loaded_cible",
@@ -3426,7 +3525,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 107,
+            "line": 108,
             "description": "Définit les titres pour une cible non chargée (simple)\nNotes\n-----\n  * La cible n'étant pas chargée, on ne peut rien savoir d'elle, on met\n    donc le même texte simple dans les deux propriétés `titre_same_book`\n    et `titre_hors_book`.",
             "itemtype": "method",
             "name": "titres_for_non_loaded_cible",
@@ -3435,7 +3534,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 132,
+            "line": 133,
             "description": "Retourne la balise [ref:...] à écrire dans le code du texte/titre",
             "itemtype": "property",
             "name": "to_balise",
@@ -3449,7 +3548,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 151,
+            "line": 152,
             "description": "Retourne la balise HTML pour la référence\nNotes\n-----\n  * C'est une propriété complexe, l'appeler sans parenthèses\n  * Le titre (le contenu) de la balise doit avoir été construit avant\n    d'appeler cette méthode",
             "itemtype": "method",
             "name": "balise_html",
@@ -3462,7 +3561,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 172,
+            "line": 173,
             "description": "Appelée pour updater l'affichage de toutes les références lorsque la\nfiche-cible est chargée.\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "update",
@@ -3471,7 +3570,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 190,
+            "line": 192,
             "description": "Instance Fiche de la cible de la référence\nNotes\n-----\n  * WARNING: Cette propriété est mise à NULL même si l'instance Fiche\n    existe, mais qu'elle n'est pas encore chargée.",
             "itemtype": "property",
             "name": "cible",
@@ -3481,7 +3580,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 210,
+            "line": 212,
             "description": "Titre pour la fiche-porteuse (pour la composition de son texte affiché)\nNotes\n-----\n  * Ce titre varie en fonction du fait que cible et porteuse se trouvent\n    ou non dans le même livre.",
             "itemtype": "property",
             "name": "titre_for_porteuse",
@@ -3491,7 +3590,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 226,
+            "line": 228,
             "description": "Retourne le titre pour la cible\nNotes\n-----\n  * Ce titre dépend du type de la fiche. Pour un book, on prend son titre\n    réel (`real_titre`), pour un paragraphe, on prend ses 50 premiers signes,\n    et on prend le titre normal pour les chapitres et les pages.\n  * Cette propriété ne doit être utilisée que pour une fiche-cible chargée.",
             "itemtype": "property",
             "name": "titre_cible",
@@ -3502,7 +3601,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 256,
+            "line": 262,
             "description": "Marque pour le livre à ajouter dans le titre hors book (quand la cible et\nla fiche porteuse n'appartienne pas au même livre ou que l'une des deux fiches\nn'est pas dans un livre)",
             "itemtype": "property",
             "name": "mark_book",
@@ -3513,7 +3612,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 274,
+            "line": 280,
             "description": "Renvoie true si la cible de la référence appartient au même livre que la\nfiche porteuse (this.porteuse).\n\nNotes\n-----\n  * C'est une propriété complexe qui est recalculée à chaque nouvelle porteuse.\n  * @rappel: this.porteuse est une instanceof {Fiche}\n  * Si la cible de la référence courante n'est pas encore chargée, on ne peut\n    pas déterminer son livre. La propriété est alors mise à false.",
             "itemtype": "property",
             "name": "same_book",
@@ -3523,7 +3622,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 302,
+            "line": 308,
             "description": "Retourne la class pour la balise `ref` en tenant compte du fait que la\nréférence appartient ou non au même livre que la fiche porteuse contenant\nla référence.\nNotes\n-----\n  * C'est une propriété complexe car la valeur est redéfini à chaque nouvelle\n    insertion dans le texte demandée.",
             "itemtype": "property",
             "name": "class",
@@ -3533,7 +3632,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 317,
+            "line": 323,
             "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nappartient au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
             "itemtype": "property",
             "name": "class_same_book",
@@ -3543,7 +3642,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 332,
+            "line": 338,
             "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nN'appartient PAS au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
             "itemtype": "property",
             "name": "class_hors_book",
@@ -3553,7 +3652,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 347,
+            "line": 353,
             "description": "Titre construit pour la référence, tel qu'il apparaitra dans le texte.\nIl dépend de l'état de chargement de la cible de la référence et de l'appartenance\nou non au même book que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe car sa (re)-définition peut faire varier\n    toutes les balises références de la même référence.",
             "itemtype": "property",
             "name": "titre",
@@ -3563,7 +3662,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 368,
+            "line": 374,
             "description": "Propriété similaire à la précédente, mais pour une référence n'appartenant\npas au livre de la porteuse.",
             "itemtype": "property",
             "name": "titre_hors_book",
@@ -3573,7 +3672,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 385,
+            "line": 391,
             "description": "Type humain de la référence (par exemple \"livre\" pour le type 'book')\nNotes\n-----\n  * La valeur est sans capitale, pour pouvoir s'insérer dans le flux du texte\n    ou entre parenthèses.",
             "itemtype": "property",
             "name": "human_type",
@@ -3584,7 +3683,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 401,
+            "line": 407,
             "description": "Retourne l'instance {Fiche} de la référence courante\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée.",
             "itemtype": "property",
             "name": "book",
@@ -3594,7 +3693,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 419,
+            "line": 425,
             "description": "Retourne l'identifiant du livre de la référence\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée. Donc à n'utiliser que dans les\n    méthodes/propriétés qui traitent du cas où la cible est loaded.",
             "itemtype": "property",
             "name": "book_id",

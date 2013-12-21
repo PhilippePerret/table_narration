@@ -212,18 +212,41 @@
  */
 Object.defineProperties(Fiche.prototype,{
 
-  /*
-   *  Retourne le code HTML du VERSO de la fiche
-   *  -------------------------------------------
-   */
+  /**
+    * Retourne le code HTML du VERSO de la fiche
+    * 
+    * Notes
+    *   * À la construction initiale de la fiche, on ne renvoie que la balise
+    *     du verso, vide. C&#x27;est seulement lorsque la fiche sera retournée la
+    *     première fois que le verso sera défini.
+    * @property html_verso
+    * @type     {String}
+    * @final
+    */
   &quot;html_verso&quot;:{
     get:function(){
       return  &#x27;&lt;verso id=&quot;&#x27;+this.dom_id+&#x27;-verso&quot; class=&quot;&#x27;+this.type+&#x27;&quot; style=&quot;display:none;&quot;&gt;&#x27;+
-                &#x27;&lt;div id=&quot;&#x27;+this.titre_verso_id+&#x27;&quot; class=&quot;titre_verso&quot;&gt;&lt;/div&gt;&#x27; +
-                this.html_fieldset_parametres +
-                this.html_fieldset_options +
-                &#x27;&lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;&#x27; +
               &#x27;&lt;/verso&gt;&#x27;
+    }
+  },
+  
+  /**
+    * Prépare le verso (au premier retournement de la fiche)
+    * Notes
+    *   * C&#x27;est cette pseudo méthode qui met &#x60;verso_ready&#x60; à true
+    * @property prepare_verso
+    * @type     {Method}
+    */
+  &quot;prepare_verso&quot;:{
+    get:function(){
+      if(this.verso_ready) return // au cas où…
+      this.verso.append(
+        &#x27;&lt;div id=&quot;&#x27;+this.titre_verso_id+&#x27;&quot; class=&quot;titre_verso&quot;&gt;&lt;/div&gt;&#x27; +
+        this.html_fieldset_parametres +
+        this.html_fieldset_options +
+        &#x27;&lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;&#x27;      
+      )
+      this.verso_ready = true
     }
   },
   
@@ -239,6 +262,7 @@ Object.defineProperties(Fiche.prototype,{
    */
   &quot;regle_verso&quot;:{
     get:function(){
+      if(!this.verso_ready) this.prepare_verso
       this.set_titre_verso
       if(undefined != this.after_regle_verso) this.after_regle_verso
     }

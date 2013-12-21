@@ -246,12 +246,20 @@ Object.defineProperties(Fiche.prototype,{
       return this._dom_id
     }
   },
-  /* Recto de la fiche */
+  /* jID du recto de la fiche */
   &quot;recto_jid&quot;:{get:function(){return &#x27;recto#&#x27;+this.dom_id+&#x27;-recto&#x27;}},
+  /**
+    * Objet DOM du recto de la fiche (jQuerySet)
+    * @property {jQuerySet} recto
+    */
   &quot;recto&quot;:{get:function(){ return $(this.recto_jid) }},
   
-  /* Verso de la fiche */
+  /* jID du verso */
   &quot;verso_jid&quot;:{get:function(){ return &#x27;verso#&#x27;+this.dom_id+&#x27;-verso&#x27;}},
+  /**
+    * Objet DOM du verso de la fiche (jQuerySet)
+    * @property {jQuerySet} verso
+    */
   &quot;verso&quot;:{get:function(){ return $(this.verso_jid) }},
   
   /* ---------------------------------------------------------------------
@@ -308,18 +316,32 @@ Object.defineProperties(Fiche.prototype,{
     *     et on montre ses enfants (paragraphes).
     *   * Propriété complexe, donc appeler sans parenthèses.
     *   * Si une méthode doit suivre, définir &#x60;this.pour_suivre_open&#x60;
+    *   * La méthode peut être appelée même si la fiche est ouverte, dans lequel
+    *     cas seul la méthode pour suivre sera traitée.
+    *   * La méthode est récursive, c&#x27;est-à-dire qu&#x27;elle ouvre tous les parents
+    *     avant de s&#x27;ouvrir.
     *
     * @method open
+    * @async
     *
     */
   &quot;open&quot;:{
     get:function(){
       var idm = &quot;Fiche::open [&quot;+this.type_id+&quot;]&quot; 
       dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
-      if(this.is_not_openable) return this.rend_openable(&#x27;open&#x27;)
-      this.opened = true // applique la class &#x27;opened&#x27; à l&#x27;objet DOM
-      if(this.parent &amp;&amp; this.is_page) this.unrange
-      this.positionne
+      if(!this.opened)
+      {
+        if(!this.loaded) return this.load(&#x27;open&#x27;)
+        if(this.parent &amp;&amp; !this.parent.opened)
+        {
+          this.parent.pour_suivre_open = $.proxy(FICHES.open, FICHES, this)
+          return this.parent.open
+        }
+        if(this.is_not_openable) return this.rend_openable(&#x27;open&#x27;)
+        this.opened = true // applique la class &#x27;opened&#x27; à l&#x27;objet DOM
+        if(this.parent &amp;&amp; this.is_page) this.unrange
+        this.positionne
+      }
       if(&#x27;function&#x27; == typeof this.pour_suivre_open)
       {
         this.pour_suivre_open()
@@ -393,11 +415,50 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
+  /**
+    * Montrer la fiche (quel que soit son type)
+    *
+    * Notes
+    * -----
+    *   * La méthode est principalement appelée quand on clique sur une référence
+    *     dans un texte. Cela produit un appel à &#x60;FICHES.show&#x60; qui appelle la
+    *     méthode &#x60;show&#x60; propre à chaque type de fiche.
+    *   * Pour une page, la montrer consiste à l&#x27;ouvrir. Mais cette page peut ne pas
+    *     être encore chargée, donc il faut s&#x27;assurer qu&#x27;elle puisse être ouverte
+    *     en chargeant tous ses parents si elle en a.
+    *   * La méthode est asynchrone seulement si ses parents et ses enfants ne sont
+    *     pas encore chargés
+    *
+    * @method show
+    * @async
+    */
+  &quot;show&quot;:{
+    value:function(options){
+      dlog(&quot;-&gt; Fiche::show [&quot;+this.type_id+&quot;]&quot;, DB_FCT_ENTER)
+      if(!this.loaded) return this.load($.proxy(this.show, this, options))
+      if(this.parent)
+      {
+        this.parent.pour_suivre_open = $.proxy(this.suite_show, this, options)
+        return this.parent.open
+      }
+      else
+      {
+        this.suite_show(options)
+      }
+    }
+  },
   
-  /*
-   *  Retourne la fiche
-   *  
-   */
+  /**
+    * Retourne la fiche (sélectionnée)
+    * Notes
+    *   * À sa construction, la fiche ne prépare pas son verso (pour être plus efficace)
+    *     Donc lorsqu&#x27;on retourne pour la première fois une fiche, il faut s&#x27;assurer
+    *     que son verso est preparé (&#x60;verso_ready&#x60;). Cela se fait dans la méthode
+    *     &#x60;regle_verso&#x60;.
+    *
+    * @property retourne
+    * @type     {Nothing}
+    */
   &quot;retourne&quot;:{
     get:function()
     {
@@ -413,6 +474,32 @@ Object.defineProperties(Fiche.prototype,{
    *   MÉTHODES DOM DIVERSES
    *
    --------------------------------------------------------------------- */
+  /**
+    * Méthode appelée à la fin de chaque méthode &#x60;show&#x60; pour traiter 
+    * la visibilité suivant les options
+    * Notes
+    * -----
+    *   * Les options sont défines dans FICHES.show et dépendent des modifiers
+    *     utilisés en cliquant sur la référence.
+    *   * Si aucune option de sélection ou d&#x27;ouverture n&#x27;est demandé, la méthode
+    *     fait simplement clignoter la fiche.
+    *
+    * @method suite_show
+    * @param  {Object|Null} options
+    *   @param {Boolean}  options.select    Si true, sélectionne la fiche
+    *   @param {Boolean}  options.open      Si true, ouvre la fiche
+    *   @param {Function} options.suivre    La méthode pour suivre, if any
+    *   @param {Boolean}  options.no_light  Si true, pas de clignotement
+    */
+  &quot;suite_show&quot;:{
+    value:function(options){
+      if(undefined == options) options = {}
+      if(options.select)  this.select
+      if (options.open)   this.open
+      if (!options.no_light) this.highlight()
+      if (options.suivre) this.options.suivre()
+    }
+  },
   /**
     * Fait clignoter la fiche
     * Notes

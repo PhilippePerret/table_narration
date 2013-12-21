@@ -597,24 +597,32 @@ window.FICHES = {
     * @method show
     * @param  {String|Number} id    Identifiant de la fiche à montrer
     * @param  {String}        type  Type de la fiche à montrer.
+    * @param  {Event}         evt   Evènement transmit à la méthode. N&#x27;est défini
+    *                               que lors de l&#x27;appel direct.
     * 
     */
-  show:function(id, type)
+  show:function(id, type, evt)
   {
-    // Si c&#x27;est un livre, il doit être forcément ouvert sur la table, puisque la
-    // méthode qui charge la collection s&#x27;assure toujours que tous les livres soient
-    // remontés. Donc on peut se contenter de l&#x27;&quot;highligher&quot;
-    // this.fiche_from({id:id, type:type}).show
+    if(undefined != evt)
+    {
+      this.options_show = {
+        select: evt.shiftKey,
+        open  : evt.altKey
+      }
+    }
     var fi = this.fiche_from({id:id, type:type})
-    dlog(&quot;fi:&quot;);dlog(fi)
-    fi.show
+    fi.show(this.options_show)
   },
   
-  /*
-   *  Ouvre la ou les fiches données en argument
-   *
-   * @param arr   Liste d&#x27;instance Fiche ou Instance Fiche
-   */
+  /**
+    * Ouvre la ou les fiches données en argument
+    *
+    * Notes
+    *   * N&#x27;ouvre les fiches que si elles sont construites (&#x60;built&#x60; = true)
+    * @method open
+    * @param  {Array|Fiche} arr Liste d&#x27;instance Fiche ou Instance Fiche
+    *
+    */
   open:function(arr)
   {
     if(exact_typeof(arr) != &#x27;array&#x27;) arr = [arr] ;

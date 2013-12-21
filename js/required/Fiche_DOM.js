@@ -38,12 +38,20 @@ Object.defineProperties(Fiche.prototype,{
       return this._dom_id
     }
   },
-  /* Recto de la fiche */
+  /* jID du recto de la fiche */
   "recto_jid":{get:function(){return 'recto#'+this.dom_id+'-recto'}},
+  /**
+    * Objet DOM du recto de la fiche (jQuerySet)
+    * @property {jQuerySet} recto
+    */
   "recto":{get:function(){ return $(this.recto_jid) }},
   
-  /* Verso de la fiche */
+  /* jID du verso */
   "verso_jid":{get:function(){ return 'verso#'+this.dom_id+'-verso'}},
+  /**
+    * Objet DOM du verso de la fiche (jQuerySet)
+    * @property {jQuerySet} verso
+    */
   "verso":{get:function(){ return $(this.verso_jid) }},
   
   /* ---------------------------------------------------------------------
@@ -233,10 +241,15 @@ Object.defineProperties(Fiche.prototype,{
   },
   
   /**
-    *  Retourne la fiche
+    * Retourne la fiche (sélectionnée)
+    * Notes
+    *   * À sa construction, la fiche ne prépare pas son verso (pour être plus efficace)
+    *     Donc lorsqu'on retourne pour la première fois une fiche, il faut s'assurer
+    *     que son verso est preparé (`verso_ready`). Cela se fait dans la méthode
+    *     `regle_verso`.
     *
-    * TODO: s'assurer avant que son verso (si verso) soit construit et le 
-    *       construire le cas échéant.
+    * @property retourne
+    * @type     {Nothing}
     */
   "retourne":{
     get:function()
