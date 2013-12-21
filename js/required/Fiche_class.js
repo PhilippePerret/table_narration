@@ -191,19 +191,21 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /*
-   *  Création d'une nouvelle fiche
-   *  -----------------------------
-   *  
-   *  NOTES
-   *  -----
-   *  * Il ne suffit pas de créer la fiche pour qu'elle soit mise en 
-   *    sauvegarde. Cela permet de les créer tranquillement lors du chargement
-   *    de la collection.
-   *    C'est seulement lorsqu'un élément de la fiche aura été modifié (et
-   *    notamment le titre ou le texte — paragraph) qu'elle sera prête pour
-   *    l'enregistrement.
-   */
+  /**
+    * Création d'une nouvelle fiche
+    * -----------------------------
+    * 
+    * NOTES
+    * -----
+    *   * Il ne suffit pas de créer la fiche pour qu'elle soit mise en 
+    *     sauvegarde. Cela permet de les créer tranquillement lors du chargement
+    *     de la collection.
+    *     C'est seulement lorsqu'un élément de la fiche aura été modifié (et
+    *     notamment le titre ou le texte — paragraph) qu'elle sera prête pour
+    *     l'enregistrement.
+    *
+    * @property {Method} create
+    */
   "create":{
     get:function(){
       dlog("---> Fiche::CREATE ("+this.type_id+")", DB_FCT_ENTER)
@@ -249,6 +251,7 @@ Object.defineProperties(Fiche.prototype, {
       
       // Rend ses enfants sortable
       this.div_items.sortable({
+        // 'containment' :"fiche."+this.type+" > recto > div.items",
         'axis'        :"y",
         'helper'      :"clone",
         'placeholder' :'newplace',
@@ -325,37 +328,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "rend_sortable":{
     get:function(){
-      // this.obj.sortable({
-      this.div_items.sortable({
-        // 'containment': this.parent.div_items,
-        // 'axis'    : 'y',
-        // 'opacity' : 0.5,
-        // 'scroll'  : true,
-        // 'forcePlaceholderSize': true,
-        // 'placeholder':'newplace', 
-        // 'change'  : function(evt, ui)
-        // {
-        //   /* appelé si changement de position*/
-        //   dlog(this.type_id+" a changé de position")
-        //   return true
-        // },
-        // 'out' :function(evt,ui)
-        // {
-        //   dlog(this.type_id+" sort de son parent")
-        // },
-        // 'over':function(evt,ui)
-        // {
-        //   dlog(this.type_id+" passe sur une liste qui peut l'accepter")
-        // },
-        // 'start':function(evt,ui)
-        // {
-        //   dlog("Début du déplacement (sort) de "+this.type_id)
-        // },
-        // 'stop':function(evt,ui)
-        // {
-        //   dlog("Fin du déplacement (sort) de "+this.type_id)
-        // }
-      })
+      // this.div_items.sortable()
       this.sortable = true
     }
   },
@@ -452,7 +425,151 @@ Object.defineProperties(Fiche.prototype, {
       this.modified = true
       this.obj.remove()
     }
-  }  
+  },
+  
+  /* ---------------------------------------------------------------------
+   *  MÉTHODES POUR COPIER/COUPER/COLLER LES ENFANTS
+   --------------------------------------------------------------------- */
+  /**
+    * Copie la fiche
+    * Notes
+    *   * En réalité, la "copie" de la fiche ne consiste qu'à mettre sa référence
+    *     dans App.clipboard
+    *   * On reconnait une fiche coupée d'une fiche copiée au 'cuted' qui est 
+    *     ajouté quand on coupe la fiche.
+    * @property {Method} copy
+    */
+  "copy":{
+    get:function(){
+      F.show("Je COPY la fiche courante"+this.type_id)
+      App.clipboard = this
+      F.show("La fiche "+this.human_type+" a été copiée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
+      image('clavier/K_Command.png')+image('clavier/K_V.png'))
+    }
+  },
+  /**
+    * Coupe la fiche
+    * Notes
+    *   * En réalité, la "coupe" de la fiche ne consiste qu'à mettre sa référence
+    *     dans App.clipboard en mettant son cuted à true et en masquant son objet
+    *     dans le DOM (pour ne pas avoir à le reconstruire.)
+    *
+    * @property {Method} cut
+    */
+  "cut":{
+    get:function(){
+      F.show("Je CUT la fiche "+this.type_id)
+      App.clipboard = this
+      App.clipboard.cuted = true
+      this.obj.hide()
+      F.show("La fiche "+this.human_type+" a été coupée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
+      image('clavier/K_Command.png')+image('clavier/K_V.png')+
+      "\nNoter que tant que la fiche n'a pas été collée, elle n'est pas retirée du parent courant.")
+    }
+  },
+  /**
+    * Colle la fiche
+    * Notes
+    *   * Pour coller la fiche copiée/coupée, il faut qu'un parent ou un frère
+    *     potentiel soit sélectionné. Si c'est un parent, on ajoute la fiche à la
+    *     fin. Sinon, on l'ajoute avant le parent sélectionné.
+    *   * Si la fiche avait été copiée, il faut reconstruire une fiche de toute pièce
+    *     en se servant des informations de la fiche copiée. Si au contraire la fiche
+    *     a été coupée, il faut la sortir de son parent et la remettre dans le nouveau.
+    *
+    * TODO: Pour le moment, on ne peut pas coller une fiche sur la table, mais on
+    * devrait pouvoir le faire.
+    *
+    * @property {Method} paste
+    */
+  "paste":{
+    get:function(){
+      try
+      {
+        if(!App.clipboard) throw 'no copied fiche'
+        if(App.clipboard.class != "Fiche") throw 'no fiche in clipboard'
+        if(App.clipboard.type != this.child_type && App.clipboard.type != this.type) 
+          throw 'bad child type in clipboard'
+        if(App.clipboard.type == this.type){
+          if(!this.parent) throw 'no parent for clipboarded fiche'
+          if(App.clipboard.cuted && App.clipboard.parent == this.parent)
+            throw 'clipboarded fiche already in parent'
+        }
+        else if (App.clipboard.type == this.child_type){
+          if(App.clipboard.cuted && App.clipboard.parent == this)
+            throw 'clipboarded fiche already in parent'
+        }
+          
+      }
+      catch(err_id){return F.error(LOCALE.fiche.error[err_id])}
+
+      // === La fiche peut être collée ===
+      // @note : si elle appartient à un parent, il faut la retirer de ce parent.
+      // - Si la fiche est "not cuted", il faut créer une autre fiche d'après
+      //   les données de la fiche copiée (et remettre le copied de la fiche à false)
+      // - Si la fiche est 'cuted=true', il faut 1/ la sortir de son parent, 2/
+      //    l'injecter dans le parent courant et 3/ remettre son obj à display=block
+      //    pour le faire ré-apparaitre
+      var new_parent, beforeChild ;
+      if(App.clipboard.type == this.child_type)
+      {
+        // La fiche sélectionnée (courante) est le nouveau parent de la fiche
+        // Il faut placer la fiche copiée/coupée au bout du parent
+        new_parent = this
+      }
+      else
+      {
+        // La fiche sélectionnée est le nouveau frère (cadet) de la fiche
+        // copiée/coupée
+        new_parent  = this.parent
+        beforeChild = this
+      }
+
+      if(App.clipboard.cuted)
+      {
+        // Fiche coupée
+        fiche = App.clipboard
+        fiche.parent.remove_child( fiche )
+      }
+      else
+      {
+        // Fiche copiée => la cloner
+        var data = {}
+        var props = [ // mettre ici les propriétés à cloner
+          'type'
+          ]
+        switch(App.clipboard.type)
+        {
+        case 'book':
+          props.push('real_titre')
+          break
+        case 'para':
+          props.push('texte')
+          props.push('ptype')
+        }
+        if(App.clipboard.type!='para') props.push('titre')
+        L(props).each(function(prop){ data[prop] = App.clipboard[prop]})
+        fiche = FICHES.full_create(data)
+        fiche.modified = true
+      }
+      
+      // Si la fiche est pastée dans un parent (sinon, elle reste sur la table)
+      if(new_parent)
+      {
+        new_parent.add_child( fiche, {before:beforeChild})
+        if(fiche.cuted)
+        {
+          fiche.obj.show()
+          delete fiche.cuted
+        } 
+      }
+      
+      // À la fin, il faut détruire le clipboard
+      delete App.clipboard
+      Flash.clean()
+    }
+  }
+  
 })
 
 /**
@@ -566,18 +683,18 @@ $.extend(Fiche.prototype,{
   },
   
   /**
-    *  Ajout d'un enfant à la fiche
+    * Ajout d'un enfant à la fiche
     *
-    *  NOTES
-    *  -----
-    *    * C'est cette méthode qui doit être utilisée pour tout ajout
-    *      d'enfant.
+    * NOTES
+    * -----
+    *   * C'est cette méthode qui doit être utilisée pour tout ajout
+    *     d'enfant.
     *
     * @method add_child
     * @param  enfant    {Fiche} de l'enfant à ajouter
     * @param  options   {Object} Options d'insertion :
-    *                      after  : <fiche>    Ajouter après cet enfant
-    *                      before : <fiche>    Ajouter avant cet enfant
+    *   @param  {Fiche} options.after  Ajouter après cet enfant
+    *   @param  {Fiche} options.before Ajouter avant cet enfant
     */
   add_child:function(enfant, options)
   {

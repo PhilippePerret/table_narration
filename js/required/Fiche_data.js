@@ -140,11 +140,29 @@ Object.defineProperties(Fiche.prototype,{
   },
   
   /**
+    * Le type humain de la fiche, par exemple "livre" pour 'book'
+    * @property {String} human_type
+    */
+  "human_type":{
+    get:function(){return FICHES.datatype[this.type].hname}
+  },
+  
+  /**
     * Méthode pratique, pour le débuggage, retournant <type>#<id> (p.e. 'book#12') 
     * @property {String} type_id
     */
   "type_id":{
     get:function(){ return this.type + '#' + this.id}
+  },
+
+  /**
+    * Type d'un enfant de la fiche courante
+    * Notes
+    *   * C'est un raccourci de FICHES.datatype[type].child_type
+    * @property {String} child_type
+    */
+  "child_type":{
+    get:function(){return FICHES.datatype[this.type].child_type}
   },
 
   /**

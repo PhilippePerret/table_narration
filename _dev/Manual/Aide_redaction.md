@@ -1,5 +1,23 @@
 #Manuel de rédaction des livres
 
+##Déplacement des fiches
+
+###Déplacement dans le même parent
+
+Pour déplacer une fiche dans son propre parent, on peut :
+* Soit utiliser la souris pour la mettre à la place voulue
+* Soit la sélectionner puis utiliser les touches CMD+flèche haut/bas pour déplacer la fiche.
+
+###Déplacement dans un autre parent
+
+Pour déplacer la fiche dans un autre parent, on fait un couper-coller.
+
+* On sélectionne la fiche à déplacer
+* On joue CMD + X
+* On sélectionne le nouveau parent ou la fiche du parent AVANT laquelle placer la fiche déplacée.
+* On joue CMD + V
+
+
 ##Films
 
 ###Balise Film

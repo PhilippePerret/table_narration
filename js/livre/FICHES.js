@@ -28,7 +28,7 @@ window.FICHES = {
     * @final
     */
   datatype:{
-    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,    parent_type:'page', hname:"paragraphe"},
+    'para'  : {level: 5 , defvalue: "TEXTE_PARAGRAPHE", child_type:null,    parent_type:'page', hname: "paragraphe"},
     'page'  : {level: 10, defvalue: "TITRE_PAGE",       child_type:'para',  parent_type:'chap', hname: "page"},
     'chap'  : {level: 15, defvalue: "TITRE_CHAPITRE",   child_type:'page',  parent_type:'book', hname: "chapitre"},
     'book'  : {level: 20, defvalue: "TITRE_LIVRE",      child_type:'chap',  parent_type:null,   hname: "livre"}
@@ -563,28 +563,29 @@ window.FICHES = {
     }
   },
   
-  /*
-   *  Crée entièrement une nouvelle fiche à partir des +data+
-   *  transmises.
-   *
-   *  NOTES
-   *  -----
-   *    @ Il s'agit d'une toute nouvelle fiche, jamais d'une fiche
-   *      existente.
-   *    @ Pour le moment, la fiche n'est pas marquée modifiée.
-   *  
-   *  @param  data    {Hash} Les données pour la nouvelle fiche
-   *  @param  options {Hash} Les options.
-   *                    focus_titre   Si TRUE, on passe le titre en édition
-   *                    focus_texte   Si TRUE, on passe le texte en édition (même chose que pour
-   *                                  focus_titre, mais pour un paragraphe)
-   *                    select        Si TRUE, on sélectionne la fiche
-   *                    after_fiche   Si défini, c'est la fiche après laquelle on doit
-   *                                  placer la nouvelle fiche.
-   *                    before_fiche  Idem, mais en fournissant la fiche après.
-   *
-   *  @return La nouvelle fiche créée
-   */
+  /**
+    * Crée entièrement une nouvelle fiche à partir des +data+
+    * transmises.
+    *
+    * NOTES
+    * -----
+    *   * Il s'agit d'une toute nouvelle fiche, jamais d'une fiche
+    *     existente.
+    *   * Pour le moment, la fiche n'est pas marquée modifiée.
+    *
+    * @method full_create
+    * @param  {Object} data Les données pour la nouvelle fiche
+    * @param  {Object|Null} options   Les options pour la création
+    *   @param {Boolean} options.focus_titre  Si TRUE, on passe le titre en édition
+    *   @param {Boolean} options.focus_texte  Si TRUE, on passe le texte en édition (même chose que pour
+    *                                         focus_titre, mais pour un paragraphe)
+    *   @param {Boolean} options.select       Si TRUE, on sélectionne la fiche
+    *   @param {Fiche}  options.after_fiche   Si défini, c'est la fiche après laquelle on doit
+    *                                         placer la nouvelle fiche.
+    *   @param {Boolean} options.before_fiche Idem, mais en fournissant la fiche après.
+    *
+    * @return {Fiche} La nouvelle fiche créée
+    */
   full_create:function(data, options)
   {
     dlog("---> FICHES.full_create", DB_FCT_ENTER)

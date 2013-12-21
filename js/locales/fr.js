@@ -37,7 +37,12 @@ window.LOCALE = {
       'unable to range orphelin'    : "Impossible de ranger une fiche orpheline…",
       'unable to unrange orphelin'  : "Impossible de un-ranger une fiche orpheline…",
       'no book for publishing'      : "Cette fiche n'appartient à aucun livre. Donc impossible de procéder à la publication.",
-      'is not child'                : "Impossible de retirer l'enfant, ça n'est pas un enfant de la fiche."
+      'is not child'                : "Impossible de retirer l'enfant, ça n'est pas un enfant de la fiche.",
+      'no copied fiche'             : "Il faut copier ou couper la fiche à coller…",
+      'no fiche in clipboard'       : "Le presse-papier ne contient pas de fiche…",
+      'bad child type in clipboard' : "La fiche dans le presse-papier ne peut pas être collée dans ce type de conteneur…",
+      'no parent for clipboarded fiche':"Cette fiche est orpheline, impossible de lui coller un frère…",
+      'clipboarded fiche already in parent':"La fiche coupée appartient déjà à ce parent.\nSauver et recharger l'application pour la voir ré-apparaitre dans le parent."
     },
     
     // LOCALE.fiche.message

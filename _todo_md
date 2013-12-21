@@ -1,10 +1,6 @@
 IMPLÉMENTER
 -----------
 
-- Ne construire le verso de la fiche que lorsque la fiche est retounée
-  > propriété volatile 'verso_prepared' (undefined au départ)
-  > proprité méthode `prepare_verso`
-
 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
@@ -31,15 +27,6 @@ APERCU (souris hover un mot/film)
 - Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet
   apercu existe dans le DOM
 
-  
-- Pour l'aperçu d'une page, le début de son texte ou peut-être même tout
-  son texte.
-  > Mais quid s'il s'agit d'un chapitre ou d'un livre ? Peut-être faire un
-    résumé de leur contenu (la liste des chapitres pour un livre et la liste
-    des titres de pages pour un chapitre)
-- mieux gérer les z-index qui se propagent aux enfants, en ne mettant pas
-  "*" mais en étant plus spécifique
-
 SCÉNODICO (objet DICO / class Mot)
 FILMODICO
   Les présenter comme des "livres" avec double panneau : à gauche la table
@@ -47,34 +34,3 @@ FILMODICO
   et à gauche le panneau de définition.
   Pour l'édition, faire un troisième panneau qui s'ouvre aussi à gauche, sans
   fermer les deux autres (pour pouvoir sélectionner des éléments de la liste)
-  
-    
-FICHES
-------
-- Fiche sélectionnée + CMD + FLECHES => Déplacer la fiche
-
-- Voir si au lieu de définir un `window.onkeypress' il ne vaut pas mieux définir
-  le keypress toujours sur l'élément visé. Note : prendre en compte le fait que
-  cela signifie qu'il faut que l'élément DOM soit focusé pour que les keypress
-  s'applique à lui.
-  
-- Sortir de l'édition du paragraphe (et autre) => correction du texte, suppression
-  des balises, évaluation du code si code, etc.
-  > En basculant du texte à l'édition (peut-être tous les champs), il faut
-    corriger les balises
-    -> UI.Input.check_value
-    Note&nbsp;: penser que l'on pourra avoir un type de paragraphe qui sera
-    du chargement de fichier, ou du code quelconque (js, ruby, etc.).
-
-
-*?* Voir comment gérer les sorties d'un parent. Soit on peut glisser en
-  dehors de lui, soit un raccourci pour le sortir (en scrollant jusqu'à lui
-  ou en le plaçant là où on se trouve.)
-  => Raccourci "E" (Extraire)
-
-* Tester le réglage de top et left
-  En profiter pour implémenter, dans 'create' ou 'built' l'appel à une méthode
-  qui placera une fiche à un endroit précis sans écraser une autre fiche (donc
-  l'idée de "place libre" aka `free_space')
-  Noter que cet emplacement pourra avoir été déterminé par le déplacement d'un
-  des outils pour créer une fiche (qui aura été déplacé à un endroit particulier)

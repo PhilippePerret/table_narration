@@ -125,6 +125,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   switch(evt.charCode)
   {
   case K_SPACE: cplx_meth = 'toggle'   ; break
+  case Key_c:   cplx_meth = 'copy'     ; break
   case Key_o:   cplx_meth = 'open'     ; break
   case Key_f:   cplx_meth = 'close'    ; break
   case Key_d:   cplx_meth = 'deselect' ; break
@@ -153,6 +154,8 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_r:
     if(!evt.metaKey){cplx_meth = 'copy_reference'}
     break
+  case Key_v:   cplx_meth = 'paste'   ; break
+  case Key_x:   cplx_meth = 'cut'     ; break
   }
   if(cplx_meth)
   {
