@@ -130,6 +130,26 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
+    * Retourne l'identifiant du livre auquel appartient (ou non) la fiche, quel
+    * que soit le type de la fiche. Lorsqu'elle est un livre, elle renvoie son propre
+    * identifiant.
+    * @property {Number|String} book_id
+    */
+  "book_id":{
+    get:function(){
+      if(undefined == this._book_id)
+      {
+        this._book_id = function(m){
+          if(     m.is_book)  return m.id
+          else if(m.book)     return m.book.id
+          else                return null
+        }(this)
+      }
+      return this._book_id
+    }
+  },
+  
+  /**
     * Définit si la fiche ne doit pas être imprimée dans le livre
     *
     * NOTES

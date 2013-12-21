@@ -98,6 +98,10 @@ Object.defineProperties(Fiche.prototype, {
   /**
     * Marque la fiche ouverte ou fermée (ou retourne la propriété)
     * True si la fiche est ouverte, false dans le cas contraire.
+    * Notes
+    * -----
+    *   * La propriété se contente d'ajouter ou de retirer la class 'opened'
+    *     à l'objet DOM de la fiche.
     *
     * @property {Boolean} opened
     * @default false
@@ -157,6 +161,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "is_openable":{
     get:function(){
+      dlog("-> Fiche::is_openable ["+this.type_id+"]")
       var i = 0, ichild ;
       if(this.is_paragraph) return true ; // toujours ouvrable
       if(this.loaded == false) return false ;
@@ -402,112 +407,6 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /**
-    * Ouvre la fiche
-    * --------------
-    *
-    * NOTES
-    * -----
-    *   * L'opération produit des résultats différents en fonction du type
-    *     de la fiche. Par exemple, pour une page, on la sort de son parent
-    *     et on montre ses enfants (paragraphes).
-    *   * Propriété complexe, donc appeler sans parenthèses.
-    *   * Si une méthode doit suivre, définir `this.open.poursuivre`
-    *
-    * @method open
-    *
-    */
-  "open":{
-    get:function(){
-      var idm = "Fiche::open ["+this.type_id+"]" 
-      dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.is_not_openable) return this.rend_openable('open')
-      this.opened = true // propriété complexe
-      if(this.parent && this.is_page) this.unrange
-      this.positionne
-      if('function'==typeof this.open.poursuivre) this.open.poursuivre()
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
-  /*
-   *  Ferme la fiche
-   *  --------------
-   *
-   *  NOTES
-   *  -----
-   *    # En mode fermé, le titre est disabled
-   *
-   */
-  "close":{
-    get:function(){
-      var idm = "Fiche::close ["+this.type_id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.retourned) this.retourne
-      this.opened = false
-      if(this.is_page && this.parent) this.range
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }  
-  },
-  
-  /*
-   *  Range la fiche
-   *  
-   *  NOTES
-   *  -----
-   *  * La fiche peut avoir un clone dans son parent, qu'il faut alors
-   *    supprimer.
-   *  * On supprime le draggable de la fiche et on ajoute un sortable
-   *
-   */
-  "range":{
-    get:function(){
-      var idm = "Fiche::range ["+this.type_id+"]"
-      dlog("---> "+idm, DB_FCT_ENTER)
-      if(!this.parent) throw LOCALE.fiche.error['unable to range orphelin']
-      if(this.obj_clone.length) this.unclone
-      else this.parent.div_items.append( this.obj )
-      if(this.draggable)
-      {
-        this.obj.draggable("destroy")
-        this.draggable = false
-      }
-      // this.rend_sortable
-      this.obj.addClass('ranged')
-      dlog("<- "+idm, DB_FCT_ENTER)
-    }
-  },
-  /*
-   *  Sort la fiche de son rangement
-   *  
-   */
-  "unrange":{
-    get:function(){
-      if(!this.parent) throw LOCALE.fiche.error['unable to unrange orphelin']
-      this.clone
-      this.obj.removeClass('ranged')
-      if(this.sortable)
-      {
-        this.obj.sortable("destroy")
-        this.sortable = false
-      }
-      this.rend_draggable
-    }
-  },
-  
-  
-  /*
-   *  Retourne la fiche
-   *  
-   */
-  "retourne":{
-    get:function()
-    {
-      this.recto[this.retourned ? 'show' : 'hide']()
-      this.verso[this.retourned ? 'hide' : 'show']()
-      this.retourned = !this.retourned
-      if(this.retourned) this.regle_verso
-    }
-  },  
   
   /*
    *  Destruction totale d'une fiche

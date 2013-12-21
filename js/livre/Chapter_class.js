@@ -44,7 +44,7 @@ Object.defineProperties(Chapter.prototype,{
       if(this.book)
       {
         if(false == this.book.opened){
-          this.book.open.poursuivre = $.proxy(this.show, this)
+          this.book.pour_suivre_open = $.proxy(this.show, this)
           return this.book.open
         }
       }
