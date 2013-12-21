@@ -143,7 +143,9 @@ class Fiche
   def publish options = nil
     begin
       $BOOK = self
-      require File.join('.', 'publication', 'source', 'builder')
+      # Pas 'required' ci-dessous car on peut publier plusieurs livres
+      # en boucle.
+      load File.join('.', 'publication', 'source', 'builder.rb')
     rescue Exception => e
       # RETOUR_AJAX[:ok] = false
       # RETOUR_AJAX[:message] = e.message

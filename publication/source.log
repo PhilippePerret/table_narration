@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.12.19)  20 DEC 2013 15:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.12.19)  21 DEC 2013 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -528,33 +528,31 @@ Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 
 
 Writing index file source.idx
-\bibdata{biblio}
-No file source.bbl.
 (/Users/philippeperret/Sites/table_narration/publication/source.aux)
 \openout1 = `source.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT2/cmr/m/n on input line 21.
-LaTeX Font Info:    Try loading font information for OT2+cmr on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT2/cmr/m/n on input line 18.
+LaTeX Font Info:    Try loading font information for OT2+cmr on input line 18.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/cyrillic/ot2cmr.fd
 File: ot2cmr.fd 2001/08/11 v3.2c Computer Modern Cyrillic font definitions
 )
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Info: Redefining \degres on input line 21.
-LaTeX Info: Redefining \dots on input line 21.
-LaTeX Info: Redefining \up on input line 21.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Info: Redefining \degres on input line 18.
+LaTeX Info: Redefining \dots on input line 18.
+LaTeX Info: Redefining \up on input line 18.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: dvips
@@ -591,20 +589,17 @@ LaTeX Info: Redefining \up on input line 21.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 22.
+(Font)              <12> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 22.
+(Font)              <8> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 22.
+(Font)              <6> on input line 19.
 [1
 
 
 ] [2
 
-] (/Users/philippeperret/Sites/table_narration/publication/source.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 3.
-)
+] (/Users/philippeperret/Sites/table_narration/publication/source.toc)
 \tf@toc=\write4
 \openout4 = `source.toc'.
 
@@ -615,44 +610,38 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ]
 Chapitre 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--6
+Underfull \hbox (badness 10000) in paragraph at lines 3--7
 
  []
 
-[5] [6
 
-]
-Chapitre 2.
+! Package inputenc Error: Unicode char \u8:Ã\global not set up for use with LaT
+eX.
 
-Overfull \hbox (1.03236pt too wide) in paragraph at lines 9--9
-[]\T1/aer/bx/n/14.4 Deuxième page du deuxième cha-pitre 
- []
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.7 \section{La notion d\'Ã©chelle}
+                                   
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.7 \section{La notion d\'Ã©chelle}
+                                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-) (/Users/philippeperret/Sites/table_narration/publication/biblio.tex [7]
-[8
-
-]
-
-LaTeX Font Warning: Font shape `T1/aer/bx/sc' undefined
-(Font)              using `T1/aer/bx/n' instead on input line 3.
-
-) (/Users/philippeperret/Sites/table_narration/publication/source.ind [9]
-[10
-
-
-]) (/Users/philippeperret/Sites/table_narration/publication/source.aux)
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
- ) 
+ 
 Here is how much of TeX's memory you used:
- 3003 strings out of 493316
- 40226 string characters out of 6137929
- 99702 words of memory out of 5000000
- 6393 multiletter control sequences out of 15000+600000
- 27781 words of font info for 40 fonts, out of 8000000 for 9000
+ 2976 strings out of 493316
+ 39747 string characters out of 6137929
+ 98702 words of memory out of 5000000
+ 6377 multiletter control sequences out of 15000+600000
+ 22501 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 35i,6n,23p,482b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
-
+ 35i,6n,23p,272b,314s stack positions out of 5000i,500n,10000p,200000b,80000s
 Output written on /Users/philippeperret/Sites/table_narration/publication/sourc
-e.dvi (10 pages, 4608 bytes).
+e.dvi (4 pages, 1188 bytes).
