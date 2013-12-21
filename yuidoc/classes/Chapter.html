@@ -425,6 +425,13 @@
                             </li>
                         
                             <li class="index-item property inherited">
+                                <a href="#property_main_field">main_field</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
                                 <a href="#property_obj">obj</a>
 
                                 
@@ -1784,12 +1791,16 @@ fichier postscript et PDF par mon RLatex.</p>
     </div>
 
     <div class="description">
-        <p>Monter un chapitre</p>
+        <p>Montrer un chapitre</p>
 <h2 id="notes">Notes</h2>
 <ul>
+<li>La méthode est principalement appelée quand on clique sur une référence
+dans un texte. Cela produit un appel à <code>FICHES.show</code> qui appelle la
+méthode <code>show</code> propre à chaque type de fiche.</li>
 <li>Un chapitre, contrairement à un livre, peut ne pas être affiché
 On doit donc s&#39;assure qu&#39;il est chargé et ouvrir le livre qui le 
 contient, sauf lorsqu&#39;il n&#39;appartient à aucun livre.</li>
+<li>Propriété complexe =&gt; appeler sans parenthèses</li>
 </ul>
 
     </div>
@@ -2136,6 +2147,51 @@ renvoyer la liste des options.</li>
 
     <div class="description">
         <p>Définit et retourne le JID (selector jQuery) de la fiche</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_main_field" class="property item inherited">
+    <h3 class="name"><code>main_field</code></h3>
+    <span class="type">JQuerySet</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_main_field">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l525"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:525</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le champ principal (soit le DIV soit le champ de saisie suivant
+le contexte) </p>
+<h2 id="-notes"> NOTES</h2>
+<p> Pour forcer la définition, utiliser `this._main_field = null&#39;</p>
 
     </div>
 

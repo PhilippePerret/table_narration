@@ -212,19 +212,30 @@
   */
 
 /**
-  * Class pour une référence. Une référence est une instance qui correspond
-  * à une fiche cible.
+  * Class pour une référence. Une référence est une instance qui permet de gérer
+  * à la volée les références à d&#x27;autres fiches qui sont faites dans des textes
+  * (ou plus rarement des titres). Une référence possède une fiche-cible ({Fiche})
+  * qui correspond à l&#x27;instance {Fiche} visée par la référence (comprendre : 
+  * “l&#x27;instance {Ref} fait référence à la cible {Fiche}).
+  *
+  * L&#x27;instance {Ref} peut posséder également une “porteuse”, qui est la fiche dans
+  * laquelle cette référence est insérée. Elle est définie principalement lorsque
+  * le texte de la porteuse doit être formaté pour affichage &quot;humain&quot;.
+  *
+  * L&#x27;instance {Ref} est capable de gérer toutes les situations, celle où la cible
+  * n&#x27;est pas encore une fiche chargée, où la fichier porteuse de la référence
+  * n&#x27;appartient pas au même livre que la fiche-cible de référence, etc.
   *
   * Notes
   * -----
-  *   * Bien que la référence ne soit pas une {Fiche}, on peut utiliser son &#x60;id&#x60; et
-  *     son &#x60;type&#x60; comme pour une fiche. Mais pour la clarté, l&#x27;instance {Ref}
-  *     possède une propriété &#x60;cible_id&#x60; et &#x60;cible_type&#x60; qui sont des alias de.
-  *     ces propriétés.
+  *   * Bien que l&#x27;instance {Ref} ne soit pas une {Fiche}, ses propriétés &#x60;id&#x60; et
+  *     &#x60;type&#x60; sont les mêmes que sa fiche-cible. Mais pour la clarté, l&#x27;instance {Ref}
+  *     possède les propriétés &#x60;cible_id&#x60; et &#x60;cible_type&#x60; qui sont des alias.
   *
   * @class Ref
   * @constructor
-  * @param  {String} rid Identifiant de la référence : &lt;type&gt;-&lt;id&gt; de la cible.
+  * @param  {String} rid  Identifiant de la référence correspondant à &#x60;&lt;type&gt;-&lt;id&gt;&#x60;
+  *                       de la cible.
   */
 window.Ref = function(rid)
 {
@@ -313,7 +324,7 @@ $.extend(Ref.prototype,{
     */
   titres_for_non_loaded_cible:function()
   {
-    var titre = &quot;[&quot; + this.human_type + &quot; #&quot; + this.default_title + &quot;]&quot;
+    var titre = &quot;[# &quot; + this.human_type + &quot; “&quot; + this.default_title + &quot;” #]&quot;
     this.titre_same_book = titre
     this.titre_hors_book = titre
   },
@@ -366,6 +377,20 @@ Object.defineProperties(Ref.prototype, {
     }    
   },
   
+  /**
+    * Appelée pour updater l&#x27;affichage de toutes les références lorsque la
+    * fiche-cible est chargée.
+    * Notes
+    * -----
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method update
+    */
+  &quot;update&quot;:{
+    get:function(){
+      this.titres_for_loaded_cible()
+    }
+  },
   /* ---------------------------------------------------------------------
    *  MÉTHODES DE DONNÉES
    */
@@ -447,7 +472,7 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       if(undefined == this._mark_book)
       {
-        if(this.book) this._mark_book = &quot; (Livre “&quot;+(this.book.real_titre||this.book.titre)+&quot;”)&quot;
+        if(this.book) this._mark_book = &quot; (livre “&quot;+(this.book.real_titre||this.book.titre)+&quot;”)&quot;
         else this._mark_book = &quot;&quot;
       }
       return this._mark_book
@@ -527,8 +552,6 @@ Object.defineProperties(Ref.prototype, {
     }
   },
 
-
-
   /**
     * Titre construit pour la référence, tel qu&#x27;il apparaitra dans le texte.
     * Il dépend de l&#x27;état de chargement de la cible de la référence et de l&#x27;appartenance
@@ -568,14 +591,17 @@ Object.defineProperties(Ref.prototype, {
 
 
   /**
-    * Type humain de la référence (par exemple &quot;Livre&quot; pour le type &#x27;book&#x27;)
-    * @property human_type
-    * @type     {String}
-    * @static
+    * Type humain de la référence (par exemple &quot;livre&quot; pour le type &#x27;book&#x27;)
+    * Notes
+    * -----
+    *   * La valeur est sans capitale, pour pouvoir s&#x27;insérer dans le flux du texte
+    *     ou entre parenthèses.
+    * @property {String} human_type
+    * @final
     */
   &quot;human_type&quot;:{
     get:function(){
-      if(undefined == this._human_type) this._human_type = FICHES.datatype[this.type].hname.capitalize();
+      if(undefined == this._human_type) this._human_type = FICHES.datatype[this.type].hname;
       return this._human_type
     }
   },

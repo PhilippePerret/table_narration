@@ -326,31 +326,30 @@ window.FICHES = {
       ifiche.loaded = true
       instances.push( ifiche )
     }
-    
-    // alert("Après création instance")
-    
+        
     // Création des fiches sur la table
     L(instances).each(function(instance){
       if(!instance.obj) instance.create
     })
     
-    // alert("Après create de l'instance")
-
     // Rangement des enfants (toujours - ils seront "dérangés" ensuite
     // si la configuration courante le nécessite)
     L(instances).each(function(instance){
       if(instance.has_parent) instance.range
                          else instance.positionne
     })
-    
-    // alert("Après rangement")
-    
+        
     // Réglage de l'indice des fiches enfants
     L(instances).each(function(instance){
       if(instance.has_children) instance.update_indice_enfants()
     })
     
-    // alert("Après update indices enfants")
+    // Actualisation de l'affichage des références à la fiche
+    L(instances).each(function(instance){
+      var rid = instance.type+"-"+instance.id
+      if(REFS.list[rid]) get_ref(rid).update
+    })
+    
     
     dlog("<- FICHES.dispatch", DB_FCT_ENTER)
   },
@@ -397,7 +396,10 @@ window.FICHES = {
     // Si c'est un livre, il doit être forcément ouvert sur la table, puisque la
     // méthode qui charge la collection s'assure toujours que tous les livres soient
     // remontés. Donc on peut se contenter de l'"highligher"
-    this.fiche_from({id:id, type:type}).show
+    // this.fiche_from({id:id, type:type}).show
+    var fi = this.fiche_from({id:id, type:type})
+    dlog("fi:");dlog(fi)
+    fi.show
   },
   
   /*

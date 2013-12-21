@@ -5,6 +5,24 @@
   */
 
 $.extend(Fiche.prototype,{
+  
+  /**
+    * Charge toutes les données de la fiche
+    *
+    * @method load
+    * @async
+    * @param  {String|Function} poursuivre
+    *                           Méthode pour suivre. Si c'est une propriété complexe
+    *                           (à appeler ensuite sans parenthèses) elle doit être donnée
+    *                           en {String}, sinon, envoyer une fonction normale.
+    */
+  load:function(poursuivre)
+  {
+    if('string'==typeof poursuivre) poursuivre = {id:this.id, prop:poursuivre}
+    FICHES.after_load.poursuivre = poursuivre
+    FICHES.load([{id:this.id, type:this.type}])
+  },
+  
   /*
    *  Place la fiche courante APRÈS la fiche +bfiche+ {Fiche}
    *  
@@ -151,12 +169,10 @@ Object.defineProperties(Fiche.prototype,{
   
   /**
     * Définit si la fiche ne doit pas être imprimée dans le livre
-    *
     * NOTES
     * -----
     *   * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)
-    *
-    * @proprety {Boolean} not_printed
+    * @property {Boolean} not_printed
     * @default {Undefined}
     */
   "not_printed":{

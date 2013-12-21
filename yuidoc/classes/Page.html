@@ -237,6 +237,8 @@
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
@@ -248,6 +250,21 @@
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_show">show</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -272,6 +289,78 @@
             
         </div>
 
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_show" class="method item">
+    <h3 class="name"><code>show</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Page_class.js.html#l29"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Page_class.js:29</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Montrer la page</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La méthode est principalement appelée quand on clique sur une référence
+dans un texte. Cela produit un appel à <code>FICHES.show</code> qui appelle la
+méthode <code>show</code> propre à chaque type de fiche.</li>
+<li>Pour une page, la montrer consiste à l&#39;ouvrir. Mais cette page peut ne pas
+être encore chargée, donc il faut s&#39;assurer qu&#39;elle puisse être ouverte
+en chargeant tous ses parents si elle en a.</li>
+<li>Propriété complexe =&gt; appeler sans parenthèses. Donc pour les méthodes
+poursuivre, il faut utiliser impérativement FICHES.show(this.id, this.type)</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

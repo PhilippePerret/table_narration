@@ -220,12 +220,12 @@ Object.defineProperties(Fiche.prototype,{
       if(undefined == this.highlight_count)
       { 
         this.highlight_count = 0
-        this.timer_highlight = setInterval($.proxy(this.highlight, this), 200)
+        this.timer_highlight = setInterval($.proxy(this.highlight, this), 100)
         this.color_highlight = ""
       }
       else 
       {
-        if(this.highlight_count > 15)
+        if(this.highlight_count > 10)
         {
           clearInterval(this.timer_highlight)
           delete this.highlight_count
@@ -523,12 +523,12 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /** 
-    * Retourne le champ principal (soit div soit saisie suivant le contexte) 
-    *
+    * Retourne le champ principal (soit le DIV soit le champ de saisie suivant
+    * le contexte) 
     *  NOTES
     *  -----
     *  Pour forcer la définition, utiliser `this._main_field = null'
-    *
+    * @property {jQuerySet} main_field
     */
   "main_field":{
     get:function(){

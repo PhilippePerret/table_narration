@@ -116,7 +116,7 @@ $.extend(Ref.prototype,{
     */
   titres_for_non_loaded_cible:function()
   {
-    var titre = "[" + this.human_type + " #" + this.default_title + "]"
+    var titre = "[# " + this.human_type + " “" + this.default_title + "” #]"
     this.titre_same_book = titre
     this.titre_hors_book = titre
   },
@@ -169,6 +169,20 @@ Object.defineProperties(Ref.prototype, {
     }    
   },
   
+  /**
+    * Appelée pour updater l'affichage de toutes les références lorsque la
+    * fiche-cible est chargée.
+    * Notes
+    * -----
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method update
+    */
+  "update":{
+    get:function(){
+      this.titres_for_loaded_cible()
+    }
+  },
   /* ---------------------------------------------------------------------
    *  MÉTHODES DE DONNÉES
    */
@@ -250,7 +264,7 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       if(undefined == this._mark_book)
       {
-        if(this.book) this._mark_book = " (Livre “"+(this.book.real_titre||this.book.titre)+"”)"
+        if(this.book) this._mark_book = " (livre “"+(this.book.real_titre||this.book.titre)+"”)"
         else this._mark_book = ""
       }
       return this._mark_book
@@ -330,8 +344,6 @@ Object.defineProperties(Ref.prototype, {
     }
   },
 
-
-
   /**
     * Titre construit pour la référence, tel qu'il apparaitra dans le texte.
     * Il dépend de l'état de chargement de la cible de la référence et de l'appartenance
@@ -371,14 +383,17 @@ Object.defineProperties(Ref.prototype, {
 
 
   /**
-    * Type humain de la référence (par exemple "Livre" pour le type 'book')
-    * @property human_type
-    * @type     {String}
-    * @static
+    * Type humain de la référence (par exemple "livre" pour le type 'book')
+    * Notes
+    * -----
+    *   * La valeur est sans capitale, pour pouvoir s'insérer dans le flux du texte
+    *     ou entre parenthèses.
+    * @property {String} human_type
+    * @final
     */
   "human_type":{
     get:function(){
-      if(undefined == this._human_type) this._human_type = FICHES.datatype[this.type].hname.capitalize();
+      if(undefined == this._human_type) this._human_type = FICHES.datatype[this.type].hname;
       return this._human_type
     }
   },

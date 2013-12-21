@@ -33,9 +33,10 @@ Object.defineProperties(Paragraph.prototype,{
 
   /**
     * Le « ptype » du paragraphe indique son type propre, à savoir :
-    *   * null  : Un texte "normal" qui sera juste formaté
+    *   * text  : Un texte "normal" qui sera juste formaté (défaut)
     *   * file  : Un paragraphe qui charge un fichier externe
     *   * code  : Du code à interpréter.
+    * @property {String|Null} ptype
     */
   "ptype":{
     get:function(){return this._ptype || null},

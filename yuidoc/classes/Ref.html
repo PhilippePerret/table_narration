@@ -226,14 +226,22 @@
 
 
 <div class="box intro">
-    <p>Class pour une référence. Une référence est une instance qui correspond
-à une fiche cible.</p>
+    <p>Class pour une référence. Une référence est une instance qui permet de gérer
+à la volée les références à d&#39;autres fiches qui sont faites dans des textes
+(ou plus rarement des titres). Une référence possède une fiche-cible ({Fiche})
+qui correspond à l&#39;instance {Fiche} visée par la référence (comprendre : 
+“l&#39;instance {Ref} fait référence à la cible {Fiche}).</p>
+<p>L&#39;instance {Ref} peut posséder également une “porteuse”, qui est la fiche dans
+laquelle cette référence est insérée. Elle est définie principalement lorsque
+le texte de la porteuse doit être formaté pour affichage &quot;humain&quot;.</p>
+<p>L&#39;instance {Ref} est capable de gérer toutes les situations, celle où la cible
+n&#39;est pas encore une fiche chargée, où la fichier porteuse de la référence
+n&#39;appartient pas au même livre que la fiche-cible de référence, etc.</p>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>Bien que la référence ne soit pas une {Fiche}, on peut utiliser son <code>id</code> et
-son <code>type</code> comme pour une fiche. Mais pour la clarté, l&#39;instance {Ref}
-possède une propriété <code>cible_id</code> et <code>cible_type</code> qui sont des alias de.
-ces propriétés.</li>
+<li>Bien que l&#39;instance {Ref} ne soit pas une {Fiche}, ses propriétés <code>id</code> et
+<code>type</code> sont les mêmes que sa fiche-cible. Mais pour la clarté, l&#39;instance {Ref}
+possède les propriétés <code>cible_id</code> et <code>cible_type</code> qui sont des alias.</li>
 </ul>
 
 </div>
@@ -312,7 +320,8 @@ ces propriétés.</li>
                     
 
                     <div class="param-description">
-                        <p>Identifiant de la référence : <type>-<id> de la cible.</p>
+                        <p>Identifiant de la référence correspondant à <code>&lt;type&gt;-&lt;id&gt;</code>
+                      de la cible.</p>
 
                     </div>
 
@@ -383,6 +392,13 @@ ces propriétés.</li>
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_update">update</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -438,8 +454,6 @@ ces propriétés.</li>
                             <li class="index-item property">
                                 <a href="#property_human_type">human_type</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -566,7 +580,7 @@ ces propriétés.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l140"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:140</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l151"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:151</code></a>
         
         </p>
 
@@ -667,7 +681,7 @@ d&#39;appeler cette méthode</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l53"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:53</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l64"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:64</code></a>
         
         </p>
 
@@ -804,7 +818,7 @@ d&#39;appeler cette méthode</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l82"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:82</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l93"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:93</code></a>
         
         </p>
 
@@ -861,7 +875,7 @@ la référence</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l96"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:96</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l107"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:107</code></a>
         
         </p>
 
@@ -878,6 +892,66 @@ la référence</p>
 <li>La cible n&#39;étant pas chargée, on ne peut rien savoir d&#39;elle, on met
 donc le même texte simple dans les deux propriétés <code>titre_same_book</code>
 et <code>titre_hors_book</code>.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_update" class="method item">
+    <h3 class="name"><code>update</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l172"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:172</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Appelée pour updater l&#39;affichage de toutes les références lorsque la
+fiche-cible est chargée.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Propriété complexe =&gt; appeler sans parenthèses</li>
 </ul>
 
     </div>
@@ -921,7 +995,7 @@ et <code>titre_hors_book</code>.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l375"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:375</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l401"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:401</code></a>
         
         </p>
 
@@ -971,7 +1045,7 @@ la cible de la référence soit chargée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l393"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:393</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l419"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:419</code></a>
         
         </p>
 
@@ -1022,7 +1096,7 @@ méthodes/propriétés qui traitent du cas où la cible est loaded.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l165"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:165</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l190"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:190</code></a>
         
         </p>
 
@@ -1072,7 +1146,7 @@ existe, mais qu&#39;elle n&#39;est pas encore chargée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l277"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:277</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l302"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:302</code></a>
         
         </p>
 
@@ -1124,7 +1198,7 @@ insertion dans le texte demandée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l307"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:307</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l332"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:332</code></a>
         
         </p>
 
@@ -1175,7 +1249,7 @@ fiche porteuse (paragraphe)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l292"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:292</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l317"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:317</code></a>
         
         </p>
 
@@ -1212,9 +1286,9 @@ fiche porteuse (paragraphe)</li>
     
 
     
-
+        <span class="flag final">final</span>
     
-        <span class="flag static">static</span>
+
     
 
     <div class="meta">
@@ -1228,7 +1302,7 @@ fiche porteuse (paragraphe)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l362"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:362</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l385"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:385</code></a>
         
         </p>
 
@@ -1238,7 +1312,12 @@ fiche porteuse (paragraphe)</li>
     </div>
 
     <div class="description">
-        <p>Type humain de la référence (par exemple &quot;Livre&quot; pour le type &#39;book&#39;)</p>
+        <p>Type humain de la référence (par exemple &quot;livre&quot; pour le type &#39;book&#39;)</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La valeur est sans capitale, pour pouvoir s&#39;insérer dans le flux du texte
+ou entre parenthèses.</li>
+</ul>
 
     </div>
 
@@ -1275,7 +1354,7 @@ fiche porteuse (paragraphe)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l30"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:30</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l41"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:41</code></a>
         
         </p>
 
@@ -1322,7 +1401,7 @@ fiche porteuse (paragraphe)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l231"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:231</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l256"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:256</code></a>
         
         </p>
 
@@ -1369,7 +1448,7 @@ n&#39;est pas dans un livre)</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l37"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:37</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l48"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:48</code></a>
         
         </p>
 
@@ -1420,7 +1499,7 @@ la référence à écrire.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l249"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:249</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l274"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:274</code></a>
         
         </p>
 
@@ -1473,7 +1552,7 @@ pas déterminer son livre. La propriété est alors mise à false.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l324"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:324</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l347"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:347</code></a>
         
         </p>
 
@@ -1527,7 +1606,7 @@ toutes les balises références de la même référence.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l201"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:201</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l226"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:226</code></a>
         
         </p>
 
@@ -1579,7 +1658,7 @@ et on prend le titre normal pour les chapitres et les pages.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l185"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:185</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l210"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:210</code></a>
         
         </p>
 
@@ -1629,7 +1708,7 @@ ou non dans le même livre.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l345"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:345</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l368"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:368</code></a>
         
         </p>
 
@@ -1677,7 +1756,7 @@ pas au livre de la porteuse.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l121"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:121</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l132"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:132</code></a>
         
         </p>
 
@@ -1735,7 +1814,7 @@ pas au livre de la porteuse.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l24"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:24</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_Ref.js.html#l35"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;Ref.js:35</code></a>
         
         </p>
 
