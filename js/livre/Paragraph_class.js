@@ -47,6 +47,25 @@ Object.defineProperties(Paragraph.prototype,{
     }
   },
   
+  // /**
+  //   * On montre le paragraphe (par exemple quand on clique sur une de ses références)
+  //   * @method show
+  //   * @param  {Object} options cf. `suite_show` dans Fiche_DOM.js
+  //   */
+  // "show":{
+  //   value:function(options){
+  //     dlog("-> Page::show ["+this.type_id+"]", DB_FCT_ENTER)
+  //     var pour_suivre = $.proxy(FICHES.show, FICHES, this.id, this.type)
+  //     if(!this.loaded) return this.load(pour_suivre)
+  //     if(this.parent)
+  //     {
+  //       this.parent.pour_suivre_open = $.proxy(this.suite_show, this, options)
+  //       return this.parent.open
+  //     }
+  //     this.suite_show(options)
+  //   }
+  // },
+  
   /**
     *  Liste des styles du paragraphe (ou null/indéfini)
     *

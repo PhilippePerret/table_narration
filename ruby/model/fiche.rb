@@ -227,6 +227,10 @@ class Fiche
   def page?;      @type == 'page' end
   def paragraph?; @type == 'para' end
   
+  # Return TRUE si la fiche est une fiche à détruire
+  def deleted?
+    @is_deleted ||= (data['deleted'] == true)
+  end
   def orpheline?
     @is_orpheline ||= !hasParent?
   end

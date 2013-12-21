@@ -83,7 +83,10 @@ class Collection
         fiches_on_table = get_on_table # {Array} d'instances {Fiche}
         if raw_current_config
           raw_current_config['openeds'].each do |dfiche|
-            Fiche::get(dfiche['id'].to_i).is_opened = true
+            ifiche = Fiche::get(dfiche['id'].to_i)
+            if ifiche.exists?
+              ifiche.is_opened = true
+            end
             # log "Fiche #{dfiche['id']} marquée ouverte"
           end
         end
@@ -113,9 +116,13 @@ class Collection
         raw_current_config['on_table'].collect do |dfiche|
           fiche = Fiche::get dfiche['id']
           fiche = Fiche.new dfiche['id'], dfiche['type'] if fiche.nil?
-          fiche.is_visible = true
-          fiche
-        end
+          if fiche.exists?
+            fiche.is_visible = true
+            fiche
+          else
+            nil
+          end
+        end.reject{|fi| fi.nil?}
       else
         # log "[Collection::get_on_table] Fichier configuration INEXISTANT"
         # Si le fichier de configuration n'existe pas, les fiches visibles

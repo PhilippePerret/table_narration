@@ -2,11 +2,25 @@
  *  Une référence
  */
 ref {
+  position    : relative;
   font-family : Arial, Helvetica;
   font-size   : 0.9em;
   color       : #F45E00;
   cursor      : pointer;
+  z-index     : 1;
 }
+ref:after {
+  content     :"Clic:afficher MAJ+clic:sélectionner ALT+Clic:ouvrir";
+  font-size   :10pt;
+  width       :100px;
+  color       : black !important;
+  display:none; 
+  position:absolute;
+  top:20px; left:0;
+  z-index:1000;
+  background-color:white;
+}
+ref:hover:after {display:block;} /*faire apparaitre le tip*/
 /* ---------------------------------------------------------------------
  *    APERÇU DU CONTENU
  --------------------------------------------------------------------- */

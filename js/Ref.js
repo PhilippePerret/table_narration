@@ -85,6 +85,7 @@ $.extend(Ref.prototype,{
   {
     this.porteuse       = porteuse
     this.default_title  = default_title
+    if(this.type=='para') this.default_title = '<span class="small">'+this.default_title+' […]</span>'
     this['titres_for_'+(this.cible?'':'non_')+'loaded_cible']()
     return this.to_html
   },
@@ -162,7 +163,7 @@ Object.defineProperties(Ref.prototype, {
     get:function(){
       return '<ref' +
                 ' class="'+this.class + '"'+
-                ' onclick="FICHES.show('+this.id+', \''+this.type+'\')"'+
+                ' onclick="FICHES.show('+this.id+', \''+this.type+'\', event)"'+
                 '>' +
                 this.titre_for_porteuse +
                 '</ref>'
@@ -183,6 +184,7 @@ Object.defineProperties(Ref.prototype, {
       this.titres_for_loaded_cible()
     }
   },
+  
   /* ---------------------------------------------------------------------
    *  MÉTHODES DE DONNÉES
    */
@@ -244,7 +246,11 @@ Object.defineProperties(Ref.prototype, {
           switch(ref.type)
           {
           case 'book' : return fi.real_titre || fi.titre
-          case 'para' : return fi.texte.substring(0,50)
+          case 'para' :
+            var extrait ;
+            if(fi.texte.length > 50) extrait = fi.texte.substring(0,50) + '[…]'
+            else extrait = fi.texte
+            return '<span class="small">'+extrait+'</span>'
           default     : return fi.titre
           }
         }(this)

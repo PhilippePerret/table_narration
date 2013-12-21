@@ -100,18 +100,32 @@ Object.defineProperties(Fiche.prototype,{
     *     et on montre ses enfants (paragraphes).
     *   * Propriété complexe, donc appeler sans parenthèses.
     *   * Si une méthode doit suivre, définir `this.pour_suivre_open`
+    *   * La méthode peut être appelée même si la fiche est ouverte, dans lequel
+    *     cas seul la méthode pour suivre sera traitée.
+    *   * La méthode est récursive, c'est-à-dire qu'elle ouvre tous les parents
+    *     avant de s'ouvrir.
     *
     * @method open
+    * @async
     *
     */
   "open":{
     get:function(){
       var idm = "Fiche::open ["+this.type_id+"]" 
       dlog("---> "+idm, DB_FCT_ENTER)
-      if(this.is_not_openable) return this.rend_openable('open')
-      this.opened = true // applique la class 'opened' à l'objet DOM
-      if(this.parent && this.is_page) this.unrange
-      this.positionne
+      if(!this.opened)
+      {
+        if(!this.loaded) return this.load('open')
+        if(this.parent && !this.parent.opened)
+        {
+          this.parent.pour_suivre_open = $.proxy(FICHES.open, FICHES, this)
+          return this.parent.open
+        }
+        if(this.is_not_openable) return this.rend_openable('open')
+        this.opened = true // applique la class 'opened' à l'objet DOM
+        if(this.parent && this.is_page) this.unrange
+        this.positionne
+      }
       if('function' == typeof this.pour_suivre_open)
       {
         this.pour_suivre_open()
@@ -185,11 +199,45 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
+  /**
+    * Montrer la fiche (quel que soit son type)
+    *
+    * Notes
+    * -----
+    *   * La méthode est principalement appelée quand on clique sur une référence
+    *     dans un texte. Cela produit un appel à `FICHES.show` qui appelle la
+    *     méthode `show` propre à chaque type de fiche.
+    *   * Pour une page, la montrer consiste à l'ouvrir. Mais cette page peut ne pas
+    *     être encore chargée, donc il faut s'assurer qu'elle puisse être ouverte
+    *     en chargeant tous ses parents si elle en a.
+    *   * La méthode est asynchrone seulement si ses parents et ses enfants ne sont
+    *     pas encore chargés
+    *
+    * @method show
+    * @async
+    */
+  "show":{
+    value:function(options){
+      dlog("-> Fiche::show ["+this.type_id+"]", DB_FCT_ENTER)
+      if(!this.loaded) return this.load($.proxy(this.show, this, options))
+      if(this.parent)
+      {
+        this.parent.pour_suivre_open = $.proxy(this.suite_show, this, options)
+        return this.parent.open
+      }
+      else
+      {
+        this.suite_show(options)
+      }
+    }
+  },
   
-  /*
-   *  Retourne la fiche
-   *  
-   */
+  /**
+    *  Retourne la fiche
+    *
+    * TODO: s'assurer avant que son verso (si verso) soit construit et le 
+    *       construire le cas échéant.
+    */
   "retourne":{
     get:function()
     {
@@ -205,6 +253,32 @@ Object.defineProperties(Fiche.prototype,{
    *   MÉTHODES DOM DIVERSES
    *
    --------------------------------------------------------------------- */
+  /**
+    * Méthode appelée à la fin de chaque méthode `show` pour traiter 
+    * la visibilité suivant les options
+    * Notes
+    * -----
+    *   * Les options sont défines dans FICHES.show et dépendent des modifiers
+    *     utilisés en cliquant sur la référence.
+    *   * Si aucune option de sélection ou d'ouverture n'est demandé, la méthode
+    *     fait simplement clignoter la fiche.
+    *
+    * @method suite_show
+    * @param  {Object|Null} options
+    *   @param {Boolean}  options.select    Si true, sélectionne la fiche
+    *   @param {Boolean}  options.open      Si true, ouvre la fiche
+    *   @param {Function} options.suivre    La méthode pour suivre, if any
+    *   @param {Boolean}  options.no_light  Si true, pas de clignotement
+    */
+  "suite_show":{
+    value:function(options){
+      if(undefined == options) options = {}
+      if(options.select)  this.select
+      if (options.open)   this.open
+      if (!options.no_light) this.highlight()
+      if (options.suivre) this.options.suivre()
+    }
+  },
   /**
     * Fait clignoter la fiche
     * Notes

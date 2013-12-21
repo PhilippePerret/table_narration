@@ -25,13 +25,15 @@ fiche.page.opened > recto {
   padding-left  : 1.6em;
   padding-top   : 2em;
 }
+
+/* Pour une page orpheline posée sur la table */
 fiche.page:not(.ranged):not(.opened){
   /* cf. aussi les définitions dans fiche.css */
-  width   : 500px !important;
+  width   : 380px !important;
 }
-/* Le titre quand la page n'est ni rangée ni ouverte (=> orpheline) */
+/* Le titre de l'orpheline sur la table */
 fiche.page:not(.ranged):not(.opened) > recto > .titre {
-  font-size     : larger;
+  font-size     : smaller;
 }
 
 fiche.page.ranged > recto > .titre {
