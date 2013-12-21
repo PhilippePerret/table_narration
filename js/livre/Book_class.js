@@ -75,24 +75,8 @@ Object.defineProperties(Book.prototype,{
     get:function(){
       return this._real_titre || null
     }
-  },
+  }
   
-  // /**
-  //   * Montre le livre
-  //   * Notes
-  //   * -----
-  //   *   * Pour un livre, ça consiste simplement à le "highligher"
-  //   *   * Un livre est toujours chargé, donc aucun test sur son chargement ou autre,
-  //   *     on peut passer directement à la suite de show (cf. dans Fiche_DOM)
-  //   *
-  //   * @method show
-  //   * @param  {Object} options cf. `suite_show` in Fiche_DOM
-  //   */
-  // "show":{
-  //   value:function(options){
-  //     this.suite_show(options)
-  //   }
-  // }
 })
 
 /* Méthode appelée au changement de real titre du livre */
