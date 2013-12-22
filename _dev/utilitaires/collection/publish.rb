@@ -4,7 +4,6 @@ Pour publier tous les livres de la collection
 
 Principe
 --------
-On appelle le module ajax "collection/publish" qui lance la publication de tous les livres trouvés dans la collection courante.
 
 =end
 
@@ -23,12 +22,31 @@ OPTIONS_PUBLISHING = {}
 # redéfinir en définissant la constante ci-dessous
 COLLECTION_NAME = 'narration'
 
-require './ruby/ajax/collection/publish'
+# Pour afficher le log de RLatex
+AFFICHER_LOG_RLATEX = true
 
-if RETOUR_AJAX[:ok]
-  puts "Publication exécutée avec succès !"
-else
-  puts "### Des erreurs sont intervenues :"
-  puts RETOUR_AJAX[:message].inspect
-  puts "\nPour mieux voir les erreurs, double-cliquer sur le fichier ./publication/source.tex et lancer sa fabrication dans TexWorks."
+require './ruby/lib/functions'
+require './ruby/model/fiche'
+require './ruby/model/collection'
+
+Collection::define_name COLLECTION_NAME
+path_to_publication = File.expand_path('.', 'publication')
+puts "path_to_publication: #{path_to_publication}"
+counter_book = 0
+logs = []
+Dir["#{Collection::folder_fiches}/book/*.msh"].each do |path|
+  counter_book += 1
+  id = File.basename(path, File.extname(path))
+  puts "\nLivre #{counter_book} : id ##{id}"
+  path = File.join('.', '.publishing.rb')
+  File.open(path, 'wb'){|f| f.write "BOOK_ID=#{id}\nCOLLECTION='#{COLLECTION_NAME}'"}
+  `cd "#{path_to_publication}";/usr/bin/rlatex .`
+  logs << File.read( File.join('.', 'publication', 'rlatex.log') )
+  # break if counter_book > 1
+end
+
+puts "\n\nNombre de livres traités : #{counter_book}"
+if AFFICHER_LOG_RLATEX
+  puts "\n\nRLatex Log :"
+  puts logs.join("\n\n")
 end

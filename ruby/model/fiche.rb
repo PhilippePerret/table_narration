@@ -316,7 +316,7 @@ class Fiche
   # 
   def normalized_affixe_from_titre
     require '../lib/ruby/extension/string'
-    @affixe_from_titre ||= titre.normalize.gsub(/ /, '_')
+    @affixe_from_titre ||= titre.normalize.gsub(/ /, '_').gsub(/\\?(['"])/, '')
   end
   
   def path

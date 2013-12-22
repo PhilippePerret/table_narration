@@ -14,6 +14,7 @@ Notes
     dans lequel cas c'est toujours la collection définie ci-dessous qui sera 
     utilisée
 =end
+dlog "---> builder.rb"
 
 # changer pour utiliser une autre collection
 DEFAULT_COLLECTION = 'publishing' unless defined?(DEFAULT_COLLECTION)
@@ -95,12 +96,14 @@ Dir.chdir(folder_narration) do
   #     les informations sur le livre est la collection. Si $BOOK n'est pas
   #     défini et qu'on trouve ce fichier, c'est lui qu'on prend pour la publication.
   if $BOOK.nil?
-    path = File.join('.', './.publishing.rb')
+    path = File.expand_path(File.join('.', '.publishing.rb'))
+    dlog "Path .publishing.rb  : #{path}"
     if File.exists? path
+      dlog "-> Récupération du book à traiter par .publishing.rb"
       require path
       $BOOK = Fiche.new BOOK_ID, 'book'
       Collection::define_name COLLECTION
-      dlog "Fichier à traiter venant de ./publishing.rb (BOOK_ID:#{BOOK_ID}/COLLECTION:#{COLLECTION})"
+      dlog "Fichier à traiter venant de ./publishing.rb (BOOK_ID:#{BOOK_ID} /COLLECTION:#{COLLECTION})"
       File.unlink path
     else
       
@@ -110,6 +113,8 @@ Dir.chdir(folder_narration) do
       # end
       $BOOK = Fiche.new( 0, 'book') 
     end
+  else
+    dlog "$BOOK n'est pas nil (#{$BOOK.type}:#{$BOOK.id}:#{$BOOK.titre})"
   end
   document.destination_file File.join('.', 'livres', Collection::name, $BOOK.normalized_affixe_from_titre)
   puts "Fichier destination : #{document.destination_file}"

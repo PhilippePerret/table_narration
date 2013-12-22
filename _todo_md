@@ -1,12 +1,14 @@
 IMPLÉMENTER
 -----------
 
-- Prévoir un script pour publier tous les livres Narration
-  Il est créé mais il ne fonctionne pas bien (notamment à cause des interruptions
-  dans latex)
-
+- Lorsque l'on se trouve dans un +paragraph+ qui a pour +ptype+ "list" ou "code",
+  il faut permettre l'utilisation de retours de chariot (ou alors indiquer qu'on
+  utilise quelque chose comme ALT+Return pour insérer un retour de chariot)
+  > Traiter le ptype dans ColText::formate
+    
 - Une option pour ré-indicer les livres tels qu'ils sont présentés (ordre) sur
-  la table.
+  la table. -> préférences et le faire dès qu'on charge l'application et qu'on
+  choisit cette option.
   
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex

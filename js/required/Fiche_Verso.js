@@ -71,8 +71,18 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       return '<fieldset id="'+this.fieldset_parametres_id+'" class="parametres">' +
         '<legend>Paramètres</legend>'+
-        (this.is_paragraph ? '<div class="div_menu_styles"></div>' : '') +
+        (this.is_paragraph ? this.html_parametres_paragraph : '') +
         '</fieldset>'
+    }
+  },
+  /**
+    * Code HTML des paramètres propres aux paragraphes
+    * @property {String} html_parametres_paragraph
+    */
+  "html_parametres_paragraph":{
+    get:function(){
+      return  '<div class="div_menu_styles"></div>'+
+              '<div class="div_menu_ptypes"></div>'
     }
   },
   /**

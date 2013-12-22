@@ -11,6 +11,29 @@
 window.PARAGRAPHS = {
   
   /**
+    * Data pour le `ptypes` des paragraphes
+    *
+    * @property {Object} PTYPES
+    * @static
+    * @final
+    */
+  PTYPES:{
+    'text' : {id:'text', hname:"Texte normal"},
+    'list' : {id:'list', hname:"Liste à puces"},
+    'code' : {id:'code', hname:"Code à interpréter"},
+    'file' : {id:'file', hname:"Fichier à insérer"},
+    'fico' : {id:'fico', hname:"Fichier de code à jouer"}
+  },
+  
+  /**
+    * Indique que le menu des ptypes n'a pas été encore construit et inséré
+    * dans la page
+    * @property {Boolean} menu_ptypes_ready
+    * @default False
+    */
+  menu_ptypes_ready: false,
+  
+  /**
     *  La fiche du paragraphe courant
     *  
     * @property current
@@ -164,6 +187,38 @@ window.PARAGRAPHS = {
 }
 
 Object.defineProperties(PARAGRAPHS, {
+  
+  /**
+    * Construit le menu des ptypes
+    * Notes
+    *   * C'est la méthode qui demande la construction du code et l'insert
+    *     simplement dans le body. La méthode appelante doit le placer au
+    *     bon endroit.
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method prepare_menu_ptypes
+    */
+  "prepare_menu_ptypes":{
+    get:function(){
+      $('body').append(this.html_menu_ptypes)
+      this.menu_ptypes_ready = true
+    }
+  },
+  /**
+    * Code HTML pour le menu des ptypes
+    *
+    * @property {String} html_menu_ptypes
+    */
+  "html_menu_ptypes":{
+    get:function(){
+      var m = '<span class="libelle">Type de paragraphe : </span>'
+      m += '<select id="menu_ptypes">'
+      L(this.PTYPES).each(function(id, data){
+        m += '<option value="'+data.id+'">Type : '+data.hname+'</option>'
+      })
+      m += '</select>'
+      return m
+    }
+  },
   /*
    *  Retourne le set jQuery des styles
    *  

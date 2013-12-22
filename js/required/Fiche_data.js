@@ -353,6 +353,19 @@ Object.defineProperties(Fiche.prototype,{
       if(formate && code != "") code = ColText.formate( code, this )
       return code
     }
+  },
+  
+  /**
+    * Actualise l'affiche de la fiche au niveau de son titre ou de son texte (quand
+    * c'est un paragraphe)
+    * Notes
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method update_display
+    */
+  "update_display":{
+    get:function(){
+      this.main_field.set(this.main_field_value(this.edited == false))
+    }
   }
   
   

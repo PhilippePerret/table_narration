@@ -28,10 +28,17 @@ window.ColText = {
   /**
     * Met en forme le texte +code+ pour son affichage humain
     *
+    * Notes
+    * -----
+    *   * La méthode peut devenir asynchrone lorsqu'il s'agit du texte
+    *     d'un paragraphe dont le ptype nécessite l'interprétation d'un code
+    *     dans un langage autre que javascript ou que c'est un fichier à
+    *     charger.
     *
     * @method formate
     * @param  {String}  code    Le texte à formater
-    * @param  {Fiche}   cible   Pour les références, on a besoin de la cible
+    * @param  {Fiche}   cible   Pour les références, ainsi que pour les corrections
+    *                           suivant le ptype du paragraphe, on a besoin de la cible
     * @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
     *                   ou un aperçu.
     *
@@ -44,6 +51,10 @@ window.ColText = {
   formate:function(code, cible)
   {
     this.code = code
+    if(cible.is_paragraph && cible.ptype != 'text')
+    {
+      this.traite_code_by_ptype(cible)
+    }
     if(code.indexOf('[film:')) this.traite_balises_films()
     if(code.indexOf('[mot:]')) this.traite_balises_mots()
     if(code.indexOf('[ref:]')) this.traite_balises_refs(cible)
@@ -99,8 +110,29 @@ window.ColText = {
        *  les données complètes et qu'elles ne sont pas encore chargées.
        */
     })
-  }
+  },
   
+  
+  /**
+    * Traitement du code d'un paragraphe dont le ptype n'est pas 'text'
+    * @method traite_code_by_ptype
+    * @param  {Paragraph} ipara   L'instance du paragraphe
+    */
+  traite_code_by_ptype:function(ipara)
+  {
+    dlog("Paragraphe " + ipara.type_id + " traité comme "+ipara.ptype)
+    switch(ipara.ptype)
+    {
+    case 'list':
+      break
+    case 'code':
+      break
+    case 'file':
+      break
+    case 'fico':
+      break
+    }
+  }
   
   
 }

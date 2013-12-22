@@ -84,7 +84,7 @@ section#table {
   position    : relative;
   width       : 1000em;
   height      : 200em;
-  border      : 1px dashed green;
+/*  border      : 1px dashed green;*/
   margin-top  : 50px;
 }
 

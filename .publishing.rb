@@ -1,2 +1,0 @@
-BOOK_ID=5
-COLLECTION='narration'

@@ -89,7 +89,10 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
-  /* Retourne le DOM élément de la fiche */
+  /**
+    * DOM élément de la fiche 
+    * @property {HTMLDom} dom_obj
+    */
   "dom_obj":{
     get:function(){
       if(undefined == this._dom_obj) this._dom_obj = this.obj[0]
@@ -142,15 +145,16 @@ Object.defineProperties(Fiche.prototype,{
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
-  /*
-   *  Ferme la fiche
-   *  --------------
-   *
-   *  NOTES
-   *  -----
-   *    # En mode fermé, le titre est disabled
-   *
-   */
+  /**
+    * Ferme la fiche
+    * --------------
+    *
+    * Notes
+    *   * Propriété complexe => appeler sans parenthèses
+    *   * En mode fermé, le titre est disabled
+    *
+    * @method close
+    */
   "close":{
     get:function(){
       var idm = "Fiche::close ["+this.type_id+"]"
@@ -612,9 +616,10 @@ Object.defineProperties(Fiche.prototype,{
   /** 
     * Retourne le champ principal (soit le DIV soit le champ de saisie suivant
     * le contexte) 
-    *  NOTES
-    *  -----
-    *  Pour forcer la définition, utiliser `this._main_field = null'
+    * Notes
+    *   * Pour forcer la définition, utiliser `this._main_field = null'
+    *   * La propriété se sert de `this.opened` pour savoir si on est en édition
+    *     ou non. Mais est-ce vraiment la bonne propriété à regarder ?…
     * @property {jQuerySet} main_field
     */
   "main_field":{
@@ -761,6 +766,7 @@ Object.defineProperties(Fiche.prototype,{
       this.select
       this.set_main_field_as_input
       UI.Input.bind( this.main_field ).select()
+      this.edited = true
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },
@@ -775,6 +781,8 @@ Object.defineProperties(Fiche.prototype,{
       
       // On remplace le INPUT/TEXTAREA par un DIV
       this.set_main_field_as_div
+      
+      this.edited = false
       
       this.main_field.bind('click', $.proxy(FICHES.on_click_on_main_field, FICHES, this))
       dlog("<- "+idm, DB_FCT_ENTER)

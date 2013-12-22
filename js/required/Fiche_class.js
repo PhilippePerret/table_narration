@@ -32,6 +32,15 @@ window.Fiche = function(data)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
   this._opened    = false   // cf. propriété complexe `opened'
+  /**
+    * Indicateur d'édition
+    * Cette propriété est mise à TRUE quand le texte (pour un paragraphe) ou
+    * le titre (pour autre type de fiche) est en édition (input/textarea au lieu
+    * de div)
+    * @property {Boolean} edited
+    * @default  False
+    */
+  this.edited     = false
   // this._ranged    = false   // cf. propriété complexe `ranged'
   this.selected   = false
   this.built      = false   // mis à true quand la fiche est construite
@@ -161,7 +170,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   "is_openable":{
     get:function(){
-      dlog("-> Fiche::is_openable ["+this.type_id+"]")
+      dlog("-> Fiche::is_openable ["+this.type_id+"]", DB_FCT_ENTER)
       var i = 0, ichild ;
       if(this.is_paragraph) return true ; // toujours ouvrable
       if(this.loaded == false) return false ;
@@ -604,6 +613,11 @@ Fiche.prototype.on_drop = function(evt, ui)
     var dtype = FICHES.datatype[data.type]
     data[data.type == 'para' ? 'texte' : 'titre'] = dtype.defvalue
     
+    // L'attribut drg_time reste parfois dans l'outil, ce qui empêche ensuite
+    // de le dragguer sur un parent. On supprime toujours cette attribut ici
+    obj_moved.removeAttr('drg_time')
+    
+    // On crée entièrement la fiche
     ichild = FICHES.full_create(data)
   }
   else

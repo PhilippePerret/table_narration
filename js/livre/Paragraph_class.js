@@ -12,7 +12,7 @@ window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
   data.type   = 'para'
-  data.ptype  = null
+  data.ptype  = 'text'
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
@@ -43,7 +43,6 @@ Object.defineProperties(Paragraph.prototype,{
     set:function(ptype){
       if(this._ptype == ptype) return
       this._ptype = ptype
-      this.modified = true
     }
   },
   
@@ -112,15 +111,45 @@ Object.defineProperties(Paragraph.prototype,{
    */
   "after_regle_verso":{
     get:function(){
-      if(PARAGRAPHS.html_menu_styles == null) PARAGRAPHS.build_menu_styles
       this.append_menu_styles
+      this.append_menu_ptypes
       this.set_style
     }
   },
 
   /* ---------------------------------------------------------------------
+   *
+   *  Pour le `ptype' du paragraphe
+   *
+   * ---------------------------------------------------------------------*/
+  /**
+    * DOM Element du menu ptypes
+    * Notes
+    *   * Le menu des "ptypes" est un select unique, qui se déplace de fiches
+    *     en fiche quand on les retourne. La propriété présente renvoie donc
+    *     le menu mais seulement quand il se trouve dans son verso.
+    * @property {jQuerySet} menu_ptypes
+    */
+  "menu_ptypes":{get:function(){return $(this.verso.find('select#menu_ptypes'))}},
+  /**
+    * Déplace le menu des ptypes dans ce paragraphe
+    *
+    * @method append_menu_ptypes
+    */
+  "append_menu_ptypes":{
+    get:function(){
+      if(!PARAGRAPHS.menu_ptypes_ready) PARAGRAPHS.prepare_menu_ptypes
+      else $('select#menu_ptypes').unbind('change')
+      this.verso.find('div.div_menu_ptypes').append($('select#menu_ptypes'))
+      this.menu_ptypes.bind('change', $.proxy(this.onchange_ptype, this))
+      this.menu_ptypes.val(this.ptype)
+    }
+  },
+  /* ---------------------------------------------------------------------
+   *
    *  Pour le style du paragraphe
-   */
+   *
+   --------------------------------------------------------------------- */
   /* Retourne l'objet DOM jQuery du menu des styles */
   "menu_styles":{get:function(){return $(this.menu_styles_jid)}},
   /* Identifiant du menu */
@@ -132,6 +161,7 @@ Object.defineProperties(Paragraph.prototype,{
    */
   "append_menu_styles":{
     get:function(){
+      if(!PARAGRAPHS.html_menu_styles) PARAGRAPHS.build_menu_styles
       this.verso.find('.div_menu_styles').append($('div#divuniq_menu_styles'))
     }
   },
@@ -176,17 +206,38 @@ Object.defineProperties(Paragraph.prototype,{
   
 })
 
-/*
- *  Méthode appelée quand on applique les styles choisis pour
- *  le paragraphe.
- *  
- */
-Paragraph.prototype.on_change_styles = function(selectors){
-  var idm = "Paragraph.on_change_styles("+selectors.join(', ')+") ["+this.type_id+"]"
-  dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-  if(selectors.length == 0) selectors = null
-  this.style    = selectors
-  this.modified = true
-  dlog("<- "+idm, DB_FCT_ENTER)
-}
+$.extend(Paragraph.prototype,{
+  /**
+    * Méthode appelée quand on modifie le ptype du paragraphe
+    *
+    * @method onchange_ptype
+    * @param  {String} ptype  Le ptype choisi.
+    *
+    */
+  onchange_ptype:function()
+  {
+    var new_ptype = this.menu_ptypes.val()
+    if(new_ptype == this.ptype) return
+    this.ptype = new_ptype
+    this.update_display
+    this.modified = true
+  },
+
+  /**
+    * Méthode appelée quand on applique les styles choisis pour
+    * le paragraphe.
+    *
+    * @method on_change_styles
+    * @param  {Array} selectors   Liste des styles choisis
+    */
+  on_change_styles:function(selectors){
+    var idm = "Paragraph.on_change_styles("+selectors.join(', ')+") ["+this.type_id+"]"
+    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    if(selectors.length == 0) selectors = null
+    this.style    = selectors
+    this.modified = true
+    dlog("<- "+idm, DB_FCT_ENTER)
+  }
+
+})
 
