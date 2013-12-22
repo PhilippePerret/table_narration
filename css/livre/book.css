@@ -3,7 +3,7 @@
  *  LIVRE (BOOK)
  */
 fiche.book {
-  background-color  : #00A2B7;
+  background-color  : #0086B7;
   color             : white;
   width             : 13em;
   border-radius     : 0.2em;
@@ -34,7 +34,7 @@ fiche.book > recto > div.div_real_titre input.real_titre {
 fiche.book.opened > recto > div.div_real_titre input.real_titre { 
   font-family       : "Times New Roman";
   font-size         : 15pt;
-  background-color  : #00BFD3;
+  background-color  : #9EC9EF;
   border            : 0;
   padding           : 0 9px 2px;
 }

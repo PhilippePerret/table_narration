@@ -13,41 +13,27 @@ Notes
     ou qu'elle appartient à un livre) mais ce script peut être aussi lancé,
     dans lequel cas c'est toujours la collection définie ci-dessous qui sera 
     utilisée
-
-=== TO DO TO DO TO DO ===
-
-Reprendre le dernier signet ajouter et ré-essayer la bibliographie en ajoutant 
-le :
-
-    \printbibliography
-
-… que je pense avoir oublié…
-
 =end
 
 # changer pour utiliser une autre collection
 DEFAULT_COLLECTION = 'publishing' unless defined?(DEFAULT_COLLECTION)
- 
 
-require './ruby/model/collection'
-require './ruby/model/fiche'
-Dir["./publication/source/lib/*.rb"].each{|mod| require mod}
+# On doit toujours s'assure qu'on travaille dans le dossier racine
+# de table narration (ce qui n'est pas le cas lorsqu'on appelle rlatex en
+# command en ligne)
+# folder_narration = File.dirname(File.dirname(File.dirname(File.expand_path(__FILE__))))
+# En dur
+folder_narration = File.join('', 'Users', 'philippeperret', 'Sites', 'table_narration')
 
+Dir.chdir(folder_narration) do
 
-# Si ce fichier est appelé directement, il faut détourner vers le programme
-# RLatex (qui rechargera ce fichier)
-unless defined?(RLatex)
-  # Définir le dossier de travail
-  ENV['RLATEX_WORKING_FOLDER'] = File.expand_path(File.join('.', 'publication'))
-  begin
-    require "/Users/philippeperret/Programmation/Programmes/RLatex/main"
-  rescue Exception => e
-    raise e.message
-  end
-  
-else
+  # puts "Dossier courant : #{File.expand_path('.')}"
+  require './ruby/model/collection'
+  require './ruby/model/fiche'
+  Dir["./publication/source/lib/*.rb"].each{|mod| require mod}
 
-  # On récupère le document initié par RLatex (dans main.rb)
+  # On récupère l'instance {RLatex::Document} document initié par RLatex 
+  # (dans main.rb)
   document = RLatex::document
 
   # Définir le document
@@ -57,9 +43,10 @@ else
   document.options.font_size      '11pt'
   document.options.with_index     true
   document.options.with_biblio    true
+  document.options.no_date        true
   document.options.bibliography_title  'Filmographie'
   # document.options.back_references true
-  
+
   # = Pour essai en simplifiant le travail =
   # document.options.with_index       false
   # document.options.with_biblio      false
@@ -116,13 +103,16 @@ else
       dlog "Fichier à traiter venant de ./publishing.rb (BOOK_ID:#{BOOK_ID}/COLLECTION:#{COLLECTION})"
       File.unlink path
     else
-      if Collection::name != DEFAULT_COLLECTION
-        Collection.define_name DEFAULT_COLLECTION
-      end
+      
+      # Non : On prend toujours la collection affichée
+      # if Collection::name != DEFAULT_COLLECTION
+      #   Collection.define_name DEFAULT_COLLECTION
+      # end
       $BOOK = Fiche.new( 0, 'book') 
     end
   end
-  document.destination_file File.join('.', 'publication', 'livres', Collection::name, $BOOK.normalized_affixe_from_titre)
+  document.destination_file File.join('.', 'livres', Collection::name, $BOOK.normalized_affixe_from_titre)
+  puts "Fichier destination : #{document.destination_file}"
   $BOOK.prepare_publication
 
   # Fabrication de la bibliographie (custom)

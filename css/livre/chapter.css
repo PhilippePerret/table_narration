@@ -4,8 +4,8 @@
  */
 fiche.chap {
   background-color : white;
-  color   :black;
-  width   :auto;
+  color   : #0075B6;
+  width   : auto;
 /*  opacity :0.5;*/
 }
 fiche.chap.opened:not(.ranged) {

@@ -145,7 +145,9 @@ class Fiche
       $BOOK = self
       # Pas 'required' ci-dessous car on peut publier plusieurs livres
       # en boucle.
-      load File.join('.', 'publication', 'source', 'builder.rb')
+      # load File.join('.', 'publication', 'source', 'builder.rb')
+      ENV['RLATEX_WORKING_FOLDER'] = File.expand_path(File.join('.', 'publication'))
+      load File.join('','Users','philippeperret','Programmation', 'Programmes', 'RLatex', 'main.rb')
     rescue Exception => e
       # RETOUR_AJAX[:ok] = false
       # RETOUR_AJAX[:message] = e.message

@@ -2,7 +2,12 @@ IMPLÉMENTER
 -----------
 
 - Prévoir un script pour publier tous les livres Narration
+  Il est créé mais il ne fonctionne pas bien (notamment à cause des interruptions
+  dans latex)
 
+- Une option pour ré-indicer les livres tels qu'ils sont présentés (ordre) sur
+  la table.
+  
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
   - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico
