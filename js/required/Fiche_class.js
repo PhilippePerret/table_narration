@@ -834,6 +834,7 @@ $.extend(Fiche.prototype,{
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val().trim()
+    new_value = this.value_by_ptype( new_value )
     if(new_value == "") return F.error(LOCALE.fiche.error['no empty text'])
     if(this[prop] != new_value)
     {
@@ -843,6 +844,25 @@ $.extend(Fiche.prototype,{
     if(this.is_chapter) this.close
     dlog("<- "+idm, DB_FCT_ENTER)
     return true
+  },
+  
+  /**
+    * Traite la nouvelle valeur du paragraphe (si c'est un paragraphe) en
+    * fonction de son ptype. Pour le moment, la méthode se contente de transformer
+    * les `**' en retours chariot dans les paragraphes de ptype 'list' et 'code'
+    * @method value_by_ptype
+    * @param  {String} value  La valeur à traiter
+    * @return {String} la nouvelle valeur au besoin
+    */
+  value_by_ptype:function(value)
+  {
+    if(this.is_not_paragraph) return value
+    if(this.ptype == 'list' || this.ptype == 'code')
+    {
+      value = value.split('**')
+      value = L(value).collect(function(line){ return line.trim() }).join("\n")
+    }
+    return value
   }
   
 })

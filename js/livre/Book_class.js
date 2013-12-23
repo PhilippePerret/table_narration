@@ -20,9 +20,8 @@ $.extend(Book.prototype,{
     *
     * @method publish
     * @async
-    * @param  {Object} options   Options. TODO Plus tard, permettra de définir
-    *                            ce qu'il faut imprimer (p.e. seulement la TdM)
-    *                             en mettant {only_tdm:true} dans +options+
+    * @param  {Object} options   Options de publication
+    *   @param  {Boolean} options.only_tdm  Si true, n'imprime que la table des matières du livre
     *
     */
   publish:function(options){

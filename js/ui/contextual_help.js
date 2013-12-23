@@ -115,7 +115,7 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this['show_'+(fi.retourned?'recto':'verso')]
         aide += this['return_change_'+(ispara?'texte':'titre')]
-        if(fi.is_book || fi.book) aide += this.cmd_p_publish
+        if(fi.is_book) aide += this.cmd_p_publish
         aide += this['r_reference']
       }
         
@@ -230,9 +230,17 @@ Object.defineProperties(ContextualHelp, {
     if(undefined == this._k_tab) this._k_tab = image('clavier/K_Tab.png')
     return this._k_tab
   }},
+  "k_maj":{get:function(){
+    if(undefined == this._k_maj) this._k_maj = image('clavier/K_Maj.png')
+    return this._k_maj
+  }},
   "k_cmd":{get:function(){
     if(undefined == this._k_cmd) this._k_cmd = image('clavier/K_Command.png')
     return this._k_cmd
+  }},
+  "k_ctrl":{get:function(){
+    if(undefined == this._k_ctrl) this._k_ctrl = image('clavier/K_Control.png')
+    return this._k_ctrl
   }},
   "k_space":{get:function(){
     if(undefined == this._k_space) this._k_space = image('clavier/K_Espace.png')
@@ -268,7 +276,8 @@ $.extend(CH, {
   'return_save_texte'   : CH.del + CH.k_return+" Enregistre texte",
   'show_recto'          : CH.del + CH.k_tab+" Recto",
   'show_verso'          : CH.del + CH.k_tab+" Verso",
-  'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier",
+  'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier"+
+                          " (+ "+CH.k_ctrl+" seulement TdM)",
   'r_reference'         : CH.del + CH.k_r+" -> Référence",
   'cmd_v_coller_ref'    : CH.del + CH.k_cmd+CH.k_v+" Coller réf."
   

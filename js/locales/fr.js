@@ -61,6 +61,11 @@ window.LOCALE = {
     // LOCALE.paragraph.tip
     tip:{
       'how to create a new para'    : "Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER."
+    },
+    
+    //LOCALE.paragraph.error
+    error:{
+      'code must be valid' :"\nUn code de paragraphe de ptype 'code' doit être valide en javascript et retourner le texte à écrire dans le paragraphe ('return \"...\"')"
     }
   },
   

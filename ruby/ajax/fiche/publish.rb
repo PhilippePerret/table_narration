@@ -26,7 +26,13 @@ if book.exists?
   begin
     path = File.join('.', '.publishing.rb')
     File.open(path, 'wb'){|f| f.write "BOOK_ID=#{param :book}\nCOLLECTION='#{collection_name}'"}
-    `cd "#{path_to_publication}";/usr/bin/rlatex .`
+    # Les options
+    opts = ""
+    unless (param :options).nil?
+      opts += " --tdm" if (param :options)['only_tdm']
+    end
+    # Commander la publication
+    `cd "#{path_to_publication}";/usr/bin/rlatex#{opts} .`
     RETOUR_AJAX[:log_publish] = File.read( File.join('.', 'publication', 'rlatex.log') )
     unless (File.exists? path_to_pdf_final) && (File.exists? path_to_ps_final)
       raise "La publication n'a pas pu se faire entièrement. Utilise plutôt l'utilitaire ./_dev/utilitaires/publish.rb pour publier le livre courant."

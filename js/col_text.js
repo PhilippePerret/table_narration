@@ -115,23 +115,38 @@ window.ColText = {
   
   /**
     * Traitement du code d'un paragraphe dont le ptype n'est pas 'text'
+    * Notes
+    *   * La méthode est asynchrone seulement pour les ptype(s) 'file' et 'fico'
     * @method traite_code_by_ptype
+    * @async
     * @param  {Paragraph} ipara   L'instance du paragraphe
     */
   traite_code_by_ptype:function(ipara)
   {
     dlog("Paragraphe " + ipara.type_id + " traité comme "+ipara.ptype)
+    var c = this.code
     switch(ipara.ptype)
     {
     case 'list':
+      c = L(c.split("\n")).collect(function(line){return '<li>'+line+'</li>'}).join('')
+      c = '<ul>'+c+'</ul>'
       break
     case 'code':
+      try
+      {
+        eval("c=function(){"+c+"}()")
+      }
+      catch(err)
+      {
+        F.error(err+LOCALE.paragraph.error['code must be valid'])
+      }
       break
     case 'file':
       break
     case 'fico':
       break
     }
+    this.code = c
   }
   
   

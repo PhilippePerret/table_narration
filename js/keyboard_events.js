@@ -137,15 +137,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
       if(cur.is_book)
       {
         F.show(LOCALE.fiche.message['book publishing'].replace(/_LIVRE_/, cur.titre))
-        cur.publish()
-      }
-      else {
-        if(cur.book)
-        {
-          F.show(LOCALE.fiche.message['book of fiche publishing'].replace(/_LIVRE_/, cur.book.titre))
-          cur.book.publish()
-        }
-        else F.error(LOCALE.fiche.error['no book for publishing'],{timer:true})
+        cur.publish({only_tdm:evt.ctrlKey})
       }
       // Dans tous les cas, on bloque l'event
       return stop_event(evt)

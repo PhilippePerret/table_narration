@@ -9,6 +9,7 @@ IMPLÉMENTER
 - Une option pour ré-indicer les livres tels qu'ils sont présentés (ordre) sur
   la table. -> préférences et le faire dès qu'on charge l'application et qu'on
   choisit cette option.
+  OU le faire systématiquement ?
   
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex

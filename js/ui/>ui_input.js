@@ -206,6 +206,14 @@ UI.Input = {
           ipara.select
           ipara.enable_main_field
         }
+        else
+        {
+          if(evt.altKey && (fiche.ptype == 'list' || fiche.ptype == 'code'))
+          {
+            // On doit permettre les retours chariot
+            F.show("Pour le moment, simule les retours chariot à l'aide de '*' au début des lignes.")
+          }
+        }
       }
       return stop_event(evt)
     case K_TAB:
