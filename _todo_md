@@ -1,6 +1,8 @@
 IMPLÉMENTER
 -----------
 
+- RLatex : traitement des listes
+
 - Lorsque l'on se trouve dans un +paragraph+ qui a pour +ptype+ "list" ou "code",
   il faut permettre l'utilisation de retours de chariot (ou alors indiquer qu'on
   utilise quelque chose comme ALT+Return pour insérer un retour de chariot)
