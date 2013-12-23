@@ -132,12 +132,13 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_p:
     if(evt.metaKey)
     {
-      var cur = FICHES.current
+      var cur = FICHES.current, options = {}
       Flash.clean()
       if(cur.is_book)
       {
         F.show(LOCALE.fiche.message['book publishing'].replace(/_LIVRE_/, cur.titre))
-        cur.publish({only_tdm:evt.ctrlKey})
+        if(evt.ctrlKey) options.only_tdm = true
+        cur.publish(options)
       }
       // Dans tous les cas, on bloque l'event
       return stop_event(evt)

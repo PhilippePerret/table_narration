@@ -1,11 +1,18 @@
 IMPLÉMENTER
 -----------
 
+- Documenter contextuel MAJ+RETURN pour les listes
 - RLatex : traitement des listes
+- RLatex :  Trouver la solution pour modifier le header (mettre les titres de chapitre
+            courant, oui, mais en tout petit)
+- Bouton pour faire le uploading sur Narration (voir si ça n'est pas déjà ce qui se
+  fait quand je demande un backup).
 
 - Lorsque l'on se trouve dans un +paragraph+ qui a pour +ptype+ "list" ou "code",
   il faut permettre l'utilisation de retours de chariot (ou alors indiquer qu'on
   utilise quelque chose comme ALT+Return pour insérer un retour de chariot)
+  > Pour que ça marche, reprendre le code en faisant return true mais en stoppant
+    la propagation de l'évènement
   > Traiter le ptype dans ColText::formate
     
 - Une option pour ré-indicer les livres tels qu'ils sont présentés (ordre) sur

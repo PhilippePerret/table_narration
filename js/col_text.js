@@ -127,9 +127,24 @@ window.ColText = {
     var c = this.code
     switch(ipara.ptype)
     {
+    case 'text':
+      break
     case 'list':
       c = L(c.split("\n")).collect(function(line){return '<li>'+line+'</li>'}).join('')
       c = '<ul>'+c+'</ul>'
+      break
+    case 'enum':
+      c = L(c.split("\n")).collect(function(line){return '<li>'+line+'</li>'}).join('')
+      c = '<ol>'+c+'</ol>'
+      break
+    case 'desc':
+      // Liste de description "mot::description\nmot::description"
+      var desc, mot ;
+      c = L(c.split("\n")).collect(function(line){
+        desc = line.split('::')
+        return '<dt>'+desc.shift()+'</dt><dd>'+desc.join('::')+'</dd>'
+      }).join('')
+      c = '<dl>'+c+'</dl>'
       break
     case 'code':
       try

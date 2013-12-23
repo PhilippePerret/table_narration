@@ -184,14 +184,28 @@ UI.Input = {
        *      la classe css "returnable"
        *  
        */
+      var fiche = null
+      if(this.target.fiche_id) fiche = get_fiche( this.target.fiche_id )
       // Un champ "returnable" se comporte normalement
       if(this.target.jq.hasClass('returnable')) return true
-      // Quelque soit le champ, on doit blurer
+      // PRÉ-Traitement spécial pour un champ de texte d'un paragraphe avec
+      // un ptype particulier
+      if(fiche && fiche.ptype != 'text')
+      {
+        /**
+          * Pour un ptype ≠ 'text', MAJ+Return permet de passer à la ligne
+          */
+        if(evt.shiftKey)
+        {
+          evt.stopPropagation()
+          return true
+        }
+      }
+      // Quel que soit le champ, on doit blurer
       this.target.jq.blur()
-      // Traitement spécial pour un champ texte de fiche paragraphe
+      // POST-Traitement spécial pour un champ texte de fiche paragraphe
       if(this.target.hasFiche && this.target.property == 'texte')
       {
-        var fiche = get_fiche( this.target.fiche_id )
         if(evt.metaKey)
         {
           // CMD + ENTER => Création d'un nouveau paragraphe
@@ -205,14 +219,6 @@ UI.Input = {
           // Et on le met en édition
           ipara.select
           ipara.enable_main_field
-        }
-        else
-        {
-          if(evt.altKey && (fiche.ptype == 'list' || fiche.ptype == 'code'))
-          {
-            // On doit permettre les retours chariot
-            F.show("Pour le moment, simule les retours chariot à l'aide de '*' au début des lignes.")
-          }
         }
       }
       return stop_event(evt)

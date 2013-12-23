@@ -45,6 +45,17 @@ a.small {
   opacity     : 1 !important;
 }
 
+/* Liste de définitions */
+dt {
+  font-family   : Arial;
+  font-size     : 12.4pt;
+  font-weight   : bold;
+}
+dd {
+    font-size: 13.4pt;
+}
+
+/* Champ focusable */
 div.focusable {
   border-width  : 1px;
   border-style  : solid;

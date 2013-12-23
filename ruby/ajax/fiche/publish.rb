@@ -24,18 +24,23 @@ File.unlink path_to_ps_final  if File.exists? path_to_ps_final
 
 if book.exists?
   begin
+    now = Time.now
     path = File.join('.', '.publishing.rb')
     File.open(path, 'wb'){|f| f.write "BOOK_ID=#{param :book}\nCOLLECTION='#{collection_name}'"}
     # Les options
     opts = ""
     unless (param :options).nil?
-      opts += " --tdm" if (param :options)['only_tdm']
+      opts += " --tdm" if (param :options)['only_tdm'] == "true"
     end
+    RETOUR_AJAX[:options_rlatex] = "Options passées à rlatex : #{opts}"
     # Commander la publication
     `cd "#{path_to_publication}";/usr/bin/rlatex#{opts} .`
     RETOUR_AJAX[:log_publish] = File.read( File.join('.', 'publication', 'rlatex.log') )
-    unless (File.exists? path_to_pdf_final) && (File.exists? path_to_ps_final)
-      raise "La publication n'a pas pu se faire entièrement. Utilise plutôt l'utilitaire ./_dev/utilitaires/publish.rb pour publier le livre courant."
+    path_source_pdf = File.join('.', 'publication', 'source.pdf')
+    if !File.exists?(path_source_pdf) || File.stat(path_source_pdf).mtime < now
+    # if File.stat(File.join('.', 'publication', 'source.pdf')).mtime < 
+    # unless (File.exists? path_to_pdf_final) && (File.exists? path_to_ps_final)
+      raise "La publication n'a pas pu se faire correctement."
     end
   rescue Exception => e
     RETOUR_AJAX[:ok] = false

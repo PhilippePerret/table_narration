@@ -181,6 +181,12 @@ class Fiche
     @idtype ||= "#{id}:#{type}"
   end
   
+  # Return le ptype de la fiche (only paragraph)
+  # 
+  def ptype
+    @ptype ||= data['ptype']
+  end
+  
   # Retourne l'instance {Fiche} du parent (si la fiche a un parent)
   def parent
     return nil if data['parent'].nil?
