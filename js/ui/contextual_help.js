@@ -96,11 +96,15 @@ Object.defineProperties(ContextualHelp, {
       var editing = $(fi.div_main_prop_jid).length == 0
       
       // === Construire l'aide contextuelle ===
-      aide += this.info_current_fiche
+      // aide += this.info_current_fiche
       if(editing){
         aide += this['return_save_'+(ispara?'texte':'titre')]
         aide += this.raccourcis_textuels
-        if( ispara ) aide += this['shortcut_paragraph']
+        if( ispara )
+        {
+          aide += this['shortcut_paragraph']
+          if(fi.ptype != 'text') aide += this['maj_return_new_item']
+        } 
         if(App.clipboard) aide += this['cmd_v_coller_ref']
       }
       else 
@@ -279,7 +283,8 @@ $.extend(CH, {
   'cmd_p_publish'       : CH.del + CH.k_cmd+CH.k_p+" Publier"+
                           " (+ "+CH.k_ctrl+" seulement TdM)",
   'r_reference'         : CH.del + CH.k_r+" -> Référence",
-  'cmd_v_coller_ref'    : CH.del + CH.k_cmd+CH.k_v+" Coller réf."
+  'cmd_v_coller_ref'    : CH.del + CH.k_cmd+CH.k_v+" Coller réf.",
+  'maj_return_new_item' : CH.del + CH.k_maj+CH.k_return+" Nouvel item"
   
 })
 ContextualHelp.AIDES = {
