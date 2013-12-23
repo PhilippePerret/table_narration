@@ -34,6 +34,7 @@ AFFICHER_LOG_RLATEX = true
 require './ruby/lib/functions'
 require './ruby/model/fiche'
 require './ruby/model/collection'
+require './data/secret/data_phil'
 
 Collection::define_name COLLECTION_NAME
 path_to_publication = File.expand_path('.', 'publication')
@@ -52,7 +53,7 @@ end.each do |path|
   puts "\nLivre #{counter_book} : id ##{id}::#{ibook.titre}"
   path = File.join('.', '.publishing.rb')
   File.open(path, 'wb'){|f| f.write "BOOK_ID=#{id}\nCOLLECTION='#{COLLECTION_NAME}'"}
-  `cd "#{path_to_publication}";/usr/bin/rlatex .`
+  `cd "#{path_to_publication}";echo '#{DATA_PHIL[:password]}' | sudo -S /usr/bin/rlatex .`
   logs << File.read( File.join('.', 'publication', 'rlatex.log') )
   # break if counter_book > 1
 end
