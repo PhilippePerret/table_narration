@@ -22,6 +22,12 @@ OPTIONS_PUBLISHING = {}
 # redéfinir en définissant la constante ci-dessous
 COLLECTION_NAME = 'narration'
 
+# Livre
+# -----
+# Pour ne traiter qu'un livre en particulier
+# Commenter cette ligne pour traiter tous les livres de la collection
+# LIVRE_ID = 5
+
 # Pour afficher le log de RLatex
 AFFICHER_LOG_RLATEX = true
 
@@ -34,10 +40,16 @@ path_to_publication = File.expand_path('.', 'publication')
 puts "path_to_publication: #{path_to_publication}"
 counter_book = 0
 logs = []
-Dir["#{Collection::folder_fiches}/book/*.msh"].each do |path|
+
+if defined? LIVRE_ID
+  [File.join(Collection::folder_fiches, 'book', "#{LIVRE_ID}.msh")]
+else
+  Dir["#{Collection::folder_fiches}/book/*.msh"]
+end.each do |path|
   counter_book += 1
   id = File.basename(path, File.extname(path))
-  puts "\nLivre #{counter_book} : id ##{id}"
+  ibook = Fiche.new id, 'book'
+  puts "\nLivre #{counter_book} : id ##{id}::#{ibook.titre}"
   path = File.join('.', '.publishing.rb')
   File.open(path, 'wb'){|f| f.write "BOOK_ID=#{id}\nCOLLECTION='#{COLLECTION_NAME}'"}
   `cd "#{path_to_publication}";/usr/bin/rlatex .`

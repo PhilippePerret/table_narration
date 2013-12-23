@@ -2,29 +2,34 @@
 
 Publication du livre param :book
 
+Mais ça ne semble pas encore fonctionner quand je le fais depuis le navigateur.
+Donc il faut s'assure que le fichier final existe.
+
+
 =end
+
+
+collection_name = (param :collection_name) || Collection::name
+path_to_publication = File.expand_path('.', 'publication')
+path_to_folder_livres = File.join(path_to_publication, 'livres', 'narration')
 
 # On vérifie que ce soit bien un livre
 book = Fiche.new (param :book), 'book'
+
+# Les fichiers finaux qu'on devra trouver
+path_to_pdf_final = File.join(path_to_folder_livres, "#{book.normalized_affixe_from_titre}.pdf")
+path_to_ps_final  = File.join(path_to_folder_livres, "#{book.normalized_affixe_from_titre}.ps")
+File.unlink path_to_pdf_final if File.exists? path_to_pdf_final
+File.unlink path_to_ps_final  if File.exists? path_to_ps_final
+
 if book.exists?
   begin
-    raise "Pour le moment, la publication ne peut pas se faire par ce biais."+
-    "\nUtiliser le script utilitaire ./_dev/utilitaires/collection/publish.rb"
-    path = File.join('.', './.publishing.rb')
-    File.open(path, 'wb'){|f| f.write "BOOK_ID=#{param :book}\nCOLLECTION='#{Collection::name}'" }
-    # book.publish(param :options)
-    path_publishing_folder = File.expand_path(File.join('.', 'publication'))
-    raise "Dossier `#{path_publishing_folder}' introuvable" unless File.exists? path_publishing_folder
-    # Si ça fonctionne, ajouter plus tard les options
-    cmd = "cd '#{path_publishing_folder}';/usr/bin/rlatex ."
-    # cmd = "cd '#{path_publishing_folder}';rlatex ."
-    ret = `#{cmd}`
-    res = $?
-    RETOUR_AJAX[:command_line]    = cmd
-    RETOUR_AJAX[:retour_command]  = ret
-    RETOUR_AJAX[:reponse_command] = res.inspect
-    if res.to_i == 127
-      raise "La commande `rlatex' n'a pas été trouvée ou un problème est survenu."
+    path = File.join('.', '.publishing.rb')
+    File.open(path, 'wb'){|f| f.write "BOOK_ID=#{param :book}\nCOLLECTION='#{collection_name}'"}
+    `cd "#{path_to_publication}";/usr/bin/rlatex .`
+    RETOUR_AJAX[:log_publish] = File.read( File.join('.', 'publication', 'rlatex.log') )
+    unless (File.exists? path_to_pdf_final) && (File.exists? path_to_ps_final)
+      raise "La publication n'a pas pu se faire entièrement. Utilise plutôt l'utilitaire ./_dev/utilitaires/publish.rb pour publier le livre courant."
     end
   rescue Exception => e
     RETOUR_AJAX[:ok] = false
