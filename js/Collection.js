@@ -147,11 +147,32 @@ $.extend(Collection, {
     if(!MODE_TEST) this.backup
   },
   
+  /**
+    * Retour du backup forcé
+    * Notes 
+    *   * Au cours de ce backup j'ai essayé aussi de faire une sauvegarde en ligne
+    *     lorsque c'est la série narration, mais ça ne fonctionne pas encore.
+    * @method retour_force_backup
+    * @param  {Object}  rajax   Objet retourné par la requête Ajax
+    *   @param  {Boolean} rajax.ok        True si tout s'est bien passé
+    *   @param  {String}  rajax.message   Le message retourné (l'erreur en cas d'erreur)
+    *   @param  {Boolean} rajax.backup_narration  True si le backup sur icare a été tenté
+    *   @param  {Number}  rajax.backup_narration_exit   L'exit de la commande. Si 0 => OK
+    */
   // Noter que ce retour n'est utilisé que lorsqu'on force un backup
   // différent du backup quotidien.
   retour_force_backup:function(rajax)
   {
-    if(rajax.ok) F.show("Backup done!", {keep:true})
+    if(rajax.ok)
+    {
+      var mess = "Backup done!"
+      if(rajax.backup_narration)
+      {
+        mess += "\nUn backup sur Icare a été tenté."
+        mess += rajax.backup_narration_exit == 0 ? "Il a réussi" : "Il n'a pas été possible."
+      }
+      F.show(mess, {keep:true})
+    } 
     else F.error(rajax.message)
   },
   
@@ -399,10 +420,13 @@ Object.defineProperties(Collection,{
     }
   },
   
-  /*
-   *  Chargement de la collection (normale ou test)
-   *  
-   */
+  /**
+    * Chargement de la collection (normale ou test)
+    * Notes
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method load
+    * @async
+    */
   "load":{
     get:function(){
       window.ready  = false
@@ -501,10 +525,11 @@ Object.defineProperties(Collection,{
     }
   },
   
-  /*
-   *  Marque la collection modifiée/non modifié
-   *    
-   */
+  /**
+    * Marque la collection modifiée/non modifié
+    * @property {Boolean} modified
+    * @default false
+    */
   "modified":{
     get:function(){ return this._modified || false },
     set:function( modified ){
@@ -525,7 +550,7 @@ Object.defineProperties(Collection,{
     */
   "backup":{
     get:function(){
-      Ajax.send({script:'collection/backup'},$.proxy)
+      Ajax.send({script:'collection/backup'})
     }
   },
   /**
@@ -546,12 +571,14 @@ Object.defineProperties(Collection,{
       else F.error( rajax.message )
     }
   },
-  /*
-   *  Force un nouveau backup (avec l'heure)
-   *  
-   *  Sauf en mode test
-   *
-   */
+  /**
+    * Force un nouveau backup (le fichier sera enregistré avec l'heure)
+    * Notes
+    *   * Sauf en mode test
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method force_backup
+    * @async
+    */
   "force_backup":{
     get:function(){
       Ajax.send({script:'collection/backup', force_backup:1}, $.proxy(this.retour_force_backup,this))
