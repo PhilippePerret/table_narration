@@ -136,7 +136,6 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
       Flash.clean()
       if(cur.is_book)
       {
-        F.show(LOCALE.fiche.message['book publishing'].replace(/_LIVRE_/, cur.titre))
         if(evt.ctrlKey) options.only_tdm = true
         cur.publish(options)
       }

@@ -24,7 +24,12 @@ $.extend(Book.prototype,{
     *
     */
   publish:function(options){
-    F.show("Publication en cours…",{keep:true})
+    var mess = LOCALE.fiche.message['book publishing'], options_mess = "" ;
+    mess = mess.replace(/_LIVRE_/, this.titre)
+    if(options.only_tdm) options_mess = " (seulement la TdM)"
+    mess = mess.replace(/_OPTIONS_/, options_mess)
+    mess += "…"
+    F.show(mess)
     Ajax.send({script:'fiche/publish', book:this.id, options:options}, $.proxy(this.retour_publish,this))
   },
   /**

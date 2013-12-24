@@ -38,8 +38,6 @@ if book.exists?
     RETOUR_AJAX[:log_publish] = File.read( File.join('.', 'publication', 'rlatex.log') )
     path_source_pdf = File.join('.', 'publication', 'source.pdf')
     if !File.exists?(path_source_pdf) || File.stat(path_source_pdf).mtime < now
-    # if File.stat(File.join('.', 'publication', 'source.pdf')).mtime < 
-    # unless (File.exists? path_to_pdf_final) && (File.exists? path_to_ps_final)
       raise "La publication n'a pas pu se faire correctement."
     end
   rescue Exception => e

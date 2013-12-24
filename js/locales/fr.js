@@ -47,8 +47,7 @@ window.LOCALE = {
     
     // LOCALE.fiche.message
     message:{
-      'book publishing'             : "Publication du livre “_LIVRE_” demandée.",
-      'book of fiche publishing'    : "Publication du livre de la fiche courante demandée (_LIVRE_).",
+      'book publishing'             : "Publication du livre “_LIVRE_”_OPTIONS_.",
       'book has no parent'          : "Un livre ne peut pas avoir de parent…",
       'no parent'                   : "Cette fiche n'a pas de parent, elle est orpheline.",
       'no children'                 : "Cette fiche n'a pas d'enfants",

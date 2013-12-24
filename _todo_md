@@ -1,29 +1,12 @@
 IMPLÉMENTER
 -----------
 
-- Edit doit afficher ses boites en position fixed pour qu'elles apparaissent
-  toujours dans la fenêtre
-  
-- Ranger toujours les livres au même endroit
-  > Lorsqu'on les ouvre, ils se décalent vers la droite
-  
 - RLatex :  Trouver la solution pour modifier le header (mettre les titres de chapitre
             courant, oui, mais en tout petit)
 
 - Bouton pour faire le uploading sur Narration (voir si ça n'est pas déjà ce qui se
   fait quand je demande un backup).
 
-- Lorsque l'on se trouve dans un +paragraph+ qui a pour +ptype+ "list" ou "code",
-  il faut permettre l'utilisation de retours de chariot (ou alors indiquer qu'on
-  utilise quelque chose comme ALT+Return pour insérer un retour de chariot)
-  > Pour que ça marche, reprendre le code en faisant return true mais en stoppant
-    la propagation de l'évènement
-  > Traiter le ptype dans ColText::formate
-    
-- Une option pour ré-indicer les livres tels qu'ils sont présentés (ordre) sur
-  la table. -> préférences et le faire dès qu'on charge l'application et qu'on
-  choisit cette option.
-  OU le faire systématiquement ?
   
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
