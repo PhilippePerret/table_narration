@@ -25,14 +25,30 @@ App.Prefs = {
   DATA:[
     /* L'id doit correspondre à celui dans App.preferences */
     {id:'general',    type:'fieldset',  legend:"Générales"},
-    {id:'autosave',   type:'cb',        label:"Sauvegarde automatique"},
-    {id:'saveconfig', type:'cb',        label:"Sauver la configuration des fiches à chaque sauvegarde"},
+    {id:'autosave',   type:'cb',        label:"Sauvegarde automatique", indiv:true},
+    {id:'saveconfig', type:'cb',        label:"Sauver la configuration des fiches à chaque sauvegarde", indiv:true},
     {id:'general',    type:'/fieldset'},
     {id:'fiches',     type:'fieldset',  legend:"Fiches"},
     {id:'snap',       type:'cb',        label:"Aligner les fiches sur la grille"},
+    '<div>',
+    {id:'gridbook',   type:'cb',        label:"Livre rangés " , onchange:"$.proxy(App.Prefs.onchange_livre_ranged,App.Prefs,this.checked)()"},
+    {id:'dirgridbook',type:'select', style:"visibility:hidden;",
+      values:[{value:"h",title:"horizontalement"}, {value:"v",title:"verticalement"}]},
+    '</div>',
     {id:'fiches',     type:'/fieldset'}
     ],
   
+  /**
+    * Méthode appelée quand on clique sur le cb "livre rangés"
+    * La méthode affiche ou masque le menu pour choisir l'alignement des livres,
+    * horizontal ou vertical.
+    * @method onchange_livre_ranged
+    * @param  {Boolean} coched    Etat du coche de la cb
+    */
+  onchange_livre_ranged:function(coched)
+  {
+    $('select#pref-dirgridbook').css('visibility', coched?'visible':'hidden')
+  }, 
   /**
     * Enregistre les préférences de l'application (et reçoit le retour de la 
     * requête ajax)
@@ -120,20 +136,30 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       var id, obj ;
       L(this.DATA).each(function(data){
+        if('string'==typeof data) return
         id  = data.id
-        obj = $('input#pref-'+id)
-        if(obj.length == 0) return
         switch(data.type)
         {
         case 'cb':
+          obj = $('input#pref-'+id)
           App.preferences[id] = obj[0].checked == true
           if(id=='autosave')
           {
             $('input#cb_automatic_save')[0].checked = App.preferences[id]
             Collection.enable_automatic_saving(App.preferences[id])
           }
-
+          else if(id=='gridbook' && App.preferences[id])
+          { //=> il faut aligner les livres
+            UI.align_books($('select#pref-dirgridbook').val())
+          }
           break
+        // Ne rien faire avec ces types :
+        case 'fieldset':
+        case '/fieldset':
+          break
+        default:
+          obj = $(data.type+'#pref-'+id)
+          App.preferences[id] = obj.val()
         }
       })
     }
@@ -153,15 +179,27 @@ Object.defineProperties(App.Prefs, {
       // On met les valeurs par défaut
       var id, obj ;
       L(this.DATA).each(function(data){
+        if('string'==typeof data) return
         id = data.id
-        obj = $('input#pref-'+id)
         switch(data.type)
         {
         case 'cb':
+          obj = $('input#pref-'+id)
           obj[0].checked = App.preferences[id]
           break
+        // Ne rien faire avec ces types :
+        case 'fieldset':
+        case '/fieldset':
+          break
+        default:
+          obj = $(data.type+'#pref-'+id)
+          obj.val(App.preferences[id])
         }
       })
+      
+      // Quelques traitements spéciaux
+      this.onchange_livre_ranged(App.preferences['gridbook'])
+      
       this.prepared = true
     }
   },
@@ -195,14 +233,35 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       var code = ""
       L(this.DATA).each(function(data){
+        if('string' == typeof data)
+        {
+          code += data
+          return
+        }
+        
+        
         var id = data.id
+        // Pour préparer les attributs de la balise d'ouverture
+        var attrs = {id:"pref-"+id}
+        if(data.onclick)  attrs.onclick   = data.onclick
+        if(data.onchange) attrs.onchange  = data.onchange
+        if(data.class)    attrs.class     = data.class
+        if(data.style)    attrs.style     = data.style
+        
         switch(data.type)
         {
         case 'cb':
-          code += '<div class="div_cb_pref">'+
-                    '<input type="checkbox" id="pref-'+id+'" />'+
-                    '<label for="pref-'+id+'">'+data.label+'</label>'+
-                  '</div>'
+          attrs.type = "checkbox"
+          if(data.indiv) code += '<div class="div_cb_pref">'
+          code += "input".to_tag(attrs) +
+                    '<label for="pref-'+id+'">'+data.label+'</label>'
+          if(data.indiv) code += '</div>'
+          break
+        case 'select':
+          code += "select".to_tag(attrs) +
+          L(data.values).collect(function(d){
+            return '<option value="'+d.value+'">'+d.title+'</option>'
+          }).join("")+'</select>'
           break
         case 'fieldset':
           code += '<fieldset id="prefs-'+id+'"><legend>'+data.legend+'</legend>'

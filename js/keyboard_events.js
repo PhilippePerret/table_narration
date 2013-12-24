@@ -107,7 +107,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case K_LEFT_ARROW:  cplx_meth = 'select_parent';       break
   case K_RIGHT_ARROW: cplx_meth = 'select_first_child';  break
   case K_UP_ARROW:    cplx_meth = evt.metaKey ? 'move_up'    : 'select_previous'; break
-  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? 'move_down'  : 'select_next';         break
+  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? 'move_down'  : 'select_next';     break
     
   /* ERASE => supprimer la fiche */
   case K_ERASE: cplx_meth = 'want_delete'; break

@@ -93,7 +93,9 @@ $.extend(window.App, {
   preferences:{
     snap        : true,   // place les fiches sur la grille
     autosave    : false,  // sauvegarde automatique
-    saveconfig  : false   // sauvegarde de la config à chaque sauvegarde
+    saveconfig  : false,  // sauvegarde de la config à chaque sauvegarde
+    gridbook    : false,  // Alignement des livres (orientation dépend de dirgridbook)
+    dirgridbook : null    // Orientation de l'alignement des livres ("v" ou "h")
   },
   
   

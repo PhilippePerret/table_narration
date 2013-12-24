@@ -154,20 +154,23 @@ Object.defineProperties(Fiche.prototype, {
 
   /* ---------------------------------------------------------------------
    */
-  /*
-   *  Vérifie si la fiche peut être ouverte
-   *  Pour être ouverte, la fiche doit être `loaded' et ses enfants doivent
-   *  l'être aussi.
-   *
-   *  NOTES
-   *  -----
-   *    = Les enfants, dans la fiche, sont toujours des instances Fiche.
-   *      (réglées au chargement du parent). C'est leur propriété `loaded'
-   *      qui détermine si elles sont chargées ou non.
-   *
-   *    = On peut appeler la méthode `rend_openable(<poursuivre>)' pour rendre
-   *      la fiche ouvrable après le test `<fiche>.is_not_openable'
-   */
+  /**
+    * Vérifie si la fiche peut être ouverte
+    * Pour être ouverte, la fiche doit être `loaded' et ses enfants doivent
+    * l'être aussi.
+    *
+    * NOTES
+    * -----
+    *   * Les enfants, dans la fiche, sont toujours des instances Fiche.
+    *     (réglées au chargement du parent). C'est leur propriété `loaded'
+    *     qui détermine si elles sont chargées ou non.
+    *   * On peut appeler la méthode `rend_openable(<poursuivre>)' pour rendre
+    *     la fiche ouvrable après le test `<fiche>.is_not_openable'
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method is_openable
+    * @return {Boolean} true si la fiche peut être ouverte, false otherwise.
+    *
+    */
   "is_openable":{
     get:function(){
       dlog("-> Fiche::is_openable ["+this.type_id+"]", DB_FCT_ENTER)
@@ -188,11 +191,14 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){return this.is_openable == false}
   },
     
-  /*
-   *  Positionne la fiche sur le table en fonction de :
-   *    - son état ranged ou non
-   *    - ses top / left
-   */
+  /**
+    * Positionne la fiche sur le table en fonction de :
+    * - son état ranged ou non
+    * - ses top / left
+    * Notes
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method positionne
+    */
   "positionne":{
     get:function(){
       if( this.ranged || this.top == null || !this.obj ) return

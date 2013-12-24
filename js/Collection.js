@@ -270,6 +270,27 @@ $.extend(Collection, {
 Object.defineProperties(Collection,{
   
   /**
+    * Classe les livres dans `this.books` suivant leur disposition sur la
+    * table. Cette méthode permet de rationnaliser l'utilisation des flèches
+    * pour passer d'un livre à l'autre.
+    * Notes
+    *   * La méthode est aussi utilisée quand on choisit les livres rangés dans
+    *     les préférences.
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method sort_book_from_table
+    */
+  "sort_book_from_table":{
+    get:function(){
+      this.books.sort(function(b1, b2){
+        if((b1.top||0) == (b2.top||0)) return (b1.left||0) - (b2.left||0)
+        else return (b1.top||0) - (b2.top||0)
+      })
+      var indice = 0
+      L(this.books).each(function(book){book.indice = indice ++})
+    }
+  },
+  /**
     * Efface complètement la collection courante (avant chargement d'une autre
     * collection)
     *

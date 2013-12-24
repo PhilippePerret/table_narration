@@ -64,8 +64,22 @@ $.extend(UI, {
    */
   FIELD_PEOPLE:'people',
   
-  GRID_X    : 80,       // Snap horizontal
-  GRID_Y    : 40,       // Snap vertical
+  /**
+    * LARGEUR d'un carreau de la grille snap
+    * Notes : Correspond à la largeur d'un livre fermé
+    * @property {Number} GRID_X
+    * @static
+    * @final
+    */
+  GRID_X    : 250,
+  /**
+    * HAUTEUR d'un carreau de la grille snap
+    * Notes : Correspond à la hauteur d'un livre fermé
+    * @property {Number} GRID_Y
+    * @static
+    * @final
+    */
+  GRID_Y    : 40,
   
   prepared  :false,     // Mis à true quand l'UI est prête
   preparing :false,     // True pendant la préparation de l'interface
@@ -99,6 +113,43 @@ $.extend(UI, {
         cancel :{name:(options.cancel_name || "Renoncer"), onclick:suivreCancel},
         ok     :{name:(options.ok_name || "OK"), onclick:suivreOk}
       }
+    })
+  },
+  
+  /**
+    * Aligne les livres sur la grille
+    *
+    * Notes
+    *   * Pour le moment, la méthode n'est appelée que lorsque la case "Livres rangés"
+    *     est cochée (le moment où on le fait) dans les préférences.
+    *   * C'est la position vertical qui l'emporte. Ensuite, si deux livres sont à
+    *     la même hauteur, c'est la position vertical qui détermine la précédence.
+    *   * Cela classe aussi les livres dans Collection.books, pour qu'ils soient
+    *     sélectionnés dans le bon ordre par les flèches
+    *
+    * @method align_books
+    * @param  {String} dir  Orientation de l'alignement, h:horizontal, v:vertical
+    *
+    */
+  align_books:function(dir)
+  {
+    if (App.preferences.gridbook == false) return
+    
+    Collection.sort_book_from_table
+
+    // On les positionne sur la table
+    // Rappel : le simple fait de changer left/top appelle le positionnement
+    // de la fiche
+    var current_x = 0
+    var current_y = 0
+    var inc_x = App.preferences['dirgridbook'] == 'h' ? this.GRID_X : 0
+    var inc_y = App.preferences['dirgridbook'] == 'v' ? this.GRID_Y : 0
+    L(Collection.books).each(function(book){
+      book.modified = current_x != book.left || current_y != book.top
+      book.left = current_x
+      book.top  = current_y
+      current_x += inc_x
+      current_y += inc_y
     })
   },
   

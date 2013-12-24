@@ -1,5 +1,9 @@
 IMPLÉMENTER
 -----------
+
+- Edit doit afficher ses boites en position fixed pour qu'elles apparaissent
+  toujours dans la fenêtre
+  
 - Ranger toujours les livres au même endroit
   > Lorsqu'on les ouvre, ils se décalent vers la droite
   

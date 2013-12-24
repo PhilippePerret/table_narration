@@ -332,6 +332,10 @@ window.FICHES = {
       if(!instance.obj) instance.create
     })
     
+    // Réglage de l'indice des livres (en fonction de leur positionnement
+    // sur la table)
+    Collection.sort_book_from_table
+    
     // Rangement des enfants (toujours - ils seront "dérangés" ensuite
     // si la configuration courante le nécessite)
     L(instances).each(function(instance){

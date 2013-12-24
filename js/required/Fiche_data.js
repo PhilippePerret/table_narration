@@ -296,7 +296,9 @@ Object.defineProperties(Fiche.prototype,{
    *  la fiche sur la table
    */
   "left":{
-    get:function(){ return this._left || null },
+    get:function(){ 
+      if(undefined == this._left) this._left = 0
+      return this._left },
     set:function(left){
       this._left = parseInt(left, 10)
       if( !this.ranged ) this.positionne
@@ -309,7 +311,9 @@ Object.defineProperties(Fiche.prototype,{
    *  
    */
   "top":{
-    get:function(){ return this._top || null },
+    get:function(){ 
+      if(undefined == this._top) this._top = 0
+      return this._top },
     set:function(top){
       this._top = parseInt(top, 10)
       if( !this.ranged ) this.positionne

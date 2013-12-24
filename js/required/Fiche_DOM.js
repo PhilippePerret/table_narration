@@ -473,14 +473,14 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
-  /*
-   *  Sélection la fiche précédente (sibling)
-   *  
-   *  NOTES
-   *  -----
-   *    = Le traitement est spécial pour les livres, ils sont conservés
-   *      dans l'ordre de leur instanciation (création) dans Collection.books
-   */
+  /**
+    * Sélection la fiche précédente (sibling)
+    * 
+    * Notes
+    * -----
+    *   * Le traitement est spécial pour les livres, ils sont conservés
+    *     dans l'ordre de leur placement sur la table
+    */
   "select_previous":{
     get:function(){
       if(this.is_book)
