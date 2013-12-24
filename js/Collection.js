@@ -274,8 +274,12 @@ Object.defineProperties(Collection,{
     * table. Cette méthode permet de rationnaliser l'utilisation des flèches
     * pour passer d'un livre à l'autre.
     * Notes
+    *   * La méthode est appelée à chaque dispatch des fiches pour classer les
+    *     livre dans l'ordre de leur positionnement sur la table.
+    *     La méthode règle la propriété volatile `indice` du livre (0-start)
     *   * La méthode est aussi utilisée quand on choisit les livres rangés dans
-    *     les préférences.
+    *     les préférences (et de façon générale chaque fois que les préférences sont
+    *     enregistrées quand il faut ranger les livres).
     *   * Propriété complexe => appeler sans parenthèses
     *
     * @method sort_book_from_table

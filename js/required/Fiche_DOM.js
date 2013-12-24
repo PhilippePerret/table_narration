@@ -115,6 +115,9 @@ Object.defineProperties(Fiche.prototype,{
     *     cas seul la méthode pour suivre sera traitée.
     *   * La méthode est récursive, c'est-à-dire qu'elle ouvre tous les parents
     *     avant de s'ouvrir.
+    *   * Lorsque l'option "Livres rangés" est choisie dans les préférences de
+    *     l'application, la méthode utilise un comportement particulier pour ouvrir
+    *     le livre : elle le décale vers la droite de UI.GRID_X.
     *
     * @method open
     * @async
@@ -135,6 +138,11 @@ Object.defineProperties(Fiche.prototype,{
         if(this.is_not_openable) return this.rend_openable('open')
         this.opened = true // applique la class 'opened' à l'objet DOM
         if(this.parent && this.is_page) this.unrange
+        else if (this.is_book && App.preferences['gridbook'] == true)
+        {
+          if(App.preferences['dirgridbook'] == 'v') this.left += UI.GRID_X
+                                               else this.top += UI.GRID_Y
+        }
         this.positionne
       }
       if('function' == typeof this.pour_suivre_open)
@@ -147,11 +155,13 @@ Object.defineProperties(Fiche.prototype,{
   },
   /**
     * Ferme la fiche
-    * --------------
     *
     * Notes
+    * -----
     *   * Propriété complexe => appeler sans parenthèses
     *   * En mode fermé, le titre est disabled
+    *   * Si la préférences "Livre rangé" est true et que c'est un livre, on
+    *     doit le recaler à sa place.
     *
     * @method close
     */
@@ -162,6 +172,11 @@ Object.defineProperties(Fiche.prototype,{
       if(this.retourned) this.retourne
       this.opened = false
       if(this.is_page && this.parent) this.range
+      else if (this.is_book && App.preferences['gridbook'] == true)
+      {
+        if(App.preferences['dirgridbook'] == 'v') this.left -= UI.GRID_X
+                                             else this.top -= UI.GRID_Y
+      }
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },
