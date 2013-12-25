@@ -22,27 +22,33 @@
     // Note:  Les plus en haut seront les plus à gauche
   ?>
   <div id="buttons_right">
-    <!-- Pour mémoriser la configuration courante -->
+    <!-- Outil recherche -->
+    <img 
+      src="../lib/img/picto/zoom-fond-blanc.png"
+      onclick="$.proxy(Search.show_form, Search)()"
+      title="Effectuer une recherche dans la collection"
+      />
+    <!-- Outil Mémo configuration -->
     <img
       src="../lib/img/device/camera/camera-3.png"
       onclick="$.proxy(App.save_current_configuration, App, forcer=true)()"
       title="Enregistrer la configuration courante pour la prochaine ouverture"
       />
-    <!-- Pour forcer un backup -->
+    <!-- Outil backup -->
     <img
       id="btn_force_backup"
       src="../lib/img/picto/backup-fond-blanc.png"
       onclick="Collection.force_backup"
       title="Forcer l'enregistrement d'un backup complet de la collection courante"
       />
-    <!-- Pour afficher les préférences -->
+    <!-- Outil préférences -->
     <img
       id="btn_preferences"
       src="../lib/img/picto/preferences-fond-blanc.png"
       onclick="$.proxy(App.Prefs.show, App.Prefs)()"
       title="Affichage des préférences de l'application"
       />
-    <!-- Menu des collections courantes -->
+    <!-- Menu collections -->
     <select
       id="collections"
       onchange="$.proxy(Collection.choose, Collection, this.value)()"

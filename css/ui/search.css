@@ -1,0 +1,24 @@
+/* Le panneau principal */
+div#search {
+  position              : fixed;
+  top                   : 5em;
+  left                  : 10em;
+  background-color      : #ECECEC;
+  border                : 2px solid #666666;
+  z-index               : 5000;
+  width                 : 500px;
+}
+/* Les deux panneaux de recherche et de résultat de la recherche */
+div.panneau_search {
+  padding               : 20px;
+}
+
+div.panneau_search div.fields {
+  height                : 200px;
+  overflow              : auto;
+}
+
+div#search_form input#search_text {
+  font-size             : inherit;
+  width                 : 96%;
+}
