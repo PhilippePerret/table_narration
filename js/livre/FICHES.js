@@ -58,7 +58,11 @@ window.FICHES = {
     {value:8, title:"À confirmer"},
     {value:9, title:"B.A.T"}
   ],
-  
+  /**
+    * Indique si le menu développement a été fabriqué
+    * @property {Boolean} menu_development_ready
+    */
+  menu_development_ready:false, 
   /**
     * Données pour les paramètres des fiches (verso)
     * Notes
@@ -687,50 +691,7 @@ window.FICHES = {
     if( ! this.current_text_field ) return false
     return this.current_text_field[0].id == $(obj)[0].id
   },
-  
-  // /*
-  //  *  Méthode appelée quand on focuse/blure dans n'importe quel champ de
-  //  *  saisie de la fiche
-  //  *  
-  //  */
-  // onfocus_textfield:function(ifiche, evt)
-  // {
-  //   /*
-  //   - on sélectionne la fiche
-  //   - on change l'aspect du champ ('focused')
-  //   - on sélectionne son texte
-  //   - on met le champ courant à ce champ (current_text_field)
-  //   - on change de gestion d'évènement keypress
-  //   - on bloque les click sur le champ
-  //    */
-  //   console.warn("La méthode FICHES.onfocus_textfield doit devenir obsolète")
-  //   var idm = "FICHES.onfocus_textfield(ifiche:"+ifiche.type_id+")"
-  //   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-  //   ifiche.select
-  //   var target = $(evt.currentTarget)
-  //   target.addClass('focused')
-  //   target.select()
-  //   this.current_text_field = target // complex
-  //   window.onkeypress = window.keypress_when_fiche_selected_in_textfield
-  //   // On bloque les click dans le champ (pour empêcher la déselection
-  //   // qui remet le onkeypress à rien)
-  //   this.current_text_field.bind('click', function(evt){evt.stopPropagation();return true})
-  //   dlog("<- "+idm, DB_FCT_ENTER | DB_CURRENT)
-  // },
-  // onblur_textfield:function(ifiche, evt)
-  // {
-  //   console.warn("La méthode FICHES.onblur_textfield doit devenir obsolète")
-  //   var idm = "FICHES.onblur_textfield(ifiche:"+ifiche.type_id+")"
-  //   dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
-  //   $(evt.target).removeClass('focused')
-  //   if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
-  //   if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
-  //   else window.onkeypress = keypress_when_no_selection_no_edition
-  //   this.current_text_field.unbind('click', function(evt){evt.stopPropagation();return true})
-  //   this.current_text_field = null // complex
-  //   dlog("<- "+idm, DB_FCT_ENTER)
-  // },
-  
+
   /*
    *  Méthode qui change la sélection courante
    *  ----------------------------------------
@@ -771,6 +732,38 @@ Object.defineProperties(FICHES,{
       this.last_id    = -1
       this.selecteds  = {}
       $('section#table').html('')
+    }
+  },
+  
+  /**
+    * Construit le menu de développement qui sera placé au verso des fiches
+    * retournées
+    * Notes
+    *   * Un seul select est construit, qui est passé de fiche en fiche
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method build_menu_development
+    */
+  "build_menu_development":{
+    get:function(){
+      $('body').append(this.html_menu_development)
+      this.menu_development_ready = true
+    }
+  },
+  /** Retourne le code HTML du menu de développement
+    * @property {String} html_menu_development
+    */
+  "html_menu_development":{
+    get:function(){
+      var c = ""
+      c += '<div id="divuniq_menu_development">' +
+            '<span class="libelle">Niveau de développement </span>' +
+            '<select id="fiche_option-dev" onchange="">';
+      c += L(this.DATA_DEV).collect(function(ddev){
+        return '<option value="'+ddev.value+'">'+ddev.title+'</option>'
+      }).join("")
+      c += '</select></div>'
+      return c
     }
   },
   

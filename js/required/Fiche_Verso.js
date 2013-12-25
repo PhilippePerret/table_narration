@@ -56,10 +56,29 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       if(!this.verso_ready) this.prepare_verso
       this.set_titre_verso
+      this.set_menu_developpement
       if(undefined != this.after_regle_verso) this.after_regle_verso
     }
   },
 
+  /**
+    * Insert et règle le menu développement de la fiche
+    * Notes
+    *   * Le menu développement n'existe qu'en un seul exemplaire et passe
+    *     d'une fiche à l'autre lorsqu'elle est retournée.
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method set_menu_developpement
+    */
+  "set_menu_developpement":{
+    get:function(){
+      if(!FICHES.menu_development_ready) FICHES.build_menu_development
+      this.verso.find('.div_menu_development').append($('div#divuniq_menu_development'))
+      // On règle la valeur
+      var menu = $('select#fiche_option-dev')
+      menu.val(this.dev || 0)
+      menu.attr('onchange', "get_fiche("+this.id+").onchange_option('dev', this.value)")
+    }
+  },
   /*
    *  Au verso, le fielset contenant les paramètres
    *  
@@ -71,6 +90,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       return '<fieldset id="'+this.fieldset_parametres_id+'" class="parametres">' +
         '<legend>Paramètres</legend>'+
+        '<div class="div_menu_development"></div>' +
         (this.is_paragraph ? this.html_parametres_paragraph : '') +
         '</fieldset>'
     }
