@@ -513,24 +513,27 @@ UI.Input = {
   retreive_current:function(id, options)
   {
     if(undefined == options) options = {}
-    this.target = this.targets[id]
-    // Il faut reprendre la sélection dans this.target maintenant, car
-    // this.target sera modifié ci-dessous quand on ré-activera
-    // le champ the this.targets[id]
-    var selection = $.extend({}, this.target.selection)
-    if(!this.target) throw "La target d'identifiant "+id+" n'est pas définie…"
-    if(options.focus)
+    if(this.targets && this.targets[id])
     {
-      if(this.target.hasFiche)
+      this.target = this.targets[id]
+      // Il faut reprendre la sélection dans this.target maintenant, car
+      // this.target sera modifié ci-dessous quand on ré-activera
+      // le champ the this.targets[id]
+      var selection = $.extend({}, this.target.selection)
+      if(!this.target) throw "La target d'identifiant "+id+" n'est pas définie…"
+      if(options.focus)
       {
-        var fiche = get_fiche(this.target.fiche_id)
-        if(fiche.main_prop == this.target.property )
+        if(this.target.hasFiche)
         {
-          fiche.enable_main_field
+          var fiche = get_fiche(this.target.fiche_id)
+          if(fiche.main_prop == this.target.property )
+          {
+            fiche.enable_main_field
+          }
         }
+        // On remet la sélection précédente
+        Selection.select(this.target.dom, selection)
       }
-      // On remet la sélection précédente
-      Selection.select(this.target.dom, selection)
     }
     // On réactive les raccourcis
     window.onkeypress = this.old_window_onkeypress
