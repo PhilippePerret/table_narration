@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -236,7 +248,7 @@ window.FICHES = {
     * @final
     */
   datatype:{
-    &#x27;para&#x27;  : {level: 5 , defvalue: &quot;TEXTE_PARAGRAPHE&quot;, child_type:null,    parent_type:&#x27;page&#x27;, hname:&quot;paragraphe&quot;},
+    &#x27;para&#x27;  : {level: 5 , defvalue: &quot;TEXTE_PARAGRAPHE&quot;, child_type:null,    parent_type:&#x27;page&#x27;, hname: &quot;paragraphe&quot;},
     &#x27;page&#x27;  : {level: 10, defvalue: &quot;TITRE_PAGE&quot;,       child_type:&#x27;para&#x27;,  parent_type:&#x27;chap&#x27;, hname: &quot;page&quot;},
     &#x27;chap&#x27;  : {level: 15, defvalue: &quot;TITRE_CHAPITRE&quot;,   child_type:&#x27;page&#x27;,  parent_type:&#x27;book&#x27;, hname: &quot;chapitre&quot;},
     &#x27;book&#x27;  : {level: 20, defvalue: &quot;TITRE_LIVRE&quot;,      child_type:&#x27;chap&#x27;,  parent_type:null,   hname: &quot;livre&quot;}
@@ -540,6 +552,10 @@ window.FICHES = {
       if(!instance.obj) instance.create
     })
     
+    // Réglage de l&#x27;indice des livres (en fonction de leur positionnement
+    // sur la table)
+    Collection.sort_book_from_table
+    
     // Rangement des enfants (toujours - ils seront &quot;dérangés&quot; ensuite
     // si la configuration courante le nécessite)
     L(instances).each(function(instance){
@@ -771,28 +787,29 @@ window.FICHES = {
     }
   },
   
-  /*
-   *  Crée entièrement une nouvelle fiche à partir des +data+
-   *  transmises.
-   *
-   *  NOTES
-   *  -----
-   *    @ Il s&#x27;agit d&#x27;une toute nouvelle fiche, jamais d&#x27;une fiche
-   *      existente.
-   *    @ Pour le moment, la fiche n&#x27;est pas marquée modifiée.
-   *  
-   *  @param  data    {Hash} Les données pour la nouvelle fiche
-   *  @param  options {Hash} Les options.
-   *                    focus_titre   Si TRUE, on passe le titre en édition
-   *                    focus_texte   Si TRUE, on passe le texte en édition (même chose que pour
-   *                                  focus_titre, mais pour un paragraphe)
-   *                    select        Si TRUE, on sélectionne la fiche
-   *                    after_fiche   Si défini, c&#x27;est la fiche après laquelle on doit
-   *                                  placer la nouvelle fiche.
-   *                    before_fiche  Idem, mais en fournissant la fiche après.
-   *
-   *  @return La nouvelle fiche créée
-   */
+  /**
+    * Crée entièrement une nouvelle fiche à partir des +data+
+    * transmises.
+    *
+    * NOTES
+    * -----
+    *   * Il s&#x27;agit d&#x27;une toute nouvelle fiche, jamais d&#x27;une fiche
+    *     existente.
+    *   * Pour le moment, la fiche n&#x27;est pas marquée modifiée.
+    *
+    * @method full_create
+    * @param  {Object} data Les données pour la nouvelle fiche
+    * @param  {Object|Null} options   Les options pour la création
+    *   @param {Boolean} options.focus_titre  Si TRUE, on passe le titre en édition
+    *   @param {Boolean} options.focus_texte  Si TRUE, on passe le texte en édition (même chose que pour
+    *                                         focus_titre, mais pour un paragraphe)
+    *   @param {Boolean} options.select       Si TRUE, on sélectionne la fiche
+    *   @param {Fiche}  options.after_fiche   Si défini, c&#x27;est la fiche après laquelle on doit
+    *                                         placer la nouvelle fiche.
+    *   @param {Boolean} options.before_fiche Idem, mais en fournissant la fiche après.
+    *
+    * @return {Fiche} La nouvelle fiche créée
+    */
   full_create:function(data, options)
   {
     dlog(&quot;---&gt; FICHES.full_create&quot;, DB_FCT_ENTER)

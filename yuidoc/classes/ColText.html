@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -266,6 +278,13 @@ avant de l&#39;afficher.</p>
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_traite_code_by_ptype">traite_code_by_ptype</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -361,6 +380,13 @@ avant de l&#39;afficher.</p>
 
     <div class="description">
         <p>Met en forme le texte +code+ pour son affichage humain</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La méthode peut devenir asynchrone lorsqu&#39;il s&#39;agit du texte
+d&#39;un paragraphe dont le ptype nécessite l&#39;interprétation d&#39;un code
+dans un langage autre que javascript ou que c&#39;est un fichier à
+charger.</li>
+</ul>
 
     </div>
 
@@ -395,7 +421,8 @@ avant de l&#39;afficher.</p>
                     
 
                     <div class="param-description">
-                        <p>Pour les références, on a besoin de la cible</p>
+                        <p>Pour les références, ainsi que pour les corrections
+                          suivant le ptype du paragraphe, on a besoin de la cible</p>
 
                     </div>
 
@@ -434,6 +461,101 @@ avant de l&#39;afficher.</p>
 
             </div>
         </div>
+    
+</div>
+
+                
+                    <div id="method_traite_code_by_ptype" class="method item">
+    <h3 class="name"><code>traite_code_by_ptype</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ipara</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag async">async</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_col_text.js.html#l116"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;col_text.js:116</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Traitement du code d&#39;un paragraphe dont le ptype n&#39;est pas &#39;text&#39;
+Notes</p>
+<ul>
+<li>La méthode est asynchrone seulement pour les ptype(s) &#39;file&#39; et &#39;fico&#39;</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ipara</code>
+                        <span class="type"><a href="../classes/Paragraph.html" class="crosslink">Paragraph</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;instance du paragraphe</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
     
 </div>
 

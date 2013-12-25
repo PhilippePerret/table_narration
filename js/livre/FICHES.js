@@ -35,6 +35,31 @@ window.FICHES = {
     },
 
   /**
+    * Données pour le niveau de développement des fiches
+    * Notes
+    *   * Ne pas changer le nom des attributs 'value' et 'title' qui servent à
+    *     construire des menus avec UI.Html.select
+    *   * C'est un array. Pour récupérer une valeur, il suffit de faire :
+    *     FICHES.DATA_DEV[&lt;niveau de développement de la fiche>]
+    *
+    * @property {Array} DATA_DEV
+    * @static
+    * @final
+    */
+  DATA_DEV:[
+    {value:0, title:"Simple création"},
+    {value:1, title:"Ébauche"},
+    {value:2, title:"1ère version"},
+    {value:3, title:"2e version"},
+    {value:4, title:"3e version"},
+    {value:5, title:"Version aboutie"},
+    {value:6, title:"Relue et corrigée"},
+    {value:7, title:"À finaliser"},
+    {value:8, title:"À confirmer"},
+    {value:9, title:"B.A.T"}
+  ],
+  
+  /**
     * Données pour les paramètres des fiches (verso)
     * Notes
     * -----
@@ -377,8 +402,9 @@ window.FICHES = {
     *
     * Notes
     * -----
-    *   * Cette fonction est appelée principalement un clic sur une référene
-    *     dans le texte. La fiche peut-être chargée ou non, et d'un type indifférent.
+    *   * Cette fonction est appelée principalement un clic sur une référence
+    *     dans le texte ou à partir du listing des résultats trouvés lors d'une
+    *     recherche. La fiche peut-être chargée ou non, et d'un type indifférent.
     *     La méthode s'arrange dans tous les cas pour la montrer. Ce qui consiste, 
     *     suivant son type, à :
     *       * "highlighter" un livre (clignotement)

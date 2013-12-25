@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -237,6 +249,43 @@ Object.defineProperties(String.prototype, {
   &quot;formate&quot;:{
     value:function(cible){
       return ColText.formate(this.toString(), cible)
+    }
+  },
+  
+  
+  /**
+    * Formate une balise (tag) HTML en fonction des attributs transmis
+    * Notes
+    *   * La méthode n&#x27;est pas très pertinente en mode simple, mais peut le devenir
+    *     lorsque les attributs sont définis dynamiquement.
+    *   * La méthode ne retourne QUE l&#x27;ouverture de la balise, pas sa fermeture,
+    *     sauf bien entendu quand il s&#x27;agit d&#x27;une fiche sans fermeture (img, input)
+    *   * Si une value est NULL ou FALSE, elle est passée. Donc, pour mettre un
+    *     null ou un false dans un champ, il faut le donner en string : &quot;null&quot; ou
+    *     &quot;false&quot;.
+    *
+    * @method to_tag
+    * @param  {Object} attrs    Attributs à placer
+    * @return {String} La balise d&#x27;ouverture formatée
+    * @example
+    *   menu = &quot;select&quot;.to_tag({id:&quot;monId&quot;, onclick:&quot;clean()&quot;})
+    *   //=&gt;   &lt;select id=&quot;monId&quot; onclick=&quot;clean()&quot;&gt;
+    */
+  &quot;to_tag&quot;:{
+    value:function(attrs){
+      var this_str = this.toString()
+      code = &quot;&lt;&quot; + this_str
+      for(attr in attrs)
+      {
+        if(false == attrs.hasOwnProperty(attr)) continue
+        if(!attrs[attr]) continue
+        code += &#x27; &#x27; + attr + &#x27;=&quot;&#x27;+attrs[attr]+&#x27;&quot;&#x27;
+      }
+      if(this_str == &#x27;img&#x27; || this_str == &#x27;input&#x27;)
+        code += &#x27; /&gt;&#x27;
+      else code += &#x27;&gt;&#x27;
+      
+      return code
     }
   }
   

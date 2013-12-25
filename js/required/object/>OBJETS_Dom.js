@@ -109,12 +109,8 @@ OBJETS.Dom = {
     else this.panneau.show()
         
     // Mémoriser le champ courant s'il existe
-    this.current_textfield = UI.Input.memorize_current({blur:true})
+    this.current_textfield = UI.Input.memorize_current({blur:true, keypress:null})
 
-    // Pour le moment :
-    this.old_window_onkeypress = window.onkeypress
-    window.onkeypress = null
-    
     this.set_focus_on('onglets')
   },
   
@@ -711,10 +707,12 @@ OBJETS_Dom_defined_properties = {
       for(opt in this.OBJS.OPTIONS)
       {
         this.options_balise[opt] = this.OBJS.OPTIONS[opt].valdef
-        id   = this.prefix+"option-"+opt
-        cbs += '<input type="checkbox" id="'+id+'" ' +
-                'onchange="$.proxy('+this.NAME+'.onchange_option, '+this.NAME+', this)()" />' +
-                '<label for="'+id+'">'+ this.OBJS.OPTIONS[opt].hname +'</label>' ;
+        id   = 
+        cbs += UI.Html.checkbox({
+          id:this.prefix+"option-"+opt, 
+          label:this.OBJS.OPTIONS[opt].hname,
+          onchange:"$.proxy('+this.NAME+'.onchange_option, '+this.NAME+', this)()"
+        })
       }
       var aspect_titre = '<span id="'+this.prefix+'aspect_balise" class="item_aspect_balise">Titre original</span>'
       return '<div id="'+this.id_panneau+'_options" class="focusable main_panneau_options" tabindex="2">' + aspect_titre + cbs + '</div>'

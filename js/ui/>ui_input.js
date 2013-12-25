@@ -1,5 +1,5 @@
 /**
- * @module    UI
+ * @module    UI_Input
  * @submodule Input
  *
  **/
@@ -461,12 +461,22 @@ UI.Input = {
     * @param  {Object} options  Liste des options à prendre en compte. Pour le moment,
     *                           ces options se résument à `blur` qui, si true, blur
     *                           le champ courant.
+    *   @param  {Boolean}       options.blur    Si True, on blur le champ courant
+    *   @param  {Function|Null} options.keypress Le nouveau gestion d'évènements
+    *                           keypress (null si aucun), en mémorisant le gestionnaire
+    *                           courant qui sera automatiquement remis par retreive_current
     * @return {Number} id Identifiant (dans `targets`) du champ mémorisé.
     *
     */
   memorize_current:function(options)
   {
+    dlog("options:");dlog(options)
     if(undefined == options) options = {}
+
+    // On désactive les raccourcis courants
+    this.old_window_onkeypress = window.onkeypress
+    window.onkeypress = options.keypress
+
     if(!this.target) return null // pas d'édition courante
     var id = Time.now()
     if(!this.targets) this.targets = {}
@@ -522,6 +532,9 @@ UI.Input = {
       // On remet la sélection précédente
       Selection.select(this.target.dom, selection)
     }
+    // On réactive les raccourcis
+    window.onkeypress = this.old_window_onkeypress
+    delete this.old_window_onkeypress
   },
   
   /*

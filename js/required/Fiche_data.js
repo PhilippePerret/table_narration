@@ -23,6 +23,19 @@ $.extend(Fiche.prototype,{
     FICHES.load([{id:this.id, type:this.type}])
   },
   
+  /**
+    * Méthode appelée quand on change une option (verso)
+    * @method onchange_option
+    * @param  {String}  prop   La propriété à définir
+    * @param  {Any}     value La valeur à lui donner
+    */
+  onchange_option:function(prop, value)
+  {
+    if(this[prop] == value) return
+    this[prop] = value
+    this.modified = true
+  },
+  
   /*
    *  Place la fiche courante APRÈS la fiche +bfiche+ {Fiche}
    *  
@@ -100,7 +113,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       data = {
         id:this.id, type:this.type, titre:this.titre,
-        top:this.top, left:this.left
+        top:this.top, left:this.left, dev:(this.dev || 0)
       }
       if(this.deleted)      data.deleted = true
       if(this.not_printed)  data.not_printed = true
@@ -405,7 +418,8 @@ Fiche.prototype.dispatch = function(data){
     case 'ranged':
       prop = '_' + prop
       break
-    case 'id': 
+    case 'id':
+    case 'dev': // niveau de développement
       val = parseInt(val, 10); 
       break;
     case 'type':

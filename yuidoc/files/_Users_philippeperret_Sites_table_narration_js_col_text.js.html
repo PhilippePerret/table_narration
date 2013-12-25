@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -236,10 +248,17 @@ window.ColText = {
   /**
     * Met en forme le texte +code+ pour son affichage humain
     *
+    * Notes
+    * -----
+    *   * La méthode peut devenir asynchrone lorsqu&#x27;il s&#x27;agit du texte
+    *     d&#x27;un paragraphe dont le ptype nécessite l&#x27;interprétation d&#x27;un code
+    *     dans un langage autre que javascript ou que c&#x27;est un fichier à
+    *     charger.
     *
     * @method formate
     * @param  {String}  code    Le texte à formater
-    * @param  {Fiche}   cible   Pour les références, on a besoin de la cible
+    * @param  {Fiche}   cible   Pour les références, ainsi que pour les corrections
+    *                           suivant le ptype du paragraphe, on a besoin de la cible
     * @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
     *                   ou un aperçu.
     *
@@ -252,6 +271,10 @@ window.ColText = {
   formate:function(code, cible)
   {
     this.code = code
+    if(cible.is_paragraph &amp;&amp; cible.ptype != &#x27;text&#x27;)
+    {
+      this.traite_code_by_ptype(cible)
+    }
     if(code.indexOf(&#x27;[film:&#x27;)) this.traite_balises_films()
     if(code.indexOf(&#x27;[mot:]&#x27;)) this.traite_balises_mots()
     if(code.indexOf(&#x27;[ref:]&#x27;)) this.traite_balises_refs(cible)
@@ -307,8 +330,59 @@ window.ColText = {
        *  les données complètes et qu&#x27;elles ne sont pas encore chargées.
        */
     })
-  }
+  },
   
+  
+  /**
+    * Traitement du code d&#x27;un paragraphe dont le ptype n&#x27;est pas &#x27;text&#x27;
+    * Notes
+    *   * La méthode est asynchrone seulement pour les ptype(s) &#x27;file&#x27; et &#x27;fico&#x27;
+    * @method traite_code_by_ptype
+    * @async
+    * @param  {Paragraph} ipara   L&#x27;instance du paragraphe
+    */
+  traite_code_by_ptype:function(ipara)
+  {
+    dlog(&quot;Paragraphe &quot; + ipara.type_id + &quot; traité comme &quot;+ipara.ptype)
+    var c = this.code
+    switch(ipara.ptype)
+    {
+    case &#x27;text&#x27;:
+      break
+    case &#x27;list&#x27;:
+      c = L(c.split(&quot;\n&quot;)).collect(function(line){return &#x27;&lt;li&gt;&#x27;+line+&#x27;&lt;/li&gt;&#x27;}).join(&#x27;&#x27;)
+      c = &#x27;&lt;ul&gt;&#x27;+c+&#x27;&lt;/ul&gt;&#x27;
+      break
+    case &#x27;enum&#x27;:
+      c = L(c.split(&quot;\n&quot;)).collect(function(line){return &#x27;&lt;li&gt;&#x27;+line+&#x27;&lt;/li&gt;&#x27;}).join(&#x27;&#x27;)
+      c = &#x27;&lt;ol&gt;&#x27;+c+&#x27;&lt;/ol&gt;&#x27;
+      break
+    case &#x27;desc&#x27;:
+      // Liste de description &quot;mot::description\nmot::description&quot;
+      var desc, mot ;
+      c = L(c.split(&quot;\n&quot;)).collect(function(line){
+        desc = line.split(&#x27;::&#x27;)
+        return &#x27;&lt;dt&gt;&#x27;+desc.shift()+&#x27;&lt;/dt&gt;&lt;dd&gt;&#x27;+desc.join(&#x27;::&#x27;)+&#x27;&lt;/dd&gt;&#x27;
+      }).join(&#x27;&#x27;)
+      c = &#x27;&lt;dl&gt;&#x27;+c+&#x27;&lt;/dl&gt;&#x27;
+      break
+    case &#x27;code&#x27;:
+      try
+      {
+        eval(&quot;c=function(){&quot;+c+&quot;}()&quot;)
+      }
+      catch(err)
+      {
+        F.error(err+LOCALE.paragraph.error[&#x27;code must be valid&#x27;])
+      }
+      break
+    case &#x27;file&#x27;:
+      break
+    case &#x27;fico&#x27;:
+      break
+    }
+    this.code = c
+  }
   
   
 }

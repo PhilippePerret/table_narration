@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -279,8 +291,18 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       return &#x27;&lt;fieldset id=&quot;&#x27;+this.fieldset_parametres_id+&#x27;&quot; class=&quot;parametres&quot;&gt;&#x27; +
         &#x27;&lt;legend&gt;Paramètres&lt;/legend&gt;&#x27;+
-        (this.is_paragraph ? &#x27;&lt;div class=&quot;div_menu_styles&quot;&gt;&lt;/div&gt;&#x27; : &#x27;&#x27;) +
+        (this.is_paragraph ? this.html_parametres_paragraph : &#x27;&#x27;) +
         &#x27;&lt;/fieldset&gt;&#x27;
+    }
+  },
+  /**
+    * Code HTML des paramètres propres aux paragraphes
+    * @property {String} html_parametres_paragraph
+    */
+  &quot;html_parametres_paragraph&quot;:{
+    get:function(){
+      return  &#x27;&lt;div class=&quot;div_menu_styles&quot;&gt;&lt;/div&gt;&#x27;+
+              &#x27;&lt;div class=&quot;div_menu_ptypes&quot;&gt;&lt;/div&gt;&#x27;
     }
   },
   /**

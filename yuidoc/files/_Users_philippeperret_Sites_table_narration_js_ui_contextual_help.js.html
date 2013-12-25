@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -304,11 +316,15 @@ Object.defineProperties(ContextualHelp, {
       var editing = $(fi.div_main_prop_jid).length == 0
       
       // === Construire l&#x27;aide contextuelle ===
-      aide += this.info_current_fiche
+      // aide += this.info_current_fiche
       if(editing){
         aide += this[&#x27;return_save_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
         aide += this.raccourcis_textuels
-        if( ispara ) aide += this[&#x27;shortcut_paragraph&#x27;]
+        if( ispara )
+        {
+          aide += this[&#x27;shortcut_paragraph&#x27;]
+          if(fi.ptype != &#x27;text&#x27;) aide += this[&#x27;maj_return_new_item&#x27;]
+        } 
         if(App.clipboard) aide += this[&#x27;cmd_v_coller_ref&#x27;]
       }
       else 
@@ -323,7 +339,7 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
         aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
-        if(fi.is_book || fi.book) aide += this.cmd_p_publish
+        if(fi.is_book) aide += this.cmd_p_publish
         aide += this[&#x27;r_reference&#x27;]
       }
         
@@ -438,9 +454,17 @@ Object.defineProperties(ContextualHelp, {
     if(undefined == this._k_tab) this._k_tab = image(&#x27;clavier/K_Tab.png&#x27;)
     return this._k_tab
   }},
+  &quot;k_maj&quot;:{get:function(){
+    if(undefined == this._k_maj) this._k_maj = image(&#x27;clavier/K_Maj.png&#x27;)
+    return this._k_maj
+  }},
   &quot;k_cmd&quot;:{get:function(){
     if(undefined == this._k_cmd) this._k_cmd = image(&#x27;clavier/K_Command.png&#x27;)
     return this._k_cmd
+  }},
+  &quot;k_ctrl&quot;:{get:function(){
+    if(undefined == this._k_ctrl) this._k_ctrl = image(&#x27;clavier/K_Control.png&#x27;)
+    return this._k_ctrl
   }},
   &quot;k_space&quot;:{get:function(){
     if(undefined == this._k_space) this._k_space = image(&#x27;clavier/K_Espace.png&#x27;)
@@ -476,9 +500,11 @@ $.extend(CH, {
   &#x27;return_save_texte&#x27;   : CH.del + CH.k_return+&quot; Enregistre texte&quot;,
   &#x27;show_recto&#x27;          : CH.del + CH.k_tab+&quot; Recto&quot;,
   &#x27;show_verso&#x27;          : CH.del + CH.k_tab+&quot; Verso&quot;,
-  &#x27;cmd_p_publish&#x27;       : CH.del + CH.k_cmd+CH.k_p+&quot; Publier&quot;,
+  &#x27;cmd_p_publish&#x27;       : CH.del + CH.k_cmd+CH.k_p+&quot; Publier&quot;+
+                          &quot; (+ &quot;+CH.k_ctrl+&quot; seulement TdM)&quot;,
   &#x27;r_reference&#x27;         : CH.del + CH.k_r+&quot; -&gt; Référence&quot;,
-  &#x27;cmd_v_coller_ref&#x27;    : CH.del + CH.k_cmd+CH.k_v+&quot; Coller réf.&quot;
+  &#x27;cmd_v_coller_ref&#x27;    : CH.del + CH.k_cmd+CH.k_v+&quot; Coller réf.&quot;,
+  &#x27;maj_return_new_item&#x27; : CH.del + CH.k_maj+CH.k_return+&quot; Nouvel item&quot;
   
 })
 ContextualHelp.AIDES = {

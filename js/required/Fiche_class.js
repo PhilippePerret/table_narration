@@ -26,6 +26,7 @@ window.Fiche = function(data)
   this.id         = null
   this.created_at = null
   this.type       = null      // le type, entre 'book', 'page', 'chap', 'para'
+  this.dev        = 0         // Niveau de développement
   
   // --- State ---
   // (ci-dessous les valeurs par défaut)

@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -220,7 +232,7 @@ window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
   data.type   = &#x27;para&#x27;
-  data.ptype  = null
+  data.ptype  = &#x27;text&#x27;
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
@@ -251,7 +263,6 @@ Object.defineProperties(Paragraph.prototype,{
     set:function(ptype){
       if(this._ptype == ptype) return
       this._ptype = ptype
-      this.modified = true
     }
   },
   
@@ -320,15 +331,45 @@ Object.defineProperties(Paragraph.prototype,{
    */
   &quot;after_regle_verso&quot;:{
     get:function(){
-      if(PARAGRAPHS.html_menu_styles == null) PARAGRAPHS.build_menu_styles
       this.append_menu_styles
+      this.append_menu_ptypes
       this.set_style
     }
   },
 
   /* ---------------------------------------------------------------------
+   *
+   *  Pour le &#x60;ptype&#x27; du paragraphe
+   *
+   * ---------------------------------------------------------------------*/
+  /**
+    * DOM Element du menu ptypes
+    * Notes
+    *   * Le menu des &quot;ptypes&quot; est un select unique, qui se déplace de fiches
+    *     en fiche quand on les retourne. La propriété présente renvoie donc
+    *     le menu mais seulement quand il se trouve dans son verso.
+    * @property {jQuerySet} menu_ptypes
+    */
+  &quot;menu_ptypes&quot;:{get:function(){return $(this.verso.find(&#x27;select#menu_ptypes&#x27;))}},
+  /**
+    * Déplace le menu des ptypes dans ce paragraphe
+    *
+    * @method append_menu_ptypes
+    */
+  &quot;append_menu_ptypes&quot;:{
+    get:function(){
+      if(!PARAGRAPHS.menu_ptypes_ready) PARAGRAPHS.prepare_menu_ptypes
+      else $(&#x27;select#menu_ptypes&#x27;).unbind(&#x27;change&#x27;)
+      this.verso.find(&#x27;div.div_menu_ptypes&#x27;).append($(&#x27;select#menu_ptypes&#x27;))
+      this.menu_ptypes.bind(&#x27;change&#x27;, $.proxy(this.onchange_ptype, this))
+      this.menu_ptypes.val(this.ptype)
+    }
+  },
+  /* ---------------------------------------------------------------------
+   *
    *  Pour le style du paragraphe
-   */
+   *
+   --------------------------------------------------------------------- */
   /* Retourne l&#x27;objet DOM jQuery du menu des styles */
   &quot;menu_styles&quot;:{get:function(){return $(this.menu_styles_jid)}},
   /* Identifiant du menu */
@@ -340,6 +381,7 @@ Object.defineProperties(Paragraph.prototype,{
    */
   &quot;append_menu_styles&quot;:{
     get:function(){
+      if(!PARAGRAPHS.html_menu_styles) PARAGRAPHS.build_menu_styles
       this.verso.find(&#x27;.div_menu_styles&#x27;).append($(&#x27;div#divuniq_menu_styles&#x27;))
     }
   },
@@ -384,19 +426,40 @@ Object.defineProperties(Paragraph.prototype,{
   
 })
 
-/*
- *  Méthode appelée quand on applique les styles choisis pour
- *  le paragraphe.
- *  
- */
-Paragraph.prototype.on_change_styles = function(selectors){
-  var idm = &quot;Paragraph.on_change_styles(&quot;+selectors.join(&#x27;, &#x27;)+&quot;) [&quot;+this.type_id+&quot;]&quot;
-  dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
-  if(selectors.length == 0) selectors = null
-  this.style    = selectors
-  this.modified = true
-  dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
-}
+$.extend(Paragraph.prototype,{
+  /**
+    * Méthode appelée quand on modifie le ptype du paragraphe
+    *
+    * @method onchange_ptype
+    * @param  {String} ptype  Le ptype choisi.
+    *
+    */
+  onchange_ptype:function()
+  {
+    var new_ptype = this.menu_ptypes.val()
+    if(new_ptype == this.ptype) return
+    this.ptype = new_ptype
+    this.update_display
+    this.modified = true
+  },
+
+  /**
+    * Méthode appelée quand on applique les styles choisis pour
+    * le paragraphe.
+    *
+    * @method on_change_styles
+    * @param  {Array} selectors   Liste des styles choisis
+    */
+  on_change_styles:function(selectors){
+    var idm = &quot;Paragraph.on_change_styles(&quot;+selectors.join(&#x27;, &#x27;)+&quot;) [&quot;+this.type_id+&quot;]&quot;
+    dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
+    if(selectors.length == 0) selectors = null
+    this.style    = selectors
+    this.modified = true
+    dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
+  }
+
+})
 
 
     </pre>

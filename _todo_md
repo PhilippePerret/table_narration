@@ -3,8 +3,17 @@ IMPLÉMENTER
 
 - Bouton pour faire le uploading sur Narration (voir si ça n'est pas déjà ce qui se
   fait quand je demande un backup).
+- Show fiche quand c'est un paragraphe :
+  > scroller jusqu'à lui
+  > l'highlighter aussi 
 
-  
+RECHERCHE
+  - sélectionner tous les types de fiche à l'ouverture du panneau recherche
+
+- Implémenter au verso le niveau de développement de la fiche
+  > Utiliser FICHES.DATA_DEV pour construire le menu
+  > utiliser dans le select la méthode get_fiche(...).onchange_option('dev', this.value)
+  > 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
   - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico

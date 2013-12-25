@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -355,11 +367,32 @@ $.extend(Collection, {
     if(!MODE_TEST) this.backup
   },
   
+  /**
+    * Retour du backup forcé
+    * Notes 
+    *   * Au cours de ce backup j&#x27;ai essayé aussi de faire une sauvegarde en ligne
+    *     lorsque c&#x27;est la série narration, mais ça ne fonctionne pas encore.
+    * @method retour_force_backup
+    * @param  {Object}  rajax   Objet retourné par la requête Ajax
+    *   @param  {Boolean} rajax.ok        True si tout s&#x27;est bien passé
+    *   @param  {String}  rajax.message   Le message retourné (l&#x27;erreur en cas d&#x27;erreur)
+    *   @param  {Boolean} rajax.backup_narration  True si le backup sur icare a été tenté
+    *   @param  {Number}  rajax.backup_narration_exit   L&#x27;exit de la commande. Si 0 =&gt; OK
+    */
   // Noter que ce retour n&#x27;est utilisé que lorsqu&#x27;on force un backup
   // différent du backup quotidien.
   retour_force_backup:function(rajax)
   {
-    if(rajax.ok) F.show(&quot;Backup done!&quot;, {keep:true})
+    if(rajax.ok)
+    {
+      var mess = &quot;Backup done!&quot;
+      if(rajax.backup_narration)
+      {
+        mess += &quot;\nUn backup sur Icare a été tenté.&quot;
+        mess += rajax.backup_narration_exit == 0 ? &quot;Il a réussi&quot; : &quot;Il n&#x27;a pas été possible.&quot;
+      }
+      F.show(mess, {keep:true})
+    } 
     else F.error(rajax.message)
   },
   
@@ -478,6 +511,31 @@ $.extend(Collection, {
 Object.defineProperties(Collection,{
   
   /**
+    * Classe les livres dans &#x60;this.books&#x60; suivant leur disposition sur la
+    * table. Cette méthode permet de rationnaliser l&#x27;utilisation des flèches
+    * pour passer d&#x27;un livre à l&#x27;autre.
+    * Notes
+    *   * La méthode est appelée à chaque dispatch des fiches pour classer les
+    *     livre dans l&#x27;ordre de leur positionnement sur la table.
+    *     La méthode règle la propriété volatile &#x60;indice&#x60; du livre (0-start)
+    *   * La méthode est aussi utilisée quand on choisit les livres rangés dans
+    *     les préférences (et de façon générale chaque fois que les préférences sont
+    *     enregistrées quand il faut ranger les livres).
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method sort_book_from_table
+    */
+  &quot;sort_book_from_table&quot;:{
+    get:function(){
+      this.books.sort(function(b1, b2){
+        if((b1.top||0) == (b2.top||0)) return (b1.left||0) - (b2.left||0)
+        else return (b1.top||0) - (b2.top||0)
+      })
+      var indice = 0
+      L(this.books).each(function(book){book.indice = indice ++})
+    }
+  },
+  /**
     * Efface complètement la collection courante (avant chargement d&#x27;une autre
     * collection)
     *
@@ -582,10 +640,13 @@ Object.defineProperties(Collection,{
     }
   },
   
-  /*
-   *  Chargement de la collection (normale ou test)
-   *  
-   */
+  /**
+    * Chargement de la collection (normale ou test)
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method load
+    * @async
+    */
   &quot;load&quot;:{
     get:function(){
       window.ready  = false
@@ -684,10 +745,11 @@ Object.defineProperties(Collection,{
     }
   },
   
-  /*
-   *  Marque la collection modifiée/non modifié
-   *    
-   */
+  /**
+    * Marque la collection modifiée/non modifié
+    * @property {Boolean} modified
+    * @default false
+    */
   &quot;modified&quot;:{
     get:function(){ return this._modified || false },
     set:function( modified ){
@@ -708,7 +770,7 @@ Object.defineProperties(Collection,{
     */
   &quot;backup&quot;:{
     get:function(){
-      Ajax.send({script:&#x27;collection/backup&#x27;},$.proxy)
+      Ajax.send({script:&#x27;collection/backup&#x27;})
     }
   },
   /**
@@ -729,12 +791,14 @@ Object.defineProperties(Collection,{
       else F.error( rajax.message )
     }
   },
-  /*
-   *  Force un nouveau backup (avec l&#x27;heure)
-   *  
-   *  Sauf en mode test
-   *
-   */
+  /**
+    * Force un nouveau backup (le fichier sera enregistré avec l&#x27;heure)
+    * Notes
+    *   * Sauf en mode test
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method force_backup
+    * @async
+    */
   &quot;force_backup&quot;:{
     get:function(){
       Ajax.send({script:&#x27;collection/backup&#x27;, force_backup:1}, $.proxy(this.retour_force_backup,this))

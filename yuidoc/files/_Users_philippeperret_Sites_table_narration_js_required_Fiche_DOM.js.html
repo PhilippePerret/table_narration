@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -297,7 +309,10 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
-  /* Retourne le DOM élément de la fiche */
+  /**
+    * DOM élément de la fiche 
+    * @property {HTMLDom} dom_obj
+    */
   &quot;dom_obj&quot;:{
     get:function(){
       if(undefined == this._dom_obj) this._dom_obj = this.obj[0]
@@ -320,6 +335,9 @@ Object.defineProperties(Fiche.prototype,{
     *     cas seul la méthode pour suivre sera traitée.
     *   * La méthode est récursive, c&#x27;est-à-dire qu&#x27;elle ouvre tous les parents
     *     avant de s&#x27;ouvrir.
+    *   * Lorsque l&#x27;option &quot;Livres rangés&quot; est choisie dans les préférences de
+    *     l&#x27;application, la méthode utilise un comportement particulier pour ouvrir
+    *     le livre : elle le décale vers la droite de UI.GRID_X.
     *
     * @method open
     * @async
@@ -340,6 +358,11 @@ Object.defineProperties(Fiche.prototype,{
         if(this.is_not_openable) return this.rend_openable(&#x27;open&#x27;)
         this.opened = true // applique la class &#x27;opened&#x27; à l&#x27;objet DOM
         if(this.parent &amp;&amp; this.is_page) this.unrange
+        else if (this.is_book &amp;&amp; App.preferences[&#x27;gridbook&#x27;] == true)
+        {
+          if(App.preferences[&#x27;dirgridbook&#x27;] == &#x27;v&#x27;) this.left += UI.GRID_X
+                                               else this.top += UI.GRID_Y
+        }
         this.positionne
       }
       if(&#x27;function&#x27; == typeof this.pour_suivre_open)
@@ -350,15 +373,18 @@ Object.defineProperties(Fiche.prototype,{
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
   },
-  /*
-   *  Ferme la fiche
-   *  --------------
-   *
-   *  NOTES
-   *  -----
-   *    # En mode fermé, le titre est disabled
-   *
-   */
+  /**
+    * Ferme la fiche
+    *
+    * Notes
+    * -----
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *   * En mode fermé, le titre est disabled
+    *   * Si la préférences &quot;Livre rangé&quot; est true et que c&#x27;est un livre, on
+    *     doit le recaler à sa place.
+    *
+    * @method close
+    */
   &quot;close&quot;:{
     get:function(){
       var idm = &quot;Fiche::close [&quot;+this.type_id+&quot;]&quot;
@@ -366,6 +392,11 @@ Object.defineProperties(Fiche.prototype,{
       if(this.retourned) this.retourne
       this.opened = false
       if(this.is_page &amp;&amp; this.parent) this.range
+      else if (this.is_book &amp;&amp; App.preferences[&#x27;gridbook&#x27;] == true)
+      {
+        if(App.preferences[&#x27;dirgridbook&#x27;] == &#x27;v&#x27;) this.left -= UI.GRID_X
+                                             else this.top -= UI.GRID_Y
+      }
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }  
   },
@@ -677,14 +708,14 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   
-  /*
-   *  Sélection la fiche précédente (sibling)
-   *  
-   *  NOTES
-   *  -----
-   *    = Le traitement est spécial pour les livres, ils sont conservés
-   *      dans l&#x27;ordre de leur instanciation (création) dans Collection.books
-   */
+  /**
+    * Sélection la fiche précédente (sibling)
+    * 
+    * Notes
+    * -----
+    *   * Le traitement est spécial pour les livres, ils sont conservés
+    *     dans l&#x27;ordre de leur placement sur la table
+    */
   &quot;select_previous&quot;:{
     get:function(){
       if(this.is_book)
@@ -820,9 +851,10 @@ Object.defineProperties(Fiche.prototype,{
   /** 
     * Retourne le champ principal (soit le DIV soit le champ de saisie suivant
     * le contexte) 
-    *  NOTES
-    *  -----
-    *  Pour forcer la définition, utiliser &#x60;this._main_field = null&#x27;
+    * Notes
+    *   * Pour forcer la définition, utiliser &#x60;this._main_field = null&#x27;
+    *   * La propriété se sert de &#x60;this.opened&#x60; pour savoir si on est en édition
+    *     ou non. Mais est-ce vraiment la bonne propriété à regarder ?…
     * @property {jQuerySet} main_field
     */
   &quot;main_field&quot;:{
@@ -969,6 +1001,7 @@ Object.defineProperties(Fiche.prototype,{
       this.select
       this.set_main_field_as_input
       UI.Input.bind( this.main_field ).select()
+      this.edited = true
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
   },
@@ -983,6 +1016,8 @@ Object.defineProperties(Fiche.prototype,{
       
       // On remplace le INPUT/TEXTAREA par un DIV
       this.set_main_field_as_div
+      
+      this.edited = false
       
       this.main_field.bind(&#x27;click&#x27;, $.proxy(FICHES.on_click_on_main_field, FICHES, this))
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)

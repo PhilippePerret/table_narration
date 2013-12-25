@@ -1,24 +1,50 @@
 /* Le panneau principal */
 div#search {
   position              : fixed;
-  top                   : 5em;
-  left                  : 10em;
+  top                   : 1em;
+  right                 : 1em;
   background-color      : #ECECEC;
   border                : 2px solid #666666;
   z-index               : 5000;
-  width                 : 500px;
+  width                 : 600px;
 }
 /* Les deux panneaux de recherche et de résultat de la recherche */
-div.panneau_search {
+div#search div.panneau_search {
   padding               : 20px;
+}
+div#search div.panneau_search fieldset {
+  margin-top            : 12px;
 }
 
 div.panneau_search div.fields {
-  height                : 200px;
+  height                : 300px;
   overflow              : auto;
 }
+div#search div.buttons { margin-top: 20px;}
 
 div#search_form input#search_text {
   font-size             : inherit;
   width                 : 96%;
+}
+
+/* ---------------------------------------------------------------------
+  * Pour afficher les résultats
+ */
+/* Les lignes de résultat */
+div#search div.result {
+  padding               : 2px 10px;
+}
+div#search div.result.bold { font-weight:bold;}
+
+/* le lien permettant de montrer la fiche */
+div#search div.result a {
+  background-color  : white;
+  padding           : 2px 12px;
+}
+/* Le détail des éléments trouvés */
+div#search div.result div.subfound {
+  margin-left     : 56px;
+}
+div#search div.result div.subfound span.match_found {
+  color           : blue;
 }

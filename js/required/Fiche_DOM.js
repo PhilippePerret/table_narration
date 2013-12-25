@@ -234,6 +234,8 @@ Object.defineProperties(Fiche.prototype,{
     *   * La méthode est principalement appelée quand on clique sur une référence
     *     dans un texte. Cela produit un appel à `FICHES.show` qui appelle la
     *     méthode `show` propre à chaque type de fiche.
+    *   * La méthode est aussi intensivement utilisée pour les recherches dans les
+    *     fiche, dans le listing de résultat.
     *   * Pour une page, la montrer consiste à l'ouvrir. Mais cette page peut ne pas
     *     être encore chargée, donc il faut s'assurer qu'elle puisse être ouverte
     *     en chargeant tous ses parents si elle en a.

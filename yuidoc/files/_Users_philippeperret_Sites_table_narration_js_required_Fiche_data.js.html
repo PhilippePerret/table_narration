@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -348,11 +360,29 @@ Object.defineProperties(Fiche.prototype,{
   },
   
   /**
+    * Le type humain de la fiche, par exemple &quot;livre&quot; pour &#x27;book&#x27;
+    * @property {String} human_type
+    */
+  &quot;human_type&quot;:{
+    get:function(){return FICHES.datatype[this.type].hname}
+  },
+  
+  /**
     * Méthode pratique, pour le débuggage, retournant &lt;type&gt;#&lt;id&gt; (p.e. &#x27;book#12&#x27;) 
     * @property {String} type_id
     */
   &quot;type_id&quot;:{
     get:function(){ return this.type + &#x27;#&#x27; + this.id}
+  },
+
+  /**
+    * Type d&#x27;un enfant de la fiche courante
+    * Notes
+    *   * C&#x27;est un raccourci de FICHES.datatype[type].child_type
+    * @property {String} child_type
+    */
+  &quot;child_type&quot;:{
+    get:function(){return FICHES.datatype[this.type].child_type}
   },
 
   /**
@@ -486,7 +516,9 @@ Object.defineProperties(Fiche.prototype,{
    *  la fiche sur la table
    */
   &quot;left&quot;:{
-    get:function(){ return this._left || null },
+    get:function(){ 
+      if(undefined == this._left) this._left = 0
+      return this._left },
     set:function(left){
       this._left = parseInt(left, 10)
       if( !this.ranged ) this.positionne
@@ -499,7 +531,9 @@ Object.defineProperties(Fiche.prototype,{
    *  
    */
   &quot;top&quot;:{
-    get:function(){ return this._top || null },
+    get:function(){ 
+      if(undefined == this._top) this._top = 0
+      return this._top },
     set:function(top){
       this._top = parseInt(top, 10)
       if( !this.ranged ) this.positionne
@@ -542,6 +576,19 @@ Object.defineProperties(Fiche.prototype,{
       else                  code = this.titre || FICHES.datatype[this.type].defvalue
       if(formate &amp;&amp; code != &quot;&quot;) code = ColText.formate( code, this )
       return code
+    }
+  },
+  
+  /**
+    * Actualise l&#x27;affiche de la fiche au niveau de son titre ou de son texte (quand
+    * c&#x27;est un paragraphe)
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method update_display
+    */
+  &quot;update_display&quot;:{
+    get:function(){
+      this.main_field.set(this.main_field_value(this.edited == false))
     }
   }
   

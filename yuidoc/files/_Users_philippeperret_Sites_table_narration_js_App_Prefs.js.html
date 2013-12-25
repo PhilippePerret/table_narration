@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -233,14 +245,30 @@ App.Prefs = {
   DATA:[
     /* L&#x27;id doit correspondre à celui dans App.preferences */
     {id:&#x27;general&#x27;,    type:&#x27;fieldset&#x27;,  legend:&quot;Générales&quot;},
-    {id:&#x27;autosave&#x27;,   type:&#x27;cb&#x27;,        label:&quot;Sauvegarde automatique&quot;},
-    {id:&#x27;saveconfig&#x27;, type:&#x27;cb&#x27;,        label:&quot;Sauver la configuration des fiches à chaque sauvegarde&quot;},
+    {id:&#x27;autosave&#x27;,   type:&#x27;cb&#x27;,        label:&quot;Sauvegarde automatique&quot;, indiv:true},
+    {id:&#x27;saveconfig&#x27;, type:&#x27;cb&#x27;,        label:&quot;Sauver la configuration des fiches à chaque sauvegarde&quot;, indiv:true},
     {id:&#x27;general&#x27;,    type:&#x27;/fieldset&#x27;},
     {id:&#x27;fiches&#x27;,     type:&#x27;fieldset&#x27;,  legend:&quot;Fiches&quot;},
     {id:&#x27;snap&#x27;,       type:&#x27;cb&#x27;,        label:&quot;Aligner les fiches sur la grille&quot;},
+    &#x27;&lt;div&gt;&#x27;,
+    {id:&#x27;gridbook&#x27;,   type:&#x27;cb&#x27;,        label:&quot;Livre rangés &quot; , onchange:&quot;$.proxy(App.Prefs.onchange_livre_ranged,App.Prefs,this.checked)()&quot;},
+    {id:&#x27;dirgridbook&#x27;,type:&#x27;select&#x27;, style:&quot;visibility:hidden;&quot;,
+      values:[{value:&quot;h&quot;,title:&quot;horizontalement&quot;}, {value:&quot;v&quot;,title:&quot;verticalement&quot;}]},
+    &#x27;&lt;/div&gt;&#x27;,
     {id:&#x27;fiches&#x27;,     type:&#x27;/fieldset&#x27;}
     ],
   
+  /**
+    * Méthode appelée quand on clique sur le cb &quot;livre rangés&quot;
+    * La méthode affiche ou masque le menu pour choisir l&#x27;alignement des livres,
+    * horizontal ou vertical.
+    * @method onchange_livre_ranged
+    * @param  {Boolean} coched    Etat du coche de la cb
+    */
+  onchange_livre_ranged:function(coched)
+  {
+    $(&#x27;select#pref-dirgridbook&#x27;).css(&#x27;visibility&#x27;, coched?&#x27;visible&#x27;:&#x27;hidden&#x27;)
+  }, 
   /**
     * Enregistre les préférences de l&#x27;application (et reçoit le retour de la 
     * requête ajax)
@@ -328,20 +356,30 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       var id, obj ;
       L(this.DATA).each(function(data){
+        if(&#x27;string&#x27;==typeof data) return
         id  = data.id
-        obj = $(&#x27;input#pref-&#x27;+id)
-        if(obj.length == 0) return
         switch(data.type)
         {
         case &#x27;cb&#x27;:
+          obj = $(&#x27;input#pref-&#x27;+id)
           App.preferences[id] = obj[0].checked == true
           if(id==&#x27;autosave&#x27;)
           {
             $(&#x27;input#cb_automatic_save&#x27;)[0].checked = App.preferences[id]
             Collection.enable_automatic_saving(App.preferences[id])
           }
-
+          else if(id==&#x27;gridbook&#x27; &amp;&amp; App.preferences[id])
+          { //=&gt; il faut aligner les livres
+            UI.align_books($(&#x27;select#pref-dirgridbook&#x27;).val())
+          }
           break
+        // Ne rien faire avec ces types :
+        case &#x27;fieldset&#x27;:
+        case &#x27;/fieldset&#x27;:
+          break
+        default:
+          obj = $(data.type+&#x27;#pref-&#x27;+id)
+          App.preferences[id] = obj.val()
         }
       })
     }
@@ -361,15 +399,27 @@ Object.defineProperties(App.Prefs, {
       // On met les valeurs par défaut
       var id, obj ;
       L(this.DATA).each(function(data){
+        if(&#x27;string&#x27;==typeof data) return
         id = data.id
-        obj = $(&#x27;input#pref-&#x27;+id)
         switch(data.type)
         {
         case &#x27;cb&#x27;:
+          obj = $(&#x27;input#pref-&#x27;+id)
           obj[0].checked = App.preferences[id]
           break
+        // Ne rien faire avec ces types :
+        case &#x27;fieldset&#x27;:
+        case &#x27;/fieldset&#x27;:
+          break
+        default:
+          obj = $(data.type+&#x27;#pref-&#x27;+id)
+          obj.val(App.preferences[id])
         }
       })
+      
+      // Quelques traitements spéciaux
+      this.onchange_livre_ranged(App.preferences[&#x27;gridbook&#x27;])
+      
       this.prepared = true
     }
   },
@@ -403,14 +453,35 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       var code = &quot;&quot;
       L(this.DATA).each(function(data){
+        if(&#x27;string&#x27; == typeof data)
+        {
+          code += data
+          return
+        }
+        
+        
         var id = data.id
+        // Pour préparer les attributs de la balise d&#x27;ouverture
+        var attrs = {id:&quot;pref-&quot;+id}
+        if(data.onclick)  attrs.onclick   = data.onclick
+        if(data.onchange) attrs.onchange  = data.onchange
+        if(data.class)    attrs.class     = data.class
+        if(data.style)    attrs.style     = data.style
+        
         switch(data.type)
         {
         case &#x27;cb&#x27;:
-          code += &#x27;&lt;div class=&quot;div_cb_pref&quot;&gt;&#x27;+
-                    &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;pref-&#x27;+id+&#x27;&quot; /&gt;&#x27;+
-                    &#x27;&lt;label for=&quot;pref-&#x27;+id+&#x27;&quot;&gt;&#x27;+data.label+&#x27;&lt;/label&gt;&#x27;+
-                  &#x27;&lt;/div&gt;&#x27;
+          attrs.type = &quot;checkbox&quot;
+          if(data.indiv) code += &#x27;&lt;div class=&quot;div_cb_pref&quot;&gt;&#x27;
+          code += &quot;input&quot;.to_tag(attrs) +
+                    &#x27;&lt;label for=&quot;pref-&#x27;+id+&#x27;&quot;&gt;&#x27;+data.label+&#x27;&lt;/label&gt;&#x27;
+          if(data.indiv) code += &#x27;&lt;/div&gt;&#x27;
+          break
+        case &#x27;select&#x27;:
+          code += &quot;select&quot;.to_tag(attrs) +
+          L(data.values).collect(function(d){
+            return &#x27;&lt;option value=&quot;&#x27;+d.value+&#x27;&quot;&gt;&#x27;+d.title+&#x27;&lt;/option&gt;&#x27;
+          }).join(&quot;&quot;)+&#x27;&lt;/select&gt;&#x27;
           break
         case &#x27;fieldset&#x27;:
           code += &#x27;&lt;fieldset id=&quot;prefs-&#x27;+id+&#x27;&quot;&gt;&lt;legend&gt;&#x27;+data.legend+&#x27;&lt;/legend&gt;&#x27;

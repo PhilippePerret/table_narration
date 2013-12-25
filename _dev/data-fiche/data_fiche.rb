@@ -3,13 +3,13 @@
 
 # Affiche les données d'une fiche
 
-
+# == Data de la fiche à voir ==
 FOLDER_COLLECTION = "test" # "current"
-FICHE_TYPE  = 'page'
-FICHE_ID    = 5
+FICHE_TYPE  = 'para'
+FICHE_ID    = 7
+# == / Data ==
+
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
-
-
 def data_fiche_in_file
   Marshal.load(File.read(FICHE_PATH))
 end

@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -240,6 +252,15 @@ window.Fiche = function(data)
   this.loaded     = false   // Mis à true si elle est entièrement chargée
   this.deleted    = false
   this._opened    = false   // cf. propriété complexe &#x60;opened&#x27;
+  /**
+    * Indicateur d&#x27;édition
+    * Cette propriété est mise à TRUE quand le texte (pour un paragraphe) ou
+    * le titre (pour autre type de fiche) est en édition (input/textarea au lieu
+    * de div)
+    * @property {Boolean} edited
+    * @default  False
+    */
+  this.edited     = false
   // this._ranged    = false   // cf. propriété complexe &#x60;ranged&#x27;
   this.selected   = false
   this.built      = false   // mis à true quand la fiche est construite
@@ -353,23 +374,26 @@ Object.defineProperties(Fiche.prototype, {
 
   /* ---------------------------------------------------------------------
    */
-  /*
-   *  Vérifie si la fiche peut être ouverte
-   *  Pour être ouverte, la fiche doit être &#x60;loaded&#x27; et ses enfants doivent
-   *  l&#x27;être aussi.
-   *
-   *  NOTES
-   *  -----
-   *    = Les enfants, dans la fiche, sont toujours des instances Fiche.
-   *      (réglées au chargement du parent). C&#x27;est leur propriété &#x60;loaded&#x27;
-   *      qui détermine si elles sont chargées ou non.
-   *
-   *    = On peut appeler la méthode &#x60;rend_openable(&lt;poursuivre&gt;)&#x27; pour rendre
-   *      la fiche ouvrable après le test &#x60;&lt;fiche&gt;.is_not_openable&#x27;
-   */
+  /**
+    * Vérifie si la fiche peut être ouverte
+    * Pour être ouverte, la fiche doit être &#x60;loaded&#x27; et ses enfants doivent
+    * l&#x27;être aussi.
+    *
+    * NOTES
+    * -----
+    *   * Les enfants, dans la fiche, sont toujours des instances Fiche.
+    *     (réglées au chargement du parent). C&#x27;est leur propriété &#x60;loaded&#x27;
+    *     qui détermine si elles sont chargées ou non.
+    *   * On peut appeler la méthode &#x60;rend_openable(&lt;poursuivre&gt;)&#x27; pour rendre
+    *     la fiche ouvrable après le test &#x60;&lt;fiche&gt;.is_not_openable&#x27;
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method is_openable
+    * @return {Boolean} true si la fiche peut être ouverte, false otherwise.
+    *
+    */
   &quot;is_openable&quot;:{
     get:function(){
-      dlog(&quot;-&gt; Fiche::is_openable [&quot;+this.type_id+&quot;]&quot;)
+      dlog(&quot;-&gt; Fiche::is_openable [&quot;+this.type_id+&quot;]&quot;, DB_FCT_ENTER)
       var i = 0, ichild ;
       if(this.is_paragraph) return true ; // toujours ouvrable
       if(this.loaded == false) return false ;
@@ -387,11 +411,14 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){return this.is_openable == false}
   },
     
-  /*
-   *  Positionne la fiche sur le table en fonction de :
-   *    - son état ranged ou non
-   *    - ses top / left
-   */
+  /**
+    * Positionne la fiche sur le table en fonction de :
+    * - son état ranged ou non
+    * - ses top / left
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method positionne
+    */
   &quot;positionne&quot;:{
     get:function(){
       if( this.ranged || this.top == null || !this.obj ) return
@@ -399,19 +426,21 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
   
-  /*
-   *  Création d&#x27;une nouvelle fiche
-   *  -----------------------------
-   *  
-   *  NOTES
-   *  -----
-   *  * Il ne suffit pas de créer la fiche pour qu&#x27;elle soit mise en 
-   *    sauvegarde. Cela permet de les créer tranquillement lors du chargement
-   *    de la collection.
-   *    C&#x27;est seulement lorsqu&#x27;un élément de la fiche aura été modifié (et
-   *    notamment le titre ou le texte — paragraph) qu&#x27;elle sera prête pour
-   *    l&#x27;enregistrement.
-   */
+  /**
+    * Création d&#x27;une nouvelle fiche
+    * -----------------------------
+    * 
+    * NOTES
+    * -----
+    *   * Il ne suffit pas de créer la fiche pour qu&#x27;elle soit mise en 
+    *     sauvegarde. Cela permet de les créer tranquillement lors du chargement
+    *     de la collection.
+    *     C&#x27;est seulement lorsqu&#x27;un élément de la fiche aura été modifié (et
+    *     notamment le titre ou le texte — paragraph) qu&#x27;elle sera prête pour
+    *     l&#x27;enregistrement.
+    *
+    * @property {Method} create
+    */
   &quot;create&quot;:{
     get:function(){
       dlog(&quot;---&gt; Fiche::CREATE (&quot;+this.type_id+&quot;)&quot;, DB_FCT_ENTER)
@@ -457,6 +486,7 @@ Object.defineProperties(Fiche.prototype, {
       
       // Rend ses enfants sortable
       this.div_items.sortable({
+        // &#x27;containment&#x27; :&quot;fiche.&quot;+this.type+&quot; &gt; recto &gt; div.items&quot;,
         &#x27;axis&#x27;        :&quot;y&quot;,
         &#x27;helper&#x27;      :&quot;clone&quot;,
         &#x27;placeholder&#x27; :&#x27;newplace&#x27;,
@@ -533,37 +563,7 @@ Object.defineProperties(Fiche.prototype, {
    */
   &quot;rend_sortable&quot;:{
     get:function(){
-      // this.obj.sortable({
-      this.div_items.sortable({
-        // &#x27;containment&#x27;: this.parent.div_items,
-        // &#x27;axis&#x27;    : &#x27;y&#x27;,
-        // &#x27;opacity&#x27; : 0.5,
-        // &#x27;scroll&#x27;  : true,
-        // &#x27;forcePlaceholderSize&#x27;: true,
-        // &#x27;placeholder&#x27;:&#x27;newplace&#x27;, 
-        // &#x27;change&#x27;  : function(evt, ui)
-        // {
-        //   /* appelé si changement de position*/
-        //   dlog(this.type_id+&quot; a changé de position&quot;)
-        //   return true
-        // },
-        // &#x27;out&#x27; :function(evt,ui)
-        // {
-        //   dlog(this.type_id+&quot; sort de son parent&quot;)
-        // },
-        // &#x27;over&#x27;:function(evt,ui)
-        // {
-        //   dlog(this.type_id+&quot; passe sur une liste qui peut l&#x27;accepter&quot;)
-        // },
-        // &#x27;start&#x27;:function(evt,ui)
-        // {
-        //   dlog(&quot;Début du déplacement (sort) de &quot;+this.type_id)
-        // },
-        // &#x27;stop&#x27;:function(evt,ui)
-        // {
-        //   dlog(&quot;Fin du déplacement (sort) de &quot;+this.type_id)
-        // }
-      })
+      // this.div_items.sortable()
       this.sortable = true
     }
   },
@@ -660,7 +660,151 @@ Object.defineProperties(Fiche.prototype, {
       this.modified = true
       this.obj.remove()
     }
-  }  
+  },
+  
+  /* ---------------------------------------------------------------------
+   *  MÉTHODES POUR COPIER/COUPER/COLLER LES ENFANTS
+   --------------------------------------------------------------------- */
+  /**
+    * Copie la fiche
+    * Notes
+    *   * En réalité, la &quot;copie&quot; de la fiche ne consiste qu&#x27;à mettre sa référence
+    *     dans App.clipboard
+    *   * On reconnait une fiche coupée d&#x27;une fiche copiée au &#x27;cuted&#x27; qui est 
+    *     ajouté quand on coupe la fiche.
+    * @property {Method} copy
+    */
+  &quot;copy&quot;:{
+    get:function(){
+      F.show(&quot;Je COPY la fiche courante&quot;+this.type_id)
+      App.clipboard = this
+      F.show(&quot;La fiche &quot;+this.human_type+&quot; a été copiée.\nSélectionne un nouveau parent pour la coller à l&#x27;aide de &quot;+
+      image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;))
+    }
+  },
+  /**
+    * Coupe la fiche
+    * Notes
+    *   * En réalité, la &quot;coupe&quot; de la fiche ne consiste qu&#x27;à mettre sa référence
+    *     dans App.clipboard en mettant son cuted à true et en masquant son objet
+    *     dans le DOM (pour ne pas avoir à le reconstruire.)
+    *
+    * @property {Method} cut
+    */
+  &quot;cut&quot;:{
+    get:function(){
+      F.show(&quot;Je CUT la fiche &quot;+this.type_id)
+      App.clipboard = this
+      App.clipboard.cuted = true
+      this.obj.hide()
+      F.show(&quot;La fiche &quot;+this.human_type+&quot; a été coupée.\nSélectionne un nouveau parent pour la coller à l&#x27;aide de &quot;+
+      image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;)+
+      &quot;\nNoter que tant que la fiche n&#x27;a pas été collée, elle n&#x27;est pas retirée du parent courant.&quot;)
+    }
+  },
+  /**
+    * Colle la fiche
+    * Notes
+    *   * Pour coller la fiche copiée/coupée, il faut qu&#x27;un parent ou un frère
+    *     potentiel soit sélectionné. Si c&#x27;est un parent, on ajoute la fiche à la
+    *     fin. Sinon, on l&#x27;ajoute avant le parent sélectionné.
+    *   * Si la fiche avait été copiée, il faut reconstruire une fiche de toute pièce
+    *     en se servant des informations de la fiche copiée. Si au contraire la fiche
+    *     a été coupée, il faut la sortir de son parent et la remettre dans le nouveau.
+    *
+    * TODO: Pour le moment, on ne peut pas coller une fiche sur la table, mais on
+    * devrait pouvoir le faire.
+    *
+    * @property {Method} paste
+    */
+  &quot;paste&quot;:{
+    get:function(){
+      try
+      {
+        if(!App.clipboard) throw &#x27;no copied fiche&#x27;
+        if(App.clipboard.class != &quot;Fiche&quot;) throw &#x27;no fiche in clipboard&#x27;
+        if(App.clipboard.type != this.child_type &amp;&amp; App.clipboard.type != this.type) 
+          throw &#x27;bad child type in clipboard&#x27;
+        if(App.clipboard.type == this.type){
+          if(!this.parent) throw &#x27;no parent for clipboarded fiche&#x27;
+          if(App.clipboard.cuted &amp;&amp; App.clipboard.parent == this.parent)
+            throw &#x27;clipboarded fiche already in parent&#x27;
+        }
+        else if (App.clipboard.type == this.child_type){
+          if(App.clipboard.cuted &amp;&amp; App.clipboard.parent == this)
+            throw &#x27;clipboarded fiche already in parent&#x27;
+        }
+          
+      }
+      catch(err_id){return F.error(LOCALE.fiche.error[err_id])}
+
+      // === La fiche peut être collée ===
+      // @note : si elle appartient à un parent, il faut la retirer de ce parent.
+      // - Si la fiche est &quot;not cuted&quot;, il faut créer une autre fiche d&#x27;après
+      //   les données de la fiche copiée (et remettre le copied de la fiche à false)
+      // - Si la fiche est &#x27;cuted=true&#x27;, il faut 1/ la sortir de son parent, 2/
+      //    l&#x27;injecter dans le parent courant et 3/ remettre son obj à display=block
+      //    pour le faire ré-apparaitre
+      var new_parent, beforeChild ;
+      if(App.clipboard.type == this.child_type)
+      {
+        // La fiche sélectionnée (courante) est le nouveau parent de la fiche
+        // Il faut placer la fiche copiée/coupée au bout du parent
+        new_parent = this
+      }
+      else
+      {
+        // La fiche sélectionnée est le nouveau frère (cadet) de la fiche
+        // copiée/coupée
+        new_parent  = this.parent
+        beforeChild = this
+      }
+
+      if(App.clipboard.cuted)
+      {
+        // Fiche coupée
+        fiche = App.clipboard
+        fiche.parent.remove_child( fiche )
+      }
+      else
+      {
+        // Fiche copiée =&gt; la cloner
+        var data = {}
+        var props = [ // mettre ici les propriétés à cloner
+          &#x27;type&#x27;
+          ]
+        switch(App.clipboard.type)
+        {
+        case &#x27;book&#x27;:
+          props.push(&#x27;real_titre&#x27;)
+          break
+        case &#x27;para&#x27;:
+          props.push(&#x27;texte&#x27;)
+          props.push(&#x27;ptype&#x27;)
+        }
+        if(App.clipboard.type!=&#x27;para&#x27;) props.push(&#x27;titre&#x27;)
+        L(props).each(function(prop){ data[prop] = App.clipboard[prop]})
+        fiche = FICHES.full_create(data)
+        fiche.modified = true
+      }
+      
+      // Si la fiche est pastée dans un parent (sinon, elle reste sur la table)
+      if(new_parent)
+      {
+        new_parent.add_child( fiche, {before:beforeChild})
+        if(fiche.cuted)
+        {
+          fiche.obj.show()
+          delete fiche.cuted
+        } 
+      }
+      
+      // À la fin, il faut détruire le clipboard
+      delete App.clipboard
+      Flash.clean()
+    }
+  }
+  
 })
 
 /**
@@ -695,6 +839,11 @@ Fiche.prototype.on_drop = function(evt, ui)
     var dtype = FICHES.datatype[data.type]
     data[data.type == &#x27;para&#x27; ? &#x27;texte&#x27; : &#x27;titre&#x27;] = dtype.defvalue
     
+    // L&#x27;attribut drg_time reste parfois dans l&#x27;outil, ce qui empêche ensuite
+    // de le dragguer sur un parent. On supprime toujours cette attribut ici
+    obj_moved.removeAttr(&#x27;drg_time&#x27;)
+    
+    // On crée entièrement la fiche
     ichild = FICHES.full_create(data)
   }
   else
@@ -774,18 +923,18 @@ $.extend(Fiche.prototype,{
   },
   
   /**
-    *  Ajout d&#x27;un enfant à la fiche
+    * Ajout d&#x27;un enfant à la fiche
     *
-    *  NOTES
-    *  -----
-    *    * C&#x27;est cette méthode qui doit être utilisée pour tout ajout
-    *      d&#x27;enfant.
+    * NOTES
+    * -----
+    *   * C&#x27;est cette méthode qui doit être utilisée pour tout ajout
+    *     d&#x27;enfant.
     *
     * @method add_child
     * @param  enfant    {Fiche} de l&#x27;enfant à ajouter
     * @param  options   {Object} Options d&#x27;insertion :
-    *                      after  : &lt;fiche&gt;    Ajouter après cet enfant
-    *                      before : &lt;fiche&gt;    Ajouter avant cet enfant
+    *   @param  {Fiche} options.after  Ajouter après cet enfant
+    *   @param  {Fiche} options.before Ajouter avant cet enfant
     */
   add_child:function(enfant, options)
   {
@@ -911,6 +1060,7 @@ $.extend(Fiche.prototype,{
     dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val().trim()
+    new_value = this.value_by_ptype( new_value )
     if(new_value == &quot;&quot;) return F.error(LOCALE.fiche.error[&#x27;no empty text&#x27;])
     if(this[prop] != new_value)
     {
@@ -920,6 +1070,25 @@ $.extend(Fiche.prototype,{
     if(this.is_chapter) this.close
     dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     return true
+  },
+  
+  /**
+    * Traite la nouvelle valeur du paragraphe (si c&#x27;est un paragraphe) en
+    * fonction de son ptype. Pour le moment, la méthode se contente de transformer
+    * les &#x60;**&#x27; en retours chariot dans les paragraphes de ptype &#x27;list&#x27; et &#x27;code&#x27;
+    * @method value_by_ptype
+    * @param  {String} value  La valeur à traiter
+    * @return {String} la nouvelle valeur au besoin
+    */
+  value_by_ptype:function(value)
+  {
+    if(this.is_not_paragraph) return value
+    if(this.ptype == &#x27;list&#x27; || this.ptype == &#x27;code&#x27;)
+    {
+      value = value.split(&#x27;**&#x27;)
+      value = L(value).collect(function(line){ return line.trim() }).join(&quot;\n&quot;)
+    }
+    return value
   }
   
 })

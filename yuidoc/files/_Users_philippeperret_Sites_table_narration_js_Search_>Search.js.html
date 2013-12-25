@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>/Users/philippeperret/Sites/table_narration/js/Search/&gt;Search.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/App.html">App</a></li>
+            
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
+                <li><a href="../classes/Collection.html">Collection</a></li>
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Fiche.html">Fiche</a></li>
+            
+                <li><a href="../classes/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
+                <li><a href="../classes/Page.html">Page</a></li>
+            
+                <li><a href="../classes/Paragraph.html">Paragraph</a></li>
+            
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
+                <li><a href="../classes/Search.html">Search</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
+            
+                <li><a href="../modules/Collection.html">Collection</a></li>
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/Debug.html">Debug</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
+            
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
+            
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
+            
+                <li><a href="../modules/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../modules/FilmClass.html">FilmClass</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
+            
+                <li><a href="../modules/KeyboardEvents.html">KeyboardEvents</a></li>
+            
+                <li><a href="../modules/KeyEvents.html">KeyEvents</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
+            
+                <li><a href="../modules/Paragraph.html">Paragraph</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
+            
+                <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
+            
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: /Users/philippeperret/Sites/table_narration/js/Search/&gt;Search.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+  * Module pour l&#x27;objet Search qui permet de faire des recherches dans 
+  * tous les textes de la collection.
+  *
+  * @module Search.js
+  * @class Search
+  * @static
+  *
+  */
+window.Search = window.Search || {}
+$.extend(window.Search,{
+
+  /** Indique l&#x27;état de préparation du panneau Search (div#search). Si true,
+    * le panneau est construit
+    * @property {Boolean} prepared 
+    * @default false
+    */
+  prepared:false,
+  /** Indique l&#x27;état de préparation du formulaire. Si True, le formulaire
+    * a été construit.
+    * @property {Boolean} form_prepared
+    * @default  false
+    */
+  form_prepared:false,
+  /** Indique l&#x27;état de préparation du panneau de résultat
+    * Si true, le panneau de résultat est prêt et peut être peuplé.
+    * @property {Boolean} panneau_result_prepared
+    * @default false
+    */
+  panneau_result_prepared:false,
+  
+  /** Fermer le panneau de recherche
+    * @method hide
+    */
+  hide:function()
+  {
+    this.panneau.hide()
+  },
+  /**
+    * Bascule entre le panneau de résultat et le formulaire de recherche
+    * @method toggle
+    */
+  toggle:function()
+  {
+    this.hide_result()
+    this.show_form()
+  },
+  /** Affiche le formulaire de recherche
+    * @method show_form
+    *
+    */
+  show_form:function()
+  {
+    this.panneau.show()
+    this.form.show()
+  },
+  /** Masque le formulaire de recherche
+    * @method hide_form
+    */
+  hide_form:function()
+  {
+    this.form.hide()
+  },
+  
+  /** Affiche le panneau de résultat
+    * @method show_result
+    * @param  {Boolean} clean Si True, la liste de résultat est effacée
+    */
+  show_result:function(clean)
+  {
+    this.panneau.show()
+    this.panneau_result.show()
+    if(clean == true) $(&#x27;div#search div#search_result_list&#x27;).html(&#x27;&#x27;)
+  },
+  /** Masque le panneau de résultat
+    * @method hide_result
+    */
+  hide_result:function()
+  {
+    this.panneau_result.hide()
+  },
+  /**
+    * = Main = Fonction principale pour invoquer une recherche
+    *
+    * Notes
+    * -----
+    *   * Cette méthode peut être utilisée par le raccourci &#x60;find(...)&#x60; défini
+    *     en bas de ce module.
+    *   * C&#x27;est cette méthode qui est appelée par le bouton “Rechercher” dans le
+    *     formulaire de recherche.
+    *
+    * @method find
+    * @async
+    * @param  {String|Regexp} text  Le texte à chercher exprimé en raw text ou
+    *                         comme une expression régulière 
+    * @param  {Object}        params  Les paramètres optionnels de la recherche
+    * 
+    * @example
+    *   Search.text(&quot;Ce texte à chercher&quot;)
+    *   Search.text(/(un|des) textes?/)
+    */
+  find:function(text, params)
+  {
+     // Envoyer la requête
+     Ajax.send(
+       {script:&#x27;fiche/search&#x27;, text:text, params:params},
+       $.proxy(this.found, this)
+     )
+  },
+  /**
+    * Méthode appelée par le bouton &quot;Rechercher&quot; du formulaire.
+    * Elle rassemble les paramètres de la recherche et invoque la méthode &#x60;find&#x60;
+    * pour effectuer cette recherche
+    * @method proceed
+    * @async
+    */
+  proceed:function()
+  {
+    var text    = $(&#x27;div#search input#search_text&#x27;).val().trim()
+    var params  = {}
+    this.find(text, params)
+  },
+  /**
+    * Retour ajax de la requête de recherche (find)
+    * @method found
+    * @param  {Object} rajax  Objet retourné par la requête Ajax
+    *   @param  {Boolean}   rajax.ok    True si la requête s&#x27;est bien passée
+    *   @param  {String}    rajax.message Le message de retour ou l&#x27;erreur
+    *   @param  {Object}    rajax.found   Objet contenant le résultat de la recherche
+    */
+  found:function(rajax)
+  {
+    if(rajax.ok) this.display_found(rajax.found)
+    else F.error(rajax.message)
+  },
+  
+  /**
+    * Traitement du résultat de la recherche remontée par ajax
+    * C&#x27;est la méthode principale qui affiche le résultat, c&#x27;est-à-dire les textes et
+    * les fiches retenues.
+    *
+    * @method display_found
+    * @param  {Object} data Donnée du résultat de la recherche
+    */
+  display_found:function(data)
+  {
+    this.hide_form()
+    this.show_result(purge=true)
+    if(data.nombre_founds == 0)
+    {
+      this.write(&quot;Aucun résultat trouvé pour la recherche donnée.&quot;, {class:&#x27;warning&#x27;})
+    }
+    else
+    {
+      this.write(&quot;Nombre de résultats : &quot; + data.nombre_founds, {class:&#x27;bold&#x27;})
+    }
+    this.write(&quot;Nombre fiches étudiées : &quot;+ data.nombre_fiches_etudiees)
+  },
+  
+  /**
+    * Ecrit une ligne (div) dans le panneau de résultat
+    * @method write
+    * @param  {String} line   La ligne à écrire (dans un DIV)
+    * @param  {Object}  options   Options pour l&#x27;affichage de ce résultat
+    *   @param  {String}  options.class   Class CSS pour cette ligne de résultat
+    */
+  write:function(line, options)
+  {
+    $(&#x27;div#search div#search_result_list&#x27;).append(this.compose_line_result(line,options))
+  },
+  
+  /**
+    * Compose la ligne de résultat à écrire
+    * @method compose_line_result
+    * @param  {String} line La ligne à écrire
+    * @param  {Object} options    Options d&#x27;affichage (cf. write ci-dessus)
+    * @return {String} La ligne de résultat à écrire
+    */
+  compose_line_result:function(line, options)
+  {
+    if(undefined == options) options = {}
+    var tag = &#x27;&lt;div&#x27;
+    var css = [&#x27;result&#x27;]
+    if(options.class) css.push(options.class)
+    tag += &#x27; class=&quot;&#x27;+css.join(&#x27; &#x27;)+&#x27;&quot;&#x27;
+    tag += &#x27;&gt;&#x27;
+    return tag + line + &#x27;&lt;/div&gt;&#x27;
+  },
+  
+  /* ---------------------------------------------------------------------
+   *  Méthodes interactives
+   * ---------------------------------------------------------------------*/
+  /** Méthode appelée quand on clique sur la CB &quot;tous&quot; pour les types de 
+    * fiche. Elle décoche ou elle coche tous les types en fonction du checked
+    * de la case à cocher.
+    * @method onchange_tout_type_fiche
+    * @param  {Boolean} coched  True si la case est cochée
+    */
+  onchange_tout_type_fiche:function(coched)
+  {
+    L(FICHES.datatype).each(function(id, dtype){
+      $(&#x27;input[type=&quot;checkbox&quot;]#param_search-fiche_type-&#x27;+id)[0].checked = coched
+    })
+  }
+})
+
+Object.defineProperties(Search,{
+
+  /**
+    * Le panneau principal
+    * @property panneau
+    * @type {jQuerySet}
+    */
+  &quot;panneau&quot;:{
+    get:function(){
+      if(!this.prepared) this.prepare_panneau
+      return $(&#x27;div#search&#x27;)
+    }
+  },
+  /**
+    * Le formulaire de recherche
+    * Notes
+    *   * C&#x27;est une propriété complexe qui crée le formulaire lorsque
+    *     c&#x27;est nécessaire
+    * @property form
+    * @type {jQuerySet}
+    * @default  undefined
+    */
+  &quot;form&quot;:{
+    get:function(){
+      if(!this.form_prepared)
+      { 
+        if(!this.prepared) this.prepare_panneau
+        this.prepare_form
+      }
+      return $(&#x27;div#search_form&#x27;)
+    }
+  },
+  
+  &quot;panneau_result&quot;:{
+    get:function(){
+      if(!this.panneau_result_prepared)
+      { 
+        if(!this.prepared) this.prepare_panneau
+        this.prepare_panneau_result
+      }
+      return $(&#x27;div#search_result&#x27;)
+    }
+  },
+  
+  /* ---------------------------------------------------------------------
+   *  Constructeurs DOM
+   * --------------------------------------------------------------------- */
+  /**
+    * Prépare le panneau principal contenant le formulaire et le résultat
+    * de la recherche
+    */
+  &quot;prepare_panneau&quot;:{
+    get:function(){
+      $(&#x27;body&#x27;).append(
+        &#x27;&lt;div id=&quot;search&quot; class=&quot;panneau&quot;&gt;&#x27;+
+        &#x27;&lt;div id=&quot;search_form&quot;&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;div id=&quot;search_result&quot; style=&quot;display:none;&quot;&gt;&lt;/div&gt;&#x27;+
+        &#x27;&lt;/div&gt;&#x27;
+      )
+      this.prepared = true
+      $(&#x27;div#search&#x27;).draggable()
+    }
+  },
+  /**
+    * Prépare le formulaire de recherche et l&#x27;insert dans la page
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method prepare_form
+    */
+  &quot;prepare_form&quot;:{
+    get:function(){
+      $(&#x27;div#search div#search_form&#x27;).replaceWith(this.html_form)
+      this.form_prepared = true
+    }
+  },
+  
+  /**
+    * Prépare le panneau pour afficher les résultats
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method prepare_panneau_result
+    */
+  &quot;prepare_panneau_result&quot;:{
+    get:function(){
+      $(&#x27;div#search div#search_result&#x27;).replaceWith(this.html_panneau_result)
+      this.panneau_result_prepared = true
+    }
+  },
+  
+  /**
+    * Retourne le code HTML pour la définition de la recherche
+    * @property html_form
+    * @static
+    */
+  &quot;html_form&quot;:{
+    get:function(){
+      return  &#x27;&lt;div id=&quot;search_form&quot; class=&quot;panneau_search&quot;&gt;&#x27;+
+                &#x27;&lt;div class=&quot;titre&quot;&gt;Recherche&lt;/div&gt;&#x27;+
+                this.html_fields_form  +
+                this.html_buttons_form +
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  
+  /**
+    * Retourne le code HTML pour le panneau de résultat
+    * @property html_panneau_result
+    * @type {String}
+    */
+  &quot;html_panneau_result&quot;:{
+    get:function(){
+      return  &#x27;&lt;div id=&quot;search_result&quot; class=&quot;panneau_search&quot;&gt;&#x27;+
+                &#x27;&lt;div class=&quot;titre&quot;&gt;Résultat de la recherche&lt;/div&gt;&#x27;+
+                this.html_fields_result +
+                this.html_buttons_result +
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  /**
+    * TODO
+    *   * Chercher seulement dans les fiches chargées (option très spéciale)
+    *   * types de fiches
+    *   * ptype des paragraphes
+    *   * Même les fiches &quot;not printed&quot;
+    */
+  &quot;html_fields_form&quot;:{
+    get:function(){
+      return  &#x27;&lt;div class=&quot;fields&quot;&gt;&#x27;+
+                &#x27;&lt;input id=&quot;search_text&quot; type=&quot;text&quot; placeholder=&quot;Expression à rechercher&quot; /&gt;&#x27; +
+                this.fieldset_params  +
+                this.fieldset_options +
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  /** Retourne le code HTML pour le fieldset des paramètres de recherche
+    * @property {String} fieldset_params
+    */
+  &quot;fieldset_params&quot;:{
+    get:function(){
+      var c = &quot;&quot;
+      c += UI.Html.checkbox(
+        {id:&quot;param_search-fiche_type-all&quot;, class:&quot;param_search&quot;, onchange:&quot;$.proxy(Search.onchange_tout_type_fiche, Search, this.checked)()&quot;, value:&quot;all&quot;, label:&quot;Tous&quot;})
+      c += L(FICHES.datatype).collect(function(id,dtype){
+        return UI.Html.checkbox({
+          id:&quot;param_search-fiche_type-&quot;+id, class:&quot;param_search&quot;, value:id, label:dtype.hname
+        })
+      }).join(&quot;&quot;)
+      return c
+    }
+  },
+  /** Retourne le code HTML pour le fieldset des options dans le formulaire
+    * @property {String} fieldset_options
+    */
+  &quot;fieldset_options&quot;:{
+    get:function(){
+      return &#x27;&lt;fieldset id=&quot;search_form_fs_options&quot;&gt;&lt;legend&gt;Options&lt;/legend&gt;&#x27; +
+        L([
+          {id:&#x27;event_not_printed&#x27;, label:&quot;Même les “Not printed”&quot;, class:&quot;param_search&quot;, indiv:true}
+          ]).collect(function(dfield){
+            return UI.Html.checkbox($.extend(dfield,{id:&quot;param_search-&quot;+dfield.id}))
+        }).join(&quot;&quot;) + &#x27;&lt;/fieldset&gt;&#x27;
+    }
+  },
+  &quot;html_buttons_form&quot;:{
+    get:function(){
+      return  &#x27;&lt;div class=&quot;buttons&quot;&gt;&#x27;+
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;Renoncer&quot; class=&quot;fleft&quot; onclick=&quot;$.proxy(Search.hide, Search)()&quot; /&gt;&#x27;+
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;Rechercher&quot; onclick=&quot;$.proxy(Search.proceed, Search)()&quot; /&gt;&#x27;+
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  },
+  &quot;html_fields_result&quot;:{
+    get:function(){
+      return &#x27;&lt;div id=&quot;search_result_list&quot; class=&quot;fields&quot;&gt;&lt;/div&gt;&#x27;
+    }
+  },
+  &quot;html_buttons_result&quot;:{
+    get:function(){
+      return  &#x27;&lt;div class=&quot;buttons&quot;&gt;&#x27;+
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;Autre recherche&quot; class=&quot;fleft&quot; onclick=&quot;$.proxy(Search.toggle, Search)()&quot; /&gt;&#x27;+
+                &#x27;&lt;input type=&quot;button&quot; value=&quot;OK&quot; onclick=&quot;$.proxy(Search.hide, Search)()&quot; /&gt;&#x27;+
+              &#x27;&lt;/div&gt;&#x27;
+    }
+  }
+})
+
+
+window.find = Search.find
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

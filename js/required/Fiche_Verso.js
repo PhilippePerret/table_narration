@@ -102,13 +102,12 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       if(undefined != this.options_supplementaires) options = $.merge(options, this.options_supplementaires)
       var c = "", id, prefix = "fiche_option-"+this.id+"-" ;
+      var me = this
       L(FICHES.OPTIONS_FICHE).each(function(option){
-        id = prefix + option.id
         c += '<div class="fiche_option">'+
-          '<input type="checkbox" id="'+id+'" class="fiche_option_'+option.id+'" '+
-          'onchange="get_fiche('+this.id+').onchange_option(\''+option.id+'\')" />'+
-          '<label for="'+id+'">'+option.label+'</label>'
-        '</div>'
+              UI.Html.checkbox({id:prefix + option.id, class:'fiche_option_'+option.id,
+              onchange:'get_fiche('+me.id+').onchange_option(\''+option.id+'\', this.checked)',
+              label:option.label}) + '</div>'
       })
       return '<fieldset class="fiche_options">'+'<legend>Options</legend>'+c+'</fieldset>'
     }

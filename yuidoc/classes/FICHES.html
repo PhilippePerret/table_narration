@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -273,6 +285,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_domObj_to_fiche">domObj_to_fiche</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_full_create">full_create</a>
 
                                 
                                 
@@ -411,7 +430,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l538"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:538</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l542"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:542</code></a>
         
         </p>
 
@@ -680,6 +699,218 @@ retourne la fiche correspondante.</p>
 </div>
 
                 
+                    <div id="method_full_create" class="method item">
+    <h3 class="name"><code>full_create</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>data</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l570"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:570</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Crée entièrement une nouvelle fiche à partir des +data+
+transmises.</p>
+<h2 id="notes">NOTES</h2>
+<ul>
+<li>Il s&#39;agit d&#39;une toute nouvelle fiche, jamais d&#39;une fiche
+existente.</li>
+<li>Pour le moment, la fiche n&#39;est pas marquée modifiée.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">data</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les données pour la nouvelle fiche</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object | Null</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les options pour la création</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">focus_titre</code>
+                                    <span class="type">Boolean</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Si TRUE, on passe le titre en édition</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">focus_texte</code>
+                                    <span class="type">Boolean</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Si TRUE, on passe le texte en édition (même chose que pour
+                                        focus_titre, mais pour un paragraphe)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">select</code>
+                                    <span class="type">Boolean</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Si TRUE, on sélectionne la fiche</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">after_fiche</code>
+                                    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                                
+
+                                <div class="param-description">
+                                    <p>Si défini, c&#39;est la fiche après laquelle on doit
+                                        placer la nouvelle fiche.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">before_fiche</code>
+                                    <span class="type">Boolean</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Idem, mais en fournissant la fiche après.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>:
+                    
+                    <p>La nouvelle fiche créée</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_init_all" class="method item">
     <h3 class="name"><code>init_all</code></h3>
 
@@ -712,7 +943,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l725"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:725</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l730"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:730</code></a>
         
         </p>
 
@@ -782,7 +1013,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l409"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:409</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l413"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:413</code></a>
         
         </p>
 
@@ -887,7 +1118,7 @@ retourne la fiche correspondante.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l371"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:371</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_FICHES.js.html#l375"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;FICHES.js:375</code></a>
         
         </p>
 

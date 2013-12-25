@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -315,7 +327,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case K_LEFT_ARROW:  cplx_meth = &#x27;select_parent&#x27;;       break
   case K_RIGHT_ARROW: cplx_meth = &#x27;select_first_child&#x27;;  break
   case K_UP_ARROW:    cplx_meth = evt.metaKey ? &#x27;move_up&#x27;    : &#x27;select_previous&#x27;; break
-  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? &#x27;move_down&#x27;  : &#x27;select_next&#x27;;         break
+  case K_DOWN_ARROW:  cplx_meth = evt.metaKey ? &#x27;move_down&#x27;  : &#x27;select_next&#x27;;     break
     
   /* ERASE =&gt; supprimer la fiche */
   case K_ERASE: cplx_meth = &#x27;want_delete&#x27;; break
@@ -333,26 +345,19 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   switch(evt.charCode)
   {
   case K_SPACE: cplx_meth = &#x27;toggle&#x27;   ; break
+  case Key_c:   cplx_meth = &#x27;copy&#x27;     ; break
   case Key_o:   cplx_meth = &#x27;open&#x27;     ; break
   case Key_f:   cplx_meth = &#x27;close&#x27;    ; break
   case Key_d:   cplx_meth = &#x27;deselect&#x27; ; break
   case Key_p:
     if(evt.metaKey)
     {
-      var cur = FICHES.current
+      var cur = FICHES.current, options = {}
       Flash.clean()
       if(cur.is_book)
       {
-        F.show(LOCALE.fiche.message[&#x27;book publishing&#x27;].replace(/_LIVRE_/, cur.titre))
-        cur.publish()
-      }
-      else {
-        if(cur.book)
-        {
-          F.show(LOCALE.fiche.message[&#x27;book of fiche publishing&#x27;].replace(/_LIVRE_/, cur.book.titre))
-          cur.book.publish()
-        }
-        else F.error(LOCALE.fiche.error[&#x27;no book for publishing&#x27;],{timer:true})
+        if(evt.ctrlKey) options.only_tdm = true
+        cur.publish(options)
       }
       // Dans tous les cas, on bloque l&#x27;event
       return stop_event(evt)
@@ -361,6 +366,8 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_r:
     if(!evt.metaKey){cplx_meth = &#x27;copy_reference&#x27;}
     break
+  case Key_v:   cplx_meth = &#x27;paste&#x27;   ; break
+  case Key_x:   cplx_meth = &#x27;cut&#x27;     ; break
   }
   if(cplx_meth)
   {

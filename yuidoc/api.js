@@ -20,7 +20,9 @@ YUI.add("yuidoc-meta", function(Y) {
         "Paragraph",
         "REFS",
         "Ref",
+        "Search",
         "UI",
+        "UI.Html",
         "UI.Input",
         "window"
     ],
@@ -39,6 +41,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "FILMS",
         "Fiche",
         "FilmClass",
+        "Html",
         "Input",
         "KeyEvents",
         "KeyboardEvents",
@@ -50,8 +53,11 @@ YUI.add("yuidoc-meta", function(Y) {
         "Page",
         "Paragraph",
         "REFS.js",
+        "Search.js",
         "String",
         "UI",
+        "UI_HTML",
+        "UI_Input",
         "app",
         "app-prefs",
         "data",
@@ -92,12 +98,12 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "ContextualHelp"
         },
         {
-            "displayName": "Data",
-            "name": "Data"
-        },
-        {
             "displayName": "data",
             "name": "data"
+        },
+        {
+            "displayName": "Data",
+            "name": "Data"
         },
         {
             "displayName": "Debug",
@@ -150,6 +156,11 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "FILMS",
             "name": "FILMS"
+        },
+        {
+            "displayName": "Html",
+            "name": "Html",
+            "description": "Sous-Objet UI.Html\n\nConstruction des éléments HTML."
         },
         {
             "displayName": "Input",
@@ -214,6 +225,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "REFS.js"
         },
         {
+            "displayName": "Search.js",
+            "name": "Search.js",
+            "description": "Module pour l'objet Search qui permet de faire des recherches dans \ntous les textes de la collection."
+        },
+        {
             "displayName": "String",
             "name": "String",
             "description": "Extensions de la classe String propre à l'application."
@@ -221,6 +237,14 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "UI",
             "name": "UI"
+        },
+        {
+            "displayName": "UI_HTML",
+            "name": "UI_HTML"
+        },
+        {
+            "displayName": "UI_Input",
+            "name": "UI_Input"
         },
         {
             "displayName": "window",

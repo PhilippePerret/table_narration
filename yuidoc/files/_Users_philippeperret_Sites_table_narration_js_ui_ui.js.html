@@ -79,7 +79,11 @@
             
                 <li><a href="../classes/REFS.html">REFS</a></li>
             
+                <li><a href="../classes/Search.html">Search</a></li>
+            
                 <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
@@ -101,9 +105,9 @@
             
                 <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
             
-                <li><a href="../modules/Data.html">Data</a></li>
-            
                 <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
             
                 <li><a href="../modules/Debug.html">Debug</a></li>
             
@@ -130,6 +134,8 @@
                 <li><a href="../modules/FilmClass.html">FilmClass</a></li>
             
                 <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
             
                 <li><a href="../modules/Input.html">Input</a></li>
             
@@ -161,9 +167,15 @@
             
                 <li><a href="../modules/REFS.js.html">REFS.js</a></li>
             
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
                 <li><a href="../modules/String.html">String</a></li>
             
                 <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -272,8 +284,22 @@ $.extend(UI, {
    */
   FIELD_PEOPLE:&#x27;people&#x27;,
   
-  GRID_X    : 80,       // Snap horizontal
-  GRID_Y    : 40,       // Snap vertical
+  /**
+    * LARGEUR d&#x27;un carreau de la grille snap
+    * Notes : Correspond à la largeur d&#x27;un livre fermé
+    * @property {Number} GRID_X
+    * @static
+    * @final
+    */
+  GRID_X    : 250,
+  /**
+    * HAUTEUR d&#x27;un carreau de la grille snap
+    * Notes : Correspond à la hauteur d&#x27;un livre fermé
+    * @property {Number} GRID_Y
+    * @static
+    * @final
+    */
+  GRID_Y    : 40,
   
   prepared  :false,     // Mis à true quand l&#x27;UI est prête
   preparing :false,     // True pendant la préparation de l&#x27;interface
@@ -307,6 +333,43 @@ $.extend(UI, {
         cancel :{name:(options.cancel_name || &quot;Renoncer&quot;), onclick:suivreCancel},
         ok     :{name:(options.ok_name || &quot;OK&quot;), onclick:suivreOk}
       }
+    })
+  },
+  
+  /**
+    * Aligne les livres sur la grille
+    *
+    * Notes
+    *   * Pour le moment, la méthode n&#x27;est appelée que lorsque la case &quot;Livres rangés&quot;
+    *     est cochée (le moment où on le fait) dans les préférences.
+    *   * C&#x27;est la position vertical qui l&#x27;emporte. Ensuite, si deux livres sont à
+    *     la même hauteur, c&#x27;est la position vertical qui détermine la précédence.
+    *   * Cela classe aussi les livres dans Collection.books, pour qu&#x27;ils soient
+    *     sélectionnés dans le bon ordre par les flèches
+    *
+    * @method align_books
+    * @param  {String} dir  Orientation de l&#x27;alignement, h:horizontal, v:vertical
+    *
+    */
+  align_books:function(dir)
+  {
+    if (App.preferences.gridbook == false) return
+    
+    Collection.sort_book_from_table
+
+    // On les positionne sur la table
+    // Rappel : le simple fait de changer left/top appelle le positionnement
+    // de la fiche
+    var current_x = 0
+    var current_y = 0
+    var inc_x = App.preferences[&#x27;dirgridbook&#x27;] == &#x27;h&#x27; ? this.GRID_X : 0
+    var inc_y = App.preferences[&#x27;dirgridbook&#x27;] == &#x27;v&#x27; ? this.GRID_Y : 0
+    L(Collection.books).each(function(book){
+      book.modified = current_x != book.left || current_y != book.top
+      book.left = current_x
+      book.top  = current_y
+      current_x += inc_x
+      current_y += inc_y
     })
   },
   
