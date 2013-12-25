@@ -412,9 +412,9 @@ UI.Input = {
       // un ptype particulier
       if(fiche &amp;&amp; fiche.ptype != &#x27;text&#x27;)
       {
-        /**
-          * Pour un ptype ≠ &#x27;text&#x27;, MAJ+Return permet de passer à la ligne
-          */
+        /*
+         * Pour un ptype ≠ &#x27;text&#x27;, MAJ+Return permet de passer à la ligne
+         */
         if(evt.shiftKey)
         {
           evt.stopPropagation()
@@ -681,12 +681,22 @@ UI.Input = {
     * @param  {Object} options  Liste des options à prendre en compte. Pour le moment,
     *                           ces options se résument à &#x60;blur&#x60; qui, si true, blur
     *                           le champ courant.
+    *   @param  {Boolean}       options.blur    Si True, on blur le champ courant
+    *   @param  {Function|Null} options.keypress Le nouveau gestion d&#x27;évènements
+    *                           keypress (null si aucun), en mémorisant le gestionnaire
+    *                           courant qui sera automatiquement remis par retreive_current
     * @return {Number} id Identifiant (dans &#x60;targets&#x60;) du champ mémorisé.
     *
     */
   memorize_current:function(options)
   {
+    dlog(&quot;options:&quot;);dlog(options)
     if(undefined == options) options = {}
+
+    // On désactive les raccourcis courants
+    this.old_window_onkeypress = window.onkeypress
+    window.onkeypress = options.keypress
+
     if(!this.target) return null // pas d&#x27;édition courante
     var id = Time.now()
     if(!this.targets) this.targets = {}
@@ -723,25 +733,31 @@ UI.Input = {
   retreive_current:function(id, options)
   {
     if(undefined == options) options = {}
-    this.target = this.targets[id]
-    // Il faut reprendre la sélection dans this.target maintenant, car
-    // this.target sera modifié ci-dessous quand on ré-activera
-    // le champ the this.targets[id]
-    var selection = $.extend({}, this.target.selection)
-    if(!this.target) throw &quot;La target d&#x27;identifiant &quot;+id+&quot; n&#x27;est pas définie…&quot;
-    if(options.focus)
+    if(this.targets &amp;&amp; this.targets[id])
     {
-      if(this.target.hasFiche)
+      this.target = this.targets[id]
+      // Il faut reprendre la sélection dans this.target maintenant, car
+      // this.target sera modifié ci-dessous quand on ré-activera
+      // le champ the this.targets[id]
+      var selection = $.extend({}, this.target.selection)
+      if(!this.target) throw &quot;La target d&#x27;identifiant &quot;+id+&quot; n&#x27;est pas définie…&quot;
+      if(options.focus)
       {
-        var fiche = get_fiche(this.target.fiche_id)
-        if(fiche.main_prop == this.target.property )
+        if(this.target.hasFiche)
         {
-          fiche.enable_main_field
+          var fiche = get_fiche(this.target.fiche_id)
+          if(fiche.main_prop == this.target.property )
+          {
+            fiche.enable_main_field
+          }
         }
+        // On remet la sélection précédente
+        Selection.select(this.target.dom, selection)
       }
-      // On remet la sélection précédente
-      Selection.select(this.target.dom, selection)
     }
+    // On réactive les raccourcis
+    window.onkeypress = this.old_window_onkeypress
+    delete this.old_window_onkeypress
   },
   
   /*

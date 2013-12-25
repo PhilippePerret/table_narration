@@ -454,6 +454,8 @@ Object.defineProperties(Fiche.prototype,{
     *   * La méthode est principalement appelée quand on clique sur une référence
     *     dans un texte. Cela produit un appel à &#x60;FICHES.show&#x60; qui appelle la
     *     méthode &#x60;show&#x60; propre à chaque type de fiche.
+    *   * La méthode est aussi intensivement utilisée pour les recherches dans les
+    *     fiche, dans le listing de résultat.
     *   * Pour une page, la montrer consiste à l&#x27;ouvrir. Mais cette page peut ne pas
     *     être encore chargée, donc il faut s&#x27;assurer qu&#x27;elle puisse être ouverte
     *     en chargeant tous ses parents si elle en a.
@@ -461,6 +463,11 @@ Object.defineProperties(Fiche.prototype,{
     *     pas encore chargés
     *
     * @method show
+    * @param  {Object|Undefined} options Options d&#x27;affichage
+    *   @param {Boolean}  options.select    Si true, sélectionne la fiche
+    *   @param {Boolean}  options.open      Si true, ouvre la fiche
+    *   @param {Function} options.suivre    La méthode pour suivre, if any
+    *   @param {Boolean}  options.no_light  Si true, pas de clignotement
     * @async
     */
   &quot;show&quot;:{
@@ -514,6 +521,7 @@ Object.defineProperties(Fiche.prototype,{
     *     utilisés en cliquant sur la référence.
     *   * Si aucune option de sélection ou d&#x27;ouverture n&#x27;est demandé, la méthode
     *     fait simplement clignoter la fiche.
+    *   * Pour un paragraphe, il faut scroller jusqu&#x27;à lui dans la page.
     *
     * @method suite_show
     * @param  {Object|Null} options
@@ -525,6 +533,11 @@ Object.defineProperties(Fiche.prototype,{
   &quot;suite_show&quot;:{
     value:function(options){
       if(undefined == options) options = {}
+      // if(this.is_paragraph &amp;&amp; this.parent)
+      // {
+      //   this.parent.div_items.scrollTo(this.obj, 400, {axis:&#x27;y&#x27;})
+      //   F.show(&quot;Je dois scroller jusqu&#x27;à para:&quot;+this.id)
+      // }
       if(options.select)  this.select
       if (options.open)   this.open
       if (!options.no_light) this.highlight()
@@ -564,6 +577,7 @@ Object.defineProperties(Fiche.prototype,{
       }
       this.color_highlight = this.color_highlight==&quot;red&quot; ? &quot;&quot; : &quot;red&quot;
       this.obj.css(&#x27;border-color&#x27;, this.color_highlight)
+      if(this.is_paragraph) this.obj.css(&#x27;background-color&#x27;, this.color_highlight)
     }
   },
   
@@ -715,6 +729,9 @@ Object.defineProperties(Fiche.prototype,{
     * -----
     *   * Le traitement est spécial pour les livres, ils sont conservés
     *     dans l&#x27;ordre de leur placement sur la table
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method select_previous
     */
   &quot;select_previous&quot;:{
     get:function(){

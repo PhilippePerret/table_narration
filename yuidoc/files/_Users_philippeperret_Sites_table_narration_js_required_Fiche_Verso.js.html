@@ -276,10 +276,29 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       if(!this.verso_ready) this.prepare_verso
       this.set_titre_verso
+      this.set_menu_developpement
       if(undefined != this.after_regle_verso) this.after_regle_verso
     }
   },
 
+  /**
+    * Insert et règle le menu développement de la fiche
+    * Notes
+    *   * Le menu développement n&#x27;existe qu&#x27;en un seul exemplaire et passe
+    *     d&#x27;une fiche à l&#x27;autre lorsqu&#x27;elle est retournée.
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method set_menu_developpement
+    */
+  &quot;set_menu_developpement&quot;:{
+    get:function(){
+      if(!FICHES.menu_development_ready) FICHES.build_menu_development
+      this.verso.find(&#x27;.div_menu_development&#x27;).append($(&#x27;div#divuniq_menu_development&#x27;))
+      // On règle la valeur
+      var menu = $(&#x27;select#fiche_option-dev&#x27;)
+      menu.val(this.dev || 0)
+      menu.attr(&#x27;onchange&#x27;, &quot;get_fiche(&quot;+this.id+&quot;).onchange_option(&#x27;dev&#x27;, this.value)&quot;)
+    }
+  },
   /*
    *  Au verso, le fielset contenant les paramètres
    *  
@@ -291,6 +310,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       return &#x27;&lt;fieldset id=&quot;&#x27;+this.fieldset_parametres_id+&#x27;&quot; class=&quot;parametres&quot;&gt;&#x27; +
         &#x27;&lt;legend&gt;Paramètres&lt;/legend&gt;&#x27;+
+        &#x27;&lt;div class=&quot;div_menu_development&quot;&gt;&lt;/div&gt;&#x27; +
         (this.is_paragraph ? this.html_parametres_paragraph : &#x27;&#x27;) +
         &#x27;&lt;/fieldset&gt;&#x27;
     }
@@ -322,13 +342,12 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       if(undefined != this.options_supplementaires) options = $.merge(options, this.options_supplementaires)
       var c = &quot;&quot;, id, prefix = &quot;fiche_option-&quot;+this.id+&quot;-&quot; ;
+      var me = this
       L(FICHES.OPTIONS_FICHE).each(function(option){
-        id = prefix + option.id
         c += &#x27;&lt;div class=&quot;fiche_option&quot;&gt;&#x27;+
-          &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;&#x27;+id+&#x27;&quot; class=&quot;fiche_option_&#x27;+option.id+&#x27;&quot; &#x27;+
-          &#x27;onchange=&quot;get_fiche(&#x27;+this.id+&#x27;).onchange_option(\&#x27;&#x27;+option.id+&#x27;\&#x27;)&quot; /&gt;&#x27;+
-          &#x27;&lt;label for=&quot;&#x27;+id+&#x27;&quot;&gt;&#x27;+option.label+&#x27;&lt;/label&gt;&#x27;
-        &#x27;&lt;/div&gt;&#x27;
+              UI.Html.checkbox({id:prefix + option.id, class:&#x27;fiche_option_&#x27;+option.id,
+              onchange:&#x27;get_fiche(&#x27;+me.id+&#x27;).onchange_option(\&#x27;&#x27;+option.id+&#x27;\&#x27;, this.checked)&#x27;,
+              label:option.label}) + &#x27;&lt;/div&gt;&#x27;
       })
       return &#x27;&lt;fieldset class=&quot;fiche_options&quot;&gt;&#x27;+&#x27;&lt;legend&gt;Options&lt;/legend&gt;&#x27;+c+&#x27;&lt;/fieldset&gt;&#x27;
     }

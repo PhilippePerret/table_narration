@@ -255,6 +255,35 @@ window.FICHES = {
     },
 
   /**
+    * Données pour le niveau de développement des fiches
+    * Notes
+    *   * Ne pas changer le nom des attributs &#x27;value&#x27; et &#x27;title&#x27; qui servent à
+    *     construire des menus avec UI.Html.select
+    *   * C&#x27;est un array. Pour récupérer une valeur, il suffit de faire :
+    *     FICHES.DATA_DEV[&amp;lt;niveau de développement de la fiche&gt;]
+    *
+    * @property {Array} DATA_DEV
+    * @static
+    * @final
+    */
+  DATA_DEV:[
+    {value:0, title:&quot;Simple création&quot;},
+    {value:1, title:&quot;Ébauche&quot;},
+    {value:2, title:&quot;1ère version&quot;},
+    {value:3, title:&quot;2e version&quot;},
+    {value:4, title:&quot;3e version&quot;},
+    {value:5, title:&quot;Version aboutie&quot;},
+    {value:6, title:&quot;Relue et corrigée&quot;},
+    {value:7, title:&quot;À finaliser&quot;},
+    {value:8, title:&quot;À confirmer&quot;},
+    {value:9, title:&quot;B.A.T&quot;}
+  ],
+  /**
+    * Indique si le menu développement a été fabriqué
+    * @property {Boolean} menu_development_ready
+    */
+  menu_development_ready:false, 
+  /**
     * Données pour les paramètres des fiches (verso)
     * Notes
     * -----
@@ -597,8 +626,9 @@ window.FICHES = {
     *
     * Notes
     * -----
-    *   * Cette fonction est appelée principalement un clic sur une référene
-    *     dans le texte. La fiche peut-être chargée ou non, et d&#x27;un type indifférent.
+    *   * Cette fonction est appelée principalement un clic sur une référence
+    *     dans le texte ou à partir du listing des résultats trouvés lors d&#x27;une
+    *     recherche. La fiche peut-être chargée ou non, et d&#x27;un type indifférent.
     *     La méthode s&#x27;arrange dans tous les cas pour la montrer. Ce qui consiste, 
     *     suivant son type, à :
     *       * &quot;highlighter&quot; un livre (clignotement)
@@ -881,50 +911,7 @@ window.FICHES = {
     if( ! this.current_text_field ) return false
     return this.current_text_field[0].id == $(obj)[0].id
   },
-  
-  // /*
-  //  *  Méthode appelée quand on focuse/blure dans n&#x27;importe quel champ de
-  //  *  saisie de la fiche
-  //  *  
-  //  */
-  // onfocus_textfield:function(ifiche, evt)
-  // {
-  //   /*
-  //   - on sélectionne la fiche
-  //   - on change l&#x27;aspect du champ (&#x27;focused&#x27;)
-  //   - on sélectionne son texte
-  //   - on met le champ courant à ce champ (current_text_field)
-  //   - on change de gestion d&#x27;évènement keypress
-  //   - on bloque les click sur le champ
-  //    */
-  //   console.warn(&quot;La méthode FICHES.onfocus_textfield doit devenir obsolète&quot;)
-  //   var idm = &quot;FICHES.onfocus_textfield(ifiche:&quot;+ifiche.type_id+&quot;)&quot;
-  //   dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
-  //   ifiche.select
-  //   var target = $(evt.currentTarget)
-  //   target.addClass(&#x27;focused&#x27;)
-  //   target.select()
-  //   this.current_text_field = target // complex
-  //   window.onkeypress = window.keypress_when_fiche_selected_in_textfield
-  //   // On bloque les click dans le champ (pour empêcher la déselection
-  //   // qui remet le onkeypress à rien)
-  //   this.current_text_field.bind(&#x27;click&#x27;, function(evt){evt.stopPropagation();return true})
-  //   dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
-  // },
-  // onblur_textfield:function(ifiche, evt)
-  // {
-  //   console.warn(&quot;La méthode FICHES.onblur_textfield doit devenir obsolète&quot;)
-  //   var idm = &quot;FICHES.onblur_textfield(ifiche:&quot;+ifiche.type_id+&quot;)&quot;
-  //   dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
-  //   $(evt.target).removeClass(&#x27;focused&#x27;)
-  //   if(this.current_field_is(ifiche.main_field)) ifiche.disable_main_field
-  //   if(this.current) window.onkeypress = keypress_when_fiche_selected_out_textfield
-  //   else window.onkeypress = keypress_when_no_selection_no_edition
-  //   this.current_text_field.unbind(&#x27;click&#x27;, function(evt){evt.stopPropagation();return true})
-  //   this.current_text_field = null // complex
-  //   dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
-  // },
-  
+
   /*
    *  Méthode qui change la sélection courante
    *  ----------------------------------------
@@ -965,6 +952,38 @@ Object.defineProperties(FICHES,{
       this.last_id    = -1
       this.selecteds  = {}
       $(&#x27;section#table&#x27;).html(&#x27;&#x27;)
+    }
+  },
+  
+  /**
+    * Construit le menu de développement qui sera placé au verso des fiches
+    * retournées
+    * Notes
+    *   * Un seul select est construit, qui est passé de fiche en fiche
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method build_menu_development
+    */
+  &quot;build_menu_development&quot;:{
+    get:function(){
+      $(&#x27;body&#x27;).append(this.html_menu_development)
+      this.menu_development_ready = true
+    }
+  },
+  /** Retourne le code HTML du menu de développement
+    * @property {String} html_menu_development
+    */
+  &quot;html_menu_development&quot;:{
+    get:function(){
+      var c = &quot;&quot;
+      c += &#x27;&lt;div id=&quot;divuniq_menu_development&quot;&gt;&#x27; +
+            &#x27;&lt;span class=&quot;libelle&quot;&gt;Niveau de développement &lt;/span&gt;&#x27; +
+            &#x27;&lt;select id=&quot;fiche_option-dev&quot; onchange=&quot;&quot;&gt;&#x27;;
+      c += L(this.DATA_DEV).collect(function(ddev){
+        return &#x27;&lt;option value=&quot;&#x27;+ddev.value+&#x27;&quot;&gt;&#x27;+ddev.title+&#x27;&lt;/option&gt;&#x27;
+      }).join(&quot;&quot;)
+      c += &#x27;&lt;/select&gt;&lt;/div&gt;&#x27;
+      return c
     }
   },
   

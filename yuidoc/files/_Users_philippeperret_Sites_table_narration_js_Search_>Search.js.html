@@ -249,12 +249,15 @@ $.extend(window.Search,{
     */
   panneau_result_prepared:false,
   
+  
+  
   /** Fermer le panneau de recherche
     * @method hide
     */
   hide:function()
   {
     this.panneau.hide()
+    UI.Input.retreive_current({focus:true})
   },
   /**
     * Bascule entre le panneau de résultat et le formulaire de recherche
@@ -266,11 +269,14 @@ $.extend(window.Search,{
     this.show_form()
   },
   /** Affiche le formulaire de recherche
-    * @method show_form
+    * C&#x27;est la méthode principale appelée pour afficher le formulaire de recherche,
+    * lorsqu&#x27;on clique par exemple sur le bouton zoom
     *
+    * @method show_form
     */
   show_form:function()
   {
+    UI.Input.memorize_current({blur:true, keypress:null})
     this.panneau.show()
     this.form.show()
   },
@@ -322,15 +328,18 @@ $.extend(window.Search,{
   find:function(text, params)
   {
      // Envoyer la requête
+     F.show(&quot;Recherche en cours…&quot;)
      Ajax.send(
-       {script:&#x27;fiche/search&#x27;, text:text, params:params},
+       {script:&#x27;fiche/search&#x27;, params:$.extend(params, {search_text:text})},
        $.proxy(this.found, this)
      )
   },
   /**
     * Méthode appelée par le bouton &quot;Rechercher&quot; du formulaire.
     * Elle rassemble les paramètres de la recherche et invoque la méthode &#x60;find&#x60;
-    * pour effectuer cette recherche
+    * pour effectuer cette recherche. Le rassemblement de ces paramètres se fait
+    * de façon assez simple en bouclant sur tous les éléments DOM de class &quot;param_search&quot;
+    * et en relevant leur valeur (seulement s&#x27;ils sont cochés pour les CB)
     * @method proceed
     * @async
     */
@@ -338,6 +347,18 @@ $.extend(window.Search,{
   {
     var text    = $(&#x27;div#search input#search_text&#x27;).val().trim()
     var params  = {}
+    $(&#x27;div#search_form .param_search&#x27;).each(function(){
+      var dom = $(this)[0]
+      if(dom.tagName == &#x27;INPUT&#x27; &amp;&amp; dom.type == &quot;checkbox&quot;)
+      {
+        if(dom.checked) params[dom.value] = true
+      }
+      else
+      {
+        params[$(this).attr(&#x27;data-param&#x27;)] = dom.value
+      }
+    })
+    dlog(&quot;params:&quot;);dlog(params)
     this.find(text, params)
   },
   /**
@@ -350,7 +371,11 @@ $.extend(window.Search,{
     */
   found:function(rajax)
   {
-    if(rajax.ok) this.display_found(rajax.found)
+    if(rajax.ok)
+    { 
+      F.clean()
+      this.display_found(rajax.found)
+    }
     else F.error(rajax.message)
   },
   
@@ -366,6 +391,7 @@ $.extend(window.Search,{
   {
     this.hide_form()
     this.show_result(purge=true)
+    $(&#x27;div#search div#search_result_list&#x27;).scrollTo(0,0)
     if(data.nombre_founds == 0)
     {
       this.write(&quot;Aucun résultat trouvé pour la recherche donnée.&quot;, {class:&#x27;warning&#x27;})
@@ -374,9 +400,66 @@ $.extend(window.Search,{
     {
       this.write(&quot;Nombre de résultats : &quot; + data.nombre_founds, {class:&#x27;bold&#x27;})
     }
-    this.write(&quot;Nombre fiches étudiées : &quot;+ data.nombre_fiches_etudiees)
+    this.write(&#x27;&lt;div style=&quot;small&quot;&gt;&#x27;,{raw:true})
+    this.write(&quot;Nombre fiches étudiées : &quot; + data.nombre_fiches_etudiees)
+    this.write(&quot;Nombre fiches rejetées : &quot; + data.nombre_rejecteds)
+    this.write(&#x27;&lt;/div&gt;&lt;hr /&gt;&#x27;,{raw:true})
+    
+    /*
+     * On affiche le listing des fiches contenues dans data.founds
+     */ 
+    var me = this
+    L(data.founds).each(function(dfound){
+      me.write(me.html_founded_text(dfound, {class:&#x27;found&#x27;}))
+    })
   },
-  
+  /**
+    * Retourne le code HTML à écrire dans la liste des résultats
+    *
+    * @method html_founded_text
+    * @param  {Object} dfound   Objet de la donnée trouvé dans la fiche
+    *   @param  {String}  dfound.id       Identifiant de la fiche
+    *   @param  {String}  dfound.type     Type de la fiche
+    *   @param  {String}  dfound.incipit  N premiers caractères
+    *   @param  {Array}   dfound.matches  
+    *                     Tous les textes trouvés, où chaque élément
+    *                     est un {Hash} contenant :
+    *                     @param  {String}  pre     N caractères avant le texte trouvé
+    *                     @param  {String}  post    N caractères après le texte trouvé
+    *                     @param  {String}  found   Le texte trouvé
+    *                     @param  {Number}  :offset L&#x27;offset du texte trouvé
+    * @return {String} Le code HTML construit
+    */
+  html_founded_text:function(dfound)
+  {
+    var c = this.link_to_show_fiche(dfound)
+    if(dfound.matches)
+    {
+      // Ajouter chaque texte trouvé
+      c += L(dfound.matches).collect(function(match){
+        return  &#x27;&lt;div class=&quot;subfound&quot;&gt;&#x27;+
+                  &#x27;&lt;span class=&quot;small&quot;&gt;&#x27;+match.pre+&#x27;&lt;/span&gt; &#x27;+
+                  &#x27;&lt;span class=&quot;match_found&quot;&gt;&#x27;+match.found + &#x27;&lt;/span&gt;&#x27; +
+                  &#x27; &lt;span class=&quot;small&quot;&gt;&#x27;+match.post +
+                  &#x27; [offset:&#x27; + match.offset + &#x27;]&lt;/span&gt;&#x27; +
+                &#x27;&lt;/div&gt;&#x27;
+      }).join(&quot;&quot;)
+    }
+    return c
+  },
+  /**
+    * Retourne le code HTML d&#x27;un &lt;a-link&gt; qui permettra d&#x27;afficher la fiche
+    * voulue.
+    * @method link_to_show_fiche
+    * @param  {Object} dfound   Objet tel que remonté par la recherche (cf. ci-dessus)
+    * @return {String} Le code HTML à copier dans la page
+    */
+  link_to_show_fiche:function(dfound)
+  {
+    return &#x27;&lt;a onclick=&quot;$.proxy(FICHES.show,FICHES,&#x27;+dfound.id+&#x27;,\&#x27;&#x27;+dfound.type+&#x27;\&#x27;)()&quot; style=&quot;cursor:pointer;&quot;&gt;&#x27; + 
+            &#x27;[&lt;span class=&quot;tiny&quot;&gt;&#x27;+dfound.type+&quot;:&quot;+dfound.id+&#x27;]&lt;/span&gt; &#x27;+
+            dfound.incipit+&#x27;&lt;/a&gt;&#x27;
+  },
   /**
     * Ecrit une ligne (div) dans le panneau de résultat
     * @method write
@@ -386,7 +469,9 @@ $.extend(window.Search,{
     */
   write:function(line, options)
   {
-    $(&#x27;div#search div#search_result_list&#x27;).append(this.compose_line_result(line,options))
+    if(undefined == options) options = {}
+    if(!options.raw) line = this.compose_line_result(line,options)
+    $(&#x27;div#search div#search_result_list&#x27;).append(line)
   },
   
   /**
@@ -398,7 +483,6 @@ $.extend(window.Search,{
     */
   compose_line_result:function(line, options)
   {
-    if(undefined == options) options = {}
     var tag = &#x27;&lt;div&#x27;
     var css = [&#x27;result&#x27;]
     if(options.class) css.push(options.class)
@@ -413,11 +497,15 @@ $.extend(window.Search,{
   /** Méthode appelée quand on clique sur la CB &quot;tous&quot; pour les types de 
     * fiche. Elle décoche ou elle coche tous les types en fonction du checked
     * de la case à cocher.
+    * Notes
+    *   * La méthode étant appelée à la construction du formulaire pour cocher
+    *     tous les types de fiche, il faut aussi traiter ici le cb &quot;Tous&quot;
     * @method onchange_tout_type_fiche
     * @param  {Boolean} coched  True si la case est cochée
     */
   onchange_tout_type_fiche:function(coched)
   {
+    $(&#x27;div#search input[type=&quot;checkbox&quot;]#param_search-fiche_type-all&#x27;)[0].checked = coched
     L(FICHES.datatype).each(function(id, dtype){
       $(&#x27;input[type=&quot;checkbox&quot;]#param_search-fiche_type-&#x27;+id)[0].checked = coched
     })
@@ -452,6 +540,8 @@ Object.defineProperties(Search,{
       { 
         if(!this.prepared) this.prepare_panneau
         this.prepare_form
+        // Pour cocher tous les types de fiche
+        this.onchange_tout_type_fiche(true)
       }
       return $(&#x27;div#search_form&#x27;)
     }
@@ -474,6 +564,10 @@ Object.defineProperties(Search,{
   /**
     * Prépare le panneau principal contenant le formulaire et le résultat
     * de la recherche
+    * Notes
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method prepare_panneau
     */
   &quot;prepare_panneau&quot;:{
     get:function(){
@@ -484,6 +578,8 @@ Object.defineProperties(Search,{
         &#x27;&lt;/div&gt;&#x27;
       )
       this.prepared = true
+      $(&#x27;div#search input[type=&quot;text&quot;]&#x27;).unbind(&#x27;keypress&#x27;)
+      $(&#x27;div#search input[type=&quot;text&quot;]&#x27;).bind(&#x27;keypress&#x27;,function(evt){return true})
       $(&#x27;div#search&#x27;).draggable()
     }
   },
@@ -497,6 +593,9 @@ Object.defineProperties(Search,{
     get:function(){
       $(&#x27;div#search div#search_form&#x27;).replaceWith(this.html_form)
       this.form_prepared = true
+      // Réglage de certaines valeurs
+      $(&#x27;select#param_search-dev_min&#x27;).val(&quot;0&quot;)
+      $(&#x27;select#param_search-dev_max&#x27;).val(&quot;9&quot;)
     }
   },
   
@@ -542,12 +641,12 @@ Object.defineProperties(Search,{
               &#x27;&lt;/div&gt;&#x27;
     }
   },
-  /**
-    * TODO
+  /** Retourne le code HTML des champs du formulaire de recherche
+    * @property {String} html_fields_form
+    * @static
+    * Traitement/Options à ajouter
     *   * Chercher seulement dans les fiches chargées (option très spéciale)
-    *   * types de fiches
     *   * ptype des paragraphes
-    *   * Même les fiches &quot;not printed&quot;
     */
   &quot;html_fields_form&quot;:{
     get:function(){
@@ -555,6 +654,7 @@ Object.defineProperties(Search,{
                 &#x27;&lt;input id=&quot;search_text&quot; type=&quot;text&quot; placeholder=&quot;Expression à rechercher&quot; /&gt;&#x27; +
                 this.fieldset_params  +
                 this.fieldset_options +
+                this.fieldset_retour  +
               &#x27;&lt;/div&gt;&#x27;
     }
   },
@@ -564,13 +664,29 @@ Object.defineProperties(Search,{
   &quot;fieldset_params&quot;:{
     get:function(){
       var c = &quot;&quot;
+      
+      c += &#x27;&lt;fieldset id=&quot;search_form_fs_typefiches&quot;&gt;&lt;legend&gt;Chercher dans type…&lt;/legend&gt;&#x27;
+      // Pour choisir le type de fiches
+      c += &#x27;&lt;div&gt;&#x27;
       c += UI.Html.checkbox(
-        {id:&quot;param_search-fiche_type-all&quot;, class:&quot;param_search&quot;, onchange:&quot;$.proxy(Search.onchange_tout_type_fiche, Search, this.checked)()&quot;, value:&quot;all&quot;, label:&quot;Tous&quot;})
+        {id:&quot;param_search-fiche_type-all&quot;, class:&quot;param_search&quot;, onchange:&quot;$.proxy(Search.onchange_tout_type_fiche, Search, this.checked)()&quot;, value:&quot;type_fiche-all&quot;, label:&quot;Tous&quot;})
       c += L(FICHES.datatype).collect(function(id,dtype){
         return UI.Html.checkbox({
-          id:&quot;param_search-fiche_type-&quot;+id, class:&quot;param_search&quot;, value:id, label:dtype.hname
+          id:&quot;param_search-fiche_type-&quot;+id, class:&quot;param_search&quot;, value:&#x27;type_fiche-&#x27;+id, label:dtype.hname.capitalize()
         })
       }).join(&quot;&quot;)
+      c += &#x27;&lt;/div&gt;&lt;div style=&quot;margin-top:10px;&quot;&gt;&#x27;
+      // Pour choisir le niveau de développement de la fiche
+      c += UI.Html.select({
+        id:&quot;param_search-dev_min&quot;, class:&quot;param_search&quot;, data:{&#x27;data-param&#x27;:&#x27;dev-min&#x27;},
+        label:&quot;D&#x27;un développement compris entre &quot;, options:FICHES.DATA_DEV
+      })
+      c += UI.Html.select({
+        id:&quot;param_search-dev_max&quot;, class:&quot;param_search&quot;, data:{&#x27;data-param&#x27;:&#x27;dev-max&#x27;},
+        label:&quot;&amp;nbsp;et &quot;, options:FICHES.DATA_DEV
+      })
+      c += &#x27;&lt;/div&gt;&#x27;
+      c += &#x27;&lt;/fieldset&gt;&#x27;
       return c
     }
   },
@@ -581,10 +697,23 @@ Object.defineProperties(Search,{
     get:function(){
       return &#x27;&lt;fieldset id=&quot;search_form_fs_options&quot;&gt;&lt;legend&gt;Options&lt;/legend&gt;&#x27; +
         L([
-          {id:&#x27;event_not_printed&#x27;, label:&quot;Même les “Not printed”&quot;, class:&quot;param_search&quot;, indiv:true}
+          {id:&#x27;event_not_printed&#x27;, label:&quot;Même dans les fiches “Not printed”&quot;, 
+          class:&quot;param_search&quot;, value:&quot;even_not_printed&quot;, indiv:true}
           ]).collect(function(dfield){
             return UI.Html.checkbox($.extend(dfield,{id:&quot;param_search-&quot;+dfield.id}))
         }).join(&quot;&quot;) + &#x27;&lt;/fieldset&gt;&#x27;
+    }
+  },
+  /** Retourne le code HTML pour les options de retour
+    * @property {String} fieldset_retour
+    */
+  &quot;fieldset_retour&quot;:{
+    get:function(){
+      var c = &quot;&quot;
+      c += &#x27;&lt;fieldset id=&quot;search_form-options_retour&quot;&gt;&lt;legend&gt;Options pour le retour&lt;/legend&gt;&#x27;
+      c += UI.Html.checkbox({id:&quot;param_search-whole_text&quot;, class:&quot;param_search&quot;, label:&quot;Remonter le texte entier (sinon, seulement extrait)&quot;, value:&quot;whole_text&quot;})
+      c += &#x27;&lt;/fieldset&gt;&#x27;
+      return c
     }
   },
   &quot;html_buttons_form&quot;:{

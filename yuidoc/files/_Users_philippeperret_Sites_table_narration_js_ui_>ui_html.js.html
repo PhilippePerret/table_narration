@@ -248,7 +248,7 @@ UI.Html = {
   {
     var c = &quot;&quot;
     if(dfield.label) c += &#x27;&lt;label for=&quot;&#x27;+dfield.id+&#x27;&quot;&gt;&#x27;+dfield.label+&#x27;&lt;/label&gt;&#x27;
-    c += this.tag($.extend(dfield, {tag:select}))
+    c += this.tag($.extend(dfield, {tag:&#x27;select&#x27;}))
     c += L(dfield.options).collect(function(option){
       return &#x27;&lt;option value=&quot;&#x27;+option.value+&#x27;&quot;&gt;&#x27;+option.title+&#x27;&lt;/option&gt;&#x27;
     }).join(&quot;&quot;)
@@ -282,15 +282,22 @@ UI.Html = {
     *   @param  {String}  dfield.value    La valeur de la tag (value)
     *   @param  {String}  dfield.class    La class CSS (if any)
     *   @param  {String}  dfield.onchange Le code à jouer en cas de changement
+    *   @param  {Object}  dfield.data     Objet pour les autres données. En clé le
+    *                                     nom de l&#x27;attribut (p.e. &quot;data-param&quot;) et en
+    *                                     valeur la valeur à lui donner.
     * @return le code HTML de la balise
     */
   tag:function(dfield)
   {
-    var t = &#x27;&lt;&#x27;.dfield.tag+&#x27; id=&quot;&#x27;+dfield.id+&#x27;&quot;&#x27;
+    var t = &#x27;&lt;&#x27;+dfield.tag+&#x27; id=&quot;&#x27;+dfield.id+&#x27;&quot;&#x27;
     if(dfield.type) t += &#x27; type=&quot;&#x27;+dfield.type+&#x27;&quot;&#x27;
     if(dfield.class) t += &#x27; class=&quot;&#x27;+dfield.class+&#x27;&quot;&#x27;
     if(dfield.onchange) t += &#x27; onchange=&quot;&#x27;+dfield.onchange+&#x27;&quot;&#x27;
     if(dfield.value) t += &#x27; value=&quot;&#x27;+dfield.value+&#x27;&quot;&#x27;
+    if(dfield.data)
+    {
+      t += L(dfield.data).collect(function(k,v){return &#x27; &#x27;+k+&#x27;=&quot;&#x27;+v+&#x27;&quot;&#x27;})
+    }
     if(dfield.tag == &#x27;input&#x27;) t += &#x27; /&gt;&#x27;
     else t += &#x27;&gt;&#x27;
     return t

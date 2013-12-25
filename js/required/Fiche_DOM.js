@@ -509,6 +509,9 @@ Object.defineProperties(Fiche.prototype,{
     * -----
     *   * Le traitement est spécial pour les livres, ils sont conservés
     *     dans l'ordre de leur placement sur la table
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method select_previous
     */
   "select_previous":{
     get:function(){

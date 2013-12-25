@@ -192,9 +192,9 @@ UI.Input = {
       // un ptype particulier
       if(fiche && fiche.ptype != 'text')
       {
-        /**
-          * Pour un ptype ≠ 'text', MAJ+Return permet de passer à la ligne
-          */
+        /*
+         * Pour un ptype ≠ 'text', MAJ+Return permet de passer à la ligne
+         */
         if(evt.shiftKey)
         {
           evt.stopPropagation()

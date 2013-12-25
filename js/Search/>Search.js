@@ -344,6 +344,10 @@ Object.defineProperties(Search,{
   /**
     * Prépare le panneau principal contenant le formulaire et le résultat
     * de la recherche
+    * Notes
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method prepare_panneau
     */
   "prepare_panneau":{
     get:function(){
