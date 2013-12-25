@@ -243,6 +243,11 @@ Object.defineProperties(Fiche.prototype,{
     *     pas encore chargés
     *
     * @method show
+    * @param  {Object|Undefined} options Options d'affichage
+    *   @param {Boolean}  options.select    Si true, sélectionne la fiche
+    *   @param {Boolean}  options.open      Si true, ouvre la fiche
+    *   @param {Function} options.suivre    La méthode pour suivre, if any
+    *   @param {Boolean}  options.no_light  Si true, pas de clignotement
     * @async
     */
   "show":{
@@ -296,6 +301,7 @@ Object.defineProperties(Fiche.prototype,{
     *     utilisés en cliquant sur la référence.
     *   * Si aucune option de sélection ou d'ouverture n'est demandé, la méthode
     *     fait simplement clignoter la fiche.
+    *   * Pour un paragraphe, il faut scroller jusqu'à lui dans la page.
     *
     * @method suite_show
     * @param  {Object|Null} options
@@ -307,6 +313,11 @@ Object.defineProperties(Fiche.prototype,{
   "suite_show":{
     value:function(options){
       if(undefined == options) options = {}
+      // if(this.is_paragraph && this.parent)
+      // {
+      //   this.parent.div_items.scrollTo(this.obj, 400, {axis:'y'})
+      //   F.show("Je dois scroller jusqu'à para:"+this.id)
+      // }
       if(options.select)  this.select
       if (options.open)   this.open
       if (!options.no_light) this.highlight()
@@ -346,6 +357,7 @@ Object.defineProperties(Fiche.prototype,{
       }
       this.color_highlight = this.color_highlight=="red" ? "" : "red"
       this.obj.css('border-color', this.color_highlight)
+      if(this.is_paragraph) this.obj.css('background-color', this.color_highlight)
     }
   },
   
