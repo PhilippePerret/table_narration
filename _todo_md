@@ -1,11 +1,6 @@
 IMPLÉMENTER
 -----------
-
-
-- Show fiche quand c'est un paragraphe :
-  > scroller jusqu'à lui
-  > l'highlighter aussi 
-
+cf. aussi l'issue list sur Github.
 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
@@ -22,15 +17,4 @@ PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
       de la référence (si pas possible, garder les mots en indexation normale)
     - Construire enfin les chapitres fictifs Filmographie et Bibliographie.
   
-  
-APERCU (souris hover un mot/film)
-- Penser à actualiser l'aperçu d'un item qui vient d'être modifié si cet
-  apercu existe dans le DOM
 
-SCÉNODICO (objet DICO / class Mot)
-FILMODICO
-  Les présenter comme des "livres" avec double panneau : à gauche la table
-  des matières (avec les onglets lettres, mais peut-être placés verticalement)
-  et à gauche le panneau de définition.
-  Pour l'édition, faire un troisième panneau qui s'ouvre aussi à gauche, sans
-  fermer les deux autres (pour pouvoir sélectionner des éléments de la liste)
