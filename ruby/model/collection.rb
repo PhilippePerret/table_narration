@@ -217,7 +217,6 @@ class Collection
     def path_current_config
       @path_current_config ||= File.join(folder, 'CURRENT_CONFIG.conf')
     end
-    
     def folder_fiches
       @folder_fiches ||= (getfolder File.join(folder, 'fiche'))
     end
@@ -228,6 +227,19 @@ class Collection
       @folder_backups ||= (getfolder File.join('.', 'collection', 'backup'))
     end
 
+    # Path au dossier contenant les ressources de la collection, tel que les
+    # images, les textes templates, etc.
+    def folder_ressource
+      @folder_ressource ||= (getfolder File.join(folder, 'ressource'))
+    end
+    # Path au dossier contenant les ressources textuelles
+    def folder_ressource_textes
+      @folder_ressource_textes ||= (getfolder File.join(folder_ressource, 'text'))
+    end
+    # Path au dossier contenant les ressources images
+    def folder_ressource_images
+      @folder_ressource_images ||= (getfolder File.join(folder_ressource, 'img'))
+    end
     
     def folder
       @folder ||= File.join('.', 'collection', name)

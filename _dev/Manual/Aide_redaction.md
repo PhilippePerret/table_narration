@@ -56,3 +56,35 @@ Ces options peuvent être&nbsp;:
     auteurs     Indication des auteurs du film.
 
 -
+
+##Paragraphes
+
+###Paragraphe image
+
+Un paragraphe peut être une image s'il est de type 'imag'.
+
+Pour définir le type 'imag', retourner le paragraphe et choisir le ptype 'Type: Image'.
+
+*Note&nbsp;: On peut aussi insérer une image dans un paragraphe à l'aide de la balise [img:path/dans/ressource/img/image.png|options].*
+
+###Paragraphes insérant le texte d'un fichier
+
+Ce sont des paragraphes de ptype 'file'. Pour le définir, retourner la fiche du paragraphe et choisir 'Type: Fichier à insérer' dans le menu des ptypes.
+
+Le texte du paragraphe doit alors être le chemin d'accès au fichier voulu.
+
+Ce chemin d'accès peut être&nbsp;:
+
+* Le chemin d'accès absolu (mais ne fonctionnera pas online)
+* Le chemin relatif depuis la racine de l'application (p.e. `../../dossier/fichier`)
+* Le chemin relatif dans le dossier ressource/textes de la collection. Si le fichier est à la racine du dossier, seul son nom importe.
+
+####Extension => type => traitement
+
+C'est l'extension du fichier qui va déterminer son type et donc son traitement avant d'être inscrit dans le paragraphe. Pour le moment, ces extensions sont possibles&nbsp;:
+
+* '**text**'. Un simple texte qui sera simplement traduit en HTML&nbsp;;
+* '**html**', 'htm'.   Un texte au format HTML, copié tel quel&nbsp;;
+* '**md**', '**markdown**'. Un fichier de type markdown&nbsp;;
+* '**rb**'. Un fichier de type ruby, qui sera joué. Un tel fichier doit "putter" le texte à écrire&nbsp;;
+* '**evc**'. Un fichier de type évènemencier, comme on peut le trouver dans le dossier des films interdata.

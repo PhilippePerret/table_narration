@@ -2,6 +2,32 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+- Définir le type 'imag'
+  > Faire son traitement dans ColText
+- Définir la balise 'img' : [img:<path>|<options>]
+  > Une image doit obligatoirement se trouve dans le dossier ressource/img/ de la
+  collection.
+  > Traiter la balise dans ColText
+  
+- Insertion de fichier
+  > Au chargement de la fiche paragraphe, si son ptype n'est pas 'text', il faut
+  renseigner sa propriété real_text.
+  > note: il le détecter au chargement de la fiche et remonter aussi le fichier
+  > Le fichier doit être traité (côté serveur) suivant son type :
+    - evc => évènemencier
+    - rb  => fichier ruby à interpréter
+    - js  => fichier javascript à charger (et jouer en chargeant)
+    - txt => texte brut
+  
+  > On doit mettre le path pour pouvoir charger un fichier de n'importe où
+- ALIAS : Une page peut être un alias d'une autre page
+  > Elle ne peut pas être éditée
+  > Un bouton doit permettre de pouvoir éditer l'original
+  > L'originale doit être chargée pour pouvoir afficher le texte de l'alias
+— Lecture du livre : on doit pouvoir le lire de page en page
+  > Pomme+R pour lancer la lecture
+  > Renseigner le menu contextuel
+
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
   - Les considérer comme des chapitres Filmographie, Bibliographie, Scénodico

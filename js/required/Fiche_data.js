@@ -348,14 +348,18 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   /**
-    *  Retourne une valeur pour le champ principal (titre ou texte)
+    * Retourne une valeur pour le champ principal (titre ou texte)
     *
-    *  NOTES
-    *  -----
-    *    * Cette méthode renvoie le texte brut si +formate+ est FALSE
-    *      Dans le cas contraire, elle le met en forme.
+    * NOTES
+    * -----
+    *   * Cette méthode renvoie le texte brut si +formate+ est FALSE
+    *     Dans le cas contraire, elle le met en forme.
+    *   * La méthode est asynchrone lorsqu'un paragraphe vient d'être défini
+    *     d'un type particulier comme 'file' et que le chargement du fichier
+    *     est nécessaire.
     *
     * @method main_field_value
+    *
     * @param  {Boolean} formate   
     *                   Si TRUE le texte est interprété, i.e. par exemple que
     *                   ses balises de référence ([<balise>:<valeur>]) sont mises

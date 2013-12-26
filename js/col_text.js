@@ -54,10 +54,15 @@ window.ColText = {
     if(cible.is_paragraph && cible.ptype != 'text')
     {
       this.traite_code_by_ptype(cible)
+      if(!this.code) return // => asynchrone
     }
-    if(code.indexOf('[film:')) this.traite_balises_films()
-    if(code.indexOf('[mot:]')) this.traite_balises_mots()
-    if(code.indexOf('[ref:]')) this.traite_balises_refs(cible)
+    /*  Il faut absolument utiliser `this.code` ci-dessous, car la méthode
+     *  this.traite_code_by_ptype ci-dessus peut avoir changé la valeur du 
+     *  code (lorsque le paragraphe n'est pas de ptype 'text')
+     */
+    if(this.code.indexOf('[film:')) this.traite_balises_films()
+    if(this.code.indexOf('[mot:]')) this.traite_balises_mots()
+    if(this.code.indexOf('[ref:]')) this.traite_balises_refs(cible)
     return this.code
   },
   
@@ -67,7 +72,6 @@ window.ColText = {
    */
   traite_balises_films:function()
   {
-    var c, dfilm ;
     this.code = this.code.replace(/\[film:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, fid, ftitre, options, offset){ 
       return get_film(fid).formate(options.split(' '), skip_loading = true)
       /*
@@ -84,7 +88,6 @@ window.ColText = {
    */
   traite_balises_mots:function()
   {
-    var c, dfilm ;
     this.code = this.code.replace(/\[mot:([^\|]+)\|([^\]\|]+)\|?([^\]]+)?\]/g, function(match, id, title, options, offset){ 
       return get_mot(id).formate(options.split(' '), skip_loading = true)
       /*
@@ -101,7 +104,6 @@ window.ColText = {
    */
   traite_balises_refs:function(cible)
   {
-    var c, dfilm ;
     this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]]+)\]/g, function(match, id, title, offset){ 
       return get_ref(id).formate(cible, title, skip_loading = true)
       /*
@@ -117,6 +119,8 @@ window.ColText = {
     * Traitement du code d'un paragraphe dont le ptype n'est pas 'text'
     * Notes
     *   * La méthode est asynchrone seulement pour les ptype(s) 'file' et 'fico'
+    *     Dans le cas contraire, on rappelle immédiatement la méthode formate.
+    *
     * @method traite_code_by_ptype
     * @async
     * @param  {Paragraph} ipara   L'instance du paragraphe
@@ -128,6 +132,7 @@ window.ColText = {
     switch(ipara.ptype)
     {
     case 'text':
+      // Rien à faire
       break
     case 'list':
       c = L(c.split("\n")).collect(function(line){return '<li>'+line+'</li>'}).join('')
@@ -157,6 +162,11 @@ window.ColText = {
       }
       break
     case 'file':
+      c = ipara.real_text
+      if(!c)
+      {
+        ipara.load_file($.proxy(this.formate, this))
+      }
       break
     case 'fico':
       break

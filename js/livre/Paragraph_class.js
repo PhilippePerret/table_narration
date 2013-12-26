@@ -11,8 +11,20 @@
 window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
-  data.type   = 'para'
-  data.ptype  = 'text'
+  data.type       = 'para'
+  /**
+    * `ptype` du paragraphe définissant si c'est un texte normal ('text') ou
+    * autre chose tel qu'un fichier à inclure, etc.
+    * @property {String} ptype
+    * @default 'text'
+    */
+  data.ptype      = 'text'
+  /**
+    * Texte réel du paragraphe lorsqu'il n'est pas de type 'text'
+    * @property {String} real_text
+    * @default Null
+    */
+  data.real_text  = null
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
@@ -35,7 +47,9 @@ Object.defineProperties(Paragraph.prototype,{
     * Le « ptype » du paragraphe indique son type propre, à savoir :
     *   * text  : Un texte "normal" qui sera juste formaté (défaut)
     *   * file  : Un paragraphe qui charge un fichier externe
-    *   * code  : Du code à interpréter.
+    *   * code  : Du code javascript à interpréter.
+    *   * ruby  : Du code ruby à évaluer
+    *   * fico  : Un fichier contenant du code à évaluer
     * @property {String|Null} ptype
     */
   "ptype":{
@@ -207,6 +221,42 @@ Object.defineProperties(Paragraph.prototype,{
 })
 
 $.extend(Paragraph.prototype,{
+  /**
+    * Chargement du fichier associé au paragraphe
+    *
+    * Notes
+    *   * La méthode renseigne la propriété `real_text` du paragraphe.
+    *   * Cette méthode n'est nécessaire que lorsque le ptype du paragraphe
+    *     vient d'être redéfini et qu'il fait appel à un fichier. Dans le cas 
+    *     courant, c'est la procédure de chargement de la fiche qui renseigne côté
+    *     serveur la propriété real_text.
+    *
+    * @method load_file
+    * @async
+    * @param  {Function}  poursuivre   
+    *                     La méthode pour suivre, qui doit recevoir en premier argument
+    *                     le code remonté et en second le paragraphe courant. Cela est
+    *                     dû au fait que la méthode est principalement appelé par 
+    *                     ColText.formate.
+    */
+  load_file:function(poursuivre, rajax)
+  {
+    if(undefined == rajax)
+    {
+      Ajax.send(
+        {script:'file/load', file_path:this.texte},
+        $.proxy(this.load_file, this, poursuivre)
+      )
+    }
+    else if(rajax.ok)
+    {
+      if(rajax.need_create) F.show(rajax.need_create) // quand fichier créé
+      this.real_text = rajax.file_real_text
+      if('function'==typeof poursuivre) poursuivre(this.real_text, this)
+    }
+    else F.error(rajax.message)
+  },
+  
   /**
     * Méthode appelée quand on modifie le ptype du paragraphe
     *
