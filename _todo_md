@@ -2,6 +2,15 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+VIEUX TEXTES
+  Commencer à mettre en place la procédure de récupération des anciens fichiers
+  du site.
+  > Bien réfléchir à comment faire pour les transformer en fichier narration.
+  > Penser à traiter toutes les balises 
+    - à commencer par film et mot
+    - mais aussi <personnage>, <acteur>, etc. (voir les autres)
+    - les références ?
+    
 INSERTION FICHIER
   > Traitement des fichiers de type évènemenciers
   
