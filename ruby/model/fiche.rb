@@ -1,4 +1,5 @@
 class Fiche
+  require '../interdata/file/ruby/model/pfile.rb' # pour paragraphe de ptype 'file'
   
   # ---------------------------------------------------------------------
   #   Classe
@@ -199,6 +200,26 @@ class Fiche
     @book ||= get_book
   end
   
+  # Pour un paragraphe de ptype différent de 'text', retourne
+  # son vrai texte (celui qui sera affiché).
+  # 
+  # Notes
+  #   * Le fichier peut être défini soit par son path absolu ou relatif depuis
+  #     la racine de l'application, soit par son path relatif dans le dossier
+  #     ressource des textes.
+  # 
+  def real_text
+    @real_text ||= begin
+      file_path = "#{main_value}"
+      file_path = File.join(Collection::folder_ressource_textes, file_path) unless File.exists? file_path
+      if File.exists? file_path
+        PFile.new(file_path).to_html
+      else
+        "[#Impossible de charger le texte : Fichier introuvable: #{file_path}]"
+      end
+    end
+  end
+  
   # ---------------------------------------------------------------------
   #   Status
   # ---------------------------------------------------------------------
@@ -309,8 +330,19 @@ class Fiche
     @children ||= data['enfants']
   end
   
+  # Retourne les données de la fiche, enregistrées dans son fichier Marshal.
+  # Notes
+  #   * Pour une fiche de type paragraphe, si son ptype n'est pas 'text', il
+  #     faut effectuer un traitement pour renseigner la propriété 'real_text'
+  # @return {Hash} Les données de la fiche.
   def data
-    @data ||= Marshal.load( File.read path )
+    @data ||= begin
+      # Ci-dessous, il faut vraiment définir déjà @data pour que les méthodes
+      # paragraph? etc. et le traitement de `real_text' puisse fonctionner.
+      @data = Marshal.load( File.read path )
+      @data['real_text'] = real_text if paragraph? && ptype != 'text'
+      @data
+    end
   end
   
   # Renvoie un affixe, calculé d'après le titre, qui permettra
