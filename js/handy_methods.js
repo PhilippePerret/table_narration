@@ -150,13 +150,32 @@ window.help = function(message)
   * <collection>/ressource/img/ de la collection.
   *
   * @method image_ressource
-  * @param  {String} relpath    Path relatif à partir du dossier ressource/img
-  * @param  {Object} attrs      Attributs optionnels
+  * @param  {String} relpath   Path relatif à partir du dossier ressource/img
+  * @param  {Array} attrs      Attributs optionnels. C'est une liste composée de duo
+  *                            [attr=valeur attr=valeur]
   * @return {String} Le code HTML à utiliser.
   */
 window.image_ressource = function(path, attrs)
 {
-  return UI.Html.img('./collection/'+Collection.name+'/ressource/img/'+path, attrs)
+  var params = {}
+  if(attrs)
+  {
+    var style = []
+    L(attrs).each(function(duo){
+      if(duo.trim() == "") return
+      if(duo.indexOf('=') < 0)
+      {
+        return F.error(LOCALE.image.error['bad options in balise'].
+                        replace(/_OPTION_/, duo).
+                        replace(/_BALISE_/, attrs))
+      }
+      style.push(duo.split('=').join(':') + ';')
+    })
+    params.data = {}
+    params.data['style'] = style.join("")
+  }
+  dlog("params:");dlog(params)
+  return UI.Html.img('./collection/'+Collection.name+'/ressource/img/'+path, params)
 }
 /**
   * Retourne le code HTML pour afficher l'image de path +path+

@@ -829,47 +829,39 @@ $.extend(Fiche.prototype,{
     *   * C'est vraiment cette fonction qui inaugure le changement du
     *     titre, car si c'était `titre=` (propriété complexe), on aura
     *     une difficulté à la définition des fiches remontées.
+    *   * Les méthodes `onchange_titre` et `onchange_texte` ont été 
+    *     différentiées car le traitement est très différent pour un texte.
     *
-    *
-    * @method onchange_texte
+    * @method onchange_titre_or_texte
     * @param  {Event} evt   L'Onchange Event.
+    *
     * @return {True} si la donnée a été prise en compte, {False} dans le cas contraire.
     */
   onchange_titre_or_texte:function(evt)
   {
     var idm = "Fiche::onchange_titre_or_texte ["+this.type_id+"]"
-    dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
+    dlog("---> "+idm, DB_FCT_ENTER)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val().trim()
-    new_value = this.value_by_ptype( new_value )
     if(new_value == "") return F.error(LOCALE.fiche.error['no empty text'])
-    if(this[prop] != new_value)
-    {
-      this[prop]    = new_value
-      this.modified = true    
-    }
-    if(this.is_chapter) this.close
+    if(this.is_paragraph)   this.onchange_texte(new_value)
+                      else  this.onchange_titre(new_value)
     dlog("<- "+idm, DB_FCT_ENTER)
     return true
   },
   
   /**
-    * Traite la nouvelle valeur du paragraphe (si c'est un paragraphe) en
-    * fonction de son ptype. Pour le moment, la méthode se contente de transformer
-    * les `**' en retours chariot dans les paragraphes de ptype 'list' et 'code'
-    * @method value_by_ptype
-    * @param  {String} value  La valeur à traiter
-    * @return {String} la nouvelle valeur au besoin
+    * Procède au change de titre de la fiche (tout type sauf paragraphe)
+    * @method onchange_titre
+    * @param  {String}  new_value   La nouvelle valeur à donner au titre
     */
-  value_by_ptype:function(value)
-  {
-    if(this.is_not_paragraph) return value
-    if(this.ptype == 'list' || this.ptype == 'code')
+  onchange_titre:function(new_value){
+    if(this.titre != new_value)
     {
-      value = value.split('**')
-      value = L(value).collect(function(line){ return line.trim() }).join("\n")
+      this.titre    = new_value
+      this.modified = true    
     }
-    return value
+    if(this.is_chapter) this.close
   }
   
 })

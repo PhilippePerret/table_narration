@@ -54,12 +54,33 @@ window.LOCALE = {
     }
   },
   
+  // LOCALE.image
+  image:{
+    
+    // LOCALE.image.error
+    error:{
+      'bad format'            : "L'image `_PATH_IMAGE_` n'est pas d'un format reconnu (png, jpg, "+
+                                "jpeg, gif, tif, tiff). Vous devez la modifier.",
+      'bad options in balise' : "Mauvaise option `_OPTION_' dans la balise `_BALISE_'. Les options doivent "+
+                                "être composée de `attribut=valeur` et être séparés par des espaces simples."
+    }
+  },
   // LOCALE.paragraph
   paragraph:{
     
     // LOCALE.paragraph.tip
     tip:{
-      'how to create a new para'    : "Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER."
+      'how to create a new para'  : "Tip: Pour créer un nouveau paragraphe à la suite d'un paragraphe édité, utiliser CMD + ENTER.",
+      'new images'                :
+        "De nouvelles images ont été ajoutées (_IMAGES_).\nPour qu'elles puissent être utilisées "+
+        "pour la publication, elles doivent exister, au même endroit, au format PostScript (.ps)."+
+        "Cette image postscript sera copiée dans le dossier "+
+        "publication (./publication/source/ressource/_COLLECTION_/img/)."
+    },
+    
+    // LOCALE.paragraph.message
+    message:{
+      
     },
     
     //LOCALE.paragraph.error

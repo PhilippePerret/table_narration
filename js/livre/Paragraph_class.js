@@ -256,7 +256,72 @@ $.extend(Paragraph.prototype,{
     }
     else F.error(rajax.message)
   },
+
+  /**
+    * Méthode appelée quand on change le texte d'un paragraphe
+    * Notes
+    * -----
+    *   * La méthode a été séparée de `onchange_titre_or_texte` pour pouvoir
+    *     faire un traitement plus précis sur le texte. Inauguré pour rechercher
+    *     les éventuelles ajouts de balises [img:...] et donner un texte d'explication
+    *     pour leur traitement pour la publication.
+    *
+    * @method onchange_titre
+    * @param  {String} new_value La nouvelle valeur
+    * @return {Boolean} True si le nouveau texte a été enregistré, false otherwise
+    */
+  onchange_texte:function(new_value){
+    if(this.texte != new_value)
+    {
+      if(false == this.check_new_texte(new_value)) return false // mauvaise donnée
+      this.texte = new_value
+      this.modified = true    
+      return true
+    }
+    else
+    {
+      return false
+    }
+  },
   
+  /**
+    * Check le nouveau texte avant de le prendre en compte.
+    * @method check_new_texte
+    * @param  {String} new_texte  Le nouveau texte.
+    */
+  check_new_texte:function(new_texte)
+  {
+    var old_texte = "" + (this.texte||"") // un clone
+    if(new_texte.indexOf("[img:") < 0) return // rien à faire
+    var new_imgs = new_texte.match(/\[img\:([^\|\]]+)(?:\||\])/g)
+    new_imgs = L(new_imgs).collect(function(str){return str.substring(5, str.length-1)});
+    var old_imgs = old_texte.match(/\[img\:([^\|\]]+)(?:\||\])/g)
+    old_imgs = L(old_imgs).collect(function(str){return str.substring(5, str.length-1)});
+    var very_new_images = []
+    for(var i in new_imgs)
+    {
+      if(old_imgs.indexOf(new_imgs[i]) < 0) very_new_images.push(new_imgs[i])
+    }
+    if(very_new_images.length)
+    {
+      // On vérifie que toutes les extensions soient des extensions images valides
+      L(very_new_images).each(function(rpath){
+        var dec = rpath.lastIndexOf('.') + 1
+        var ext = rpath.substring(dec, rpath.length)
+        if(['jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff'].indexOf(ext) < 0)
+        {
+          F.error(LOCALE.image.error['bad format'].replace(/_PATH_IMAGE_/, rpath))
+          return false
+        }
+      })
+      F.show(
+        LOCALE.paragraph.tip['new images'].
+          replace(/_IMAGES_/, very_new_images.join(', ')).
+          replace(/_COLLECTION_/, Collection.name)
+      )
+    }
+    return true
+  },
   /**
     * Méthode appelée quand on modifie le ptype du paragraphe
     *

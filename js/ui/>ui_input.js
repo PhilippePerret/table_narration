@@ -277,8 +277,11 @@ UI.Input = {
            */
           if(kmeta)
           {
-            dlog("cmd-v")
-            if(App.coller_clipboard) return stop_event(evt)
+            if(App.clipboard)
+            {
+              App.coller_clipboard
+              return stop_event(evt)
+            } 
             else return true
           }
           break

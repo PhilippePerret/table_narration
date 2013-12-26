@@ -2,22 +2,13 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+-#! Les images postscript construites doivent être enregistrées dans le 
+    dossier ./publication/source/ressource/<COLLECTION>/img
+      (pour le moment, <COLLECTION> n'est pas utilisé)
 - Accompagner l'inscription de balises image dans le texte des paragraphes :
-  > Détecter dans le code lorsqu'une balise image a été ajoutée.
-    Pour ce faire, il faut comparer le code avant et après, en considérant qu'une
-    balise était peut-être déjà présente. Elle a pu être modifiée, ou une nouvelle
-    image a pu être ajoutée.
-  > Lorsque c'est le cas, tester l'extension de l'image
-  > Si l'extension est OK (jpg, png, gif), indiquer à l'user que cette image,
-    si elle existe, sera convertie en image postscript.
-    Mais pour ce faire, on a besoin de connaitre les dimensions à donner à l'image,
-    si elles doivent être changées. C'est dans les options de la balise qu'on indique
-    la chose.
 
 - Définir le ptype 'imag'
   > Faire son traitement dans ColText
-- Définir la balise 'img' : [img:<path>|<options>]
-  > Traiter la balise builder (voir comment on insert une image dans LaTex)
   
 - Insertion de fichier
   > Traitement des fichiers de type évènemenciers

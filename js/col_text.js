@@ -133,7 +133,7 @@ window.ColText = {
   traite_balises_images:function()
   {
     this.code = this.code.replace(/\[img:([^\|\]]+)(?:\|([^\]]+))?\]/g, function(match, path, attrs, offset){
-      if(attrs) attrs = JSON.parse(attrs)
+      if(attrs) attrs = attrs.split(' ')
       return image_ressource(path, attrs)
     })
   },

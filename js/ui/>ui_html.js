@@ -87,11 +87,12 @@ UI.Html = {
     */
   tag:function(dfield)
   {
-    var t = '<'+dfield.tag+' id="'+dfield.id+'"'
-    if(dfield.type) t += ' type="'+dfield.type+'"'
-    if(dfield.class) t += ' class="'+dfield.class+'"'
-    if(dfield.onchange) t += ' onchange="'+dfield.onchange+'"'
-    if(dfield.value) t += ' value="'+dfield.value+'"'
+    var t = '<'+dfield.tag
+    if(dfield.id        ) t += ' id="'+dfield.id+'"'
+    if(dfield.type      ) t += ' type="'+dfield.type+'"'
+    if(dfield.class     ) t += ' class="'+dfield.class+'"'
+    if(dfield.onchange  ) t += ' onchange="'+dfield.onchange+'"'
+    if(dfield.value     ) t += ' value="'+dfield.value+'"'
     if(dfield.data)
     {
       t += L(dfield.data).collect(function(k,v){return ' '+k+'="'+v+'"'})
