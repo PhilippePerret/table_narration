@@ -4,6 +4,11 @@
 
 Taille maximale (intérieur d'un format A5 = 11cm)
 
+##Nom de l'image
+
+Il vaut mieux prendre un nom ne contenant que des lettes (a-z, A-Z), des chiffres et le signe moins ("-"). Tous les autres caractères, à commencer par le trait plat ("_") seront supprimés du fichier qui sera dupliqué vers le dossier publication, pour éviter tout ennui dans le traitement du path (sinon, "paradigme_field.png" se transforme en "paradigme\_field.ps", ce qui plante latex)
+
+
 ##Balise image
 
 La balise image s'écrit dans le texte par :
