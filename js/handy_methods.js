@@ -146,6 +146,19 @@ window.help = function(message)
 }
 
 /**
+  * Retourne le code HTML pour afficher une image du dossier 
+  * <collection>/ressource/img/ de la collection.
+  *
+  * @method image_ressource
+  * @param  {String} relpath    Path relatif à partir du dossier ressource/img
+  * @param  {Object} attrs      Attributs optionnels
+  * @return {String} Le code HTML à utiliser.
+  */
+window.image_ressource = function(path, attrs)
+{
+  return UI.Html.img('./collection/'+Collection.name+'/ressource/img/'+path, attrs)
+}
+/**
   * Retourne le code HTML pour afficher l'image de path +path+
   *
   * Notes

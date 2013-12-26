@@ -63,6 +63,7 @@ window.ColText = {
     if(this.code.indexOf('[film:')) this.traite_balises_films()
     if(this.code.indexOf('[mot:]')) this.traite_balises_mots()
     if(this.code.indexOf('[ref:]')) this.traite_balises_refs(cible)
+    if(this.code.indexOf('[img:]')) this.traite_balises_images()
     return this.code
   },
   
@@ -114,6 +115,28 @@ window.ColText = {
     })
   },
   
+  /**
+    * Traitement des balises de type image dans le texte du paragraphe
+    * Notes
+    *   * Une balise de type image possède ce format :
+    *       [img:path/in/collection/ressource/img/|attrs]
+    *       où `attrs` est un {Object} en string qui doit pouvoir être parsé par
+    *       JSON et qui défini les attributs de l'image.
+    *       @example :
+    *           [img:mon_image.png|{"id":"idimage", "title":"Titre de l'image"}]
+    *   * Donc une image doit obligatoirement être contenue dans le dossier
+    *     ressource/img/ de la collection.
+    *
+    * @method traite_balises_images
+    * @products Le traitement de this.code
+    */
+  traite_balises_images:function()
+  {
+    this.code = this.code.replace(/\[img:([^\|\]]+)(?:\|([^\]]+))?\]/g, function(match, path, attrs, offset){
+      if(attrs) attrs = JSON.parse(attrs)
+      return image_ressource(path, attrs)
+    })
+  },
   
   /**
     * Traitement du code d'un paragraphe dont le ptype n'est pas 'text'
@@ -133,7 +156,7 @@ window.ColText = {
     {
     case 'text':
       // Rien à faire
-      break
+      return
     case 'list':
       c = L(c.split("\n")).collect(function(line){return '<li>'+line+'</li>'}).join('')
       c = '<ul>'+c+'</ul>'

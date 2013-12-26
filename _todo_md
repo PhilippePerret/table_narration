@@ -2,7 +2,7 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
-- Définir le type 'imag'
+- Définir le ptype 'imag'
   > Faire son traitement dans ColText
 - Définir la balise 'img' : [img:<path>|<options>]
   > Une image doit obligatoirement se trouve dans le dossier ressource/img/ de la

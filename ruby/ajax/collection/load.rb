@@ -47,6 +47,8 @@ NOTES
 =end
 require 'json'
 
+# Juste pour crée le dossier image
+Collection::folder_ressource_images
 
 # Méthode principale appelée pour charger les fiches nécessaires
 # de la collection à son chargement.

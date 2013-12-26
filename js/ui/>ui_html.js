@@ -54,6 +54,24 @@ UI.Html = {
     return c
   },
   
+  /**
+    * Retourne le code HTML pour une image de path +path+ et d'attributs
+    * optionnels +attrs+.
+    *
+    * @method img
+    * @param  {String} path   Chemin d'accès à l'image
+    * @param  {Object|Undefined} attrs    Attributs à appliquer à la balise
+    * @return {StringHTML} Le code HTML pour charger l'image
+    */
+  img:function(path, attrs)
+  {
+    if(!attrs) attrs = {}
+    attrs.tag  = 'img'
+    if(!attrs.data) attrs.data = {src:null}
+    attrs.data.src = path
+    return this.tag( attrs )
+  },
+  
   /** Méthode générale préparant une balise
     * @method tag
     * @param  {Object} dfield   Donnée pour le champ
@@ -78,7 +96,7 @@ UI.Html = {
     {
       t += L(dfield.data).collect(function(k,v){return ' '+k+'="'+v+'"'})
     }
-    if(dfield.tag == 'input') t += ' />'
+    if(dfield.tag == 'input' || dfield.tag == 'img') t += ' />'
     else t += '>'
     return t
   }
