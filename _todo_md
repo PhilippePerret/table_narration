@@ -2,15 +2,7 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
--#! Les images postscript construites doivent être enregistrées dans le 
-    dossier ./publication/source/ressource/<COLLECTION>/img
-      (pour le moment, <COLLECTION> n'est pas utilisé)
-- Accompagner l'inscription de balises image dans le texte des paragraphes :
-
-- Définir le ptype 'imag'
-  > Faire son traitement dans ColText
-  
-- Insertion de fichier
+INSERTION FICHIER
   > Traitement des fichiers de type évènemenciers
   
 - ALIAS : Une page peut être un alias d'une autre page
