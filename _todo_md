@@ -2,24 +2,26 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+- Accompagner l'inscription de balises image dans le texte des paragraphes :
+  > Détecter dans le code lorsqu'une balise image a été ajoutée.
+    Pour ce faire, il faut comparer le code avant et après, en considérant qu'une
+    balise était peut-être déjà présente. Elle a pu être modifiée, ou une nouvelle
+    image a pu être ajoutée.
+  > Lorsque c'est le cas, tester l'extension de l'image
+  > Si l'extension est OK (jpg, png, gif), indiquer à l'user que cette image,
+    si elle existe, sera convertie en image postscript.
+    Mais pour ce faire, on a besoin de connaitre les dimensions à donner à l'image,
+    si elles doivent être changées. C'est dans les options de la balise qu'on indique
+    la chose.
+
 - Définir le ptype 'imag'
   > Faire son traitement dans ColText
 - Définir la balise 'img' : [img:<path>|<options>]
-  > Une image doit obligatoirement se trouve dans le dossier ressource/img/ de la
-  collection.
-  > Traiter la balise dans ColText
+  > Traiter la balise builder (voir comment on insert une image dans LaTex)
   
 - Insertion de fichier
-  > Au chargement de la fiche paragraphe, si son ptype n'est pas 'text', il faut
-  renseigner sa propriété real_text.
-  > note: il le détecter au chargement de la fiche et remonter aussi le fichier
-  > Le fichier doit être traité (côté serveur) suivant son type :
-    - evc => évènemencier
-    - rb  => fichier ruby à interpréter
-    - js  => fichier javascript à charger (et jouer en chargeant)
-    - txt => texte brut
+  > Traitement des fichiers de type évènemenciers
   
-  > On doit mettre le path pour pouvoir charger un fichier de n'importe où
 - ALIAS : Une page peut être un alias d'une autre page
   > Elle ne peut pas être éditée
   > Un bouton doit permettre de pouvoir éditer l'original

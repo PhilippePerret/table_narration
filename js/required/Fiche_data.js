@@ -112,8 +112,8 @@ Object.defineProperties(Fiche.prototype,{
   "data":{
     get:function(){
       data = {
-        id:this.id, type:this.type, titre:this.titre,
-        top:this.top, left:this.left, dev:(this.dev || 0)
+        id:this.id, type:this.type, top:this.top, left:this.left, 
+        dev:(this.dev || 0)
       }
       if(this.deleted)      data.deleted = true
       if(this.not_printed)  data.not_printed = true
@@ -128,10 +128,14 @@ Object.defineProperties(Fiche.prototype,{
       if(this.is_book) data.real_titre  = this.real_titre
       if(this.is_paragraph)
       {
-        data.texte  = this.texte
+        data.texte  = this.texte.stripSlashes()
         if(this._style) data.style = this._style.join('.')
         if(this.ptype)  data.ptype = this.ptype
-      } 
+      }
+      else
+      {
+        data.titre = this.titre.stripSlashes()
+      }
       return data
     }
   },

@@ -21,6 +21,8 @@ param(:fiches).each do |data|
   File.unlink(ifiche.path) if ifiche.exists?
   # Si c'est vraiment une sauvegarde
   unless data['deleted'] == "true"
+    data['texte'] = data['texte'].strip_slashes unless data['texte'].nil?
+    data['titre'] = data['titre'].strip_slashes unless data['titre'].nil?
     File.open(ifiche.path, 'wb'){|f| f.write (Marshal.dump data)}
     upper_id = ifiche.id if ifiche.id > upper_id
   else

@@ -6,7 +6,7 @@
 # == Data de la fiche à voir ==
 FOLDER_COLLECTION = "test" # "current"
 FICHE_TYPE  = 'para'
-FICHE_ID    = 7
+FICHE_ID    = 17
 # == / Data ==
 
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
