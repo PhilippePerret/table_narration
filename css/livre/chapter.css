@@ -4,7 +4,7 @@
  */
 fiche.chap {
   background-color : white;
-  color   : #0075B6;
+/*  color   : #0075B6; cf. .titre */
   width   : auto;
 /*  opacity :0.5;*/
 }
@@ -17,6 +17,7 @@ fiche.chap.ranged {
   padding     : 0 4px 0 0;
 }
 fiche.chap > recto > .titre {
+  color       : #376ECF;
   font-size   : x-large;
 }
 

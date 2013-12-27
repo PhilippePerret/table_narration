@@ -129,6 +129,12 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = 'open'     ; break
   case Key_f:   cplx_meth = 'close'    ; break
   case Key_d:   cplx_meth = 'deselect' ; break
+  case Key_l:
+    if(FICHES.current.is_book && evt.metaKey) // => Lecture du livre
+    {
+      FICHES.current.read({from:0})
+    }
+    break
   case Key_p:
     if(evt.metaKey)
     {

@@ -58,7 +58,7 @@ fiche > recto > input.titre {
   width:98%;
 }
 fiche.selected { 
-  border-color: blue !important; 
+  border-color: #F000FF !important; 
 }
 
 /* Fiche survolée par enfant potentiel */

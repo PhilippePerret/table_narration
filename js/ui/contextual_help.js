@@ -119,7 +119,11 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this['show_'+(fi.retourned?'recto':'verso')]
         aide += this['return_change_'+(ispara?'texte':'titre')]
-        if(fi.is_book) aide += this.cmd_p_publish
+        if(fi.is_book) 
+        {
+          aide += this.cmd_p_publish
+          aide += this.cmd_l_read_book
+        }
         aide += this['r_reference']
       }
         
@@ -193,6 +197,10 @@ Object.defineProperties(ContextualHelp, {
   "k_f":{get:function(){
     if(undefined == this._k_f) this._k_f = this.k_lettre('F')
     return this._k_f
+  }},
+  "k_l":{get:function(){
+    if(undefined == this._k_l) this._k_l = this.k_lettre('L')
+    return this._k_l
   }},
   "k_m":{get:function(){
     if(undefined == this._k_m) this._k_m = this.k_lettre('M')
@@ -284,7 +292,8 @@ $.extend(CH, {
                           " (+ "+CH.k_ctrl+" seulement TdM)",
   'r_reference'         : CH.del + CH.k_r+" -> Référence",
   'cmd_v_coller_ref'    : CH.del + CH.k_cmd+CH.k_v+" Coller réf.",
-  'maj_return_new_item' : CH.del + CH.k_maj+CH.k_return+" Nouvel item"
+  'maj_return_new_item' : CH.del + CH.k_maj+CH.k_return+" Nouvel item",
+  'cmd_l_read_book'     : CH.del + CH.k_cmd+CH.k_l+" Lire le livre"
   
 })
 ContextualHelp.AIDES = {

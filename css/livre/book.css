@@ -3,10 +3,13 @@
  *  LIVRE (BOOK)
  */
 fiche.book {
-  background-color  : #0086B7;
+  background-color  : #738CCF;
   color             : white;
   width             : 13em;
-  border-radius     : 0.2em;
+/*  border-radius     : 0.2em; */  
+  border-color      : #00006C;
+  font-family       : Helvetica, Arial;
+  font-size         : 1.02em;
 /*  opacity :0.5;*/
 }
 fiche.book.opened {
@@ -16,27 +19,35 @@ fiche.book.opened {
 fiche.book > recto > .titre {
   background-color  : transparent !important;
   color             : white !important;
-  font-size         : larger;
+/*  font-size         : larger;*/
+  letter-spacing    : 1.5px;
+  padding           : 0.3em 0.1em;
 }
 
 fiche.book > recto > div.div_real_titre {
     display   : none;
+}
+
+fiche.book.opened > recto > .titre {
+  font-variant    : small-caps;
+  font-size       : 18.3pt;
 }
 fiche.book.opened > recto > div.div_real_titre {
     display   : block;
 }
 
 fiche.book > recto > div.div_real_titre input.real_titre {
-  width     : 70%;
+  width     : 79.3%;
 }
 
 /* Éléments invisibles quand la fiche est fermée */
 fiche.book.opened > recto > div.div_real_titre input.real_titre { 
-  font-family       : "Times New Roman";
-  font-size         : 15pt;
+  font-family       : Arial;
+  font-size         : 12pt;
   background-color  : #9EC9EF;
   border            : 0;
-  padding           : 0 9px 2px;
+  padding           : 0 5px 2px;
+  color             : #394A86;
 }
 fiche.book.opened > recto > div.items { 
   display: block;
@@ -47,4 +58,21 @@ fiche.book.opened > recto > div.items {
 
 fiche.book > verso {
   color         :black;
+}
+
+div#div_book_pdf {
+  position    : absolute;
+  top         : 0.3em;
+  left        : 16em;
+  padding     : 0.3em;
+  background-color : black;
+  display     : none;
+  z-index     : 5000;
+}
+/* Lecture du book pdf */
+object#book-pdf {
+  border      : 1px solid black;
+  height      : 21cm;
+  width       : 14.85cm ; /* 29.7cm / 2 ;*/
+  background-color: #ccc;
 }

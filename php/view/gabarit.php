@@ -13,5 +13,13 @@
 	<section id="table">
 	</section>
   <?php include "./php/view/section_footer.php" ?>
+  <!-- Lecteur du livre -->
+  <div id="div_book_pdf">
+    <object
+      id="book-pdf"
+      data="" 
+      type="application/pdf"
+      ></object>
+  </div>
 </body>
 </html>

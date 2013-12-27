@@ -49,11 +49,65 @@ $.extend(Book.prototype,{
       F.error(rajax.message)
       // F.show("Pas de panique… Ce livre a été enregistré pour publication. Il suffit de runner le module `./publication/source/builder.rb` dans TextMate pour que le livre soit finalisé.",{keep:true})
     }
-  }
+  },
+  
+  /**
+    * Pour lire le livre, c'est-à-dire le passer de page en page depuis la 
+    * couverture jusqu'à la fin.
+    * Notes
+    * -----
+    *   * La méthode est asynchrone dans le sens où les pages ne sont pas 
+    *     nécessairement toutes chargées au moment où la commande est exécutée.
+    *     
+    * @method read
+    * @async
+    * @param  {Object} params   Les paramètres de lecture
+    *   @param  {Number}  params.from   Page à partir de laquelle il faut lire (0 = couverture)
+    *   @param  {Number}  params.to     Page jusqu'à laquelle on doit lire. -1 pour la dernière.
+    */
+  read:function(params)
+  {
+    var divpdf = $('div#div_book_pdf')
+    var jobjet = $('object#book-pdf')
+    if(this.reading)
+    {
+      // Fin de la lecture
+      divpdf.hide(500)
+      this.reading = false
+    }
+    else
+    {
+      // Afficher le pdf
+      divpdf[0].style.display = 'block'
+      var me = this
+      divpdf.show({duration:500, complete:function(){
+        var objet = jobjet[0]
+        objet.data = "publication/livres/"+Collection.name+"/"+me.pdf_filename
+        if(divpdf.hasClass('ui-draggable') == false ) divpdf.draggable()
+        if(console)console.clear()
+      }})
+      this.reading = true
+    }
+  },
   
 })
 
 Object.defineProperties(Book.prototype,{
+  /**
+    * Retourne le nom du book tel qu'il a été utilisé pour la création
+    * du fichier PDF.
+    * @property {String} pdf_filename
+    * @static
+    */
+  "pdf_filename":{
+    get:function(){
+      if(undefined == this._pdf_filename)
+      {
+        this._pdf_filename = this.titre.replace(/ /g,'_').capitalize() + '.pdf'
+      }
+      return this._pdf_filename
+    }
+  },
   
   /*
    *  Concernant le TITRE RÉEL (real_titre)
