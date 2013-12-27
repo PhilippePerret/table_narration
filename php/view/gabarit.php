@@ -14,7 +14,10 @@
 	</section>
   <?php include "./php/view/section_footer.php" ?>
   <!-- Lecteur du livre -->
-  <div id="div_book_pdf">
+  <div id="lecteur_pdf">
+    <div class="right">
+      <input type="button" class="small" value="Fermer" onclick="$.proxy(Book.stop_reading, Book)()" />
+    </div>
     <object
       id="book-pdf"
       data="" 

@@ -60,7 +60,7 @@ fiche.book > verso {
   color         :black;
 }
 
-div#div_book_pdf {
+div#lecteur_pdf {
   position    : absolute;
   top         : 0.3em;
   left        : 16em;

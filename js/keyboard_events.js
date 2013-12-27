@@ -132,7 +132,7 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_l:
     if(FICHES.current.is_book && evt.metaKey) // => Lecture du livre
     {
-      FICHES.current.read({from:0})
+      Book.read(FICHES.current, {page:1})
     }
     break
   case Key_p:

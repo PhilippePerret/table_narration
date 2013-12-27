@@ -9,6 +9,68 @@ window.Book = function(data)
 Book.prototype = Object.create( Fiche.prototype )
 Book.prototype.constructor = Book
 
+$.extend(Book,{
+  /**
+    * Le livre en lecture (PDF)
+    * @property {Book} current_read_book
+    * @default Null
+    */
+  current_read_book:null,
+  /**
+    * Méthode de classe pour lire le PDF du livre
+    * @method read
+    * @param  {Book} book L'instance du livre à lire
+    * @param  {Object}  params  Paramètres pour la lecture
+    *   @param  {Number}  params.page   Page à partir de laquelle il faut lire
+    */
+  read:function(book, params)
+  {
+    if(!this.current_read_book)
+    {
+      // => Aucun livre en lecture, il faut préparer le lecteur
+      this.prepare_lecteur_pdf()
+    }
+    book.read(params)
+    this.current_read_book = book
+    if(console)console.clear()
+  },
+  /**
+    * Méthode de classe pour arrêter la lecture PDF
+    * @note   La méthode est appelée par le bouton d'arrêt
+    * @method stop_read
+    */
+  stop_reading:function()
+  {
+    this.lecteur_pdf.hide()
+    this.current_read_book = null
+  },
+  /**
+    * Méthode qui prépare le lecteur PDF
+    * Notes
+    * -----
+    *   * La préparation consiste à 
+    *     * Afficher le DIV du lecteur
+    *     * Le rendre draggable si nécessaire
+    * @note   Ce n'est pas la balise object, mais le div la contenant, draggable
+    * @method prepare_lecteur_pdf
+    */
+  prepare_lecteur_pdf:function()
+  {
+    this.lecteur_pdf.show()
+    if(this.lecteur_pdf.hasClass('ui-draggable') == false ) this.lecteur_pdf.draggable()
+  }
+})
+
+Object.defineProperties(Book,{
+  /**
+    * Objet jQuery du lecteur PDF
+    * @property {jQuerySet} lecteur_pdf
+    */
+  "lecteur_pdf":{
+    get:function(){return $('div#lecteur_pdf') }
+  }
+})
+
 $.extend(Book.prototype,{
   /**
     * Procède à la publication du livre, c'est-à-dire à la fabrication des
@@ -56,39 +118,17 @@ $.extend(Book.prototype,{
     * couverture jusqu'à la fin.
     * Notes
     * -----
-    *   * La méthode est asynchrone dans le sens où les pages ne sont pas 
-    *     nécessairement toutes chargées au moment où la commande est exécutée.
-    *     
+    *   * Ce n'est pas cette méthode qui doit être appelée, mais Book.read (méthode
+    *     de classe)
+    *
     * @method read
-    * @async
     * @param  {Object} params   Les paramètres de lecture
-    *   @param  {Number}  params.from   Page à partir de laquelle il faut lire (0 = couverture)
-    *   @param  {Number}  params.to     Page jusqu'à laquelle on doit lire. -1 pour la dernière.
+    *   @param  {Number}  params.page   Page à partir de laquelle il faut lire (1 = couverture)
     */
   read:function(params)
   {
-    var divpdf = $('div#div_book_pdf')
-    var jobjet = $('object#book-pdf')
-    if(this.reading)
-    {
-      // Fin de la lecture
-      divpdf.hide(500)
-      this.reading = false
-    }
-    else
-    {
-      // Afficher le pdf
-      divpdf[0].style.display = 'block'
-      var me = this
-      divpdf.show({duration:500, complete:function(){
-        var objet = jobjet[0]
-        objet.data = "publication/livres/"+Collection.name+"/"+me.pdf_filename
-        if(divpdf.hasClass('ui-draggable') == false ) divpdf.draggable()
-        if(console)console.clear()
-      }})
-      this.reading = true
-    }
-  },
+    $('object#book-pdf')[0].data = "publication/livres/"+Collection.name+"/"+this.pdf_filename
+  }
   
 })
 
@@ -103,7 +143,7 @@ Object.defineProperties(Book.prototype,{
     get:function(){
       if(undefined == this._pdf_filename)
       {
-        this._pdf_filename = this.titre.replace(/ /g,'_').capitalize() + '.pdf'
+        this._pdf_filename = Texte.to_ascii(this.titre.replace(/ /g,'_')).capitalize() + '.pdf'
       }
       return this._pdf_filename
     }
