@@ -23,6 +23,7 @@ param(:fiches).each do |data|
   unless data['deleted'] == "true"
     data['texte'] = data['texte'].strip_slashes unless data['texte'].nil?
     data['titre'] = data['titre'].strip_slashes unless data['titre'].nil?
+    data['updated_at'] = Time.now.to_i
     File.open(ifiche.path, 'wb'){|f| f.write (Marshal.dump data)}
     upper_id = ifiche.id if ifiche.id > upper_id
   else

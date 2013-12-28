@@ -2,7 +2,7 @@
 # encoding: UTF-8
 
 
-MOT_ID = 'Acte'
+MOT_ID = 'keyscene'
 
 MOT_PATH = File.join('..', 'interdata', 'scenodico', 'mots', "#{MOT_ID}.msh")
 

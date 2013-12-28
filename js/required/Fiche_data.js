@@ -113,7 +113,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){
       data = {
         id:this.id, type:this.type, top:this.top, left:this.left, 
-        dev:(this.dev || 0)
+        dev:(this.dev || 0), created_at:(this.created_at || parseInt(Time.now()/1000))
       }
       if(this.deleted)      data.deleted = true
       if(this.not_printed)  data.not_printed = true
@@ -428,6 +428,8 @@ Fiche.prototype.dispatch = function(data){
       break
     case 'id':
     case 'dev': // niveau de développement
+    case 'created_at':
+    case 'updated_at':
       val = parseInt(val, 10); 
       break;
     case 'type':

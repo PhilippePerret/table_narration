@@ -166,19 +166,44 @@ OBJETS_Edition = {
     if(this.current && this.current.is_new) this.OBJS.Dom.on_click_onglet( this.current.let )
   },
  
-  /*
-   *  Retourne un identifiant de film à partir du +value+ fourni
-   *  
-   *  TODO: Voir si ce sera pareil pour les mots… En tout cas, il faut
-   *        également commencer par le mot  lui-même pour les classements 
-   *        et les tris par lettre.
-   *
-   */
+  /**
+    * Retourne un identifiant de l'objet à partir du +value+ fourni (le titre
+    * du film, le mot du scénodico, etc.)
+    * @method id_from_mainprop
+    * @param  {String} value  Le mot, le titre du film, etc.
+    * @return {String} Un identifiant valide pour l'objet.
+    */
   id_from_mainprop:function(value)
   {
-    var t = Texte.to_ascii( value )
+    var t_fin, t = Texte.to_ascii( value )
     t = t.titleize().replace(/[^a-zA-Z0-9]/g,'')
-    return t
+    if (this.OBJS.NAME == 'DICO') t_fin = t.substring(0,7)
+    else t_fin = t
+    var doublon_checked = false, id_doublon = null ;
+    while (undefined != this.OBJS.DATA[t_fin] )
+    {
+      // Si on passe par ici, c'est que l'identifiant existe déjà dans la
+      // liste d'objets. On vérifie quand même que ce ne soit pas un doublon
+      if(!doublon_checked)
+      {
+        if(this.OBJS.DATA[t_fin][this.main_prop] == value)
+        {
+          id_doublon = "" + t_fin
+        }
+        doublon_checked = true
+      }
+      if(t_fin.length < t.length) t_fin = t.substring(0, t_fin.length + 1)
+      else t_fin += "0" // on finira bien par en trouver un
+    }
+    if( id_doublon )
+    {
+      F.error(LOCALE.objet.error['objet already exists'].
+        replace(/_VALUE_/, value).
+        replace(/_ID_/, id_doublon).
+        replace(/_OTHER_ID_/,t_fin)
+      )
+    }
+    return t_fin
   },
  
 }

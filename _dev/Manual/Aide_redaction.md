@@ -10,7 +10,7 @@ Pour déplacer une fiche dans son propre parent, on peut :
 
 ###Déplacement dans un autre parent
 
-Pour déplacer la fiche dans un autre parent, on fait un couper-coller.
+Pour déplacer la fiche dans un autre parent, on doit procéder à un couper-coller.
 
 * On sélectionne la fiche à déplacer
 * On joue CMD + X

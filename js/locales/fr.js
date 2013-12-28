@@ -89,6 +89,14 @@ window.LOCALE = {
     }
   },
   
+  // LOCALE.objet
+  objet:{
+    
+    // LOCALE.objet.error
+    error:{
+      'objet already exists':"Cet élément “_VALUE_” semble déjà exister (avec l'identifiant '_ID_'). Je l'ajoute, avec un autre identifiant unique ('_OTHER_ID_'), mais il faudra le vérifier."
+    }
+  },
   // LOCALE.film
   film:{
     // LOCALE.film.ask

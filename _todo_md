@@ -2,7 +2,17 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
-VIEUX TEXTES
+POURSUIVRE RÉCUPÉRATION DES PAGES
+  Cf. new_page.rb
+
+-# Voir le problème avec les "é" dans les titres de film. Ils sont supprimés
+    > regarder si ça vient de javascript ou de ruby (voir celui qui construit l'id)
+
+- Faire un style css spécial pour une fiche not_printed quand c'est un paragraphe,
+  avec une opacity moindre, sauf quand on glisse la souris dessus.
+  > Option préférence pour masquer ces fiches quand ce sont des paragraphes.
+  
+VIEUX COURS
   Commencer à mettre en place la procédure de récupération des anciens fichiers
   du site.
   > Bien réfléchir à comment faire pour les transformer en fichier narration.
@@ -18,9 +28,7 @@ INSERTION FICHIER
   > Elle ne peut pas être éditée
   > Un bouton doit permettre de pouvoir éditer l'original
   > L'originale doit être chargée pour pouvoir afficher le texte de l'alias
-— Lecture du livre : on doit pouvoir le lire de page en page
-  > Pomme+R pour lancer la lecture
-  > Renseigner le menu contextuel
+  
 
 PUBLISHING : FILMOGRAPHIE / BIBLIOGRAPHIE / SCÉNODICO
   Fabriquer mes propres procédure de récupération des films et livres pour LaTex
