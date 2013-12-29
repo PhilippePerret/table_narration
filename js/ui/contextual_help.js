@@ -96,14 +96,14 @@ Object.defineProperties(ContextualHelp, {
       var editing = $(fi.div_main_prop_jid).length == 0
       
       // === Construire l'aide contextuelle ===
-      // aide += this.info_current_fiche
+      if(App.preferences.showinfos) aide += this.info_current_fiche
       if(editing){
         aide += this['return_save_'+(ispara?'texte':'titre')]
         aide += this.raccourcis_textuels
         if( ispara )
         {
           aide += this['shortcut_paragraph']
-          if(fi.ptype != 'text') aide += this['maj_return_new_item']
+          if(PARAGRAPHS.PTYPES[fi.ptype].return_disabled != true) aide += this['maj_return_new_item']
         } 
         if(App.clipboard) aide += this['cmd_v_coller_ref']
       }

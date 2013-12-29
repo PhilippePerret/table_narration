@@ -188,18 +188,15 @@ UI.Input = {
       if(this.target.fiche_id) fiche = get_fiche( this.target.fiche_id )
       // Un champ "returnable" se comporte normalement
       if(this.target.jq.hasClass('returnable')) return true
-      // PRÉ-Traitement spécial pour un champ de texte d'un paragraphe avec
-      // un ptype particulier
-      if(fiche && fiche.ptype != 'text')
+      /*
+       *  Si le type du paragraphe permet les retours chariot avec la
+       *  touche MAJ, on s'en retourne normalement en stoppant simplement
+       *  la propagation.
+       */
+      if(fiche && evt.shiftKey && PARAGRAPHS.PTYPES[fiche.ptype].return_disabled != true)
       {
-        /*
-         * Pour un ptype ≠ 'text', MAJ+Return permet de passer à la ligne
-         */
-        if(evt.shiftKey)
-        {
-          evt.stopPropagation()
-          return true
-        }
+        evt.stopPropagation()
+        return true
       }
       // Quel que soit le champ, on doit blurer
       this.target.jq.blur()

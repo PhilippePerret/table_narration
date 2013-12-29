@@ -18,14 +18,15 @@ window.PARAGRAPHS = {
     * @final
     */
   PTYPES:{
-    'text' : {id:'text', hname:"Texte normal"},
+    'text' : {id:'text', hname:"Texte normal", return_disabled:true},
     'list' : {id:'list', hname:"Liste à puces (item MAJ+RETURN item...)"},
     'enum' : {id:'enum', hname:"Liste numérotée (item1 MAJ+RETURN item2...)"},
     'desc' : {id:'desc', hname:"Liste définitions (mot::description MAJ+RETURN ...)"},
+    'revc' : {id:'revc', hname:"Evènemencier brut"},
+    'file' : {id:'file', hname:"Fichier à insérer (PATH)", return_disabled:true},
     'code' : {id:'code', hname:"Code javascript à interpréter"},
     'ruby' : {id:'ruby', hname:"Code ruby à interpréter"},
-    'file' : {id:'file', hname:"Fichier à insérer (PATH)"},
-    'fico' : {id:'fico', hname:"Fichier de code à jouer (PATH)"}
+    'fico' : {id:'fico', hname:"Fichier de code à jouer (PATH)", return_disabled:true}
   },
   
   /**
