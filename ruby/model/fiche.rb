@@ -126,6 +126,9 @@ class Fiche
   end
   
   def save
+    # Possesseur courant du fichier
+    # puts "Owner du fichier (dans save) " + File.stat(path).uid.to_s
+    # puts "Owner du process courant : #{Process::uid}"
     File.unlink path if File.exists? path
     @data['updated_at'] = Time.now.to_i
     File.open(path, 'wb'){|f| f.write (Marshal.dump @data)}
@@ -316,6 +319,17 @@ class Fiche
     return parent.book
   end
   
+  # Change le propriétaire du fichier
+  # Notes
+  # -----
+  #   * Il faut penser à remettre le propriétaire à _www pour pouvoir utiliser
+  #     la collection normalement
+  #   * Le script utilisant cette méthode doit requérir avant les données phil
+  # 
+  def set_owner_to owner
+    `echo '#{DATA_PHIL[:password]}' | sudo -S chown #{owner} '#{path}'`
+    `echo '#{DATA_PHIL[:password]}' | sudo -S chmod 0777 '#{path}'`
+  end
   
   # Retourne la liste {Array} des enfants comme liste d'instances
   # fiche
