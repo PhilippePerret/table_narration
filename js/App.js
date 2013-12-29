@@ -95,7 +95,8 @@ $.extend(window.App, {
     autosave    : false,  // sauvegarde automatique
     saveconfig  : false,  // sauvegarde de la config à chaque sauvegarde
     gridbook    : false,  // Alignement des livres (orientation dépend de dirgridbook)
-    dirgridbook : null    // Orientation de l'alignement des livres ("v" ou "h")
+    dirgridbook : null,   // Orientation de l'alignement des livres ("v" ou "h"),
+    showinfos   : false   // Si true affiche le type et l'id de la fiche courante
   },
   
   
