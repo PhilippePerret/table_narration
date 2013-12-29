@@ -236,7 +236,7 @@ Object.defineProperties(Film.prototype,{
     get:function(){
       if(this.apercu.length == 0) return
       this.apercu.find('.mainprop').html(this.titre)
-      this.apercu.find('.resume').html(this.resume.formate)
+      this.apercu.find('.resume').html(this.resume.formate())
     }
   }
   

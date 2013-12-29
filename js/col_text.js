@@ -39,6 +39,7 @@ window.ColText = {
     * @param  {String}  code    Le texte à formater
     * @param  {Fiche}   cible   Pour les références, ainsi que pour les corrections
     *                           suivant le ptype du paragraphe, on a besoin de la cible
+    *                           quand c'est une fiche.
     * @return {String}  Le code mis en forme, prêt à être affiché dans un DIV/SPAN
     *                   ou un aperçu.
     *
@@ -51,7 +52,7 @@ window.ColText = {
   formate:function(code, cible)
   {
     this.code = code
-    if(cible.is_paragraph && cible.ptype != 'text')
+    if(cible && cible.is_paragraph && cible.ptype != 'text')
     {
       this.traite_code_by_ptype(cible)
       if(!this.code) return // => asynchrone
@@ -62,7 +63,7 @@ window.ColText = {
      */
     if(this.code.indexOf('[film:')) this.traite_balises_films()
     if(this.code.indexOf('[mot:]')) this.traite_balises_mots()
-    if(this.code.indexOf('[ref:]')) this.traite_balises_refs(cible)
+    if(cible && this.code.indexOf('[ref:]')) this.traite_balises_refs(cible)
     if(this.code.indexOf('[img:]')) this.traite_balises_images()
     return this.code
   },

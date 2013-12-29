@@ -21,11 +21,12 @@ $.extend(DICO, {
   
   NAME:"DICO",
   
-  /*
-   *  Options pour l'affichage du mot
-   *  dans la page.
-   *  
-   */
+  /**
+    * Options pour l'affichage du mot
+    * dans la page.
+    * @property {Object} OPTIONS
+    * @static
+    */
   OPTIONS:{
     // 'annee'   :{hname: "Année (A)",           valdef:true}, 
   },

@@ -137,13 +137,14 @@ Object.defineProperties(HTMLTable.prototype,{
     }
   }
 })
+
 /**
   * @class UI.Html
   * @static
   */
 
 if('undefined' == typeof UI.Html) UI.Html = {}
-$.extend(UI.Html,{
+$.extend(UI.Html, {
   
   /**
     * Prend le code courant (this.code) et le formate comme un tableau HTML
@@ -157,8 +158,4 @@ $.extend(UI.Html,{
   {
     return (new HTMLTable(str)).to_html
   }
-})
-
-Object.defineProperties(UI.Html,{
-  
 })

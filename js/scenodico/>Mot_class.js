@@ -84,7 +84,7 @@ Object.defineProperties(Mot.prototype,{
     get:function(){
       if(this.apercu.length == 0) return
       this.apercu.find('.mainprop').html(this.mot)
-      this.apercu.find('.resume').html(this.definition.formate)
+      this.apercu.find('.resume').html(this.definition.formate())
     }
   }
 })

@@ -37,21 +37,20 @@ $.extend(ObjetClass.prototype,{
   },
   
   /**
-   *  Place l'apercu de l'item dans l'objet DOM +domObj+
-   *  en le créant si nécessaire.
-   * 
-   *  NOTES
-   *  -----
-   *
-   *    * L'aperçu est également décalé à droite ou à gauche suivant la
-   *      position de son contenant dans le texte pour être parfaitement visible.
-   *    * On affiche pas l'aperçu si le mot se trouve dans un aperçu.
-   *
-   *  @method apercu_in
-   *
-   *  @param  domObj  {DOMElement} Element du DOM dans lequel placer l'aperçu.
-   *                  C'est normalement un lien/balise dans le texte.
-   */
+    * Place l'apercu de l'item dans l'objet DOM +domObj+
+    * en le créant si nécessaire.
+    *
+    * NOTES
+    * -----
+    *   * L'aperçu est également décalé à droite ou à gauche suivant la
+    *     position de son contenant dans le texte pour être parfaitement visible.
+    *   * On affiche pas l'aperçu si le mot se trouve dans un aperçu.
+    *
+    * @method apercu_in
+    *
+    * @param  domObj  {DOMElement} Element du DOM dans lequel placer l'aperçu.
+    *                 C'est normalement un lien/balise dans le texte.
+    */
   apercu_in:function(domObj)
   {
     if($(domObj).parents().hasClass('apercu'))

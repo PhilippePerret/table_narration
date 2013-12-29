@@ -59,13 +59,69 @@ Ces options peuvent être&nbsp;:
 
 ##Paragraphes
 
-###Paragraphe image
+###Paragraphes “Tableau”
 
-Un paragraphe peut être une image s'il est de type 'imag'.
+Un paragraphe tableau (table HTML) se définit en choisissant le `ptype` “Type : Tableau” (après avoir retourné la fiche).
 
-Pour définir le type 'imag', retourner le paragraphe et choisir le ptype 'Type: Image'.
+Un tableau peut se définir en ajoutant un caractère "|" avant chaque ligne.
 
-*Note&nbsp;: On peut aussi insérer une image dans un paragraphe à l'aide de la balise [img:path/dans/ressource/img/image.png|options].*
+* La première ligne doit définir la largeur des colonnes (et donc leur nombre)&nbsp;;
+  * Soit ce sont des nombres seuls, dont le TOTAL fait 100, ils sont alors considérés
+  comme des pourcentages&nbsp;;
+  * Soit ce sont des nombres seuls, dont le TOTAL ne fait pas 100, ils sont considérés comme des pixels&nbsp;;
+  * Soit ce sont des nombres avec leur unités (quelconque).
+* Chaque rangée (tr) doit être séparée par `|---` (au moins 3 "-")&nbsp;;
+* Chaque cellule peut être définie soit par un retour à la ligne, soit par des `||` si les cellules sont sur la même ligne.
+
+Exemple&nbsp;:
+
+    |50 50          2 colonnes de 50% (total = 100)
+    |---            Début d'une rangée
+    |Cellule 1
+    |Cellule 2
+    |---            Nouvelle rangée
+    |CellA || CellB   2 cellules définies sur 1 seule rangée
+
+Produira&nbsp;:
+
+    <table>
+      <colgroup>
+        <col width="50%">
+        <col width="50%">
+      </colgroup>
+      <tr>
+        <td>Cellule 1</td>
+        <td>Cellule 2</td>
+      </tr>
+      <tr>
+        <td>CellA</td>
+        <td>CellB</td>
+      </tr>
+    </table>
+
+####Colspan
+
+Le `colspan` d'une cellule peut être défini simplement en mettant "-" (1 moins) dans la cellule sur laquelle doit se prolonger la cellule précédente. Par exemple&nbsp;:
+
+    |---
+    | Une cellule sur 2 colonnes || - || Cell 3
+    
+… ou :
+
+    |---
+    | Une cellule sur 2 colonnes
+    | -
+    | Cell 3
+
+… produira :
+
+    <tr>
+      <td colspan="2">Une cellule sur 2 colonnes</td>
+      <td>Cell 3</td>
+    </tr>
+
+*Note&nbsp;: Pas de rowspan pour le moment dans ce format.*
+
 
 ###Paragraphes insérant le texte d'un fichier
 
