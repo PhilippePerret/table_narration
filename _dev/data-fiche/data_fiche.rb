@@ -5,10 +5,10 @@
 
 # == Data de la fiche à voir ==
 FOLDER_COLLECTION = "scenariopole" # "current"
-# FICHE_TYPE  = 'page'
-# FICHE_ID    = 169
 FICHE_TYPE  = 'page'
 FICHE_ID    = 13
+# FICHE_TYPE  = 'para'
+# FICHE_ID    = 27
 # == / Data ==
 
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")

@@ -150,7 +150,6 @@ window.ColText = {
     */
   traite_code_by_ptype:function(ipara)
   {
-    dlog("Paragraphe " + ipara.type_id + " traité comme "+ipara.ptype)
     var c = this.code
     switch(ipara.ptype)
     {
@@ -193,9 +192,18 @@ window.ColText = {
       break
     case 'fico':
       break
+    case 'tabl': // Format tableau défini visuellement
+      c = UI.Html.str2table( this.code )
+      break
     }
     this.code = c
   }
   
   
 }
+
+
+Object.defineProperties(ColText,{
+    
+  
+})

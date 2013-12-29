@@ -129,6 +129,8 @@ begin
   # ------------------------------
   old_children = page_paras.children
   new_children = []
+  # Il faut retirer le premier paragraphe, qui restera dans la page
+  LISTE_PARAGRAPHES.shift
   page_paras.children.each do |dpara|
     if LISTE_PARAGRAPHES.index(dpara['id'].to_i).nil?
       new_children << dpara

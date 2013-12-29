@@ -4,13 +4,14 @@
 # Permet de modifier les données d'une fiche
 
 # Mettre ici les changements à effectuer
-CHANGE = {
-  "enfants"  => [{"id"=>"1", "type"=>"chap"}],
-}
+# Ou les définir précisément plus bas
+# CHANGE = {
+#   "enfants"  => [{"id"=>"1", "type"=>"chap"}],
+# }
 
-FOLDER_COLLECTION = "test" # "current"
-FICHE_TYPE  = 'book'
-FICHE_ID    = 0
+FOLDER_COLLECTION = "scenariopole" # "current"
+FICHE_TYPE  = 'page'
+FICHE_ID    = 13
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
 
 def autorise path
@@ -32,7 +33,16 @@ end
 puts "Data d'origine"
 @data_fiche = data_fiche_in_file
 puts @data_fiche.inspect
-@data_fiche.merge!(CHANGE)
+if defined? CHANGE
+  @data_fiche.merge!(CHANGE)
+else
+  new_enfants = []
+  @data_fiche['enfants'].each do |dchild|
+    new_enfants << dchild
+    new_enfants << {'id'=> "27", 'type'=>"para"} if dchild['id'].to_i == 26
+  end
+  @data_fiche['enfants'] = new_enfants
+end
 autorise FICHE_PATH
 File.open(FICHE_PATH, 'wb'){|f| f.write Marshal.dump(@data_fiche)}
 desautorise FICHE_PATH

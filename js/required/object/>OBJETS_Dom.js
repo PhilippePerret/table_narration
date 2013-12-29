@@ -334,7 +334,6 @@ OBJETS.Dom = {
   build_listing:function(letter)
   {
     this.div_listing.append(this.html_listing(letter))
-    dlog("build_listing dans "+this.NAME)
     this.letters_built[letter] = true
     this.current_letter = letter
   },

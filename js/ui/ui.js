@@ -293,3 +293,32 @@ Object.defineProperties(UI,{
     }
   }
 })
+
+/**
+  * @class UI.Textarea
+  * @static
+  */
+$.extend(UI, {
+  Textarea: {
+  
+    /**
+      * Adapte la taille du textarea en fonction de son contenu
+      * @method adapt
+      * @param  {DOMElement|jQuerySet} o  L'élément DOM
+      * @usage  UI.Textarea.adapt(<dom element>)
+      * @example
+      *   UI.Textarea.adapt($('div#mon_div'))
+      */
+    adapt: function( o ){
+      var o     = $(o) ;
+      var odom  = o[0] ;
+      if ( odom.tagName != 'TEXTAREA' ) return ;
+      var oh    = odom.offsetHeight ;
+      if( oh == 0 ) return ; // not displayed
+      sh = odom.scrollHeight ;
+      if ( oh >= (sh + 10) ) return ;
+      o.css( 'height', (sh + 20) + "px" ) ;
+    }
+  }
+  
+})

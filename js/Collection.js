@@ -481,9 +481,9 @@ Object.defineProperties(Collection,{
     */
   "save":{
     value:function(){
+      dlog("-> Collection.save / Sauvegarde de la collection", DB_FCT_ENTER)
       if(this.nothing_to_save) return false
       this.saving = true
-      dlog("Sauvegarde de la collection", DB_SIMPLE)
       F.show("Sauvegarde en cours…", {no_timer:true})
       this.save_fiches
       return true

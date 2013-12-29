@@ -13,7 +13,8 @@
   *  @static
   *
   **/
-UI.Html = {
+if(undefined == typeof UI.Html) UI.Html = {}
+$.extend(UI.Html,{
 
   /** Construction d'un menu select
     * @method select
@@ -101,4 +102,4 @@ UI.Html = {
     else t += '>'
     return t
   }
-}
+})

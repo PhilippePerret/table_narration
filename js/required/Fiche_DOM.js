@@ -735,17 +735,21 @@ Object.defineProperties(Fiche.prototype,{
       this.main_field_as_input.replaceWith( this.html_div_titre )
     }
   },
-  /* Place le texte dans un textarea */
+  /** 
+    * Place le texte dans un textarea pour son édition
+    * Notes
+    *   * Pour les paragraphes, adapte la taille du textarea à la
+    *     taille du texte.
+    *   * Propriété complexe => appeler sans parenthèses
+    *
+    * @method texte_in_textarea
+    */
   "texte_in_textarea":{
     get:function(){
       var idm = "Paragraph::texte_in_textarea ["+this.type_id+"]"
       dlog("---> "+idm, DB_FCT_ENTER)
-      // if(this.main_field_as_div.length == 0)
-      // {
-      //   console.error("Le DIV du champ principal de "+this.type_id+" est introuvable…")
-      // }
-      // else 
       this.main_field_as_div.replaceWith(this.html_textarea_texte)
+      if(this.is_paragraph) UI.Textarea.adapt(this.textarea_texte)
       dlog("<- "+idm, DB_FCT_ENTER)
     }
   },

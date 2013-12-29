@@ -470,7 +470,6 @@ UI.Input = {
     */
   memorize_current:function(options)
   {
-    dlog("options:");dlog(options)
     if(undefined == options) options = {}
 
     // On désactive les raccourcis courants
