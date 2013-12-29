@@ -2,10 +2,13 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+PROBLÈME PUBLICATION
+  # Échec sur : De battre mon c\oeur
+  
 POURSUIVRE RÉCUPÉRATION DES PAGES
-  Cf. new_page.rb
-
--# Voir le problème avec les "é" dans les titres de film. Ils sont supprimés
+  
+BUGS
+  # Voir le problème avec les "é" dans les titres de film. Ils sont supprimés
     > regarder si ça vient de javascript ou de ruby (voir celui qui construit l'id)
 
 - Faire un style css spécial pour une fiche not_printed quand c'est un paragraphe,

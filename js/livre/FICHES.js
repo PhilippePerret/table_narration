@@ -2,11 +2,6 @@
   * @module FICHES
   *
   */
-// Raccourci
-window.get_fiche = function(id)
-{
-  return FICHES.get(id)
-}
 
 /**
   * Objet FICHES

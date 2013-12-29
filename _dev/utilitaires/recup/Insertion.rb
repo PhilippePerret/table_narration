@@ -5,18 +5,19 @@ Ce module permet d'insérer les anciennes pages dans le livre
 =end
 
 # Identifiant de la page à afficher ou à insérer
-PAGE_ID = 156
+# Commenter cette ligne pour voir la liste
+PAGE_ID = 128
 # Si PAGE_ID est commenté, c'est la liste de toutes les pages qui s'affiche
 SHOW_LIST = true
 # On peut ajouter un filtre sur le titre (expression régulière) pour ne voir
 # que certains titres
-FILTRE_TITRE = /personnage/i
+FILTRE_TITRE = /Introduction à l'exposition/i
 
 # SENSIBLE
 # Mettre à true pour construire la page définie par PAGE_ID ci-dessus
 # La donnée étant particulièrement sensible (elle peut mettre le bazard dans la
 # collection), une clé de confirmation est demandée, à mettre dans KEY_CONFIRMATION
-CONSTRUIRE_PAGE  = true
+CONSTRUIRE_PAGE  = false
 IN_CHAPTER       = 35
 KEY_CONFIRMATION = 1388263025
 

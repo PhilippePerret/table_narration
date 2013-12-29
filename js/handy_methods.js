@@ -85,6 +85,22 @@ Object.defineProperties(window,{
   }
   
 })
+
+/**
+  * Retourne la fiche d'identifiant +id+
+  * ------------------------------------
+  * @note C'est un raccourci de FICHES.get(id)
+  *
+  * @method get_fiche
+  * @param  {Number|String} id   Identifiant de la fiche
+  * @return {Fiche} Instance fiche de la fiche
+  * @for window
+  */
+window.get_fiche = function(id)
+{
+  return FICHES.get(id)
+}
+
 /**
   * Retourne l'instance {Mot} du mot d'identifiant +mid+
   * en la créant si nécessaire

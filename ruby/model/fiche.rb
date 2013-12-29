@@ -76,19 +76,16 @@ class Fiche
     def folder_type type
       type = type.to_sym
       @folders ||= {}
-      if @folders[type].nil?
-        d = @folders[type] = File.join(folder, type.to_s)
-        Dir.mkdir(d, 0755) unless File.exists?(d)
-      end
+      @folders[type] = (getfolder File.join(folder, type.to_s)) if @folders[type].nil?
       @folders[type]
     end
     # Return le path du dossier principal des fiches
     def folder
-      @folder ||= begin
-        d = File.join(Collection::folder, 'fiche')
-        Dir.mkdir(d, 0755) unless File.exists?(d)
-        d
-      end
+      @folder ||= (getfolder File.join(Collection::folder, 'fiche'))
+    end
+    def getfolder path
+      Dir.mkdir(path, 0777) unless File.exists? path
+      path
     end
   end
   
@@ -117,15 +114,20 @@ class Fiche
   
   # Merge les données de la fiche avec les données transmises
   # 
+  # Notes
+  # -----
+  #   La méthode peut être aussi utilisées pour créer la fiche
+  # 
+  # @param  {Hash} Les données à enregistrées
   def merge hash_data
-    @data = Marshal.load( File.read path )
+    @data = exists? ? Marshal.load(File.read path) : {}
     @data = @data.merge hash_data
     save
   end
   
   def save
     File.unlink path if File.exists? path
-    @data['updated_at'] = Time.now
+    @data['updated_at'] = Time.now.to_i
     File.open(path, 'wb'){|f| f.write (Marshal.dump @data)}
   end
   

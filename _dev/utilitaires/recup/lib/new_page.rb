@@ -90,6 +90,13 @@ class NPage # Classe pour une nouvelle page
   # 
   attr_reader :data
   
+  # La liste des paragraphes
+  # 
+  # C'est un {Array} contenant des Objets {:type, :texte} pour les paragraphes
+  # et {:type => 'titre', :level => niveau de titre, :titre => le titre, 
+  #     :ancre => l'ancre | Nil} pour les titre
+  attr_reader :paragraphs
+  
   def initialize path, id
     @path_formated = path
     @id   = id
@@ -101,17 +108,53 @@ class NPage # Classe pour une nouvelle page
   end
   
   # == Main ==
+  # Méthode créant tous les paragraphes de la page
+  # 
+  # @param {Number} npage_id    Identifiant de la page MAIS DANS LA COLLECTION
+  #                             Car self.id renverrait l'identifiant dans les anciens 
+  #                             cours.
+  # @return La liste des enfants créées, où chaque élément est un objet
+  #         {'id' => identifiant dans collection, 'type' => "para"}
+  def create_paragraphs_of npage_id
+    child_list = []
+    parse
+    paragraphs.each do |dpara|
+      pid = self.class.get_new_id
+      para = Fiche.new pid, 'para'
+      data = {
+        'id'          => pid,
+        'type'        => 'para',
+        'texte'       => dpara[:texte],
+        'left'        => "200",
+        'top'         => "100",
+        'created_at'  => self.data[:created_at],
+        'ptype'       => 'text',
+        'parent'      => {'id' => npage_id.to_s, 'type' => 'page'}
+      }
+      case dpara[:type]
+      when 'not_printed'  
+        data = data.merge 'not_printed' => true
+      when 'titre'
+        data = data.merge 'style' => "titre_level_#{dpara[:level]}"
+      when 'note'         
+        data = data.merge 'style' => "note_redaction"
+      when 'unknown'
+        data = data.merge 'style' => "warning"
+      end
+      self.class.create_fiche para, data
+      child_list << {'id' => para.id, 'type' => 'para'}
+    end
+    return child_list
+  end
+  
+  # == Main ==
   # Fonction principale qui fait de la page demandée une page
   # de la collection Narration
-  # 
+  # TODO La méthode est complètement à implémenter
   # @param  {Integer} chap_id   Le chapitre dans lequel il faut insérer la page
   # 
   def insert_in_narration chap_id
-    @chap_id = chap_id
-    parse
-    puts "* Insertion de la page “#{data[:titre_page]}” dans le chapitre #{chap_id}"
-    return error('unable with only javascript') if @data[:only_javascript]
-    puts @data.inspect
+
   end
   
   def parse
@@ -123,12 +166,20 @@ class NPage # Classe pour une nouvelle page
       :contents_php     => false, 
       :only_javascript  => false
     }
+    # Tous les paragraphes de la page
+    @paragraphs = []
     File.read(path_formated).each_line do |line|
-      dline = line.strip.split('::')
-      next if dline.count == 0 # ne devrait pas arriver
-      motun = dline.shift
-      tline = dline.join('::')
-      tline = nil if tline == ""
+      line = line.strip
+      if line.index('::')
+        dline = line.strip.split('::')
+        next if dline.count == 0 # ne devrait pas arriver
+        motun = dline.shift.strip
+        tline = dline.join('::').strip
+        tline = nil if tline == ""
+      else
+        motun = 'paragraphe'
+        tline = line
+      end
       case motun
       when 'titre_page'   then @data[:titre_page]      = tline
       when 'resume_page'  then @data[:resume_page]     = tline
@@ -137,20 +188,24 @@ class NPage # Classe pour une nouvelle page
       when 'CONTENTS_PHP' then @data[:contents_php]    = true
       when 'ONLY_JS'      then @data[:only_javascript] = true
       else
-        # Autre donnée
-        case motun
+        # Autre donnée => un paragraphe
+        next if tline.nil?
+        @paragraphs << case motun
         when 'titre'
           # Un titre (note : tline est constitué de <niveau titre>::<titre>)
           # + Le titre peut être composé de <titre>|<ancre>
+          level, titre = tline.split('::')
+          titre, ancre = titre.split('|')
+          {:type => 'titre', :texte => titre, :level => level, :ancre => ancre}
         when 'not_printed'
-          # Un paragraphe non imprimé
+          {:type => 'not_printed', :texte => tline}
         when 'note'
-          # Une note
-        when 'onlywebmaster'
-          # Un paragraphe seulement pour le webmaster
-          # Inutilisé : c'est un paragraphe marqué not_printed
+          {:type => 'note', :texte => tline}
+        when 'paragraphe'
+          {:type => 'text', :texte => tline}
         else
-          # Tout le reste, ce sont des paragraphes normaux
+          # Tout le reste, ce sont des choses inconnues
+          {:type => 'unknown', :texte => tline}
         end
       end
     end

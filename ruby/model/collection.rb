@@ -242,7 +242,7 @@ class Collection
     end
     
     def folder
-      @folder ||= File.join('.', 'collection', name)
+      @folder ||= (getfolder File.join('.', 'collection', name))
     end
     
     def getfolder path

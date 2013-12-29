@@ -269,7 +269,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){ return this._resume },
     set:function(resume)
     {
-      if(resume.trim() == "") resume = null
+      if(resume && resume.trim() == "") resume = null
       this._resume = resume
     }
   },
