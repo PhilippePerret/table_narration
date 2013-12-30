@@ -9,9 +9,9 @@ Donc il faut s'assure que le fichier final existe.
 =end
 
 
-collection_name = (param :collection_name) || Collection::name
+collection_name = Collection::name
 path_to_publication = File.expand_path('.', 'publication')
-path_to_folder_livres = File.join(path_to_publication, 'livres', 'narration')
+path_to_folder_livres = File.join(path_to_publication, 'livres', Collection::name)
 
 # On vérifie que ce soit bien un livre
 book = Fiche.new (param :book), 'book'

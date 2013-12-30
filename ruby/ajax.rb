@@ -72,6 +72,12 @@ begin
   
   # Prendre les données envoyées
   Params::init(ARGV[0])
+  
+  # Si la collection est fournie, on la définit comme
+  # collection courante
+  Collection::choose(param :collection) unless (param :collection).nil?
+  
+  # Jouer le script
   require "./ruby/ajax/#{param('script')}.rb"
   
   # Fermer le fichier log si nécessaire

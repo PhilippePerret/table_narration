@@ -22,7 +22,7 @@ unless Collection::name == "test"
 
   # Une sauvegarde par jour seulement
   unless File.exists? archive_path
-    `zip -r '#{archive_path}' './collection/current'`
+    `zip -r '#{archive_path}' './collection/#{Collection::name}'`
   end
   
   # Si c'est la collection Narration, et qu'on force le backup, on 

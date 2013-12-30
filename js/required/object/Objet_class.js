@@ -162,7 +162,7 @@ Object.defineProperties(ObjetClass.prototype, {
       { // => Requête ajax
         dlog("script : "+this.folder_ajax+'/load')
         Ajax.send(
-          {script:this.folder_ajax+'/load', item_id:this.id},
+          {script:this.folder_ajax+'/load', collection:Collection.name, item_id:this.id},
           $.proxy(this.load, this, poursuivre)
         )
       }
@@ -194,7 +194,7 @@ Object.defineProperties(ObjetClass.prototype, {
       if(undefined == rajax)
       { // => Requête ajax
         Ajax.send(
-          {script:this.folder_ajax+'/save', data:this.data_for_save},
+          {script:this.folder_ajax+'/save', collection:Collection.name, data:this.data_for_save},
           $.proxy(this.save, this, poursuivre)
         )
       }

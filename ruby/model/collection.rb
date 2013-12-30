@@ -37,7 +37,9 @@ class Collection
         File.basename(path)
       end.reject{|el| el.nil? }
     end
+    
     # Choisit la collection courante
+    # (et l'enregistre en collection courante si elle est différente)
     # 
     # @param  {String}  name Le nom de la collection à utiliser, correspondant au
     #                   nom de son dossier dans ./collection/

@@ -244,7 +244,7 @@ $.extend(Paragraph.prototype,{
     if(undefined == rajax)
     {
       Ajax.send(
-        {script:'file/load', file_path:this.texte},
+        {script:'file/load', collection:Collection.name, file_path:this.texte},
         $.proxy(this.load_file, this, poursuivre)
       )
     }

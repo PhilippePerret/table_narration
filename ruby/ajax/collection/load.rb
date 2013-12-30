@@ -4,13 +4,14 @@
 Chargement de la collection
 ---------------------------
 
-* La collection chargée est déterminée par (param :collection_name)
+* La collection chargée est déterminée par (param :collection)
+  Au premier chargement de l'application, ce paramètre est omis pour charger
+  la dernière collection chargée.
 
 Ce script retourne TOUTES les informations utiles pour l'affichage de la collection
 
 Il s'agit de :
   - La liste utile des fiches (i.e. celles qu'on verra - cf. ci-dessous)
-  - Les préférences de l'application (TODO)
 
 Le script renseigne la propriété :data qui sera ensuite dispatchée dans 
 l'application
@@ -102,16 +103,16 @@ end
 # 
 # Notes
 # -----
-#   * Si le paramètre :collection_name est défini, on doit changer la
+#   * Si le paramètre :collection est défini, on doit changer la
 #     collection courante. Sinon, on utilise la collection courante
 #     définie dans le fichier ./.current
-#   * Si :collection_name n'est pas défini, c'est un premier chargement.
+#   * Si :collection n'est pas défini, c'est un premier chargement.
 #     On remonte aussi le nom des collections courantes pour préparer le 
 #     menu des collections dans l'interface (2e temps, après la définition
 #     de @data).
 # 
-unless (param :collection_name).nil?
-  Collection::choose (param :collection_name)
+unless (param :collection).nil?
+  Collection::choose (param :collection)
 end
 
 alog "Collection courante : #{Collection::name}"
@@ -127,7 +128,7 @@ alog "Collection courante : #{Collection::name}"
 }
 # On relève tous les noms de collection pour peupler le menu
 # collections de l'interface
-if (param :collection_name).nil?
+if (param :collection).nil?
   @data[:data][:collections] = Collection::all_names
 end
 

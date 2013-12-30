@@ -109,7 +109,7 @@ $.extend(Collection, {
   {
     if(undefined == confirmed && this.modified) return this.confirm_load($.proxy(this.choose, this, name))
     this.clear
-    Ajax.send({script:"collection/load", collection_name:name}, $.proxy(this.retour_load, this))
+    Ajax.send({script:"collection/load", collection:name}, $.proxy(this.retour_load, this))
     return true
   },
   
@@ -550,7 +550,7 @@ Object.defineProperties(Collection,{
     */
   "backup":{
     get:function(){
-      Ajax.send({script:'collection/backup'})
+      Ajax.send({script:'collection/backup', collection:Collection.name})
     }
   },
   /**
@@ -581,7 +581,7 @@ Object.defineProperties(Collection,{
     */
   "force_backup":{
     get:function(){
-      Ajax.send({script:'collection/backup', force_backup:1}, $.proxy(this.retour_force_backup,this))
+      Ajax.send({script:'collection/backup', collection:Collection.name, force_backup:1}, $.proxy(this.retour_force_backup,this))
     }
   }
   

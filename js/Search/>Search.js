@@ -110,7 +110,7 @@ $.extend(window.Search,{
      // Envoyer la requête
      F.show("Recherche en cours…")
      Ajax.send(
-       {script:'fiche/search', params:$.extend(params, {search_text:text})},
+       {script:'fiche/search', collection:Collection.name, params:$.extend(params, {search_text:text})},
        $.proxy(this.found, this)
      )
   },

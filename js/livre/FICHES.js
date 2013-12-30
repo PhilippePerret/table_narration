@@ -277,7 +277,7 @@ window.FICHES = {
     }
     if(fiches.length)
     {
-      Ajax.send({script:'fiche/save', fiches:fiches}, $.proxy(this.retour_save,this))
+      Ajax.send({script:'fiche/save', collection:Collection.name, fiches:fiches}, $.proxy(this.retour_save,this))
     }
     else this.retour_save({ok:true})
   },
@@ -474,7 +474,7 @@ window.FICHES = {
   {
     dlog("---> FICHES.load", DB_FCT_ENTER)
     Ajax.send(
-      {script:'fiche/load', fiches:arr},
+      {script:'fiche/load', collection:Collection.name, fiches:arr},
       $.proxy(this.after_load, this)
     )
     dlog("<- FICHES.load", DB_FCT_ENTER)

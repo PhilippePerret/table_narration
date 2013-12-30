@@ -92,7 +92,7 @@ $.extend(Book.prototype,{
     mess = mess.replace(/_OPTIONS_/, options_mess)
     mess += "…"
     F.show(mess)
-    Ajax.send({script:'fiche/publish', book:this.id, options:options}, $.proxy(this.retour_publish,this))
+    Ajax.send({script:'fiche/publish', collection:Collection.name, book:this.id, options:options}, $.proxy(this.retour_publish,this))
   },
   /**
     * Retour ajax de la méthode `publish`

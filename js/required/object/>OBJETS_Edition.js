@@ -88,12 +88,12 @@ OBJETS_Edition = {
     })
   },
   /*
-   *  Destruction du item d'identifiant +id+
+   *  Destruction de l'item d'identifiant +id+
    *  
    */
   remove:function(id)
   {
-    Ajax.send({script:this.folder_ajax+'/destroy', item_id:id}, $.proxy(this.suite_remove, this))
+    Ajax.send({script:this.folder_ajax+'/destroy', collection:Collection.name, item_id:id}, $.proxy(this.suite_remove, this))
   },
   suite_remove:function(rajax)
   {

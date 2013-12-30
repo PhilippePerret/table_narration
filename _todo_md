@@ -2,14 +2,12 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
-PROBLÈME PUBLICATION
-  # Échec sur : De battre mon c\oeur
-  
-- Adapter le textarea à la longueur du texte à la mise en édition
-
-POURSUIVRE RÉCUPÉRATION DES PAGES
-  
+- Pouvoir ouvrir deux collections différentes dans deux pages différentes :
+  Il faut que le nom de la collection soit toujours envoyée aux requêtes ajax
+  et qu'elle soit toujours pris en compte par les scripts
+    
 BUGS
+  # Échec sur : De battre mon c\oeur
   # Voir le problème avec les "é" dans les titres de film. Ils sont supprimés
     > regarder si ça vient de javascript ou de ruby (voir celui qui construit l'id)
 

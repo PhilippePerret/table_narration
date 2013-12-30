@@ -126,7 +126,8 @@ $.extend(window.App, {
     if(undefined == rajax)
     {
       Ajax.send(
-        {script:'app/save_config', config:this.current_config, force:forcer},
+        {script:'app/save_config', collection:Collection.name,
+        config:this.current_config, force:forcer},
         $.proxy(this.save_current_configuration, this, forcer)
       )
     }
@@ -147,6 +148,7 @@ $.extend(window.App, {
   {
     Ajax.send({
       script:"app/test_ajax",
+      collection:Collection.name,
       data:{}
     }, $.proxy(this.suite_ajax, this))
   },

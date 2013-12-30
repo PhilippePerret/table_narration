@@ -68,7 +68,10 @@ App.Prefs = {
     {
       this.get_values
       Ajax.send(
-        {script:'app/save_preferences', preferences:App.preferences},
+        {
+          script:'app/save_preferences', 
+          collection:Collection.name,
+          preferences:App.preferences},
         $.proxy(this.save, this)
       )
     }

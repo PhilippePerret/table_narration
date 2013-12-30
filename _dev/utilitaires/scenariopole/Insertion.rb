@@ -3,13 +3,6 @@
 Script permettant de prendre une page des anciens cours et de la
 coller dans les nouveaux cours.
 
-TODO
-  * OK : Modifier le parent de la page déplacée
-  * OK : Modifier le parent de tous les paragraphes déplacés
-  * OK : Voir pourquoi la page ne se met pas au bon endroit
-  * Il semble que des fichiers soient créés non pas avec l'identifiant mais
-    avec la donnée child ({"id"=>..., "type"=>...})
-
 Utilisation
 -----------
   * Ouvrir la collection "Scénariopole" sur la table
