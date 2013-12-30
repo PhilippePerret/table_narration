@@ -66,11 +66,12 @@ div.apercu {
  --------------------------------------------------------------------- */
 
 fiche.para .lk_film {
-  position    : relative;
-  font-family : Verdana;
-  font-size   : 11.3pt;
-  color       : #00009C;
-  z-index     : 1;
+  position      : relative;
+  font-family   : Verdana;
+  font-size     : 11.3pt;
+  color         : #00009C;
+  font-variant  : small-caps;
+  z-index       : 1;
 }
 fiche.para .lk_mot {
   position    : relative;

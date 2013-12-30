@@ -149,11 +149,10 @@ Object.defineProperties(ContextualHelp, {
   "info_current_fiche":{
     get:function(){
       var fi = this.current_fiche
-      var p_type_id = fi.parent ? fi.parent.type_id : "-"
+      var p_type_id = fi.parent ? fi.parent.id : "-"
       var info =  fi.type+":"+fi.id
-      if(fi.is_not_book)      info += CH.del + "Par:"+p_type_id
-      if(fi.is_not_paragraph) info += " / Enf:"+(fi.enfants||[]).length
-      return info
+      if(fi.is_not_book) info += CH.del + "Parent:"+p_type_id
+      return '<span class="info_fiche">'+info+'</span>'
     }
   },
   /*
