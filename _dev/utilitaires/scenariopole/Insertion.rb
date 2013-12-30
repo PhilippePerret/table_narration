@@ -3,6 +3,13 @@
 Script permettant de prendre une page des anciens cours et de la
 coller dans les nouveaux cours.
 
+TODO
+  * OK : Modifier le parent de la page déplacée
+  * OK : Modifier le parent de tous les paragraphes déplacés
+  * OK : Voir pourquoi la page ne se met pas au bon endroit
+  * Il semble que des fichiers soient créés non pas avec l'identifiant mais
+    avec la donnée child ({"id"=>..., "type"=>...})
+
 Utilisation
 -----------
   * Ouvrir la collection "Scénariopole" sur la table
@@ -37,14 +44,18 @@ Notes
 # === Définition du déplacement ===
 
 # Identifiant de la page dans les anciens cours
-ID_PAGE_SRC = nil
+# Note: Absolument un nombre
+ID_PAGE_SRC = 13
 
 # Identifiant du chapitre dans lequel mettre la page
-ID_CHAPITRE_DEST = nil
+# Note: Absolument un nombre
+ID_CHAPITRE_DEST = 49
+
 # Optionnellement, on peut indiquer l'identifiant de la page avant laquelle
 # mettre la page déplacée. Sans cette indication, la page sera ajoutée à
 # la fin
-BEFORE_PAGE_ID = nil
+# Note: Absolument un nombre (ou nil)
+BEFORE_PAGE_ID = 50
 
 # === / Fin définition du déplacement ===
 # ---------------------------------------------------------------------
@@ -79,7 +90,12 @@ def folder_fiches_narration
   @folder_fiches_narration ||= File.join('.', 'collection', 'narration', 'fiche')
 end
 def path_of_fiche collection, type, id
-  File.join('.', 'collection', collection, type, "#{id}.msh")
+  if id.class == Hash
+    puts "Mauvais identifiant fourni à path_of_fiche : #{id.inspect} (je prend l'id)"
+    id = id['id']
+    raise "Impossible d'obtenir l'identifiant !" if id.nil?
+  end
+  File.join('.', 'collection', collection, 'fiche', type, "#{id}.msh")
 end
 def load_data path
   raise "Fichier #{path} introuvable. Impossible de prendre ses données" unless File.exists? path
@@ -113,6 +129,12 @@ def get_new_id
   @last_id += 1
 end
 
+# Pour contrôler que les fichiers ont bien été supprimés
+# ou ajoutés
+removed_files = []
+ajouted_files = []
+
+
 # --- Pour la transaction ---
 init_dchap_source = nil
 init_dpage_source = nil
@@ -125,8 +147,8 @@ begin
   path_page_source = path_of_fiche 'scenariopole', 'page', ID_PAGE_SRC
   data_page_source = load_data path_page_source
   puts "- Récupération des données de la page source OK"
-  path_chap_source = path_of_fiche 'scenariopole', 'chap', data_page_source['parent']
-  data_chap_source = load_data path_page_source
+  path_chap_source = path_of_fiche 'scenariopole', 'chap', data_page_source['parent']['id']
+  data_chap_source = load_data path_chap_source
   puts "- Récupération des données du chapitre source OK"
   path_chap_destin = path_of_fiche 'narration', 'chap', ID_CHAPITRE_DEST
   data_chap_destin = load_data path_chap_destin
@@ -143,12 +165,20 @@ begin
   init_dchap_source = load_data path_page_source # pour annuler la transaction
   new_children = []
   data_chap_source['enfants'].each do |dchild|
-    next if dchild['id'] == ID_PAGE_SRC
+    next if dchild['id'].to_i == ID_PAGE_SRC
     new_children << dchild
   end
   data_chap_source['enfants'] = new_children
   save_data path_chap_source, data_chap_source
   puts "* Retrait de la page du chapitre source OK"
+  
+  # Identifiant de la page ajoutée à Narration
+  # ------------------------------------------
+  # @note:  Pris ici pour pouvoir régler le parent des paragraphes
+  # @note:  On pourrait vérifier aussi si c'est nécessaire de le
+  #         changer
+  PAGE_NEW_ID = get_new_id
+  puts "- Nouvel identifiant de la page dans Narration : #{PAGE_NEW_ID}"
   
   # Déplacement de tous les paragraphes de la page
   # source, en modifiant leur identifiant
@@ -162,17 +192,21 @@ begin
   new_children_para = []
   puts "-> Déplacement des paragraphes (#{data_page_source['enfants'].count})…"
   data_page_source['enfants'].each do |dchild|
-    path_src_child    = path_of_fiche 'scenariopole', 'para', dchild['id']
-    dchild['id']      = get_new_id if dchild['id'].to_i <= @last_id
-    path_des_child    = path_of_fiche 'narration', 'para', dchild['id']
-    data_child        = load_data path_src_child
-    data_child['id']  = dchild['id'] # peut-être le même
+    old_id_child          = dchild['id']
+    path_src_child        = path_of_fiche 'scenariopole', 'para', dchild['id']
+    removed_files << path_src_child
+    dchild['id']          = get_new_id if dchild['id'].to_i <= @last_id
+    path_des_child        = path_of_fiche 'narration', 'para', dchild['id']
+    ajouted_files << path_des_child
+    data_child            = load_data path_src_child
+    data_child['id']      = dchild['id'] # peut-être le même
+    data_child['parent']  = {"id" => PAGE_NEW_ID, "type" => "page"}
     save_data path_des_child, data_child
     File.unlink path_src_child
-    puts "  > Déplacement du paragraphe #{data_child['id']} OK"
+    puts "  > Déplacement du paragraphe #{old_id_child} -> #{data_child['id']} OK"
     new_children_para << dchild
   end
-  puts "*** Déplacement des paragraphes dans la collection Narration OK ***"
+  puts "* Déplacement des paragraphes dans la collection Narration OK"
   puts "LAST_ID narration = #{@last_id}"
   
   # Déplacement de la page dans le dossier source
@@ -180,9 +214,9 @@ begin
   # Note : En fait, on enregistre les nouvelles données
   # dans une nouvelle page, sur Narration, et on détruit
   # l'ancien fichier
-  PAGE_NEW_ID = get_new_id
   data_page_source['id']      = PAGE_NEW_ID
   data_page_source['enfants'] = new_children_para
+  data_page_source['parent']  = {"id" => ID_CHAPITRE_DEST, "type" => "chap"}
   path_page_destin  = path_of_fiche 'narration', 'page', PAGE_NEW_ID
   init_dpage_source = load_data path_page_source # pour annuler transaction
   save_data path_page_destin, data_page_source
@@ -194,17 +228,19 @@ begin
   # -------------------------------------------
   # => Modification du chapitre de destination
   inserted    = false
-  new_dchild  = {'id' => PAGE_NEW_ID, 'type' => 'page'} 
+  new_dchild  = {'id' => PAGE_NEW_ID.to_s, 'type' => 'page'} 
   if defined? BEFORE_PAGE_ID
     new_children = []
+    data_chap_destin['enfants'] ||= []
     data_chap_destin['enfants'].each do |dchild|
-      if dchild['id'] == BEFORE_PAGE_ID
+      if dchild['id'].to_i == BEFORE_PAGE_ID
         new_children << new_dchild
         inserted = true
         puts "* Page #{PAGE_NEW_ID} insérée avant #{BEFORE_PAGE_ID}"
       end
       new_children << dchild
     end
+    data_chap_destin['enfants'] = new_children
   end
   if inserted == false
     puts "* Page #{PAGE_NEW_ID} insérée à la fin du chapitre"
@@ -227,6 +263,14 @@ rescue Exception => e
   
 end
 
+# On vérifie que les fichiers ont bien été détruits/créés
+removed_files.each do |path|
+  errors << "ERROR : Le fichier #{path} aurait dû être DÉTRUIT" if File.exists? path
+end
+ajouted_files.each do |path|
+  errors << "ERROR : Le fichier #{path} aurait dû être CRÉÉ" unless File.exists? path
+end
+
 
 if errors.count > 0
   
@@ -241,9 +285,11 @@ if errors.count > 0
 
   unless init_dchap_destin.nil?
   end
-else
+else  
+  
   puts "\n=== OPÉRATION EXÉCUTÉE AVEC SUCCÈS ! ==="
-  puts "= Recharge la collection pour voir le résultat"
+  puts "= Recharge Narration pour voir si la page a été correctement ajoutée"
+  puts "= Charge Scénariopole pour voir si la page a été correctement retirée"
 end
 
 change_owner '_www'
