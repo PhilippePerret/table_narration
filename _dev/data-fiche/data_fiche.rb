@@ -4,11 +4,17 @@
 # Affiche les données d'une fiche
 
 # == Data de la fiche à voir ==
-FOLDER_COLLECTION = "scenariopole" # "current"
-FICHE_TYPE  = 'page'
-FICHE_ID    = 13
-# FICHE_TYPE  = 'para'
-# FICHE_ID    = 27
+# FOLDER_COLLECTION = "narration"
+# FICHE_TYPE  = 'chap'
+# FICHE_ID    = 49
+# FICHE_TYPE  = 'page'
+# FICHE_ID    = 121
+
+FOLDER_COLLECTION = "scenariopole"
+FICHE_TYPE  = 'chap'
+FICHE_ID    = 12
+
+
 # == / Data ==
 
 FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")

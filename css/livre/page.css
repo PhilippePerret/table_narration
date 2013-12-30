@@ -41,12 +41,14 @@ fiche.page.ranged > recto > .titre {
 }
 fiche.page.opened > recto > .titre {
   font-size     : xx-large;
-  margin-bottom : 76px;
+  margin-bottom : 28px;
 }
 /* Pour la page, la hauteur des éléments est fixe */
 fiche.page.opened > recto > div.items {
-  height    : 30em;
-  overflow  : auto;
+  height          : 30em;
+  overflow        : auto;
+  margin-bottom   : 2em;
+  border-bottom   : 3px solid #DADADA;
 }
 
 /* Le titre quand la page est fermée */

@@ -25,7 +25,10 @@ ref:hover:after {display:block;} /*faire apparaitre le tip*/
  *    APERÇU DU CONTENU
  --------------------------------------------------------------------- */
 
-.lk .apercu {display:none;}
+.lk .apercu {
+  display     :none; 
+  font-weight :normal;
+}
 .lk:hover   {z-index:1000 !important;}
 .lk:hover .apercu {display:block;}
 /* Les liens doivent apparaitre plus petits dans les apercus */

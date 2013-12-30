@@ -5,14 +5,13 @@
 
 # Mettre ici les changements à effectuer
 # Ou les définir précisément plus bas
-# CHANGE = {
-#   "enfants"  => [{"id"=>"1", "type"=>"chap"}],
-# }
+CHANGE = {
+  "parent"  => {"id"=>"49", "type"=>"chap"},
+}
 
-FOLDER_COLLECTION = "scenariopole" # "current"
+FOLDER_COLLECTION = "narration" # "current"
 FICHE_TYPE  = 'page'
-FICHE_ID    = 13
-FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
+FICHE_ID    = 121
 
 def autorise path
   load_data_phil unless defined?(DATA_PHIL)
@@ -29,6 +28,8 @@ end
 def data_fiche_in_file
   Marshal.load(File.read(FICHE_PATH))
 end
+
+FICHE_PATH  = File.join('collection', FOLDER_COLLECTION, 'fiche', FICHE_TYPE, "#{FICHE_ID}.msh")
 
 puts "Data d'origine"
 @data_fiche = data_fiche_in_file
