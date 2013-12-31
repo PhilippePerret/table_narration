@@ -284,7 +284,7 @@ class Fiche
   end
   
   def printed?
-    data['not_printed'] != true
+    data['not_printed'] == nil
   end
   
   # Return toutes les données des enfants de la fiche.

@@ -84,7 +84,7 @@ Object.defineProperties(HTMLTable.prototype,{
   "parse_code_str":{
     get:function(){
       var lines = this.code_str.split("\n")
-      if(lines[0].substring(0,1) == "|"){ // ancien format
+      if(lines[0].substring(0,1) == "|"){
         lines = L(lines).collect(function(line){
           return line.substring(1, line.length).trim()
         })
@@ -92,10 +92,20 @@ Object.defineProperties(HTMLTable.prototype,{
       // La première ligne doit définir les colonnes
       this.width_colonnes  = lines.shift().split(' ')
       this.nombre_colonnes = this.width_colonnes.length
-      // On ajoute un marqueur de nouvelle rangée s'il n'existe pas
-      if(lines[0].substring(0,3) != "---") lines.unshift('---')
       this.rangees  = []
       var irangee   = -1
+      /*
+       *  Lorsqu'on définit pour la première fois le paragraphe comme tableau
+       *  alors les lignes ne sont pas encore définies. Donc il ne faut traiter
+       *  le tableau que si on trouve une première ligne après la définition des
+       *  colonnes.
+       */
+      if(undefined == lines[0])
+      {
+        return
+      }
+      // On ajoute un marqueur de nouvelle rangée s'il n'existe pas
+      if(lines[0].substring(0,3) != "---") lines.unshift('---')
       while(line = lines.shift())
       {
         if(line.substring(0,3) == '---')

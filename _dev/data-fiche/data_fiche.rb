@@ -11,8 +11,8 @@
 # FICHE_ID    = 121
 
 FOLDER_COLLECTION = "scenariopole"
-FICHE_TYPE  = 'chap'
-FICHE_ID    = 12
+FICHE_TYPE  = 'para'
+FICHE_ID    = 8466
 
 
 # == / Data ==

@@ -200,9 +200,7 @@ class Fiche
   # 
   def traite_per_style
     return if self.style.nil?
-    if ParserStyle::respond_to? self.style
-      ParserStyle::send(self.style, self)
-    end
+    ParserStyle::send(self.style, self) if ParserStyle::respond_to?( self.style )
   end
   
   # # Traite le paragraphe en fonction de son ptype
@@ -211,22 +209,10 @@ class Fiche
   def traite_per_ptype
     @latex = case ptype
     when 'text' then @latex
-    when 'list' # Liste à puce
-      "\\begin{itemize}\n" + 
-      @latex.split("\n").collect do |line|
-        "\\item #{line}"
-      end.join("\n") + "\n\\end{itemize}\n"
-    when 'enum' # Liste numérotée
-      "\\begin{enumerate}\n" + 
-      @latex.split("\n").collect do |line|
-        "\\item #{line}"
-      end.join("\n") + "\n\\end{enumerate}\n"
-    when 'desc' # Liste de définitions
-      "\\begin{description}\n" + 
-      @latex.split("\n").collect do |line|
-        mot, desc = line.split('::')
-        "\\item[#{mot}] \\hfill \\\n#{desc}"
-      end.join("\n") + "\n\\end{description}\n"
+    # liste à puce, numérotée, ou de définition
+    # et table HTML
+    when 'list', 'enum', 'desc', 'tabl', 'revc'
+      ParserPType::parse self
     when 'ruby'
       eval @latex
     when 'code'
