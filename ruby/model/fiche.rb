@@ -205,6 +205,12 @@ class Fiche
     @book ||= get_book
   end
   
+  # La Propriété `style`
+  # @note:  Elle n'existe que pour les paragraphes
+  def style
+    @style ||= data['style']
+  end
+  
   # Pour un paragraphe de ptype différent de 'text', retourne
   # son vrai texte (celui qui sera affiché).
   # 

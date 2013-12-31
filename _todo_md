@@ -2,12 +2,21 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
-- Pouvoir ouvrir deux collections différentes dans deux pages différentes :
-  Il faut que le nom de la collection soit toujours envoyée aux requêtes ajax
-  et qu'elle soit toujours pris en compte par les scripts
-    
+PUBLISH
+- builder.rb :: Mettre en place le traitement des scénarios
+- Traiter les balises '<i>...</i>' (idem pour "b", "u", "strong", "tt", "ins", "del")
+- Pour les tables (ptype 'tabl'), cf. le package 'array' (dans tabular - p274 du Latex Compagnion)
+- asset.tex :: définir les autres types de document avec des styles propres qu'il
+  faut ajouter aux styles de paragraphe de collection.
+  > Évènemencier (spécial puisqu'un évènement pourrait fonctionner avec une
+    commande qui reçoit les informations de l'évènement)
+
+- Renommer l'application 'table_narration' par 'collection' (pour pouvoir en
+  faire plein d'autres choses). Peut-être faire simplement un autre dépôt et
+  supprimer 'table_narration' (EN PRENANT SOIN DE COPIER LE DOSSIER 'collection'
+  QUI N'EST PAS UPLOADÉ SUR GITHUB)
+
 BUGS
-  # Échec sur : De battre mon c\oeur
   # Voir le problème avec les "é" dans les titres de film. Ils sont supprimés
     > regarder si ça vient de javascript ou de ruby (voir celui qui construit l'id)
 
@@ -15,15 +24,6 @@ BUGS
   avec une opacity moindre, sauf quand on glisse la souris dessus.
   > Option préférence pour masquer ces fiches quand ce sont des paragraphes.
   
-VIEUX COURS
-  Commencer à mettre en place la procédure de récupération des anciens fichiers
-  du site.
-  > Bien réfléchir à comment faire pour les transformer en fichier narration.
-  > Penser à traiter toutes les balises 
-    - à commencer par film et mot
-    - mais aussi <personnage>, <acteur>, etc. (voir les autres)
-    - les références ?
-    
 INSERTION FICHIER
   > Traitement des fichiers de type évènemenciers
   

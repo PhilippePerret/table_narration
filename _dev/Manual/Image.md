@@ -17,7 +17,7 @@ La balise image s'écrit dans le texte par :
 
 L'image doit obligatoirement se trouver dans le dossier ou un sous-dossier de :
 
-./collection/<collection>/ressource/img/
+    ./collection/<collection>/ressource/img/
   
 C'est le `path/to` depuis ce dossier qu'on doit indiquer dans la balise.
 

@@ -18,14 +18,44 @@
 #
 #   NOTES
 #   -----
-#     :: Tous les selectors qui commencent par le même nom fonctionnent en "exclusion",
-#        c'est-à-dire qu'un seul peut être appliqué à la fois.
-#
-#     :: Toutes les propriétés concernant les données du style hors CSS sont précédées
-#        de ":". Par exemple `:style_after' qui définit le style par défaut du paragraphe
-#        suivant.
-#        Ces données sont mises dans `DATA_STYLES' dans le même fichier.
+#     ::  Tous les selectors qui commencent par le même nom fonctionnent 
+#         en "exclusion", c'est-à-dire qu'un seul peut être appliqué à la fois.
+#     ::  Toutes les propriétés concernant les données du style hors CSS sont
+#         précédées de ":". Par exemple `:style_after' qui définit le style par
+#         défaut du paragraphe suivant.
+#         Ces données sont mises dans `DATA_STYLES' dans le même fichier.
 # 
+#   NOTE SUR LES PARAGRAPHES DEVANT SUBIR UN TRAITEMENT POUR LA PUBLICATION
+#   -----------------------------------------------------------------------
+#   ::  Si un style de paragraphe doit subir un traitement particulier (par
+#       exemple, les paragraphes de styles `scenario_scene` et 
+#       `scenario_character` sont mis en capitales), ce traitement doit être
+#       défini dans le module `./ruby/lib_publication/parser_style.rb` en
+#       définissant une méthode de même nom que le style.
+# 
+#   NOTES CONCERNANT LES STYLES "DOCUMENT AUTEUR" (par exemple un scénario)
+#   -----------------------------------------------------------------------
+#   ::  Ces styles sont traités de façon particulière à la publication : tous les
+#       paragraphes adjacents sont rassemblés pour être placés dans un environnement
+#       défini dans `publication/source/asset.tex`.
+#   ::  Pour créer un tel document, il faut :
+#       * Définir son préfixe dans `ruby/lib_publication/fiche.rb` dans la 
+#         constante PREFIXES_STYLE_DOC_AUTEUR. Par exemple 'scenario' est mis dans
+#         cette constante.
+#       * Tous les styles de ce type de document doivent commencer par ce préfixe
+#         suivi d'un trait plat. Par exemple 'scenario_action', 'scenario_character'.
+#       * Dans `publication/source/asset.tex` il faut définir la commande de nom
+#         'doc'+<prefixe capitalisé. Par exemple, pour 'scenario' => '\docScenario'
+#       * Si ce type de document contient des sous-styles (intitulé, action, etc.)
+#         il faut définir une commande LaTex pour chacun d'eux.
+#         Si le nom du style est ici '<prefixe>_<sousstyle>' le nom de la commande
+#         LaTex doit être '<prefixe><Sousstyle>' (suppression du trait plat et 
+#         capitalisation de 'sousstyle') Par exemple pour le sous-style 'note_jeu'
+#         du scénario, le style est défini ici par 'scenario_note_jeu' et la commande
+#         LaTex dans 'publication/source/asset.tex' porte le nom 'scenarioNoteJeu'.
+#       * S'inspirer des styles scénario pour composer le nouveau style.
+# 
+# ----------------------------------------------------------------------------------
 
 titre_level_1, titre_level_2, titre_level_3
   font-family   "Times New Roman"

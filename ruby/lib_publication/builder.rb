@@ -109,7 +109,14 @@ def build_content_tex
   affixe_dest += "-tdm" if OPTIONS_COMMAND[:only_tdm]
   document.destination_file File.join('.', 'livres', Collection::name, affixe_dest)
   dlog "Fichier destination : #{document.destination_file}"
-  $BOOK.prepare_publication OPTIONS_COMMAND
+  begin
+    $BOOK.prepare_publication OPTIONS_COMMAND
+  rescue Exception => e
+    dlog "### ERROR : #{e.message}"
+    dlog "### " + e.backtrace.join("\n### ")
+    dlog "###"
+    raise
+  end
 
   # Fabrication de la bibliographie (custom)
   Film::build_biblio
