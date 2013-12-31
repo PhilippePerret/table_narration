@@ -97,11 +97,11 @@ class << self
       end
     end
     # Le texte renvoyé
-    '\noindent' + "\n" +
+    '\vspace{12pt}\noindent' + "\n" +
     "\\begin{#{tabular}}{#{cols_definition}}\n"+
     rows.join("\n") + "\n" +
     "\\hline"+
-    "\\end{#{tabular}}\n"
+    "\\end{#{tabular}}\\vspace{12pt}\n"
   end
   
   # Traiement des évènemenciers

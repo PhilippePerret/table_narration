@@ -2,8 +2,30 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+EVENEMENCIER
+  Principe des nouveaux évènemenciers :
+  * Une banque d'évènements
+    Peut-être une banque par "scale" du film
+    Scale acte, scale meta-sequence, scale sequence scale scène, scale beat,
+    scale event
+    Dans chaque banque, les évènements possèdent
+    - un identifiant unique (au moins dans la banque)
+    - un résumé décrivant l'évènement
+    - un temps (leur début)
+    - une durée (leur fin)
+    - une note (pour ajouter une note générale sur l'évènement)
+    - des données propres (peut-être la nature de l'évènement)
+  * Chaque évènemencier s'appuie sur ces banques.
+    > Un évènemencier complet d'un scale donné reprend simplement tous les
+      évènements de ce scale
+    > Un brin peut piocher dans la banque, et intercroiser même des évènements
+      de scale différent.
+    * Donc un évènement doit préciser :
+      // Les deux données qui suffisent à connaître l'évènement (son temps, sa durée,
+      // son résumé)
+      - scale::id
+
 PUBLISH
-- Pour les tables (ptype 'tabl'), cf. le package 'array' (dans tabular - p274 du Latex Compagnion)
 - asset.tex :: définir les autres types de document avec des styles propres qu'il
   faut ajouter aux styles de paragraphe de collection.
   > Évènemencier (spécial puisqu'un évènement pourrait fonctionner avec une
