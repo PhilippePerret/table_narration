@@ -113,7 +113,37 @@ Object.defineProperties(Paragraph.prototype,{
     get:function(){
       var css = $.merge([], this._style || [])
       css.push('texte')
+      if(this.not_printed)
+      {
+        css.push('not_printed')
+        if(App.preferences.masknotprinted) css.push('hidden')
+      } 
       return css.join(' ')
+    }
+  },
+  
+  /**
+    * Méthode "filtrant" le paragraphe, c'est-à-dire lui appliquant certains
+    * styles ou le masquant suivant le filtre défini.
+    * Notes
+    *   * Cette méthode a été inaugurée pour gérer la préférence "Masquer les 
+    *     paragraphes not printed".
+    *   * Pour le moment, le filtre ne concerne que cette préférence.
+    *   * la méthode est appelée chaque fois qu'une page est ouverte, pour régler
+    *     ses paragraphes.
+    *   * TODO: Plus tard, on pourra l'utiliser pour filtrer suivante une recherche,
+    *     une condition sur le style, sur l'état de développement, etc.
+    *   * C'est une propriété complexe => appeler sans parenthèses
+    *
+    * @method applique_filtre
+    */
+  "applique_filtre":{
+    get:function(){
+      if(this.not_printed)
+      {
+        if(!this.obj.hasClass('not_printed')) this.obj.addClass('not_printed')
+        this.obj[(App.preferences.masknotprinted?'add':'remove')+'Class']('hidden')
+      }
     }
   },
   
@@ -182,7 +212,7 @@ Object.defineProperties(Paragraph.prototype,{
   /* Règle le style dans le menu style du paragraphe (verso) */
   "set_style":{
     get:function(){
-      // On active tous les styles du paragraphes
+      // On active tous les styles du paragraphe
       PARAGRAPHS.active_styles( this.style )
     }
   },  
@@ -340,7 +370,7 @@ $.extend(Paragraph.prototype,{
 
   /**
     * Méthode appelée quand on applique les styles choisis pour
-    * le paragraphe.
+    * le paragraphe (verso de la fiche).
     *
     * @method on_change_styles
     * @param  {Array} selectors   Liste des styles choisis
@@ -350,6 +380,7 @@ $.extend(Paragraph.prototype,{
     dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
     if(selectors.length == 0) selectors = null
     this.style    = selectors
+    this.update_display
     this.modified = true
     dlog("<- "+idm, DB_FCT_ENTER)
   }

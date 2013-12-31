@@ -15,6 +15,20 @@ window.Page = function(data)
 Page.prototype = Object.create( Fiche.prototype )
 Page.prototype.constructor = Page
 
+$.extend(Page.prototype,{
+  
+  /**
+    * Méthode appelée après l'ouverture de la page (`open` commun à tous les
+    * type de fiche)
+    *
+    * @method after_open
+    */
+  after_open:function(){
+    if(this.enfants){
+      L(this.enfants).each(function(child){child.applique_filtre})
+    }
+  }
+})
 Object.defineProperties(Page.prototype,{
   /**
     * @property {Book} book Le livre auquel appartient la page (ou null)

@@ -6,12 +6,15 @@ body {
  *  Styles généraux
  */
 bad {color: red;} /* publication : souligné par des vagues */
+
 .fright{float:right;}
 .fleft {float:left ;}
 .right {text-align:right;}
 .left   {text-align:left;}
 .small { font-size: 0.8em;  }
 .tiny  { font-size: 0.65em; }
+
+.hidden {display:none;}
 
 /* Un titre de panneau (le div doit contenir la class "panneau")*/
 div.panneau div.titre {

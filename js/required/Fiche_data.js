@@ -25,6 +25,10 @@ $.extend(Fiche.prototype,{
   
   /**
     * Méthode appelée quand on change une option (verso)
+    * Notes
+    *   * Cela peut avoir un impact direct sur l'affichage, comme pour les
+    *     paragraphes not-printed.
+    *
     * @method onchange_option
     * @param  {String}  prop   La propriété à définir
     * @param  {Any}     value La valeur à lui donner
@@ -33,6 +37,7 @@ $.extend(Fiche.prototype,{
   {
     if(this[prop] == value) return
     this[prop] = value
+    if(this.is_paragraph && prop == 'not_printed') this.update_display
     this.modified = true
   },
   
@@ -390,6 +395,7 @@ Object.defineProperties(Fiche.prototype,{
   "update_display":{
     get:function(){
       this.main_field.set(this.main_field_value(this.edited == false))
+      if(this.is_paragraph) this.applique_filtre
     }
   }
   

@@ -102,6 +102,17 @@ window.get_fiche = function(id)
 }
 
 /**
+  * Raccourci pour obtenir l'instance Fiche de l'objet DOM donné
+  * en argument.
+  * @method fiche_of_obj
+  * @param  {DOMElement|jQuerySet} obj    L'objet DOM
+  * @return {Fiche} La fiche possédant l'objet DOM
+  */
+window.fiche_of_obj = function(obj)
+{
+  return FICHES.domObj_to_fiche(obj)
+}
+/**
   * Retourne l'instance {Mot} du mot d'identifiant +mid+
   * en la créant si nécessaire
   *

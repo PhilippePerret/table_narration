@@ -27,6 +27,12 @@ ul#paragraphs_menu_styles > li
   margin-left   : 40px;
 }
 
+/* Pour un paragraphe non imprimable */
+fiche.para.not_printed {
+  opacity     :0.2;
+}
+fiche.para.not_printed:hover{opacity:1;}
+
 /*
  * Menu contenant les styles de paragraph
  * --------------------------------------

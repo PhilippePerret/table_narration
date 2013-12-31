@@ -36,7 +36,11 @@ App.Prefs = {
     {id:'dirgridbook',type:'select', style:"visibility:hidden;",
       values:[{value:"h",title:"horizontalement"}, {value:"v",title:"verticalement"}]},
     '</div>',
-    {id:'fiches',     type:'/fieldset'}
+    {id:'fiches',     type:'/fieldset'},
+    {id:'paragraphes', type:'fieldset', legend:"Paragraphes"},
+    {id:'masknotprinted', type:'cb',    label:"Masquer paragraphe “not printed”", indiv:true, 
+      onchange:"$.proxy(App.Prefs.onchange_masknotprinted, App.Prefs, this.checked)()"},
+    {id:'paragraphes', type:'/fieldset'}
     ],
   
   /**
@@ -50,6 +54,28 @@ App.Prefs = {
   {
     $('select#pref-dirgridbook').css('visibility', coched?'visible':'hidden')
   }, 
+  
+  /**
+    * Méthode appelée quand on clique sur la CB pour masquer/afficher les 
+    * paragraphes "not printed"
+    * Elle passe en revue les pages ouvertes (elle doit les trouver sur la
+    * table) et masque ou montre les paragraphes not printed.
+    * @method onchange_masknotprinted
+    * @param {Boolean} masquer Si TRUE, on doit les masquer
+    */
+  onchange_masknotprinted:function(masquer)
+  {
+    $('section#table > fiche.page').each(function(){
+      fiche = fiche_of_obj($(this))
+      if(fiche.enfants)
+      {
+        L(fiche.enfants).each(function(child){
+          child.applique_filtre
+        })
+      }
+    })
+  },
+  
   /**
     * Enregistre les préférences de l'application (et reçoit le retour de la 
     * requête ajax)
