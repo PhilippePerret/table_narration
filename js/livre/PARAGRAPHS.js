@@ -188,6 +188,26 @@ window.PARAGRAPHS = {
     if(!selectors || selectors.length == 0) return
     // On règle l'aperçu du paragraphe avec ses styles
     $('li#apercu_paragraph').addClass(selectors.join(' '))
+  },
+  
+  /**
+    * Méthode appelée par un click sur la CB "Show style aspect" pour
+    * montrer l'aspect des styles ou par les préférences
+    * @method show_aspect_styles
+    * @param {Boolean} montrer    True s'il faut les montrer
+    *
+    */
+  show_aspect_styles:function(montrer)
+  {
+    if(undefined == montrer){
+      montrer = App.preferences.show_aspects_styles
+    }else{
+      App.preferences.show_aspects_styles = montrer
+    }
+    L(PARAGRAPH_STYLES).each(function(selector){
+      $('li#'+"li-paragraph_style-"+selector)[(montrer?'add':'remove')+'Class'](selector)
+    })
+    $('ul#paragraphs_menu_styles')[(montrer?'remove':'add')+'Class']('small')
   }
 }
 
@@ -240,10 +260,12 @@ Object.defineProperties(PARAGRAPHS, {
     get:function(){
       var id ;
       var btn_apply = '<input type="button" value="Appliquer" onclick="$.proxy(PARAGRAPHS.apply_styles, PARAGRAPHS)()" style="font-size:1.3em;" />'
-      var cb_apercu =   '<div class="fleft">' +
-                          '<input type="checkbox" id="cb_show_apercu_paragraph" onchange="$(\'div#div_apercu_paragraph\').toggle();" />' +
-                          '<label for="cb_show_apercu_paragraph">Aperçu</label>' +
-                        '</div>' ;
+      var cbs = '<div class="fleft">' +
+                  '<input type="checkbox" id="cb_show_aspect_styles" onchange="$.proxy(PARAGRAPHS.show_aspect_styles,PARAGRAPHS,this.checked)()" />' +
+                  '<label for="cb_show_aspect_styles">Show aspect</label>' +
+                  '<input type="checkbox" id="cb_show_apercu_paragraph" onchange="$(\'div#div_apercu_paragraph\').toggle();" />' +
+                  '<label for="cb_show_apercu_paragraph">Aperçu</label>' +
+                '</div>' ;
       var buttons   = '<div class="buttons" style="font-size:0.9em">' +  
                         btn_apply +
                       '</div>'
@@ -254,12 +276,12 @@ Object.defineProperties(PARAGRAPHS, {
                     '<div id="div_apercu_paragraph" style="display:none;">' +
                       '<li id="apercu_paragraph">Aperçu du style du paragraphe</li>' +
                     '</div>' +
-                  cb_apercu + 
+                  cbs + 
                   buttons
       code += '<ul id="paragraphs_menu_styles">'
       L(PARAGRAPH_STYLES).each(function(selector){
         id  = "paragraph_style-"+selector ;
-        code += '<li class="'+selector+'">'+
+        code += '<li id="li-'+id+'">'+
                   '<input type="checkbox" id="'+id+'-cb" '+
                     'onchange="$.proxy(PARAGRAPHS.add_remove_style, PARAGRAPHS, this)()"' +
                     ' />'+
@@ -271,6 +293,7 @@ Object.defineProperties(PARAGRAPHS, {
       // On l'ajoute dans le body, il sera tout de suite placé dans
       // le verso d'un paragraphe
       $('body').append( this.html_menu_styles )
+      this.show_aspect_styles()
     }
   },
   

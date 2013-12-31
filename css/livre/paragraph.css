@@ -65,8 +65,12 @@ div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li {
 div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li:hover {
   background-color :#eef;
 }
-div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles li input[type="checkbox"] {
+div.div_menu_styles div#div_paragraph_styles ul#paragraphs_menu_styles:not(.small) li input[type="checkbox"] {
   margin-right  : 1.5em;
   width         : 19px;
   height        : 19px;
+}
+ul#paragraphs_menu_styles.small li input[type="checkbox"]{
+  width         : 15px;
+  height        : 13px;
 }

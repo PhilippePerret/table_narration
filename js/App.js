@@ -96,7 +96,9 @@ $.extend(window.App, {
     saveconfig  : false,  // sauvegarde de la config à chaque sauvegarde
     gridbook    : false,  // Alignement des livres (orientation dépend de dirgridbook)
     dirgridbook : null,   // Orientation de l'alignement des livres ("v" ou "h"),
-    showinfos   : false   // Si true affiche le type et l'id de la fiche courante
+    showinfos   : false,  // Si true affiche le type et l'id de la fiche courante
+    // Préférences hors panneau préférence
+    show_aspects_styles:true  // true: montre l'aspect de chaque style de paragraph
   },
   
   
