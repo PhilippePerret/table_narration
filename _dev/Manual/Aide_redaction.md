@@ -1,5 +1,17 @@
 #Manuel de rédaction des livres
 
+##Texte
+
+###Styles (balises) spéciales
+
+En plus des balises `<b>`, `<strong>`, `<i>`, `<u>`, `<stroke>` on peut utiliser :
+
+    <del>Texte supprimé</del>         // Sera barré en publication
+                                      // Better than 'stroke'
+    <ins>Texte en remplacement</ins>  // underlined en publication
+                                      // need <del> before
+    <bad>Mauvais texte</bad>          // rouge à l'affichage, waves en publication
+  
 ##Déplacement des fiches
 
 ###Déplacement dans le même parent
@@ -58,6 +70,7 @@ Ces options peuvent être&nbsp;:
 -
 
 ##Paragraphes
+
 
 ###Paragraphes “Tableau”
 

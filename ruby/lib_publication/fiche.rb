@@ -115,6 +115,7 @@ class Fiche
   # Retourne le préfixe "doc exemple" du paragraphe courant s'il appartient
   # à un type de document exemple, ou nil
   def prefix_doc_exemple
+    return nil if self.style.nil?
     return nil if STYLE_CSS_HORS_DOC_EXEMPLE[self.style]
     if STYLE_CSS_TO_COMMAND_LATEX[self.style].nil?
       # Le style du paragraphe courant n'est pas connu. Il faut
@@ -186,22 +187,24 @@ class Fiche
     @latex = main_value
     traite_per_style if paragraph?
     traite_per_ptype
-    traite_balise_for_latex
+    ParserBalises::parse self
     @latex += "\n" if paragraph?
     @latex.to_latex
   end
   
-  # Traite le paragraphe en fonction de son style
+  # Traite le paragraphe en fonction de son style (s'il est défini)
   # Principe
   # --------
   #   * Si la méthode 'ParserStyle::<style paragraphe>' existe, on l'invoque 
   #     pour traiter le paragraphe.
   # 
   def traite_per_style
+    return if self.style.nil?
     if ParserStyle::respond_to? self.style
       ParserStyle::send(self.style, self)
     end
   end
+  
   # # Traite le paragraphe en fonction de son ptype
   # # @requis {String} @latex La main value du paragraphe
   # # 
@@ -239,34 +242,7 @@ class Fiche
       ""
     end
   end
-  
-  # Traitement des balises dans @latex
-  # 
-  def traite_balise_for_latex
-    return @latex if @latex.index('[').nil?
-    dlog "Une balise détectée dans #{@latex}"
-    @latex.gsub!(/\[(film|mot|ref|img):([^\|\]]+)(?:\|([^\|\]]+))?(?:\|([^\]]+))?\]/u){
-      tout = $&
-      bal = $1
-      ide = $2
-      val = $3
-      opt = ($4 || "").split
-      foo = case bal
-        when 'film' then Film::new(ide)
-        when 'mot'  then Mot::new(ide)
-        when 'ref'  then Ref::new(ide)
-        when 'img'  then 
-          Image::new(ide, val)
-      end
-      case bal
-        when 'film', 'mot', 'ref'
-          foo.to_latex( opt.unshift(val) )
-        else # pour toutes les autres balises
-          foo.to_latex
-      end
-    }
-  end
-  
+    
   # Raccourci au document source.tex de RLatex
   # 
   def source

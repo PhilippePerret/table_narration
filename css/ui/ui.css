@@ -5,6 +5,7 @@ body {
 /* ---------------------------------------------------------------------
  *  Styles généraux
  */
+bad {color: red;} /* publication : souligné par des vagues */
 .fright{float:right;}
 .fleft {float:left ;}
 .right {text-align:right;}

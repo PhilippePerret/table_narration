@@ -3,7 +3,6 @@ IMPLÉMENTER
 cf. aussi l'issue list sur Github.
 
 PUBLISH
-- builder.rb :: Mettre en place le traitement des scénarios
 - Traiter les balises '<i>...</i>' (idem pour "b", "u", "strong", "tt", "ins", "del")
 - Pour les tables (ptype 'tabl'), cf. le package 'array' (dans tabular - p274 du Latex Compagnion)
 - asset.tex :: définir les autres types de document avec des styles propres qu'il

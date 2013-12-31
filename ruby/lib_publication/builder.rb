@@ -31,6 +31,7 @@ def build_content_tex
   document.author = "Philippe Perret"
   document.type 'book'
   document.options.paper_size     'a5paper'
+  document.options.font_family    'Utopia Regular with Fourier'
   document.options.font_size      '11pt'
   document.options.with_index     true
   document.options.with_biblio    true
@@ -112,9 +113,10 @@ def build_content_tex
   begin
     $BOOK.prepare_publication OPTIONS_COMMAND
   rescue Exception => e
-    dlog "### ERROR : #{e.message}"
+    dlog "\n\n###---------------------------------------------------------------------"+
+          "\n### ERROR : #{e.message}"
     dlog "### " + e.backtrace.join("\n### ")
-    dlog "###"
+    dlog "###---------------------------------------------------------------------"
     raise
   end
 
