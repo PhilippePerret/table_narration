@@ -1,0 +1,139 @@
+% Ce fichier permet de définir:
+%   - Les styles
+%   - Les commandes
+%   - Les environnements
+% Utilisés pour mettre en forme les livres.
+
+% ---------------------------------------------------------------------
+%   Définitions de constantes
+% ---------------------------------------------------------------------
+\newcommand{\COLLECTION}{\emph{COLLECTION NARRATION}} % pour \COLLECTION{}
+
+% ---------------------------------------------------------------------
+%   Font
+% ---------------------------------------------------------------------
+% Je change la police par défaut pour :
+\usepackage{times}
+
+% ---------------------------------------------------------------------
+%   Définition des couleurs utilisées
+% ---------------------------------------------------------------------
+\definecolor{fondexemple}{rgb}{0.98,0.98,0.99}
+% \definecolor{fondexemple}{cmyk}{6,5,0,0}
+\definecolor{bordexemple}{rgb}{0.7,0.7,0.7}
+
+% ---------------------------------------------------------------------
+%   Commandes pour les styles
+% ---------------------------------------------------------------------
+
+% Quand un mot est <tt>...</tt> (terme technique non indexé)
+\newcommand{\tterm}[1]{\texttt{\textbf{#1}}}
+
+% ---------------------------------------------------------------------
+%   Environnements
+% ---------------------------------------------------------------------
+
+% === Main Environnement ===
+% L'environnement que doit appeler tout environnement pour un
+% document d'écriture en exemple, même de type scénario.
+% Cf. les environnements généraux définis ci-dessous.
+% 
+\newcommand{\docAuteur}[1]{%
+  \noindent
+  \setlength{\parindent}{0em}%
+  \vspace{12pt}\par
+  \fcolorbox{bordexemple}{fondexemple}{%
+    \begin{minipage}{1\textwidth}
+      \vspace{12pt}%
+      #1%
+      \vspace{12pt}%
+    \end{minipage}%
+  }
+  \vspace{8pt}\par%
+  % Remettre la config initiale
+  % ---------------------------
+  % TODO: Plus tard, il faudra reprendre les définitions par défaut
+  % EN fait : faire une commande pour remettre les valeurs par défaut.
+  \setlength{\parindent}{2em}%
+  \fontfamily{}
+  \selectfont
+}
+
+% --- Environnement Scénario ---
+% Commande sous classe de \docAuteur
+% Elle modifie simplement la font et est utilisé
+% Par tout environnement scénario
+\newcommand{\docScenario}[1]{%
+  \fontfamily{phv}
+  \selectfont % pour que la font soit prise en compte
+  \docAuteur{#1}
+}
+
+% --- Environnement Synopsis ---
+\newcommand{\docSynopsis}[1]{#1}
+
+% ---------------------------------------------------------------------
+%   Méthodes générales
+% ---------------------------------------------------------------------
+
+% Sous-environnement permettant de définir les 
+% décalage de texte
+% Notes
+%   * Usage : \OffText{<marge gauche>}{<marge droite>}
+%   * On peut définir les polices dans l'environnement principal
+%     cf. \docScenario ci-dessus
+% 
+\newenvironment{OffText}[2]{%
+\begin{list}{}{%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+}
+\setlength{\parskip}{0pt}%
+\setlength{\parindent}{2em}%
+\scriptsize\item[]%
+}{%
+\end{list}
+}
+
+% ---------------------------------------------------------------------
+%   Pour les scénarios
+% 
+%     \scenarioIntitule{....}
+%     \scenarioAction{....}
+%     \scenarioPersonnage{...}
+%     \scenarioNoteJeu{...}
+%     \scenarioDialogue{...}
+% 
+% Notes
+%   * Ces commandes sont incluses dans l'environnement \docScenario
+%     cf. ci-dessus
+% ---------------------------------------------------------------------
+\newcommand{\scenarioScene}[1]{%
+  \begin{OffText}{12pt}{12pt}
+    {\bfseries #1}
+  \end{OffText}%
+}
+\newcommand{\scenarioCharacter}[1]{%
+  \begin{OffText}{4cm}{12pt}
+    {\bfseries #1}
+  \end{OffText}%
+}
+\newcommand{\scenarioNoteJeu}[1]{%
+  \begin{OffText}{4cm}{3cm}
+    \vspace{-6pt}
+    {\itshape #1}
+  \end{OffText}%
+}
+\newcommand{\scenarioDialog}[1]{%
+  \begin{OffText}{2.5cm}{2cm}
+    \begin{flushleft}
+      \vspace{-6pt}
+      #1
+    \end{flushleft}
+  \end{OffText}%
+}
+\newcommand{\scenarioAction}[1]{%
+  \begin{OffText}{22pt}{24pt}
+    #1
+  \end{OffText}%
+}  

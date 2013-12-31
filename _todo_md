@@ -14,11 +14,6 @@ PUBLISH
   supprimer 'table_narration' (EN PRENANT SOIN DE COPIER LE DOSSIER 'collection'
   QUI N'EST PAS UPLOADÉ SUR GITHUB)
 
-BUGS
-
-- Faire un style css spécial pour une fiche not_printed quand c'est un paragraphe,
-  avec une opacity moindre, sauf quand on glisse la souris dessus.
-  > Option préférence pour masquer ces fiches quand ce sont des paragraphes.
   
 INSERTION FICHIER
   > Traitement des fichiers de type évènemenciers
