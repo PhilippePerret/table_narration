@@ -17,6 +17,10 @@
 // // On l'étend avec les propriétés complexes partagées
 // Object.defineProperties(Film.prototype, ObjetClass_defined_properties)
 
+/**
+  * @class Film
+  * @constructor
+  */
 $.extend(Film.prototype,{
   
   /*

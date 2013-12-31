@@ -203,6 +203,11 @@ OBJETS_Edition = {
         replace(/_OTHER_ID_/,t_fin)
       )
     }
+    // == débug suite à erreur sur Cinquième Élément ==
+    alert("L'identifiant trouvé d'après le titre est : "+t_fin+"\n\n"+
+    "[Pour supprimer ce message (si la méthode fonctionne bien) : il est généré "+
+    "dans\n`required/object/>OBJETS_Edition.js::id_from_mainprop`]")
+    // == /débug
     return t_fin
   },
  

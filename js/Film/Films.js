@@ -19,13 +19,20 @@
 window.FILMS = FILMS || {}
 $.extend(FILMS, {
 
+  /**
+    * Pour connaitre le name de l'objet-pluriel courant
+    * @property {String} NAME
+    * @static
+    */
   NAME:"FILMS",
 
-  /*
-   *  Options pour l'affichage du titre du film
-   *  dans la page.
-   *  
-   */
+  /**
+    * Options pour l'affichage du titre du film
+    * dans la page.
+    *
+    * @property {Object} OPTIONS
+    * @static
+    */
   OPTIONS:{
     'annee'   :{hname: "Année (A)",           valdef:true}, 
     'titrefr' :{hname: "Titre français (F)",  valdef:false}, 
