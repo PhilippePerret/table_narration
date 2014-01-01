@@ -2,7 +2,7 @@
  *  Paragraph Styles
  *  ----------------
  *
- *  @last_update : 31 12 2013 - 10:23 (day month year - hours:minutes)
+ *  @last_update : 01 01 2014 - 17:29 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
@@ -38,6 +38,55 @@ fiche.para div.titre_level_3,fiche.para textarea.titre_level_3,div#div_paragraph
 	font-size : 1.2em !important;
 	margin-top : 20px !important;
 	margin-bottom : 10px !important;
+}
+
+fiche.para textarea.document_titre{border:0;}
+fiche.para div.document_titre,fiche.para textarea.document_titre,div#div_paragraph_styles li.document_titre {
+	text-align : center !important;
+	font-weight : bold !important;
+	font-variant : small-caps !important;
+	font-size : 18pt !important;
+}
+
+fiche.para textarea.document_sous_titre{border:0;}
+fiche.para div.document_sous_titre,fiche.para textarea.document_sous_titre,div#div_paragraph_styles li.document_sous_titre {
+	text-align : center !important;
+	font-weight : bold !important;
+	font-variant : small-caps !important;
+	font-size : 16pt !important;
+}
+
+fiche.para textarea.document_partie{border:0;}
+fiche.para div.document_partie,fiche.para textarea.document_partie,div#div_paragraph_styles li.document_partie {
+	font-size : 18pt !important;
+}
+
+fiche.para textarea.document_sous_partie{border:0;}
+fiche.para div.document_sous_partie,fiche.para textarea.document_sous_partie,div#div_paragraph_styles li.document_sous_partie {
+	font-family : Verdana !important;
+	font-size : 16pt !important;
+}
+
+fiche.para textarea.document_section{border:0;}
+fiche.para div.document_section,fiche.para textarea.document_section,div#div_paragraph_styles li.document_section {
+	font-family : Verdana !important;
+	font-size : 14pt !important;
+}
+
+fiche.para textarea.document_paragraphe{border:0;}
+fiche.para div.document_paragraphe,fiche.para textarea.document_paragraphe,div#div_paragraph_styles li.document_paragraphe {
+	font-family : Verdana !important;
+	font-size : 12pt !important;
+	margin-left : 20pt !important;
+}
+
+fiche.para textarea.document_note{border:0;}
+fiche.para div.document_note,fiche.para textarea.document_note,div#div_paragraph_styles li.document_note {
+	font-family : Verdana !important;
+	font-size : 10pt !important;
+	color : blue !important;
+	font-style : italic !important;
+	margin-left : 100pt !important;
 }
 
 fiche.para textarea.scenario_scene{border:0;}

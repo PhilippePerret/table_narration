@@ -29,6 +29,9 @@ App.Prefs = {
     {id:'saveconfig', type:'cb',        label:"Sauver la configuration des fiches à chaque sauvegarde", indiv:true},
     {id:'general',    type:'/fieldset'},
     {id:'fiches',     type:'fieldset',  legend:"Fiches"},
+    {id:'modeunique', type:'cb',
+      onclick:"$.proxy(App.Prefs.onchange_mode_unique, App.Prefs, this.checked)()",
+      label:"Mode “Unique” <span class=\"tiny\">Dans ce mode, un seul livre et une seule page pourront être ouverts, placés toujours au même endroit visible.</span>"},
     {id:'snap',       type:'cb',        label:"Aligner les fiches sur la grille", indiv:true},
     {id:'showinfos',  type:'cb',        label:"Afficher type:id dans pied de page", indiv:true},
     '<div>',
@@ -43,6 +46,47 @@ App.Prefs = {
     {id:'paragraphes', type:'/fieldset'}
     ],
   
+  /**
+    * Au chargement de la collection, règle les préférences qui doivent
+    * être prises en compte immédiatement.
+    * Notes
+    *
+    * @method set
+    * @param  {Object} prefs    Les préférences de l'application, ou null
+    */
+  set:function(prefs){
+    if(!prefs) return
+    App.preferences = prefs
+    window.MODE_UNIQUE = App.preferences.modeunique
+  },
+
+  /**
+    * Méthode appelée quand on passe en mode unique (ou qu'on en sort, mais elle ne
+    * fait rien alors).
+    * La méthode va mettre en place le mode unique, en commençant par fermer tous
+    * les 'book' et 'page' ouverts (en passant en revue les éléments posés sur la table)
+    * Elle va définir la valeur de MODE_UNIQUE et rouvrir la dernière fiche trouvée.
+    * @method onchange_mode_unique
+    * @param  {Boolean} activer   True s'il faut activer le mode unique.
+    */
+  onchange_mode_unique:function(activer)
+  {
+    if(activer == false)
+    {
+      MODE_UNIQUE = false
+      return
+    } 
+    var fiche, fiche_open ;
+    $('section#table').find('fiche.book, fiche.page').each(function(){
+      fiche = fiche_of_obj($(this))
+      if((fiche.is_book || fiche.is_page) && fiche._opened){
+        fiche.close
+        fiche_open = get_fiche(fiche.id)
+      } 
+    })
+    MODE_UNIQUE = true
+    if(fiche_open) fiche_open.open
+  },
   /**
     * Méthode appelée quand on clique sur le cb "livre rangés"
     * La méthode affiche ou masque le menu pour choisir l'alignement des livres,
@@ -248,7 +292,9 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       return  '<div id="preferences">'+
                 '<div class="titre">Préférences</div>'+
-                this.html_options +
+                '<div class="fieldsets">'+
+                  this.html_options +
+                '</div>' +
                 this.html_buttons +
               '</div>'
     }

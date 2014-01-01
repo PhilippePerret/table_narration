@@ -884,8 +884,7 @@ $.extend(Fiche.prototype,{
   */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
-  dlog("-> Fiche::stop_drag", DB_FCT_ENTER | DB_CURRENT)
-  dlog("App.preferences.snap:"+App.preferences.snap)
+  dlog("-> Fiche::stop_drag", DB_FCT_ENTER)
   pos_on_grid = UI.position_on_grid([pos.left, pos.top], App.preferences.snap)
   this.left = pos_on_grid.left
   this.top  = pos_on_grid.top

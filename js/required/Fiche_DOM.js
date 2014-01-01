@@ -149,7 +149,16 @@ Object.defineProperties(Fiche.prototype,{
         // Appeler la méthode `after_open` si elle est définie pour ce
         // type de fiche
         if('function'==typeof this.after_open) this.after_open()
-      }
+        
+        if('function' != typeof this.pour_suivre_open)
+        {
+          // Note: On ne traite le mode unique que dans le cas où il n'y ait
+          // pas de méthode poursuivre, ce qui indiquerait qu'un traitement
+          // particulier est en cours. Mais peut-être que ça peut être mauvais
+          // pour les références. À voir.
+          if(MODE_UNIQUE) UI.open_mode_unique( this )
+        }
+      } // si la fiche n'est pas déjà ouverte
       if('function' == typeof this.pour_suivre_open)
       {
         this.pour_suivre_open()
@@ -167,6 +176,8 @@ Object.defineProperties(Fiche.prototype,{
     *   * En mode fermé, le titre est disabled
     *   * Si la préférences "Livre rangé" est true et que c'est un livre, on
     *     doit le recaler à sa place.
+    *   * Si on est en “mode unique” (un seul book et une seule page ouverte à 
+    *     la fois, on doit positionner la fiche avec UI.open_mode_unique) 
     *
     * @method close
     */
@@ -180,8 +191,9 @@ Object.defineProperties(Fiche.prototype,{
       else if (this.is_book && App.preferences['gridbook'] == true)
       {
         if(App.preferences['dirgridbook'] == 'v') this.left -= UI.GRID_X
-                                             else this.top -= UI.GRID_Y
+                                             else this.top  -= UI.GRID_Y
       }
+      if(MODE_UNIQUE) UI.close_mode_unique( this )
       dlog("<- "+idm, DB_FCT_ENTER)
     }  
   },

@@ -91,6 +91,8 @@ $.extend(window.App, {
     * @default Les préférences par défaut
     */
   preferences:{
+    modeunique    :false,   // Dans ce mode un seul élément de type 'book' ou 'page'
+                            // ouvert à la fois.
     snap         : true,    // place les fiches sur la grille
     autosave     : false,   // sauvegarde automatique
     saveconfig   : false,   // sauvegarde de la config à chaque sauvegarde

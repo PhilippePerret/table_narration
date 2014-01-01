@@ -257,7 +257,7 @@ $.extend(Collection, {
   {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
     this.name = data.collection_name
-    if(data.preferences) App.preferences = data.preferences
+    App.Prefs.set(data.preferences)
     if(data.collections) UI.peuple_menu_collections(data.collections)
     // Configuration courante (note: le fait de la définir l'applique)
     App.current_configuration = data.current_configuration
