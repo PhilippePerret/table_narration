@@ -14,13 +14,33 @@ Retour
 Retourne :found {Object} Contenant tous les éléments correspondant à la recherche
 
 =end
+
 class String
-  def without_returns
+  # On supprime les retours chariot et toutes les balises HTML
+  def without_unwanted
     self.gsub!(/\n/, '\\n')
+    self.gsub!(/<\/?(?:[^>]*?)>/u, '')
     self
   end
 end
 
+# Longueur maximale pour un extrait de paragraphe (début)
+# 
+MAX_LENGTH_EXTRAIT = 50
+
+# Longueur maximale de texte qui a va être prise avant et après
+# un match de recherche
+# @note   Essentiellement utile pour les paragraphes.
+#         Les autres types de fiche, puisqu'on checke leur titre, ne pourront
+#         que rarement dépasser cette limite.
+MAX_BEFORE_AFTER = 100
+
+
+# Table contenant en clé l'identifiant {Fixnum} de la fiche et en
+# valeur son titre.
+# Elle permet de renseigner l'appartenance (ancêtre) d'une fiche
+# retenue
+DFICHES = {}
 
 @search_param = (param :params)
 @search_param['dev-min'] = @search_param['dev-min'].to_i
@@ -44,12 +64,14 @@ unless searched == ""
     while found = text.match(@regexp, offs)
       # puts found.inspect
       offs += found.begin(0) + 1
-      prem = found.pre_match
-      prem = prem[-21..-1] if prem.length > 20
+      prem = found.pre_match.to_s.without_unwanted
+      prem = prem[-(MAX_BEFORE_AFTER+1)..-1] if prem.length > MAX_BEFORE_AFTER
+      post = found.post_match.to_s.without_unwanted
+      post = post[0..MAX_BEFORE_AFTER]
       @current[:matches] << {
-        :pre    => prem.to_s.without_returns, 
-        :found  => found.to_s.without_returns, 
-        :post   => found.post_match[0..20].to_s.without_returns,
+        :pre    => prem, 
+        :found  => found.to_s.without_unwanted, 
+        :post   => post,
         :offset => offs - 1
       } 
     end
@@ -65,12 +87,41 @@ end
   :param_search           => (param :params)
 }
 
+# Charge les données de la fiche d'id +id+ et de type +type+ dans DFICHES
+# 
+# Noter que cette méthode n'est utile que si la recherche n'est pas faite
+# sur TOUS les types de fiches. Dans le cas contraire, la donnée DFICHES
+# est renseignée au fur et à mesure de la lecture des fiches (car, par chance,
+# on passe d'abord par 'book', puis 'chap', puis 'page', puis 'para')
+# 
+def load_fiche id, type
+  path    = File.join(Collection::folder_fiches, type, "#{id}.msh")
+  dfiche  = Marshal.load(File.read path)
+  DFICHES[id.to_i] = {:titre => dfiche['titre'], :parent => dfiche['parent']}
+end
+# Retourne la hiérarchie de titre de la fiche courante 
+# (quand mémorisée)
+# 
+def parents_of_current
+  parents = []
+  parent  = @current['parent']
+  return nil if parent.nil?
+  while parent
+    id = parent['id'].to_i
+    load_fiche( id, parent['type'] ) if DFICHES[id].nil?
+    parents.unshift DFICHES[id][:titre]
+    parent = DFICHES[id][:parent]
+  end
+  parents.join(' > ')
+end
 # Enregistre les fiches OK
 # @param {Hash} La données de la fiche (telle que relevée dans le fichier)
 def memorize_current
   @found[:founds] << {
     :id       => @current['id'], 
     :type     => @current['type'],
+    :parent   => @current['parent'],
+    :parents  => parents_of_current,
     :incipit  => main_value_for_retour,
     :matches  => @current[:matches]
   }
@@ -82,8 +133,8 @@ end
 # La méthode travaille sur @current, la fiche courante
 def main_value_for_retour
   texte = main_value
-  texte = texte[0..66] + " […]" if texte.length > 70 && !@search_param['whole_text']
-  texte.to_s.without_returns
+  texte = texte[0..(MAX_LENGTH_EXTRAIT-4)] + " […]" if texte.length > MAX_LENGTH_EXTRAIT && !@search_param['whole_text']
+  texte.to_s.without_unwanted
 end
 # Retourne le texte à considérer en fonction de la fiche
 # La méthode travaille sur @current, la fiche courante
@@ -123,6 +174,15 @@ def search_in_folder folder_path
     @current = Marshal.load(File.read path)
  
     @found[:nombre_fiches_etudiees] += 1
+    
+    # Dans tous les cas, si la fiche n'est pas un paragraphe, on mémorise
+    # son titre pour pouvoir renseigner les ancêtres d'une fiche retenue.
+    if @current['type'] != 'para'
+      DFICHES[@current['id'].to_i] = {
+        :titre  => @current['titre'],
+        :parent => @current['parent']
+      }
+    end
     
     begin
       # Passer les fiches non imprimées, sauf si on doit les considérer

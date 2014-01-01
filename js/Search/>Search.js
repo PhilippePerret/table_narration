@@ -28,8 +28,28 @@ $.extend(window.Search,{
     * @default false
     */
   panneau_result_prepared:false,
+  /**
+    * Indique si une recherche courante a été affichée
+    * Noter que cette propriété reste à faux si une recherche a été lancée mais
+    * qu'aucun résultat n'a été remonté.
+    * @property {Boolean} resultats_found
+    * @default false
+    */
+  resultats_found:false,
   
-  
+  /** == Main ==
+    * Méthode principale appelée quand on veut faire une recherche (par exemple
+    * en cliquant sur le bouton avec la loupe). 
+    * Si une recherche a déjà été faite (et pas effacée), la méthode remontre
+    * le résultat de la recherche, sinon, elle ouvre le formulaire.
+    * @method show
+    */
+  show:function()
+  {
+    UI.Input.memorize_current({blur:true, keypress:null})
+    if(this.resultats_found) this.panneau.show()
+    else this.show_form()
+  },
   
   /** Fermer le panneau de recherche
     * @method hide
@@ -41,22 +61,23 @@ $.extend(window.Search,{
   },
   /**
     * Bascule entre le panneau de résultat et le formulaire de recherche
+    * Mais la méthode n'est utilisée que lorsqu'on clique sur le bouton
+    * "Autre recherche".
     * @method toggle
     */
   toggle:function()
   {
+    this.resultats_found = false
     this.hide_result()
     this.show_form()
   },
-  /** Affiche le formulaire de recherche
-    * C'est la méthode principale appelée pour afficher le formulaire de recherche,
-    * lorsqu'on clique par exemple sur le bouton zoom
+  /** 
+    * Affiche le formulaire de recherche
     *
     * @method show_form
     */
   show_form:function()
   {
-    UI.Input.memorize_current({blur:true, keypress:null})
     this.panneau.show()
     this.form.show()
   },
@@ -138,7 +159,6 @@ $.extend(window.Search,{
         params[$(this).attr('data-param')] = dom.value
       }
     })
-    dlog("params:");dlog(params)
     this.find(text, params)
   },
   /**
@@ -172,7 +192,8 @@ $.extend(window.Search,{
     this.hide_form()
     this.show_result(purge=true)
     $('div#search div#search_result_list').scrollTo(0,0)
-    if(data.nombre_founds == 0)
+    this.resultats_found = data.nombre_founds > 0
+    if(!this.resultats_found)
     {
       this.write("Aucun résultat trouvé pour la recherche donnée.", {class:'warning'})
     }
@@ -200,6 +221,8 @@ $.extend(window.Search,{
     * @param  {Object} dfound   Objet de la donnée trouvé dans la fiche
     *   @param  {String}  dfound.id       Identifiant de la fiche
     *   @param  {String}  dfound.type     Type de la fiche
+    *   @param  {Object}  dfound.parent   Parent de la fiche {:id, :type}
+    *   @param  {String}  dfound.parents  "titre book > titre chap > etc..."
     *   @param  {String}  dfound.incipit  N premiers caractères
     *   @param  {Array}   dfound.matches  
     *                     Tous les textes trouvés, où chaque élément
@@ -218,7 +241,7 @@ $.extend(window.Search,{
       // Ajouter chaque texte trouvé
       c += L(dfound.matches).collect(function(match){
         return  '<div class="subfound">'+
-                  '<span class="small">'+match.pre+'</span> '+
+                  '<span class="small">• '+match.pre+'</span> '+
                   '<span class="match_found">'+match.found + '</span>' +
                   ' <span class="small">'+match.post +
                   ' [offset:' + match.offset + ']</span>' +
@@ -237,8 +260,12 @@ $.extend(window.Search,{
   link_to_show_fiche:function(dfound)
   {
     return '<a onclick="$.proxy(FICHES.show,FICHES,'+dfound.id+',\''+dfound.type+'\')()" style="cursor:pointer;">' + 
-            '[<span class="tiny">'+dfound.type+":"+dfound.id+']</span> '+
-            dfound.incipit+'</a>'
+            '[<span class="tiny">'+
+                dfound.type+":"+dfound.id +
+                (dfound.parents ? ' in '+dfound.parents : '')+
+              ']</span> '+ 
+              (dfound.type == 'para' ? '<br>' : '')+
+              dfound.incipit+'</a>'
   },
   /**
     * Ecrit une ligne (div) dans le panneau de résultat

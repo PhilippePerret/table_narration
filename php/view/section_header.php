@@ -25,7 +25,7 @@
     <!-- Outil recherche -->
     <img 
       src="../lib/img/picto/zoom-fond-blanc.png"
-      onclick="$.proxy(Search.show_form, Search)()"
+      onclick="$.proxy(Search.show, Search)()"
       title="Effectuer une recherche dans la collection"
       />
     <!-- Outil Mémo configuration -->
