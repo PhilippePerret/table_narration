@@ -125,13 +125,17 @@ Object.defineProperties(Paragraph.prototype,{
   /**
     * Méthode "filtrant" le paragraphe, c'est-à-dire lui appliquant certains
     * styles ou le masquant suivant le filtre défini.
+    * Traitement
+    *   * Masque complètement les paragraphes "not printed" si préférence
+    *   * Ajoute un '<br><br>' au bout des paragraphes de type "exemple document"
+    *     pour obtenir de l'air.
     * Notes
     *   * Cette méthode a été inaugurée pour gérer la préférence "Masquer les 
     *     paragraphes not printed".
     *   * Pour le moment, le filtre ne concerne que cette préférence.
     *   * la méthode est appelée chaque fois qu'une page est ouverte, pour régler
     *     ses paragraphes.
-    *   * TODO: Plus tard, on pourra l'utiliser pour filtrer suivante une recherche,
+    *   * TODO: Plus tard, on pourra l'utiliser pour filtrer suivant une recherche,
     *     une condition sur le style, sur l'état de développement, etc.
     *   * C'est une propriété complexe => appeler sans parenthèses
     *
@@ -144,9 +148,33 @@ Object.defineProperties(Paragraph.prototype,{
         if(!this.obj.hasClass('not_printed')) this.obj.addClass('not_printed')
         this.obj[(App.preferences.masknotprinted?'add':'remove')+'Class']('hidden')
       }
+      else
+      {
+        if(this.is_exemple_document)
+        {
+          if(this.next == null || !this.next.is_exemple_document) this.div_texte.append('<br><br>')
+        }
+      }
     }
   },
   
+  /**
+    * Retourne TRUE si le style du paragraphe est de type "exemple document"
+    * @property {Boolean} is_exemple_document
+    */
+  "is_exemple_document":{
+    get:function(){
+      if(!this.style) return false
+      var prefs = PARAGRAPHS.PREFIXES_DOCUMENTS_EXEMPLES
+      for(var ist = 0, len = this.style.length; ist < len; ++ist)
+      {
+        // TODO Il faut mettre ça dans une constante générale pour
+        // pouvoir le redéfinir aisément
+        if(prefs.indexOf(this.style[ist].split('_')[0]) > -1) return true
+      }
+      return false
+    }
+  },
   /*
    *  Méthode appelée quand on règle le verso de la fiche
    *

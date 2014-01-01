@@ -38,6 +38,13 @@
 # 
 #   NOTES CONCERNANT LES STYLES "DOCUMENT AUTEUR" (par exemple un scénario)
 #   -----------------------------------------------------------------------
+#   ::  Si un nouveau type de document est inauguré, il faut ABSOLUMENT ajouter
+#       son préfixe dans PREFIXES_DOCUMENTS_EXEMPLES dans le fichier PARAGRAPHS.js
+#       C'est la connaissance de ces préfixes qui permet le bon affichage de ces
+#       types de document.
+#       Remarque : mais c'est quand même ici qu'il faut traiter le fond du document,
+#       en n'ayant recours qu'à des padding (pas de margin qui laisseraient des 
+#       blancs, pas de widths non plus).
 #   ::  Ces styles sont traités de façon particulière à la publication : tous les
 #       paragraphes adjacents sont rassemblés pour être placés dans un environnement
 #       défini dans `publication/source/asset.tex`.
@@ -87,7 +94,7 @@ titre_level_3
 # 
 document_titre, document_sous_titre, document_partie, 
 document_sous_partie, document_section, document_paragraphe, document_note
-  font-family     Verdana
+  font-family       Verdana
 
 document_titre, document_sous_titre
   text-align      center
@@ -96,42 +103,51 @@ document_titre, document_sous_titre
 
 document_titre
   font-size       18pt
+  :style_after    document_paragraphe
 
 document_sous_titre
   font-size       16pt
+  :style_after    document_paragraphe
 
 document_partie
   font-size       18pt
+  :style_after    document_paragraphe
 
 document_sous_partie
   font-size       16pt
+  :style_after    document_paragraphe
   
 document_section
   font-size       14pt
+  :style_after    document_paragraphe
 
 document_paragraphe
   font-size       12pt
   margin-left     20pt
+  :style_after    document_paragraphe
 
 document_note
   font-size       10pt
   color           blue
   font-style      italic
   margin-left     100pt
+  :style_after    document_paragraphe
 
 
 # ---------------------------------------------------------------------
 #   Styles pour scénario
 # 
 scenario_scene, scenario_action, scenario_character, scenario_note_jeu, scenario_dialog
-  font-family     Arial, Helvetica
-  font-size       12pt
+  font-family       Arial, Helvetica
+  font-size         12pt
+  background-color  #e9e9e9
+  margin-left       0 !important
 
 scenario_scene, scenario_action, scenario_character
-  margin-top      16px
+  padding-top      16px
 
 scenario_scene
-  margin-left     0px
+  padding-left    20px
   :style_after    scenario_action
   
 scenario_scene, scenario_character
@@ -140,21 +156,21 @@ scenario_scene, scenario_character
   font-size       1.1em
 
 scenario_action
-  margin-left     20px
+  padding-left    40px
   :style_after    scenario_action
 
 scenario_character
-  margin-left     170px
+  padding-left    190px
   :style_after    scenario_dialog
 
 scenario_note_jeu
   font-style      italic
-  margin-left     170px
+  padding-left    190px
   :style_after    scenario_dialog
 
 scenario_dialog
-  margin-left     104px
-  width           300px
+  padding-left    124px
+  padding-right   90px
   :style_after    scenario_action
 
 # ---------------------------------------------------------------------

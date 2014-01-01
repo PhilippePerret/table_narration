@@ -2,7 +2,7 @@
  *  Paragraph Styles
  *  ----------------
  *
- *  @last_update : 01 01 2014 - 17:29 (day month year - hours:minutes)
+ *  @last_update : 01 01 2014 - 20:46 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
@@ -93,8 +93,10 @@ fiche.para textarea.scenario_scene{border:0;}
 fiche.para div.scenario_scene,fiche.para textarea.scenario_scene,div#div_paragraph_styles li.scenario_scene {
 	font-family : Arial, Helvetica !important;
 	font-size : 1.1em !important;
-	margin-top : 16px !important;
-	margin-left : 0px !important;
+	background-color : #e9e9e9 !important;
+	margin-left : 0 !important !important;
+	padding-top : 16px !important;
+	padding-left : 20px !important;
 	font-weight : bold !important;
 	font-variant : small-caps !important;
 }
@@ -103,34 +105,42 @@ fiche.para textarea.scenario_action{border:0;}
 fiche.para div.scenario_action,fiche.para textarea.scenario_action,div#div_paragraph_styles li.scenario_action {
 	font-family : Arial, Helvetica !important;
 	font-size : 12pt !important;
-	margin-top : 16px !important;
-	margin-left : 20px !important;
+	background-color : #e9e9e9 !important;
+	margin-left : 0 !important !important;
+	padding-top : 16px !important;
+	padding-left : 40px !important;
 }
 
 fiche.para textarea.scenario_character{border:0;}
 fiche.para div.scenario_character,fiche.para textarea.scenario_character,div#div_paragraph_styles li.scenario_character {
 	font-family : Arial, Helvetica !important;
 	font-size : 1.1em !important;
-	margin-top : 16px !important;
+	background-color : #e9e9e9 !important;
+	margin-left : 0 !important !important;
+	padding-top : 16px !important;
 	font-weight : bold !important;
 	font-variant : small-caps !important;
-	margin-left : 170px !important;
+	padding-left : 190px !important;
 }
 
 fiche.para textarea.scenario_note_jeu{border:0;}
 fiche.para div.scenario_note_jeu,fiche.para textarea.scenario_note_jeu,div#div_paragraph_styles li.scenario_note_jeu {
 	font-family : Arial, Helvetica !important;
 	font-size : 12pt !important;
+	background-color : #e9e9e9 !important;
+	margin-left : 0 !important !important;
 	font-style : italic !important;
-	margin-left : 170px !important;
+	padding-left : 190px !important;
 }
 
 fiche.para textarea.scenario_dialog{border:0;}
 fiche.para div.scenario_dialog,fiche.para textarea.scenario_dialog,div#div_paragraph_styles li.scenario_dialog {
 	font-family : Arial, Helvetica !important;
 	font-size : 12pt !important;
-	margin-left : 104px !important;
-	width : 300px !important;
+	background-color : #e9e9e9 !important;
+	margin-left : 0 !important !important;
+	padding-left : 124px !important;
+	padding-right : 90px !important;
 }
 
 fiche.para textarea.action_lecteur{border:0;}

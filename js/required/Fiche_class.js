@@ -91,6 +91,30 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
 
+  /**
+    * Return la fiche suivant la fiche courante
+    * Si elle existe
+    * @property {Fiche} next
+    * @default  La fiche ou Null
+    */
+  "next":{
+    get:function(){
+      if(!this.parent) return null
+      return this.parent.enfants[this.indice + 1]
+    }
+  },
+  /**
+    * Return la fiche précédent la fiche courante
+    * Si elle existe, ou Null
+    * @property {Fiche} prev
+    * @default la fiche ou Null
+    */
+  "prev":{
+    get:function(){
+      if(!this.indice || !this.parent) return null
+      return this.parent.enfants[this.indice - 1]
+    }
+  },
   /* ---------------------------------------------------------------------
    *      PROPRIÉTÉS D'ÉTAT
    --------------------------------------------------------------------- */

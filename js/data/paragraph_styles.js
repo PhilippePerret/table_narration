@@ -1,7 +1,7 @@
 /*
  *  Paragraph Style List
  *  --------------------
- *  @last_update : 01 01 2014 - 17:29 (day month year - hours:minutes)
+ *  @last_update : 01 01 2014 - 20:46 (day month year - hours:minutes)
  */
 /*        ------------------------------------------------
  *        | = = = = NE PAS MODIFIER CE FICHIER = = = = = |
@@ -18,13 +18,13 @@ DATA_STYLES = {
 	titre_level_1: {style_after:null}, 
 	titre_level_2: {style_after:null}, 
 	titre_level_3: {style_after:null}, 
-	document_titre: {}, 
-	document_sous_titre: {}, 
-	document_partie: {}, 
-	document_sous_partie: {}, 
-	document_section: {}, 
-	document_paragraphe: {}, 
-	document_note: {}, 
+	document_titre: {style_after:'document_paragraphe'}, 
+	document_sous_titre: {style_after:'document_paragraphe'}, 
+	document_partie: {style_after:'document_paragraphe'}, 
+	document_sous_partie: {style_after:'document_paragraphe'}, 
+	document_section: {style_after:'document_paragraphe'}, 
+	document_paragraphe: {style_after:'document_paragraphe'}, 
+	document_note: {style_after:'document_paragraphe'}, 
 	scenario_scene: {style_after:'scenario_action'}, 
 	scenario_action: {style_after:'scenario_action'}, 
 	scenario_character: {style_after:'scenario_dialog'}, 

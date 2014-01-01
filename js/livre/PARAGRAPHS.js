@@ -11,6 +11,14 @@
 window.PARAGRAPHS = {
   
   /**
+    * Préfixes des styles de type "exemple document"
+    * @property {Array} PREFIXES_DOCUMENTS_EXEMPLES
+    * @static
+    # @final
+    */
+  PREFIXES_DOCUMENTS_EXEMPLES:['scenario', 'synopsis'],
+  
+  /**
     * Data pour le `ptypes` des paragraphes
     *
     * @property {Object} PTYPES
