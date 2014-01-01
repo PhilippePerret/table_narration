@@ -1,5 +1,8 @@
 
 # Définition des styles de paragraphe (Fiche::Paragraph)
+#
+# NOTE : C'est ce fichier qui doit être modifié pour modifier les styles
+#        appliqués aux paragraphes.
 # 
 #   * Permet de construire :
 #     - le fichier ./css/livre/styles_paragraph.css
@@ -65,19 +68,57 @@ titre_level_1
   font-size       1.6em
   margin-top      40px
   margin-bottom   30px
-  :style_after    titre_level_2
+  :style_after    null
 
 titre_level_2
   font-size       1.4em
   margin-top      30px
   margin-bottom   20px
-  :style_after    titre_level_3
+  :style_after    null
   
 titre_level_3
   font-size       1.2em
   margin-top      20px
   margin-bottom   10px
   :style_after    null
+
+# ---------------------------------------------------------------------
+#   Styles pour document exemple quelconque
+# 
+document_titre, document_sous_titre, document_partie, 
+document_sous_partie, document_section, document_paragraphe, document_note
+  font-family     Verdana
+
+document_titre, document_sous_titre
+  text-align      center
+  font-weight     bold
+  font-variant    small-caps
+
+document_titre
+  font-size       18pt
+
+document_sous_titre
+  font-size       16pt
+
+document_partie
+  font-size       18pt
+
+document_sous_partie
+  font-size       16pt
+  
+document_section
+  font-size       14pt
+
+document_paragraphe
+  font-size       12pt
+  margin-left     20pt
+
+document_note
+  font-size       10pt
+  color           blue
+  font-style      italic
+  margin-left     100pt
+
 
 # ---------------------------------------------------------------------
 #   Styles pour scénario
