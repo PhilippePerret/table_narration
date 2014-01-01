@@ -97,14 +97,14 @@ window.PARAGRAPHS = {
     var id, osel ;
     if(!selectors || selectors.length == 0) return
     L(selectors).each(function(selector){
-      osel = $('ul#paragraphs_menu_styles > li.'+selector+' input[type="checkbox"]')
+      osel = $('ul#paragraphs_menu_styles > li[data-style="'+selector+'"] input[type="checkbox"]')
       if(osel.length) osel[0].checked = true
     })
   },
   /* Décoche la checkbox pour le style de paragraphe +style+ */
   decocher_style:function(style)
   {
-    $('ul#paragraphs_menu_styles > li.'+style+' input[type="checkbox"]')[0].checked = false
+    $('ul#paragraphs_menu_styles > li[data-style="'+style+'"] input[type="checkbox"]')[0].checked = false
   },
   /*
    *  Appliquer les styles courants au paragraphe courant
@@ -129,7 +129,7 @@ window.PARAGRAPHS = {
    */
   add_remove_style:function(CB)
   {
-    var selector = $(CB).parent().attr('class')
+    var selector = $(CB).parent().attr('data-style')
     var checked  = CB.checked == true
     if(this.current != FICHES.current)
     { 
@@ -153,12 +153,15 @@ window.PARAGRAPHS = {
     this.set_apercu( this.current_styles )
   },
   
-  /*
-   *  Gestion des exclusions
-   *
-   *  La méthode regarde si un style de même premier mot existe dans la
-   *  liste des styles courants et le supprime si c'est le cas.
-   */
+  /**
+    * Gestion des exclusions
+    *
+    * La méthode regarde si un style de même premier mot existe dans la
+    * liste des styles courants et le supprime si c'est le cas.
+    *
+    * @method check_exclusions_with
+    * @param  {String} selector
+    */
   check_exclusions_with:function(selector)
   {
     var currents = this.current_styles
@@ -281,7 +284,7 @@ Object.defineProperties(PARAGRAPHS, {
       code += '<ul id="paragraphs_menu_styles">'
       L(PARAGRAPH_STYLES).each(function(selector){
         id  = "paragraph_style-"+selector ;
-        code += '<li id="li-'+id+'">'+
+        code += '<li id="li-'+id+'" data-style="'+selector+'">'+
                   '<input type="checkbox" id="'+id+'-cb" '+
                     'onchange="$.proxy(PARAGRAPHS.add_remove_style, PARAGRAPHS, this)()"' +
                     ' />'+
