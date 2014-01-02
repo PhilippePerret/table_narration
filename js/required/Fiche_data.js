@@ -232,7 +232,7 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
-    * Met dans le App.clipboard l'instance {Ref} à la fiche courante. Cette
+    * Met dans le App.Clipboard l'instance {Ref} à la fiche courante. Cette
     * référence pourra être ensuite collée dans le texte.
     * Notes
     * -----
@@ -241,7 +241,7 @@ Object.defineProperties(Fiche.prototype,{
     */
   "copy_reference":{
     get:function(){
-      App.clipboard = get_ref(this.type+"-"+this.id)
+      App.Clipboard.add(get_ref(this.type+"-"+this.id),{type:'ref'})
       F.show( image('clavier/K_Command.png')+image('clavier/K_V.png')+
               " pour insérer référence.")
     }

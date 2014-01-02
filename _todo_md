@@ -2,6 +2,20 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+- Poursuivre le travail sur le clipboard
+  > À prendre en compte : j'ai détruit this.target à la fin du blur dans
+  UI.Input, pour pouvoir savoir de façon sûre si on se trouvait dans un champ
+  d'édition. Mais cela risque d'avoir de nombreux effets colatéraux à surveiller.
+  Notamment, il faut voir ce qui se passe quand on veut coller un film ou un mot
+  et qu'on blure fatalement le champ.
+  > D'autre part cet essai foire (charger scenariopole)
+    * Ouvrir le premier livre
+    * Copier la première page (CMD + C)
+    * Ouvrir la deuxième page
+    * mettre le deuxième paragraphe en édition
+    * Coller (CMD + V)
+    Normalement, c'est la référence à la fiche qui devrait être collée, mais au lieu
+    de ça, c'est un code qui vient de je ne sais pas où. Voir ce qui se passe.
 
 EVENEMENCIER
   Principe des nouveaux évènemenciers :

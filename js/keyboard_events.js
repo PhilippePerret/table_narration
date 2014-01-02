@@ -88,6 +88,15 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     window.onkeypress = keypress_when_no_selection_no_edition
     return keypress_when_no_selection_no_edition(evt)
   }
+  /*  = WARNING =
+   *  S'il y a un champ en édition, on ne doit pas passer par ici
+   *  
+   */
+  if(UI.Input.target)
+  {
+    F.error("Mauvais gestionnaire d'évènement (on se trouve dans un champ d'édition)")
+    return UI.Input.onkeypress(evt)
+  }
   
   var cplx_meth = null
   switch(evt.keyCode)

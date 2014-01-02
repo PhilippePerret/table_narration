@@ -148,6 +148,12 @@ UI.Input = {
     }
     
     this.set_keypress(focus = false)
+    
+    /*
+     *  J'essaie de détruire `this.target` (pour clarifier), mais
+     *  ça risque de poser des problèmes. À surveiller
+     */
+    delete this.target
     return this.unpropage(evt)
   },
   
@@ -198,25 +204,25 @@ UI.Input = {
         evt.stopPropagation()
         return true
       }
-      // Quel que soit le champ, on doit blurer
+      // Quel que soit le champ, on doit blurer. Mais avant, il faut savoir si
+      // la cible est un texte de paragraphe pour faire un traitement particulier
+      // (car maintenant, this.target est détruit au blur)
+      var is_champ_texte_paragraphe = this.target.hasFiche && this.target.property == 'texte'
       this.target.jq.blur()
       // POST-Traitement spécial pour un champ texte de fiche paragraphe
-      if(this.target.hasFiche && this.target.property == 'texte')
+      if(is_champ_texte_paragraphe && evt.metaKey)
       {
-        if(evt.metaKey)
-        {
-          // CMD + ENTER => Création d'un nouveau paragraphe
-          var data = {type:'para'}
-          // Si le style du paragraphe courant définit un style after,
-          // on l'utilise.
-          if(fiche.next_style) data.style = [fiche.next_style]
-          var ipara = FICHES.full_create( data )
-          // On l'ajoute au parent en dessous du paragraphe courant
-          fiche.parent.add_child( ipara, {after:fiche} )
-          // Et on le met en édition
-          ipara.select
-          ipara.enable_main_field
-        }
+        // CMD + ENTER => Création d'un nouveau paragraphe
+        var data = {type:'para'}
+        // Si le style du paragraphe courant définit un style after,
+        // on l'utilise.
+        if(fiche.next_style) data.style = [fiche.next_style]
+        var ipara = FICHES.full_create( data )
+        // On l'ajoute au parent en dessous du paragraphe courant
+        fiche.parent.add_child( ipara, {after:fiche} )
+        // Et on le met en édition
+        ipara.select
+        ipara.enable_main_field
       }
       return stop_event(evt)
     case K_TAB:
@@ -269,10 +275,10 @@ UI.Input = {
           /*
            * Fonctionnement spécial de la combinaison CMD+V. Elle peut se comporter
            * normalement (coller le contenu du clipboard), mais si le clipboard de
-           * l'application (App.clipboard) contient une valeur (comme par exemple une
+           * l'application (App.Clipboard) contient une valeur (comme par exemple une
            * référence) alors c'est ce contenu qui est copié (et effacé).
            */
-          if(kmeta && App.coller_clipboard) return stop_event(evt)
+          if(kmeta && App.Clipboard.paste()) return stop_event(evt)
           return true
           break
         }

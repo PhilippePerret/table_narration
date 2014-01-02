@@ -105,7 +105,7 @@ Object.defineProperties(ContextualHelp, {
           aide += this['shortcut_paragraph']
           if(PARAGRAPHS.PTYPES[fi.ptype].return_disabled != true) aide += this['maj_return_new_item']
         } 
-        if(App.clipboard) aide += this['cmd_v_coller_ref']
+        if(App.Clipboard.content) aide += this['cmd_v_coller_ref']
       }
       else 
       {

@@ -474,7 +474,7 @@ Object.defineProperties(Fiche.prototype, {
     * Copie la fiche
     * Notes
     *   * En réalité, la "copie" de la fiche ne consiste qu'à mettre sa référence
-    *     dans App.clipboard
+    *     dans App.Clipboard
     *   * On reconnait une fiche coupée d'une fiche copiée au 'cuted' qui est 
     *     ajouté quand on coupe la fiche.
     * @property {Method} copy
@@ -482,7 +482,7 @@ Object.defineProperties(Fiche.prototype, {
   "copy":{
     get:function(){
       F.show("Je COPY la fiche courante"+this.type_id)
-      App.clipboard = this
+      App.Clipboard.add(this)
       F.show("La fiche "+this.human_type+" a été copiée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
       image('clavier/K_Command.png')+image('clavier/K_V.png'))
     }
@@ -490,17 +490,16 @@ Object.defineProperties(Fiche.prototype, {
   /**
     * Coupe la fiche
     * Notes
-    *   * En réalité, la "coupe" de la fiche ne consiste qu'à mettre sa référence
-    *     dans App.clipboard en mettant son cuted à true et en masquant son objet
-    *     dans le DOM (pour ne pas avoir à le reconstruire.)
+    *   * En réalité, la "coupe" de la fiche ne consiste qu'à mettre son instance
+    *     dans App.Clipboard.content.fiche en mettant son cuted à true et en masquant 
+    *     son objet dans le DOM (pour ne pas avoir à le reconstruire.)
     *
     * @property {Method} cut
     */
   "cut":{
     get:function(){
       F.show("Je CUT la fiche "+this.type_id)
-      App.clipboard = this
-      App.clipboard.cuted = true
+      App.Clipboard.add( this )
       this.obj.hide()
       F.show("La fiche "+this.human_type+" a été coupée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
       image('clavier/K_Command.png')+image('clavier/K_V.png')+
@@ -526,17 +525,18 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       try
       {
-        if(!App.clipboard) throw 'no copied fiche'
-        if(App.clipboard.class != "Fiche") throw 'no fiche in clipboard'
-        if(App.clipboard.type != this.child_type && App.clipboard.type != this.type) 
+        clip = App.Clipboard.get('fiche')
+        
+        if(!clip) throw 'no copied fiche'
+        if(clip.type != this.child_type && clip.type != this.type) 
           throw 'bad child type in clipboard'
-        if(App.clipboard.type == this.type){
+        if(clip.type == this.type){
           if(!this.parent) throw 'no parent for clipboarded fiche'
-          if(App.clipboard.cuted && App.clipboard.parent == this.parent)
+          if(clip.cuted && clip.parent == this.parent)
             throw 'clipboarded fiche already in parent'
         }
-        else if (App.clipboard.type == this.child_type){
-          if(App.clipboard.cuted && App.clipboard.parent == this)
+        else if (clip.type == this.child_type){
+          if(clip.cuted && clip.parent == this)
             throw 'clipboarded fiche already in parent'
         }
           
@@ -551,7 +551,7 @@ Object.defineProperties(Fiche.prototype, {
       //    l'injecter dans le parent courant et 3/ remettre son obj à display=block
       //    pour le faire ré-apparaitre
       var new_parent, beforeChild ;
-      if(App.clipboard.type == this.child_type)
+      if(clip.type == this.child_type)
       {
         // La fiche sélectionnée (courante) est le nouveau parent de la fiche
         // Il faut placer la fiche copiée/coupée au bout du parent
@@ -565,11 +565,9 @@ Object.defineProperties(Fiche.prototype, {
         beforeChild = this
       }
 
-      if(App.clipboard.cuted)
+      if(clip.cuted) // Fiche coupée
       {
-        // Fiche coupée
-        fiche = App.clipboard
-        fiche.parent.remove_child( fiche )
+        clip.parent.remove_child( clip )
       }
       else
       {
@@ -578,7 +576,7 @@ Object.defineProperties(Fiche.prototype, {
         var props = [ // mettre ici les propriétés à cloner
           'type'
           ]
-        switch(App.clipboard.type)
+        switch(clip.type)
         {
         case 'book':
           props.push('real_titre')
@@ -587,8 +585,8 @@ Object.defineProperties(Fiche.prototype, {
           props.push('texte')
           props.push('ptype')
         }
-        if(App.clipboard.type!='para') props.push('titre')
-        L(props).each(function(prop){ data[prop] = App.clipboard[prop]})
+        if(clip.type!='para') props.push('titre')
+        L(props).each(function(prop){ data[prop] = clip[prop]})
         fiche = FICHES.full_create(data)
         fiche.modified = true
       }
@@ -605,7 +603,7 @@ Object.defineProperties(Fiche.prototype, {
       }
       
       // À la fin, il faut détruire le clipboard
-      delete App.clipboard
+      App.Clipboard.flush('fiche')
       Flash.clean()
     }
   }
