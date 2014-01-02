@@ -22,6 +22,18 @@
     // Note:  Les plus en haut seront les plus à gauche
   ?>
   <div id="buttons_right">
+    <!-- Outil aide -->
+    <img
+      src="../lib/img/picto/help-fond-blanc.png"
+      onclick="$.proxy(App.help, App)()"
+      title="Ouvrir l'aide (dans une nouvelle fenêtre)"
+      />
+    <!-- Outil dupliquer (la page courante) -->
+    <img
+      src="../lib/img/picto/dupliquer-fond-blanc.png"
+      onclick="$.proxy(App.dupliquer, App)()"
+      title="Ouvrir un double de la collection dans une autre fenêtre (pour références)"
+      />
     <!-- Outil recherche -->
     <img 
       src="../lib/img/picto/zoom-fond-blanc.png"

@@ -1,0 +1,545 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+<title>Manuel de l'application “Collection”</title>
+
+</head>
+<body>
+<h1>Manuel de l'application “Collection”</h1>
+
+<p>(note&nbsp;: ex "Table narration")</p>
+
+<ul>
+<li><a href="#texte">TEXTES</a></li>
+<li><a href="#style_texte">Style du texte (balises)</a></li>
+<li><a href="#fiches">FICHES</a></li>
+<li><a href="#move_fiches">Déplacement des fiches</a></li>
+<li><a href="#ref_fiche">Référence à une fiche</a></li>
+<li><a href="#films">FILMS</a></li>
+<li><a href="#balise_film">Balise Film</a></li>
+<li><a href="#paragraphes">PARAGRAPHES</a></li>
+<li><a href="#paragraphes_tableau">Les paragraphes “Tableau”</a></li>
+<li><a href="#paragraphe_fichier">Paragraphe insérant le texte d'un fichier</a></li>
+</ul>
+
+
+<p><a name="texte"></a></p>
+
+<h2>Texte</h2>
+
+<p><a name="style_texte"></p>
+
+<h3>Styles (balises) spéciales</h3>
+
+<p>En plus des balises <code>&lt;b&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;stroke&gt;</code> on peut utiliser :</p>
+
+<pre><code>&lt;del&gt;Texte supprimé&lt;/del&gt;         // Sera barré en publication
+                                  // Better than 'stroke'
+&lt;ins&gt;Texte en remplacement&lt;/ins&gt;  // underlined en publication
+                                  // need &lt;del&gt; before
+&lt;bad&gt;Mauvais texte&lt;/bad&gt;          // rouge à l'affichage, waves en publication
+</code></pre>
+
+<p><a name="fiches"></a></p>
+
+<h2>Les Fiches</h2>
+
+<p><a name="ref_fiche"></a></p>
+
+<h3>Référence à une autre fiche</h3>
+
+<p>Pour coller une référence à une autre fiche&nbsp;:</p>
+
+<ul>
+<li>Sélectionner la fiche (livre, chapitre, page ou paragraphe) et taper la lettre "R".</li>
+<li>Placer le curseur à l'endroit où doit être insérée la référence</li>
+<li>Taper CMD + V.</li>
+</ul>
+
+
+<h4>Les références faciles</h4>
+
+<p>Pour travailler confortablement avec les références, le plus simple est de “cloner” la collection courante en cliquant sur le bouton <img src="../../../lib/img/picto/dupliquer-fond-blanc.png" alt="Dupliquer table" /></p>
+
+<p><a name="move_fiches"></a></p>
+
+<h3>Déplacement des fiches</h3>
+
+<h4>Déplacement dans le même parent</h4>
+
+<p>Pour déplacer une fiche dans son propre parent, on peut :
+* Soit utiliser la souris pour la mettre à la place voulue
+* Soit la sélectionner puis utiliser les touches CMD+flèche haut/bas pour déplacer la fiche.</p>
+
+<h4>Déplacement dans un autre parent</h4>
+
+<p>Pour déplacer la fiche dans un autre parent, on doit procéder à un couper-coller.</p>
+
+<ul>
+<li>On sélectionne la fiche à déplacer</li>
+<li>On joue CMD + X</li>
+<li>On sélectionne le nouveau parent ou la fiche du parent AVANT laquelle placer la fiche déplacée.</li>
+<li>On joue CMD + V</li>
+</ul>
+
+
+<p><a name="films"></a></p>
+
+<h2>Films</h2>
+
+<p><a name="balise_film"></a></p>
+
+<h3>Balise Film</h3>
+
+<p>On peut choisir un film en tapant CMD+F quand on se trouve dans un champ d'édition (n'importe lequel).</p>
+
+<p>Après avoir choisi le film, une balise s'inscrit au cursor.</p>
+
+<p><em>Dans la fenêtre Film, des cases à cocher permettent de définir l'aspect du lien, ses options. Le plus simple est donc de définir l'affichage du titre en le choisissant. On peut cependant les régler dans la balise elle-même.</em></p>
+
+<p>La balise est composée de&nbsp;:</p>
+
+<pre><code>[film:&lt;id film&gt;|&lt;titre lien&gt;|&lt;options&gt;]
+</code></pre>
+
+<p>Les options sont facultatives. On peut utiliser :</p>
+
+<pre><code>[film:&lt;id film&gt;|&lt;titre lien&gt;]
+</code></pre>
+
+<p><code>&lt;titre lien&gt;</code> peut avoir la valeur qu'on veut. C'est en général le titre du film dans sa langue originale.</p>
+
+<h4>Les Options</h4>
+
+<p><code>&lt;options&gt;</code> est une suite de termes séparés par des espaces.</p>
+
+<pre><code>[film:&lt;id&gt;|&lt;titre&gt;|option1 option2... optionN]
+</code></pre>
+
+<p>Ces options peuvent être&nbsp;:</p>
+
+<pre><code>date        Ajoute la date du film (après le titre)
+titrefr     Utilise le titre français (par défaut, c'est le
+            titre original)
+titreor     Si titre_fr, le titre original est ajouté entre
+            parenthèses
+nolink      Le film ne doit pas être lié, c'est-à-dire qu'il
+            n'est pas cliquable.
+auteurs     Indication des auteurs du film.
+</code></pre>
+
+<p>-</p>
+
+<p><a name="paragraphes"></a></p>
+
+<h2>Paragraphes</h2>
+
+<p><a name="paragraphes_tableau"></a></p>
+
+<h3>Paragraphes “Tableau”</h3>
+
+<p>Un paragraphe tableau (table HTML) se définit en choisissant le <code>ptype</code> “Type : Tableau” (après avoir retourné la fiche).</p>
+
+<p>Un tableau peut se définir en ajoutant un caractère "|" avant chaque ligne.</p>
+
+<ul>
+<li>La première ligne doit définir la largeur des colonnes (et donc leur nombre)&nbsp;;
+
+<ul>
+<li>Soit ce sont des nombres seuls, dont le TOTAL fait 100, ils sont alors considérés
+comme des pourcentages&nbsp;;</li>
+<li>Soit ce sont des nombres seuls, dont le TOTAL ne fait pas 100, ils sont considérés comme des pixels&nbsp;;</li>
+<li>Soit ce sont des nombres avec leur unités (quelconque).</li>
+</ul>
+</li>
+<li>Chaque rangée (tr) doit être séparée par <code>|---</code> (au moins 3 "-")&nbsp;;</li>
+<li>Chaque cellule peut être définie soit par un retour à la ligne, soit par des <code>||</code> si les cellules sont sur la même ligne.</li>
+</ul>
+
+
+<p>Exemple&nbsp;:</p>
+
+<pre><code>|50 50          2 colonnes de 50% (total = 100)
+|---            Début d'une rangée
+|Cellule 1
+|Cellule 2
+|---            Nouvelle rangée
+|CellA || CellB   2 cellules définies sur 1 seule rangée
+</code></pre>
+
+<p>Produira&nbsp;:</p>
+
+<pre><code>&lt;table&gt;
+  &lt;colgroup&gt;
+    &lt;col width="50%"&gt;
+    &lt;col width="50%"&gt;
+  &lt;/colgroup&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Cellule 1&lt;/td&gt;
+    &lt;td&gt;Cellule 2&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;CellA&lt;/td&gt;
+    &lt;td&gt;CellB&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+
+<h4>Colspan</h4>
+
+<p>Le <code>colspan</code> d'une cellule peut être défini simplement en mettant "-" (1 moins) dans la cellule sur laquelle doit se prolonger la cellule précédente. Par exemple&nbsp;:</p>
+
+<pre><code>|---
+| Une cellule sur 2 colonnes || - || Cell 3
+</code></pre>
+
+<p>… ou :</p>
+
+<pre><code>|---
+| Une cellule sur 2 colonnes
+| -
+| Cell 3
+</code></pre>
+
+<p>… produira :</p>
+
+<pre><code>&lt;tr&gt;
+  &lt;td colspan="2"&gt;Une cellule sur 2 colonnes&lt;/td&gt;
+  &lt;td&gt;Cell 3&lt;/td&gt;
+&lt;/tr&gt;
+</code></pre>
+
+<p><em>Note&nbsp;: Pas de rowspan pour le moment dans ce format.</em></p>
+
+<p><a name="paragraphe_fichier"></a></p>
+
+<h3>Paragraphe insérant le texte d'un fichier</h3>
+
+<p>Ce sont des paragraphes de ptype 'file'. Pour le définir, retourner la fiche du paragraphe et choisir 'Type: Fichier à insérer' dans le menu des ptypes.</p>
+
+<p>Le texte du paragraphe doit alors être le chemin d'accès au fichier voulu.</p>
+
+<p>Ce chemin d'accès peut être&nbsp;:</p>
+
+<ul>
+<li>Le chemin d'accès absolu (mais ne fonctionnera pas online)</li>
+<li>Le chemin relatif depuis la racine de l'application (p.e. <code>../../dossier/fichier</code>)</li>
+<li>Le chemin relatif dans le dossier ressource/textes de la collection. Si le fichier est à la racine du dossier, seul son nom importe.</li>
+</ul>
+
+
+<h4>Extension => type => traitement</h4>
+
+<p>C'est l'extension du fichier qui va déterminer son type et donc son traitement avant d'être inscrit dans le paragraphe. Pour le moment, ces extensions sont possibles&nbsp;:</p>
+
+<ul>
+<li>'<strong>text</strong>'. Un simple texte qui sera simplement traduit en HTML&nbsp;;</li>
+<li>'<strong>html</strong>', 'htm'.   Un texte au format HTML, copié tel quel&nbsp;;</li>
+<li>'<strong>md</strong>', '<strong>markdown</strong>'. Un fichier de type markdown&nbsp;;</li>
+<li>'<strong>rb</strong>'. Un fichier de type ruby, qui sera joué. Un tel fichier doit "putter" le texte à écrire&nbsp;;</li>
+<li>'<strong>evc</strong>'. Un fichier de type évènemencier, comme on peut le trouver dans le dossier des films interdata.</li>
+</ul>
+
+</body>
+</html>

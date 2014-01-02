@@ -1,7 +1,24 @@
-#Manuel de rédaction des livres
+#Manuel de l'application “Collection”
 
+(note&nbsp;: ex "Table narration")
+
+* [TEXTES](#texte)
+* [Style du texte (balises)](#style_texte)
+* [FICHES](#fiches)
+* [Déplacement des fiches](#move_fiches)
+* [Référence à une fiche](#ref_fiche)
+* [FILMS](#films)
+* [Balise Film](#balise_film)
+* [PARAGRAPHES](#paragraphes)
+* [Les paragraphes “Tableau”](#paragraphes_tableau)
+* [Paragraphe insérant le texte d'un fichier](#paragraphe_fichier)
+
+
+
+<a name="texte"></a>
 ##Texte
 
+<a name="style_texte">
 ###Styles (balises) spéciales
 
 En plus des balises `<b>`, `<strong>`, `<i>`, `<u>`, `<stroke>` on peut utiliser :
@@ -12,15 +29,35 @@ En plus des balises `<b>`, `<strong>`, `<i>`, `<u>`, `<stroke>` on peut utiliser
                                       // need <del> before
     <bad>Mauvais texte</bad>          // rouge à l'affichage, waves en publication
   
-##Déplacement des fiches
 
-###Déplacement dans le même parent
+
+<a name="fiches"></a>
+##Les Fiches
+
+<a name="ref_fiche"></a>
+###Référence à une autre fiche
+
+Pour coller une référence à une autre fiche&nbsp;:
+
+* Sélectionner la fiche (livre, chapitre, page ou paragraphe) et taper la lettre "R".
+* Placer le curseur à l'endroit où doit être insérée la référence
+* Taper CMD + V.
+
+####Les références faciles
+
+Pour travailler confortablement avec les références, le plus simple est de “cloner” la collection courante en cliquant sur le bouton ![Dupliquer table](../../../lib/img/picto/dupliquer-fond-blanc.png)
+
+
+<a name="move_fiches"></a>
+###Déplacement des fiches
+
+####Déplacement dans le même parent
 
 Pour déplacer une fiche dans son propre parent, on peut :
 * Soit utiliser la souris pour la mettre à la place voulue
 * Soit la sélectionner puis utiliser les touches CMD+flèche haut/bas pour déplacer la fiche.
 
-###Déplacement dans un autre parent
+####Déplacement dans un autre parent
 
 Pour déplacer la fiche dans un autre parent, on doit procéder à un couper-coller.
 
@@ -30,8 +67,11 @@ Pour déplacer la fiche dans un autre parent, on doit procéder à un couper-col
 * On joue CMD + V
 
 
+<a name="films"></a>
 ##Films
 
+
+<a name="balise_film"></a>
 ###Balise Film
 
 On peut choisir un film en tapant CMD+F quand on se trouve dans un champ d'édition (n'importe lequel).
@@ -69,9 +109,10 @@ Ces options peuvent être&nbsp;:
 
 -
 
+<a name="paragraphes"></a>
 ##Paragraphes
 
-
+<a name="paragraphes_tableau"></a>
 ###Paragraphes “Tableau”
 
 Un paragraphe tableau (table HTML) se définit en choisissant le `ptype` “Type : Tableau” (après avoir retourné la fiche).
@@ -136,7 +177,8 @@ Le `colspan` d'une cellule peut être défini simplement en mettant "-" (1 moins
 *Note&nbsp;: Pas de rowspan pour le moment dans ce format.*
 
 
-###Paragraphes insérant le texte d'un fichier
+<a name="paragraphe_fichier"></a>
+###Paragraphe insérant le texte d'un fichier
 
 Ce sont des paragraphes de ptype 'file'. Pour le définir, retourner la fiche du paragraphe et choisir 'Type: Fichier à insérer' dans le menu des ptypes.
 

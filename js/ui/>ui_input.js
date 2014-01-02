@@ -272,15 +272,8 @@ UI.Input = {
            * l'application (App.clipboard) contient une valeur (comme par exemple une
            * référence) alors c'est ce contenu qui est copié (et effacé).
            */
-          if(kmeta)
-          {
-            if(App.clipboard)
-            {
-              App.coller_clipboard
-              return stop_event(evt)
-            } 
-            else return true
-          }
+          if(kmeta && App.coller_clipboard) return stop_event(evt)
+          return true
           break
         }
       }

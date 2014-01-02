@@ -45,23 +45,6 @@ window.App = window.App || {}
 $.extend(window.App, {
   
   /**
-    * Clipboard (mémoire tampon) de l'application. Pour placer du texte qui 
-    * devra ensuite être inséré dans le texte à l'aide de CMD+V.
-    * Notes
-    * -----
-    *   * La valeur est soit un {String} à copier tel quel dans le texte, soit
-    *     un {Object} qui doit obligatoirement répondre à la méthode `.to_balise`
-    *     qui doit retourner le texte à coller dans le texte.
-    *   * Utilisé par exemple pour les références
-    *   * C'est la pseudo-méthode `App.coller_clipboard` qui répond au CMD+V
-    *
-    * @property clipboard
-    * @type     {Object|String}
-    * @default  null
-    */
-  clipboard:null,
-  
-  /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
     * empêcher d'en enregistrer un nouveau à la fermeture de la collection.
     * Noter cependant que de toute façon, il sera impossible d'enregistrer la 
@@ -105,7 +88,26 @@ $.extend(window.App, {
     show_aspects_styles:true  // true: montre l'aspect de chaque style de paragraph
   },
   
+  /**
+    * Ouvre l'aide de l'application dans une nouvelle fenêtre
+    * @method help
+    */
+  help:function()
+  {
+    window.open('_dev/Manual/Manuel.html', "help_table_narration")
+  },
   
+  /**
+    * Clone la collection courante dans une nouvelle fenêtre
+    * @method dupliquer
+    */
+  dupliquer:function()
+  {
+    this.cloneTable = window.open('index.php', 'clone_table_narration')
+    F.show("Le clipboard de l'autre fenêtre est accessible depuis cette table.\n"+
+    "Cela permet par exemple de copier des références ou même des fiches de la même "+
+    "série ou d'une autre.")
+  },
   /**
     * Enregistre la configuration d'ouverture (et de rangement) actuelle pour
     * la replacer au prochain chargement de l'application.
@@ -179,22 +181,58 @@ Object.defineProperties(App,{
     *     à la méthode `.to_balise` (comme les références).
     *
     * @method coller_clipboard
-    *
+    * @return {Boolean} True si le clipboard a été copié, false otherwise
     */
   "coller_clipboard":{
     get:function(){
       dlog("-> App.coller_clipboard", DB_FCT_ENTER)
-      if(this.clipboard == null) return false
-      var clip ;
-      if('string'==typeof this.clipboard) clip = this.clipboard.toString()
-      else clip = this.clipboard.to_balise
+      var clip = this.clipboard
+      if(!clip) return false
       UI.Input.set_selection_to( clip )
-      this.clipboard = null
       CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
       dlog("<- App.coller_clipboard", DB_FCT_ENTER)
       return true
     }
   },
+  /**
+    * Clipboard (mémoire tampon) de l'application. Pour placer du texte qui 
+    * devra ensuite être inséré dans le texte à l'aide de CMD+V.
+    * Notes
+    * -----
+    *   * La valeur est soit un {String} à copier tel quel dans le texte, soit
+    *     un {Object} qui doit obligatoirement répondre à la méthode `.to_balise`
+    *     qui doit retourner le texte à coller dans le texte.
+    *   * Si la table a été cloner (à l'aide du bouton dupliquer), alors il faut
+    *     aussi aller voir si le clone contient quelque chose dans son presse-papier
+    *     pour le prendre le cas échéant. Ce clone a même la priorité sur le clipboard
+    *     de la table courante.
+    *   * Utilisé par exemple pour les références
+    *   * C'est la pseudo-méthode `App.coller_clipboard` qui répond au CMD+V
+    *
+    * @property clipboard
+    * @type     {Object|String}
+    * @default  null
+    */
+  "clipboard":{
+    set:function(value){this._clipboard = value},
+    get:function(){
+      var clip = null
+      if(undefined != this.cloneTable && this.cloneTable.App.clipboard)
+      {
+        var clip = this.cloneTable.App.clipboard
+        delete this.cloneTable.App._clipboard
+      }
+      else
+      {
+        clip = this._clipboard || null
+        delete this._clipboard
+      }
+      if('string' == typeof clip) clip = clip.toString()
+      else if(clip) clip = clip.to_balise
+      return clip
+    }
+  },
+  
   /**
     * Pour passer en mode test
     *
