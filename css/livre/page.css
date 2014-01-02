@@ -17,8 +17,9 @@ fiche.page.opened {
 
 fiche.page.ranged {
   margin-left   : 1.5em;
-  height        : 24px;
+  height        : 18px;
   border-width  : 1px !solid;
+  cursor        : pointer;
 }
 
 fiche.page.opened > recto {
@@ -37,7 +38,7 @@ fiche.page:not(.ranged):not(.opened) > recto > .titre {
 }
 
 fiche.page.ranged > recto > .titre {
-  font-size     : 1.1em;
+  font-size     : 12pt !important;
 }
 fiche.page.opened > recto > .titre {
   font-size     : xx-large;

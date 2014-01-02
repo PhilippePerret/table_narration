@@ -22,7 +22,7 @@ window.MODE_UNIQUE = false
 
 if('undefined' == typeof UI) UI = {}
 $.extend(UI, {
-  
+    
   /**
     * Liste {Object} des instances de fiches book ou page ouvertes en mode unique
     * Cet objet possède la propriété 'book' et la propriété 'page' qui sont toutes
@@ -39,8 +39,9 @@ $.extend(UI, {
     * et positionne la nouvelle fiche à ouvrir (déjà ouverte par sa méthode)
     * Notes
     *   * La méthode est appelée par tout type de fiche, donc il faut tester ici
-    *     que ce soit un type book ou page
-    *
+    *     que ce soit un type book ou page. On ne prend en compte que les book et page
+    *   * Elle règle aussi les dimensions de l'élément pour qu'il prenne toute
+    *     la page et que son div items réagisse au scroll.
     * @method open_mode_unique
     * @param  {Fiche} fiche   La fiche ouverte
     */
@@ -49,12 +50,17 @@ $.extend(UI, {
     if(fiche.is_not_book && fiche.is_not_page) return
     var last = this.last_fiche_historique(fiche.type)
     if(last) last.close
-    var left = fiche.is_book ? UI.GRID_X : 2 * UI.GRID_X ;
-    var top  = 0
-    fiche.obj.css({'top':top+"px", 'left':left+"px"})
+    this.ModeUnique.positionne(fiche)
     this.add_to_histo(fiche)
   },
-  
+  /**
+    * Sous-objet UI.ModeUnique
+    * Sera étendu plus bas
+    * @class UI.ModeUnique
+    * @static
+    */
+  ModeUnique:{},
+
   /**
     * Méthode appelée quand on ferme une fiche en mode unique
     * Notes
@@ -66,7 +72,8 @@ $.extend(UI, {
   close_mode_unique:function(fiche)
   {
     if(fiche.is_not_book && fiche.is_not_page) return
-    this.remove_from_histo(fiche)
+    this.ModeUnique.unpositionne(fiche)
+    this.remove_from_histo(fiche) // idiot, sinon l'historique est toujours vide
   },
   /**
     * Méthode ajoutant la fiche +fiche+ à l'historique des fiches book ou page
@@ -114,5 +121,85 @@ Object.defineProperties(UI,{
       if( last == -1 ) return null
       else return this.historique_mode_open[type][last]
     }
+  }
+})
+
+/**
+  * @class UI.ModeUnique
+  * @static
+  */
+$.extend(UI.ModeUnique,{
+  /**
+    * Top de la fiche book ou page en mode unique
+    * @note: La fiche est en position fixed dans ce mode
+    * @property {Number} TOP_MODE_UNIQUE
+    * @static
+    * @final
+    */
+  TOP_MODE_UNIQUE:44,
+ 
+  /**
+    * La fiche couramment traité dans le mode unique
+    * @property {Fiche} fiche
+    */
+  current:null,
+  /**
+    * Positionne la fiche dans le mode unique
+    * @method positionne
+    * @param {Fiche} fiche Instance de la fiche à positionner
+    */
+  positionne:function(fiche)
+  {
+    this.current = fiche
+    this.set_position()
+    this.set_hauteur()
+    this.set_div_children()
+  },
+  /**
+    * Méthode pour "dépositionner la fiche"
+    * La méthode supprime ce que `positionne` avait réglé (pour pouvoir ranger
+    * correctement la fiche)
+    * @method unpositionne
+    */
+  unpositionne:function(fiche)
+  {
+    fiche.obj.css({position:'absolute', height:''})
+    fiche.obj.find('> recto > div.items').css({overflow:'', height:''})
+  },
+  /**
+    * Règle la position de la fiche dans le mode unique
+    * @method set_position
+    */
+  set_position:function()
+  {
+    this.current.obj.css({
+      'position'  : 'fixed', 
+      'top'       : this.TOP_MODE_UNIQUE+"px", 
+      'left'      : (this.current.is_book ? UI.GRID_X : 2 * UI.GRID_X)+"px"})
+  },
+  /**
+    * Règle la hauteur de la fiche dans le mode unique
+    * @method set_hauteur
+    */
+  set_hauteur:function()
+  {
+    windowh = window.innerHeight
+    footerh = $('section#footer').height()
+    ficheh  = windowh - (this.TOP_MODE_UNIQUE + footerh + 40)
+    this.current.obj.css({height:ficheh+'px'})
+  },
+  /**
+    * Règle le div des enfants dans le mode unique
+    * @method set_div_children
+    */
+  set_div_children:function()
+  {
+    titreh = this.current.obj.find('> recto > div.titre').height()
+    ficheh = this.current.obj.height()
+    itemsh = ficheh - (titreh + 64)
+    this.current.obj.find('> recto > div.items').css({
+      height:itemsh+'px', 
+      overflow:'scroll'
+    })
   }
 })
