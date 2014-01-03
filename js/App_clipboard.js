@@ -80,6 +80,7 @@ App.Clipboard = {
     */
   paste:function()
   {
+    if(!this.content) return false // pas de clipboard
     var type
     if      (undefined != this.content.ref)     type = 'ref'
     else if (undefined != this.content.string)  type = 'string'
