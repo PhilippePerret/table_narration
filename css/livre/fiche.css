@@ -65,3 +65,9 @@ fiche.selected {
 fiche.dropped, fiche.selected.dropped {
   border-color: #0F5 !important;
 }
+/*  Classe spéciale utilisée en mode unique pour faire apparaitre le
+    verso de la page en haut (toujours le voir) */
+fiche.on_top {
+  position    :absolute !important;
+  top         :0px;
+}

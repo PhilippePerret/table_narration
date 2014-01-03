@@ -301,9 +301,28 @@ Object.defineProperties(Fiche.prototype,{
       this.verso[this.retourned ? 'hide' : 'show']()
       this.retourned = !this.retourned
       if(this.retourned) this.regle_verso
+      if(MODE_UNIQUE) this.regle_verso_mode_unique
     }
   },  
 
+  /**
+    * Règle le verso quand on est en mode unique (un seul page/book ouvert et
+    * fixé dans la page)
+    * Notes
+    * -----
+    *   * Contrairement à la méthode `regle_verso` qui n'est invoqué que lorsque
+    *     on retourne la fiche, cette méthode est appelée dans les deux sens.
+    *   * Elle permet d'afficher correctement le verso, pour toujours le voir.
+    *   * Propriété complexe => appeler sans parenthèses
+    * @method regle_verso_mode_unique
+    */
+  "regle_verso_mode_unique":{
+    get:function(){
+      if(this.is_book) return // rien à faire avec un livre
+      if(this.is_page && this._opened) return // rien à faire avec une page ouverte
+      this.obj[(this.retourned?'add':'remove')+'Class']('on_top')
+    }
+  },
   /* ---------------------------------------------------------------------
    *
    *   MÉTHODES DOM DIVERSES
