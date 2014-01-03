@@ -5,7 +5,12 @@ body {
 /* ---------------------------------------------------------------------
  *  Styles généraux
  */
-bad {color: red;} /* publication : souligné par des vagues */
+bad {
+  background-image: url("http://www.atelier-icare.net/lib/img/divers/wave.png");
+  background-position: 0 19px;
+  background-repeat: repeat-x;
+  color: #7F0000;
+} /* publication : souligné par des vagues */
 
 .fright{float:right;}
 .fleft {float:left ;}
