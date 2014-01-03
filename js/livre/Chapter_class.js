@@ -25,5 +25,15 @@ Object.defineProperties(Chapter.prototype,{
       if(!this.parent) return null
       return this.parent
     }
-  }  
+  },
+  
+  /**
+    * Retourne le titre du chapitre pour affichage dans une référence
+    *
+    * @property {String} titre_for_ref
+    */
+  "titre_for_ref":{
+    get:function(){return this.titre}
+  }
+    
 })

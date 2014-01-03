@@ -178,6 +178,19 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
+    * Retourne la balise de référence de la fiche
+    * Notes
+    * -----
+    *   * La méthode est utilisée aussi bien par les instances {Ref} que
+    *     par le clipboard de l'application.
+    * @proprety {String} to_balise
+    */
+  "to_balise":{
+    get:function(){
+      return "[ref:"+this.type+"-"+this.id+"|"+this.titre_for_ref+"]"
+    }
+  },
+  /**
     * Type d'un enfant de la fiche courante
     * Notes
     *   * C'est un raccourci de FICHES.datatype[type].child_type

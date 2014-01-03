@@ -73,8 +73,8 @@ window.keypress_when_no_selection_no_edition = function(evt)
   */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
-  // var idm = "keypress_when_fiche_selected_out_textfield"
-  // dlog("---> "+idm, DB_FCT_ENTER)
+  var idm = "keypress_when_fiche_selected_out_textfield"
+  dlog("---> "+idm, DB_FCT_ENTER | DB_CURRENT)
   
   /*  = WARNING =
    *  S'il n'y a pas de fiche courante, il faut rectifier le gestionnaire
@@ -94,8 +94,11 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
    */
   if(UI.Input.target)
   {
-    F.error("Mauvais gestionnaire d'évènement (on se trouve dans un champ d'édition)")
-    return UI.Input.onkeypress(evt)
+    F.error("Mauvais gestionnaire d'évènement (on se trouve dans un champ d'édition)"+
+    "\nPour le moment, je ne fais rien (appeler le gestionnaire UI.Input génèrerait "+
+    "une erreur)")
+    return stop_event(evt)
+    // return UI.Input.onkeypress(evt)
   }
   
   var cplx_meth = null

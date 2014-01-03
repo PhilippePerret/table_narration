@@ -39,5 +39,14 @@ Object.defineProperties(Page.prototype,{
       if(!this.parent) return null
       return this.parent.book
     }
-  }  
+  },
+  /**
+    * Retourne le titre de la page pour affichage dans une référence
+    *
+    * @property {String} titre_for_ref
+    */
+  "titre_for_ref":{
+    get:function(){return this.titre}
+  }
+  
 })

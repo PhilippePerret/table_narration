@@ -134,6 +134,14 @@ $.extend(Book.prototype,{
 
 Object.defineProperties(Book.prototype,{
   /**
+    * Retourne le titre du book pour affichage dans une référence
+    *
+    * @property {String} titre_for_ref
+    */
+  "titre_for_ref":{
+    get:function(){return this.real_titre || this.titre}
+  },
+  /**
     * Retourne le nom du book tel qu'il a été utilisé pour la création
     * du fichier PDF.
     * @property {String} pdf_filename

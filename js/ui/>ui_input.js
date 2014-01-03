@@ -167,6 +167,7 @@ UI.Input = {
     */
   onkeypress:function(evt)
   {
+    dlog("-> UI.Input.onkeypress", DB_FCT_ENTER | DB_CURRENT)
     this.infos_keypress('onkeypress', evt) // seulement si DB_INFOS_EVENT
     
     /* Test du KEYCODE */
@@ -471,11 +472,10 @@ UI.Input = {
   {
     if(undefined == options) options = {}
 
-    // On désactive les raccourcis courants
-    this.old_window_onkeypress = window.onkeypress
-    window.onkeypress = options.keypress
-
     if(!this.target) return null // pas d'édition courante
+    this.target.current_onkeypress = window.onkeypress
+    window.onkeypress = options.keypress
+    
     var id = Time.now()
     if(!this.targets) this.targets = {}
     // On prend la sélection courante
@@ -484,12 +484,13 @@ UI.Input = {
     this.targets[id] = $.extend({}, this.target)
     if(options.blur)
     {
-      this.target.dom.blur()
-      if(this.target.hasFiche)
-      {
-        var fiche = get_fiche(this.target.fiche_id)
-        if(fiche.main_prop == this.target.property ) fiche.disable_main_field
+      var fiche, is_main_field = false ;
+      if(this.target.hasFiche) {
+        fiche = get_fiche(this.target.fiche_id)
+        is_main_field = fiche.main_prop == this.target.property
       }
+      this.target.dom.blur()
+      if(is_main_field) fiche.disable_main_field
     }
     return id
   },
@@ -534,8 +535,7 @@ UI.Input = {
       }
     }
     // On réactive les raccourcis
-    window.onkeypress = this.old_window_onkeypress
-    delete this.old_window_onkeypress
+    window.onkeypress = this.target.current_onkeypress
   },
   
   /*
@@ -553,7 +553,11 @@ UI.Input = {
   /**
     * Bind ou Unbind le 'keypress' sur la `target` courante, en fonction de la valeur
     * de +focusing+
-    * 
+    * Notes
+    * -----
+    *   * La méthode désactive ou ré-active le gestionnaire d'évènement
+    *     qui était défini (il a été mémorisé dans `target`).
+    *
     * Requis
     * ------
     *   * {Object} this.target, définissant le champ courant (donnée complexe)
@@ -569,10 +573,12 @@ UI.Input = {
     {
       // Pour le moment, le même, mais pourra changer suivant le contexte
       this.target.jq.bind('keypress', this.target.binding)
+      window.onkeypress = null
     }
     else
     {
       this.target.jq.unbind('keypress', this.target.binding)
+      window.onkeypress = this.target.current_onkeypress
     }
   },
   
@@ -636,6 +642,7 @@ UI.Input = {
       selection : Selection.of(domObj),
       data_type : target.attr('data-type'),
          format : target.attr('data-format'),
+         current_onkeypress : window.onkeypress,
        is_input : null,
     is_textarea : null,
        /* Seulement si c'est le champ d'une fiche */

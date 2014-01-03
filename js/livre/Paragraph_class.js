@@ -33,6 +33,20 @@ Paragraph.prototype.constructor = Paragraph
 Object.defineProperties(Paragraph.prototype,{
 
   /**
+    * Retourne un extrait du paragraphe pour affichage dans une référence
+    *
+    * @property {String} titre_for_ref
+    */
+  "titre_for_ref":{
+    get:function(){
+      var extrait = this.texte ;
+      if(!extrait) extrait = "[paragraphe vide]"
+      if(extrait.length > 50) extrait = extrait.substring(0,50) + '[…]'
+      return '<span class="small">'+extrait+'</span>'
+    }
+  },
+
+  /**
     * @property {Book} book Le livre auquel appartient le paragraphe (ou null)
     *
     */

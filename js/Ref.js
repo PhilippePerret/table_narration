@@ -141,10 +141,7 @@ Object.defineProperties(Ref.prototype, {
     */
   "to_balise":{
     get:function(){
-      if(undefined == this._to_balise)
-      {
-        this._to_balise = "[ref:"+this.type+"-"+this.id+"|"+this.titre_cible+"]"
-      }
+      if(undefined == this._to_balise) this._to_balise = get_fiche(this.id).to_balise
       return this._to_balise
     }
   },
@@ -191,11 +188,12 @@ Object.defineProperties(Ref.prototype, {
   
   /**
     * Instance Fiche de la cible de la référence
+    *
     * Notes
     * -----
     *   * WARNING: Cette propriété est mise à NULL même si l'instance Fiche
     *     existe, mais qu'elle n'est pas encore chargée.
-    *
+    *   * Pour obtenir vraiment la fiche, utiliser la propriété `fiche`
     * @property {Fiche} cible
     *
     */
@@ -208,7 +206,11 @@ Object.defineProperties(Ref.prototype, {
       return this._cible
     }
   },
-  
+  "fiche":{
+    get:function(){
+      return get_fiche(this.cible_id)
+    }
+  },
   /**
     * Titre pour la fiche-porteuse (pour la composition de son texte affiché)
     * Notes
@@ -239,22 +241,7 @@ Object.defineProperties(Ref.prototype, {
     */
   "titre_cible":{
     get:function(){
-      if(undefined == this._titre_cible)
-      {
-        this._titre_cible = function(ref){
-          var fi = ref.cible
-          switch(ref.type)
-          {
-          case 'book' : return fi.real_titre || fi.titre
-          case 'para' :
-            var extrait ;
-            if(fi.texte.length > 50) extrait = fi.texte.substring(0,50) + '[…]'
-            else extrait = fi.texte
-            return '<span class="small">'+extrait+'</span>'
-          default     : return fi.titre
-          }
-        }(this)
-      }
+      if(undefined == this._titre_cible) this._titre_cible = this.fiche.titre_for_ref
       return this._titre_cible
     }
   },

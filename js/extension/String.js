@@ -7,10 +7,27 @@
  **/
 
 $.extend(String.prototype,{
+  /**
+    * Prend un "template" (par exemple une locale) et remplace tous les mots
+    * "_<MOT>_" par les valeurs fournies en argument.
+    * @method templatize
+    * @param  {Object} params Table de remplacement. Les clés seront transformées en
+    *                         majuscules.
+    */
+  templatize:function(params)
+  {
+    var transformed = this.toString(), reg ;
+    L(params).each(function(balise, replacement){
+      reg = new RegExp("_"+balise.toUpperCase()+"_", "g")
+      transformed = transformed.replace(reg, replacement)
+    })
+    return transformed
+  }
   
 })
 
 Object.defineProperties(String.prototype, {
+  
   
   /**
     * Formate le string pour affichage (en remplaçant notamment les balises films,
@@ -28,7 +45,6 @@ Object.defineProperties(String.prototype, {
     */
   "formate":{
     value:function(cible){
-      dlog("Dans String.formate, this = ");dlog(this);dlog("type:"+(typeof this))
       return ColText.formate(this.toString(), cible)
     }
   },

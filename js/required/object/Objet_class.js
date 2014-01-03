@@ -1,17 +1,17 @@
 /**
- *  @module ObjetClass
- */
+  *  @module ObjetClass
+  */
 
 /**
- *  Class qui sera héritée par les « Items » de l'application, qui peuvent être
- *  des {Film}s, des {Mot}s, etc.
- *
- *  @class  ObjetClass
- *  @constructor
- *
- *  @param  id  {String} Identifiant de l'item.
- *
- */
+  * Class qui sera héritée par les « Items » de l'application, qui peuvent être
+  * des {Film}s, des {Mot}s, etc.
+  *
+  * @class  ObjetClass
+  * @constructor
+  *
+  * @param  id  {String} Identifiant de l'item.
+  *
+  */
 window.ObjetClass = function(id){
   this.id             = id
   this.loaded         = false  
@@ -149,15 +149,17 @@ Object.defineProperties(ObjetClass.prototype, {
    *  
    --------------------------------------------------------------------- */
   
-  /*
-   *  Chargement des données complètes de l'item
-   *  
-   *  @param  poursuivre  La méthode poursuivre
-   */
+  /**
+    * Chargement des données complètes de l'item
+    * 
+    * @method load
+    * @async
+    * @param  {Function} poursuivre  La méthode poursuivre
+    * @param  {Object}    rajax Dans un second appel le retour de la requête ajax
+    */
   "load":{
     value:function(poursuivre, rajax)
     {
-      dlog("-> load")
       if(undefined == rajax)
       { // => Requête ajax
         dlog("script : "+this.folder_ajax+'/load')
@@ -167,7 +169,7 @@ Object.defineProperties(ObjetClass.prototype, {
         )
       }
       else
-      { // => Retour chargement
+      { // => Retour ajax
         if(rajax.ok)
         {
           this.dispatch( rajax.ditem )

@@ -481,10 +481,8 @@ Object.defineProperties(Fiche.prototype, {
     */
   "copy":{
     get:function(){
-      F.show("Je COPY la fiche courante"+this.type_id)
       App.Clipboard.add(this)
-      F.show("La fiche "+this.human_type+" a été copiée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
-      image('clavier/K_Command.png')+image('clavier/K_V.png'))
+      F.show(LOCALE.fiche['copy or paste'].templatize({type:this.human_type, action:'copiée'}))
     }
   },
   /**
@@ -498,11 +496,9 @@ Object.defineProperties(Fiche.prototype, {
     */
   "cut":{
     get:function(){
-      F.show("Je CUT la fiche "+this.type_id)
       App.Clipboard.add( this )
       this.obj.hide()
-      F.show("La fiche "+this.human_type+" a été coupée.\nSélectionne un nouveau parent pour la coller à l'aide de "+
-      image('clavier/K_Command.png')+image('clavier/K_V.png')+
+      F.show(LOCALE.fiche['copy or paste'].templatize({type:this.human_type, action:'coupée'})+
       "\nNoter que tant que la fiche n'a pas été collée, elle n'est pas retirée du parent courant.")
     }
   },

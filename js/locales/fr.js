@@ -4,6 +4,7 @@ window.LOCALE = {
   app:{
     // LOCALE.app.error
     error:{
+      'no valid clipboard'  : "Le clipboard ne contient pas un objet valide (peut-être lui manque-t-il une méthode complexe `to_balise` pour le traiter).",
       'current config error': "Des erreurs sont survenues en essayant d'application la"+
                               " configuration courante (le problème peut peut-être se "+
                               "résoudre simplement en prenant un flash de la configuration"+
@@ -20,10 +21,13 @@ window.LOCALE = {
     }
   },
   
+  // LOCALE.fiche
   fiche:{
     'want delete fiche'             : "Détruire définitivement cette fiche ?",
     'kill children'                 : "Détruire aussi tout son contenu",
-    
+    'copy or paste'                 : "La fiche _TYPE_ a été _ACTION_. "+
+                                      image('clavier/K_Command.png')+image('clavier/K_V.png') +
+                                      " permet de la coller dans un nouveau parent ou de coller sa référence dans un paragraphe",
     // LOCALE.fiche.error
     error:{
       'no empty text'               : "Impossible d'enregistrer un texte vide !",

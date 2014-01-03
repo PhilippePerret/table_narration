@@ -81,13 +81,20 @@ App.Clipboard = {
   paste:function()
   {
     var type
-    if(undefined != this.content.ref)           type = 'ref'
+    if      (undefined != this.content.ref)     type = 'ref'
     else if (undefined != this.content.string)  type = 'string'
     else if (undefined != this.content.fiche)   type = 'fiche'
     else if (undefined != this.content.object)  type = 'object'
     else return false
     var foo = this.content[type]
+    dlog("foo avant traitement (type="+type+"):");dlog(foo)
     if('object' == typeof foo) foo = foo.to_balise
+    dlog("foo après traitement:");dlog(foo)
+    if(undefined == foo)
+    {
+      F.error(LOCALE.app.error['no valid clipboard'])
+      return false
+    }
     UI.Input.set_selection_to( foo )
     CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
     this.flush(type)
