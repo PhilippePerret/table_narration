@@ -15,6 +15,8 @@ class Fiche
   # Quel que soit le type de la fiche, on la passe par cette publication.
   # Mais le traitement est très simple pour les fiches autres que paragraphe,
   # puisque seul leur titre sera utilisé.
+  # Donc le traitement d'un livre complet se fait en appelant cette méthode
+  # c'est le démarrage (et donc la possibilité d'initialiser certaines valeurs)
   # 
   # Notes
   # -----
@@ -31,6 +33,20 @@ class Fiche
     case type
     when 'para'
       publish_as_paragraph if options[:only_tdm].nil? || options[:only_tdm] == false
+    when 'book'
+      # Démarrage de la procédure => initialisation
+      # -------------------------------------------
+
+      # On définit le titre du livre
+      # TODO  Mais plus tard, on ne fera rien du tout puisqu'il y aura une
+      #       première de couverture.
+      source.title = (data['real_titre'] || main_value).to_latex
+      # Liste des identifiants des autres livres auxquels on fait référence
+      
+      # dans les fiches. Cette liste permettra de déterminer les `external_document`
+      # pour le package LaTex `xr` qui gère ces références externes.
+      $IDS_BOOKS_XR = []
+      
     else              
       publish_as_titre
       children_as_fiches.each { |fchild| fchild.prepare_publication options }
@@ -166,11 +182,13 @@ class Fiche
     DOC_EXEMPLE[:content] = ""
   end
   
+  # Publie la fiche comme simple titre
+  # @note : le livre lui-même est traité plus haut, dans la méthode
+  # `prepare_publication`
   def publish_as_titre
     case type
-    when 'book' then source.title = (data['real_titre'] || main_value).to_latex
-    when 'chap' then source.new_chapter main_value.to_latex
-    when 'page' then source.new_section main_value.to_latex
+    when 'chap' then source.new_chapter main_value.to_latex, :label => "ref#{id}"
+    when 'page' then source.new_section main_value.to_latex, :label => "ref#{id}"
     end
   end
   
@@ -227,6 +245,39 @@ class Fiche
       dlog "ptype inconnu : #{ptype}"
       ""
     end
+  end
+  
+  # Préfixe externe
+  # ---------------
+  # Ce préfixe est utilisé pour faire une référence à un autre livre
+  # 
+  # Notes
+  # -----
+  #   * C'est le package `xr` qui s'en sert.
+  #   * Les documents externes se trouvent dans `publication/source/external_document`
+  #   * Ils portent le même nom que les pdf, mais ce sont des .tex
+  #   * Ils sont déclarés dans source.tex par \external_document[<ce prefixe>-]{path}
+  #   * Quand le builder rencontre une balise faisant référence à un autre livre,
+  #     il fait cette référence en ajoutant ce préfixe (en utilisant ma commande
+  #     \refpour{<prefix>-<ref>})
+  # 
+  def external_prefix
+    @external_prefix ||= "B#{id}"    
+  end
+  # Nom du fichier external_document
+  def external_name
+    @external_name ||= "#{normalized_affixe_from_titre}.tex"
+  end
+  # External path pour source.tex
+  def external_path_for_source
+    @external_path_for_source ||= File.join('source', 'external_document', external_name)
+  end
+  # Path (mais pour enregistrer le document)
+  def path_external
+    @path_external ||= File.join(folder_external_documents, external_name)
+  end
+  def folder_external_documents
+    @folder_external_documents ||= (self.class.getfolder File.join('publication', 'source', 'external_document'))
   end
     
   # Raccourci au document source.tex de RLatex

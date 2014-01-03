@@ -2,6 +2,7 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "App",
+        "App.Clipboard",
         "App.Prefs",
         "Chapter",
         "ColText",
@@ -11,6 +12,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "FICHES",
         "FILMS",
         "Fiche",
+        "Film",
+        "HTMLTable",
         "Mot",
         "OBJETS",
         "OBJETS.Dom",
@@ -24,9 +27,12 @@ YUI.add("yuidoc-meta", function(Y) {
         "UI",
         "UI.Html",
         "UI.Input",
+        "UI.ModeUnique",
+        "UI.Textarea",
         "window"
     ],
     "modules": [
+        "App_clipboard",
         "Chapter",
         "ColText",
         "Collection",
@@ -59,6 +65,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "UI_HTML",
         "UI_Input",
         "app",
+        "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.",
         "app-prefs",
         "data",
         "dom",
@@ -69,6 +76,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "objets",
         "ready.js",
         "ref.js",
+        "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.",
+        "ui_mode_unique",
         "window"
     ],
     "allModules": [
@@ -77,9 +86,17 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "app"
         },
         {
+            "displayName": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.",
+            "name": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc."
+        },
+        {
             "displayName": "app-prefs",
             "name": "app-prefs",
             "description": "Gestion des préférences de l'application."
+        },
+        {
+            "displayName": "App_clipboard",
+            "name": "App_clipboard"
         },
         {
             "displayName": "Chapter",
@@ -243,8 +260,16 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "UI_HTML"
         },
         {
+            "displayName": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.",
+            "name": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
             "displayName": "UI_Input",
             "name": "UI_Input"
+        },
+        {
+            "displayName": "ui_mode_unique",
+            "name": "ui_mode_unique"
         },
         {
             "displayName": "window",

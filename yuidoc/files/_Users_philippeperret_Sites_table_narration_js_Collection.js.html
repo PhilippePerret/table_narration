@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -329,7 +359,7 @@ $.extend(Collection, {
   {
     if(undefined == confirmed &amp;&amp; this.modified) return this.confirm_load($.proxy(this.choose, this, name))
     this.clear
-    Ajax.send({script:&quot;collection/load&quot;, collection_name:name}, $.proxy(this.retour_load, this))
+    Ajax.send({script:&quot;collection/load&quot;, collection:name}, $.proxy(this.retour_load, this))
     return true
   },
   
@@ -477,7 +507,7 @@ $.extend(Collection, {
   {
     FICHES.last_id = parseInt(data.last_id_fiche, 10)
     this.name = data.collection_name
-    if(data.preferences) App.preferences = data.preferences
+    App.Prefs.set(data.preferences)
     if(data.collections) UI.peuple_menu_collections(data.collections)
     // Configuration courante (note: le fait de la définir l&#x27;applique)
     App.current_configuration = data.current_configuration
@@ -701,9 +731,9 @@ Object.defineProperties(Collection,{
     */
   &quot;save&quot;:{
     value:function(){
+      dlog(&quot;-&gt; Collection.save / Sauvegarde de la collection&quot;, DB_FCT_ENTER)
       if(this.nothing_to_save) return false
       this.saving = true
-      dlog(&quot;Sauvegarde de la collection&quot;, DB_SIMPLE)
       F.show(&quot;Sauvegarde en cours…&quot;, {no_timer:true})
       this.save_fiches
       return true
@@ -770,7 +800,7 @@ Object.defineProperties(Collection,{
     */
   &quot;backup&quot;:{
     get:function(){
-      Ajax.send({script:&#x27;collection/backup&#x27;})
+      Ajax.send({script:&#x27;collection/backup&#x27;, collection:Collection.name})
     }
   },
   /**
@@ -801,7 +831,7 @@ Object.defineProperties(Collection,{
     */
   &quot;force_backup&quot;:{
     get:function(){
-      Ajax.send({script:&#x27;collection/backup&#x27;, force_backup:1}, $.proxy(this.retour_force_backup,this))
+      Ajax.send({script:&#x27;collection/backup&#x27;, collection:Collection.name, force_backup:1}, $.proxy(this.retour_force_backup,this))
     }
   }
   

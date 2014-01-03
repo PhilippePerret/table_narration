@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -219,19 +249,19 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- *  @module ObjetClass
- */
+  *  @module ObjetClass
+  */
 
 /**
- *  Class qui sera héritée par les « Items » de l&#x27;application, qui peuvent être
- *  des {Film}s, des {Mot}s, etc.
- *
- *  @class  ObjetClass
- *  @constructor
- *
- *  @param  id  {String} Identifiant de l&#x27;item.
- *
- */
+  * Class qui sera héritée par les « Items » de l&#x27;application, qui peuvent être
+  * des {Film}s, des {Mot}s, etc.
+  *
+  * @class  ObjetClass
+  * @constructor
+  *
+  * @param  id  {String} Identifiant de l&#x27;item.
+  *
+  */
 window.ObjetClass = function(id){
   this.id             = id
   this.loaded         = false  
@@ -257,21 +287,20 @@ $.extend(ObjetClass.prototype,{
   },
   
   /**
-   *  Place l&#x27;apercu de l&#x27;item dans l&#x27;objet DOM +domObj+
-   *  en le créant si nécessaire.
-   * 
-   *  NOTES
-   *  -----
-   *
-   *    * L&#x27;aperçu est également décalé à droite ou à gauche suivant la
-   *      position de son contenant dans le texte pour être parfaitement visible.
-   *    * On affiche pas l&#x27;aperçu si le mot se trouve dans un aperçu.
-   *
-   *  @method apercu_in
-   *
-   *  @param  domObj  {DOMElement} Element du DOM dans lequel placer l&#x27;aperçu.
-   *                  C&#x27;est normalement un lien/balise dans le texte.
-   */
+    * Place l&#x27;apercu de l&#x27;item dans l&#x27;objet DOM +domObj+
+    * en le créant si nécessaire.
+    *
+    * NOTES
+    * -----
+    *   * L&#x27;aperçu est également décalé à droite ou à gauche suivant la
+    *     position de son contenant dans le texte pour être parfaitement visible.
+    *   * On affiche pas l&#x27;aperçu si le mot se trouve dans un aperçu.
+    *
+    * @method apercu_in
+    *
+    * @param  domObj  {DOMElement} Element du DOM dans lequel placer l&#x27;aperçu.
+    *                 C&#x27;est normalement un lien/balise dans le texte.
+    */
   apercu_in:function(domObj)
   {
     if($(domObj).parents().hasClass(&#x27;apercu&#x27;))
@@ -370,25 +399,27 @@ Object.defineProperties(ObjetClass.prototype, {
    *  
    --------------------------------------------------------------------- */
   
-  /*
-   *  Chargement des données complètes de l&#x27;item
-   *  
-   *  @param  poursuivre  La méthode poursuivre
-   */
+  /**
+    * Chargement des données complètes de l&#x27;item
+    * 
+    * @method load
+    * @async
+    * @param  {Function} poursuivre  La méthode poursuivre
+    * @param  {Object}    rajax Dans un second appel le retour de la requête ajax
+    */
   &quot;load&quot;:{
     value:function(poursuivre, rajax)
     {
-      dlog(&quot;-&gt; load&quot;)
       if(undefined == rajax)
       { // =&gt; Requête ajax
         dlog(&quot;script : &quot;+this.folder_ajax+&#x27;/load&#x27;)
         Ajax.send(
-          {script:this.folder_ajax+&#x27;/load&#x27;, item_id:this.id},
+          {script:this.folder_ajax+&#x27;/load&#x27;, collection:Collection.name, item_id:this.id},
           $.proxy(this.load, this, poursuivre)
         )
       }
       else
-      { // =&gt; Retour chargement
+      { // =&gt; Retour ajax
         if(rajax.ok)
         {
           this.dispatch( rajax.ditem )
@@ -415,7 +446,7 @@ Object.defineProperties(ObjetClass.prototype, {
       if(undefined == rajax)
       { // =&gt; Requête ajax
         Ajax.send(
-          {script:this.folder_ajax+&#x27;/save&#x27;, data:this.data_for_save},
+          {script:this.folder_ajax+&#x27;/save&#x27;, collection:Collection.name, data:this.data_for_save},
           $.proxy(this.save, this, poursuivre)
         )
       }

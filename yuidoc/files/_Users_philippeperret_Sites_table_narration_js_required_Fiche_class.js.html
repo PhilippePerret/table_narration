@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -311,6 +341,30 @@ Object.defineProperties(Fiche.prototype, {
     }
   },
 
+  /**
+    * Return la fiche suivant la fiche courante
+    * Si elle existe
+    * @property {Fiche} next
+    * @default  La fiche ou Null
+    */
+  &quot;next&quot;:{
+    get:function(){
+      if(!this.parent) return null
+      return this.parent.enfants[this.indice + 1]
+    }
+  },
+  /**
+    * Return la fiche précédent la fiche courante
+    * Si elle existe, ou Null
+    * @property {Fiche} prev
+    * @default la fiche ou Null
+    */
+  &quot;prev&quot;:{
+    get:function(){
+      if(!this.indice || !this.parent) return null
+      return this.parent.enfants[this.indice - 1]
+    }
+  },
   /* ---------------------------------------------------------------------
    *      PROPRIÉTÉS D&#x27;ÉTAT
    --------------------------------------------------------------------- */
@@ -670,36 +724,31 @@ Object.defineProperties(Fiche.prototype, {
     * Copie la fiche
     * Notes
     *   * En réalité, la &quot;copie&quot; de la fiche ne consiste qu&#x27;à mettre sa référence
-    *     dans App.clipboard
+    *     dans App.Clipboard
     *   * On reconnait une fiche coupée d&#x27;une fiche copiée au &#x27;cuted&#x27; qui est 
     *     ajouté quand on coupe la fiche.
     * @property {Method} copy
     */
   &quot;copy&quot;:{
     get:function(){
-      F.show(&quot;Je COPY la fiche courante&quot;+this.type_id)
-      App.clipboard = this
-      F.show(&quot;La fiche &quot;+this.human_type+&quot; a été copiée.\nSélectionne un nouveau parent pour la coller à l&#x27;aide de &quot;+
-      image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;))
+      App.Clipboard.add(this)
+      F.show(LOCALE.fiche[&#x27;copy or paste&#x27;].templatize({type:this.human_type, action:&#x27;copiée&#x27;}))
     }
   },
   /**
     * Coupe la fiche
     * Notes
-    *   * En réalité, la &quot;coupe&quot; de la fiche ne consiste qu&#x27;à mettre sa référence
-    *     dans App.clipboard en mettant son cuted à true et en masquant son objet
-    *     dans le DOM (pour ne pas avoir à le reconstruire.)
+    *   * En réalité, la &quot;coupe&quot; de la fiche ne consiste qu&#x27;à mettre son instance
+    *     dans App.Clipboard.content.fiche en mettant son cuted à true et en masquant 
+    *     son objet dans le DOM (pour ne pas avoir à le reconstruire.)
     *
     * @property {Method} cut
     */
   &quot;cut&quot;:{
     get:function(){
-      F.show(&quot;Je CUT la fiche &quot;+this.type_id)
-      App.clipboard = this
-      App.clipboard.cuted = true
+      App.Clipboard.add( this )
       this.obj.hide()
-      F.show(&quot;La fiche &quot;+this.human_type+&quot; a été coupée.\nSélectionne un nouveau parent pour la coller à l&#x27;aide de &quot;+
-      image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;)+
+      F.show(LOCALE.fiche[&#x27;copy or paste&#x27;].templatize({type:this.human_type, action:&#x27;coupée&#x27;})+
       &quot;\nNoter que tant que la fiche n&#x27;a pas été collée, elle n&#x27;est pas retirée du parent courant.&quot;)
     }
   },
@@ -722,17 +771,18 @@ Object.defineProperties(Fiche.prototype, {
     get:function(){
       try
       {
-        if(!App.clipboard) throw &#x27;no copied fiche&#x27;
-        if(App.clipboard.class != &quot;Fiche&quot;) throw &#x27;no fiche in clipboard&#x27;
-        if(App.clipboard.type != this.child_type &amp;&amp; App.clipboard.type != this.type) 
+        clip = App.Clipboard.get(&#x27;fiche&#x27;)
+        
+        if(!clip) throw &#x27;no copied fiche&#x27;
+        if(clip.type != this.child_type &amp;&amp; clip.type != this.type) 
           throw &#x27;bad child type in clipboard&#x27;
-        if(App.clipboard.type == this.type){
+        if(clip.type == this.type){
           if(!this.parent) throw &#x27;no parent for clipboarded fiche&#x27;
-          if(App.clipboard.cuted &amp;&amp; App.clipboard.parent == this.parent)
+          if(clip.cuted &amp;&amp; clip.parent == this.parent)
             throw &#x27;clipboarded fiche already in parent&#x27;
         }
-        else if (App.clipboard.type == this.child_type){
-          if(App.clipboard.cuted &amp;&amp; App.clipboard.parent == this)
+        else if (clip.type == this.child_type){
+          if(clip.cuted &amp;&amp; clip.parent == this)
             throw &#x27;clipboarded fiche already in parent&#x27;
         }
           
@@ -747,7 +797,7 @@ Object.defineProperties(Fiche.prototype, {
       //    l&#x27;injecter dans le parent courant et 3/ remettre son obj à display=block
       //    pour le faire ré-apparaitre
       var new_parent, beforeChild ;
-      if(App.clipboard.type == this.child_type)
+      if(clip.type == this.child_type)
       {
         // La fiche sélectionnée (courante) est le nouveau parent de la fiche
         // Il faut placer la fiche copiée/coupée au bout du parent
@@ -761,11 +811,9 @@ Object.defineProperties(Fiche.prototype, {
         beforeChild = this
       }
 
-      if(App.clipboard.cuted)
+      if(clip.cuted) // Fiche coupée
       {
-        // Fiche coupée
-        fiche = App.clipboard
-        fiche.parent.remove_child( fiche )
+        clip.parent.remove_child( clip )
       }
       else
       {
@@ -774,7 +822,7 @@ Object.defineProperties(Fiche.prototype, {
         var props = [ // mettre ici les propriétés à cloner
           &#x27;type&#x27;
           ]
-        switch(App.clipboard.type)
+        switch(clip.type)
         {
         case &#x27;book&#x27;:
           props.push(&#x27;real_titre&#x27;)
@@ -783,8 +831,8 @@ Object.defineProperties(Fiche.prototype, {
           props.push(&#x27;texte&#x27;)
           props.push(&#x27;ptype&#x27;)
         }
-        if(App.clipboard.type!=&#x27;para&#x27;) props.push(&#x27;titre&#x27;)
-        L(props).each(function(prop){ data[prop] = App.clipboard[prop]})
+        if(clip.type!=&#x27;para&#x27;) props.push(&#x27;titre&#x27;)
+        L(props).each(function(prop){ data[prop] = clip[prop]})
         fiche = FICHES.full_create(data)
         fiche.modified = true
       }
@@ -801,7 +849,7 @@ Object.defineProperties(Fiche.prototype, {
       }
       
       // À la fin, il faut détruire le clipboard
-      delete App.clipboard
+      App.Clipboard.flush(&#x27;fiche&#x27;)
       Flash.clean()
     }
   }
@@ -1049,47 +1097,39 @@ $.extend(Fiche.prototype,{
     *   * C&#x27;est vraiment cette fonction qui inaugure le changement du
     *     titre, car si c&#x27;était &#x60;titre=&#x60; (propriété complexe), on aura
     *     une difficulté à la définition des fiches remontées.
+    *   * Les méthodes &#x60;onchange_titre&#x60; et &#x60;onchange_texte&#x60; ont été 
+    *     différentiées car le traitement est très différent pour un texte.
     *
-    *
-    * @method onchange_texte
+    * @method onchange_titre_or_texte
     * @param  {Event} evt   L&#x27;Onchange Event.
+    *
     * @return {True} si la donnée a été prise en compte, {False} dans le cas contraire.
     */
   onchange_titre_or_texte:function(evt)
   {
     var idm = &quot;Fiche::onchange_titre_or_texte [&quot;+this.type_id+&quot;]&quot;
-    dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
+    dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
     var obj=this.main_field, prop=this.main_prop ;
     var new_value = obj.val().trim()
-    new_value = this.value_by_ptype( new_value )
     if(new_value == &quot;&quot;) return F.error(LOCALE.fiche.error[&#x27;no empty text&#x27;])
-    if(this[prop] != new_value)
-    {
-      this[prop]    = new_value
-      this.modified = true    
-    }
-    if(this.is_chapter) this.close
+    if(this.is_paragraph)   this.onchange_texte(new_value)
+                      else  this.onchange_titre(new_value)
     dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     return true
   },
   
   /**
-    * Traite la nouvelle valeur du paragraphe (si c&#x27;est un paragraphe) en
-    * fonction de son ptype. Pour le moment, la méthode se contente de transformer
-    * les &#x60;**&#x27; en retours chariot dans les paragraphes de ptype &#x27;list&#x27; et &#x27;code&#x27;
-    * @method value_by_ptype
-    * @param  {String} value  La valeur à traiter
-    * @return {String} la nouvelle valeur au besoin
+    * Procède au change de titre de la fiche (tout type sauf paragraphe)
+    * @method onchange_titre
+    * @param  {String}  new_value   La nouvelle valeur à donner au titre
     */
-  value_by_ptype:function(value)
-  {
-    if(this.is_not_paragraph) return value
-    if(this.ptype == &#x27;list&#x27; || this.ptype == &#x27;code&#x27;)
+  onchange_titre:function(new_value){
+    if(this.titre != new_value)
     {
-      value = value.split(&#x27;**&#x27;)
-      value = L(value).collect(function(line){ return line.trim() }).join(&quot;\n&quot;)
+      this.titre    = new_value
+      this.modified = true    
     }
-    return value
+    if(this.is_chapter) this.close
   }
   
 })
@@ -1112,8 +1152,7 @@ $.extend(Fiche.prototype,{
   */
 Fiche.prototype.stop_drag = function(evt, ui){
   var pos = this.obj.position()
-  dlog(&quot;-&gt; Fiche::stop_drag&quot;, DB_FCT_ENTER | DB_CURRENT)
-  dlog(&quot;App.preferences.snap:&quot;+App.preferences.snap)
+  dlog(&quot;-&gt; Fiche::stop_drag&quot;, DB_FCT_ENTER)
   pos_on_grid = UI.position_on_grid([pos.left, pos.top], App.preferences.snap)
   this.left = pos_on_grid.left
   this.top  = pos_on_grid.top

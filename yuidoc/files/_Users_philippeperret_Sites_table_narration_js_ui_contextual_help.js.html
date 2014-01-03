@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -316,16 +346,16 @@ Object.defineProperties(ContextualHelp, {
       var editing = $(fi.div_main_prop_jid).length == 0
       
       // === Construire l&#x27;aide contextuelle ===
-      // aide += this.info_current_fiche
+      if(App.preferences.showinfos) aide += this.info_current_fiche
       if(editing){
         aide += this[&#x27;return_save_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
         aide += this.raccourcis_textuels
         if( ispara )
         {
           aide += this[&#x27;shortcut_paragraph&#x27;]
-          if(fi.ptype != &#x27;text&#x27;) aide += this[&#x27;maj_return_new_item&#x27;]
+          if(PARAGRAPHS.PTYPES[fi.ptype].return_disabled != true) aide += this[&#x27;maj_return_new_item&#x27;]
         } 
-        if(App.clipboard) aide += this[&#x27;cmd_v_coller_ref&#x27;]
+        if(App.Clipboard.content) aide += this[&#x27;cmd_v_coller_ref&#x27;]
       }
       else 
       {
@@ -339,7 +369,11 @@ Object.defineProperties(ContextualHelp, {
         }
         aide += this[&#x27;show_&#x27;+(fi.retourned?&#x27;recto&#x27;:&#x27;verso&#x27;)]
         aide += this[&#x27;return_change_&#x27;+(ispara?&#x27;texte&#x27;:&#x27;titre&#x27;)]
-        if(fi.is_book) aide += this.cmd_p_publish
+        if(fi.is_book) 
+        {
+          aide += this.cmd_p_publish
+          aide += this.cmd_l_read_book
+        }
         aide += this[&#x27;r_reference&#x27;]
       }
         
@@ -365,11 +399,10 @@ Object.defineProperties(ContextualHelp, {
   &quot;info_current_fiche&quot;:{
     get:function(){
       var fi = this.current_fiche
-      var p_type_id = fi.parent ? fi.parent.type_id : &quot;-&quot;
+      var p_type_id = fi.parent ? fi.parent.id : &quot;-&quot;
       var info =  fi.type+&quot;:&quot;+fi.id
-      if(fi.is_not_book)      info += CH.del + &quot;Par:&quot;+p_type_id
-      if(fi.is_not_paragraph) info += &quot; / Enf:&quot;+(fi.enfants||[]).length
-      return info
+      if(fi.is_not_book) info += CH.del + &quot;Parent:&quot;+p_type_id
+      return &#x27;&lt;span class=&quot;info_fiche&quot;&gt;&#x27;+info+&#x27;&lt;/span&gt;&#x27;
     }
   },
   /*
@@ -413,6 +446,10 @@ Object.defineProperties(ContextualHelp, {
   &quot;k_f&quot;:{get:function(){
     if(undefined == this._k_f) this._k_f = this.k_lettre(&#x27;F&#x27;)
     return this._k_f
+  }},
+  &quot;k_l&quot;:{get:function(){
+    if(undefined == this._k_l) this._k_l = this.k_lettre(&#x27;L&#x27;)
+    return this._k_l
   }},
   &quot;k_m&quot;:{get:function(){
     if(undefined == this._k_m) this._k_m = this.k_lettre(&#x27;M&#x27;)
@@ -504,7 +541,8 @@ $.extend(CH, {
                           &quot; (+ &quot;+CH.k_ctrl+&quot; seulement TdM)&quot;,
   &#x27;r_reference&#x27;         : CH.del + CH.k_r+&quot; -&gt; Référence&quot;,
   &#x27;cmd_v_coller_ref&#x27;    : CH.del + CH.k_cmd+CH.k_v+&quot; Coller réf.&quot;,
-  &#x27;maj_return_new_item&#x27; : CH.del + CH.k_maj+CH.k_return+&quot; Nouvel item&quot;
+  &#x27;maj_return_new_item&#x27; : CH.del + CH.k_maj+CH.k_return+&quot; Nouvel item&quot;,
+  &#x27;cmd_l_read_book&#x27;     : CH.del + CH.k_cmd+CH.k_l+&quot; Lire le livre&quot;
   
 })
 ContextualHelp.AIDES = {

@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -269,7 +299,21 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_check_exclusions_with">check_exclusions_with</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_prepare_menu_ptypes">prepare_menu_ptypes</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_show_aspect_styles">show_aspect_styles</a>
 
                                 
                                 
@@ -307,6 +351,15 @@
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_PREFIXES_DOCUMENTS_EXEMPLES">PREFIXES_DOCUMENTS_EXEMPLES</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_PTYPES">PTYPES</a>
 
                                 
@@ -327,6 +380,96 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_check_exclusions_with" class="method item">
+    <h3 class="name"><code>check_exclusions_with</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>selector</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l164"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:164</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Gestion des exclusions</p>
+<p>La méthode regarde si un style de même premier mot existe dans la
+liste des styles courants et le supprime si c&#39;est le cas.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">selector</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_prepare_menu_ptypes" class="method item">
@@ -361,7 +504,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l194"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:194</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l227"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:227</code></a>
         
         </p>
 
@@ -383,6 +526,96 @@ bon endroit.</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_show_aspect_styles" class="method item">
+    <h3 class="name"><code>show_aspect_styles</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>montrer</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l204"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:204</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode appelée par un click sur la CB &quot;Show style aspect&quot; pour
+montrer l&#39;aspect des styles ou par les préférences</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">montrer</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>True s&#39;il faut les montrer</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -422,7 +655,7 @@ bon endroit.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l39"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:39</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l49"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:49</code></a>
         
         </p>
 
@@ -469,7 +702,7 @@ bon endroit.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l209"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:209</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l242"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:242</code></a>
         
         </p>
 
@@ -514,7 +747,7 @@ bon endroit.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l31"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:31</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l41"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:41</code></a>
         
         </p>
 
@@ -531,6 +764,53 @@ dans la page</p>
 
     
         <p><strong>Default:</strong> False</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_PREFIXES_DOCUMENTS_EXEMPLES" class="property item">
+    <h3 class="name"><code>PREFIXES_DOCUMENTS_EXEMPLES</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l13"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:13</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Préfixes des styles de type &quot;exemple document&quot;</p>
+
+    </div>
+
     
 
     
@@ -566,7 +846,7 @@ dans la page</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l13"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:13</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_PARAGRAPHS.js.html#l21"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;PARAGRAPHS.js:21</code></a>
         
         </p>
 

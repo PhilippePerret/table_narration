@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -368,6 +398,12 @@ UI.Input = {
     }
     
     this.set_keypress(focus = false)
+    
+    /*
+     *  J&#x27;essaie de détruire &#x60;this.target&#x60; (pour clarifier), mais
+     *  ça risque de poser des problèmes. À surveiller
+     */
+    delete this.target
     return this.unpropage(evt)
   },
   
@@ -381,6 +417,7 @@ UI.Input = {
     */
   onkeypress:function(evt)
   {
+    dlog(&quot;-&gt; UI.Input.onkeypress&quot;, DB_FCT_ENTER | DB_CURRENT)
     this.infos_keypress(&#x27;onkeypress&#x27;, evt) // seulement si DB_INFOS_EVENT
     
     /* Test du KEYCODE */
@@ -408,38 +445,35 @@ UI.Input = {
       if(this.target.fiche_id) fiche = get_fiche( this.target.fiche_id )
       // Un champ &quot;returnable&quot; se comporte normalement
       if(this.target.jq.hasClass(&#x27;returnable&#x27;)) return true
-      // PRÉ-Traitement spécial pour un champ de texte d&#x27;un paragraphe avec
-      // un ptype particulier
-      if(fiche &amp;&amp; fiche.ptype != &#x27;text&#x27;)
+      /*
+       *  Si le type du paragraphe permet les retours chariot avec la
+       *  touche MAJ, on s&#x27;en retourne normalement en stoppant simplement
+       *  la propagation.
+       */
+      if(fiche &amp;&amp; evt.shiftKey &amp;&amp; PARAGRAPHS.PTYPES[fiche.ptype].return_disabled != true)
       {
-        /*
-         * Pour un ptype ≠ &#x27;text&#x27;, MAJ+Return permet de passer à la ligne
-         */
-        if(evt.shiftKey)
-        {
-          evt.stopPropagation()
-          return true
-        }
+        evt.stopPropagation()
+        return true
       }
-      // Quel que soit le champ, on doit blurer
+      // Quel que soit le champ, on doit blurer. Mais avant, il faut savoir si
+      // la cible est un texte de paragraphe pour faire un traitement particulier
+      // (car maintenant, this.target est détruit au blur)
+      var is_champ_texte_paragraphe = this.target.hasFiche &amp;&amp; this.target.property == &#x27;texte&#x27;
       this.target.jq.blur()
       // POST-Traitement spécial pour un champ texte de fiche paragraphe
-      if(this.target.hasFiche &amp;&amp; this.target.property == &#x27;texte&#x27;)
+      if(is_champ_texte_paragraphe &amp;&amp; evt.metaKey)
       {
-        if(evt.metaKey)
-        {
-          // CMD + ENTER =&gt; Création d&#x27;un nouveau paragraphe
-          var data = {type:&#x27;para&#x27;}
-          // Si le style du paragraphe courant définit un style after,
-          // on l&#x27;utilise.
-          if(fiche.next_style) data.style = [fiche.next_style]
-          var ipara = FICHES.full_create( data )
-          // On l&#x27;ajoute au parent en dessous du paragraphe courant
-          fiche.parent.add_child( ipara, {after:fiche} )
-          // Et on le met en édition
-          ipara.select
-          ipara.enable_main_field
-        }
+        // CMD + ENTER =&gt; Création d&#x27;un nouveau paragraphe
+        var data = {type:&#x27;para&#x27;}
+        // Si le style du paragraphe courant définit un style after,
+        // on l&#x27;utilise.
+        if(fiche.next_style) data.style = [fiche.next_style]
+        var ipara = FICHES.full_create( data )
+        // On l&#x27;ajoute au parent en dessous du paragraphe courant
+        fiche.parent.add_child( ipara, {after:fiche} )
+        // Et on le met en édition
+        ipara.select
+        ipara.enable_main_field
       }
       return stop_event(evt)
     case K_TAB:
@@ -492,15 +526,11 @@ UI.Input = {
           /*
            * Fonctionnement spécial de la combinaison CMD+V. Elle peut se comporter
            * normalement (coller le contenu du clipboard), mais si le clipboard de
-           * l&#x27;application (App.clipboard) contient une valeur (comme par exemple une
+           * l&#x27;application (App.Clipboard) contient une valeur (comme par exemple une
            * référence) alors c&#x27;est ce contenu qui est copié (et effacé).
            */
-          if(kmeta)
-          {
-            dlog(&quot;cmd-v&quot;)
-            if(App.coller_clipboard) return stop_event(evt)
-            else return true
-          }
+          if(kmeta &amp;&amp; App.Clipboard.paste()) return stop_event(evt)
+          return true
           break
         }
       }
@@ -690,14 +720,12 @@ UI.Input = {
     */
   memorize_current:function(options)
   {
-    dlog(&quot;options:&quot;);dlog(options)
     if(undefined == options) options = {}
 
-    // On désactive les raccourcis courants
-    this.old_window_onkeypress = window.onkeypress
-    window.onkeypress = options.keypress
-
     if(!this.target) return null // pas d&#x27;édition courante
+    this.target.current_onkeypress = window.onkeypress
+    window.onkeypress = options.keypress
+    
     var id = Time.now()
     if(!this.targets) this.targets = {}
     // On prend la sélection courante
@@ -706,12 +734,13 @@ UI.Input = {
     this.targets[id] = $.extend({}, this.target)
     if(options.blur)
     {
-      this.target.dom.blur()
-      if(this.target.hasFiche)
-      {
-        var fiche = get_fiche(this.target.fiche_id)
-        if(fiche.main_prop == this.target.property ) fiche.disable_main_field
+      var fiche, is_main_field = false ;
+      if(this.target.hasFiche) {
+        fiche = get_fiche(this.target.fiche_id)
+        is_main_field = fiche.main_prop == this.target.property
       }
+      this.target.dom.blur()
+      if(is_main_field) fiche.disable_main_field
     }
     return id
   },
@@ -756,8 +785,7 @@ UI.Input = {
       }
     }
     // On réactive les raccourcis
-    window.onkeypress = this.old_window_onkeypress
-    delete this.old_window_onkeypress
+    window.onkeypress = this.target.current_onkeypress
   },
   
   /*
@@ -775,7 +803,11 @@ UI.Input = {
   /**
     * Bind ou Unbind le &#x27;keypress&#x27; sur la &#x60;target&#x60; courante, en fonction de la valeur
     * de +focusing+
-    * 
+    * Notes
+    * -----
+    *   * La méthode désactive ou ré-active le gestionnaire d&#x27;évènement
+    *     qui était défini (il a été mémorisé dans &#x60;target&#x60;).
+    *
     * Requis
     * ------
     *   * {Object} this.target, définissant le champ courant (donnée complexe)
@@ -791,10 +823,12 @@ UI.Input = {
     {
       // Pour le moment, le même, mais pourra changer suivant le contexte
       this.target.jq.bind(&#x27;keypress&#x27;, this.target.binding)
+      window.onkeypress = null
     }
     else
     {
       this.target.jq.unbind(&#x27;keypress&#x27;, this.target.binding)
+      window.onkeypress = this.target.current_onkeypress
     }
   },
   
@@ -858,6 +892,7 @@ UI.Input = {
       selection : Selection.of(domObj),
       data_type : target.attr(&#x27;data-type&#x27;),
          format : target.attr(&#x27;data-format&#x27;),
+         current_onkeypress : window.onkeypress,
        is_input : null,
     is_textarea : null,
        /* Seulement si c&#x27;est le champ d&#x27;une fiche */

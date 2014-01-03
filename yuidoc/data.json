@@ -28,7 +28,9 @@
             "modules": {
                 "FilmClass": 1
             },
-            "classes": {},
+            "classes": {
+                "Film": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -260,8 +262,18 @@
             "modules": {
                 "Html": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "modules": {
+                "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.": 1
+            },
             "classes": {
-                "UI.Html": 1
+                "UI.Html": 1,
+                "HTMLTable": 1
             },
             "fors": {},
             "namespaces": {}
@@ -294,9 +306,23 @@
                 "UI": 1
             },
             "classes": {
-                "UI": 1
+                "UI.Textarea": 1
             },
             "fors": {},
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "modules": {
+                "ui_mode_unique": 1
+            },
+            "classes": {
+                "UI": 1,
+                "UI.ModeUnique": 1
+            },
+            "fors": {
+                "window": 1
+            },
             "namespaces": {}
         },
         "/Users/philippeperret/Sites/table_narration/js/App.js": {
@@ -319,6 +345,17 @@
             "fors": {
                 "App.Prefs": 1
             },
+            "namespaces": {}
+        },
+        "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js": {
+            "name": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "modules": {
+                "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.": 1
+            },
+            "classes": {
+                "App.Clipboard": 1
+            },
+            "fors": {},
             "namespaces": {}
         },
         "/Users/philippeperret/Sites/table_narration/js/Collection.js": {
@@ -389,7 +426,9 @@
                 "window": 1
             },
             "classes": {},
-            "fors": {},
+            "fors": {
+                "window": 1
+            },
             "namespaces": {}
         },
         "/Users/philippeperret/Sites/table_narration/js/jquery_extensions.js": {
@@ -484,12 +523,14 @@
         "FilmClass": {
             "name": "FilmClass",
             "submodules": {},
-            "classes": {},
+            "classes": {
+                "Film": 1
+            },
             "fors": {},
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/Film/>film_class.js",
-            "line": 1
+            "line": 20
         },
         "Search.js": {
             "name": "Search.js",
@@ -549,7 +590,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 11
+            "line": 6
         },
         "PARAGRAPHS": {
             "name": "PARAGRAPHS",
@@ -734,13 +775,9 @@
             "submodules": {
                 "Html": 1
             },
-            "classes": {
-                "UI.Html": 1
-            },
+            "classes": {},
             "fors": {},
-            "namespaces": {},
-            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 7
+            "namespaces": {}
         },
         "Html": {
             "name": "Html",
@@ -753,9 +790,22 @@
             "namespaces": {},
             "module": "UI_HTML",
             "namespace": "",
-            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 7,
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 151,
             "description": "Sous-Objet UI.Html\n\nConstruction des éléments HTML."
+        },
+        "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.": {
+            "name": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.",
+            "submodules": {},
+            "classes": {
+                "UI.Html": 1,
+                "HTMLTable": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 9
         },
         "UI_Input": {
             "name": "UI_Input",
@@ -801,13 +851,29 @@
             "name": "UI",
             "submodules": {},
             "classes": {
-                "UI": 1
+                "UI.Textarea": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 5
+            "line": 297
+        },
+        "ui_mode_unique": {
+            "name": "ui_mode_unique",
+            "submodules": {},
+            "classes": {
+                "UI": 1,
+                "UI.ModeUnique": 1
+            },
+            "fors": {
+                "window": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 127,
+            "static": "Méthode de UI qui gèrent le mode unique et l'historique des fiches\nouvertes."
         },
         "app": {
             "name": "app",
@@ -842,6 +908,33 @@
             "description": "Gestion des préférences de l'application.",
             "tag": "main",
             "itemtype": "main"
+        },
+        "App_clipboard": {
+            "name": "App_clipboard",
+            "submodules": {
+                "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.": 1
+            },
+            "classes": {
+                "App.Clipboard": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 9
+        },
+        "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.": {
+            "name": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.",
+            "submodules": {},
+            "classes": {
+                "App.Clipboard": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "App_clipboard",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 9
         },
         "Collection": {
             "name": "Collection",
@@ -915,7 +1008,9 @@
             "name": "window",
             "submodules": {},
             "classes": {},
-            "fors": {},
+            "fors": {
+                "window": 1
+            },
             "namespaces": {},
             "tag": "module",
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
@@ -965,6 +1060,20 @@
         }
     },
     "classes": {
+        "Film": {
+            "name": "Film",
+            "shortname": "Film",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "FilmClass",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/Film/>film_class.js",
+            "line": 20,
+            "is_constructor": 1
+        },
         "FILMS": {
             "name": "FILMS",
             "shortname": "FILMS",
@@ -1040,7 +1149,7 @@
             "module": "FICHES",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 11,
+            "line": 6,
             "description": "Objet FICHES\n------------\nPour la gestion des fiches comme ensemble.",
             "static": 1
         },
@@ -1204,13 +1313,27 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "UI_HTML",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.",
             "submodule": "Html",
             "namespace": "",
-            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 7,
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 151,
             "description": "Sous-Objet UI.Html\n\nConstruction des éléments HTML.",
             "static": 1
+        },
+        "HTMLTable": {
+            "name": "HTMLTable",
+            "shortname": "HTMLTable",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau.",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 9,
+            "is_constructor": 1
         },
         "UI.Input": {
             "name": "UI.Input",
@@ -1251,11 +1374,54 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "ui_mode_unique",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 1,
+            "description": "Gestion de l'interface utilisateur",
+            "static": 1
+        },
+        "UI.Textarea": {
+            "name": "UI.Textarea",
+            "shortname": "UI.Textarea",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
             "module": "UI",
             "namespace": "",
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
-            "line": 5,
-            "description": "Gestion de l'interface utilisateur",
+            "line": 297,
+            "static": 1
+        },
+        "window": {
+            "name": "window",
+            "shortname": "window",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "KeyboardEvents",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/keyboard_events.js",
+            "line": 1,
+            "static": 1
+        },
+        "UI.ModeUnique": {
+            "name": "UI.ModeUnique",
+            "shortname": "UI.ModeUnique",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ui_mode_unique",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 127,
+            "description": "Sous-objet UI.ModeUnique\nSera étendu plus bas",
             "static": 1
         },
         "App": {
@@ -1284,6 +1450,21 @@
             "module": "app",
             "submodule": "app-prefs",
             "namespace": ""
+        },
+        "App.Clipboard": {
+            "name": "App.Clipboard",
+            "shortname": "App.Clipboard",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "App_clipboard",
+            "submodule": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc.",
+            "namespace": "",
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 9,
+            "static": 1
         },
         "REFS": {
             "name": "REFS",
@@ -1335,20 +1516,6 @@
             "line": 5,
             "description": "Objet ColText\n-------------\nGestion des textes de la collection (toutes les fiches).\nC'est cet objet par exemple qui va traiter les balises que contient un texte\navant de l'afficher.",
             "static": 1
-        },
-        "window": {
-            "name": "window",
-            "shortname": "window",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "KeyboardEvents",
-            "namespace": "",
-            "file": "/Users/philippeperret/Sites/table_narration/js/keyboard_events.js",
-            "line": 1,
-            "static": 1
         }
     },
     "classitems": [
@@ -1361,7 +1528,7 @@
             "type": "Array",
             "static": 1,
             "final": 1,
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1379,7 +1546,7 @@
                     "type": "Film"
                 }
             ],
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1390,7 +1557,7 @@
             "description": "Récupère les valeurs éditées (en vue de l'enregistrement du Film)",
             "itemtype": "method",
             "name": "get_values",
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1412,7 +1579,7 @@
                 "description": "Le tagname propre à la propriété.",
                 "type": "String"
             },
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1430,7 +1597,7 @@
                     "type": "String"
                 }
             ],
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1441,7 +1608,7 @@
             "description": "Initialisation du formulaire",
             "itemtype": "method",
             "name": "init_form",
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
@@ -1456,10 +1623,32 @@
                 "description": "Code HTML du formulaire pour un {Film}",
                 "type": "HTML"
             },
-            "class": "FILMS",
+            "class": "Film",
             "module": "FILMS",
             "submodule": "Edition",
             "namespace": "Edition"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Film/FILMS.js",
+            "line": 22,
+            "description": "Pour connaitre le name de l'objet-pluriel courant",
+            "itemtype": "property",
+            "name": "NAME",
+            "type": "String",
+            "static": 1,
+            "class": "FILMS",
+            "module": "FILMS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Film/FILMS.js",
+            "line": 29,
+            "description": "Options pour l'affichage du titre du film\ndans la page.",
+            "itemtype": "property",
+            "name": "OPTIONS",
+            "type": "Object",
+            "static": 1,
+            "class": "FILMS",
+            "module": "FILMS"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
@@ -1496,7 +1685,27 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 34,
+            "line": 31,
+            "description": "Indique si une recherche courante a été affichée\nNoter que cette propriété reste à faux si une recherche a été lancée mais\nqu'aucun résultat n'a été remonté.",
+            "itemtype": "property",
+            "name": "resultats_found",
+            "type": "Boolean",
+            "default": "false",
+            "class": "Search",
+            "module": "Search.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
+            "line": 40,
+            "description": "Méthode principale appelée quand on veut faire une recherche (par exemple\nen cliquant sur le bouton avec la loupe). \nSi une recherche a déjà été faite (et pas effacée), la méthode remontre\nle résultat de la recherche, sinon, elle ouvre le formulaire.",
+            "itemtype": "method",
+            "name": "show",
+            "class": "Search",
+            "module": "Search.js"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
+            "line": 54,
             "itemtype": "method",
             "name": "hide",
             "class": "Search",
@@ -1504,8 +1713,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 42,
-            "description": "Bascule entre le panneau de résultat et le formulaire de recherche",
+            "line": 62,
+            "description": "Bascule entre le panneau de résultat et le formulaire de recherche\nMais la méthode n'est utilisée que lorsqu'on clique sur le bouton\n\"Autre recherche\".",
             "itemtype": "method",
             "name": "toggle",
             "class": "Search",
@@ -1513,8 +1722,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 51,
-            "description": "C'est la méthode principale appelée pour afficher le formulaire de recherche,\nlorsqu'on clique par exemple sur le bouton zoom",
+            "line": 74,
+            "description": "Affiche le formulaire de recherche",
             "itemtype": "method",
             "name": "show_form",
             "class": "Search",
@@ -1522,7 +1731,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 63,
+            "line": 84,
             "itemtype": "method",
             "name": "hide_form",
             "class": "Search",
@@ -1530,7 +1739,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 71,
+            "line": 92,
             "itemtype": "method",
             "name": "show_result",
             "params": [
@@ -1545,7 +1754,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 81,
+            "line": 102,
             "itemtype": "method",
             "name": "hide_result",
             "class": "Search",
@@ -1553,7 +1762,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 88,
+            "line": 109,
             "description": "= Main = Fonction principale pour invoquer une recherche\n\nNotes\n-----\n  * Cette méthode peut être utilisée par le raccourci `find(...)` défini\n    en bas de ce module.\n  * C'est cette méthode qui est appelée par le bouton “Rechercher” dans le\n    formulaire de recherche.",
             "itemtype": "method",
             "name": "find",
@@ -1578,7 +1787,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 117,
+            "line": 138,
             "description": "Méthode appelée par le bouton \"Rechercher\" du formulaire.\nElle rassemble les paramètres de la recherche et invoque la méthode `find`\npour effectuer cette recherche. Le rassemblement de ces paramètres se fait\nde façon assez simple en bouclant sur tous les éléments DOM de class \"param_search\"\net en relevant leur valeur (seulement s'ils sont cochés pour les CB)",
             "itemtype": "method",
             "name": "proceed",
@@ -1588,7 +1797,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 144,
+            "line": 164,
             "description": "Retour ajax de la requête de recherche (find)",
             "itemtype": "method",
             "name": "found",
@@ -1621,7 +1830,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 162,
+            "line": 182,
             "description": "Traitement du résultat de la recherche remontée par ajax\nC'est la méthode principale qui affiche le résultat, c'est-à-dire les textes et\nles fiches retenues.",
             "itemtype": "method",
             "name": "display_found",
@@ -1637,7 +1846,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 196,
+            "line": 217,
             "description": "Retourne le code HTML à écrire dans la liste des résultats",
             "itemtype": "method",
             "name": "html_founded_text",
@@ -1655,6 +1864,16 @@
                         {
                             "name": "type",
                             "description": "Type de la fiche",
+                            "type": "String"
+                        },
+                        {
+                            "name": "parent",
+                            "description": "Parent de la fiche {:id, :type}",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "parents",
+                            "description": "\"titre book > titre chap > etc...\"",
                             "type": "String"
                         },
                         {
@@ -1699,7 +1918,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 230,
+            "line": 253,
             "description": "Retourne le code HTML d'un <a-link> qui permettra d'afficher la fiche\nvoulue.",
             "itemtype": "method",
             "name": "link_to_show_fiche",
@@ -1719,7 +1938,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 243,
+            "line": 270,
             "description": "Ecrit une ligne (div) dans le panneau de résultat",
             "itemtype": "method",
             "name": "write",
@@ -1747,7 +1966,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 257,
+            "line": 284,
             "description": "Compose la ligne de résultat à écrire",
             "itemtype": "method",
             "name": "compose_line_result",
@@ -1772,7 +1991,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 277,
+            "line": 304,
             "description": "fiche. Elle décoche ou elle coche tous les types en fonction du checked\nde la case à cocher.\nNotes\n  * La méthode étant appelée à la construction du formulaire pour cocher\n    tous les types de fiche, il faut aussi traiter ici le cb \"Tous\"",
             "itemtype": "method",
             "name": "onchange_tout_type_fiche",
@@ -1788,7 +2007,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 297,
+            "line": 324,
             "description": "Le panneau principal",
             "itemtype": "property",
             "name": "panneau",
@@ -1798,7 +2017,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 308,
+            "line": 335,
             "description": "Le formulaire de recherche\nNotes\n  * C'est une propriété complexe qui crée le formulaire lorsque\n    c'est nécessaire",
             "itemtype": "property",
             "name": "form",
@@ -1809,7 +2028,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 344,
+            "line": 371,
             "description": "Prépare le panneau principal contenant le formulaire et le résultat\nde la recherche\nNotes\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "prepare_panneau",
@@ -1818,7 +2037,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 366,
+            "line": 393,
             "description": "Prépare le formulaire de recherche et l'insert dans la page\nNotes\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "prepare_form",
@@ -1827,7 +2046,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 382,
+            "line": 409,
             "description": "Prépare le panneau pour afficher les résultats\nNotes\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "prepare_panneau_result",
@@ -1836,7 +2055,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 395,
+            "line": 422,
             "description": "Retourne le code HTML pour la définition de la recherche",
             "itemtype": "property",
             "name": "html_form",
@@ -1846,7 +2065,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 410,
+            "line": 437,
             "description": "Retourne le code HTML pour le panneau de résultat",
             "itemtype": "property",
             "name": "html_panneau_result",
@@ -1856,7 +2075,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 424,
+            "line": 451,
             "itemtype": "property",
             "name": "html_fields_form",
             "type": "String",
@@ -1866,7 +2085,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 441,
+            "line": 468,
             "itemtype": "property",
             "name": "fieldset_params",
             "type": "String",
@@ -1875,7 +2094,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 473,
+            "line": 500,
             "itemtype": "property",
             "name": "fieldset_options",
             "type": "String",
@@ -1884,7 +2103,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Search/>Search.js",
-            "line": 487,
+            "line": 514,
             "itemtype": "property",
             "name": "fieldset_retour",
             "type": "String",
@@ -1902,7 +2121,23 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/extension/String.js",
-            "line": 15,
+            "line": 10,
+            "description": "Prend un \"template\" (par exemple une locale) et remplace tous les mots\n\"_<MOT>_\" par les valeurs fournies en argument.",
+            "itemtype": "method",
+            "name": "templatize",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Table de remplacement. Les clés seront transformées en\n                        majuscules.",
+                    "type": "Object"
+                }
+            ],
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/extension/String.js",
+            "line": 32,
             "description": "Formate le string pour affichage (en remplaçant notamment les balises films,\nscénodico, etc.)  \n\nNOTES\n-----\n  * C'est un raccourci pour ColText.formate(<this>, <cible>)",
             "itemtype": "method",
             "name": "formate",
@@ -1925,7 +2160,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/extension/String.js",
-            "line": 36,
+            "line": 53,
             "description": "Formate une balise (tag) HTML en fonction des attributs transmis\nNotes\n  * La méthode n'est pas très pertinente en mode simple, mais peut le devenir\n    lorsque les attributs sont définis dynamiquement.\n  * La méthode ne retourne QUE l'ouverture de la balise, pas sa fermeture,\n    sauf bien entendu quand il s'agit d'une fiche sans fermeture (img, input)\n  * Si une value est NULL ou FALSE, elle est passée. Donc, pour mettre un\n    null ou un false dans un champ, il faut le donner en string : \"null\" ou\n    \"false\".",
             "itemtype": "method",
             "name": "to_tag",
@@ -1949,6 +2184,75 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
             "line": 13,
+            "description": "Le livre en lecture (PDF)",
+            "itemtype": "property",
+            "name": "current_read_book",
+            "type": "Book",
+            "default": "Null",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 19,
+            "description": "Méthode de classe pour lire le PDF du livre",
+            "itemtype": "method",
+            "name": "read",
+            "params": [
+                {
+                    "name": "book",
+                    "description": "L'instance du livre à lire",
+                    "type": "Book"
+                },
+                {
+                    "name": "params",
+                    "description": "Paramètres pour la lecture",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "page",
+                            "description": "Page à partir de laquelle il faut lire",
+                            "type": "Number"
+                        }
+                    ]
+                }
+            ],
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 37,
+            "description": "Méthode de classe pour arrêter la lecture PDF",
+            "note": "La méthode est appelée par le bouton d'arrêt",
+            "itemtype": "method",
+            "name": "stop_read",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 47,
+            "description": "Méthode qui prépare le lecteur PDF\nNotes\n-----\n  * La préparation consiste à \n    * Afficher le DIV du lecteur\n    * Le rendre draggable si nécessaire",
+            "note": "Ce n'est pas la balise object, mais le div la contenant, draggable",
+            "itemtype": "method",
+            "name": "prepare_lecteur_pdf",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 65,
+            "description": "Objet jQuery du lecteur PDF",
+            "itemtype": "property",
+            "name": "lecteur_pdf",
+            "type": "JQuerySet",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 75,
             "description": "Procède à la publication du livre, c'est-à-dire à la fabrication des\nfichier postscript et PDF par mon RLatex.\n\nNotes\n-----",
             "itemtype": "method",
             "name": "publish",
@@ -1972,7 +2276,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
-            "line": 35,
+            "line": 97,
             "description": "Retour ajax de la méthode `publish`",
             "itemtype": "method",
             "name": "retour_publish",
@@ -1987,6 +2291,50 @@
             "module": "String"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 116,
+            "description": "Pour lire le livre, c'est-à-dire le passer de page en page depuis la \ncouverture jusqu'à la fin.\nNotes\n-----\n  * Ce n'est pas cette méthode qui doit être appelée, mais Book.read (méthode\n    de classe)",
+            "itemtype": "method",
+            "name": "read",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Les paramètres de lecture",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "page",
+                            "description": "Page à partir de laquelle il faut lire (1 = couverture)",
+                            "type": "Number"
+                        }
+                    ]
+                }
+            ],
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 136,
+            "description": "Retourne le titre du book pour affichage dans une référence",
+            "itemtype": "property",
+            "name": "titre_for_ref",
+            "type": "String",
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Book_class.js",
+            "line": 144,
+            "description": "Retourne le nom du book tel qu'il a été utilisé pour la création\ndu fichier PDF.",
+            "itemtype": "property",
+            "name": "pdf_filename",
+            "type": "String",
+            "static": 1,
+            "class": "Chapter",
+            "module": "String"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
             "line": 19,
             "itemtype": "property",
@@ -1996,8 +2344,18 @@
             "module": "Chapter"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Chapter_class.js",
+            "line": 30,
+            "description": "Retourne le titre du chapitre pour affichage dans une référence",
+            "itemtype": "property",
+            "name": "titre_for_ref",
+            "type": "String",
+            "class": "Chapter",
+            "module": "Chapter"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 22,
+            "line": 17,
             "description": "Données pour les types de fiche",
             "itemtype": "property",
             "name": "datatype",
@@ -2009,7 +2367,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 37,
+            "line": 32,
             "description": "Données pour le niveau de développement des fiches\nNotes\n  * Ne pas changer le nom des attributs 'value' et 'title' qui servent à\n    construire des menus avec UI.Html.select\n  * C'est un array. Pour récupérer une valeur, il suffit de faire :\n    FICHES.DATA_DEV[&lt;niveau de développement de la fiche>]",
             "itemtype": "property",
             "name": "DATA_DEV",
@@ -2021,7 +2379,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 61,
+            "line": 56,
             "description": "Indique si le menu développement a été fabriqué",
             "itemtype": "property",
             "name": "menu_development_ready",
@@ -2031,7 +2389,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 66,
+            "line": 61,
             "description": "Données pour les paramètres des fiches (verso)\nNotes\n-----\n  * L'`id` correspond au nom de la propriété de classe",
             "itemtype": "property",
             "name": "PARAMETRES_FICHE",
@@ -2043,7 +2401,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 81,
+            "line": 76,
             "description": "Données pour les options des fiches (verso)\nNotes\n-----\n  * Pour des types propres à un type de fiche particulier, utiliser\n    `only:<type>` ou `sauf:<type>`\n  * L'`id` correspond au nom de la propriété de classe",
             "itemtype": "property",
             "name": "OPTIONS_FICHE",
@@ -2055,7 +2413,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 104,
+            "line": 99,
             "description": "Table des fiches instanciées\n----------------------------\n\n NOTES\n -----\n * En clé, l'identifiant ({Number}), en valeur l'instance de la fiche\n * C'est la méthode `create' de la fiche qui la met dans la liste\n * Utiliser la méthode `FICHES.get' pour obtenir une fiche de cette liste.",
             "itemtype": "property",
             "name": "list",
@@ -2065,7 +2423,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 119,
+            "line": 114,
             "description": "Nombre de fiches dans `list`",
             "itemtype": "property",
             "name": "length",
@@ -2076,7 +2434,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 133,
+            "line": 128,
             "description": "Fiche courante",
             "itemtype": "property",
             "name": "current",
@@ -2087,7 +2445,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 152,
+            "line": 147,
             "description": "Reçoit un objet DOM de fiche (class fiche) et\nretourne la fiche correspondante.",
             "itemtype": "method",
             "name": "domObj_to_fiche",
@@ -2107,7 +2465,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 310,
+            "line": 305,
             "description": "Dispatch des fiches\n\nNOTES\n-----\n  * Avec le nouveau fonctionnement, il n'y a plus de problème au niveau\n    des parents ou des enfants. Les fiches sont instanciées à leur première\n    détection (soit ici, soit dans les enfants/parent des fiches traitées),\n    puis elles sont ensuites \"remplies\" avec les données si la fiche est\n    traitées plus tard ici.\n  * Par défaut, les fiches sont maintenant créées fermées, donc on doit\n    passer seulement en revue les fiches qui doivent être ouvertes.\n  * Cette méthode est appelée à tout chargement de fiches par groupe\n  * Seule une fiche passant par cette méthode peut voir si `loaded` marqué\n    true. Toutes les autres fiches sont considérées comme non chargées.\n\nPRODUIT\n-------\n  * La création de la fiche (toujours, entendu qu'une fiche passant par\n    ce dispatch a forcément toutes ses données)\n\n  * La tenue à jour de `Collection.books'",
             "itemtype": "method",
             "name": "dispatch",
@@ -2123,7 +2481,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 404,
+            "line": 399,
             "description": "Montre la fiche\n\nNotes\n-----\n  * Cette fonction est appelée principalement un clic sur une référence\n    dans le texte ou à partir du listing des résultats trouvés lors d'une\n    recherche. La fiche peut-être chargée ou non, et d'un type indifférent.\n    La méthode s'arrange dans tous les cas pour la montrer. Ce qui consiste, \n    suivant son type, à :\n      * \"highlighter\" un livre (clignotement)\n      * \"highlighter\" un chapitre après avoir ouvert son livre si nécessaire.\n      * Ouvrir une page\n      * Ouvrir la page d'un paragraphe et scroller jusqu'à lui\n  * La fiche peut ne pas être chargée. Et ses parents non plus s'il s'agit\n    d'un paragraphe.\n  * La question se pose de savoir si je fais une méthode ici qui traite tous\n    les cas où si je fais une méthode propre pour chaque type de fiche.",
             "itemtype": "method",
             "name": "show",
@@ -2149,7 +2507,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 443,
+            "line": 438,
             "description": "Ouvre la ou les fiches données en argument\n\nNotes\n  * N'ouvre les fiches que si elles sont construites (`built` = true)",
             "itemtype": "method",
             "name": "open",
@@ -2165,7 +2523,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 572,
+            "line": 567,
             "description": "Instancie une fiche avec les données `data`.",
             "itemtype": "method",
             "name": "create_instance_fiche_of_type",
@@ -2181,7 +2539,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 600,
+            "line": 595,
             "description": "Crée entièrement une nouvelle fiche à partir des +data+\ntransmises.\n\nNOTES\n-----\n  * Il s'agit d'une toute nouvelle fiche, jamais d'une fiche\n    existente.\n  * Pour le moment, la fiche n'est pas marquée modifiée.",
             "itemtype": "method",
             "name": "full_create",
@@ -2233,7 +2591,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 717,
+            "line": 712,
             "description": "Initialisation complète des fiches\n\nNotes\n-----\n  * C'est une propriété complexe (=> à appeler sans parenthèses)\n  * Elle procède aussi au nettoyage de la table.",
             "itemtype": "method",
             "name": "init_all",
@@ -2242,7 +2600,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 738,
+            "line": 733,
             "description": "Construit le menu de développement qui sera placé au verso des fiches\nretournées\nNotes\n  * Un seul select est construit, qui est passé de fiche en fiche\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "build_menu_development",
@@ -2251,7 +2609,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/FICHES.js",
-            "line": 753,
+            "line": 748,
             "itemtype": "property",
             "name": "html_menu_development",
             "type": "String",
@@ -2261,6 +2619,17 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
             "line": 13,
+            "description": "Préfixes des styles de type \"exemple document\"",
+            "itemtype": "property",
+            "name": "PREFIXES_DOCUMENTS_EXEMPLES",
+            "type": "Array",
+            "static": "# @final",
+            "class": "PARAGRAPHES",
+            "module": "PARAGRAPHS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 21,
             "description": "Data pour le `ptypes` des paragraphes",
             "itemtype": "property",
             "name": "PTYPES",
@@ -2272,7 +2641,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
-            "line": 31,
+            "line": 41,
             "description": "Indique que le menu des ptypes n'a pas été encore construit et inséré\ndans la page",
             "itemtype": "property",
             "name": "menu_ptypes_ready",
@@ -2283,7 +2652,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
-            "line": 39,
+            "line": 49,
             "description": "La fiche du paragraphe courant",
             "itemtype": "property",
             "name": "current",
@@ -2294,7 +2663,39 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
-            "line": 194,
+            "line": 164,
+            "description": "Gestion des exclusions\n\nLa méthode regarde si un style de même premier mot existe dans la\nliste des styles courants et le supprime si c'est le cas.",
+            "itemtype": "method",
+            "name": "check_exclusions_with",
+            "params": [
+                {
+                    "name": "selector",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "PARAGRAPHES",
+            "module": "PARAGRAPHS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 204,
+            "description": "Méthode appelée par un click sur la CB \"Show style aspect\" pour\nmontrer l'aspect des styles ou par les préférences",
+            "itemtype": "method",
+            "name": "show_aspect_styles",
+            "params": [
+                {
+                    "name": "montrer",
+                    "description": "True s'il faut les montrer",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "PARAGRAPHES",
+            "module": "PARAGRAPHS"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
+            "line": 227,
             "description": "Construit le menu des ptypes\nNotes\n  * C'est la méthode qui demande la construction du code et l'insert\n    simplement dans le body. La méthode appelante doit le placer au\n    bon endroit.\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "prepare_menu_ptypes",
@@ -2303,7 +2704,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/PARAGRAPHS.js",
-            "line": 209,
+            "line": 242,
             "description": "Code HTML pour le menu des ptypes",
             "itemtype": "property",
             "name": "html_menu_ptypes",
@@ -2313,7 +2714,16 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
-            "line": 19,
+            "line": 20,
+            "description": "Méthode appelée après l'ouverture de la page (`open` commun à tous les\ntype de fiche)",
+            "itemtype": "method",
+            "name": "after_open",
+            "class": "Page",
+            "module": "Page"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
+            "line": 33,
             "itemtype": "property",
             "name": "book Le livre auquel appartient la page (ou null)",
             "type": "Book",
@@ -2321,8 +2731,50 @@
             "module": "Page"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Page_class.js",
+            "line": 43,
+            "description": "Retourne le titre de la page pour affichage dans une référence",
+            "itemtype": "property",
+            "name": "titre_for_ref",
+            "type": "String",
+            "class": "Page",
+            "module": "Page"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 23,
+            "line": 15,
+            "description": "`ptype` du paragraphe définissant si c'est un texte normal ('text') ou\nautre chose tel qu'un fichier à inclure, etc.",
+            "itemtype": "property",
+            "name": "ptype",
+            "type": "String",
+            "default": "'text'",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 22,
+            "description": "Texte réel du paragraphe lorsqu'il n'est pas de type 'text'",
+            "itemtype": "property",
+            "name": "real_text",
+            "type": "String",
+            "default": "Null",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 35,
+            "description": "Retourne un extrait du paragraphe pour affichage dans une référence",
+            "itemtype": "property",
+            "name": "titre_for_ref",
+            "type": "String",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 49,
             "itemtype": "property",
             "name": "book Le livre auquel appartient le paragraphe (ou null)",
             "type": "Book",
@@ -2331,8 +2783,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 34,
-            "description": "Le « ptype » du paragraphe indique son type propre, à savoir :\n  * text  : Un texte \"normal\" qui sera juste formaté (défaut)\n  * file  : Un paragraphe qui charge un fichier externe\n  * code  : Du code à interpréter.",
+            "line": 60,
+            "description": "Le « ptype » du paragraphe indique son type propre, à savoir :\n  * text  : Un texte \"normal\" qui sera juste formaté (défaut)\n  * file  : Un paragraphe qui charge un fichier externe\n  * code  : Du code javascript à interpréter.\n  * ruby  : Du code ruby à évaluer\n  * fico  : Un fichier contenant du code à évaluer",
             "itemtype": "property",
             "name": "ptype",
             "type": "String|Null",
@@ -2341,7 +2793,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 49,
+            "line": 77,
             "description": "Liste des styles du paragraphe (ou null/indéfini)\n\n NOTES\n -----\n * Les styles sont définis dans le fichier `./js/data/paragraph_styles.js`\n   qui est un fichier produit programmatiquement à partir des informations\n   sur les styles contenus dans `./data/asset/paragraph_styles.txt`.",
             "itemtype": "property",
             "name": "style",
@@ -2352,7 +2804,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 73,
+            "line": 101,
             "description": "Retourne le style par défaut du paragraphe suivant s'il est défini",
             "itemtype": "property",
             "name": "next_style",
@@ -2362,7 +2814,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 91,
+            "line": 119,
             "description": "Retourne le code pour l'attribut `class` de la balise en fonction des styles\ndu paragraphe.",
             "itemtype": "property",
             "name": "class_css",
@@ -2373,7 +2825,26 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 125,
+            "line": 139,
+            "description": "Méthode \"filtrant\" le paragraphe, c'est-à-dire lui appliquant certains\nstyles ou le masquant suivant le filtre défini.\nTraitement\n  * Masque complètement les paragraphes \"not printed\" si préférence\n  * Ajoute un '<br><br>' au bout des paragraphes de type \"exemple document\"\n    pour obtenir de l'air.\nNotes\n  * Cette méthode a été inaugurée pour gérer la préférence \"Masquer les \n    paragraphes not printed\".\n  * Pour le moment, le filtre ne concerne que cette préférence.\n  * la méthode est appelée chaque fois qu'une page est ouverte, pour régler\n    ses paragraphes.\n  * TODO: Plus tard, on pourra l'utiliser pour filtrer suivant une recherche,\n    une condition sur le style, sur l'état de développement, etc.\n  * C'est une propriété complexe => appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "applique_filtre",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 175,
+            "description": "Retourne TRUE si le style du paragraphe est de type \"exemple document\"",
+            "itemtype": "property",
+            "name": "is_exemple_document",
+            "type": "Boolean",
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 211,
             "description": "DOM Element du menu ptypes\nNotes\n  * Le menu des \"ptypes\" est un select unique, qui se déplace de fiches\n    en fiche quand on les retourne. La propriété présente renvoie donc\n    le menu mais seulement quand il se trouve dans son verso.",
             "itemtype": "property",
             "name": "menu_ptypes",
@@ -2383,7 +2854,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 134,
+            "line": 220,
             "description": "Déplace le menu des ptypes dans ce paragraphe",
             "itemtype": "method",
             "name": "append_menu_ptypes",
@@ -2392,7 +2863,60 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 210,
+            "line": 296,
+            "description": "Chargement du fichier associé au paragraphe\n\nNotes\n  * La méthode renseigne la propriété `real_text` du paragraphe.\n  * Cette méthode n'est nécessaire que lorsque le ptype du paragraphe\n    vient d'être redéfini et qu'il fait appel à un fichier. Dans le cas \n    courant, c'est la procédure de chargement de la fiche qui renseigne côté\n    serveur la propriété real_text.",
+            "itemtype": "method",
+            "name": "load_file",
+            "async": 1,
+            "params": [
+                {
+                    "name": "poursuivre",
+                    "description": "\n                    La méthode pour suivre, qui doit recevoir en premier argument\n                    le code remonté et en second le paragraphe courant. Cela est\n                    dû au fait que la méthode est principalement appelé par \n                    ColText.formate.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 332,
+            "description": "Méthode appelée quand on change le texte d'un paragraphe\nNotes\n-----\n  * La méthode a été séparée de `onchange_titre_or_texte` pour pouvoir\n    faire un traitement plus précis sur le texte. Inauguré pour rechercher\n    les éventuelles ajouts de balises [img:...] et donner un texte d'explication\n    pour leur traitement pour la publication.",
+            "itemtype": "method",
+            "name": "onchange_titre",
+            "params": [
+                {
+                    "name": "new_value",
+                    "description": "La nouvelle valeur",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "True si le nouveau texte a été enregistré, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 359,
+            "description": "Check le nouveau texte avant de le prendre en compte.",
+            "itemtype": "method",
+            "name": "check_new_texte",
+            "params": [
+                {
+                    "name": "new_texte",
+                    "description": "Le nouveau texte.",
+                    "type": "String"
+                }
+            ],
+            "class": "Paragraph",
+            "module": "Paragraph"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
+            "line": 397,
             "description": "Méthode appelée quand on modifie le ptype du paragraphe",
             "itemtype": "method",
             "name": "onchange_ptype",
@@ -2408,8 +2932,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/livre/Paragraph_class.js",
-            "line": 226,
-            "description": "Méthode appelée quand on applique les styles choisis pour\nle paragraphe.",
+            "line": 413,
+            "description": "Méthode appelée quand on applique les styles choisis pour\nle paragraphe (verso de la fiche).",
             "itemtype": "method",
             "name": "on_change_styles",
             "params": [
@@ -2471,6 +2995,27 @@
             "submodule": "Edition"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/>OBJETS_Edition.js",
+            "line": 169,
+            "description": "Retourne un identifiant de l'objet à partir du +value+ fourni (le titre\ndu film, le mot du scénodico, etc.)",
+            "itemtype": "method",
+            "name": "id_from_mainprop",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "Le mot, le titre du film, etc.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Un identifiant valide pour l'objet.",
+                "type": "String"
+            },
+            "class": "OBJETS",
+            "module": "OBJET",
+            "submodule": "Edition"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/OBJETS.js",
             "line": 23,
             "description": "Table de tous les items connus, avec leurs data minimum.\nPar exemple, pour les films, il s'agit du titre, du titre français, de\nl'identifiant et du code ascii de la première lettre.\n\n# NOTES\n\n    * Pour les films, cf. :\n      ../interdata/film/data_js/films_data.js\n    * Pour les mots cf. :\n      ../interdata/scenodico/data_js/dico_data.js",
@@ -2508,7 +3053,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
             "line": 39,
-            "description": "Place l'apercu de l'item dans l'objet DOM +domObj+\nen le créant si nécessaire.\n \nNOTES\n-----\n\n  * L'aperçu est également décalé à droite ou à gauche suivant la\n    position de son contenant dans le texte pour être parfaitement visible.\n  * On affiche pas l'aperçu si le mot se trouve dans un aperçu.",
+            "description": "Place l'apercu de l'item dans l'objet DOM +domObj+\nen le créant si nécessaire.\n\nNOTES\n-----\n  * L'aperçu est également décalé à droite ou à gauche suivant la\n    position de son contenant dans le texte pour être parfaitement visible.\n  * On affiche pas l'aperçu si le mot se trouve dans un aperçu.",
             "itemtype": "method",
             "name": "apercu_in",
             "params": [
@@ -2516,6 +3061,28 @@
                     "name": "domObj",
                     "description": "Element du DOM dans lequel placer l'aperçu.\n                C'est normalement un lien/balise dans le texte.",
                     "type": "DOMElement"
+                }
+            ],
+            "class": "ObjetClass",
+            "module": "ObjetClass"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/object/Objet_class.js",
+            "line": 152,
+            "description": "Chargement des données complètes de l'item",
+            "itemtype": "method",
+            "name": "load",
+            "async": 1,
+            "params": [
+                {
+                    "name": "poursuivre",
+                    "description": "La méthode poursuivre",
+                    "type": "Function"
+                },
+                {
+                    "name": "rajax",
+                    "description": "Dans un second appel le retour de la requête ajax",
+                    "type": "Object"
                 }
             ],
             "class": "ObjetClass",
@@ -2579,7 +3146,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
             "line": 103,
-            "description": "Ouvre la fiche\n--------------\n\nNOTES\n-----\n  * L'opération produit des résultats différents en fonction du type\n    de la fiche. Par exemple, pour une page, on la sort de son parent\n    et on montre ses enfants (paragraphes).\n  * Propriété complexe, donc appeler sans parenthèses.\n  * Si une méthode doit suivre, définir `this.pour_suivre_open`\n  * La méthode peut être appelée même si la fiche est ouverte, dans lequel\n    cas seul la méthode pour suivre sera traitée.\n  * La méthode est récursive, c'est-à-dire qu'elle ouvre tous les parents\n    avant de s'ouvrir.\n  * Lorsque l'option \"Livres rangés\" est choisie dans les préférences de\n    l'application, la méthode utilise un comportement particulier pour ouvrir\n    le livre : elle le décale vers la droite de UI.GRID_X.",
+            "description": "Ouvre la fiche\n--------------\n\nNOTES\n-----\n  * L'opération produit des résultats différents en fonction du type\n    de la fiche. Par exemple, pour une page, on la sort de son parent\n    et on montre ses enfants (paragraphes).\n  * Propriété complexe, donc appeler sans parenthèses.\n  * Si une méthode doit suivre, définir `this.pour_suivre_open`\n  * La méthode peut être appelée même si la fiche est ouverte, dans lequel\n    cas seule la méthode pour suivre sera traitée.\n  * La méthode est récursive, c'est-à-dire qu'elle ouvre tous les parents\n    avant de s'ouvrir.\n  * Si le type de fiche possède une méthode `after_open`, elle est appelée\n    en fin de processus (avant la méthode `pour_suivre_open`)\n  * Lorsque l'option \"Livres rangés\" est choisie dans les préférences de\n    l'application, la méthode utilise un comportement particulier pour ouvrir\n    le livre : elle le décale vers la droite de UI.GRID_X.",
             "itemtype": "method",
             "name": "open",
             "async": 1,
@@ -2589,8 +3156,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 156,
-            "description": "Ferme la fiche\n\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses\n  * En mode fermé, le titre est disabled\n  * Si la préférences \"Livre rangé\" est true et que c'est un livre, on\n    doit le recaler à sa place.",
+            "line": 170,
+            "description": "Ferme la fiche\n\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses\n  * En mode fermé, le titre est disabled\n  * Si la préférences \"Livre rangé\" est true et que c'est un livre, on\n    doit le recaler à sa place.\n  * Si on est en “mode unique” (un seul book et une seule page ouverte à \n    la fois, on doit positionner la fiche avec UI.open_mode_unique)",
             "itemtype": "method",
             "name": "close",
             "class": "Fiche",
@@ -2599,7 +3166,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 229,
+            "line": 246,
             "description": "Montrer la fiche (quel que soit son type)\n\nNotes\n-----\n  * La méthode est principalement appelée quand on clique sur une référence\n    dans un texte. Cela produit un appel à `FICHES.show` qui appelle la\n    méthode `show` propre à chaque type de fiche.\n  * La méthode est aussi intensivement utilisée pour les recherches dans les\n    fiche, dans le listing de résultat.\n  * Pour une page, la montrer consiste à l'ouvrir. Mais cette page peut ne pas\n    être encore chargée, donc il faut s'assurer qu'elle puisse être ouverte\n    en chargeant tous ses parents si elle en a.\n  * La méthode est asynchrone seulement si ses parents et ses enfants ne sont\n    pas encore chargés",
             "itemtype": "method",
             "name": "show",
@@ -2639,7 +3206,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 269,
+            "line": 286,
             "description": "Retourne la fiche (sélectionnée)\nNotes\n  * À sa construction, la fiche ne prépare pas son verso (pour être plus efficace)\n    Donc lorsqu'on retourne pour la première fois une fiche, il faut s'assurer\n    que son verso est preparé (`verso_ready`). Cela se fait dans la méthode\n    `regle_verso`.",
             "itemtype": "property",
             "name": "retourne",
@@ -2650,7 +3217,17 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 295,
+            "line": 308,
+            "description": "Règle le verso quand on est en mode unique (un seul page/book ouvert et\nfixé dans la page)\nNotes\n-----\n  * Contrairement à la méthode `regle_verso` qui n'est invoqué que lorsque\n    on retourne la fiche, cette méthode est appelée dans les deux sens.\n  * Elle permet d'afficher correctement le verso, pour toujours le voir.\n  * Propriété complexe => appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "regle_verso_mode_unique",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 331,
             "description": "Méthode appelée à la fin de chaque méthode `show` pour traiter \nla visibilité suivant les options\nNotes\n-----\n  * Les options sont défines dans FICHES.show et dépendent des modifiers\n    utilisés en cliquant sur la référence.\n  * Si aucune option de sélection ou d'ouverture n'est demandé, la méthode\n    fait simplement clignoter la fiche.\n  * Pour un paragraphe, il faut scroller jusqu'à lui dans la page.",
             "itemtype": "method",
             "name": "suite_show",
@@ -2689,7 +3266,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 327,
+            "line": 363,
             "description": "Fait clignoter la fiche\nNotes\n-----\n  * La méthode/procédure qui appelle cette méthode doit s'assurer que\n    la fiche est chargée et visible",
             "itemtype": "method",
             "name": "highlight",
@@ -2699,7 +3276,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 369,
+            "line": 405,
             "description": "Déplacement de l'enfant vers le haut\n\nNotes\n-----\n  * Méthode \"complexe\", donc invoquée sans parenthèses\n  * Je pourrais utiliser la méthode this.onchange_ordre_enfants pour prendre\n    le nouvel ordre à chaque fois, mais ça risque d'être intense pour rien.\n    Au lieu de ça, j'utilise un timeout qui appelera la méthode seulement \n    lorsque les déplacements sembleront terminés.",
             "itemtype": "method",
             "name": "move_up",
@@ -2709,7 +3286,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 394,
+            "line": 430,
             "description": "Déplacement de l'enfant vers le bas\nNotes\n-----\n  * Cf. les notes de la méthode `move_up`.",
             "itemtype": "method",
             "name": "move_down",
@@ -2719,7 +3296,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 505,
+            "line": 541,
             "description": "Sélection la fiche précédente (sibling)\n\nNotes\n-----\n  * Le traitement est spécial pour les livres, ils sont conservés\n    dans l'ordre de leur placement sur la table\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "select_previous",
@@ -2729,7 +3306,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 636,
+            "line": 672,
             "description": "Propriété principale en fonction du type de la fiche. Pour un paragraphe,\nla propriété principale est `texte`, pour toutes les autres fiches, c'est\n`titre`",
             "itemtype": "property",
             "name": "main_prop",
@@ -2741,7 +3318,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 648,
+            "line": 684,
             "description": "Retourne le champ principal (soit le DIV soit le champ de saisie suivant\nle contexte) \nNotes\n  * Pour forcer la définition, utiliser `this._main_field = null'\n  * La propriété se sert de `this.opened` pour savoir si on est en édition\n    ou non. Mais est-ce vraiment la bonne propriété à regarder ?…",
             "itemtype": "property",
             "name": "main_field",
@@ -2752,7 +3329,17 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 776,
+            "line": 774,
+            "description": "Place le texte dans un textarea pour son édition\nNotes\n  * Pour les paragraphes, adapte la taille du textarea à la\n    taille du texte.\n  * Propriété complexe => appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "texte_in_textarea",
+            "class": "Fiche",
+            "module": "fiche_dom",
+            "submodule": "dom"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
+            "line": 816,
             "description": "Passe le titre/texte en édition\n\nNOTES\n-----\n  * C'est une méthode composée avec un propriété complexe. Elle\n    s'appelle sans arguments ni parenthèses.\n\nPRODUIT\n-------\n  * Sélectionne la fiche\n  * Remplace le div contenant le titre (ou le texte) par un champ\n    de saisie.\n  * Place les observers sur le champ de saisie.\n  * Sélectionne le texte",
             "itemtype": "method",
             "name": "enable_main_field",
@@ -2762,7 +3349,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_DOM.js",
-            "line": 830,
+            "line": 870,
             "description": "Clone/Déclone la fiche courante\n\nNOTES\n-----\n  * Propriété complexe (appelé sans parenthèses)\n  * \"Cloner la fiche\" consiste à :\n      * Placer un clone de la fiche dans le parent, à la place de la fiche\n      * Sortir le DOM Objet du parent pour le mettre sur la table\n  * \"Décloner\" la fiche consiste à :\n      * Remettre la fiche dans le parent\n      * Détruire le clone",
             "itemtype": "method",
             "name": "clone",
@@ -2844,7 +3431,29 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 108,
+            "line": 94,
+            "description": "Return la fiche suivant la fiche courante\nSi elle existe",
+            "itemtype": "property",
+            "name": "next",
+            "type": "Fiche",
+            "default": "La fiche ou Null",
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 106,
+            "description": "Return la fiche précédent la fiche courante\nSi elle existe, ou Null",
+            "itemtype": "property",
+            "name": "prev",
+            "type": "Fiche",
+            "default": "la fiche ou Null",
+            "class": "Fiche",
+            "module": "Fiche"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
+            "line": 132,
             "description": "Marque la fiche ouverte ou fermée (ou retourne la propriété)\nTrue si la fiche est ouverte, false dans le cas contraire.\nNotes\n-----\n  * La propriété se contente d'ajouter ou de retirer la class 'opened'\n    à l'objet DOM de la fiche.",
             "itemtype": "property",
             "name": "opened",
@@ -2855,7 +3464,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 126,
+            "line": 150,
             "description": "Returne true si la fiche est fermée, false si ouverte",
             "itemtype": "property",
             "name": "closed",
@@ -2867,7 +3476,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 135,
+            "line": 159,
             "description": "Marque l'élément rangé ou non rangé (ou retourne la propriété ranged)\n\nNOTES\n-----\n  * La valeur retournée dépend du type de fiche.\n      * Pour un livre, la valeur est toujours false\n      * Pour un chapitre ou un paragraphe, dès qu'ils ont un parent,\n        ils sont toujours rangés.\n      * Pour un page, dépend de son ouverture / fermeture.",
             "itemtype": "property",
             "name": "ranged",
@@ -2877,7 +3486,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 158,
+            "line": 182,
             "description": "Vérifie si la fiche peut être ouverte\nPour être ouverte, la fiche doit être `loaded' et ses enfants doivent\nl'être aussi.\n\nNOTES\n-----\n  * Les enfants, dans la fiche, sont toujours des instances Fiche.\n    (réglées au chargement du parent). C'est leur propriété `loaded'\n    qui détermine si elles sont chargées ou non.\n  * On peut appeler la méthode `rend_openable(<poursuivre>)' pour rendre\n    la fiche ouvrable après le test `<fiche>.is_not_openable'\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "is_openable",
@@ -2890,7 +3499,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 195,
+            "line": 219,
             "description": "Positionne la fiche sur le table en fonction de :\n- son état ranged ou non\n- ses top / left\nNotes\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "positionne",
@@ -2899,7 +3508,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 210,
+            "line": 234,
             "description": "Création d'une nouvelle fiche\n-----------------------------\n\nNOTES\n-----\n  * Il ne suffit pas de créer la fiche pour qu'elle soit mise en \n    sauvegarde. Cela permet de les créer tranquillement lors du chargement\n    de la collection.\n    C'est seulement lorsqu'un élément de la fiche aura été modifié (et\n    notamment le titre ou le texte — paragraph) qu'elle sera prête pour\n    l'enregistrement.",
             "itemtype": "property",
             "name": "create",
@@ -2909,8 +3518,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 449,
-            "description": "Copie la fiche\nNotes\n  * En réalité, la \"copie\" de la fiche ne consiste qu'à mettre sa référence\n    dans App.clipboard\n  * On reconnait une fiche coupée d'une fiche copiée au 'cuted' qui est \n    ajouté quand on coupe la fiche.",
+            "line": 473,
+            "description": "Copie la fiche\nNotes\n  * En réalité, la \"copie\" de la fiche ne consiste qu'à mettre sa référence\n    dans App.Clipboard\n  * On reconnait une fiche coupée d'une fiche copiée au 'cuted' qui est \n    ajouté quand on coupe la fiche.",
             "itemtype": "property",
             "name": "copy",
             "type": "Method",
@@ -2919,8 +3528,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 466,
-            "description": "Coupe la fiche\nNotes\n  * En réalité, la \"coupe\" de la fiche ne consiste qu'à mettre sa référence\n    dans App.clipboard en mettant son cuted à true et en masquant son objet\n    dans le DOM (pour ne pas avoir à le reconstruire.)",
+            "line": 488,
+            "description": "Coupe la fiche\nNotes\n  * En réalité, la \"coupe\" de la fiche ne consiste qu'à mettre son instance\n    dans App.Clipboard.content.fiche en mettant son cuted à true et en masquant \n    son objet dans le DOM (pour ne pas avoir à le reconstruire.)",
             "itemtype": "property",
             "name": "cut",
             "type": "Method",
@@ -2929,7 +3538,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 486,
+            "line": 505,
             "description": "Colle la fiche\nNotes\n  * Pour coller la fiche copiée/coupée, il faut qu'un parent ou un frère\n    potentiel soit sélectionné. Si c'est un parent, on ajoute la fiche à la\n    fin. Sinon, on l'ajoute avant le parent sélectionné.\n  * Si la fiche avait été copiée, il faut reconstruire une fiche de toute pièce\n    en se servant des informations de la fiche copiée. Si au contraire la fiche\n    a été coupée, il faut la sortir de son parent et la remettre dans le nouveau.\n\nTODO: Pour le moment, on ne peut pas coller une fiche sur la table, mais on\ndevrait pouvoir le faire.",
             "itemtype": "property",
             "name": "paste",
@@ -2939,7 +3548,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 591,
+            "line": 609,
             "description": "Appelé quand on relâche un enfant sur la fiche courante",
             "itemtype": "method",
             "name": "on_drop",
@@ -2960,7 +3569,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 652,
+            "line": 670,
             "description": "Appelé quand on change l'ordre des enfants de la fiche, soit par le\nsortable du div_items, soit par `move_up` ou `move_down` d'un des\nenfant.\n\nNOTES\n-----\n  * Plutôt que de s'embêter à étudier +ui+ pour savoir quel\n    élément a été déplacé, on compare la liste du DOM avec la liste des\n    enfants et on commence à traiter à partir de cet indice.\n  * Les deux arguments ne sont pas définis lorsque la méthode est appelée\n    depuis `move_up` et `move_down`.",
             "itemtype": "method",
             "name": "onchange_ordre_enfants",
@@ -2981,7 +3590,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 706,
+            "line": 724,
             "description": "Ajout d'un enfant à la fiche\n\nNOTES\n-----\n  * C'est cette méthode qui doit être utilisée pour tout ajout\n    d'enfant.",
             "itemtype": "method",
             "name": "add_child",
@@ -3014,7 +3623,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 783,
+            "line": 801,
             "description": "Supprime un enfant de la fiche",
             "itemtype": "method",
             "name": "remove_child",
@@ -3030,10 +3639,10 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 820,
-            "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.",
+            "line": 838,
+            "description": "Méthode appelée quand on change le texte (paragraphe) ou le titre (autres\nfiches) d'une fiche.\n\nNOTES\n-----\n  * La méthode interdit d'enregistrer une donnée vide.\n  * Cela peut se produire lorsqu'on quitte le champ, ou lorsque\n    l'on presse la touche RETURN sur le champ.\n  * C'est vraiment cette fonction qui inaugure le changement du\n    titre, car si c'était `titre=` (propriété complexe), on aura\n    une difficulté à la définition des fiches remontées.\n  * Les méthodes `onchange_titre` et `onchange_texte` ont été \n    différentiées car le traitement est très différent pour un texte.",
             "itemtype": "method",
-            "name": "onchange_texte",
+            "name": "onchange_titre_or_texte",
             "params": [
                 {
                     "name": "evt",
@@ -3050,27 +3659,23 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 856,
-            "description": "Traite la nouvelle valeur du paragraphe (si c'est un paragraphe) en\nfonction de son ptype. Pour le moment, la méthode se contente de transformer\nles `**' en retours chariot dans les paragraphes de ptype 'list' et 'code'",
+            "line": 871,
+            "description": "Procède au change de titre de la fiche (tout type sauf paragraphe)",
             "itemtype": "method",
-            "name": "value_by_ptype",
+            "name": "onchange_titre",
             "params": [
                 {
-                    "name": "value",
-                    "description": "La valeur à traiter",
+                    "name": "new_value",
+                    "description": "La nouvelle valeur à donner au titre",
                     "type": "String"
                 }
             ],
-            "return": {
-                "description": "la nouvelle valeur au besoin",
-                "type": "String"
-            },
             "class": "Fiche",
             "module": "Fiche"
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_class.js",
-            "line": 878,
+            "line": 888,
             "description": "Invoquée à la fin du drag d'une fiche, cette méthode enregistre la nouvelle\nposition de la fiche, la place sur la grille si les préférences l'exigent et\nindique que la fiche a été modifiée.\n \nNotes\n-----\n  * C'est la préférence `App.preferences.snap` qui détermine s'il faut placer\n    la fiche sur la grille (true par défaut)",
             "itemtype": "method",
             "name": "stop_drag",
@@ -3110,7 +3715,7 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
             "line": 26,
-            "description": "Méthode appelée quand on change une option (verso)",
+            "description": "Méthode appelée quand on change une option (verso)\nNotes\n  * Cela peut avoir un impact direct sur l'affichage, comme pour les\n    paragraphes not-printed.",
             "itemtype": "method",
             "name": "onchange_option",
             "params": [
@@ -3131,7 +3736,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 105,
+            "line": 110,
             "description": "Retourne les données à enregistrer",
             "itemtype": "property",
             "name": "data",
@@ -3145,7 +3750,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 139,
+            "line": 148,
             "description": "Le type de la fiche, qui détermine s'il s'agit d'un livre, d'un chapitre\nd'une page ou d'un paragraphe.\n\nNotes\n-----\n  * C'est une donnée sur 4 lettres ('book', 'chap', 'page' ou 'para')\n  * Ne pas confondre cette propriété avec le `ptype` du paragraphe.",
             "itemtype": "property",
             "name": "type",
@@ -3156,7 +3761,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 155,
+            "line": 164,
             "description": "Le type humain de la fiche, par exemple \"livre\" pour 'book'",
             "itemtype": "property",
             "name": "human_type",
@@ -3167,7 +3772,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 163,
+            "line": 172,
             "description": "Méthode pratique, pour le débuggage, retournant <type>#<id> (p.e. 'book#12')",
             "itemtype": "property",
             "name": "type_id",
@@ -3178,7 +3783,18 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 171,
+            "line": 180,
+            "description": "Retourne la balise de référence de la fiche\nNotes\n-----\n  * La méthode est utilisée aussi bien par les instances {Ref} que\n    par le clipboard de l'application.",
+            "itemtype": "property",
+            "name": "to_balise",
+            "type": "String",
+            "class": "DICO",
+            "module": "fiche_data",
+            "submodule": "data"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
+            "line": 193,
             "description": "Type d'un enfant de la fiche courante\nNotes\n  * C'est un raccourci de FICHES.datatype[type].child_type",
             "itemtype": "property",
             "name": "child_type",
@@ -3189,7 +3805,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 181,
+            "line": 203,
             "description": "Retourne l'identifiant du livre auquel appartient (ou non) la fiche, quel\nque soit le type de la fiche. Lorsqu'elle est un livre, elle renvoie son propre\nidentifiant.",
             "itemtype": "property",
             "name": "book_id",
@@ -3200,7 +3816,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 201,
+            "line": 223,
             "description": "Définit si la fiche ne doit pas être imprimée dans le livre\nNOTES\n-----\n  * Ça peut concerner tout un livre (par exemple pour de l'aide ou des notes)",
             "itemtype": "property",
             "name": "not_printed",
@@ -3212,8 +3828,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 225,
-            "description": "Met dans le App.clipboard l'instance {Ref} à la fiche courante. Cette\nréférence pourra être ensuite collée dans le texte.\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
+            "line": 247,
+            "description": "Met dans le App.Clipboard l'instance {Ref} à la fiche courante. Cette\nréférence pourra être ensuite collée dans le texte.\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "copy_reference",
             "class": "DICO",
@@ -3222,7 +3838,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 247,
+            "line": 269,
             "description": "Retourne la valeur principal de la fiche, i.e. son titre si ce n'est pas\nun paragraphe et son texte si c'est un paragraphe.\nNotes\n  * Propriété complexe",
             "itemtype": "property",
             "name": "main_value",
@@ -3233,14 +3849,14 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 350,
-            "description": "Retourne une valeur pour le champ principal (titre ou texte)\n\nNOTES\n-----\n  * Cette méthode renvoie le texte brut si +formate+ est FALSE\n    Dans le cas contraire, elle le met en forme.",
+            "line": 372,
+            "description": "Retourne une valeur pour le champ principal (titre ou texte)\n\nNOTES\n-----\n  * Cette méthode renvoie le texte brut si +formate+ est FALSE\n    Dans le cas contraire, elle le met en forme.\n  * La méthode est asynchrone lorsqu'un paragraphe vient d'être défini\n    d'un type particulier comme 'file' et que le chargement du fichier\n    est nécessaire.",
             "itemtype": "method",
             "name": "main_field_value",
             "params": [
                 {
                     "name": "formate",
-                    "description": "\n                 Si TRUE le texte est interprété, i.e. par exemple que\n                 ses balises de référence ([<balise>:<valeur>]) sont mises\n                 en forme. \n                 Si FALSE, le texte est renvoyé tel qu'il est enregistré.",
+                    "description": "\n                  Si TRUE le texte est interprété, i.e. par exemple que\n                  ses balises de référence ([<balise>:<valeur>]) sont mises\n                  en forme. \n                  Si FALSE, le texte est renvoyé tel qu'il est enregistré.",
                     "type": "Boolean"
                 }
             ],
@@ -3250,7 +3866,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 375,
+            "line": 401,
             "description": "Actualise l'affiche de la fiche au niveau de son titre ou de son texte (quand\nc'est un paragraphe)\nNotes\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "update_display",
@@ -3260,7 +3876,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/required/Fiche_data.js",
-            "line": 392,
+            "line": 419,
             "description": "Dispatch les données +data+ dans la fiche.",
             "itemtype": "method",
             "name": "dispatch",
@@ -3377,8 +3993,19 @@
             "submodule": "dom"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/scenodico/DICO.js",
+            "line": 24,
+            "description": "Options pour l'affichage du mot\ndans la page.",
+            "itemtype": "property",
+            "name": "OPTIONS",
+            "type": "Object",
+            "static": 1,
+            "class": "DICO",
+            "module": "DICO.js"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 18,
+            "line": 19,
             "itemtype": "method",
             "name": "select",
             "params": [
@@ -3421,7 +4048,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 38,
+            "line": 39,
             "description": "Construction d'un checkbox",
             "itemtype": "method",
             "name": "checkbox",
@@ -3469,7 +4096,33 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
-            "line": 57,
+            "line": 58,
+            "description": "Retourne le code HTML pour une image de path +path+ et d'attributs\noptionnels +attrs+.",
+            "itemtype": "method",
+            "name": "img",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "Chemin d'accès à l'image",
+                    "type": "String"
+                },
+                {
+                    "name": "attrs",
+                    "description": "Attributs à appliquer à la balise",
+                    "type": "Object|Undefined"
+                }
+            ],
+            "return": {
+                "description": "Le code HTML pour charger l'image",
+                "type": "StringHTML"
+            },
+            "class": "UI.Html",
+            "module": "UI_HTML",
+            "submodule": "Html"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html.js",
+            "line": 76,
             "itemtype": "method",
             "name": "tag",
             "params": [
@@ -3517,6 +4170,78 @@
             "class": "UI.Html",
             "module": "UI_HTML",
             "submodule": "Html"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 24,
+            "description": "Retourne le code HTML pour la table",
+            "itemtype": "property",
+            "name": "to_html",
+            "type": "String",
+            "class": "HTMLTable",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 37,
+            "description": "Code HTML pour toutes les rangées du tableau",
+            "itemtype": "property",
+            "name": "html_rangees",
+            "type": "HTMLString",
+            "class": "HTMLTable",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 49,
+            "description": "Code HTML pour une rangée\nNotes\n  * Un colspan est indiqué en indiquant \"-\" en contenu de la\n    rangée sur laquelle doit se poursuivre la cellule précédente.",
+            "itemtype": "method",
+            "name": "html_tr",
+            "params": [
+                {
+                    "name": "drangee",
+                    "description": "Liste des contenus de la rangée",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Code pour la rangée de table",
+                "type": "HTMLString"
+            },
+            "class": "HTMLTable",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 73,
+            "description": "Parse le code string donné en argument à l'instanciation\nNotes\n-----\n  * Méthode complexe => appeler sans parenthèses\nProduit\n-------\n  * La définition des colonnes",
+            "itemtype": "method",
+            "name": "parse_code_str",
+            "class": "HTMLTable",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 125,
+            "description": "Retourne le code HTML pour l'entête des colonnes\nPrincipe des colonnes\n---------------------\n  * Si la définition comprend une unité, on la prend\n  * Sinon, si le total fait 100, ce sont des pourcentages\n  * Dans le cas contraire, ce sont des pixels.\n  * On ne peut pas mélanger nombre sans unité et nombre avec unité.",
+            "itemtype": "property",
+            "name": "entete_colonnes",
+            "type": "HTMLString",
+            "class": "HTMLTable",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_html_table.js",
+            "line": 159,
+            "description": "Prend le code courant (this.code) et le formate comme un tableau HTML\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
+            "itemtype": "method",
+            "name": "formate_as_tableau",
+            "return": {
+                "description": "Le code pour le tableau courant",
+                "type": "StringHTML"
+            },
+            "class": "UI.Html",
+            "module": "ui_html_table\n\nLe module définit l'objet UI.Html.str2table et la classe HTMLTable qui\npermet de mettre en forme un tableau."
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
@@ -3638,7 +4363,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 154,
+            "line": 160,
             "description": "Méthode appelée quand on presse une touche sur le champ courant. Gère\nl'utilisation de touches ou combinaisons de touches spéciales, comme \nCMD+F pour insérer une balise film ou CMD+M pour insérer un mot du scénodico.",
             "itemtype": "method",
             "name": "onkeypress",
@@ -3744,7 +4469,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 499,
+            "line": 498,
             "description": "Réactive le champ d'édition mémorisé par `memorize_current` en le remettant\ndans le même état de sélection.\n\nNotes\n-----\n  * Resélectionne ce qui était sélectionné dans le champ, très exactement.",
             "itemtype": "method",
             "name": "retreive_current",
@@ -3766,8 +4491,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 555,
-            "description": "Bind ou Unbind le 'keypress' sur la `target` courante, en fonction de la valeur\nde +focusing+\n\nRequis\n------\n  * {Object} this.target, définissant le champ courant (donnée complexe)",
+            "line": 553,
+            "description": "Bind ou Unbind le 'keypress' sur la `target` courante, en fonction de la valeur\nde +focusing+\nNotes\n-----\n  * La méthode désactive ou ré-active le gestionnaire d'évènement\n    qui était défini (il a été mémorisé dans `target`).\n\nRequis\n------\n  * {Object} this.target, définissant le champ courant (donnée complexe)",
             "itemtype": "method",
             "name": "set_keypress",
             "params": [
@@ -3783,7 +4508,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 581,
+            "line": 585,
             "description": "Return le vrai jQuery Set de champ de text de +obj+",
             "params": [
                 {
@@ -3809,7 +4534,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 600,
+            "line": 604,
             "description": "Retourne l'élément DOM ciblé par l'évènement +evt+",
             "itemtype": "method",
             "name": "eventTextField",
@@ -3830,7 +4555,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 663,
+            "line": 668,
             "description": "Constantes erreurs pour l'objet UI.Input",
             "itemtype": "property",
             "name": "ERRORS",
@@ -3841,7 +4566,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 671,
+            "line": 676,
             "description": "Provoque l'erreur d'identifiant +err_id+ dans `ERRORS`\n\nNotes\n-----\n  * C'est une erreur fatale (throw)\n  * On peut ajouter autant d'arguments que l'on veut, ils seront\n    envoyés en console.",
             "itemtype": "method",
             "name": "error",
@@ -3858,7 +4583,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js",
-            "line": 690,
+            "line": 695,
             "description": "Empêche l'Event +evt+ de se propager mais renvoie true.",
             "usage": ":  Simplement à la fin d'une méthode gérant un type d'évènement\n          avec `return this.unpropage(<evt>)'",
             "itemtype": "method",
@@ -3907,7 +4632,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/ui/contextual_help.js",
-            "line": 140,
+            "line": 144,
             "description": "Infos sur la fiche courante, à afficher en amorce",
             "itemtype": "property",
             "name": "info_current_fiche",
@@ -4109,6 +4834,203 @@
             "module": "UI"
         },
         {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui.js",
+            "line": 304,
+            "description": "Adapte la taille du textarea en fonction de son contenu",
+            "itemtype": "method",
+            "name": "adapt",
+            "params": [
+                {
+                    "name": "o",
+                    "description": "L'élément DOM",
+                    "type": "DOMElement|jQuerySet"
+                }
+            ],
+            "usage": "UI.Textarea.adapt(<dom element>)",
+            "example": [
+                "\n  UI.Textarea.adapt($('div#mon_div'))"
+            ],
+            "class": "UI.Textarea",
+            "module": "UI"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 10,
+            "description": "Constante-raccourci pour savoir si on se trouve dans le mode unique\nLe mode unique permet de n'ouvrir qu'un seul 'book' et qu'une seule 'page'\nà un endroit unique de la page (pour une meilleure lisibilité)\nNotes\n  * Réglé par la préférence `modeunique`",
+            "itemtype": "property",
+            "name": "MODE_UNIQUE",
+            "type": "Boolean",
+            "default": "false",
+            "class": "window",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 26,
+            "description": "Liste {Object} des instances de fiches book ou page ouvertes en mode unique\nCet objet possède la propriété 'book' et la propriété 'page' qui sont toutes\ndeux une liste ({Array}) des instances de fiches de chaque type ouvertes en\nmode unique.",
+            "itemtype": "property",
+            "name": "historique_mode_open",
+            "type": "Object",
+            "default": "{'book':[], 'page':[]}",
+            "class": "window",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 36,
+            "description": "Méthode appelée quand on ouvre une fiche en mode unique\nLa méthode ferme éventuellement la fiche de même type couramment ouverte\net positionne la nouvelle fiche à ouvrir (déjà ouverte par sa méthode)\nNotes\n  * La méthode est appelée par tout type de fiche, donc il faut tester ici\n    que ce soit un type book ou page. On ne prend en compte que les book et page\n  * Elle règle aussi les dimensions de l'élément pour qu'il prenne toute\n    la page et que son div items réagisse au scroll.",
+            "itemtype": "method",
+            "name": "open_mode_unique",
+            "params": [
+                {
+                    "name": "fiche",
+                    "description": "La fiche ouverte",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "window",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 64,
+            "description": "Méthode appelée quand on ferme une fiche en mode unique\nNotes\n  * La méthode est appelée par tout type de fiche, donc il faut tester ici\n    que ce soit un type book ou page",
+            "itemtype": "method",
+            "name": "close_mode_unique",
+            "params": [
+                {
+                    "name": "fiche",
+                    "description": "L'instance fiche à fermer",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 78,
+            "description": "Méthode ajoutant la fiche +fiche+ à l'historique des fiches book ou page\nouvertes.\nNotes\n  * Si la fiche à ajouter est la même que la dernière fiche ouverte,\n    on ne fait rien. Cela arrive chaque fois qu'on ferme une fiche, puisque\n    la dernière ouverte est alors rouverte (et passe donc par ici)",
+            "itemtype": "method",
+            "name": "add_to_histo",
+            "params": [
+                {
+                    "name": "fiche",
+                    "description": "Instance fiche de la fiche",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 94,
+            "description": "Méthode retirant la fiche +fiche+ de l'historique des fiches book ou page\nouvertes.\nC'est forcément la dernière fiche ouverte. Mais on vérifie quand même",
+            "itemtype": "method",
+            "name": "remove_from_histo",
+            "params": [
+                {
+                    "name": "fiche",
+                    "description": "Instance fiche de la fiche",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 113,
+            "description": "Retourne la dernière fiche enregistrée dans l'historique (mode unique)",
+            "itemtype": "method",
+            "name": "last_fiche_historique",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "Le type de fiche 'book' ou 'page'",
+                    "type": "String"
+                }
+            ],
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 132,
+            "description": "Top de la fiche book ou page en mode unique",
+            "note": ": La fiche est en position fixed dans ce mode",
+            "itemtype": "property",
+            "name": "TOP_MODE_UNIQUE",
+            "type": "Number",
+            "static": 1,
+            "final": 1,
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 141,
+            "description": "La fiche couramment traité dans le mode unique",
+            "itemtype": "property",
+            "name": "fiche",
+            "type": "Fiche",
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 146,
+            "description": "Positionne la fiche dans le mode unique",
+            "itemtype": "method",
+            "name": "positionne",
+            "params": [
+                {
+                    "name": "fiche",
+                    "description": "Instance de la fiche à positionner",
+                    "type": "Fiche"
+                }
+            ],
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 158,
+            "description": "Méthode pour \"dépositionner la fiche\"\nLa méthode supprime ce que `positionne` avait réglé (pour pouvoir ranger\ncorrectement la fiche)",
+            "itemtype": "method",
+            "name": "unpositionne",
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 169,
+            "description": "Règle la position de la fiche dans le mode unique",
+            "itemtype": "method",
+            "name": "set_position",
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 180,
+            "description": "Règle la hauteur de la fiche dans le mode unique",
+            "itemtype": "method",
+            "name": "set_hauteur",
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js",
+            "line": 191,
+            "description": "Règle le div des enfants dans le mode unique",
+            "itemtype": "method",
+            "name": "set_div_children",
+            "class": "UI.ModeUnique",
+            "module": "ui_mode_unique"
+        },
+        {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
             "line": 5,
             "description": "Sécurité pour empêcher de quitter la page quand des données n'ont pas été\nenregistrées.\n \nS'il n'y a aucune modification en cours, on sauve la configuration courante des\nfiche pour récupérer le même état au relancement de l'application. Noter cependant\nque si un “flash” d'une configuration a déjà été demandé, on ne procède pas\nà l'enregistrement de la configuration.",
@@ -4130,17 +5052,6 @@
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
             "line": 47,
-            "description": "Clipboard (mémoire tampon) de l'application. Pour placer du texte qui \ndevra ensuite être inséré dans le texte à l'aide de CMD+V.\nNotes\n-----\n  * La valeur est soit un {String} à copier tel quel dans le texte, soit\n    un {Object} qui doit obligatoirement répondre à la méthode `.to_balise`\n    qui doit retourner le texte à coller dans le texte.\n  * Utilisé par exemple pour les références\n  * C'est la pseudo-méthode `App.coller_clipboard` qui répond au CMD+V",
-            "itemtype": "property",
-            "name": "clipboard",
-            "type": "{Object|String}",
-            "default": "null",
-            "class": "App",
-            "module": "app"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 64,
             "description": "Mis à TRUE si un flash de la configuration courante a été demandé. Pour \nempêcher d'en enregistrer un nouveau à la fermeture de la collection.\nNoter cependant que de toute façon, il sera impossible d'enregistrer la \nconfiguration courante si un fichier de configuration (qui est supprimé à\nchaque chargement) se trouve déjà créé (par un flash).",
             "itemtype": "property",
             "name": "flashed",
@@ -4151,7 +5062,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 77,
+            "line": 60,
             "description": "Préférences de l'application\n\nPréférences\n-----------\n  * snap    Si true, les fiches sont disposées sur la grille\n\nNotes\n-----\n  * Cf. l'objet {Prefs} qui gère ces préférences",
             "itemtype": "property",
             "name": "preferences",
@@ -4163,7 +5074,25 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 102,
+            "line": 91,
+            "description": "Ouvre l'aide de l'application dans une nouvelle fenêtre",
+            "itemtype": "method",
+            "name": "help",
+            "class": "App",
+            "module": "app"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 100,
+            "description": "Clone la collection courante dans une nouvelle fenêtre",
+            "itemtype": "method",
+            "name": "dupliquer",
+            "class": "App",
+            "module": "app"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
+            "line": 111,
             "description": "Enregistre la configuration d'ouverture (et de rangement) actuelle pour\nla replacer au prochain chargement de l'application.\n\nNOTES\n-----\n  * La méthode est appelée à chaque sauvegarde si les préférences l'exigent.\n  * Envoi la requête Ajax pour créer le fichier \"current_config.config\"\n  * Si une méthode doit suivre, renseigner avec cette méthode (proxy)\n    `App.save_current_configuration.poursuivre`",
             "itemtype": "method",
             "name": "save_current_configuration",
@@ -4185,16 +5114,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 161,
-            "description": "Insert dans le texte le contenu du clipboard s'il n'est pas null.\nS'il est null, renvoie FALSE pour que CMD+V agisse par défaut.\nNotes\n-----\n  * Le App.clipboard est vidé dès qu'il est collé pour ne pas parasiter le\n    comportement normal du coller-copier.\n  * C'est une propriété complexe, donc l'appeler sans parenthèses.\n  * Le `clipboard` peut être soit un simple {String} soit un {Object} répondant\n    à la méthode `.to_balise` (comme les références).",
-            "itemtype": "method",
-            "name": "coller_clipboard",
-            "class": "App",
-            "module": "app"
-        },
-        {
-            "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 189,
+            "line": 171,
             "description": "Pour passer en mode test\n\nNotes\n-----\n  * C'est une propriété complexe, donc appeler sans parenthèses\n  * La méthode ouvre l'application Pure-JS-Tests.",
             "itemtype": "method",
             "name": "mode_test",
@@ -4203,7 +5123,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 205,
+            "line": 187,
             "description": "Analyse la configuration actuelle (ouvertures et rangements) et retourne\nun {Object} à enregistrer dans le fichier de configuration courante.\n\nNOTES\n-----\n  * Pour procéder, cette propriété/méthode regarde simplement les fiches\n    qui sont on_table sur la table.",
             "itemtype": "property",
             "name": "current_config",
@@ -4216,7 +5136,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App.js",
-            "line": 252,
+            "line": 234,
             "description": "Applique la configuration courante. En d'autres termes, ouvre les fiches qui\ndoivent être ouvertes (en les sortant de leur parent si nécessaire).",
             "itemtype": "method",
             "name": "current_configuration",
@@ -4248,7 +5168,41 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 41,
+            "line": 49,
+            "description": "Au chargement de la collection, règle les préférences qui doivent\nêtre prises en compte immédiatement.\nNotes",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "prefs",
+                    "description": "Les préférences de l'application, ou null",
+                    "type": "Object"
+                }
+            ],
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 63,
+            "description": "Méthode appelée quand on passe en mode unique (ou qu'on en sort, mais elle ne\nfait rien alors).\nLa méthode va mettre en place le mode unique, en commençant par fermer tous\nles 'book' et 'page' ouverts (en passant en revue les éléments posés sur la table)\nElle va définir la valeur de MODE_UNIQUE et rouvrir la dernière fiche trouvée.",
+            "itemtype": "method",
+            "name": "onchange_mode_unique",
+            "params": [
+                {
+                    "name": "activer",
+                    "description": "True s'il faut activer le mode unique.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 90,
             "description": "Méthode appelée quand on clique sur le cb \"livre rangés\"\nLa méthode affiche ou masque le menu pour choisir l'alignement des livres,\nhorizontal ou vertical.",
             "itemtype": "method",
             "name": "onchange_livre_ranged",
@@ -4265,7 +5219,24 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 52,
+            "line": 102,
+            "description": "Méthode appelée quand on clique sur la CB pour masquer/afficher les \nparagraphes \"not printed\"\nElle passe en revue les pages ouvertes (elle doit les trouver sur la\ntable) et masque ou montre les paragraphes not printed.",
+            "itemtype": "method",
+            "name": "onchange_masknotprinted",
+            "params": [
+                {
+                    "name": "masquer",
+                    "description": "Si TRUE, on doit les masquer",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "App.Prefs",
+            "module": "app",
+            "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
+            "line": 123,
             "description": "Enregistre les préférences de l'application (et reçoit le retour de la \nrequête ajax)\n\nNotes\n-----\n  * Les préférences sont définies dans {App.preferences}",
             "itemtype": "method",
             "name": "save",
@@ -4282,7 +5253,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 85,
+            "line": 159,
             "description": "Ouvre le panneau des préférences\n\nNotes\n-----\n  * C'est la méthode principale à appeler. Elle se charge de construire le\n    panneau des préférences si nécessaire.",
             "itemtype": "method",
             "name": "show",
@@ -4292,7 +5263,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 102,
+            "line": 176,
             "description": "Ferme le panneau des préférences",
             "itemtype": "method",
             "name": "close",
@@ -4302,7 +5273,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 117,
+            "line": 191,
             "description": "Objet DOM du panneau ({jQuerySet})",
             "itemtype": "property",
             "name": "panneau",
@@ -4313,7 +5284,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 128,
+            "line": 202,
             "description": "Récupère les valeurs des préférences dans le panneau et les met\ndans App.preferences",
             "itemtype": "method",
             "name": "get_values (complexe)",
@@ -4323,7 +5294,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 168,
+            "line": 242,
             "description": "Prépare le panneau des préférences\nNotes\n-----\n  * C'est une propriété complexe, donc l'appeler sans parenthèses",
             "itemtype": "method",
             "name": "prepare_panneau",
@@ -4333,7 +5304,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 207,
+            "line": 281,
             "description": "Retourne le code HTML du panneau de préférences\n\nNotes\n-----\n  * Cf. le fichier de style `./css/ui/preferences.css` pour l'aspect",
             "itemtype": "method",
             "name": "html_panneau (complexe)",
@@ -4347,7 +5318,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 226,
+            "line": 302,
             "description": "Retourne le code HTML pour la liste des options des préférences",
             "itemtype": "method",
             "name": "liste_options",
@@ -4361,7 +5332,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/App_Prefs.js",
-            "line": 278,
+            "line": 354,
             "description": "Retourne le code HTML pour les boutons du bas",
             "itemtype": "method",
             "name": "html_buttons",
@@ -4372,6 +5343,81 @@
             "class": "App.Prefs",
             "module": "app",
             "submodule": "app-prefs"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 15,
+            "description": "Contenu du clipboard",
+            "itemtype": "property",
+            "name": "content",
+            "type": "Object",
+            "class": "App.Clipboard",
+            "module": "App_clipboard",
+            "submodule": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 21,
+            "description": "Ajoute un élément au clipboard",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "Elément à clipboarder",
+                    "type": "Object|String"
+                },
+                {
+                    "name": "params",
+                    "description": "Les paramètres éventuels",
+                    "type": "Object|Null",
+                    "props": [
+                        {
+                            "name": "type",
+                            "description": "Le type de clipboard à mémoriser\n                                  P.e. 'ref' pour une référence.",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "App.Clipboard",
+            "module": "App_clipboard",
+            "submodule": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 47,
+            "description": "Récupère le contenu du clipboard de type +type+\nNotes\n  * Ça n'est pas cette méthode qui détruit le clipboard.\n    Il faut appeler la méthode App.Clipboard.flush(<type>) pour le faire.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "Le type de contenu possible. Par exemple, si aucun\n                        champ n'est en édition, c'est pour coller une fiche,\n                        sinon, ça peut être une référence.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Le contenu correspondant ou null",
+                "type": "Object|String|Null"
+            },
+            "class": "App.Clipboard",
+            "module": "App_clipboard",
+            "submodule": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc."
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/App_clipboard.js",
+            "line": 65,
+            "description": "Colle dans le champ d'édition le contenu du clipboard\nNotes\n-----\n  * La méthode peut récupérer dans l'ordre\n    * La référence  (type 'ref')\n    * Le string     (type 'string')\n    * La fiche      (type 'fiche')\n    * Un object quelconque (type 'object') mais dans ce cas, l'objet\n      doit obligatoirement répondre à la méthode (sans parenthèses) `to_balise`.\n  * La méthode colle le contenu éventuel du clipboard dans le\n    champ d'édition courant.\n  *",
+            "itemtype": "method",
+            "name": "paste",
+            "return": {
+                "description": "TRUE si quelque chose a été coller, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "App.Clipboard",
+            "module": "App_clipboard",
+            "submodule": "app\n\nObjet qui gère le clipboard de l'application, dans lequel on peut mettre\ndes fiches, des références, etc."
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Collection.js",
@@ -4824,7 +5870,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 152,
+            "line": 149,
             "description": "Retourne la balise HTML pour la référence\nNotes\n-----\n  * C'est une propriété complexe, l'appeler sans parenthèses\n  * Le titre (le contenu) de la balise doit avoir été construit avant\n    d'appeler cette méthode",
             "itemtype": "method",
             "name": "balise_html",
@@ -4837,7 +5883,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 173,
+            "line": 170,
             "description": "Appelée pour updater l'affichage de toutes les références lorsque la\nfiche-cible est chargée.\nNotes\n-----\n  * Propriété complexe => appeler sans parenthèses",
             "itemtype": "method",
             "name": "update",
@@ -4846,8 +5892,8 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 192,
-            "description": "Instance Fiche de la cible de la référence\nNotes\n-----\n  * WARNING: Cette propriété est mise à NULL même si l'instance Fiche\n    existe, mais qu'elle n'est pas encore chargée.",
+            "line": 189,
+            "description": "Instance Fiche de la cible de la référence\n\nNotes\n-----\n  * WARNING: Cette propriété est mise à NULL même si l'instance Fiche\n    existe, mais qu'elle n'est pas encore chargée.\n  * Pour obtenir vraiment la fiche, utiliser la propriété `fiche`",
             "itemtype": "property",
             "name": "cible",
             "type": "Fiche",
@@ -4856,7 +5902,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 212,
+            "line": 214,
             "description": "Titre pour la fiche-porteuse (pour la composition de son texte affiché)\nNotes\n-----\n  * Ce titre varie en fonction du fait que cible et porteuse se trouvent\n    ou non dans le même livre.",
             "itemtype": "property",
             "name": "titre_for_porteuse",
@@ -4866,7 +5912,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 228,
+            "line": 230,
             "description": "Retourne le titre pour la cible\nNotes\n-----\n  * Ce titre dépend du type de la fiche. Pour un book, on prend son titre\n    réel (`real_titre`), pour un paragraphe, on prend ses 50 premiers signes,\n    et on prend le titre normal pour les chapitres et les pages.\n  * Cette propriété ne doit être utilisée que pour une fiche-cible chargée.",
             "itemtype": "property",
             "name": "titre_cible",
@@ -4877,7 +5923,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 262,
+            "line": 249,
             "description": "Marque pour le livre à ajouter dans le titre hors book (quand la cible et\nla fiche porteuse n'appartienne pas au même livre ou que l'une des deux fiches\nn'est pas dans un livre)",
             "itemtype": "property",
             "name": "mark_book",
@@ -4888,7 +5934,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 280,
+            "line": 267,
             "description": "Renvoie true si la cible de la référence appartient au même livre que la\nfiche porteuse (this.porteuse).\n\nNotes\n-----\n  * C'est une propriété complexe qui est recalculée à chaque nouvelle porteuse.\n  * @rappel: this.porteuse est une instanceof {Fiche}\n  * Si la cible de la référence courante n'est pas encore chargée, on ne peut\n    pas déterminer son livre. La propriété est alors mise à false.",
             "itemtype": "property",
             "name": "same_book",
@@ -4898,7 +5944,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 308,
+            "line": 295,
             "description": "Retourne la class pour la balise `ref` en tenant compte du fait que la\nréférence appartient ou non au même livre que la fiche porteuse contenant\nla référence.\nNotes\n-----\n  * C'est une propriété complexe car la valeur est redéfini à chaque nouvelle\n    insertion dans le texte demandée.",
             "itemtype": "property",
             "name": "class",
@@ -4908,7 +5954,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 323,
+            "line": 310,
             "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nappartient au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
             "itemtype": "property",
             "name": "class_same_book",
@@ -4918,7 +5964,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 338,
+            "line": 325,
             "description": "Retourne la class pour la balise ref dans le cas d'une référence qui\nN'appartient PAS au même livre que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe qui redéfinit la valeur à chaque nouvelle\n    fiche porteuse (paragraphe)",
             "itemtype": "property",
             "name": "class_hors_book",
@@ -4928,7 +5974,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 353,
+            "line": 340,
             "description": "Titre construit pour la référence, tel qu'il apparaitra dans le texte.\nIl dépend de l'état de chargement de la cible de la référence et de l'appartenance\nou non au même book que la porteuse.\nNotes\n-----\n  * C'est une propriété complexe car sa (re)-définition peut faire varier\n    toutes les balises références de la même référence.",
             "itemtype": "property",
             "name": "titre",
@@ -4938,7 +5984,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 374,
+            "line": 361,
             "description": "Propriété similaire à la précédente, mais pour une référence n'appartenant\npas au livre de la porteuse.",
             "itemtype": "property",
             "name": "titre_hors_book",
@@ -4948,7 +5994,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 391,
+            "line": 378,
             "description": "Type humain de la référence (par exemple \"livre\" pour le type 'book')\nNotes\n-----\n  * La valeur est sans capitale, pour pouvoir s'insérer dans le flux du texte\n    ou entre parenthèses.",
             "itemtype": "property",
             "name": "human_type",
@@ -4959,7 +6005,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 407,
+            "line": 394,
             "description": "Retourne l'instance {Fiche} de la référence courante\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée.",
             "itemtype": "property",
             "name": "book",
@@ -4969,7 +6015,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/Ref.js",
-            "line": 425,
+            "line": 412,
             "description": "Retourne l'identifiant du livre de la référence\n\nNotes\n-----\n  * Pour obtenir cette information, il faut obligatoirement que\n    la cible de la référence soit chargée. Donc à n'utiliser que dans les\n    méthodes/propriétés qui traitent du cas où la cible est loaded.",
             "itemtype": "property",
             "name": "book_id",
@@ -5002,7 +6048,7 @@
                 },
                 {
                     "name": "cible",
-                    "description": "Pour les références, ainsi que pour les corrections\n                          suivant le ptype du paragraphe, on a besoin de la cible",
+                    "description": "Pour les références, ainsi que pour les corrections\n                          suivant le ptype du paragraphe, on a besoin de la cible\n                          quand c'est une fiche.",
                     "type": "Fiche"
                 }
             ],
@@ -5018,8 +6064,21 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
-            "line": 116,
-            "description": "Traitement du code d'un paragraphe dont le ptype n'est pas 'text'\nNotes\n  * La méthode est asynchrone seulement pour les ptype(s) 'file' et 'fico'",
+            "line": 119,
+            "description": "Traitement des balises de type image dans le texte du paragraphe\nNotes\n  * Une balise de type image possède ce format :\n      [img:path/in/collection/ressource/img/|attrs]\n      où `attrs` est un {Object} en string qui doit pouvoir être parsé par\n      JSON et qui défini les attributs de l'image.",
+            "example": [
+                " :\n          [img:mon_image.png|{\"id\":\"idimage\", \"title\":\"Titre de l'image\"}]\n  * Donc une image doit obligatoirement être contenue dans le dossier\n    ressource/img/ de la collection."
+            ],
+            "itemtype": "method",
+            "name": "traite_balises_images",
+            "products": "Le traitement de this.code",
+            "class": "ColText",
+            "module": "ColText"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/col_text.js",
+            "line": 142,
+            "description": "Traitement du code d'un paragraphe dont le ptype n'est pas 'text'\nNotes\n  * La méthode est asynchrone seulement pour les ptype(s) 'file' et 'fico'\n    Dans le cas contraire, on rappelle immédiatement la méthode formate.",
             "itemtype": "method",
             "name": "traite_code_by_ptype",
             "async": 1,
@@ -5074,7 +6133,48 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
-            "line": 88,
+            "line": 89,
+            "description": "Retourne la fiche d'identifiant +id+\n------------------------------------",
+            "note": "C'est un raccourci de FICHES.get(id)",
+            "itemtype": "method",
+            "name": "get_fiche",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Identifiant de la fiche",
+                    "type": "Number|String"
+                }
+            ],
+            "return": {
+                "description": "Instance fiche de la fiche",
+                "type": "Fiche"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 104,
+            "description": "Raccourci pour obtenir l'instance Fiche de l'objet DOM donné\nen argument.",
+            "itemtype": "method",
+            "name": "fiche_of_obj",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "L'objet DOM",
+                    "type": "DOMElement|jQuerySet"
+                }
+            ],
+            "return": {
+                "description": "La fiche possédant l'objet DOM",
+                "type": "Fiche"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 115,
             "description": "Retourne l'instance {Mot} du mot d'identifiant +mid+\nen la créant si nécessaire\n\nNOTES\n-----\n  * C'est un raccourci de la méthode DICO.get",
             "itemtype": "method",
             "name": "get_mot",
@@ -5094,7 +6194,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
-            "line": 104,
+            "line": 131,
             "description": "Retourne l'instance {Film} du film d'identifiant +fid+\nen la créant si nécessaire.\n\nNOTES\n-----\n  * Cette méthode est un raccourci de `FILMS.get(id)'",
             "itemtype": "method",
             "name": "get_film",
@@ -5114,7 +6214,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
-            "line": 122,
+            "line": 149,
             "description": "Retourne l'instance {Ref} de la référence d'identifiant +rid+\nen la créant si nécessaire.\n\nNOTES\n-----\n  * Cette méthode est un raccourci de `REFS.get(rid)'",
             "itemtype": "method",
             "name": "get_ref",
@@ -5134,7 +6234,32 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
-            "line": 148,
+            "line": 175,
+            "description": "Retourne le code HTML pour afficher une image du dossier \n<collection>/ressource/img/ de la collection.",
+            "itemtype": "method",
+            "name": "image_ressource",
+            "params": [
+                {
+                    "name": "relpath",
+                    "description": "Path relatif à partir du dossier ressource/img",
+                    "type": "String"
+                },
+                {
+                    "name": "attrs",
+                    "description": "Attributs optionnels. C'est une liste composée de duo\n                           [attr=valeur attr=valeur]",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Le code HTML à utiliser.",
+                "type": "String"
+            },
+            "class": "window",
+            "module": "window"
+        },
+        {
+            "file": "/Users/philippeperret/Sites/table_narration/js/handy_methods.js",
+            "line": 207,
             "description": "Retourne le code HTML pour afficher l'image de path +path+\n\nNotes\n-----\n  * Pour le moment, l'image doit se trouver dans le dossier lib/img",
             "itemtype": "method",
             "name": "image",
@@ -5223,7 +6348,7 @@
         },
         {
             "file": "/Users/philippeperret/Sites/table_narration/js/keyboard_events.js",
-            "line": 167,
+            "line": 185,
             "description": "Méthode de gestion des évènements Keypress lorsqu'ils n'ont pas été traités\npar une méthode propre. C'est en quelque sorte les traitements par défaut.\nPar exemple, quel que soit le contexte, le raccourci CMD+S sauvera toujours la\ncollection.",
             "itemtype": "method",
             "name": "keypress_default",
@@ -5244,12 +6369,36 @@
     ],
     "warnings": [
         {
+            "message": "unknown tag: note",
+            "line": " /Users/philippeperret/Sites/table_narration/js/livre/Book_class.js:37"
+        },
+        {
+            "message": "unknown tag: note",
+            "line": " /Users/philippeperret/Sites/table_narration/js/livre/Book_class.js:47"
+        },
+        {
             "message": "unknown tag: statif",
-            "line": " /Users/philippeperret/Sites/table_narration/js/livre/FICHES.js:66"
+            "line": " /Users/philippeperret/Sites/table_narration/js/livre/FICHES.js:61"
         },
         {
             "message": "unknown tag: usage",
-            "line": " /Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js:690"
+            "line": " /Users/philippeperret/Sites/table_narration/js/ui/>ui_input.js:695"
+        },
+        {
+            "message": "unknown tag: usage",
+            "line": " /Users/philippeperret/Sites/table_narration/js/ui/ui.js:304"
+        },
+        {
+            "message": "unknown tag: note",
+            "line": " /Users/philippeperret/Sites/table_narration/js/ui/ui_mode_unique.js:132"
+        },
+        {
+            "message": "unknown tag: products",
+            "line": " /Users/philippeperret/Sites/table_narration/js/col_text.js:119"
+        },
+        {
+            "message": "unknown tag: note",
+            "line": " /Users/philippeperret/Sites/table_narration/js/handy_methods.js:89"
         }
     ]
 }

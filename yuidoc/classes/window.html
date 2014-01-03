@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -275,6 +305,20 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_fiche_of_obj">fiche_of_obj</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_get_fiche">get_fiche</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_get_film">get_film</a>
 
                                 
@@ -303,6 +347,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_image_ressource">image_ressource</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_keypress_default">keypress_default</a>
 
                                 
@@ -318,6 +369,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_keypress_when_no_selection_no_edition">keypress_when_no_selection_no_edition</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_open_mode_unique">open_mode_unique</a>
 
                                 
                                 
@@ -348,10 +406,24 @@
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
+                                <a href="#property_historique_mode_open">historique_mode_open</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_MODE_TEST">MODE_TEST</a>
 
                                 
                                     <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_MODE_UNIQUE">MODE_UNIQUE</a>
+
                                 
                                 
                             </li>
@@ -482,8 +554,8 @@
 </div>
 
                 
-                    <div id="method_get_film" class="method item">
-    <h3 class="name"><code>get_film</code></h3>
+                    <div id="method_fiche_of_obj" class="method item">
+    <h3 class="name"><code>fiche_of_obj</code></h3>
 
     
         <div class="args">
@@ -491,7 +563,7 @@
             
                 <li class="arg">
                     
-                        <code>fid</code>
+                        <code>obj</code>
                     
                 </li>
             
@@ -501,7 +573,7 @@
 
     
         <span class="returns-inline">
-            <span class="type">Film</span>
+            <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
         </span>
     
 
@@ -531,6 +603,225 @@
         
         
         <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l104"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:104</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Raccourci pour obtenir l&#39;instance Fiche de l&#39;objet DOM donné
+en argument.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type">DOMElement | JQuerySet</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;objet DOM</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>:
+                    
+                    <p>La fiche possédant l&#39;objet DOM</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_get_fiche" class="method item">
+    <h3 class="name"><code>get_fiche</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>id</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/window.html">window</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l89"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:89</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <h2 id="retourne-la-fiche-d-identifiant-id-">Retourne la fiche d&#39;identifiant +id+</h2>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">id</code>
+                        <span class="type">Number | String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Identifiant de la fiche</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>:
+                    
+                    <p>Instance fiche de la fiche</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_get_film" class="method item">
+    <h3 class="name"><code>get_film</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fid</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Film.html" class="crosslink">Film</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/window.html">window</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l131"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:131</code></a>
         
         </p>
 
@@ -583,7 +874,7 @@ en la créant si nécessaire.</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">Film</span>:
+                        <span class="type"><a href="../classes/Film.html" class="crosslink">Film</a></span>:
                     
                     <p>L&#39;instance du film ou null s&#39;il n&#39;existe pas.</p>
 
@@ -644,7 +935,7 @@ en la créant si nécessaire.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l88"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:88</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l115"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:115</code></a>
         
         </p>
 
@@ -758,7 +1049,7 @@ en la créant si nécessaire</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l122"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:122</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l149"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:149</code></a>
         
         </p>
 
@@ -878,7 +1169,7 @@ en la créant si nécessaire.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l148"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:148</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l207"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:207</code></a>
         
         </p>
 
@@ -970,6 +1261,139 @@ en la créant si nécessaire.</p>
 </div>
 
                 
+                    <div id="method_image_ressource" class="method item">
+    <h3 class="name"><code>image_ressource</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>relpath</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>attrs</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/window.html">window</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_handy_methods.js.html#l175"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;handy_methods.js:175</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le code HTML pour afficher une image du dossier </p>
+<p><collection>/ressource/img/ de la collection.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">relpath</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Path relatif à partir du dossier ressource/img</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">attrs</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Attributs optionnels. C&#39;est une liste composée de duo
+                           [attr=valeur attr=valeur]</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    <p>Le code HTML à utiliser.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_keypress_default" class="method item">
     <h3 class="name"><code>keypress_default</code></h3>
 
@@ -1016,7 +1440,7 @@ en la créant si nécessaire.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_keyboard_events.js.html#l167"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;keyboard_events.js:167</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_keyboard_events.js.html#l185"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;keyboard_events.js:185</code></a>
         
         </p>
 
@@ -1300,6 +1724,106 @@ mais que l&#39;on ne se trouve pas dans un champ d&#39;édition.</p>
 </div>
 
                 
+                    <div id="method_open_mode_unique" class="method item">
+    <h3 class="name"><code>open_mode_unique</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fiche</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/ui_mode_unique.html">ui_mode_unique</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l36"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:36</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode appelée quand on ouvre une fiche en mode unique
+La méthode ferme éventuellement la fiche de même type couramment ouverte
+et positionne la nouvelle fiche à ouvrir (déjà ouverte par sa méthode)
+Notes</p>
+<ul>
+<li>La méthode est appelée par tout type de fiche, donc il faut tester ici
+que ce soit un type book ou page. On ne prend en compte que les book et page</li>
+<li>Elle règle aussi les dimensions de l&#39;élément pour qu&#39;il prenne toute
+la page et que son div items réagisse au scroll.</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">fiche</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>La fiche ouverte</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_restart_save" class="method item">
     <h3 class="name"><code>restart_save</code></h3>
 
@@ -1430,6 +1954,58 @@ mais que l&#39;on ne se trouve pas dans un champ d&#39;édition.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property_historique_mode_open" class="property item">
+    <h3 class="name"><code>historique_mode_open</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/ui_mode_unique.html">ui_mode_unique</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l26"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:26</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Liste {Object} des instances de fiches book ou page ouvertes en mode unique
+Cet objet possède la propriété &#39;book&#39; et la propriété &#39;page&#39; qui sont toutes
+deux une liste ({Array}) des instances de fiches de chaque type ouvertes en
+mode unique.</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> {&#x27;book&#x27;:[], &#x27;page&#x27;:[]}</p>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_MODE_TEST" class="property item">
     <h3 class="name"><code>MODE_TEST</code></h3>
     <span class="type">Unknown</span>
@@ -1476,6 +2052,61 @@ de la collection, si la collection courante (Collection.name) est &quot;test&quo
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_MODE_UNIQUE" class="property item">
+    <h3 class="name"><code>MODE_UNIQUE</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/ui_mode_unique.html">ui_mode_unique</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l10"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:10</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Constante-raccourci pour savoir si on se trouve dans le mode unique
+Le mode unique permet de n&#39;ouvrir qu&#39;un seul &#39;book&#39; et qu&#39;une seule &#39;page&#39;
+à un endroit unique de la page (pour une meilleure lisibilité)
+Notes</p>
+<ul>
+<li>Réglé par la préférence <code>modeunique</code></li>
+</ul>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
     
 
     

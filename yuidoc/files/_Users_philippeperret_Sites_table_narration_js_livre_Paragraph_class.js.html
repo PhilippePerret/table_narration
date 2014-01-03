@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -231,14 +261,40 @@
 window.Paragraph = function(data)
 {
   if(undefined == data) data = {}
-  data.type   = &#x27;para&#x27;
-  data.ptype  = &#x27;text&#x27;
+  data.type       = &#x27;para&#x27;
+  /**
+    * &#x60;ptype&#x60; du paragraphe définissant si c&#x27;est un texte normal (&#x27;text&#x27;) ou
+    * autre chose tel qu&#x27;un fichier à inclure, etc.
+    * @property {String} ptype
+    * @default &#x27;text&#x27;
+    */
+  data.ptype      = &#x27;text&#x27;
+  /**
+    * Texte réel du paragraphe lorsqu&#x27;il n&#x27;est pas de type &#x27;text&#x27;
+    * @property {String} real_text
+    * @default Null
+    */
+  data.real_text  = null
   Fiche.call(this, data)
 }
 Paragraph.prototype = Object.create( Fiche.prototype )
 Paragraph.prototype.constructor = Paragraph
 
 Object.defineProperties(Paragraph.prototype,{
+
+  /**
+    * Retourne un extrait du paragraphe pour affichage dans une référence
+    *
+    * @property {String} titre_for_ref
+    */
+  &quot;titre_for_ref&quot;:{
+    get:function(){
+      var extrait = this.texte ;
+      if(!extrait) extrait = &quot;[paragraphe vide]&quot;
+      if(extrait.length &gt; 50) extrait = extrait.substring(0,50) + &#x27;[…]&#x27;
+      return &#x27;&lt;span class=&quot;small&quot;&gt;&#x27;+extrait+&#x27;&lt;/span&gt;&#x27;
+    }
+  },
 
   /**
     * @property {Book} book Le livre auquel appartient le paragraphe (ou null)
@@ -255,7 +311,9 @@ Object.defineProperties(Paragraph.prototype,{
     * Le « ptype » du paragraphe indique son type propre, à savoir :
     *   * text  : Un texte &quot;normal&quot; qui sera juste formaté (défaut)
     *   * file  : Un paragraphe qui charge un fichier externe
-    *   * code  : Du code à interpréter.
+    *   * code  : Du code javascript à interpréter.
+    *   * ruby  : Du code ruby à évaluer
+    *   * fico  : Un fichier contenant du code à évaluer
     * @property {String|Null} ptype
     */
   &quot;ptype&quot;:{
@@ -319,10 +377,68 @@ Object.defineProperties(Paragraph.prototype,{
     get:function(){
       var css = $.merge([], this._style || [])
       css.push(&#x27;texte&#x27;)
+      if(this.not_printed)
+      {
+        css.push(&#x27;not_printed&#x27;)
+        if(App.preferences.masknotprinted) css.push(&#x27;hidden&#x27;)
+      } 
       return css.join(&#x27; &#x27;)
     }
   },
   
+  /**
+    * Méthode &quot;filtrant&quot; le paragraphe, c&#x27;est-à-dire lui appliquant certains
+    * styles ou le masquant suivant le filtre défini.
+    * Traitement
+    *   * Masque complètement les paragraphes &quot;not printed&quot; si préférence
+    *   * Ajoute un &#x27;&lt;br&gt;&lt;br&gt;&#x27; au bout des paragraphes de type &quot;exemple document&quot;
+    *     pour obtenir de l&#x27;air.
+    * Notes
+    *   * Cette méthode a été inaugurée pour gérer la préférence &quot;Masquer les 
+    *     paragraphes not printed&quot;.
+    *   * Pour le moment, le filtre ne concerne que cette préférence.
+    *   * la méthode est appelée chaque fois qu&#x27;une page est ouverte, pour régler
+    *     ses paragraphes.
+    *   * TODO: Plus tard, on pourra l&#x27;utiliser pour filtrer suivant une recherche,
+    *     une condition sur le style, sur l&#x27;état de développement, etc.
+    *   * C&#x27;est une propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method applique_filtre
+    */
+  &quot;applique_filtre&quot;:{
+    get:function(){
+      if(this.not_printed)
+      {
+        if(!this.obj.hasClass(&#x27;not_printed&#x27;)) this.obj.addClass(&#x27;not_printed&#x27;)
+        this.obj[(App.preferences.masknotprinted?&#x27;add&#x27;:&#x27;remove&#x27;)+&#x27;Class&#x27;](&#x27;hidden&#x27;)
+      }
+      else
+      {
+        if(this.is_exemple_document)
+        {
+          if(this.next == null || !this.next.is_exemple_document) this.div_texte.append(&#x27;&lt;br&gt;&lt;br&gt;&#x27;)
+        }
+      }
+    }
+  },
+  
+  /**
+    * Retourne TRUE si le style du paragraphe est de type &quot;exemple document&quot;
+    * @property {Boolean} is_exemple_document
+    */
+  &quot;is_exemple_document&quot;:{
+    get:function(){
+      if(!this.style) return false
+      var prefs = PARAGRAPHS.PREFIXES_DOCUMENTS_EXEMPLES
+      for(var ist = 0, len = this.style.length; ist &lt; len; ++ist)
+      {
+        // TODO Il faut mettre ça dans une constante générale pour
+        // pouvoir le redéfinir aisément
+        if(prefs.indexOf(this.style[ist].split(&#x27;_&#x27;)[0]) &gt; -1) return true
+      }
+      return false
+    }
+  },
   /*
    *  Méthode appelée quand on règle le verso de la fiche
    *
@@ -388,7 +504,7 @@ Object.defineProperties(Paragraph.prototype,{
   /* Règle le style dans le menu style du paragraphe (verso) */
   &quot;set_style&quot;:{
     get:function(){
-      // On active tous les styles du paragraphes
+      // On active tous les styles du paragraphe
       PARAGRAPHS.active_styles( this.style )
     }
   },  
@@ -428,6 +544,107 @@ Object.defineProperties(Paragraph.prototype,{
 
 $.extend(Paragraph.prototype,{
   /**
+    * Chargement du fichier associé au paragraphe
+    *
+    * Notes
+    *   * La méthode renseigne la propriété &#x60;real_text&#x60; du paragraphe.
+    *   * Cette méthode n&#x27;est nécessaire que lorsque le ptype du paragraphe
+    *     vient d&#x27;être redéfini et qu&#x27;il fait appel à un fichier. Dans le cas 
+    *     courant, c&#x27;est la procédure de chargement de la fiche qui renseigne côté
+    *     serveur la propriété real_text.
+    *
+    * @method load_file
+    * @async
+    * @param  {Function}  poursuivre   
+    *                     La méthode pour suivre, qui doit recevoir en premier argument
+    *                     le code remonté et en second le paragraphe courant. Cela est
+    *                     dû au fait que la méthode est principalement appelé par 
+    *                     ColText.formate.
+    */
+  load_file:function(poursuivre, rajax)
+  {
+    if(undefined == rajax)
+    {
+      Ajax.send(
+        {script:&#x27;file/load&#x27;, collection:Collection.name, file_path:this.texte},
+        $.proxy(this.load_file, this, poursuivre)
+      )
+    }
+    else if(rajax.ok)
+    {
+      if(rajax.need_create) F.show(rajax.need_create) // quand fichier créé
+      this.real_text = rajax.file_real_text
+      if(&#x27;function&#x27;==typeof poursuivre) poursuivre(this.real_text, this)
+    }
+    else F.error(rajax.message)
+  },
+
+  /**
+    * Méthode appelée quand on change le texte d&#x27;un paragraphe
+    * Notes
+    * -----
+    *   * La méthode a été séparée de &#x60;onchange_titre_or_texte&#x60; pour pouvoir
+    *     faire un traitement plus précis sur le texte. Inauguré pour rechercher
+    *     les éventuelles ajouts de balises [img:...] et donner un texte d&#x27;explication
+    *     pour leur traitement pour la publication.
+    *
+    * @method onchange_titre
+    * @param  {String} new_value La nouvelle valeur
+    * @return {Boolean} True si le nouveau texte a été enregistré, false otherwise
+    */
+  onchange_texte:function(new_value){
+    if(this.texte != new_value)
+    {
+      if(false == this.check_new_texte(new_value)) return false // mauvaise donnée
+      this.texte = new_value
+      this.modified = true    
+      return true
+    }
+    else
+    {
+      return false
+    }
+  },
+  
+  /**
+    * Check le nouveau texte avant de le prendre en compte.
+    * @method check_new_texte
+    * @param  {String} new_texte  Le nouveau texte.
+    */
+  check_new_texte:function(new_texte)
+  {
+    var old_texte = &quot;&quot; + (this.texte||&quot;&quot;) // un clone
+    if(new_texte.indexOf(&quot;[img:&quot;) &lt; 0) return // rien à faire
+    var new_imgs = new_texte.match(/\[img\:([^\|\]]+)(?:\||\])/g)
+    new_imgs = L(new_imgs).collect(function(str){return str.substring(5, str.length-1)});
+    var old_imgs = old_texte.match(/\[img\:([^\|\]]+)(?:\||\])/g)
+    old_imgs = L(old_imgs).collect(function(str){return str.substring(5, str.length-1)});
+    var very_new_images = []
+    for(var i in new_imgs)
+    {
+      if(old_imgs.indexOf(new_imgs[i]) &lt; 0) very_new_images.push(new_imgs[i])
+    }
+    if(very_new_images.length)
+    {
+      // On vérifie que toutes les extensions soient des extensions images valides
+      L(very_new_images).each(function(rpath){
+        var dec = rpath.lastIndexOf(&#x27;.&#x27;) + 1
+        var ext = rpath.substring(dec, rpath.length)
+        if([&#x27;jpg&#x27;, &#x27;jpeg&#x27;, &#x27;png&#x27;, &#x27;gif&#x27;, &#x27;tif&#x27;, &#x27;tiff&#x27;].indexOf(ext) &lt; 0)
+        {
+          F.error(LOCALE.image.error[&#x27;bad format&#x27;].replace(/_PATH_IMAGE_/, rpath))
+          return false
+        }
+      })
+      F.show(
+        LOCALE.paragraph.tip[&#x27;new images&#x27;].
+          replace(/_IMAGES_/, very_new_images.join(&#x27;, &#x27;)).
+          replace(/_COLLECTION_/, Collection.name)
+      )
+    }
+    return true
+  },
+  /**
     * Méthode appelée quand on modifie le ptype du paragraphe
     *
     * @method onchange_ptype
@@ -445,7 +662,7 @@ $.extend(Paragraph.prototype,{
 
   /**
     * Méthode appelée quand on applique les styles choisis pour
-    * le paragraphe.
+    * le paragraphe (verso de la fiche).
     *
     * @method on_change_styles
     * @param  {Array} selectors   Liste des styles choisis
@@ -455,6 +672,7 @@ $.extend(Paragraph.prototype,{
     dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
     if(selectors.length == 0) selectors = null
     this.style    = selectors
+    this.update_display
     this.modified = true
     dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
   }

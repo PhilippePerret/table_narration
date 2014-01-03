@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -231,6 +261,14 @@
 window.PARAGRAPHS = {
   
   /**
+    * Préfixes des styles de type &quot;exemple document&quot;
+    * @property {Array} PREFIXES_DOCUMENTS_EXEMPLES
+    * @static
+    # @final
+    */
+  PREFIXES_DOCUMENTS_EXEMPLES:[&#x27;scenario&#x27;, &#x27;synopsis&#x27;],
+  
+  /**
     * Data pour le &#x60;ptypes&#x60; des paragraphes
     *
     * @property {Object} PTYPES
@@ -238,14 +276,16 @@ window.PARAGRAPHS = {
     * @final
     */
   PTYPES:{
-    &#x27;text&#x27; : {id:&#x27;text&#x27;, hname:&quot;Texte normal&quot;},
+    &#x27;text&#x27; : {id:&#x27;text&#x27;, hname:&quot;Texte normal&quot;, return_disabled:true},
     &#x27;list&#x27; : {id:&#x27;list&#x27;, hname:&quot;Liste à puces (item MAJ+RETURN item...)&quot;},
     &#x27;enum&#x27; : {id:&#x27;enum&#x27;, hname:&quot;Liste numérotée (item1 MAJ+RETURN item2...)&quot;},
     &#x27;desc&#x27; : {id:&#x27;desc&#x27;, hname:&quot;Liste définitions (mot::description MAJ+RETURN ...)&quot;},
+    &#x27;file&#x27; : {id:&#x27;file&#x27;, hname:&quot;Fichier à insérer (PATH)&quot;, return_disabled:true},
+    &#x27;revc&#x27; : {id:&#x27;revc&#x27;, hname:&quot;Evènemencier brut&quot;},
+    &#x27;tabl&#x27; : {id:&#x27;tabl&#x27;, hname:&quot;Tableau&quot;},
     &#x27;code&#x27; : {id:&#x27;code&#x27;, hname:&quot;Code javascript à interpréter&quot;},
     &#x27;ruby&#x27; : {id:&#x27;ruby&#x27;, hname:&quot;Code ruby à interpréter&quot;},
-    &#x27;file&#x27; : {id:&#x27;file&#x27;, hname:&quot;Fichier à insérer (PATH)&quot;},
-    &#x27;fico&#x27; : {id:&#x27;fico&#x27;, hname:&quot;Fichier de code à jouer (PATH)&quot;}
+    &#x27;fico&#x27; : {id:&#x27;fico&#x27;, hname:&quot;Fichier de code à jouer (PATH)&quot;, return_disabled:true}
   },
   
   /**
@@ -315,14 +355,14 @@ window.PARAGRAPHS = {
     var id, osel ;
     if(!selectors || selectors.length == 0) return
     L(selectors).each(function(selector){
-      osel = $(&#x27;ul#paragraphs_menu_styles &gt; li.&#x27;+selector+&#x27; input[type=&quot;checkbox&quot;]&#x27;)
+      osel = $(&#x27;ul#paragraphs_menu_styles &gt; li[data-style=&quot;&#x27;+selector+&#x27;&quot;] input[type=&quot;checkbox&quot;]&#x27;)
       if(osel.length) osel[0].checked = true
     })
   },
   /* Décoche la checkbox pour le style de paragraphe +style+ */
   decocher_style:function(style)
   {
-    $(&#x27;ul#paragraphs_menu_styles &gt; li.&#x27;+style+&#x27; input[type=&quot;checkbox&quot;]&#x27;)[0].checked = false
+    $(&#x27;ul#paragraphs_menu_styles &gt; li[data-style=&quot;&#x27;+style+&#x27;&quot;] input[type=&quot;checkbox&quot;]&#x27;)[0].checked = false
   },
   /*
    *  Appliquer les styles courants au paragraphe courant
@@ -347,7 +387,7 @@ window.PARAGRAPHS = {
    */
   add_remove_style:function(CB)
   {
-    var selector = $(CB).parent().attr(&#x27;class&#x27;)
+    var selector = $(CB).parent().attr(&#x27;data-style&#x27;)
     var checked  = CB.checked == true
     if(this.current != FICHES.current)
     { 
@@ -371,12 +411,15 @@ window.PARAGRAPHS = {
     this.set_apercu( this.current_styles )
   },
   
-  /*
-   *  Gestion des exclusions
-   *
-   *  La méthode regarde si un style de même premier mot existe dans la
-   *  liste des styles courants et le supprime si c&#x27;est le cas.
-   */
+  /**
+    * Gestion des exclusions
+    *
+    * La méthode regarde si un style de même premier mot existe dans la
+    * liste des styles courants et le supprime si c&#x27;est le cas.
+    *
+    * @method check_exclusions_with
+    * @param  {String} selector
+    */
   check_exclusions_with:function(selector)
   {
     var currents = this.current_styles
@@ -406,6 +449,26 @@ window.PARAGRAPHS = {
     if(!selectors || selectors.length == 0) return
     // On règle l&#x27;aperçu du paragraphe avec ses styles
     $(&#x27;li#apercu_paragraph&#x27;).addClass(selectors.join(&#x27; &#x27;))
+  },
+  
+  /**
+    * Méthode appelée par un click sur la CB &quot;Show style aspect&quot; pour
+    * montrer l&#x27;aspect des styles ou par les préférences
+    * @method show_aspect_styles
+    * @param {Boolean} montrer    True s&#x27;il faut les montrer
+    *
+    */
+  show_aspect_styles:function(montrer)
+  {
+    if(undefined == montrer){
+      montrer = App.preferences.show_aspects_styles
+    }else{
+      App.preferences.show_aspects_styles = montrer
+    }
+    L(PARAGRAPH_STYLES).each(function(selector){
+      $(&#x27;li#&#x27;+&quot;li-paragraph_style-&quot;+selector)[(montrer?&#x27;add&#x27;:&#x27;remove&#x27;)+&#x27;Class&#x27;](selector)
+    })
+    $(&#x27;ul#paragraphs_menu_styles&#x27;)[(montrer?&#x27;remove&#x27;:&#x27;add&#x27;)+&#x27;Class&#x27;](&#x27;small&#x27;)
   }
 }
 
@@ -458,10 +521,12 @@ Object.defineProperties(PARAGRAPHS, {
     get:function(){
       var id ;
       var btn_apply = &#x27;&lt;input type=&quot;button&quot; value=&quot;Appliquer&quot; onclick=&quot;$.proxy(PARAGRAPHS.apply_styles, PARAGRAPHS)()&quot; style=&quot;font-size:1.3em;&quot; /&gt;&#x27;
-      var cb_apercu =   &#x27;&lt;div class=&quot;fleft&quot;&gt;&#x27; +
-                          &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;cb_show_apercu_paragraph&quot; onchange=&quot;$(\&#x27;div#div_apercu_paragraph\&#x27;).toggle();&quot; /&gt;&#x27; +
-                          &#x27;&lt;label for=&quot;cb_show_apercu_paragraph&quot;&gt;Aperçu&lt;/label&gt;&#x27; +
-                        &#x27;&lt;/div&gt;&#x27; ;
+      var cbs = &#x27;&lt;div class=&quot;fleft&quot;&gt;&#x27; +
+                  &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;cb_show_aspect_styles&quot; onchange=&quot;$.proxy(PARAGRAPHS.show_aspect_styles,PARAGRAPHS,this.checked)()&quot; /&gt;&#x27; +
+                  &#x27;&lt;label for=&quot;cb_show_aspect_styles&quot;&gt;Show aspect&lt;/label&gt;&#x27; +
+                  &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;cb_show_apercu_paragraph&quot; onchange=&quot;$(\&#x27;div#div_apercu_paragraph\&#x27;).toggle();&quot; /&gt;&#x27; +
+                  &#x27;&lt;label for=&quot;cb_show_apercu_paragraph&quot;&gt;Aperçu&lt;/label&gt;&#x27; +
+                &#x27;&lt;/div&gt;&#x27; ;
       var buttons   = &#x27;&lt;div class=&quot;buttons&quot; style=&quot;font-size:0.9em&quot;&gt;&#x27; +  
                         btn_apply +
                       &#x27;&lt;/div&gt;&#x27;
@@ -472,12 +537,12 @@ Object.defineProperties(PARAGRAPHS, {
                     &#x27;&lt;div id=&quot;div_apercu_paragraph&quot; style=&quot;display:none;&quot;&gt;&#x27; +
                       &#x27;&lt;li id=&quot;apercu_paragraph&quot;&gt;Aperçu du style du paragraphe&lt;/li&gt;&#x27; +
                     &#x27;&lt;/div&gt;&#x27; +
-                  cb_apercu + 
+                  cbs + 
                   buttons
       code += &#x27;&lt;ul id=&quot;paragraphs_menu_styles&quot;&gt;&#x27;
       L(PARAGRAPH_STYLES).each(function(selector){
         id  = &quot;paragraph_style-&quot;+selector ;
-        code += &#x27;&lt;li class=&quot;&#x27;+selector+&#x27;&quot;&gt;&#x27;+
+        code += &#x27;&lt;li id=&quot;li-&#x27;+id+&#x27;&quot; data-style=&quot;&#x27;+selector+&#x27;&quot;&gt;&#x27;+
                   &#x27;&lt;input type=&quot;checkbox&quot; id=&quot;&#x27;+id+&#x27;-cb&quot; &#x27;+
                     &#x27;onchange=&quot;$.proxy(PARAGRAPHS.add_remove_style, PARAGRAPHS, this)()&quot;&#x27; +
                     &#x27; /&gt;&#x27;+
@@ -489,6 +554,7 @@ Object.defineProperties(PARAGRAPHS, {
       // On l&#x27;ajoute dans le body, il sera tout de suite placé dans
       // le verso d&#x27;un paragraphe
       $(&#x27;body&#x27;).append( this.html_menu_styles )
+      this.show_aspect_styles()
     }
   },
   

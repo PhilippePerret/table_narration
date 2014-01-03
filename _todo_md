@@ -2,6 +2,12 @@ IMPLÉMENTER
 -----------
 cf. aussi l'issue list sur Github.
 
+- Corriger absolument deux derniers bugs
+- Puis faire les premiers essais de références croisées entre livres
+  > s'arranger pour produire une erreur avec un livre non encore publié
+  > s'arranger pour produire une erreur avec un livre publié mais ne
+    contenant pas encore la référence (NON ce n'est pas possible :-)
+
 - Poursuivre le travail sur le clipboard
   > À prendre en compte : j'ai détruit this.target à la fin du blur dans
   UI.Input, pour pouvoir savoir de façon sûre si on se trouvait dans un champ

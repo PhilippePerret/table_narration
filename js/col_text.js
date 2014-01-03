@@ -106,8 +106,8 @@ window.ColText = {
    */
   traite_balises_refs:function(cible)
   {
-    this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]]+)\]/g, function(match, id, title, offset){ 
-      return get_ref(id).formate(cible, title, skip_loading = true)
+    this.code = this.code.replace(/\[ref:([^\|]+)\|([^\]]+)\]/g, function(match, refid, title, offset){ 
+      return get_ref(refid).formate(cible, title, skip_loading = true)
       /*
        *  La précision skip_loading ci-dessus permet de passer les données
        *  manquante, lorsque des options d'affichage de la référence nécessite d'avoir

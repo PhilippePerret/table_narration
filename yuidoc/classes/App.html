@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -269,13 +299,6 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_coller_clipboard">coller_clipboard</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_confirmExit">confirmExit</a>
 
                                 
@@ -284,6 +307,20 @@
                         
                             <li class="index-item method">
                                 <a href="#method_current_configuration">current_configuration</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_dupliquer">dupliquer</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_help">help</a>
 
                                 
                                 
@@ -312,13 +349,6 @@
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
-                        
-                            <li class="index-item property">
-                                <a href="#property_clipboard">clipboard</a>
-
-                                
-                                
-                            </li>
                         
                             <li class="index-item property">
                                 <a href="#property_current_config">current_config</a>
@@ -355,70 +385,6 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
-
-                
-                    <div id="method_coller_clipboard" class="method item">
-    <h3 class="name"><code>coller_clipboard</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l161"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:161</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Insert dans le texte le contenu du clipboard s&#39;il n&#39;est pas null.
-S&#39;il est null, renvoie FALSE pour que CMD+V agisse par défaut.</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>Le App.clipboard est vidé dès qu&#39;il est collé pour ne pas parasiter le
-comportement normal du coller-copier.</li>
-<li>C&#39;est une propriété complexe, donc l&#39;appeler sans parenthèses.</li>
-<li>Le <code>clipboard</code> peut être soit un simple {String} soit un {Object} répondant
-à la méthode <code>.to_balise</code> (comme les références).</li>
-</ul>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
 
                 
                     <div id="method_confirmExit" class="method item">
@@ -565,7 +531,7 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l252"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:252</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l234"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:234</code></a>
         
         </p>
 
@@ -578,6 +544,116 @@ que si un “flash” d&#39;une configuration a déjà été demandé, on ne pro
     <div class="description">
         <p>Applique la configuration courante. En d&#39;autres termes, ouvre les fiches qui
 doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dupliquer" class="method item">
+    <h3 class="name"><code>dupliquer</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l100"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:100</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Clone la collection courante dans une nouvelle fenêtre</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_help" class="method item">
+    <h3 class="name"><code>help</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l91"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:91</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Ouvre l&#39;aide de l&#39;application dans une nouvelle fenêtre</p>
 
     </div>
 
@@ -621,7 +697,7 @@ doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l189"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:189</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l171"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:171</code></a>
         
         </p>
 
@@ -699,7 +775,7 @@ doivent être ouvertes (en les sortant de leur parent si nécessaire).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l102"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:102</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l111"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:111</code></a>
         
         </p>
 
@@ -781,62 +857,6 @@ la replacer au prochain chargement de l&#39;application.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_clipboard" class="property item">
-    <h3 class="name"><code>clipboard</code></h3>
-    <span class="type">Object | String</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l47"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:47</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Clipboard (mémoire tampon) de l&#39;application. Pour placer du texte qui 
-devra ensuite être inséré dans le texte à l&#39;aide de CMD+V.</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>La valeur est soit un {String} à copier tel quel dans le texte, soit
-un {Object} qui doit obligatoirement répondre à la méthode <code>.to_balise</code>
-qui doit retourner le texte à coller dans le texte.</li>
-<li>Utilisé par exemple pour les références</li>
-<li>C&#39;est la pseudo-méthode <code>App.coller_clipboard</code> qui répond au CMD+V</li>
-</ul>
-
-    </div>
-
-    
-        <p><strong>Default:</strong> null</p>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="property_current_config" class="property item">
     <h3 class="name"><code>current_config</code></h3>
     <span class="type">Unknown</span>
@@ -860,7 +880,7 @@ qui doit retourner le texte à coller dans le texte.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l205"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:205</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l187"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:187</code></a>
         
         </p>
 
@@ -911,7 +931,7 @@ qui sont on_table sur la table.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l64"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:64</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l47"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:47</code></a>
         
         </p>
 
@@ -964,7 +984,7 @@ chaque chargement) se trouve déjà créé (par un flash).</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l77"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:77</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_App.js.html#l60"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;App.js:60</code></a>
         
         </p>
 

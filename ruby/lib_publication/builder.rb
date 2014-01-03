@@ -40,7 +40,7 @@ def build_content_tex
   # Ne pas indiquer le mot "Chapitre" avant les chapitres
   document.options.no_name_chapter  true
   # document.options.back_references true
-
+  
   # = Pour essai en simplifiant le travail =
   # document.options.with_index       false
   # document.options.with_biblio      false
@@ -120,6 +120,35 @@ def build_content_tex
     raise
   end
 
+  # --- Documents externes --- 
+  # Liste des documents externes pour faire des références
+  # d'un livre à l'autre.
+  # Questions qui se posent :
+  #   1.Comment définir le nom du document externe, entendu que tout est fait
+  #     dans 'context.tex'
+  #     Solution : une fois context.tex fabriqué ici, le dupliquer dans
+  #     'source/external_document/' avec le nom du document (utiliser l'affixe
+  #     pris pour les pdf)
+  #   2. Comment gérer le fait qu'un document externe n'est peut-être pas 
+  #     encore publié ?
+  #     Solution : laisser passer les erreurs
+  # 
+  # TODO  Une manière significative d'améliorer la procédure serait de n'inclure
+  #       QUE les autres livres qui ont été trouvés au cours de la préparation de
+  #       la publication ci-dessus.
+  unless OPTIONS_COMMAND[:only_tdm]
+    document.options.external_documents = []
+    $IDS_BOOKS_XR.each do |bid|
+      book = Collection::book bid
+      next if book.id == $BOOK.id
+      document.options.external_documents << {
+        :prefix => book.external_prefix, 
+        :path   => book.external_path_for_source
+      }
+    end
+  end
+  # RLatex ajoutera des commandes : \externaldocument[<prefix>-]
+
   # Fabrication de la bibliographie (custom)
   Film::build_biblio
 
@@ -129,4 +158,10 @@ def build_content_tex
   # On produit le fichier `source.tex`
   document.build_source
   
+  # Sauf si c'est seulement la table des matières qui est demandée,
+  # il faut faire de ce document un document externe pour que ses références
+  # puissent servir à un autre livre
+  unless OPTIONS_COMMAND[:only_tdm]
+    FileUtils::cp document.path_source, $BOOK.path_external
+  end
 end

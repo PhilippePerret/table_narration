@@ -26,6 +26,27 @@ class Collection
       @name = new_name
     end
     
+    # Pour récupérer un livre (son instance {Fiche})
+    # 
+    def book id
+      @books ||= {}
+      if @books[id.to_s].nil?
+        @books = @books.merge id.to_s => Fiche::new(id, 'book')
+      end
+      @books[id.to_s]
+    end
+    
+    # Pour récupérer tous les livres (liste d'instances Fiches)
+    # 
+    # Return {Array} de {Fiche}
+    def books
+      @books ||= begin
+        Dir["#{folder_fiches}/book/*.msh"].collect do |path|
+          book File.basename(path, File.extname(path))
+        end
+      end
+    end
+    
     # Retourne la liste de toutes les collections
     # 
     # @return {Array} Liste des noms des collections dans le dossier ./collection

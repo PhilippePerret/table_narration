@@ -38,9 +38,8 @@ class << self
       foo = case bal
         when 'film' then Film::new(ide)
         when 'mot'  then Mot::new(ide)
-        when 'ref'  then Ref::new(ide)
-        when 'img'  then 
-          Image::new(ide, val)
+        when 'ref'  then parse_reference ide
+        when 'img'  then Image::new(ide, val)
       end
       case bal
         when 'film', 'mot', 'ref'
@@ -51,6 +50,20 @@ class << self
     }
   end
   
+  # Traitement d'une référence
+  # --------------------------
+  # @return {Ref} L'instance Ref de la référence, dont on appellera la
+  #               méthode `to_latex`
+  # Ce traitement est isolé pour pouvoir voir si la référence fait référence
+  # à un autre livre, donc à un document externe.
+  # Si c'est le cas, elle renseigne la liste $IDS_BOOKS_XR qui se chargera de
+  # préciser à LaTex de charger les livres externes.
+  # Noter qu'une erreur peut être produite si le livre externe n'a pas encore 
+  # été publié (voir si elle est fatale)
+  def parse_reference ref
+    $IDS_BOOKS_XR
+    Ref::new(ref) # l'instance référence
+  end
   # Traitement des balises HTML (<i>, <u>, etc.) contenues dans @code
   # TODO: Normalement, je devrais mettre ça dans RLatex
   def balises_html

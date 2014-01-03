@@ -32,18 +32,37 @@
 window.Ref = function(rid)
 {
   var did = rid.split('-')
+  
+  if(did.length == 2 /* ancienne référence */)
+  {
+    F.error("La référence `"+rid+"` est obsolète. Il faut l'actualiser (avec le livre). Je mets 0 en attendant mais ça risque de produire des erreurs.")
+    did.unshift("0")
+  }
   /**
-    * Type de la cible de la référence
+    * Class de la référence
+    * @property {String} class
+    * @static
+    */
+  this.class = "Ref"
+  /**
+    * Book de la référence
+    * @note Cette propriété permet d'aller plus vite, au cours de la
+    * publication du livre, pour savoir si la fiche appartient au même
+    * livre.
+    */
+  this.book_id = did[0]
+  /**
+    * Type de la cible de la référence ('book', 'page', etc.)
     * @property {String} type
     * @final
     */
-  this.type = this.cible_type = did[0]
+  this.type = this.cible_type = did[1]
   /**
     * Identifiant de la cible de la référence
     * @property {Number|String} id
     * @final
     */
-  this.id   = this.cible_id   = did[1]
+  this.id   = this.cible_id   = did[2]
   
   /**
     * La fiche porteuse de la référence, c'est-à-dire qui la possède dans
@@ -56,7 +75,6 @@ window.Ref = function(rid)
     * @property {Fiche} porteuse
     */
   this.porteuse = null
-  
   
   REFS.list[rid] = this
 }
@@ -159,7 +177,7 @@ Object.defineProperties(Ref.prototype, {
   "to_html":{
     get:function(){
       return '<ref' +
-                ' class="'+this.class + '"'+
+                ' class="'+this.classcss + '"'+
                 ' onclick="FICHES.show('+this.id+', \''+this.type+'\', event)"'+
                 '>' +
                 this.titre_for_porteuse +
@@ -287,7 +305,7 @@ Object.defineProperties(Ref.prototype, {
         throw err
       }
       if(!this.cible || !this.cible.loaded) return false
-      else return this.cible.book_id == this.porteuse.book_id
+      else return this.book == this.porteuse.book_id
     }
   },
   
@@ -302,9 +320,9 @@ Object.defineProperties(Ref.prototype, {
     *     insertion dans le texte demandée.
     * @property {String} class
     */
-  "class":{
+  "classcss":{
     get:function(){
-      return this['class_'+(this.same_book?'same':'hors')+'_book']
+      return this['classcss_'+(this.same_book?'same':'hors')+'_book']
     }
   },
   /**
@@ -316,7 +334,7 @@ Object.defineProperties(Ref.prototype, {
     *     fiche porteuse (paragraphe)
     * @property {String} class_same_book
     */
-  "class_same_book":{
+  "classcss_same_book":{
     get:function(){
       return this.type+"-"+this.id+"-in"
     }
@@ -331,7 +349,7 @@ Object.defineProperties(Ref.prototype, {
     *     fiche porteuse (paragraphe)
     * @property {String} class_hors_book
     */
-  "class_hors_book":{
+  "classcss_hors_book":{
     get:function(){
       return this.type+"-"+this.id+"-out"
     }
@@ -404,27 +422,9 @@ Object.defineProperties(Ref.prototype, {
     */
   "book":{
     get:function(){ 
-      if(undefined == this._book) this._book = this.cible.book 
+      if(undefined == this._book) this._book = get_fiche(this.book_id)
       return this._book
     }
   },
-  
-  /**
-    * Retourne l'identifiant du livre de la référence
-    *
-    * Notes
-    * -----
-    *   * Pour obtenir cette information, il faut obligatoirement que
-    *     la cible de la référence soit chargée. Donc à n'utiliser que dans les
-    *     méthodes/propriétés qui traitent du cas où la cible est loaded.
-    *
-    * @property book_id
-    * @type {String|Number}
-    */
-  "book_id":{
-    get:function(){
-      return this.book.id
-    }
-  }
   
 })

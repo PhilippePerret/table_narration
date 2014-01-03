@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -350,7 +380,14 @@
                             </li>
                         
                             <li class="index-item method inherited">
-                                <a href="#method_onchange_texte">onchange_texte</a>
+                                <a href="#method_onchange_titre">onchange_titre</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_onchange_titre_or_texte">onchange_titre_or_texte</a>
 
                                 
                                 
@@ -371,7 +408,35 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_prepare_lecteur_pdf">prepare_lecteur_pdf</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_publish">publish</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_read">read</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_read">read</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_regle_verso_mode_unique">regle_verso_mode_unique</a>
 
                                 
                                 
@@ -419,6 +484,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_stop_read">stop_read</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_suite_show">suite_show</a>
 
@@ -427,14 +499,21 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_to_tag">to_tag</a>
+                                <a href="#method_templatize">templatize</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method inherited">
-                                <a href="#method_value_by_ptype">value_by_ptype</a>
+                                <a href="#method_texte_in_textarea">texte_in_textarea</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_to_tag">to_tag</a>
 
                                 
                                 
@@ -473,6 +552,13 @@
                         
                             <li class="index-item property inherited">
                                 <a href="#property_create">create</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_current_read_book">current_read_book</a>
 
                                 
                                 
@@ -534,8 +620,22 @@
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_lecteur_pdf">lecteur_pdf</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item property inherited">
                                 <a href="#property_main_field">main_field</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_next">next</a>
 
                                 
                                 
@@ -562,8 +662,24 @@
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_pdf_filename">pdf_filename</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
                             <li class="index-item property inherited">
                                 <a href="#property_prepare_verso">prepare_verso</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_prev">prev</a>
 
                                 
                                 
@@ -585,6 +701,20 @@
                         
                             <li class="index-item property inherited">
                                 <a href="#property_retourne">retourne</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre_for_ref">titre_for_ref</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_titre_for_ref">titre_for_ref</a>
 
                                 
                                 
@@ -656,7 +786,7 @@
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l706"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:706</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l724"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:724</code></a>
         
         </p>
 
@@ -785,7 +915,7 @@ d&#39;enfant.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l830"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:830</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l870"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:870</code></a>
         
         </p>
 
@@ -851,7 +981,7 @@ d&#39;enfant.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l156"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:156</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l170"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:170</code></a>
         
         </p>
 
@@ -869,6 +999,8 @@ d&#39;enfant.</li>
 <li>En mode fermé, le titre est disabled</li>
 <li>Si la préférences &quot;Livre rangé&quot; est true et que c&#39;est un livre, on
 doit le recaler à sa place.</li>
+<li>Si on est en “mode unique” (un seul book et une seule page ouverte à 
+la fois, on doit positionner la fiche avec UI.open_mode_unique)</li>
 </ul>
 
     </div>
@@ -910,7 +1042,7 @@ doit le recaler à sa place.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l776"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:776</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l816"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:816</code></a>
         
         </p>
 
@@ -994,7 +1126,7 @@ de saisie.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l15"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:15</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l32"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:32</code></a>
         
         </p>
 
@@ -1098,7 +1230,7 @@ scénodico, etc.)  </p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l327"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:327</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l363"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:363</code></a>
         
         </p>
 
@@ -1159,7 +1291,7 @@ la fiche est chargée et visible</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l158"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:158</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l182"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:182</code></a>
         
         </p>
 
@@ -1236,7 +1368,7 @@ la fiche ouvrable après le test</code><fiche>.is_not_openable&#39;</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l394"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:394</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l430"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:430</code></a>
         
         </p>
 
@@ -1292,7 +1424,7 @@ la fiche ouvrable après le test</code><fiche>.is_not_openable&#39;</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l369"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:369</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l405"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:405</code></a>
         
         </p>
 
@@ -1368,7 +1500,7 @@ lorsque les déplacements sembleront terminés.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l591"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:591</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l609"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:609</code></a>
         
         </p>
 
@@ -1479,7 +1611,7 @@ lorsque les déplacements sembleront terminés.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l652"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:652</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l670"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:670</code></a>
         
         </p>
 
@@ -1552,8 +1684,94 @@ depuis <code>move_up</code> et <code>move_down</code>.</li>
 </div>
 
                 
-                    <div id="method_onchange_texte" class="method item inherited">
-    <h3 class="name"><code>onchange_texte</code></h3>
+                    <div id="method_onchange_titre" class="method item inherited">
+    <h3 class="name"><code>onchange_titre</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>new_value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_onchange_titre">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l871"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:871</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Procède au change de titre de la fiche (tout type sauf paragraphe)</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">new_value</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>La nouvelle valeur à donner au titre</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onchange_titre_or_texte" class="method item inherited">
+    <h3 class="name"><code>onchange_titre_or_texte</code></h3>
 
     
         <div class="args">
@@ -1591,11 +1809,11 @@ depuis <code>move_up</code> et <code>move_down</code>.</li>
         
             
                 <p>Inherited from
-                <a href="../classes/Fiche.html#method_onchange_texte">Fiche</a>:
+                <a href="../classes/Fiche.html#method_onchange_titre_or_texte">Fiche</a>:
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l820"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:820</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l838"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:838</code></a>
         
         </p>
 
@@ -1616,6 +1834,8 @@ l&#39;on presse la touche RETURN sur le champ.</li>
 <li>C&#39;est vraiment cette fonction qui inaugure le changement du
 titre, car si c&#39;était <code>titre=</code> (propriété complexe), on aura
 une difficulté à la définition des fiches remontées.</li>
+<li>Les méthodes <code>onchange_titre</code> et <code>onchange_texte</code> ont été 
+différentiées car le traitement est très différent pour un texte.</li>
 </ul>
 
     </div>
@@ -1717,9 +1937,11 @@ et on montre ses enfants (paragraphes).</li>
 <li>Propriété complexe, donc appeler sans parenthèses.</li>
 <li>Si une méthode doit suivre, définir <code>this.pour_suivre_open</code></li>
 <li>La méthode peut être appelée même si la fiche est ouverte, dans lequel
-cas seul la méthode pour suivre sera traitée.</li>
+cas seule la méthode pour suivre sera traitée.</li>
 <li>La méthode est récursive, c&#39;est-à-dire qu&#39;elle ouvre tous les parents
 avant de s&#39;ouvrir.</li>
+<li>Si le type de fiche possède une méthode <code>after_open</code>, elle est appelée
+en fin de processus (avant la méthode <code>pour_suivre_open</code>)</li>
 <li>Lorsque l&#39;option &quot;Livres rangés&quot; est choisie dans les préférences de
 l&#39;application, la méthode utilise un comportement particulier pour ouvrir
 le livre : elle le décale vers la droite de UI.GRID_X.</li>
@@ -1764,7 +1986,7 @@ le livre : elle le décale vers la droite de UI.GRID_X.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l195"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:195</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l219"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:219</code></a>
         
         </p>
 
@@ -1781,6 +2003,71 @@ le livre : elle le décale vers la droite de UI.GRID_X.</li>
 <li>ses top / left
 Notes<ul>
 <li>Propriété complexe =&gt; appeler sans parenthèses</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_prepare_lecteur_pdf" class="method item">
+    <h3 class="name"><code>prepare_lecteur_pdf</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l47"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:47</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode qui prépare le lecteur PDF</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La préparation consiste à <ul>
+<li>Afficher le DIV du lecteur</li>
+<li>Le rendre draggable si nécessaire</li>
 </ul>
 </li>
 </ul>
@@ -1841,7 +2128,7 @@ Notes<ul>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l13"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:13</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l75"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:75</code></a>
         
         </p>
 
@@ -1908,6 +2195,312 @@ fichier postscript et PDF par mon RLatex.</p>
 </div>
 
                 
+                    <div id="method_read" class="method item">
+    <h3 class="name"><code>read</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>book</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>params</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l19"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:19</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode de classe pour lire le PDF du livre</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">book</code>
+                        <span class="type">Book</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;instance du livre à lire</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">params</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Paramètres pour la lecture</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">page</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Page à partir de laquelle il faut lire</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_read" class="method item">
+    <h3 class="name"><code>read</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>params</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l116"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:116</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pour lire le livre, c&#39;est-à-dire le passer de page en page depuis la 
+couverture jusqu&#39;à la fin.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Ce n&#39;est pas cette méthode qui doit être appelée, mais Book.read (méthode
+de classe)</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">params</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Les paramètres de lecture</p>
+
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">page</code>
+                                    <span class="type">Number</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Page à partir de laquelle il faut lire (1 = couverture)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_regle_verso_mode_unique" class="method item inherited">
+    <h3 class="name"><code>regle_verso_mode_unique</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_regle_verso_mode_unique">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l308"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:308</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Règle le verso quand on est en mode unique (un seul page/book ouvert et
+fixé dans la page)</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Contrairement à la méthode <code>regle_verso</code> qui n&#39;est invoqué que lorsque
+on retourne la fiche, cette méthode est appelée dans les deux sens.</li>
+<li>Elle permet d&#39;afficher correctement le verso, pour toujours le voir.</li>
+<li>Propriété complexe =&gt; appeler sans parenthèses</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_remove_child" class="method item inherited">
     <h3 class="name"><code>remove_child</code></h3>
 
@@ -1947,7 +2540,7 @@ fichier postscript et PDF par mon RLatex.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l783"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:783</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l801"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:801</code></a>
         
         </p>
 
@@ -2038,7 +2631,7 @@ fichier postscript et PDF par mon RLatex.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l35"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:35</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l97"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:97</code></a>
         
         </p>
 
@@ -2114,7 +2707,7 @@ fichier postscript et PDF par mon RLatex.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l505"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:505</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l541"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:541</code></a>
         
         </p>
 
@@ -2242,7 +2835,7 @@ d&#39;une fiche à l&#39;autre lorsqu&#39;elle est retournée.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l229"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:229</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l246"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:246</code></a>
         
         </p>
 
@@ -2407,7 +3000,7 @@ pas encore chargés</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l878"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:878</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l888"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:888</code></a>
         
         </p>
 
@@ -2477,6 +3070,63 @@ la fiche sur la grille (true par défaut)</li>
 </div>
 
                 
+                    <div id="method_stop_read" class="method item">
+    <h3 class="name"><code>stop_read</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l37"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode de classe pour arrêter la lecture PDF</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_suite_show" class="method item inherited">
     <h3 class="name"><code>suite_show</code></h3>
 
@@ -2516,7 +3166,7 @@ la fiche sur la grille (true par défaut)</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l295"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:295</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l331"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:331</code></a>
         
         </p>
 
@@ -2631,6 +3281,157 @@ fait simplement clignoter la fiche.</li>
 </div>
 
                 
+                    <div id="method_templatize" class="method item">
+    <h3 class="name"><code>templatize</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>params</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l10"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:10</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Prend un &quot;template&quot; (par exemple une locale) et remplace tous les mots
+&quot;<em><MOT></em>&quot; par les valeurs fournies en argument.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">params</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Table de remplacement. Les clés seront transformées en
+                        majuscules.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_texte_in_textarea" class="method item inherited">
+    <h3 class="name"><code>texte_in_textarea</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#method_texte_in_textarea">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l774"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:774</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Place le texte dans un textarea pour son édition
+Notes</p>
+<ul>
+<li>Pour les paragraphes, adapte la taille du textarea à la
+taille du texte.</li>
+<li>Propriété complexe =&gt; appeler sans parenthèses</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_to_tag" class="method item">
     <h3 class="name"><code>to_tag</code></h3>
 
@@ -2679,7 +3480,7 @@ fait simplement clignoter la fiche.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l36"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:36</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_extension_String.js.html#l53"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;extension&#x2F;String.js:53</code></a>
         
         </p>
 
@@ -2760,112 +3561,6 @@ null ou un false dans un champ, il faut le donner en string : &quot;null&quot; o
 </div>
 
                 
-                    <div id="method_value_by_ptype" class="method item inherited">
-    <h3 class="name"><code>value_by_ptype</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>value</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="../classes/Fiche.html#method_value_by_ptype">Fiche</a>:
-            
-        
-        
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l856"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:856</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Traite la nouvelle valeur du paragraphe (si c&#39;est un paragraphe) en
-fonction de son ptype. Pour le moment, la méthode se contente de transformer
-les `**&#39; en retours chariot dans les paragraphes de ptype &#39;list&#39; et &#39;code&#39;</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">value</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>La valeur à traiter</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">String</span>:
-                    
-                    <p>la nouvelle valeur au besoin</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
             </div>
         
 
@@ -2938,7 +3633,7 @@ les `**&#39; en retours chariot dans les paragraphes de ptype &#39;list&#39; et 
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l126"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:126</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l150"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:150</code></a>
         
         </p>
 
@@ -2982,7 +3677,7 @@ les `**&#39; en retours chariot dans les paragraphes de ptype &#39;list&#39; et 
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l449"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:449</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l473"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:473</code></a>
         
         </p>
 
@@ -2996,7 +3691,7 @@ les `**&#39; en retours chariot dans les paragraphes de ptype &#39;list&#39; et 
 Notes</p>
 <ul>
 <li>En réalité, la &quot;copie&quot; de la fiche ne consiste qu&#39;à mettre sa référence
-dans App.clipboard</li>
+dans App.Clipboard</li>
 <li>On reconnait une fiche coupée d&#39;une fiche copiée au &#39;cuted&#39; qui est 
 ajouté quand on coupe la fiche.</li>
 </ul>
@@ -3031,7 +3726,7 @@ ajouté quand on coupe la fiche.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l210"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:210</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l234"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:234</code></a>
         
         </p>
 
@@ -3062,6 +3757,55 @@ l&#39;enregistrement.</li>
 </div>
 
                 
+                    <div id="property_current_read_book" class="property item">
+    <h3 class="name"><code>current_read_book</code></h3>
+    <span class="type">Book</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l13"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:13</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Le livre en lecture (PDF)</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> Null</p>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_cut" class="property item inherited">
     <h3 class="name"><code>cut</code></h3>
     <span class="type">Method</span>
@@ -3082,7 +3826,7 @@ l&#39;enregistrement.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l466"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:466</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l488"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:488</code></a>
         
         </p>
 
@@ -3095,9 +3839,9 @@ l&#39;enregistrement.</li>
         <p>Coupe la fiche
 Notes</p>
 <ul>
-<li>En réalité, la &quot;coupe&quot; de la fiche ne consiste qu&#39;à mettre sa référence
-dans App.clipboard en mettant son cuted à true et en masquant son objet
-dans le DOM (pour ne pas avoir à le reconstruire.)</li>
+<li>En réalité, la &quot;coupe&quot; de la fiche ne consiste qu&#39;à mettre son instance
+dans App.Clipboard.content.fiche en mettant son cuted à true et en masquant 
+son objet dans le DOM (pour ne pas avoir à le reconstruire.)</li>
 </ul>
 
     </div>
@@ -3425,6 +4169,53 @@ première fois que le verso sera défini.</li>
 </div>
 
                 
+                    <div id="property_lecteur_pdf" class="property item">
+    <h3 class="name"><code>lecteur_pdf</code></h3>
+    <span class="type">JQuerySet</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l65"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:65</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Objet jQuery du lecteur PDF</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_main_field" class="property item inherited">
     <h3 class="name"><code>main_field</code></h3>
     <span class="type">JQuerySet</span>
@@ -3445,7 +4236,7 @@ première fois que le verso sera défini.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l648"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:648</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l684"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:684</code></a>
         
         </p>
 
@@ -3466,6 +4257,51 @@ ou non. Mais est-ce vraiment la bonne propriété à regarder ?…</li>
 
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_next" class="property item inherited">
+    <h3 class="name"><code>next</code></h3>
+    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_next">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l94"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:94</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Return la fiche suivant la fiche courante
+Si elle existe</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> La fiche ou Null</p>
     
 
     
@@ -3543,7 +4379,7 @@ si la fiche n&#39;est pas encore construite.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l108"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:108</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l132"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:132</code></a>
         
         </p>
 
@@ -3593,7 +4429,7 @@ True si la fiche est ouverte, false dans le cas contraire.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l486"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:486</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l505"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:505</code></a>
         
         </p>
 
@@ -3615,6 +4451,56 @@ a été coupée, il faut la sortir de son parent et la remettre dans le nouveau.
 </ul>
 <p>TODO: Pour le moment, on ne peut pas coller une fiche sur la table, mais on
 devrait pouvoir le faire.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_pdf_filename" class="property item">
+    <h3 class="name"><code>pdf_filename</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l144"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:144</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le nom du book tel qu&#39;il a été utilisé pour la création
+du fichier PDF.</p>
 
     </div>
 
@@ -3672,6 +4558,51 @@ Notes</p>
 </div>
 
                 
+                    <div id="property_prev" class="property item inherited">
+    <h3 class="name"><code>prev</code></h3>
+    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/Fiche.html#property_prev">Fiche</a>:
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l106"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:106</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Return la fiche précédent la fiche courante
+Si elle existe, ou Null</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> la fiche ou Null</p>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_ranged" class="property item inherited">
     <h3 class="name"><code>ranged</code></h3>
     <span class="type">Boolean</span>
@@ -3692,7 +4623,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l135"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:135</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_class.js.html#l159"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_class.js:159</code></a>
         
         </p>
 
@@ -3786,7 +4717,7 @@ ils sont toujours rangés.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l269"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:269</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_DOM.js.html#l286"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_DOM.js:286</code></a>
         
         </p>
 
@@ -3804,6 +4735,98 @@ Donc lorsqu&#39;on retourne pour la première fois une fiche, il faut s&#39;assu
 que son verso est preparé (<code>verso_ready</code>). Cela se fait dans la méthode
 <code>regle_verso</code>.</li>
 </ul>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre_for_ref" class="property item">
+    <h3 class="name"><code>titre_for_ref</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Chapter_class.js.html#l30"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Chapter_class.js:30</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le titre du chapitre pour affichage dans une référence</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_titre_for_ref" class="property item">
+    <h3 class="name"><code>titre_for_ref</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/String.html">String</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_livre_Book_class.js.html#l136"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;livre&#x2F;Book_class.js:136</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne le titre du book pour affichage dans une référence</p>
 
     </div>
 

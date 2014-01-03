@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>UI.ModeUnique</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/App.html">App</a></li>
+            
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
+                <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
+            
+                <li><a href="../classes/Chapter.html">Chapter</a></li>
+            
+                <li><a href="../classes/Collection.html">Collection</a></li>
+            
+                <li><a href="../classes/ColText.html">ColText</a></li>
+            
+                <li><a href="../classes/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../classes/DICO.html">DICO</a></li>
+            
+                <li><a href="../classes/Fiche.html">Fiche</a></li>
+            
+                <li><a href="../classes/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../classes/Film.html">Film</a></li>
+            
+                <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
+            
+                <li><a href="../classes/Mot.html">Mot</a></li>
+            
+                <li><a href="../classes/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../classes/OBJETS.html">OBJETS</a></li>
+            
+                <li><a href="../classes/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
+                <li><a href="../classes/Page.html">Page</a></li>
+            
+                <li><a href="../classes/Paragraph.html">Paragraph</a></li>
+            
+                <li><a href="../classes/PARAGRAPHES.html">PARAGRAPHES</a></li>
+            
+                <li><a href="../classes/Ref.html">Ref</a></li>
+            
+                <li><a href="../classes/REFS.html">REFS</a></li>
+            
+                <li><a href="../classes/Search.html">Search</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/UI.Html.html">UI.Html</a></li>
+            
+                <li><a href="../classes/UI.Input.html">UI.Input</a></li>
+            
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/app.html">app</a></li>
+            
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
+                <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
+            
+                <li><a href="../modules/Chapter.html">Chapter</a></li>
+            
+                <li><a href="../modules/Collection.html">Collection</a></li>
+            
+                <li><a href="../modules/ColText.html">ColText</a></li>
+            
+                <li><a href="../modules/ContextualHelp.html">ContextualHelp</a></li>
+            
+                <li><a href="../modules/data.html">data</a></li>
+            
+                <li><a href="../modules/Data.html">Data</a></li>
+            
+                <li><a href="../modules/Debug.html">Debug</a></li>
+            
+                <li><a href="../modules/DICO.html">DICO</a></li>
+            
+                <li><a href="../modules/DICO.js.html">DICO.js</a></li>
+            
+                <li><a href="../modules/Dom.html">Dom</a></li>
+            
+                <li><a href="../modules/dom.html">dom</a></li>
+            
+                <li><a href="../modules/Edition.html">Edition</a></li>
+            
+                <li><a href="../modules/edition.collection.js.html">edition.collection.js</a></li>
+            
+                <li><a href="../modules/Fiche.html">Fiche</a></li>
+            
+                <li><a href="../modules/fiche_data.html">fiche_data</a></li>
+            
+                <li><a href="../modules/fiche_dom.html">fiche_dom</a></li>
+            
+                <li><a href="../modules/FICHES.html">FICHES</a></li>
+            
+                <li><a href="../modules/FilmClass.html">FilmClass</a></li>
+            
+                <li><a href="../modules/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../modules/Html.html">Html</a></li>
+            
+                <li><a href="../modules/Input.html">Input</a></li>
+            
+                <li><a href="../modules/jQueryExtension.html">jQueryExtension</a></li>
+            
+                <li><a href="../modules/KeyboardEvents.html">KeyboardEvents</a></li>
+            
+                <li><a href="../modules/KeyEvents.html">KeyEvents</a></li>
+            
+                <li><a href="../modules/Mot.html">Mot</a></li>
+            
+                <li><a href="../modules/OBJET.html">OBJET</a></li>
+            
+                <li><a href="../modules/ObjetClass.html">ObjetClass</a></li>
+            
+                <li><a href="../modules/objets.html">objets</a></li>
+            
+                <li><a href="../modules/OBJETS.Dom.html">OBJETS.Dom</a></li>
+            
+                <li><a href="../modules/Page.html">Page</a></li>
+            
+                <li><a href="../modules/Paragraph.html">Paragraph</a></li>
+            
+                <li><a href="../modules/PARAGRAPHS.html">PARAGRAPHS</a></li>
+            
+                <li><a href="../modules/ready.js.html">ready.js</a></li>
+            
+                <li><a href="../modules/ref.js.html">ref.js</a></li>
+            
+                <li><a href="../modules/REFS.js.html">REFS.js</a></li>
+            
+                <li><a href="../modules/Search.js.html">Search.js</a></li>
+            
+                <li><a href="../modules/String.html">String</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
+            
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
+                <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
+            
+                <li><a href="../modules/window.html">window</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>UI.ModeUnique Class</h1>
+<div class="box meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l127"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:127</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/ui_mode_unique.html">ui_mode_unique</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Sous-objet UI.ModeUnique
+Sera étendu plus bas</p>
+
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_add_to_histo">add_to_histo</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_close_mode_unique">close_mode_unique</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_last_fiche_historique">last_fiche_historique</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_positionne">positionne</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_remove_from_histo">remove_from_histo</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_set_div_children">set_div_children</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_set_hauteur">set_hauteur</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_set_position">set_position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_unpositionne">unpositionne</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_fiche">fiche</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_TOP_MODE_UNIQUE">TOP_MODE_UNIQUE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_add_to_histo" class="method item">
+    <h3 class="name"><code>add_to_histo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fiche</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l78"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:78</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode ajoutant la fiche +fiche+ à l&#39;historique des fiches book ou page
+ouvertes.
+Notes</p>
+<ul>
+<li>Si la fiche à ajouter est la même que la dernière fiche ouverte,
+on ne fait rien. Cela arrive chaque fois qu&#39;on ferme une fiche, puisque
+la dernière ouverte est alors rouverte (et passe donc par ici)</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">fiche</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Instance fiche de la fiche</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_close_mode_unique" class="method item">
+    <h3 class="name"><code>close_mode_unique</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fiche</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l64"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:64</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode appelée quand on ferme une fiche en mode unique
+Notes</p>
+<ul>
+<li>La méthode est appelée par tout type de fiche, donc il faut tester ici
+que ce soit un type book ou page</li>
+</ul>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">fiche</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>L&#39;instance fiche à fermer</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_last_fiche_historique" class="method item">
+    <h3 class="name"><code>last_fiche_historique</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l113"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:113</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la dernière fiche enregistrée dans l&#39;historique (mode unique)</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Le type de fiche &#39;book&#39; ou &#39;page&#39;</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_positionne" class="method item">
+    <h3 class="name"><code>positionne</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fiche</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l146"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:146</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Positionne la fiche dans le mode unique</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">fiche</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Instance de la fiche à positionner</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_remove_from_histo" class="method item">
+    <h3 class="name"><code>remove_from_histo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>fiche</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l94"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:94</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode retirant la fiche +fiche+ de l&#39;historique des fiches book ou page
+ouvertes.
+C&#39;est forcément la dernière fiche ouverte. Mais on vérifie quand même</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">fiche</code>
+                        <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Instance fiche de la fiche</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_set_div_children" class="method item">
+    <h3 class="name"><code>set_div_children</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l191"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:191</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Règle le div des enfants dans le mode unique</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_set_hauteur" class="method item">
+    <h3 class="name"><code>set_hauteur</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l180"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:180</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Règle la hauteur de la fiche dans le mode unique</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_set_position" class="method item">
+    <h3 class="name"><code>set_position</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l169"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:169</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Règle la position de la fiche dans le mode unique</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_unpositionne" class="method item">
+    <h3 class="name"><code>unpositionne</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l158"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:158</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Méthode pour &quot;dépositionner la fiche&quot;
+La méthode supprime ce que <code>positionne</code> avait réglé (pour pouvoir ranger
+correctement la fiche)</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_fiche" class="property item">
+    <h3 class="name"><code>fiche</code></h3>
+    <span class="type"><a href="../classes/Fiche.html" class="crosslink">Fiche</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l141"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:141</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>La fiche couramment traité dans le mode unique</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_TOP_MODE_UNIQUE" class="property item">
+    <h3 class="name"><code>TOP_MODE_UNIQUE</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_ui_ui_mode_unique.js.html#l132"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;ui&#x2F;ui_mode_unique.js:132</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Top de la fiche book ou page en mode unique</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

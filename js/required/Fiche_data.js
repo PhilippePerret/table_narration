@@ -182,12 +182,12 @@ Object.defineProperties(Fiche.prototype,{
     * Notes
     * -----
     *   * La méthode est utilisée aussi bien par les instances {Ref} que
-    *     par le clipboard de l'application.
-    * @proprety {String} to_balise
+    *     par le clipboard de l'application ou pour coller une référence.
+    * @property {String} to_balise
     */
   "to_balise":{
     get:function(){
-      return "[ref:"+this.type+"-"+this.id+"|"+this.titre_for_ref+"]"
+      return "[ref:"+this.book_id+'-'+this.type+"-"+this.id+"|"+this.titre_for_ref+"]"
     }
   },
   /**
@@ -251,10 +251,12 @@ Object.defineProperties(Fiche.prototype,{
     * -----
     *   * Propriété complexe => appeler sans parenthèses
     * @method copy_reference
+    *
     */
   "copy_reference":{
     get:function(){
-      App.Clipboard.add(get_ref(this.type+"-"+this.id),{type:'ref'})
+      if(!this.book_id) return F.error("Impossible de prendre la référence d'une fiche n'appartenant pas à un livre.")        
+      App.Clipboard.add(get_ref(this.book_id+"-"+this.type+"-"+this.id),{type:'ref'})
       F.show( image('clavier/K_Command.png')+image('clavier/K_V.png')+
               " pour insérer référence.")
     }

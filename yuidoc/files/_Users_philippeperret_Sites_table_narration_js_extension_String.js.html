@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -227,25 +257,42 @@
  **/
 
 $.extend(String.prototype,{
+  /**
+    * Prend un &quot;template&quot; (par exemple une locale) et remplace tous les mots
+    * &quot;_&lt;MOT&gt;_&quot; par les valeurs fournies en argument.
+    * @method templatize
+    * @param  {Object} params Table de remplacement. Les clés seront transformées en
+    *                         majuscules.
+    */
+  templatize:function(params)
+  {
+    var transformed = this.toString(), reg ;
+    L(params).each(function(balise, replacement){
+      reg = new RegExp(&quot;_&quot;+balise.toUpperCase()+&quot;_&quot;, &quot;g&quot;)
+      transformed = transformed.replace(reg, replacement)
+    })
+    return transformed
+  }
   
 })
 
 Object.defineProperties(String.prototype, {
   
+  
   /**
-   *  Formate le string pour affichage (en remplaçant notamment les balises films,
-   *  scénodico, etc.)  
-   *
-   *  NOTES
-   *  -----
-   *    * C&#x27;est un raccourci pour ColText.formate(&lt;this&gt;, &lt;cible&gt;)
-   *
-   *  @method formate
-   *  @param  {Fiche} cible   La fiche cible du lien (utile pour les références)
-   *  @return {String} Le string courant formaté.
-   *  @example
-   *      &lt;texte&gt;.formate
-   */
+    * Formate le string pour affichage (en remplaçant notamment les balises films,
+    * scénodico, etc.)  
+    *
+    * NOTES
+    * -----
+    *   * C&#x27;est un raccourci pour ColText.formate(&lt;this&gt;, &lt;cible&gt;)
+    *
+    * @method formate
+    * @param  {Fiche}   cible   La fiche cible du lien (utile pour les références)
+    * @return {String}  Le string courant formaté.
+    * @example
+    *     &lt;texte&gt;.formate
+    */
   &quot;formate&quot;:{
     value:function(cible){
       return ColText.formate(this.toString(), cible)

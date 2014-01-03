@@ -30,8 +30,14 @@ App.Clipboard = {
     */
   add:function(clip, params)
   {
+    dlog("-> add")
     if(undefined == params) params = {}
+    dlog("1")
     if(this.content == null) this.content = {}
+    dlog("2")
+    dlog(clip)
+    clip.class
+    dlog("3")
     if(clip.class == "Fiche")
     { 
       clip.cuted = true
@@ -42,6 +48,7 @@ App.Clipboard = {
       if(undefined == params.type) params.type = (typeof clip)
       this.content[params.type] = clip
     } 
+    dlog("Sortie de add")
   },
   
   /**

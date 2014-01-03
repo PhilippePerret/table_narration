@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -422,6 +452,22 @@
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_OPTIONS">OPTIONS</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_to_balise">to_balise</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_type">type</a>
 
                                 
@@ -597,7 +643,7 @@ avec les options +options+</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l225"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:225</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l247"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:247</code></a>
         
         </p>
 
@@ -608,7 +654,7 @@ avec les options +options+</p>
     </div>
 
     <div class="description">
-        <p>Met dans le App.clipboard l&#39;instance {Ref} à la fiche courante. Cette
+        <p>Met dans le App.Clipboard l&#39;instance {Ref} à la fiche courante. Cette
 référence pourra être ensuite collée dans le texte.</p>
 <h2 id="notes">Notes</h2>
 <ul>
@@ -669,7 +715,7 @@ référence pourra être ensuite collée dans le texte.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l392"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:392</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l419"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:419</code></a>
         
         </p>
 
@@ -912,7 +958,7 @@ référence pourra être ensuite collée dans le texte.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l350"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:350</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l372"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:372</code></a>
         
         </p>
 
@@ -928,6 +974,9 @@ référence pourra être ensuite collée dans le texte.</p>
 <ul>
 <li>Cette méthode renvoie le texte brut si +formate+ est FALSE
 Dans le cas contraire, elle le met en forme.</li>
+<li>La méthode est asynchrone lorsqu&#39;un paragraphe vient d&#39;être défini
+d&#39;un type particulier comme &#39;file&#39; et que le chargement du fichier
+est nécessaire.</li>
 </ul>
 
     </div>
@@ -947,10 +996,10 @@ Dans le cas contraire, elle le met en forme.</li>
                     
 
                     <div class="param-description">
-                        <pre><code>             Si TRUE le texte est interprété, i.e. par exemple que
-             ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
-             en forme. 
-             Si FALSE, le texte est renvoyé tel qu&#39;il est enregistré.</code></pre>
+                        <pre><code>              Si TRUE le texte est interprété, i.e. par exemple que
+              ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
+              en forme. 
+              Si FALSE, le texte est renvoyé tel qu&#39;il est enregistré.</code></pre>
 
                     </div>
 
@@ -1028,7 +1077,12 @@ Dans le cas contraire, elle le met en forme.</li>
     </div>
 
     <div class="description">
-        <p>Méthode appelée quand on change une option (verso)</p>
+        <p>Méthode appelée quand on change une option (verso)
+Notes</p>
+<ul>
+<li>Cela peut avoir un impact direct sur l&#39;affichage, comme pour les
+paragraphes not-printed.</li>
+</ul>
 
     </div>
 
@@ -1205,7 +1259,7 @@ Dans le cas contraire, elle le met en forme.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l375"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:375</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l401"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:401</code></a>
         
         </p>
 
@@ -1266,7 +1320,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l181"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:181</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l203"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:203</code></a>
         
         </p>
 
@@ -1315,7 +1369,7 @@ identifiant.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l171"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:171</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l193"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:193</code></a>
         
         </p>
 
@@ -1366,7 +1420,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l105"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:105</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l110"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:110</code></a>
         
         </p>
 
@@ -1507,7 +1561,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l155"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:155</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l164"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:164</code></a>
         
         </p>
 
@@ -1655,7 +1709,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l247"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:247</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l269"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:269</code></a>
         
         </p>
 
@@ -1707,7 +1761,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l201"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:201</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l223"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:223</code></a>
         
         </p>
 
@@ -1727,6 +1781,106 @@ Notes</p>
 
     
         <p><strong>Default:</strong> {Undefined}</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_OPTIONS" class="property item">
+    <h3 class="name"><code>OPTIONS</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_scenodico_DICO.js.html#l24"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;scenodico&#x2F;DICO.js:24</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Options pour l&#39;affichage du mot
+dans la page.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_to_balise" class="property item">
+    <h3 class="name"><code>to_balise</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/data.html">data</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l180"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:180</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Retourne la balise de référence de la fiche</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>La méthode est utilisée aussi bien par les instances {Ref} que
+par le clipboard de l&#39;application.</li>
+</ul>
+
+    </div>
+
     
 
     
@@ -1760,7 +1914,7 @@ Notes</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l139"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:139</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l148"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:148</code></a>
         
         </p>
 
@@ -1813,7 +1967,7 @@ d&#39;une page ou d&#39;un paragraphe.</p>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l163"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:163</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_required_Fiche_data.js.html#l172"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;required&#x2F;Fiche_data.js:172</code></a>
         
         </p>
 

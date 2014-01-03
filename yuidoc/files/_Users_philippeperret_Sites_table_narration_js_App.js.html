@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -265,23 +295,6 @@ window.App = window.App || {}
 $.extend(window.App, {
   
   /**
-    * Clipboard (mémoire tampon) de l&#x27;application. Pour placer du texte qui 
-    * devra ensuite être inséré dans le texte à l&#x27;aide de CMD+V.
-    * Notes
-    * -----
-    *   * La valeur est soit un {String} à copier tel quel dans le texte, soit
-    *     un {Object} qui doit obligatoirement répondre à la méthode &#x60;.to_balise&#x60;
-    *     qui doit retourner le texte à coller dans le texte.
-    *   * Utilisé par exemple pour les références
-    *   * C&#x27;est la pseudo-méthode &#x60;App.coller_clipboard&#x60; qui répond au CMD+V
-    *
-    * @property clipboard
-    * @type     {Object|String}
-    * @default  null
-    */
-  clipboard:null,
-  
-  /**
     * Mis à TRUE si un flash de la configuration courante a été demandé. Pour 
     * empêcher d&#x27;en enregistrer un nouveau à la fermeture de la collection.
     * Noter cependant que de toute façon, il sera impossible d&#x27;enregistrer la 
@@ -311,14 +324,40 @@ $.extend(window.App, {
     * @default Les préférences par défaut
     */
   preferences:{
-    snap        : true,   // place les fiches sur la grille
-    autosave    : false,  // sauvegarde automatique
-    saveconfig  : false,  // sauvegarde de la config à chaque sauvegarde
-    gridbook    : false,  // Alignement des livres (orientation dépend de dirgridbook)
-    dirgridbook : null    // Orientation de l&#x27;alignement des livres (&quot;v&quot; ou &quot;h&quot;)
+    modeunique    :false,   // Dans ce mode un seul élément de type &#x27;book&#x27; ou &#x27;page&#x27;
+                            // ouvert à la fois.
+    snap         : true,    // place les fiches sur la grille
+    autosave     : false,   // sauvegarde automatique
+    saveconfig   : false,   // sauvegarde de la config à chaque sauvegarde
+    gridbook     : false,   // Alignement des livres (orientation dépend de
+                            // dirgridbook)
+    dirgridbook  : null,    // Orientation de l&#x27;alignement des livres (&quot;v&quot; ou &quot;h&quot;),
+    showinfos     : false,  // Si true affiche le type et l&#x27;id de la fiche courante
+    masknotprinted: false,  // Si true, masque les paragraphes not printed
+    // Préférences hors panneau préférence
+    show_aspects_styles:true  // true: montre l&#x27;aspect de chaque style de paragraph
   },
   
+  /**
+    * Ouvre l&#x27;aide de l&#x27;application dans une nouvelle fenêtre
+    * @method help
+    */
+  help:function()
+  {
+    window.open(&#x27;_dev/Manual/Manuel.html&#x27;, &quot;help_table_narration&quot;)
+  },
   
+  /**
+    * Clone la collection courante dans une nouvelle fenêtre
+    * @method dupliquer
+    */
+  dupliquer:function()
+  {
+    this.cloneTable = window.open(&#x27;index.php&#x27;, &#x27;clone_table_narration&#x27;)
+    F.show(&quot;Le clipboard de l&#x27;autre fenêtre est accessible depuis cette table.\n&quot;+
+    &quot;Cela permet par exemple de copier des références ou même des fiches de la même &quot;+
+    &quot;série ou d&#x27;une autre.&quot;)
+  },
   /**
     * Enregistre la configuration d&#x27;ouverture (et de rangement) actuelle pour
     * la replacer au prochain chargement de l&#x27;application.
@@ -345,7 +384,8 @@ $.extend(window.App, {
     if(undefined == rajax)
     {
       Ajax.send(
-        {script:&#x27;app/save_config&#x27;, config:this.current_config, force:forcer},
+        {script:&#x27;app/save_config&#x27;, collection:Collection.name,
+        config:this.current_config, force:forcer},
         $.proxy(this.save_current_configuration, this, forcer)
       )
     }
@@ -366,6 +406,7 @@ $.extend(window.App, {
   {
     Ajax.send({
       script:&quot;app/test_ajax&quot;,
+      collection:Collection.name,
       data:{}
     }, $.proxy(this.suite_ajax, this))
   },
@@ -377,35 +418,6 @@ $.extend(window.App, {
 })
 
 Object.defineProperties(App,{
-  
-  /**
-    * Insert dans le texte le contenu du clipboard s&#x27;il n&#x27;est pas null.
-    * S&#x27;il est null, renvoie FALSE pour que CMD+V agisse par défaut.
-    * Notes
-    * -----
-    *   * Le App.clipboard est vidé dès qu&#x27;il est collé pour ne pas parasiter le
-    *     comportement normal du coller-copier.
-    *   * C&#x27;est une propriété complexe, donc l&#x27;appeler sans parenthèses.
-    *   * Le &#x60;clipboard&#x60; peut être soit un simple {String} soit un {Object} répondant
-    *     à la méthode &#x60;.to_balise&#x60; (comme les références).
-    *
-    * @method coller_clipboard
-    *
-    */
-  &quot;coller_clipboard&quot;:{
-    get:function(){
-      dlog(&quot;-&gt; App.coller_clipboard&quot;, DB_FCT_ENTER)
-      if(this.clipboard == null) return false
-      var clip ;
-      if(&#x27;string&#x27;==typeof this.clipboard) clip = this.clipboard.toString()
-      else clip = this.clipboard.to_balise
-      UI.Input.set_selection_to( clip )
-      this.clipboard = null
-      CHelp.adapt_with_fiche_active // pour actualiser les raccourcis actifs
-      dlog(&quot;&lt;- App.coller_clipboard&quot;, DB_FCT_ENTER)
-      return true
-    }
-  },
   /**
     * Pour passer en mode test
     *

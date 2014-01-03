@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -245,6 +275,10 @@ $.extend(Fiche.prototype,{
   
   /**
     * Méthode appelée quand on change une option (verso)
+    * Notes
+    *   * Cela peut avoir un impact direct sur l&#x27;affichage, comme pour les
+    *     paragraphes not-printed.
+    *
     * @method onchange_option
     * @param  {String}  prop   La propriété à définir
     * @param  {Any}     value La valeur à lui donner
@@ -253,6 +287,7 @@ $.extend(Fiche.prototype,{
   {
     if(this[prop] == value) return
     this[prop] = value
+    if(this.is_paragraph &amp;&amp; prop == &#x27;not_printed&#x27;) this.update_display
     this.modified = true
   },
   
@@ -332,8 +367,8 @@ Object.defineProperties(Fiche.prototype,{
   &quot;data&quot;:{
     get:function(){
       data = {
-        id:this.id, type:this.type, titre:this.titre,
-        top:this.top, left:this.left, dev:(this.dev || 0)
+        id:this.id, type:this.type, top:this.top, left:this.left, 
+        dev:(this.dev || 0), created_at:(this.created_at || parseInt(Time.now()/1000))
       }
       if(this.deleted)      data.deleted = true
       if(this.not_printed)  data.not_printed = true
@@ -348,10 +383,14 @@ Object.defineProperties(Fiche.prototype,{
       if(this.is_book) data.real_titre  = this.real_titre
       if(this.is_paragraph)
       {
-        data.texte  = this.texte
+        data.texte  = this.texte.stripSlashes()
         if(this._style) data.style = this._style.join(&#x27;.&#x27;)
         if(this.ptype)  data.ptype = this.ptype
-      } 
+      }
+      else
+      {
+        data.titre = this.titre.stripSlashes()
+      }
       return data
     }
   },
@@ -388,6 +427,19 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){ return this.type + &#x27;#&#x27; + this.id}
   },
 
+  /**
+    * Retourne la balise de référence de la fiche
+    * Notes
+    * -----
+    *   * La méthode est utilisée aussi bien par les instances {Ref} que
+    *     par le clipboard de l&#x27;application.
+    * @property {String} to_balise
+    */
+  &quot;to_balise&quot;:{
+    get:function(){
+      return &quot;[ref:&quot;+this.type+&quot;-&quot;+this.id+&quot;|&quot;+this.titre_for_ref+&quot;]&quot;
+    }
+  },
   /**
     * Type d&#x27;un enfant de la fiche courante
     * Notes
@@ -443,7 +495,7 @@ Object.defineProperties(Fiche.prototype,{
   },
 
   /**
-    * Met dans le App.clipboard l&#x27;instance {Ref} à la fiche courante. Cette
+    * Met dans le App.Clipboard l&#x27;instance {Ref} à la fiche courante. Cette
     * référence pourra être ensuite collée dans le texte.
     * Notes
     * -----
@@ -452,7 +504,7 @@ Object.defineProperties(Fiche.prototype,{
     */
   &quot;copy_reference&quot;:{
     get:function(){
-      App.clipboard = get_ref(this.type+&quot;-&quot;+this.id)
+      App.Clipboard.add(get_ref(this.type+&quot;-&quot;+this.id),{type:&#x27;ref&#x27;})
       F.show( image(&#x27;clavier/K_Command.png&#x27;)+image(&#x27;clavier/K_V.png&#x27;)+
               &quot; pour insérer référence.&quot;)
     }
@@ -485,7 +537,7 @@ Object.defineProperties(Fiche.prototype,{
     get:function(){ return this._resume },
     set:function(resume)
     {
-      if(resume.trim() == &quot;&quot;) resume = null
+      if(resume &amp;&amp; resume.trim() == &quot;&quot;) resume = null
       this._resume = resume
     }
   },
@@ -568,14 +620,18 @@ Object.defineProperties(Fiche.prototype,{
     }
   },
   /**
-    *  Retourne une valeur pour le champ principal (titre ou texte)
+    * Retourne une valeur pour le champ principal (titre ou texte)
     *
-    *  NOTES
-    *  -----
-    *    * Cette méthode renvoie le texte brut si +formate+ est FALSE
-    *      Dans le cas contraire, elle le met en forme.
+    * NOTES
+    * -----
+    *   * Cette méthode renvoie le texte brut si +formate+ est FALSE
+    *     Dans le cas contraire, elle le met en forme.
+    *   * La méthode est asynchrone lorsqu&#x27;un paragraphe vient d&#x27;être défini
+    *     d&#x27;un type particulier comme &#x27;file&#x27; et que le chargement du fichier
+    *     est nécessaire.
     *
     * @method main_field_value
+    *
     * @param  {Boolean} formate   
     *                   Si TRUE le texte est interprété, i.e. par exemple que
     *                   ses balises de référence ([&lt;balise&gt;:&lt;valeur&gt;]) sont mises
@@ -602,6 +658,7 @@ Object.defineProperties(Fiche.prototype,{
   &quot;update_display&quot;:{
     get:function(){
       this.main_field.set(this.main_field_value(this.edited == false))
+      if(this.is_paragraph) this.applique_filtre
     }
   }
   
@@ -640,6 +697,8 @@ Fiche.prototype.dispatch = function(data){
       break
     case &#x27;id&#x27;:
     case &#x27;dev&#x27;: // niveau de développement
+    case &#x27;created_at&#x27;:
+    case &#x27;updated_at&#x27;:
       val = parseInt(val, 10); 
       break;
     case &#x27;type&#x27;:

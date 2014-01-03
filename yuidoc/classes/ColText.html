@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -273,6 +303,13 @@ avant de l&#39;afficher.</p>
                         
                             <li class="index-item method">
                                 <a href="#method_formate">formate</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_traite_balises_images">traite_balises_images</a>
 
                                 
                                 
@@ -422,7 +459,8 @@ charger.</li>
 
                     <div class="param-description">
                         <p>Pour les références, ainsi que pour les corrections
-                          suivant le ptype du paragraphe, on a besoin de la cible</p>
+                          suivant le ptype du paragraphe, on a besoin de la cible
+                          quand c&#39;est une fiche.</p>
 
                     </div>
 
@@ -458,6 +496,82 @@ charger.</li>
                 <pre class="code prettyprint"><code>ColText.formate(&lt;le texte&gt;)
 # Mais on peut utiliser aussi :
 &lt;le texte&gt;.formate</code></pre>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_traite_balises_images" class="method item">
+    <h3 class="name"><code>traite_balises_images</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_col_text.js.html#l119"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;col_text.js:119</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Traitement des balises de type image dans le texte du paragraphe
+Notes</p>
+<ul>
+<li>Une balise de type image possède ce format :
+  [img:path/in/collection/ressource/img/|attrs]
+  où <code>attrs</code> est un {Object} en string qui doit pouvoir être parsé par
+  JSON et qui défini les attributs de l&#39;image.</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> :
+          [img:mon_image.png|{&quot;id&quot;:&quot;idimage&quot;, &quot;title&quot;:&quot;Titre de l&#39;image&quot;}]</p>
+<ul>
+<li>Donc une image doit obligatoirement être contenue dans le dossier
+ressource/img/ de la collection.</li>
+</ul>
 
             </div>
         </div>
@@ -509,7 +623,7 @@ charger.</li>
             
         
         
-        <a href="../files/_Users_philippeperret_Sites_table_narration_js_col_text.js.html#l116"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;col_text.js:116</code></a>
+        <a href="../files/_Users_philippeperret_Sites_table_narration_js_col_text.js.html#l142"><code>&#x2F;Users&#x2F;philippeperret&#x2F;Sites&#x2F;table_narration&#x2F;js&#x2F;col_text.js:142</code></a>
         
         </p>
 
@@ -523,7 +637,8 @@ charger.</li>
         <p>Traitement du code d&#39;un paragraphe dont le ptype n&#39;est pas &#39;text&#39;
 Notes</p>
 <ul>
-<li>La méthode est asynchrone seulement pour les ptype(s) &#39;file&#39; et &#39;fico&#39;</li>
+<li>La méthode est asynchrone seulement pour les ptype(s) &#39;file&#39; et &#39;fico&#39;
+Dans le cas contraire, on rappelle immédiatement la méthode formate.</li>
 </ul>
 
     </div>

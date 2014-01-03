@@ -6,12 +6,12 @@
 # Mettre ici les changements à effectuer
 # Ou les définir précisément plus bas
 CHANGE = {
-  "parent"  => {"id"=>"49", "type"=>"chap"},
+  "texte"  => "Une référence : ",
 }
 
-FOLDER_COLLECTION = "narration" # "current"
-FICHE_TYPE  = 'page'
-FICHE_ID    = 121
+FOLDER_COLLECTION = "scenariopole" # "current"
+FICHE_TYPE  = 'para'
+FICHE_ID    = 8470
 
 def autorise path
   load_data_phil unless defined?(DATA_PHIL)

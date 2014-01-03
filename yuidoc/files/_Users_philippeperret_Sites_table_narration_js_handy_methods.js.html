@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -305,6 +335,33 @@ Object.defineProperties(window,{
   }
   
 })
+
+/**
+  * Retourne la fiche d&#x27;identifiant +id+
+  * ------------------------------------
+  * @note C&#x27;est un raccourci de FICHES.get(id)
+  *
+  * @method get_fiche
+  * @param  {Number|String} id   Identifiant de la fiche
+  * @return {Fiche} Instance fiche de la fiche
+  * @for window
+  */
+window.get_fiche = function(id)
+{
+  return FICHES.get(id)
+}
+
+/**
+  * Raccourci pour obtenir l&#x27;instance Fiche de l&#x27;objet DOM donné
+  * en argument.
+  * @method fiche_of_obj
+  * @param  {DOMElement|jQuerySet} obj    L&#x27;objet DOM
+  * @return {Fiche} La fiche possédant l&#x27;objet DOM
+  */
+window.fiche_of_obj = function(obj)
+{
+  return FICHES.domObj_to_fiche(obj)
+}
 /**
   * Retourne l&#x27;instance {Mot} du mot d&#x27;identifiant +mid+
   * en la créant si nécessaire
@@ -365,6 +422,38 @@ window.help = function(message)
   $(&#x27;div#div_help&#x27;).html( message )
 }
 
+/**
+  * Retourne le code HTML pour afficher une image du dossier 
+  * &lt;collection&gt;/ressource/img/ de la collection.
+  *
+  * @method image_ressource
+  * @param  {String} relpath   Path relatif à partir du dossier ressource/img
+  * @param  {Array} attrs      Attributs optionnels. C&#x27;est une liste composée de duo
+  *                            [attr=valeur attr=valeur]
+  * @return {String} Le code HTML à utiliser.
+  */
+window.image_ressource = function(path, attrs)
+{
+  var params = {}
+  if(attrs)
+  {
+    var style = []
+    L(attrs).each(function(duo){
+      if(duo.trim() == &quot;&quot;) return
+      if(duo.indexOf(&#x27;=&#x27;) &lt; 0)
+      {
+        return F.error(LOCALE.image.error[&#x27;bad options in balise&#x27;].
+                        replace(/_OPTION_/, duo).
+                        replace(/_BALISE_/, attrs))
+      }
+      style.push(duo.split(&#x27;=&#x27;).join(&#x27;:&#x27;) + &#x27;;&#x27;)
+    })
+    params.data = {}
+    params.data[&#x27;style&#x27;] = style.join(&quot;&quot;)
+  }
+  dlog(&quot;params:&quot;);dlog(params)
+  return UI.Html.img(&#x27;./collection/&#x27;+Collection.name+&#x27;/ressource/img/&#x27;+path, params)
+}
 /**
   * Retourne le code HTML pour afficher l&#x27;image de path +path+
   *

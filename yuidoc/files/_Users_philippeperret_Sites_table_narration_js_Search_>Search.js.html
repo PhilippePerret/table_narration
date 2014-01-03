@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -248,8 +278,28 @@ $.extend(window.Search,{
     * @default false
     */
   panneau_result_prepared:false,
+  /**
+    * Indique si une recherche courante a été affichée
+    * Noter que cette propriété reste à faux si une recherche a été lancée mais
+    * qu&#x27;aucun résultat n&#x27;a été remonté.
+    * @property {Boolean} resultats_found
+    * @default false
+    */
+  resultats_found:false,
   
-  
+  /** == Main ==
+    * Méthode principale appelée quand on veut faire une recherche (par exemple
+    * en cliquant sur le bouton avec la loupe). 
+    * Si une recherche a déjà été faite (et pas effacée), la méthode remontre
+    * le résultat de la recherche, sinon, elle ouvre le formulaire.
+    * @method show
+    */
+  show:function()
+  {
+    UI.Input.memorize_current({blur:true, keypress:null})
+    if(this.resultats_found) this.panneau.show()
+    else this.show_form()
+  },
   
   /** Fermer le panneau de recherche
     * @method hide
@@ -261,22 +311,23 @@ $.extend(window.Search,{
   },
   /**
     * Bascule entre le panneau de résultat et le formulaire de recherche
+    * Mais la méthode n&#x27;est utilisée que lorsqu&#x27;on clique sur le bouton
+    * &quot;Autre recherche&quot;.
     * @method toggle
     */
   toggle:function()
   {
+    this.resultats_found = false
     this.hide_result()
     this.show_form()
   },
-  /** Affiche le formulaire de recherche
-    * C&#x27;est la méthode principale appelée pour afficher le formulaire de recherche,
-    * lorsqu&#x27;on clique par exemple sur le bouton zoom
+  /** 
+    * Affiche le formulaire de recherche
     *
     * @method show_form
     */
   show_form:function()
   {
-    UI.Input.memorize_current({blur:true, keypress:null})
     this.panneau.show()
     this.form.show()
   },
@@ -330,7 +381,7 @@ $.extend(window.Search,{
      // Envoyer la requête
      F.show(&quot;Recherche en cours…&quot;)
      Ajax.send(
-       {script:&#x27;fiche/search&#x27;, params:$.extend(params, {search_text:text})},
+       {script:&#x27;fiche/search&#x27;, collection:Collection.name, params:$.extend(params, {search_text:text})},
        $.proxy(this.found, this)
      )
   },
@@ -358,7 +409,6 @@ $.extend(window.Search,{
         params[$(this).attr(&#x27;data-param&#x27;)] = dom.value
       }
     })
-    dlog(&quot;params:&quot;);dlog(params)
     this.find(text, params)
   },
   /**
@@ -392,7 +442,8 @@ $.extend(window.Search,{
     this.hide_form()
     this.show_result(purge=true)
     $(&#x27;div#search div#search_result_list&#x27;).scrollTo(0,0)
-    if(data.nombre_founds == 0)
+    this.resultats_found = data.nombre_founds &gt; 0
+    if(!this.resultats_found)
     {
       this.write(&quot;Aucun résultat trouvé pour la recherche donnée.&quot;, {class:&#x27;warning&#x27;})
     }
@@ -420,6 +471,8 @@ $.extend(window.Search,{
     * @param  {Object} dfound   Objet de la donnée trouvé dans la fiche
     *   @param  {String}  dfound.id       Identifiant de la fiche
     *   @param  {String}  dfound.type     Type de la fiche
+    *   @param  {Object}  dfound.parent   Parent de la fiche {:id, :type}
+    *   @param  {String}  dfound.parents  &quot;titre book &gt; titre chap &gt; etc...&quot;
     *   @param  {String}  dfound.incipit  N premiers caractères
     *   @param  {Array}   dfound.matches  
     *                     Tous les textes trouvés, où chaque élément
@@ -438,7 +491,7 @@ $.extend(window.Search,{
       // Ajouter chaque texte trouvé
       c += L(dfound.matches).collect(function(match){
         return  &#x27;&lt;div class=&quot;subfound&quot;&gt;&#x27;+
-                  &#x27;&lt;span class=&quot;small&quot;&gt;&#x27;+match.pre+&#x27;&lt;/span&gt; &#x27;+
+                  &#x27;&lt;span class=&quot;small&quot;&gt;• &#x27;+match.pre+&#x27;&lt;/span&gt; &#x27;+
                   &#x27;&lt;span class=&quot;match_found&quot;&gt;&#x27;+match.found + &#x27;&lt;/span&gt;&#x27; +
                   &#x27; &lt;span class=&quot;small&quot;&gt;&#x27;+match.post +
                   &#x27; [offset:&#x27; + match.offset + &#x27;]&lt;/span&gt;&#x27; +
@@ -457,8 +510,12 @@ $.extend(window.Search,{
   link_to_show_fiche:function(dfound)
   {
     return &#x27;&lt;a onclick=&quot;$.proxy(FICHES.show,FICHES,&#x27;+dfound.id+&#x27;,\&#x27;&#x27;+dfound.type+&#x27;\&#x27;)()&quot; style=&quot;cursor:pointer;&quot;&gt;&#x27; + 
-            &#x27;[&lt;span class=&quot;tiny&quot;&gt;&#x27;+dfound.type+&quot;:&quot;+dfound.id+&#x27;]&lt;/span&gt; &#x27;+
-            dfound.incipit+&#x27;&lt;/a&gt;&#x27;
+            &#x27;[&lt;span class=&quot;tiny&quot;&gt;&#x27;+
+                dfound.type+&quot;:&quot;+dfound.id +
+                (dfound.parents ? &#x27; in &#x27;+dfound.parents : &#x27;&#x27;)+
+              &#x27;]&lt;/span&gt; &#x27;+ 
+              (dfound.type == &#x27;para&#x27; ? &#x27;&lt;br&gt;&#x27; : &#x27;&#x27;)+
+              dfound.incipit+&#x27;&lt;/a&gt;&#x27;
   },
   /**
     * Ecrit une ligne (div) dans le panneau de résultat

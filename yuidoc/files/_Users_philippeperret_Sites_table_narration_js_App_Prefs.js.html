@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -249,15 +279,64 @@ App.Prefs = {
     {id:&#x27;saveconfig&#x27;, type:&#x27;cb&#x27;,        label:&quot;Sauver la configuration des fiches à chaque sauvegarde&quot;, indiv:true},
     {id:&#x27;general&#x27;,    type:&#x27;/fieldset&#x27;},
     {id:&#x27;fiches&#x27;,     type:&#x27;fieldset&#x27;,  legend:&quot;Fiches&quot;},
-    {id:&#x27;snap&#x27;,       type:&#x27;cb&#x27;,        label:&quot;Aligner les fiches sur la grille&quot;},
+    {id:&#x27;modeunique&#x27;, type:&#x27;cb&#x27;,
+      onclick:&quot;$.proxy(App.Prefs.onchange_mode_unique, App.Prefs, this.checked)()&quot;,
+      label:&quot;Mode “Unique” &lt;span class=\&quot;tiny\&quot;&gt;Dans ce mode, un seul livre et une seule page pourront être ouverts, placés toujours au même endroit visible.&lt;/span&gt;&quot;},
+    {id:&#x27;snap&#x27;,       type:&#x27;cb&#x27;,        label:&quot;Aligner les fiches sur la grille&quot;, indiv:true},
+    {id:&#x27;showinfos&#x27;,  type:&#x27;cb&#x27;,        label:&quot;Afficher type:id dans pied de page&quot;, indiv:true},
     &#x27;&lt;div&gt;&#x27;,
     {id:&#x27;gridbook&#x27;,   type:&#x27;cb&#x27;,        label:&quot;Livre rangés &quot; , onchange:&quot;$.proxy(App.Prefs.onchange_livre_ranged,App.Prefs,this.checked)()&quot;},
     {id:&#x27;dirgridbook&#x27;,type:&#x27;select&#x27;, style:&quot;visibility:hidden;&quot;,
       values:[{value:&quot;h&quot;,title:&quot;horizontalement&quot;}, {value:&quot;v&quot;,title:&quot;verticalement&quot;}]},
     &#x27;&lt;/div&gt;&#x27;,
-    {id:&#x27;fiches&#x27;,     type:&#x27;/fieldset&#x27;}
+    {id:&#x27;fiches&#x27;,     type:&#x27;/fieldset&#x27;},
+    {id:&#x27;paragraphes&#x27;, type:&#x27;fieldset&#x27;, legend:&quot;Paragraphes&quot;},
+    {id:&#x27;masknotprinted&#x27;, type:&#x27;cb&#x27;,    label:&quot;Masquer paragraphe “not printed”&quot;, indiv:true, 
+      onchange:&quot;$.proxy(App.Prefs.onchange_masknotprinted, App.Prefs, this.checked)()&quot;},
+    {id:&#x27;paragraphes&#x27;, type:&#x27;/fieldset&#x27;}
     ],
   
+  /**
+    * Au chargement de la collection, règle les préférences qui doivent
+    * être prises en compte immédiatement.
+    * Notes
+    *
+    * @method set
+    * @param  {Object} prefs    Les préférences de l&#x27;application, ou null
+    */
+  set:function(prefs){
+    if(!prefs) return
+    App.preferences = prefs
+    window.MODE_UNIQUE = App.preferences.modeunique
+  },
+
+  /**
+    * Méthode appelée quand on passe en mode unique (ou qu&#x27;on en sort, mais elle ne
+    * fait rien alors).
+    * La méthode va mettre en place le mode unique, en commençant par fermer tous
+    * les &#x27;book&#x27; et &#x27;page&#x27; ouverts (en passant en revue les éléments posés sur la table)
+    * Elle va définir la valeur de MODE_UNIQUE et rouvrir la dernière fiche trouvée.
+    * @method onchange_mode_unique
+    * @param  {Boolean} activer   True s&#x27;il faut activer le mode unique.
+    */
+  onchange_mode_unique:function(activer)
+  {
+    if(activer == false)
+    {
+      MODE_UNIQUE = false
+      return
+    } 
+    var fiche, fiche_open ;
+    $(&#x27;section#table&#x27;).find(&#x27;fiche.book, fiche.page&#x27;).each(function(){
+      fiche = fiche_of_obj($(this))
+      if((fiche.is_book || fiche.is_page) &amp;&amp; fiche._opened){
+        fiche.close
+        fiche_open = get_fiche(fiche.id)
+      } 
+    })
+    MODE_UNIQUE = true
+    if(fiche_open) fiche_open.open
+  },
   /**
     * Méthode appelée quand on clique sur le cb &quot;livre rangés&quot;
     * La méthode affiche ou masque le menu pour choisir l&#x27;alignement des livres,
@@ -269,6 +348,28 @@ App.Prefs = {
   {
     $(&#x27;select#pref-dirgridbook&#x27;).css(&#x27;visibility&#x27;, coched?&#x27;visible&#x27;:&#x27;hidden&#x27;)
   }, 
+  
+  /**
+    * Méthode appelée quand on clique sur la CB pour masquer/afficher les 
+    * paragraphes &quot;not printed&quot;
+    * Elle passe en revue les pages ouvertes (elle doit les trouver sur la
+    * table) et masque ou montre les paragraphes not printed.
+    * @method onchange_masknotprinted
+    * @param {Boolean} masquer Si TRUE, on doit les masquer
+    */
+  onchange_masknotprinted:function(masquer)
+  {
+    $(&#x27;section#table &gt; fiche.page&#x27;).each(function(){
+      fiche = fiche_of_obj($(this))
+      if(fiche.enfants)
+      {
+        L(fiche.enfants).each(function(child){
+          child.applique_filtre
+        })
+      }
+    })
+  },
+  
   /**
     * Enregistre les préférences de l&#x27;application (et reçoit le retour de la 
     * requête ajax)
@@ -287,7 +388,10 @@ App.Prefs = {
     {
       this.get_values
       Ajax.send(
-        {script:&#x27;app/save_preferences&#x27;, preferences:App.preferences},
+        {
+          script:&#x27;app/save_preferences&#x27;, 
+          collection:Collection.name,
+          preferences:App.preferences},
         $.proxy(this.save, this)
       )
     }
@@ -438,7 +542,9 @@ Object.defineProperties(App.Prefs, {
     get:function(){
       return  &#x27;&lt;div id=&quot;preferences&quot;&gt;&#x27;+
                 &#x27;&lt;div class=&quot;titre&quot;&gt;Préférences&lt;/div&gt;&#x27;+
-                this.html_options +
+                &#x27;&lt;div class=&quot;fieldsets&quot;&gt;&#x27;+
+                  this.html_options +
+                &#x27;&lt;/div&gt;&#x27; +
                 this.html_buttons +
               &#x27;&lt;/div&gt;&#x27;
     }

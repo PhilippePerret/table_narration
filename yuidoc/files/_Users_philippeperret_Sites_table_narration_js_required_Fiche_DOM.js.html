@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -332,9 +362,11 @@ Object.defineProperties(Fiche.prototype,{
     *   * Propriété complexe, donc appeler sans parenthèses.
     *   * Si une méthode doit suivre, définir &#x60;this.pour_suivre_open&#x60;
     *   * La méthode peut être appelée même si la fiche est ouverte, dans lequel
-    *     cas seul la méthode pour suivre sera traitée.
+    *     cas seule la méthode pour suivre sera traitée.
     *   * La méthode est récursive, c&#x27;est-à-dire qu&#x27;elle ouvre tous les parents
     *     avant de s&#x27;ouvrir.
+    *   * Si le type de fiche possède une méthode &#x60;after_open&#x60;, elle est appelée
+    *     en fin de processus (avant la méthode &#x60;pour_suivre_open&#x60;)
     *   * Lorsque l&#x27;option &quot;Livres rangés&quot; est choisie dans les préférences de
     *     l&#x27;application, la méthode utilise un comportement particulier pour ouvrir
     *     le livre : elle le décale vers la droite de UI.GRID_X.
@@ -361,10 +393,22 @@ Object.defineProperties(Fiche.prototype,{
         else if (this.is_book &amp;&amp; App.preferences[&#x27;gridbook&#x27;] == true)
         {
           if(App.preferences[&#x27;dirgridbook&#x27;] == &#x27;v&#x27;) this.left += UI.GRID_X
-                                               else this.top += UI.GRID_Y
+                                               else this.top  += UI.GRID_Y
         }
         this.positionne
-      }
+        // Appeler la méthode &#x60;after_open&#x60; si elle est définie pour ce
+        // type de fiche
+        if(&#x27;function&#x27;==typeof this.after_open) this.after_open()
+        
+        if(&#x27;function&#x27; != typeof this.pour_suivre_open)
+        {
+          // Note: On ne traite le mode unique que dans le cas où il n&#x27;y ait
+          // pas de méthode poursuivre, ce qui indiquerait qu&#x27;un traitement
+          // particulier est en cours. Mais peut-être que ça peut être mauvais
+          // pour les références. À voir.
+          if(MODE_UNIQUE) UI.open_mode_unique( this )
+        }
+      } // si la fiche n&#x27;est pas déjà ouverte
       if(&#x27;function&#x27; == typeof this.pour_suivre_open)
       {
         this.pour_suivre_open()
@@ -382,6 +426,8 @@ Object.defineProperties(Fiche.prototype,{
     *   * En mode fermé, le titre est disabled
     *   * Si la préférences &quot;Livre rangé&quot; est true et que c&#x27;est un livre, on
     *     doit le recaler à sa place.
+    *   * Si on est en “mode unique” (un seul book et une seule page ouverte à 
+    *     la fois, on doit positionner la fiche avec UI.open_mode_unique) 
     *
     * @method close
     */
@@ -395,8 +441,9 @@ Object.defineProperties(Fiche.prototype,{
       else if (this.is_book &amp;&amp; App.preferences[&#x27;gridbook&#x27;] == true)
       {
         if(App.preferences[&#x27;dirgridbook&#x27;] == &#x27;v&#x27;) this.left -= UI.GRID_X
-                                             else this.top -= UI.GRID_Y
+                                             else this.top  -= UI.GRID_Y
       }
+      if(MODE_UNIQUE) UI.close_mode_unique( this )
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }  
   },
@@ -504,9 +551,28 @@ Object.defineProperties(Fiche.prototype,{
       this.verso[this.retourned ? &#x27;hide&#x27; : &#x27;show&#x27;]()
       this.retourned = !this.retourned
       if(this.retourned) this.regle_verso
+      if(MODE_UNIQUE) this.regle_verso_mode_unique
     }
   },  
 
+  /**
+    * Règle le verso quand on est en mode unique (un seul page/book ouvert et
+    * fixé dans la page)
+    * Notes
+    * -----
+    *   * Contrairement à la méthode &#x60;regle_verso&#x60; qui n&#x27;est invoqué que lorsque
+    *     on retourne la fiche, cette méthode est appelée dans les deux sens.
+    *   * Elle permet d&#x27;afficher correctement le verso, pour toujours le voir.
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    * @method regle_verso_mode_unique
+    */
+  &quot;regle_verso_mode_unique&quot;:{
+    get:function(){
+      if(this.is_book) return // rien à faire avec un livre
+      if(this.is_page &amp;&amp; this._opened) return // rien à faire avec une page ouverte
+      this.obj[(this.retourned?&#x27;add&#x27;:&#x27;remove&#x27;)+&#x27;Class&#x27;](&#x27;on_top&#x27;)
+    }
+  },
   /* ---------------------------------------------------------------------
    *
    *   MÉTHODES DOM DIVERSES
@@ -955,17 +1021,21 @@ Object.defineProperties(Fiche.prototype,{
       this.main_field_as_input.replaceWith( this.html_div_titre )
     }
   },
-  /* Place le texte dans un textarea */
+  /** 
+    * Place le texte dans un textarea pour son édition
+    * Notes
+    *   * Pour les paragraphes, adapte la taille du textarea à la
+    *     taille du texte.
+    *   * Propriété complexe =&gt; appeler sans parenthèses
+    *
+    * @method texte_in_textarea
+    */
   &quot;texte_in_textarea&quot;:{
     get:function(){
       var idm = &quot;Paragraph::texte_in_textarea [&quot;+this.type_id+&quot;]&quot;
       dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
-      // if(this.main_field_as_div.length == 0)
-      // {
-      //   console.error(&quot;Le DIV du champ principal de &quot;+this.type_id+&quot; est introuvable…&quot;)
-      // }
-      // else 
       this.main_field_as_div.replaceWith(this.html_textarea_texte)
+      if(this.is_paragraph) UI.Textarea.adapt(this.textarea_texte)
       dlog(&quot;&lt;- &quot;+idm, DB_FCT_ENTER)
     }
   },

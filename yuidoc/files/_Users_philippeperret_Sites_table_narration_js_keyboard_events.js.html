@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/App.html">App</a></li>
             
+                <li><a href="../classes/App.Clipboard.html">App.Clipboard</a></li>
+            
                 <li><a href="../classes/App.Prefs.html">App.Prefs</a></li>
             
                 <li><a href="../classes/Chapter.html">Chapter</a></li>
@@ -59,7 +61,11 @@
             
                 <li><a href="../classes/FICHES.html">FICHES</a></li>
             
+                <li><a href="../classes/Film.html">Film</a></li>
+            
                 <li><a href="../classes/FILMS.html">FILMS</a></li>
+            
+                <li><a href="../classes/HTMLTable.html">HTMLTable</a></li>
             
                 <li><a href="../classes/Mot.html">Mot</a></li>
             
@@ -87,6 +93,10 @@
             
                 <li><a href="../classes/UI.Input.html">UI.Input</a></li>
             
+                <li><a href="../classes/UI.ModeUnique.html">UI.ModeUnique</a></li>
+            
+                <li><a href="../classes/UI.Textarea.html">UI.Textarea</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
@@ -95,7 +105,17 @@
             
                 <li><a href="../modules/app.html">app</a></li>
             
+                <li><a href="../modules/app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc..html">app
+
+Objet qui gère le clipboard de l&#x27;application, dans lequel on peut mettre
+des fiches, des références, etc.</a></li>
+            
                 <li><a href="../modules/app-prefs.html">app-prefs</a></li>
+            
+                <li><a href="../modules/App_clipboard.html">App_clipboard</a></li>
             
                 <li><a href="../modules/Chapter.html">Chapter</a></li>
             
@@ -175,7 +195,17 @@
             
                 <li><a href="../modules/UI_HTML.html">UI_HTML</a></li>
             
+                <li><a href="../modules/ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau..html">ui_html_table
+
+Le module définit l&#x27;objet UI.Html.str2table et la classe HTMLTable qui
+permet de mettre en forme un tableau.</a></li>
+            
                 <li><a href="../modules/UI_Input.html">UI_Input</a></li>
+            
+                <li><a href="../modules/ui_mode_unique.html">ui_mode_unique</a></li>
             
                 <li><a href="../modules/window.html">window</a></li>
             
@@ -293,8 +323,8 @@ window.keypress_when_no_selection_no_edition = function(evt)
   */
 window.keypress_when_fiche_selected_out_textfield = function(evt)
 {
-  // var idm = &quot;keypress_when_fiche_selected_out_textfield&quot;
-  // dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER)
+  var idm = &quot;keypress_when_fiche_selected_out_textfield&quot;
+  dlog(&quot;---&gt; &quot;+idm, DB_FCT_ENTER | DB_CURRENT)
   
   /*  = WARNING =
    *  S&#x27;il n&#x27;y a pas de fiche courante, il faut rectifier le gestionnaire
@@ -307,6 +337,18 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
     console.warn(&quot;Le gestionnaire de keypress &#x60;keypress_when_fiche_selected_out_textfield&#x27; a été appelé alors qu&#x27;aucune fiche n&#x27;est sélectionné…&quot;)
     window.onkeypress = keypress_when_no_selection_no_edition
     return keypress_when_no_selection_no_edition(evt)
+  }
+  /*  = WARNING =
+   *  S&#x27;il y a un champ en édition, on ne doit pas passer par ici
+   *  
+   */
+  if(UI.Input.target)
+  {
+    F.error(&quot;Mauvais gestionnaire d&#x27;évènement (on se trouve dans un champ d&#x27;édition)&quot;+
+    &quot;\nPour le moment, je ne fais rien (appeler le gestionnaire UI.Input génèrerait &quot;+
+    &quot;une erreur)&quot;)
+    return stop_event(evt)
+    // return UI.Input.onkeypress(evt)
   }
   
   var cplx_meth = null
@@ -349,6 +391,12 @@ window.keypress_when_fiche_selected_out_textfield = function(evt)
   case Key_o:   cplx_meth = &#x27;open&#x27;     ; break
   case Key_f:   cplx_meth = &#x27;close&#x27;    ; break
   case Key_d:   cplx_meth = &#x27;deselect&#x27; ; break
+  case Key_l:
+    if(FICHES.current.is_book &amp;&amp; evt.metaKey) // =&gt; Lecture du livre
+    {
+      Book.read(FICHES.current, {page:1})
+    }
+    break
   case Key_p:
     if(evt.metaKey)
     {
